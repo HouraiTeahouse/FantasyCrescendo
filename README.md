@@ -2,6 +2,8 @@
 
 A open source Touhou x Smash Bros game created in Unity3D. 
 
+**DISCLAIMER:** While this is an open source project (all the code is free for you to use elsewhere), the other assets, namely the animation, art, and music are all owned by their respective creators. Ask for permission if you are going to use them in another project.
+
 -----
 **CURRENT STATUS**: Planning/Engine Dev
 
