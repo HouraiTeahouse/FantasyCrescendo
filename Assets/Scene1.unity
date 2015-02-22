@@ -318,7 +318,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 268423681}
   m_LocalRotation: {x: .1305262, y: 0, z: 0, w: .991444886}
-  m_LocalPosition: {x: 3.6500001, y: 5.51999998, z: -9}
+  m_LocalPosition: {x: -1.35000002, y: 5.51999998, z: -17.5499992}
   m_LocalScale: {x: 1, y: 2.12812471, z: 2.12812495}
   m_Children: []
   m_Father: {fileID: 1250365802}
@@ -1264,9 +1264,9 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1383068756}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_Mass: .400000006
+  m_LinearDrag: 1.5
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_FixedAngle: 1
   m_IsKinematic: 0
@@ -1280,7 +1280,7 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1383068756}
   m_Enabled: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 08092ce56e418ae40b9949d268a4421d, type: 2}
   m_IsTrigger: 0
   m_Size: {x: 1, y: 2}
   m_Center: {x: 0, y: 0}
@@ -1295,11 +1295,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8954145707ea3b48a730367e07f9d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 10
+  walkSpeed: 13
   runSpeed: 20
   jumpHeight: 5
   jumpCount: 2
-  jumpDampening: .5
+  jumpDampening: .800000012
+  jumpsRemaining: 0
 --- !u!1 &1407528117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,7 +1596,7 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1689879168}
   m_Enabled: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 38bdaf0630f275146b15a0d81449de46, type: 2}
   m_IsTrigger: 0
   m_Size: {x: 1, y: 1}
   m_Center: {x: 0, y: 0}

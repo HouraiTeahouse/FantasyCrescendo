@@ -20,6 +20,7 @@ public abstract class AbstractCharacter : MonoBehaviour {
 	private float jumpDampening = 0.5f;
 
 	private Rigidbody2D rigBod;
+	[SerializeField]
 	private int jumpsRemaining;
 	private bool grounded;
 	public bool IsGrounded {
@@ -46,20 +47,22 @@ public abstract class AbstractCharacter : MonoBehaviour {
 		Vector2 v = rigBod.velocity;
 
 		float horizontalSpeed = (running) ? runSpeed : walkSpeed;
-		Vector2 movementForce = Vector2.right * m * (horizontalSpeed - v.x) / dt;
+		Vector2 movementForce = Vector2.right * (horizontalSpeed - v.magnitude);
 		movementForce.x *= Util.Sign (horizontal);
-
+		rigBod.AddForce (movementForce);
 		//If on the ground
-		if(grounded) {
+		if(grounded || jumpsRemaining > 0) {
 			if(Input.GetButtonDown("Vertical") && vertical > 0f && jumpsRemaining > 0){
 				Jump (jumpHeight * Mathf.Pow(jumpDampening, jumpCount - jumpsRemaining), dt);
+				--jumpsRemaining;
 			}
 		}
 
-		//Debug.Log ("" + horizontal + " " + rigBod.velocity + " " + movementForce);
+		Debug.Log ("" + horizontal + " " + v + " " + movementForce);
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
+		jumpsRemaining = jumpCount;
 		GroundedCheck (col.gameObject, true);
 	}
 
