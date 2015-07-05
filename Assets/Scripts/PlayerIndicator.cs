@@ -8,20 +8,20 @@ public sealed class PlayerIndicator : MonoBehaviour {
 
     public Color Color {
         get {
-            return spriteRenderer != null ? spriteRenderer.color : Color.clear;
+            return spriteRenderer ? spriteRenderer.color : Color.clear;
         }
         set {
-            if (spriteRenderer != null)
+            if (spriteRenderer)
                 spriteRenderer.color = value;
         }
     }
 
     public Sprite Sprite {
         get {
-            return spriteRenderer != null ? spriteRenderer.sprite : null;
+            return spriteRenderer ? spriteRenderer.sprite : null;
         }
         set {
-            if (spriteRenderer != null)
+            if (spriteRenderer)
                 spriteRenderer.sprite = value;
         }
     }
