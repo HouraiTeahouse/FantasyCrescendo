@@ -9,7 +9,7 @@ using System;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CapsuleCollider))]
-public class Character : MonoBehaviour {
+public class Character : GensoBehaviour {
 
     [SerializeField]
     private int maxJumps;
@@ -17,19 +17,19 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private AnimationCurve jumpPower;
 
-    protected Rigidbody Rigidbody { get; private set; }
-    protected Animator Animator { get; private set; }
-    protected CapsuleCollider Collider { get; private set; }
+    public Rigidbody Rigidbody { get; private set; }
+    public Animator Animator { get; private set; }
+    public CapsuleCollider Collider { get; private set; }
 
     public int PlayerNumber { get; set; }
     public Transform RespawnPosition { get; set; }
 
     public float Height {
         get {
-            return Collider != null ? Collider.height : 0;
+            return Collider ? Collider.height : 0;
         }
         protected set {
-            if (Collider != null)
+            if (Collider)
                 Collider.height = value;
         }
     }
