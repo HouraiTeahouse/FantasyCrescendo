@@ -5,20 +5,28 @@ public static class UnityObjectExtensions {
 
     /// <summary>
     /// Instantiates a copy of the Unity object.
-    /// Shorthand for Object.Instantiate
+    /// Shorthand for Object.Copy
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="targetObject"></param>
     /// <returns></returns>
-    public static T Instantiate<T>(this T targetObject) where T : Object {
+    public static T Copy<T>(this T targetObject) where T : Object {
+        if (targetObject == null)
+            return null;
         return Object.Instantiate(targetObject);
     }
 
-    public static T Instantiate<T>(this T targetObject, Vector3 position) where T : Object {
+    public static T Copy<T>(this T targetObject, Vector3 position) where T : Object
+    {
+        if (targetObject == null)
+            return null;
         return Object.Instantiate(targetObject, position, Quaternion.identity) as T;
     }
 
-    public static T Instantiate<T>(this T targetObject, Vector3 position, Quaternion rotation) where T : Object {
+    public static T Copy<T>(this T targetObject, Vector3 position, Quaternion rotation) where T : Object
+    {
+        if (targetObject == null)
+            return null;
         return Object.Instantiate(targetObject, position, rotation) as T;
     }
 
@@ -29,13 +37,14 @@ public static class UnityObjectExtensions {
     /// </summary>
     /// <param name="targetObject"></param>
     /// <param name="allowDestroyingAssets"></param>
-    public static void Destroy(this Object targetObject, bool allowDestroyingAssets = false) {
+    public static void Destroy<T>(this T targetObject, bool allowDestroyingAssets = false) where T : Object {
         if (targetObject == null)
             return;
 
         if (Application.isPlaying) {
-            if (targetObject is GameObject) {
-                ((GameObject) targetObject).transform.parent = null;
+            var gameObject = targetObject as GameObject;
+            if (gameObject != null) {
+                gameObject.transform.parent = null;
             }
             Object.Destroy(targetObject);
         } else {
@@ -49,7 +58,7 @@ public static class UnityObjectExtensions {
     /// </summary>
     /// <param name="targetObjects"></param>
     /// <param name="allowDestroyingAssets"></param>
-    public static void DestroyAll(this IEnumerable<Object> targetObjects, bool allowDestroyingAssets = false) {
+    public static void DestroyAll<T>(this IEnumerable<T> targetObjects, bool allowDestroyingAssets = false) where T : Object {
         if (targetObjects == null)
             return;
 
