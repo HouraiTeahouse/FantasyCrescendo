@@ -8,6 +8,9 @@ public class SplashScreen : MonoBehaviour {
     private Image logo;
 
     [SerializeField]
+    private Text derivativeWarning;
+
+    [SerializeField]
     private AnimationCurve alphaOverTime;
 
     [SerializeField]
@@ -25,10 +28,12 @@ public class SplashScreen : MonoBehaviour {
         foreach (GameObject target in disableWhileLoading) {
             target.SetActive(false);
         }
+        float logoDisplayDuration = alphaOverTime.keys[alphaOverTime.length - 1].time;
         if (logo != null) {
+            if (derivativeWarning != null)
+                derivativeWarning.enabled = false;
             //Do the splash screen animation
             float t = 0;
-            float logoDisplayDuration = alphaOverTime.keys[alphaOverTime.length - 1].time;
             Color baseColor = logo.color;
             Color targetColor = baseColor;
             baseColor.a = 0f;
@@ -38,7 +43,27 @@ public class SplashScreen : MonoBehaviour {
                 yield return null;
                 t += Time.deltaTime;
             }
+            if (derivativeWarning != null)
+                derivativeWarning.enabled = true;
+            logo.enabled = false;
         }
+        if (derivativeWarning != null)
+        {
+            //Do the splash screen animation
+            float t = 0;
+            Color baseColor = derivativeWarning.color;
+            Color targetColor = baseColor;
+            baseColor.a = 0f;
+            while (t < logoDisplayDuration)
+            {
+                derivativeWarning.color = Color.Lerp(baseColor, targetColor, alphaOverTime.Evaluate(t));
+                //Wait one frame
+                yield return null;
+                t += Time.deltaTime;
+            }
+            derivativeWarning.enabled = false;
+        }
+        
         AsyncOperation operation = Application.LoadLevelAsync(targetSceneName);
         if (operation != null && !operation.isDone) {
             foreach (GameObject target in disableWhileLoading) {
