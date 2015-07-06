@@ -18,6 +18,9 @@ help is essential for keeping it great.
 
 0. The Effects Standard Assets (In Unity, in the menu, Assets -> Import Package -> Effects)
 0. The Unity Test Tools (Downloadable [here](https://www.assetstore.unity3d.com/en/#!/content/13802))
+0. SmartLocalization (Downloadable [here](https://www.assetstore.unity3d.com/en/#!/content/7543))
+
+All of these dependencies are free.
 
 Here are a few things you can do that will increase the likelihood of your pull request being accepted:
 
