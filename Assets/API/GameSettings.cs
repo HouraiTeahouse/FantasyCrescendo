@@ -26,7 +26,7 @@ public class GameSettings : ScriptableObject {
         Sprite[] sprites = Instance.playerIndicatorSprites;
         newIndicator.Sprite = (playerNumber >= 0 && playerNumber < sprites.Length)
                                   ? sprites[playerNumber]
-                                  : sprites[0];
+                                  : sprites[sprites.Length - 1];
         return newIndicator;
     }
 
@@ -34,8 +34,10 @@ public class GameSettings : ScriptableObject {
         GameSettings instance = Instance;
         if (instance == null)
             return Color.white;
-        else
-            return Instance.playerColors[playerNumber];
+        Color[] colors = instance.playerColors;
+        if (playerNumber >= colors.Length)
+            return playerNumber <= 0 ? Color.white : colors[colors.Length - 1];
+        return colors[playerNumber];
     }
 
 }
