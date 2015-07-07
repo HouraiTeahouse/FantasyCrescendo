@@ -2,7 +2,7 @@
 A open source Touhou x Smash Bros game created in Unity3D.
 
 ## About
-The Touhou Project (東方Project) ) is a Japanese doujin game series focused on bullet hell shooters made by the one-man developer Team Shanghai Alice. It's colorful cast of characters and largely self-defined setting of Gensokyo has attracted a large following on both sides of the Pacific.
+The Touhou Project (東方Project) ) is a Japanese doujin game series focused on bullet hell shooters made by the one-man developer Team Shanghai Alice. Its colorful cast of characters and largely self-defined setting of Gensokyo has attracted a large following on both sides of the Pacific.
 
 Gensō Shōjokōsen is a collaborative community project created by various Touhou fans to create a fan-game akin to that of Super Smash Bros with the same cast and setting seen in the canon Touhou games.
 
