@@ -5,10 +5,7 @@ using UnityEngine.UI;
 public class SplashScreen : MonoBehaviour {
 
     [SerializeField]
-    private Image logo;
-
-    [SerializeField]
-    private Text derivativeWarning;
+    private Graphic[] splashGraphics;
 
     [SerializeField]
     private AnimationCurve alphaOverTime;
@@ -29,41 +26,26 @@ public class SplashScreen : MonoBehaviour {
             target.SetActive(false);
         }
         float logoDisplayDuration = alphaOverTime.keys[alphaOverTime.length - 1].time;
-        if (logo != null) {
-            if (derivativeWarning != null)
-                derivativeWarning.enabled = false;
-            //Do the splash screen animation
+        foreach (Graphic graphic in splashGraphics)
+            graphic.enabled = false;
+        foreach (Graphic graphic in splashGraphics) {
+            if (graphic == null)
+                continue;
+            graphic.enabled = true;
             float t = 0;
-            Color baseColor = logo.color;
-            Color targetColor = baseColor;
-            baseColor.a = 0f;
-            while (t < logoDisplayDuration) {
-                logo.color = Color.Lerp(baseColor, targetColor, alphaOverTime.Evaluate(t));
-                //Wait one frame
-                yield return null;
-                t += Time.deltaTime;
-            }
-            if (derivativeWarning != null)
-                derivativeWarning.enabled = true;
-            logo.enabled = false;
-        }
-        if (derivativeWarning != null)
-        {
-            //Do the splash screen animation
-            float t = 0;
-            Color baseColor = derivativeWarning.color;
+            Color baseColor = graphic.color;
             Color targetColor = baseColor;
             baseColor.a = 0f;
             while (t < logoDisplayDuration)
             {
-                derivativeWarning.color = Color.Lerp(baseColor, targetColor, alphaOverTime.Evaluate(t));
+                graphic.color = Color.Lerp(baseColor, targetColor, alphaOverTime.Evaluate(t));
                 //Wait one frame
                 yield return null;
                 t += Time.deltaTime;
             }
-            derivativeWarning.enabled = false;
+            graphic.enabled = false;
+            graphic.color = targetColor;
         }
-        
         AsyncOperation operation = Application.LoadLevelAsync(targetSceneName);
         if (operation != null && !operation.isDone) {
             foreach (GameObject target in disableWhileLoading) {
