@@ -11,13 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888c9459344b5c142996209c3a569b47, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  playerColors:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 1, b: 0, a: 1}
-  playerIndicatorSprites:
-  - {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
-  - {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
-  - {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
-  - {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
+  playerColors: []
+  playerIndicatorSprites: []
