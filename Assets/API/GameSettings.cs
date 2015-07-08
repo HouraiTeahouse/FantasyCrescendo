@@ -1,24 +1,12 @@
 ﻿using UnityEngine;
 
-public class GameSettings : ScriptableObject {
+public class GameSettings : Singleton<GameSettings> {
 
     [SerializeField]
     private Color[] playerColors;
 
     [SerializeField]
     private Sprite[] playerIndicatorSprites;
-
-    private static GameSettings _instance;
-    private static GameSettings Instance {
-        get {
-            if (_instance == null) {
-                _instance = Resources.Load<GameSettings>("GameSettings");
-                if(_instance == null)
-                    Debug.LogError("GameSettings is not found. Please create new GameSettings in the Resources folder.");
-            }
-            return _instance;
-        }
-    }
 
     public static PlayerIndicator CreatePlayerIndicator(int playerNumber) {
         PlayerIndicator newIndicator = new GameObject("P" + (playerNumber + 1) + " Indicator" ).AddComponent<PlayerIndicator>();
