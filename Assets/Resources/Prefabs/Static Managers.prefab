@@ -13,7 +13,7 @@ GameObject:
   - 114: {fileID: 11451058}
   m_Layer: 0
   m_Name: Static Managers
-  m_TagString: Untagged
+  m_TagString: Static Managers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,16 +42,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepBetweenScenes: 1
-  playerColors:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 1, b: 0, a: 1}
-  playerIndicatorSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _playerData:
+  - Color: {r: 1, g: 0, b: 0, a: 1}
+    Sprite: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
+  - Color: {r: 0, g: 0, b: 1, a: 1}
+    Sprite: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
+  - Color: {r: 1, g: 1, b: 0, a: 1}
+    Sprite: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
+  - Color: {r: 0, g: 1, b: 0, a: 1}
+    Sprite: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
 --- !u!114 &11453928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -86,6 +85,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: playerColors.Array.size
       value: 4
@@ -146,6 +149,66 @@ Prefab:
       propertyPath: playerColors.Array.data[3].a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Static Managers
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[0].Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[0].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[1].Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[1].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[2].Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[2].Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[2].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[3].Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[3].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[0].Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[2].Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[3].Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: _playerData.Array.data[1].Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 189600}
