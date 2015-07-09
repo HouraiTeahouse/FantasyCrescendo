@@ -99,10 +99,6 @@ public abstract class GensoBehaviour : MonoBehaviour
     #endregion
 
 #region GameObject Properties
-    public string tag {
-        get { return gameObject.tag; }
-        set { gameObject.tag = value; }
-    }
 
     public int layer {
         get { return gameObject.layer; }
