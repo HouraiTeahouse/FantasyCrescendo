@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Genso.API;
 
 /// <summary>
 /// Custom character script for Wriggle
