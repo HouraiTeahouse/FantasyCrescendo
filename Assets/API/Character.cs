@@ -88,6 +88,11 @@ namespace Genso.API {
             Animator = GetComponent<Animator>();
             Collider = GetComponent<CapsuleCollider>();
             animation.Initialize(Animator);
+
+            foreach (Collider collider in GetComponentsInChildren<Collider>()) {
+                if((collider.gameObject.layer & GameSettings.HurtboxLayers) != 0)
+                    Hurtbox.Register(this, collider);
+            }
         }
 
         protected virtual void Update() {

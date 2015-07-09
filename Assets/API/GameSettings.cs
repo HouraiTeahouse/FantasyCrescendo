@@ -14,8 +14,16 @@ public class GameSettings : Singleton<GameSettings> {
         get { return Instance._playerData.Length;  }
     }
 
+    public static LayerMask HurtboxLayers
+    {
+        get { return Instance._hurtboxLayers; }
+    }
+
     [SerializeField]
     private PlayerData[] _playerData;
+
+    [SerializeField]
+    private LayerMask _hurtboxLayers;
 
     public static PlayerIndicator CreatePlayerIndicator(int playerNumber) {
         PlayerIndicator newIndicator = new GameObject("P" + (playerNumber + 1) + " Indicator" ).AddComponent<PlayerIndicator>();
