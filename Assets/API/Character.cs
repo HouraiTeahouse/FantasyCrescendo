@@ -1,56 +1,113 @@
 ﻿using UnityEngine;
 using System;
 
-/// <summary>
-/// General character class for handling the physics and animations of individual characters
-/// </summary>
-/// Author: James Liu
-/// Authored on 07/01/2015
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(CapsuleCollider))]
-public class Character : GensoBehaviour {
+namespace Genso.API {
 
-    [SerializeField]
-    private int maxJumps;
+    /// <summary>
+    /// General character class for handling the physics and animations of individual characters
+    /// </summary>
+    /// Author: James Liu
+    /// Authored on 07/01/2015
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(CapsuleCollider))]
+    public class Character : GensoBehaviour
+    {
+        [Serializable]
+        private class MovementData {
 
-    [SerializeField]
-    private AnimationCurve jumpPower;
+            public float WalkSpeed = 5f;
+            public float RunSpeed = 10f;
+            public float AirSpeed = 3f;
+            public int MaxJumps;
+            public AnimationCurve JumpPower;
 
-    public Rigidbody Rigidbody { get; private set; }
-    public Animator Animator { get; private set; }
-    public CapsuleCollider Collider { get; private set; }
-
-    public int PlayerNumber { get; set; }
-    public Transform RespawnPosition { get; set; }
-
-    public float Height {
-        get {
-            return Collider ? Collider.height : 0;
         }
-        protected set {
-            if (Collider)
-                Collider.height = value;
-        }
-    }
 
-    public int JumpCount { get; private set; }
+        [Serializable]
+        private class AnimationParameters {
 
-    protected virtual void Awake() {
-        Rigidbody = GetComponent<Rigidbody>();
-        Animator = GetComponent<Animator>();
-        Collider = GetComponent<CapsuleCollider>();
-    }
+            public AnimationBool Grounded = new AnimationBool("grounded");
+            public AnimationFloat VerticalSpeed = new AnimationFloat("vertical speed");
+            public AnimationFloat HorizontalSpeed = new AnimationFloat("horizontal speed");
 
-    public void Jump() {
-        if (JumpCount < maxJumps) {
-            if (maxJumps <= 0) {
-                Rigidbody.AddForce(transform.up*jumpPower.Evaluate(0f));
-            } else {
-                Rigidbody.AddForce(transform.up * jumpPower.Evaluate((float)JumpCount / ((float)maxJumps - 1)));   
+            public void Initialize(Animator animator) {
+                Grounded.Animator = animator;
+                VerticalSpeed.Animator = animator;
+                HorizontalSpeed.Animator = animator;
             }
-            JumpCount++;
+
         }
+
+        [SerializeField]
+        private MovementData movement;
+
+        [SerializeField]
+        private AnimationParameters animation;
+
+        private bool grounded;
+        private bool running;
+
+        protected float HorizontalSpeed
+        {
+            get
+            {
+                if (!grounded)
+                    return movement.AirSpeed;
+                if (running)
+                    return movement.RunSpeed;
+                return movement.WalkSpeed;
+            }
+        }
+
+        public Rigidbody Rigidbody { get; private set; }
+        public Animator Animator { get; private set; }
+        public CapsuleCollider Collider { get; private set; }
+
+        public int PlayerNumber { get; set; }
+        public Transform RespawnPosition { get; set; }
+
+        public float Height
+        {
+            get
+            {
+                return Collider ? Collider.height : 0;
+            }
+            protected set
+            {
+                if (Collider)
+                    Collider.height = value;
+            }
+        }
+
+        public int JumpCount { get; private set; }
+
+        protected virtual void Awake()
+        {
+            Rigidbody = GetComponent<Rigidbody>();
+            Animator = GetComponent<Animator>();
+            Collider = GetComponent<CapsuleCollider>();
+            animation.Initialize(Animator);
+        }
+
+        protected virtual void Update() {
+            
+            animation.Grounded.Set(grounded);
+
+        }
+
+        public virtual void Jump() {
+            int maxJumps = movement.MaxJumps;
+            if (JumpCount < movement.MaxJumps) {
+                AnimationCurve jumpPower = movement.JumpPower;
+                if (maxJumps <= 0)
+                    Rigidbody.AddForce(transform.up * jumpPower.Evaluate(0f));
+                else
+                    Rigidbody.AddForce(transform.up * jumpPower.Evaluate((float)JumpCount / ((float)maxJumps - 1)));
+                JumpCount++;
+            }
+        }
+
     }
 
 }
