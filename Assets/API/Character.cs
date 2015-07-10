@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace Genso.API {
 
@@ -47,6 +48,7 @@ namespace Genso.API {
 
         private bool grounded;
         private bool running;
+        private Collider[] hurtboxes;
 
         protected float HorizontalSpeed
         {
@@ -89,10 +91,12 @@ namespace Genso.API {
             Collider = GetComponent<CapsuleCollider>();
             animation.Initialize(Animator);
 
+            List<Collider> tempHurtboxes = new List<Collider>();
             foreach (Collider collider in GetComponentsInChildren<Collider>()) {
                 if((collider.gameObject.layer & GameSettings.HurtboxLayers) != 0)
                     Hurtbox.Register(this, collider);
             }
+            hurtboxes = tempHurtboxes.ToArray();
         }
 
         protected virtual void Update() {
@@ -111,6 +115,13 @@ namespace Genso.API {
                     Rigidbody.AddForce(transform.up * jumpPower.Evaluate((float)JumpCount / ((float)maxJumps - 1)));
                 JumpCount++;
             }
+        }
+
+        public virtual void OnDrawGizmos() {
+            if (hurtboxes == null)
+                return;
+
+           GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
         }
 
     }

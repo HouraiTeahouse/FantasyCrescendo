@@ -4,6 +4,16 @@ using System.Collections.Generic;
 
 namespace Genso.API {
 
+    public enum HitboxType {
+
+        Offensive,
+        Damageable,
+        Invincible,
+        Intangible
+
+    }
+
+
     public static class Hurtbox {
 
         static Hurtbox() {

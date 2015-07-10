@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Genso.API;
+using UnityEngine;
 
 public class GameSettings : Singleton<GameSettings> {
 
@@ -7,6 +8,16 @@ public class GameSettings : Singleton<GameSettings> {
 
         public Color Color;
         public Sprite Sprite;
+
+    }
+
+    [System.Serializable]
+    private class DebugData {
+
+        public Color OffensiveHitboxColor = Color.red;
+        public Color DamageableHitboxColor = Color.yellow;
+        public Color InvincibleHitboxColor = Color.green;
+        public Color IntangiblHitboxColor = Color.blue;
 
     }
 
@@ -24,6 +35,25 @@ public class GameSettings : Singleton<GameSettings> {
 
     [SerializeField]
     private LayerMask _hurtboxLayers;
+
+    [SerializeField]
+    private DebugData _debug;
+
+    public static Color GetHitboxColor(HitboxType type) {
+        DebugData debugData = Instance._debug;
+        switch (type) {
+            case HitboxType.Offensive:
+                return debugData.OffensiveHitboxColor;
+            case HitboxType.Damageable:
+                return debugData.DamageableHitboxColor;
+            case HitboxType.Invincible:
+                return debugData.IntangiblHitboxColor;
+            case HitboxType.Intangible:
+                return debugData.InvincibleHitboxColor;
+            default:
+                return Color.white;
+        }
+    }
 
     public static PlayerIndicator CreatePlayerIndicator(int playerNumber) {
         PlayerIndicator newIndicator = new GameObject("P" + (playerNumber + 1) + " Indicator" ).AddComponent<PlayerIndicator>();

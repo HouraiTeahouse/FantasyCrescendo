@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2326824}
   - 95: {fileID: 9564776}
   - 54: {fileID: 5454386}
-  - 114: {fileID: 11469258}
+  - 114: {fileID: 11471550}
   m_Layer: 0
   m_Name: Caps 2hu
   m_TagString: Untagged
@@ -96,7 +96,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11469258
+--- !u!114 &11471550
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -107,12 +107,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d588262f1ac0b46935263b41d95dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxJumps: 0
-  jumpPower:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+  movement:
+    WalkSpeed: 5
+    RunSpeed: 10
+    AirSpeed: 3
+    MaxJumps: 0
+    JumpPower:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  animation:
+    Grounded:
+      _name: grounded
+      _hash: -904282986
+    VerticalSpeed:
+      _name: vertical speed
+      _hash: -2136748335
+    HorizontalSpeed:
+      _name: horizontal speed
+      _hash: -1007198299
 --- !u!136 &13689510
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -136,6 +150,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Constraints
       value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animation.Grounded._hash
+      value: -904282986
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animation.VerticalSpeed._hash
+      value: -2136748335
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: animation.HorizontalSpeed._hash
+      value: -1007198299
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
