@@ -478,12 +478,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b349bce6fb1642144b4a33bec34ce054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keepBetweenScenes: 0
   characters:
-  - {fileID: 11469258, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
-  - {fileID: 11469258, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
-  - {fileID: 11469258, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
-  - {fileID: 11469258, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
+  - {fileID: 11471550, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
+  - {fileID: 11471550, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
+  - {fileID: 11471550, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
+  - {fileID: 11471550, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
 --- !u!114 &11494426
 MonoBehaviour:
   m_ObjectHideFlags: 1

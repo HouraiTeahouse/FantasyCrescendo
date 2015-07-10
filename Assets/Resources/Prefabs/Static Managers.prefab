@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 404724}
-  - 114: {fileID: 11481562}
   - 114: {fileID: 11453928}
   - 114: {fileID: 11451058}
   m_Layer: 0
@@ -51,6 +50,14 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
   - Color: {r: 0, g: 1, b: 0, a: 1}
     Sprite: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
+  _hurtboxLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  _debug:
+    OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}
+    DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
+    InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
+    IntangiblHitboxColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!114 &11453928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,18 +73,6 @@ MonoBehaviour:
   defaultConfiguration: 
   dontDestroyOnLoad: 1
   ignoreTimescale: 0
---- !u!114 &11481562
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -618230154, guid: 151fea9ca90494fc5add8c17ae82c5f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultLanguage: en
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

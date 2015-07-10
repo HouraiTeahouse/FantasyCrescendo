@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameSettings : Singleton<GameSettings> {
 
+    #pragma warning disable 0649
     [System.Serializable]
     private class PlayerData {
 
@@ -20,6 +21,7 @@ public class GameSettings : Singleton<GameSettings> {
         public Color IntangiblHitboxColor = Color.blue;
 
     }
+    #pragma warning restore 0649
 
     public static int MaxPlayers {
         get { return Instance._playerData.Length;  }
@@ -54,7 +56,7 @@ public class GameSettings : Singleton<GameSettings> {
                 return Color.white;
         }
     }
-
+     
     public static PlayerIndicator CreatePlayerIndicator(int playerNumber) {
         PlayerIndicator newIndicator = new GameObject("P" + (playerNumber + 1) + " Indicator" ).AddComponent<PlayerIndicator>();
         newIndicator.Color = GetPlayerColor(playerNumber);

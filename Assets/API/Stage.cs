@@ -14,10 +14,10 @@ namespace Genso.API {
         [System.Serializable]
         private class PlayerData
         {
-
+            #pragma warning disable 0649
             public Transform Spawn;
             public Transform Respawn;
-
+            #pragma warning restore 0649
         }
 
         [SerializeField]

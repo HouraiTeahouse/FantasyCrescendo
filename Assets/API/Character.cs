@@ -20,7 +20,7 @@ namespace Genso.API {
             public float WalkSpeed = 5f;
             public float RunSpeed = 10f;
             public float AirSpeed = 3f;
-            public int MaxJumps;
+            public int MaxJumps = 2;
             public AnimationCurve JumpPower;
 
         }
@@ -44,7 +44,7 @@ namespace Genso.API {
         private MovementData movement;
 
         [SerializeField]
-        private AnimationParameters animation;
+        private AnimationParameters animationInfo;
 
         private bool grounded;
         private bool running;
@@ -89,7 +89,7 @@ namespace Genso.API {
             Rigidbody = GetComponent<Rigidbody>();
             Animator = GetComponent<Animator>();
             Collider = GetComponent<CapsuleCollider>();
-            animation.Initialize(Animator);
+            animationInfo.Initialize(Animator);
 
             List<Collider> tempHurtboxes = new List<Collider>();
             foreach (Collider collider in GetComponentsInChildren<Collider>()) {
@@ -101,7 +101,7 @@ namespace Genso.API {
 
         protected virtual void Update() {
             
-            animation.Grounded.Set(grounded);
+            animationInfo.Grounded.Set(grounded);
 
         }
 
