@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 404724}
   - 114: {fileID: 11453928}
   - 114: {fileID: 11451058}
+  - 114: {fileID: 11429446}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: Static Managers
@@ -29,6 +30,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11429446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c331a677c66a30f49935376486b8c281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keepBetweenScenes: 1
 --- !u!114 &11451058
 MonoBehaviour:
   m_ObjectHideFlags: 1

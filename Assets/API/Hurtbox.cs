@@ -18,10 +18,9 @@ namespace Genso.API {
 
         static Hurtbox() {
             HurtboxMap = new Dictionary<Collider, Character>();
-        }
-
-        internal static void Reset() {
-            HurtboxMap.Clear();
+            GlobalCallbacks.OnLoad += delegate(int level) {
+                                          HurtboxMap.Clear();
+                                      };
         }
 
         private static readonly Dictionary<Collider, Character> HurtboxMap;
