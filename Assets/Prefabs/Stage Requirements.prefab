@@ -355,7 +355,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195034}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -10}
+  m_LocalPosition: {x: 0, y: 3, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 427500}
@@ -412,7 +412,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 166592}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 40, y: 40, z: 3}
@@ -479,10 +479,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters:
-  - {fileID: 11471550, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
-  - {fileID: 11471550, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
-  - {fileID: 11471550, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
-  - {fileID: 11471550, guid: 4385e07aee2011741b01da86d50b8c2c, type: 2}
+  - {fileID: 11460992, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+  - {fileID: 11460992, guid: 77e90760407a4104a9d3e187868be546, type: 2}
 --- !u!114 &11494426
 MonoBehaviour:
   m_ObjectHideFlags: 1
