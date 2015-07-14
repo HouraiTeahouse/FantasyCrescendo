@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Genso.API {
 
@@ -11,7 +12,9 @@ namespace Genso.API {
     /// Authored on 07/01/2015
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
-    public class Character : GensoBehaviour
+	[RequireComponent(typeof(NetworkTransform))]
+	[RequireComponent(typeof(NetworkAnimator))]
+	public class Character : GensoNetworkBehaviour
     {
         [Serializable]
         private class MovementData {
@@ -92,7 +95,7 @@ namespace Genso.API {
         protected virtual void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = GetComponentInChildren<Animator>();
+            Animator = GetComponent<NetworkAnimator>().animator;
             Collider = GetComponent<CapsuleCollider>();
 
             List<Collider> tempHurtboxes = new List<Collider>();
@@ -101,14 +104,8 @@ namespace Genso.API {
                     Hurtbox.Register(this, collider);
             }
             hurtboxes = tempHurtboxes.ToArray();
-        }
-
-        void Start() {
-
-            Animator = GetComponentInChildren<Animator>();
-            animationInfo.Initialize(Animator);
-            Animator.Rebind();
-
+			
+			animationInfo.Initialize(Animator);
         }
         
         public virtual void Jump() {

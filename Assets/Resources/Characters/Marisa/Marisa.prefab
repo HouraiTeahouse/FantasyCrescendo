@@ -718,8 +718,11 @@ GameObject:
   - 4: {fileID: 453282}
   - 136: {fileID: 13687226}
   - 54: {fileID: 5437312}
-  - 95: {fileID: 9577636}
   - 114: {fileID: 11472010}
+  - 114: {fileID: 11482800}
+  - 114: {fileID: 11410208}
+  - 95: {fileID: 9579140}
+  - 114: {fileID: 11447154}
   m_Layer: 9
   m_Name: Marisa
   m_TagString: Untagged
@@ -1926,7 +1929,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!95 &9577636
+--- !u!95 &9579140
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -1960,6 +1963,45 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11410208
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: .100000001
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: .00100000005
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &11447154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 9587890}
+  m_ParameterSendBits: 0
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
 --- !u!114 &11472010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1991,6 +2033,38 @@ MonoBehaviour:
     HorizontalSpeed:
       _name: horizontal speed
       _hash: -1007198299
+--- !u!114 &11482800
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 119
+    i1: 233
+    i2: 7
+    i3: 96
+    i4: 64
+    i5: 122
+    i6: 65
+    i7: 4
+    i8: 169
+    i9: 211
+    i10: 225
+    i11: 135
+    i12: 134
+    i13: 139
+    i14: 229
+    i15: 70
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!136 &13687226
 CapsuleCollider:
   m_ObjectHideFlags: 1
