@@ -40,14 +40,14 @@ namespace Genso.API {
             selectedCharacters.AddRange(characters);
         }
 
-        public Character SpawnCharacter(int playerNumber, Vector3 position)
+        public Character SpawnCharacter(int playerNumber, SpawnPoint spawnPoint)
         {
             Character runtimeCharacter = InstantiateCharacter(playerNumber);
             runtimeCharacter.transform.position = position;
             return runtimeCharacter;
         }
 
-        protected Character GetCharacterPrefab(int playerNumber)
+        public Character GetCharacterPrefab(int playerNumber)
         {
             return selectedCharacters[playerNumber];
         }

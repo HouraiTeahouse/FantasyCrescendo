@@ -11,27 +11,18 @@ namespace Genso.API {
     public sealed class Stage : Singleton<Stage>
     {
 
-        [System.Serializable]
-        private class PlayerData
-        {
-            #pragma warning disable 0649
-            public Transform Spawn;
-            public Transform Respawn;
-            #pragma warning restore 0649
-        }
-
         [SerializeField]
         private Camera mainCamera;
 
-        [SerializeField]
-        private PlayerData[] playerData;
+        private SpawnPoint[] spawnPoints;
+        private Transform[] respawnPoints;
 
         /// <summary>
         /// The maximum number of supported players on this Stage
         /// </summary>
         public static int SupportedPlayerCount
         {
-            get { return Instance.playerData.Length; }
+            get { return Instance.spawnPoints.Length; }
         }
 
         public static Camera Camera
@@ -49,11 +40,8 @@ namespace Genso.API {
             if (match.PlayerCount > SupportedPlayerCount)
                 throw new InvalidOperationException("Cannot start a match when there are more players participating than supported by the selected stage");
 
-            int playerCount = Mathf.Min(match.PlayerCount, SupportedPlayerCount);
-
-            for (var i = 0; i < playerCount; i++)
-            {
-                Character spawnedCharacter = match.SpawnCharacter(i, playerData[i].Spawn.position);
+            for (var i = 0; i < match.PlayerCount; i++) {
+                Character spawnedCharacter = spawnPoints[i].Spawn(match.GetCharacterPrefab(i));
                 PlayerIndicator indicator = GameSettings.CreatePlayerIndicator(i);
                 indicator.Attach(spawnedCharacter);
             }
@@ -63,13 +51,15 @@ namespace Genso.API {
         protected override void Awake()
         {
             base.Awake();
+            spawnPoints = FindObjectsOfType<SpawnPoint>();
+            foreach (var spawnPoint in spawnPoints) {
+                print(spawnPoint);
+            }
             if (mainCamera != null)
                 return;
-            if (Camera.main != null)
-            {
-                mainCamera = Camera.main;
-            }
-            mainCamera = FindObjectOfType<Camera>();
+
+            mainCamera = Camera.main ?? FindObjectOfType<Camera>();
+
             if (mainCamera == null)
                 Debug.LogError("Stage has no Camera!");
         }
