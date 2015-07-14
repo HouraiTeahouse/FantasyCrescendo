@@ -33,10 +33,10 @@ public class GameSettings : Singleton<GameSettings> {
     }
 
     [SerializeField]
-    private PlayerData[] _playerData;
+    private LayerMask _hurtboxLayers;
 
     [SerializeField]
-    private LayerMask _hurtboxLayers;
+    private PlayerData[] _playerData;
 
     [SerializeField]
     private DebugData _debug;
