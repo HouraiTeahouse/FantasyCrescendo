@@ -15,13 +15,7 @@ This part is about to setting up a development enviroment for contributing to th
 0. The Unity3D Engine (Downloadable [here](https://unity3d.com/get-unity/download))
   * To install, simply download the installer and follow the instructions.
 0. Open the cloned project in the Unity Editor.
-0. Install the following dependencies (all of them are free):
-  0. The Effects Standard Assets
-    * To install: in Unity, with the project open, on the menu, select Assets -> Import Package -> Effects. Import the entire package.
-  0. The Unity Test Tools (Downloadable [here](https://www.assetstore.unity3d.com/en/#!/content/13802))
-    * To install, open the link in Unity, download and import everything except for the Examples folder.
-  0. SmartLocalization (Downloadable [here](https://www.assetstore.unity3d.com/en/#!/content/7543))
-    * To install, open the link in Unity, download and import everything.
+0. Run all of the unit tests (Ctrl+Shift+Alt+U) and integration tests (Ctrl+Shift+Alt+T), and make sure they all pass.
 
 ## Release Installation
 This part is about setting up and running released precompiled binaries.

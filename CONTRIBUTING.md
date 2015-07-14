@@ -6,21 +6,12 @@ help is essential for keeping it great.
 ## Submitting a pull request (Code assets)
 
 0. [Fork][] and clone the repository
+0. Create a new branch: `git checkout -b my-branch-name`
 0. [Download](https://unity3d.com/get-unity/download) and install the Unity Engine/Editor if you haven't already.
 0. Open the project in Unity.
-0. Install the dependencies listed below.
-0. Create a new branch: `git checkout -b my-branch-name`
 0. Make your change, add tests, and make sure the tests still pass
 0. Push to your fork and [submit a pull request][pr]
 0. Pat your self on the back and wait for your pull request to be reviewed.
-
-### Dependencies
-
-0. The Effects Standard Assets (In Unity, in the menu, Assets -> Import Package -> Effects)
-0. The Unity Test Tools (Downloadable [here](https://www.assetstore.unity3d.com/en/#!/content/13802))
-0. SmartLocalization (Downloadable [here](https://www.assetstore.unity3d.com/en/#!/content/7543))
-
-All of these dependencies are free.
 
 Here are a few things you can do that will increase the likelihood of your pull request being accepted:
 
