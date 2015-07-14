@@ -11,6 +11,8 @@ GameObject:
   - 114: {fileID: 11453928}
   - 114: {fileID: 11451058}
   - 114: {fileID: 11429446}
+  - 82: {fileID: 8287076}
+  - 114: {fileID: 11452990}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: Static Managers
@@ -30,6 +32,76 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!82 &8287076
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24392500, guid: 41a5798365caae34abc8f0a349706cbf,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: dd875099282f283468443207100369e7, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11429446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,6 +143,18 @@ MonoBehaviour:
     DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
     InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
     IntangiblHitboxColor: {r: 0, g: 0, b: 1, a: 1}
+--- !u!114 &11452990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1caf9071eb694ef49996489c114232a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keepBetweenScenes: 0
 --- !u!114 &11453928
 MonoBehaviour:
   m_ObjectHideFlags: 1
