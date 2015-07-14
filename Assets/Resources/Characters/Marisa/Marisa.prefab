@@ -370,9 +370,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 492572}
   - 95: {fileID: 9517824}
-  - 136: {fileID: 13603324}
-  - 54: {fileID: 5482176}
-  - 114: {fileID: 11460992}
   m_Layer: 0
   m_Name: Marisa
   m_TagString: Untagged
@@ -749,6 +746,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 453282}
+  - 136: {fileID: 13687226}
+  - 54: {fileID: 5437312}
+  - 95: {fileID: 9577636}
+  - 114: {fileID: 11472010}
   m_Layer: 0
   m_Name: Marisa
   m_TagString: Untagged
@@ -1516,7 +1517,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179158}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: -2.41009927, y: 3.24141955, z: -1.33161151}
+  m_LocalPosition: {x: 0, y: 3.24141955, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 492572}
@@ -1822,7 +1823,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143500}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 1.01600003, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 457230}
@@ -1881,12 +1882,12 @@ Transform:
   - {fileID: 420912}
   m_Father: {fileID: 436010}
   m_RootOrder: 1
---- !u!54 &5482176
+--- !u!54 &5437312
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 143500}
+  m_GameObject: {fileID: 179158}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -1905,20 +1906,37 @@ Animator:
   m_GameObject: {fileID: 143500}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 3d87c5e7d4692f642b18877d1d3f04fc, type: 3}
-  m_Controller: {fileID: 9100000, guid: 40b63fe5682036648ad2e4dd7d18303c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9adcc966fe629f744813b6f35ef39806, type: 2}
   m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &9577636
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179158}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11460992
+--- !u!114 &11472010
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 143500}
+  m_GameObject: {fileID: 179158}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
@@ -1944,12 +1962,12 @@ MonoBehaviour:
     HorizontalSpeed:
       _name: horizontal speed
       _hash: -1007198299
---- !u!136 &13603324
+--- !u!136 &13687226
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 143500}
+  m_GameObject: {fileID: 179158}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1

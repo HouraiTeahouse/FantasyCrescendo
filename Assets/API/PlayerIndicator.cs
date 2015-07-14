@@ -40,7 +40,7 @@ public sealed class PlayerIndicator : MonoBehaviour {
         spriteRenderer.enabled = haveTarget;
         if (haveTarget) {
             Vector3 up = transform.up = target.up;
-            transform.position = target.position + up * target.Height;
+            transform.position = target.position + up * target.Height * 2;
         }
     }
 
