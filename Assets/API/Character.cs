@@ -10,11 +10,8 @@ namespace Genso.API {
     /// </summary>
     /// Author: James Liu
     /// Authored on 07/01/2015
-    [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(CapsuleCollider))]
-	[RequireComponent(typeof(NetworkTransform))]
-	[RequireComponent(typeof(NetworkAnimator))]
-	public class Character : GensoNetworkBehaviour
+    [RequireComponent(typeof(CharacterPhysics))]
+	public class Character : GensoBehaviour
     {
         [Serializable]
         private class MovementData {
@@ -62,31 +59,31 @@ namespace Genso.API {
                 return movement.WalkSpeed;
             }
         }
-
-        public Rigidbody Rigidbody { get; private set; }
+        
         public Animator Animator { get; private set; }
-        public CapsuleCollider Collider { get; private set; }
+        public CharacterController Controller { get; private set; }
 
         public int PlayerNumber { get; set; }
         public Transform RespawnPosition { get; set; }
 
-        public float Height
-        {
-            get
-            {
-                return Collider ? Collider.height : 0;
+        public float Height {
+            get {
+                return Controller ? Controller.height : 0;
             }
-            protected set
-            {
-                if (Collider)
-                    Collider.height = value;
+            protected set {
+                if (Controller)
+                    Controller.height = value;
             }
         }
 
+        private bool _grounded;
         public bool Grounded {
-            get { return animationInfo.Grounded.Get(); }
+            get { return _grounded; }
             protected set {
+                _grounded = value;
                 animationInfo.Grounded.Set(value);
+                if (value)
+                    JumpCount = 0;
             }
         }
 
@@ -94,9 +91,8 @@ namespace Genso.API {
 
         protected virtual void Awake()
         {
-            Rigidbody = GetComponent<Rigidbody>();
-            Animator = GetComponent<NetworkAnimator>().animator;
-            Collider = GetComponent<CapsuleCollider>();
+            Animator = GetComponentInChildren<Animator>();
+            Controller = GetComponent<CharacterController>();
 
             List<Collider> tempHurtboxes = new List<Collider>();
             foreach (Collider collider in GetComponentsInChildren<Collider>()) {
@@ -107,24 +103,47 @@ namespace Genso.API {
 			
 			animationInfo.Initialize(Animator);
         }
+
+        void Update() {
+            if (Input.GetButtonDown("Jump"))
+                Jump();
+        }
         
         public virtual void Jump() {
             int maxJumps = movement.MaxJumps;
-            if (JumpCount < movement.MaxJumps) {
-                AnimationCurve jumpPower = movement.JumpPower;
-                if (maxJumps <= 0)
-                    Rigidbody.AddForce(transform.up * jumpPower.Evaluate(0f));
-                else
-                    Rigidbody.AddForce(transform.up * jumpPower.Evaluate((float)JumpCount / ((float)maxJumps - 1)));
+            Debug.Log(movement.MaxJumps);
+            if (JumpCount < maxJumps) {
+                float jumpPower = movement.JumpPower.Evaluate((maxJumps <= 0f) ? 0f : ((float)JumpCount / ((float)maxJumps - 1)));
+                Debug.Log(jumpPower);
+                //TODO: Reimplement jumping using Character Controller physics
                 JumpCount++;
             }
         }
 
-        public virtual void OnDrawGizmos() {
+        protected virtual void OnDrawGizmos() {
             if (hurtboxes == null)
                 return;
 
            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
+        }
+
+        protected virtual void OnTriggerEnter(Collider other) {
+            GroundedCheck(other, true);
+        }
+
+        protected virtual void OnTriggerStay(Collider other) {
+            GroundedCheck(other, true);
+        }
+
+        protected virtual void OnTriggerExit(Collider other) {
+            GroundedCheck(other, false);
+        }
+
+        protected void GroundedCheck(Component other, bool value) {
+            if (other == null)
+                return;
+
+            Grounded = (other.CompareTag("Platform")) ? value : !value;
         }
 
     }

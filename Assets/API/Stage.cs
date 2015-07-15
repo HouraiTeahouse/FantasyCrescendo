@@ -52,9 +52,6 @@ namespace Genso.API {
         {
             base.Awake();
             spawnPoints = FindObjectsOfType<SpawnPoint>();
-            foreach (var spawnPoint in spawnPoints) {
-                print(spawnPoint);
-            }
             if (mainCamera != null)
                 return;
 

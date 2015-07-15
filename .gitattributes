@@ -1,0 +1,7 @@
+*.tga filter=lfs diff=lfs merge=lfs -crlf
+*.fbx filter=lfs diff=lfs merge=lfs -crlf
+*.psd filter=lfs diff=lfs merge=lfs -crlf
+*.mp3 filter=lfs diff=lfs merge=lfs -crlf
+*.wav filter=lfs diff=lfs merge=lfs -crlf
+*.png filter=lfs diff=lfs merge=lfs -crlf
+*.dll filter=lfs diff=lfs merge=lfs -crlf
