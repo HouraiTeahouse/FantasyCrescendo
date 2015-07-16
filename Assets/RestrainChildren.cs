@@ -1,15 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RestrainChildren : MonoBehaviour {
+namespace Genso.API {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    [RequireComponent(typeof(BoxCollider))]
+    public class RestrainChildren : MonoBehaviour {
+
+        private BoxCollider bounds;
+
+        void Awake() {
+            bounds = GetComponent<BoxCollider>();
+        }
+
+
+        void LateUpdate() {
+            var boundedArea = new Bounds(bounds.center, bounds.size);
+            foreach (Transform child in transform)
+                child.localPosition = boundedArea.ClosestPoint(child.localPosition);
+        }
+    }
+
+
 }
