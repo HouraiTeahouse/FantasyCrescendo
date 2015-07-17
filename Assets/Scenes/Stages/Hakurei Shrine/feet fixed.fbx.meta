@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 941bea8c443ecd0478d5892b3c959a7b
-timeCreated: 1437007435
+guid: 5e8b981a75670234dadc79dfde8032f4
+timeCreated: 1437113229
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -16,14 +16,17 @@ ModelImporter:
     100016: polySurface52
     100018: polySurface53
     100020: polySurface54
-    100022: transform20
-    100024: transform21
-    100026: transform22
-    100028: transform23
-    100030: transform24
-    100032: transform25
-    100034: transform26
-    100036: transform27
+    100022: polySurface58
+    100024: polySurface59
+    100026: transform20
+    100028: transform21
+    100030: transform22
+    100032: transform23
+    100034: transform24
+    100036: transform25
+    100038: transform26
+    100040: transform27
+    100042: transform28
     400000: //RootNode
     400002: pCube1
     400004: pCube2
@@ -35,17 +38,23 @@ ModelImporter:
     400016: polySurface52
     400018: polySurface53
     400020: polySurface54
-    400022: transform20
-    400024: transform21
-    400026: transform22
-    400028: transform23
-    400030: transform24
-    400032: transform25
-    400034: transform26
-    400036: transform27
-    2300000: polySurface54
-    3300000: polySurface54
-    4300000: polySurface54
+    400022: polySurface58
+    400024: polySurface59
+    400026: transform20
+    400028: transform21
+    400030: transform22
+    400032: transform23
+    400034: transform24
+    400036: transform25
+    400038: transform26
+    400040: transform27
+    400042: transform28
+    2300000: polySurface58
+    2300002: polySurface59
+    3300000: polySurface58
+    3300002: polySurface59
+    4300000: polySurface58
+    4300002: polySurface59
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -104,7 +113,7 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

@@ -1,61 +1,65 @@
 fileFormatVersion: 2
-guid: 99b37cbc3ebadf6438dd277f42cf977b
-timeCreated: 1437007179
+guid: 59beb0127cce9e04f8a442dae9849eaa
+timeCreated: 1437112961
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
-    100002: pCylinder3
-    100004: polySurface5
-    100006: polySurface6
-    100008: pTorus1
-    100010: pTorus10
-    100012: pTorus2
-    100014: pTorus4
-    100016: pTorus5
-    100018: pTorus6
-    100020: pTorus7
-    100022: pTorus8
-    100024: pTorus9
-    100026: transform1
-    100028: transform10
-    100030: transform11
-    100032: transform2
-    100034: transform3
-    100036: transform4
-    100038: transform5
-    100040: transform6
-    100042: transform7
-    100044: transform8
-    100046: transform9
+    100002: pCube1
+    100004: pCube2
+    100006: pCube3
+    100008: pCube4
+    100010: pCube5
+    100012: polySurface44
+    100014: polySurface51
+    100016: polySurface52
+    100018: polySurface53
+    100020: polySurface54
+    100022: polySurface55
+    100024: polySurface56
+    100026: polySurface57
+    100028: transform20
+    100030: transform21
+    100032: transform22
+    100034: transform23
+    100036: transform24
+    100038: transform25
+    100040: transform26
+    100042: transform27
+    100044: transform28
     400000: //RootNode
-    400002: pCylinder3
-    400004: polySurface5
-    400006: polySurface6
-    400008: pTorus1
-    400010: pTorus10
-    400012: pTorus2
-    400014: pTorus4
-    400016: pTorus5
-    400018: pTorus6
-    400020: pTorus7
-    400022: pTorus8
-    400024: pTorus9
-    400026: transform1
-    400028: transform10
-    400030: transform11
-    400032: transform2
-    400034: transform3
-    400036: transform4
-    400038: transform5
-    400040: transform6
-    400042: transform7
-    400044: transform8
-    400046: transform9
-    2300000: polySurface6
-    3300000: polySurface6
-    4300000: polySurface6
+    400002: pCube1
+    400004: pCube2
+    400006: pCube3
+    400008: pCube4
+    400010: pCube5
+    400012: polySurface44
+    400014: polySurface51
+    400016: polySurface52
+    400018: polySurface53
+    400020: polySurface54
+    400022: polySurface55
+    400024: polySurface56
+    400026: polySurface57
+    400028: transform20
+    400030: transform21
+    400032: transform22
+    400034: transform23
+    400036: transform24
+    400038: transform25
+    400040: transform26
+    400042: transform27
+    400044: transform28
+    2300000: polySurface55
+    2300002: polySurface56
+    2300004: polySurface57
+    3300000: polySurface55
+    3300002: polySurface56
+    3300004: polySurface57
+    4300000: polySurface55
+    4300002: polySurface56
+    4300004: polySurface57
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -114,7 +118,7 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
