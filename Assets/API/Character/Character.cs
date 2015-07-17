@@ -49,6 +49,7 @@ namespace Genso.API {
                     OnJump += component.OnJump;
             }
 
+            CameraController.AddTarget(this);
         }
         void Update() {
             if (Input.GetButtonDown("Jump"))

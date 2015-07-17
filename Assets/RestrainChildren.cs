@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Genso.API {
-
 
     [RequireComponent(typeof(BoxCollider))]
     public class RestrainChildren : MonoBehaviour {
@@ -11,8 +9,8 @@ namespace Genso.API {
 
         void Awake() {
             bounds = GetComponent<BoxCollider>();
+            bounds.enabled = false;
         }
-
 
         void LateUpdate() {
             var boundedArea = new Bounds(bounds.center, bounds.size);
