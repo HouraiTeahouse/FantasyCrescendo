@@ -5,6 +5,10 @@ namespace Genso.API {
     public static class ComponentExtensions
     {
 
+        public static bool CheckLayer(this Component component, int mask) {
+            return component.gameObject.CheckLayer(mask);
+        }
+
         public static T GetOrAddComponent<T>(this Component component) where T : Component
         {
             return component.gameObject.GetOrAddComponent<T>();

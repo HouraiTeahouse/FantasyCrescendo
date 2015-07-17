@@ -9,6 +9,17 @@ namespace Genso.API {
     {
 
         /// <summary>
+        /// Shorthand way to check if a GameObject's layer is included in a mask.
+        /// This is functionally the same as <c>((1 << obj.layer) & mask) != 0</c>.
+        /// </summary>
+        /// <param name="obj">the GameObject to check</param>
+        /// <param name="mask">the bitmask to check the GameObject</param>
+        /// <returns><c>true</c> if the GameObject's layer is set to 1 in the mask, <c>false</c> otherwise.</returns>
+        public static bool CheckLayer(this GameObject obj, int mask) {
+            return ((1 << obj.layer) & mask) != 0;
+        }
+
+        /// <summary>
         /// Enumerates all children of a GameObject.
         /// </summary>
         /// <param name="obj"></param>
