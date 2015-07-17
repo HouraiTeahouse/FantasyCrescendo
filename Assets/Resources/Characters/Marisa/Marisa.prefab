@@ -2112,10 +2112,10 @@ MonoBehaviour:
     _hash: -1007198299
   JumpTrigger:
     _name: jump
-    _hash: 0
+    _hash: -1481439722
   AirJumpTrigger:
     _name: air jump
-    _hash: 0
+    _hash: 1720790206
 --- !u!135 &13553158
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -2512,6 +2512,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.w
       value: .707106709
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: JumpTrigger._hash
+      value: -1481439722
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AirJumpTrigger._hash
+      value: 1720790206
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

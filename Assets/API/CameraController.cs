@@ -1,14 +1,11 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Genso.API {
 
     [RequireComponent(typeof(Camera))]
     public sealed class CameraController : Singleton<CameraController> {
-
-        private enum ZoomStyle { HeightBased, WidthBased }
 
         [SerializeField]
         private Vector3 targetPositionBias;
@@ -19,23 +16,19 @@ namespace Genso.API {
         [SerializeField]
         private float cameraSpeed = 1f;
 
-        [SerializeField]
-        private ZoomStyle zoomStyle;
+        [SerializeField, MinMaxSlider(0, 180)]
+        private Vector2 FovRange;
 
         private Camera camera;
-        private float fov;
-        private List<Transform> targets;
-        private Vector2 inversePadding;
+        private HashSet<Transform> targets;
 
         void Awake() {
             camera = GetComponent<Camera>();
-            fov = camera.fieldOfView;
-            targets = new List<Transform>();
-            inversePadding = new Vector2(1 + 2 * padding.x, 1 + 2 * padding.y);
+            targets = new HashSet<Transform>();
         }
 
         void LateUpdate() {
-            int count = 0;
+            var count = 0;
             
             //Find the Bounds in which
             Vector3 sum = Vector3.zero;
@@ -49,21 +42,27 @@ namespace Genso.API {
                 min = Vector3.Min(min, target.position);
                 max = Vector3.Max(max, target.position);
             }
-            Debug.Log(min);
 
             Vector3 targetPosition = targetPositionBias + ((count <= 0) ? Vector3.zero : sum / count);
             Vector2 size = (Vector2) max - (Vector2) min;
 
-            transform.LookAt(targetPosition);
+            // Calculate the actual padding to use
+            Vector2 actualPadding = new Vector2(1 + 2 * padding.x, 1 + 2 * padding.y);
 
             // Compute Hadamard product between size and inverse padding to add the padding desired.
-            size = new Vector2(size.x * inversePadding.x, size.y * inversePadding.y);
+            size = new Vector2(size.x * actualPadding.x, size.y * actualPadding.y);
+            
+            // Calculate the target field of view for the proper level of zoom
+            float targetFOV = 2f * Mathf.Atan(size.x * 0.5f / Mathf.Abs(transform.position.z - targetPosition.z)) * Mathf.Rad2Deg;
 
-            if(zoomStyle == ZoomStyle.HeightBased)
-                targetPosition.z -= 0.5f * size.y / Mathf.Tan(0.5f * Mathf.Deg2Rad * fov);
-            else
-                targetPosition.z -= 2f * size.x / Mathf.Tan(0.5f * Mathf.Deg2Rad * fov);
+            // Clamp the FOV so it isn't too small or too big.
+            targetFOV = Mathf.Clamp(targetFOV, FovRange.x, FovRange.y);
 
+            // Keep the camera in the same Z plane.
+            targetPosition.z = transform.position.z;
+
+            // Lerp both the FOV and the position at the desired speeds
+            camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, targetFOV, Util.dt * cameraSpeed);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Util.dt * cameraSpeed);
         }
 
@@ -73,8 +72,7 @@ namespace Genso.API {
             if(Instance == null)
                 throw new InvalidOperationException("There is no CameraController instance in this scene.");
             Transform targetTransform = target.transform;
-            if(!Instance.targets.Contains(targetTransform))
-                Instance.targets.Add(targetTransform);
+            Instance.targets.Add(targetTransform);
         }
 
         public static void AddTarget(GameObject target) {
