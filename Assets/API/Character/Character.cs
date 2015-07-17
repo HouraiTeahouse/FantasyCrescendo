@@ -33,12 +33,13 @@ namespace Genso.API {
         private bool _grounded;
         public bool Grounded {
             get { return _grounded; }
-            protected set {
+            set {
                 if (value)
                     JumpCount = 0;
-                if (_grounded != value)
-                    OnGrounded.SafeInvoke();
+                bool changed = _grounded == value;
                 _grounded = value;
+                if(changed)
+                    OnGrounded.SafeInvoke();
             }
         }
 
@@ -127,13 +128,6 @@ namespace Genso.API {
         protected virtual void OnDrawGizmos() {
             FindHurtboxes();
            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
-        }
-
-        protected void GroundedCheck(Component other, bool value) {
-            if (other == null)
-                return;
-
-            Grounded = (other.CompareTag("Platform")) ? value : !value;
         }
 
     }

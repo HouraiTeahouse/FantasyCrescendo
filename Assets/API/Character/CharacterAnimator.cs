@@ -30,6 +30,8 @@ namespace Genso.API {
             HorizontalSpeed.Animator = _animator;
             JumpTrigger.Animator = _animator;
             AirJumpTrigger.Animator = _animator;
+
+            Grounded.Set(Character.Grounded);
         }
 
         public override void OnJump() {
@@ -38,6 +40,10 @@ namespace Genso.API {
                 JumpTrigger.Set();
             else
                 AirJumpTrigger.Set();
+        }
+
+        public override void OnGrounded() {
+            Grounded.Set(Character.Grounded);
         }
 
     }

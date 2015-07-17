@@ -321,6 +321,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &128464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 420818}
+  - 135: {fileID: 13567874}
+  - 114: {fileID: 11496148}
+  m_Layer: 9
+  m_Name: Ground Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &129000
 GameObject:
   m_ObjectHideFlags: 1
@@ -959,6 +976,7 @@ GameObject:
   - 114: {fileID: 11434712}
   - 54: {fileID: 5483394}
   - 114: {fileID: 11482868}
+  - 114: {fileID: 11451884}
   m_Layer: 9
   m_Name: Marisa
   m_TagString: Untagged
@@ -1384,6 +1402,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 413284}
   m_RootOrder: 0
+--- !u!4 &420818
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128464}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 453282}
+  m_RootOrder: 1
 --- !u!4 &421802
 Transform:
   m_ObjectHideFlags: 1
@@ -1640,6 +1670,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 408840}
+  - {fileID: 420818}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &459584
@@ -2082,6 +2113,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _facingMode: 0
   triggerSizeRatio: 1.5
+--- !u!114 &11451884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77fb51c9098dd134ba0a11971e4a6eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grounded:
+    _name: grounded
+    _hash: -904282986
+  VerticalSpeed:
+    _name: vertical speed
+    _hash: -2136748335
+  HorizontalSpeed:
+    _name: horizontal speed
+    _hash: -1007198299
+  JumpTrigger:
+    _name: jump
+    _hash: -1481439722
+  AirJumpTrigger:
+    _name: air jump
+    _hash: 1720790206
 --- !u!114 &11482868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2100,6 +2157,17 @@ MonoBehaviour:
   _jumpPower:
   - 10
   - 5
+--- !u!114 &11496148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90db46b9fe4995c4abecb59e3686211e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &13513392
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -2172,6 +2240,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: .0799999982
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13567874
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128464}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .100000001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13579978
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -2243,7 +2323,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 773a44f824cb842419ae490db0931e09, type: 2}
+  - {fileID: 2100000, guid: 03d8d0edd3f22154f851978a4e6ca767, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2316,7 +2396,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6d2df025e56bb114c9ed0b5e441b0427, type: 2}
+  - {fileID: 2100000, guid: a1db250ceba0cb143ba241cdb3c8e7b4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1

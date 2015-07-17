@@ -6,10 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: marisa_clothes
+  m_Name: Base Stage
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _NORMALMAP
-  m_LightmapFlags: 1
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
   m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
@@ -26,7 +26,7 @@ Material:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 2800000, guid: c278b101fcd414f44bf6cbd902b9f489, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -102,11 +102,11 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .0930000022
+        second: 0
       data:
         first:
           name: _BumpScale
-        second: 1.5
+        second: 1
       data:
         first:
           name: _OcclusionStrength
@@ -131,8 +131,8 @@ Material:
       data:
         first:
           name: _EmissionColor
-        second: {r: .125, g: .125, b: .125, a: 1}
+        second: {r: 0, g: 0, b: 0, a: 1}
       data:
         first:
           name: _Color
-        second: {r: .235294104, g: .235294104, b: .235294104, a: 1}
+        second: {r: .429011673, g: .845588207, b: .518072963, a: 1}
