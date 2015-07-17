@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace Genso.API {
 
@@ -10,9 +9,21 @@ namespace Genso.API {
     /// </summary>
     /// Author: James Liu
     /// Authored on 07/01/2015
-	public class Character : GensoBehaviour
-    {
-        
+    [RequireComponent(typeof(CapsuleCollider))]
+	public class Character : GensoBehaviour {
+
+        private enum FacingMode { Rotation, Scale }
+
+        private CapsuleCollider movementCollider;
+        private CapsuleCollider triggerCollider;
+
+        [SerializeField]
+        private FacingMode _facingMode = FacingMode.Rotation;
+
+        [SerializeField]
+        private float triggerSizeRatio = 1.5f;
+
+        private bool _facing;
         private bool running;
         private Collider[] hurtboxes;
 
@@ -23,35 +34,88 @@ namespace Genso.API {
         public bool Grounded {
             get { return _grounded; }
             protected set {
-                _grounded = value;
                 if (value)
                     JumpCount = 0;
+                if (_grounded != value)
+                    OnGrounded.SafeInvoke();
+                _grounded = value;
             }
         }
 
-        private Action OnJump;
+        /// <summary>
+        /// The direction the character is currently facing.
+        /// If set to true, the character faces the right.
+        /// If set to false, the character faces the left.
+        /// 
+        /// The method in which the character is flipped depends on what the Facing Mode parameter is set to.
+        /// </summary>
+        public bool Facing {
+            get { return _facing; }
+            set {
+                if (_facing != value) {
+                    if (_facingMode == FacingMode.Rotation)
+                        transform.Rotate(0f, 180f, 0f);
+                    else {
+                        Vector3 temp = transform.localScale;
+                        temp.x *= -1;
+                        transform.localScale = temp;
+                    }
+                }
+                _facing = value;
+            }
+        }
 
-        public int Height { get; set; }
+        public event Action OnJump;
+        public event Action OnGrounded;
+
+        public float Height {
+            get { return movementCollider.height; }
+        }  
 
         public int JumpCount { get; private set; }
 
-        protected virtual void Awake()
-        {
+        protected virtual void Awake() {
+            FindHurtboxes();
+            CameraController.AddTarget(this);
+
+            movementCollider = GetComponent<CapsuleCollider>();
+            movementCollider.isTrigger = false;
+            triggerCollider = gameObject.AddComponent<CapsuleCollider>();
+            triggerCollider.isTrigger = true;
+        }
+
+        void FindHurtboxes() {
             List<Collider> tempHurtboxes = new List<Collider>();
             foreach (Collider collider in GetComponentsInChildren<Collider>()) {
-                if((collider.gameObject.layer & GameSettings.HurtboxLayers) != 0)
-                    Hurtbox.Register(this, collider);
+                if (!collider.CheckLayer(GameSettings.HurtboxLayers))
+                    continue;
+                Hurtbox.Register(this, collider);
+                tempHurtboxes.Add(collider);
             }
             hurtboxes = tempHurtboxes.ToArray();
-
-            foreach (var component in GetComponentsInChildren<CharacterComponent>()) {
-                if (component)
-                    OnJump += component.OnJump;
-            }
-
-            CameraController.AddTarget(this);
         }
+
+        internal void AddCharacterComponent(CharacterComponent component) {
+            if(component == null)
+                throw new ArgumentNullException("component");
+            OnJump += component.OnJump;
+            OnGrounded += component.OnGrounded;
+        }
+
+        internal void RemoveCharacterComponent(CharacterComponent component) {
+            if(component == null)
+                throw new ArgumentNullException("component");
+            OnJump -= component.OnJump;
+            OnGrounded -= component.OnGrounded;
+        }
+
         void Update() {
+            // Sync Trigger and Movement Colliders
+            triggerCollider.center = movementCollider.center;
+            triggerCollider.direction = movementCollider.direction;
+            triggerCollider.height = movementCollider.height * triggerSizeRatio;
+            triggerCollider.radius = movementCollider.radius * triggerSizeRatio;
+            
             if (Input.GetButtonDown("Jump"))
                 Jump();
         }
@@ -61,9 +125,7 @@ namespace Genso.API {
         }
 
         protected virtual void OnDrawGizmos() {
-            if (hurtboxes == null)
-                return;
-
+            FindHurtboxes();
            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
         }
 

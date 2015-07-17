@@ -81,8 +81,6 @@ namespace Genso.API {
             AddTarget(target.transform);
         }
 
-
-
     }
 
 }

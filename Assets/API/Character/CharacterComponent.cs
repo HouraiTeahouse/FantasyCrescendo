@@ -10,9 +10,17 @@ namespace Genso.API {
 
         protected virtual void Awake() {
             Character = GetComponentInParent<Character>();
+            Character.AddCharacterComponent(this);
+        }
+
+        protected virtual void OnDestroy() {
+            Character.RemoveCharacterComponent(this);
         }
 
         public virtual void OnJump() {
+        }
+
+        public virtual void OnGrounded() {
         }
 
     }

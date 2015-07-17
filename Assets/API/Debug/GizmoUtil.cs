@@ -103,7 +103,7 @@ namespace Genso.API {
                 {
                     foreach (Collider collider in asArray)
                     {
-                        if (collider == null || (filter != null && filter(collider)))
+                        if (collider == null || (filter != null && !filter(collider)))
                             continue;
                         Gizmos.matrix = collider.transform.localToWorldMatrix;
                         DrawCollider3D_Impl(collider, solid);
@@ -113,7 +113,7 @@ namespace Genso.API {
                 {
                     foreach (Collider collider in colliders)
                     {
-                        if (collider == null || (filter != null && filter(collider)))
+                        if (collider == null || (filter != null && !    filter(collider)))
                             continue;
                         Gizmos.matrix = collider.transform.localToWorldMatrix;
                         DrawCollider3D_Impl(collider, solid);

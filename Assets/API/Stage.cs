@@ -41,6 +41,7 @@ namespace Genso.API {
                 throw new InvalidOperationException("Cannot start a match when there are more players participating than supported by the selected stage");
 
             for (var i = 0; i < match.PlayerCount; i++) {
+                print(spawnPoints[i]);
                 Character spawnedCharacter = spawnPoints[i].Spawn(match.GetCharacterPrefab(i));
                 PlayerIndicator indicator = GameSettings.CreatePlayerIndicator(i);
                 indicator.Attach(spawnedCharacter);
@@ -52,6 +53,10 @@ namespace Genso.API {
         {
             base.Awake();
             spawnPoints = FindObjectsOfType<SpawnPoint>();
+
+            // Sort the Spawn Points by name instead of by random spatial orientation
+            Array.Sort(spawnPoints, (s1, s2) => s1.name.CompareTo(s2.name));
+
             if (mainCamera != null)
                 return;
 

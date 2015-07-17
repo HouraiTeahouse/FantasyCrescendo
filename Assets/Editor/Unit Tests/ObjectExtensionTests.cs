@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using NUnit.Framework;
+using Genso.API;
 
 public class ObjectExtensionTests {
 
