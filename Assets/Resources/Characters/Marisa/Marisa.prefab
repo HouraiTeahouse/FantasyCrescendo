@@ -8,9 +8,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 496168}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandMiddle1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23,9 +23,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 472120}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandThumb4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,9 +38,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 462178}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandRing3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,9 +53,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 424076}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightToeBase
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,9 +68,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 419352}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandMiddle4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,9 +83,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 490774}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandPinky4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,9 +98,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 435476}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandMiddle4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,9 +113,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 420030}
-  m_Layer: 0
+  - 135: {fileID: 13525630}
+  m_Layer: 11
   m_Name: Character1_Head
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,9 +129,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 468518}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandRing4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,9 +144,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 425472}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_Spine
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,9 +159,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400612}
-  m_Layer: 0
+  - 135: {fileID: 13551632}
+  m_Layer: 11
   m_Name: Character1_LeftHand
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,9 +175,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 424116}
-  m_Layer: 0
+  - 135: {fileID: 13538380}
+  m_Layer: 11
   m_Name: Character1_RightFoot
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,9 +207,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 468010}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandRing2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -219,9 +222,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 430262}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandIndex1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,9 +237,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 463410}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandThumb3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -249,9 +252,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 402288}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandPinky1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -264,9 +267,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 416348}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandIndex3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -279,9 +282,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 432542}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandIndex4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -294,9 +297,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 442822}
-  m_Layer: 0
+  - 135: {fileID: 13513392}
+  m_Layer: 11
   m_Name: Character1_LeftFoot
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -309,9 +313,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 495114}
-  m_Layer: 0
+  - 135: {fileID: 13579978}
+  m_Layer: 11
   m_Name: Character1_RightForeArm
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -324,9 +329,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 482978}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftUpLeg
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,9 +344,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 499188}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftShoulder
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -354,9 +359,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 483314}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandIndex3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,9 +374,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 445960}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandRing1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -384,9 +389,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 499386}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandPinky2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -399,9 +404,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 447010}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandThumb1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -414,9 +419,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 414026}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_Spine1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -429,9 +434,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400828}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandRing2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -444,9 +449,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 415462}
-  m_Layer: 0
+  - 135: {fileID: 13517500}
+  m_Layer: 11
   m_Name: Character1_LeftForeArm
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -459,9 +465,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 419200}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandThumb2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -474,9 +480,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 413284}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_Neck
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -489,9 +495,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 497246}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandMiddle2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -504,9 +510,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 423832}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandPinky2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -535,9 +541,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 405072}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandIndex1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -550,9 +556,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 484466}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandPinky3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -565,9 +571,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 403370}
-  m_Layer: 0
+  - 135: {fileID: 13589820}
+  m_Layer: 11
   m_Name: Character1_RightLeg
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -580,9 +587,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 462044}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandIndex2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -595,9 +602,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 485104}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandRing1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -610,9 +617,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 425894}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandMiddle3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -625,9 +632,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 431128}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandPinky3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -656,9 +663,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 482754}
-  m_Layer: 0
+  - 135: {fileID: 13583894}
+  m_Layer: 11
   m_Name: Character1_LeftLeg
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -671,9 +679,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 430150}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandThumb4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -686,9 +694,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 423428}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandIndex2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -717,9 +725,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 467688}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandRing3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -732,9 +740,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 408558}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandThumb3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -747,9 +755,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 489534}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandPinky1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -762,9 +770,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 480672}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightUpLeg
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -777,9 +785,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 410986}
-  m_Layer: 0
+  - 135: {fileID: 13531900}
+  m_Layer: 11
   m_Name: Character1_RightHand
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -792,9 +801,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 490778}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandMiddle2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -807,9 +816,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 421802}
-  m_Layer: 0
+  - 135: {fileID: 13594418}
+  m_Layer: 11
   m_Name: Character1_Hips
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -838,9 +848,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 431102}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightArm
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -853,9 +863,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 415672}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftToeBase
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -868,9 +878,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 402610}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandRing4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -883,9 +893,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 407844}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftArm
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -930,9 +940,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 489688}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandMiddle3
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -945,12 +955,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 453282}
-  - 114: {fileID: 11472010}
-  - 135: {fileID: 13553158}
-  - 54: {fileID: 5427236}
-  - 136: {fileID: 13611736}
-  - 114: {fileID: 11404582}
-  - 114: {fileID: 11485274}
+  - 136: {fileID: 13696542}
+  - 114: {fileID: 11434712}
+  - 54: {fileID: 5483394}
+  - 114: {fileID: 11482868}
   m_Layer: 9
   m_Name: Marisa
   m_TagString: Untagged
@@ -966,9 +974,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 482630}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandIndex4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -981,9 +989,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 499644}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandThumb1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -996,9 +1004,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 426218}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandPinky4
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1011,9 +1019,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 414124}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightHandMiddle1
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1026,9 +1034,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 486290}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_LeftHandThumb2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1041,9 +1049,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 430416}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_Spine2
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1087,9 +1095,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 459584}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Character1_RightShoulder
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2029,7 +2037,7 @@ Transform:
   - {fileID: 486290}
   m_Father: {fileID: 400612}
   m_RootOrder: 4
---- !u!54 &5427236
+--- !u!54 &5483394
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2038,12 +2046,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: .0500000007
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!95 &9548968
 Animator:
   serializedVersion: 3
@@ -2061,7 +2069,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11404582
+--- !u!114 &11434712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _facingMode: 0
+  triggerSizeRatio: 1.5
+--- !u!114 &11482868
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2079,56 +2100,127 @@ MonoBehaviour:
   _jumpPower:
   - 10
   - 5
---- !u!114 &11472010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 179158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11485274
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 179158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77fb51c9098dd134ba0a11971e4a6eb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Grounded:
-    _name: grounded
-    _hash: -904282986
-  VerticalSpeed:
-    _name: vertical speed
-    _hash: -2136748335
-  HorizontalSpeed:
-    _name: horizontal speed
-    _hash: -1007198299
-  JumpTrigger:
-    _name: jump
-    _hash: -1481439722
-  AirJumpTrigger:
-    _name: air jump
-    _hash: 1720790206
---- !u!135 &13553158
+--- !u!135 &13513392
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 179158}
+  m_GameObject: {fileID: 125738}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .300000012
-  m_Center: {x: 0, y: .239999995, z: 0}
---- !u!136 &13611736
+  m_Radius: .150000006
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13517500
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140710}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .109999999
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13525630
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .189999998
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13531900
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173368}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .0799999982
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13538380
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114884}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .150000006
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13551632
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108750}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .0799999982
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13579978
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127640}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .109999999
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13583894
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160272}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .150000006
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13589820
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150100}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .150000006
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &13594418
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175622}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .200000003
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &13696542
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2140,7 +2232,7 @@ CapsuleCollider:
   m_Radius: .300000012
   m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0, y: .730000019, z: 0}
+  m_Center: {x: 0, y: .75, z: 0}
 --- !u!137 &13718254
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
