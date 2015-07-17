@@ -60,7 +60,7 @@ public class GameSettings : Singleton<GameSettings> {
     public static PlayerIndicator CreatePlayerIndicator(int playerNumber) {
         PlayerIndicator newIndicator = new GameObject("P" + (playerNumber + 1) + " Indicator" ).AddComponent<PlayerIndicator>();
         newIndicator.Color = GetPlayerColor(playerNumber);
-        newIndicator.Sprite = (playerNumber > 0 && playerNumber <= MaxPlayers)
+        newIndicator.Sprite = (playerNumber >= 0 && playerNumber <= MaxPlayers)
                                   ? Instance._playerData[playerNumber].Sprite
                                   : null;
         return newIndicator;

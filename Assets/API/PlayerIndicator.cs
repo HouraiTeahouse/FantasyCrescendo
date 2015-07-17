@@ -4,6 +4,8 @@ using Genso.API;
 [RequireComponent(typeof(SpriteRenderer))]
 public sealed class PlayerIndicator : MonoBehaviour {
 
+    private Vector3 positionBias = new Vector3(0f, 1f, 0f);
+
     private SpriteRenderer spriteRenderer;
     private Character target;
 
@@ -40,7 +42,7 @@ public sealed class PlayerIndicator : MonoBehaviour {
         spriteRenderer.enabled = haveTarget;
         if (haveTarget) {
             Vector3 up = transform.up = target.up;
-            transform.position = target.position + up * target.Height;
+            transform.position = target.position + up * target.Height + positionBias;
         }
     }
 
