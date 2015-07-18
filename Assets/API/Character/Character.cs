@@ -23,19 +23,31 @@ namespace Genso.API {
         [SerializeField]
         private float triggerSizeRatio = 1.5f;
 
+        // Private state variables
+        private bool _grounded;
+        private bool _helpless;
         private bool _facing;
-        private bool running;
+        private bool _dashing;
+
         private Collider[] hurtboxes;
 
         public int PlayerNumber { get; set; }
+
+        public Color PlayerColor {
+            get { return GameSettings.GetPlayerColor(PlayerNumber); }
+        }
+
+        public ICharacterInput InputSource { get; set; }
+
         public Transform RespawnPosition { get; set; }
 
-        private bool _grounded;
-        public bool Grounded {
+        public bool IsGrounded {
             get { return _grounded; }
             set {
                 bool changed = _grounded == value;
                 _grounded = value;
+                if (value)
+                    IsHelpless = false;
                 if(changed)
                     OnGrounded.SafeInvoke();
             }
@@ -64,18 +76,55 @@ namespace Genso.API {
             }
         }
 
+        public bool IsDashing {
+            get {
+                return IsGrounded && _dashing;
+            }
+            set {
+                _dashing = value;
+            }
+        }
+
+        public bool IsFastFalling {
+            get {
+                return !IsGrounded && InputSource != null && InputSource.Crouch;
+            }
+        }
+
+        public bool IsCrouching {
+            get {
+                return IsGrounded && InputSource != null && InputSource.Crouch;
+            }
+        }
+
+        public bool IsHelpless {
+            get {
+                return !IsGrounded && _helpless;
+            }
+            set {
+                bool changed = _helpless == value;
+                _helpless = value;
+                if(changed)
+                    OnHelpless.SafeInvoke();
+            }
+        }
+
         public event Action OnJump;
+        public event Action OnHelpless;
         public event Action OnGrounded;
         public event Action<Vector2> OnMove;
+        public event Action OnBlastZoneExit;
 
         public float Height {
             get { return movementCollider.height; }
-        }  
+        }
 
-        public int JumpCount { get; private set; }
+        #region Unity Callbacks
 
         protected virtual void Awake() {
             FindHurtboxes();
+
+            // TODO: Find a better place to put this
             CameraController.AddTarget(this);
 
             movementCollider = GetComponent<CapsuleCollider>();
@@ -84,6 +133,25 @@ namespace Genso.API {
             triggerCollider = gameObject.AddComponent<CapsuleCollider>();
             triggerCollider.isTrigger = true;
         }
+
+        protected virtual void Update() {
+            // Sync Trigger and Movement Colliders
+            triggerCollider.center = movementCollider.center;
+            triggerCollider.direction = movementCollider.direction;
+            triggerCollider.height = movementCollider.height * triggerSizeRatio;
+            triggerCollider.radius = movementCollider.radius * triggerSizeRatio;
+
+            if (InputSource.Jump)
+                Jump();
+
+        }
+
+
+        protected virtual void OnDrawGizmos() {
+            FindHurtboxes();
+            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
+        }
+        #endregion
 
         void FindHurtboxes() {
             List<Collider> tempHurtboxes = new List<Collider>();
@@ -103,6 +171,7 @@ namespace Genso.API {
             OnJump += component.OnJump;
             OnGrounded += component.OnGrounded;
             OnMove += component.OnMove;
+            OnBlastZoneExit += component.OnBlastZoneExit;
         }
 
         internal void RemoveCharacterComponent(CharacterComponent component) {
@@ -111,27 +180,20 @@ namespace Genso.API {
 
             OnJump -= component.OnJump;
             OnGrounded -= component.OnGrounded;
-            OnMove += component.OnMove;
+            OnMove -= component.OnMove;
+            OnBlastZoneExit -= component.OnBlastZoneExit;
         }
 
-        void Update() {
-            // Sync Trigger and Movement Colliders
-            triggerCollider.center = movementCollider.center;
-            triggerCollider.direction = movementCollider.direction;
-            triggerCollider.height = movementCollider.height * triggerSizeRatio;
-            triggerCollider.radius = movementCollider.radius * triggerSizeRatio;
-            
-            if (Input.GetButtonDown("Jump"))
-                Jump();
+        public virtual void Move(Vector2 direction) {
+            OnMove.SafeInvoke(direction);
         }
 
         public virtual void Jump() {
             OnJump.SafeInvoke();
         }
 
-        protected virtual void OnDrawGizmos() {
-           FindHurtboxes();
-           GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
+        public void BlastZoneExit() {
+            OnBlastZoneExit.SafeInvoke();
         }
 
     }

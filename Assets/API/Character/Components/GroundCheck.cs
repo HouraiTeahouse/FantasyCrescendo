@@ -30,7 +30,7 @@ namespace Genso.API {
                 return;
 
             if (other.CompareTag("Platform"))
-                Character.Grounded = value;
+                Character.IsGrounded = value;
         }
     }
 

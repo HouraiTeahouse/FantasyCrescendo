@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 namespace Genso.API {
@@ -14,6 +15,15 @@ namespace Genso.API {
         private float _gravity = 9.86f;
 
         [SerializeField]
+        private float _walkSpeed = 3f;
+
+        [SerializeField]
+        private float _dashSpeed = 5f;
+
+        [SerializeField]
+        private float _airSpeed = 3f;
+
+        [SerializeField]
         private float _maxFallSpeed = 10f;
 
         [SerializeField]
@@ -27,6 +37,10 @@ namespace Genso.API {
 
         private float FallSpeed {
             get {
+                if (Character.IsHelpless)
+                    return _helplessFallSpeed;
+                if(Character.IsFastFalling)
+                    return _fastFallSpeed;
                 return -_maxFallSpeed;
             }
         }
@@ -50,7 +64,7 @@ namespace Genso.API {
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        void FixedUpdate() {
+        private void FixedUpdate() {
             // Apply custom gravity
             _rigidbody.AddForce(0f, -_gravity, 0f);
 
@@ -61,15 +75,34 @@ namespace Genso.API {
             Velocity = velocity;
         }
 
+        public override void OnMove(Vector2 direction) {
+            if (Math.Abs(direction.x) < float.Epsilon)
+                return;
+
+            Vector3 vel = Velocity;
+
+            if (Character.IsGrounded) {
+                if (Character.IsDashing)
+                    vel.x = _dashSpeed;
+                else
+                    vel.x = _walkSpeed;
+            } else {
+                vel.x = _airSpeed;
+            }
+            vel.x = Util.MatchSign(vel.x, direction.x);
+
+            Velocity = vel;
+
+        }
+
         public override void OnGrounded() {
-            if (Character.Grounded)
+            if (Character.IsGrounded)
                 _jumpCount = 0;
         }
 
         public override void OnJump() {
-            Debug.Log(_jumpCount);
             // Cannot jump if already jumped the maximum number of times.
-            if (_jumpCount >= _jumpHeight.Length)
+            if (_jumpCount >= _jumpHeight.Length - 1)
                 return;
             
             // Apply upward force to jump
