@@ -1666,7 +1666,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.24141955, z: 0}
+  m_LocalPosition: {x: 0, y: 12.5299997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 408840}
@@ -2124,19 +2124,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fb51c9098dd134ba0a11971e4a6eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grounded:
+  _grounded:
     _name: grounded
     _hash: -904282986
-  VerticalSpeed:
+  _helpless:
+    _name: helpless
+    _hash: -877370616
+  _verticalSpeed:
     _name: vertical speed
     _hash: -2136748335
-  HorizontalSpeed:
+  _horizontalSpeed:
     _name: horizontal speed
     _hash: -1007198299
-  JumpTrigger:
+  _jump:
     _name: jump
     _hash: -1481439722
-  AirJumpTrigger:
+  _airJump:
     _name: air jump
     _hash: 1720790206
 --- !u!114 &11482868
@@ -2150,13 +2153,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5baa7e20c474cf445a93b255ae96fefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mass: 1
   _gravity: 9.85999966
+  _walkSpeed: 3
+  _dashSpeed: 5
+  _airSpeed: 3
   _maxFallSpeed: 10
   _fastFallSpeed: 15
-  _jumpPower:
-  - 10
-  - 5
+  _helplessFallSpeed: 10
+  _jumpHeight:
+  - 1.5
+  - 1.5
 --- !u!114 &11496148
 MonoBehaviour:
   m_ObjectHideFlags: 1
