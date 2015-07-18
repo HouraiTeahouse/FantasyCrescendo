@@ -270,9 +270,9 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 316118994}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3cfb8e722b144b9ea114b608a62702e, type: 3}
+  m_Script: {fileID: 11500000, guid: 39707bf3111d270428bc4ebe338d9717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   localizedKey: Touhou.DerivativeDisclaimer
@@ -301,7 +301,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
+    may contain story, character personalities, and settings different from  the original
+    works.\nIf you feel unconfortable with this, please proceed with caution."
 --- !u!222 &316118998
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -487,7 +489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 718fe3848ef997b4ca106cff6ae83ee2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5de8833de9571664da390881f408ce91, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -513,10 +515,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1389028398}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: .5}
-  m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 256}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 1.52587891e-05}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!1 &1786135469
 GameObject:
