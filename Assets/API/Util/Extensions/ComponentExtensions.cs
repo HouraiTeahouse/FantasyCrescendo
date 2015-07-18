@@ -1,9 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Genso.API {
 
     public static class ComponentExtensions
     {
+
+        public static bool CompareTags(this Component component, IEnumerable<string> tags) {
+            return component.gameObject.CompareTags(tags);
+        }
+
+        public static T SafeGetComponent<T>(this Component component) where T : class {
+            return component.gameObject.SafeGetComponent<T>();
+        }
 
         public static bool CheckLayer(this Component component, int mask) {
             return component.gameObject.CheckLayer(mask);

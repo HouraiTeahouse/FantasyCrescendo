@@ -20,6 +20,32 @@ namespace Genso.API {
         }
 
         /// <summary>
+        /// Compares a single GameObject's tag against a set of tags.
+        /// </summary>
+        /// <param name="obj">the GameObject to be tested</param>
+        /// <param name="tags">the set of Tags to compare against</param>
+        /// <exception cref="ArgumentNullException">thrown if tags is null</exception>
+        /// <returns>True if any of the tags match, False if none do.</returns>
+        public static bool CompareTags(this GameObject obj, IEnumerable<string> tags) {
+            if(tags == null)
+                throw new ArgumentNullException("tags");
+
+            var arrayTest = tags as string[];
+            if (arrayTest != null) {
+                foreach (string tag in arrayTest) {
+                    if (obj.CompareTag(tag))
+                        return true;
+                }
+            } else {
+                foreach (string tag in tags) {
+                    if (!obj.CompareTag(tag))
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Enumerates all children of a GameObject.
         /// </summary>
         /// <param name="obj"></param>
@@ -127,6 +153,31 @@ namespace Genso.API {
                 retrievedComponent = obj.gameObject.AddComponent<T>();
 
             return retrievedComponent;
+        }
+
+        public static T GetComponentAnywhere<T>(this GameObject obj) where T : class {
+            T comp = obj.GetComponentInParent(typeof (T)) as T ?? obj.GetComponentInChildren(typeof (T)) as T;
+
+            if (comp == null)
+            {
+                Debug.LogError("Expected to find obj of type "
+                   + typeof(T) + " but found none", obj);
+            }
+
+            return comp;
+        }
+
+        public static T[] GetAllComponents<T>(this GameObject obj) where T : class {
+            HashSet<T> components = new HashSet<T>();
+            T[] parents = obj.GetComponentsInParent(typeof (T)) as T[];
+            T[] children = obj.GetComponentInChildren(typeof (T)) as T[];
+            if(parents != null)
+                components.UnionWith(parents);
+            if(children != null)
+                components.UnionWith(children);
+            T[] all = new T[components.Count];
+            components.CopyTo(all);
+            return all;
         }
 
         /// <summary>
