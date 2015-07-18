@@ -6,15 +6,14 @@ namespace Genso.API {
     public sealed class BlastZone : Singleton<BlastZone> {
 
         [SerializeField]
-        private string[] validCharacterStrings = new string[] { "Character" };
-
+        private string[] validCharacterStrings = new string[] { "Player" };
 
         void Awake() {
             var col = GetComponent<Collider>();
             var rigBod = GetComponent<Rigidbody>();
 
             // Make sure that the collider isn't a trigger
-            col.isTrigger = false;
+            col.isTrigger = true;
         }
 
 

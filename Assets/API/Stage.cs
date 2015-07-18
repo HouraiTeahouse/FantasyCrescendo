@@ -15,7 +15,15 @@ namespace Genso.API {
         private Camera mainCamera;
 
         private SpawnPoint[] spawnPoints;
-        private Transform[] respawnPoints;
+        private Transform respawnPoint;
+
+        public static Transform Transform {
+            get { return Instance.transform; }
+        }
+
+        public static Vector3 RespawnPosition {
+            get { return Instance.respawnPoint.position; }
+        }
 
         /// <summary>
         /// The maximum number of supported players on this Stage
@@ -52,6 +60,7 @@ namespace Genso.API {
         {
             base.Awake();
             spawnPoints = FindObjectsOfType<SpawnPoint>();
+            respawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
 
             // Sort the Spawn Points by name instead of by random spatial orientation
             Array.Sort(spawnPoints, (s1, s2) => s1.name.CompareTo(s2.name));

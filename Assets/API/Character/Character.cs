@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ namespace Genso.API {
         private bool _helpless;
         private bool _facing;
         private bool _dashing;
+        private bool _invinicible;
 
         private Collider[] hurtboxes;
 
@@ -38,8 +40,6 @@ namespace Genso.API {
         }
 
         public ICharacterInput InputSource { get; set; }
-
-        public Transform RespawnPosition { get; set; }
 
         public bool IsGrounded {
             get { return _grounded; }
@@ -73,6 +73,24 @@ namespace Genso.API {
                     }
                 }
                 _facing = value;
+            }
+        }
+
+        public bool IsInvincible {
+            get { return _invinicible; }
+            set {
+                if (_invinicible == value)
+                    return;
+
+                if (value)
+                    Debug.Log(name + " is now invincible.");
+                else
+                    Debug.Log(name + " is no longer invincible.");
+
+                foreach (var hurtbox in hurtboxes)
+                    hurtbox.enabled = !value;
+
+                _invinicible = value;
             }
         }
 
@@ -141,6 +159,13 @@ namespace Genso.API {
             triggerCollider.height = movementCollider.height * triggerSizeRatio;
             triggerCollider.radius = movementCollider.radius * triggerSizeRatio;
 
+            if (InputSource == null)
+                return;
+
+            Vector2 movement = InputSource.Movement;
+            if(movement != Vector2.zero)
+                Move(movement);
+
             if (InputSource.Jump)
                 Jump();
 
@@ -150,6 +175,7 @@ namespace Genso.API {
         protected virtual void OnDrawGizmos() {
             FindHurtboxes();
             GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
+            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Intangible, x => !x.enabled);
         }
         #endregion
 
@@ -195,6 +221,20 @@ namespace Genso.API {
         public void BlastZoneExit() {
             OnBlastZoneExit.SafeInvoke();
         }
+
+        public void TemporaryInvincibility(float time) {
+            StartCoroutine(TempInvincibility(time));
+        }
+
+        IEnumerator TempInvincibility(float duration) {
+            IsInvincible = true;
+            var t = 0f;
+            while (t < duration) {
+                yield return null;
+                t += Util.dt;
+            }
+            IsInvincible = false;
+        } 
 
     }
 

@@ -44,9 +44,8 @@ GameObject:
   - 4: {fileID: 493300}
   - 65: {fileID: 6543638}
   - 114: {fileID: 11410694}
-  - 54: {fileID: 5406702}
   - 114: {fileID: 11445952}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Blast Zone
   m_TagString: Blast Zone
   m_Icon: {fileID: 0}
@@ -233,21 +232,6 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
   m_StereoMirrorMode: 0
---- !u!54 &5406702
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 166592}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!65 &6543638
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -358,7 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepBetweenScenes: 0
-  targetPositionBias: {x: 0, y: 1.5, z: 0}
+  targetPositionBias: {x: 0, y: 1, z: 0}
   padding: {x: .100000001, y: .100000001}
   cameraSpeed: 5
   FovRange: {x: 20, y: 65}
@@ -388,7 +372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keepBetweenScenes: 0
   validCharacterStrings:
-  - Character
+  - Player
 --- !u!114 &11467576
 MonoBehaviour:
   m_ObjectHideFlags: 1

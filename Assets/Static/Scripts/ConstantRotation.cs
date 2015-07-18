@@ -13,6 +13,6 @@ public class ConstantRotation : MonoBehaviour {
 
     // Update is called once per frame
 	void Update () {
-        transform.Rotate(RotationPerSecond * Time.deltaTime);
+        transform.Rotate(RotationPerSecond * Util.dt);
 	}
 }
