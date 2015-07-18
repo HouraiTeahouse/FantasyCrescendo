@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using UnityEditor.Callbacks;
 using Genso.API;
 
@@ -19,3 +20,4 @@ public class InjectStaticManagers : MonoBehaviour {
     }
 
 }
+*/

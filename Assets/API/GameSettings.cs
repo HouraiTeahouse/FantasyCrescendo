@@ -73,4 +73,14 @@ public class GameSettings : Singleton<GameSettings> {
          return playerNumber < 0 || playerNumber >= MaxPlayers ? Color.white : instance._playerData[playerNumber].Color;
     }
 
+    void OnLevelWasLoaded(int level) {
+        GameObject[] staticManagers = GameObject.FindGameObjectsWithTag("Static Managers");
+        foreach (GameObject tagged in staticManagers) {
+            if(tagged != gameObject)
+                Destroy(tagged);
+        }
+
+
+    }
+
 }

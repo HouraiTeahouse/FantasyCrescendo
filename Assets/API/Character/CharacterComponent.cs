@@ -17,6 +17,9 @@ namespace Genso.API {
             Character.RemoveCharacterComponent(this);
         }
 
+        public virtual void OnMove(Vector2 direction) {
+        }
+
         public virtual void OnJump() {
         }
 

@@ -3,8 +3,7 @@ using System.Collections;
 
 namespace Genso.API {
 
-    [RequireComponent(typeof(AudioSource))]
-    public class BGM : Singleton<BGM> {
+    public sealed class BGM : Singleton<BGM> {
 
         private static AudioSource bgmSource;
 
@@ -24,7 +23,11 @@ namespace Genso.API {
 
         protected override void Awake() {
             base.Awake();
-            bgmSource = GetComponent<AudioSource>();
+            bgmSource = gameObject.SafeGetComponent<AudioSource>();
+        }
+
+        void OnDestroy() {
+            Destroy(bgmSource);
         }
 
     }

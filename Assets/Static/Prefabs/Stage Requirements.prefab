@@ -168,7 +168,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186262}
-  m_LocalRotation: {x: .499999881, y: 5.96331446e-08, z: 5.96331446e-08, w: .866025507}
+  m_LocalRotation: {x: -.959304452, y: .0337639116, z: -.248093158, w: -.130555928}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -272,7 +272,7 @@ Light:
   serializedVersion: 6
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: .219999999
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepBetweenScenes: 0
-  targetPositionBias: {x: 0, y: 1, z: 0}
+  targetPositionBias: {x: 0, y: 1.5, z: 0}
   padding: {x: .100000001, y: .100000001}
   cameraSpeed: 5
   FovRange: {x: 20, y: 65}

@@ -34,8 +34,6 @@ namespace Genso.API {
         public bool Grounded {
             get { return _grounded; }
             set {
-                if (value)
-                    JumpCount = 0;
                 bool changed = _grounded == value;
                 _grounded = value;
                 if(changed)
@@ -68,6 +66,7 @@ namespace Genso.API {
 
         public event Action OnJump;
         public event Action OnGrounded;
+        public event Action<Vector2> OnMove;
 
         public float Height {
             get { return movementCollider.height; }
@@ -81,6 +80,7 @@ namespace Genso.API {
 
             movementCollider = GetComponent<CapsuleCollider>();
             movementCollider.isTrigger = false;
+
             triggerCollider = gameObject.AddComponent<CapsuleCollider>();
             triggerCollider.isTrigger = true;
         }
@@ -99,15 +99,19 @@ namespace Genso.API {
         internal void AddCharacterComponent(CharacterComponent component) {
             if(component == null)
                 throw new ArgumentNullException("component");
+
             OnJump += component.OnJump;
             OnGrounded += component.OnGrounded;
+            OnMove += component.OnMove;
         }
 
         internal void RemoveCharacterComponent(CharacterComponent component) {
             if(component == null)
                 throw new ArgumentNullException("component");
+
             OnJump -= component.OnJump;
             OnGrounded -= component.OnGrounded;
+            OnMove += component.OnMove;
         }
 
         void Update() {
@@ -126,7 +130,7 @@ namespace Genso.API {
         }
 
         protected virtual void OnDrawGizmos() {
-            FindHurtboxes();
+           FindHurtboxes();
            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
         }
 
