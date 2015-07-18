@@ -14,4 +14,12 @@ public class TestSpawnPlayer : Match {
         }
     }
 
+    protected override Character InstantiateCharacter(int playerNumber) {
+        Character toSpawn = base.InstantiateCharacter(playerNumber);
+        toSpawn.gameObject.AddComponent<CharacterDeath>();
+        toSpawn.gameObject.AddComponent<CharacterRespawn>();
+        toSpawn.gameObject.AddComponent<TestInput>();
+        return toSpawn;
+    }
+
 }

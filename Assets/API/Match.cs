@@ -42,8 +42,10 @@ namespace Genso.API {
 
         public Character SpawnCharacter(int playerNumber, SpawnPoint spawnPoint)
         {
+            if(spawnPoint == null)
+                throw new ArgumentNullException("spawnPoint");
             Character runtimeCharacter = InstantiateCharacter(playerNumber);
-            runtimeCharacter.transform.position = position;
+            spawnPoint.EditSpawn(runtimeCharacter);
             return runtimeCharacter;
         }
 

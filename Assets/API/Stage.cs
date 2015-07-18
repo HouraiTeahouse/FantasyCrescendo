@@ -49,7 +49,7 @@ namespace Genso.API {
                 throw new InvalidOperationException("Cannot start a match when there are more players participating than supported by the selected stage");
 
             for (var i = 0; i < match.PlayerCount; i++) {
-                Character spawnedCharacter = spawnPoints[i].Spawn(match.GetCharacterPrefab(i));
+                Character spawnedCharacter = match.SpawnCharacter(i, spawnPoints[i]);
                 PlayerIndicator indicator = GameSettings.CreatePlayerIndicator(i);
                 indicator.Attach(spawnedCharacter);
             }

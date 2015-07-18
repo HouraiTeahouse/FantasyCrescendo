@@ -61,7 +61,12 @@ namespace Genso.API {
         /// The method in which the character is flipped depends on what the Facing Mode parameter is set to.
         /// </summary>
         public bool Facing {
-            get { return _facing; }
+            get {
+                if (_facingMode == FacingMode.Scale)
+                    return transform.localScale.x > 0;
+                else
+                    return transform.eulerAngles.y > 179f;
+            }
             set {
                 if (_facing != value) {
                     if (_facingMode == FacingMode.Rotation)
@@ -163,8 +168,20 @@ namespace Genso.API {
                 return;
 
             Vector2 movement = InputSource.Movement;
+
             if(movement != Vector2.zero)
                 Move(movement);
+
+            if (IsGrounded) {
+
+                //Ensure that the character is walking in the right direction
+                if((movement.x > 0 && Facing) ||
+                   (movement.x < 0 && !Facing)) {
+                    Facing = !Facing;
+                }
+                    
+            }
+
 
             if (InputSource.Jump)
                 Jump();

@@ -43,6 +43,9 @@ namespace Genso.API {
 
         void Update() {
             _helpless.Set(Character.IsHelpless);
+            Vector2 velocity = _physics.Velocity;
+            _horizontalSpeed.Set(Mathf.Abs(velocity.x));
+            _verticalSpeed.Set(velocity.y);
         }
 
         public override void OnJump() {
