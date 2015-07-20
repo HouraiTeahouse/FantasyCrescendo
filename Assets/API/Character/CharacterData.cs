@@ -51,7 +51,8 @@ namespace Genso.API {
 		}
 
         void OnEnable() {
-            _languageManager = LanguageManager.Instance;
+            if(!Application.isEditor || Application.isPlaying)
+                _languageManager = LanguageManager.Instance;
 			_prefabResource = new Resource<GameObject>(_prefab);
         }
 
