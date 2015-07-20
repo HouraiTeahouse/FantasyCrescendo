@@ -6,15 +6,17 @@ namespace Genso.API {
     [RequireComponent(typeof(ParticleSystem))]
     public class AutoDestroyParticleSystem : MonoBehaviour {
 
-        private ParticleSystem particleSystem;
+        private ParticleSystem _particleSystem;
 
         void Awake() {
-            particleSystem = GetComponent<ParticleSystem>();
+            _particleSystem = GetComponent<ParticleSystem>();
         }
+
         void Update() {
-            if(particleSystem == null || !particleSystem.IsAlive())
+            if(_particleSystem == null || !_particleSystem.IsAlive())
                 Destroy(gameObject);
         }
+
     }
 
 

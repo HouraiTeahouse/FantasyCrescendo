@@ -8,9 +8,10 @@ namespace Genso.API {
         [SerializeField]
         private string[] validCharacterStrings = new string[] { "Player" };
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
+
             var col = GetComponent<Collider>();
-            var rigBod = GetComponent<Rigidbody>();
 
             // Make sure that the collider isn't a trigger
             col.isTrigger = true;

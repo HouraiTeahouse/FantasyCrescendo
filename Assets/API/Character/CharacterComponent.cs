@@ -20,31 +20,21 @@ namespace Genso.API {
 
         protected virtual void Awake() {
             Character = GetComponentInParent<Character>();
-            if(Character != null)
-                Character.AddCharacterComponent(this);
-            else
-                Debug.LogWarning(GetType() + " on " + name + " has not found a suitable Character component. Please attach one.");
+            if (Character == null) {
+                enabled = false;
+                Debug.LogWarning(GetType() + " on " + name + " has not found a suitable Character component. Please attach one.");   
+            }
         }
 
-        protected virtual void OnDestroy() {
-            if (Character == null)
+        protected void Update() {
+            if (Character == null) {
+                enabled = false;
                 return;
-            Character.RemoveCharacterComponent(this);
+            }
+            OnUpdate();
         }
 
-        public virtual void OnMove(Vector2 direction) {
-        }
-
-        public virtual void OnHelpless() {
-        }
-
-        public virtual void OnJump() {
-        }
-
-        public virtual void OnGrounded() {
-        }
-
-        public virtual void OnBlastZoneExit() {
+        protected virtual void OnUpdate() {
         }
 
     }

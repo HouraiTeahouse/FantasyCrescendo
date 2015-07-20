@@ -1,30 +1,35 @@
 ﻿using UnityEngine;
-using Genso.API;
 
 namespace Genso.API {
 
 
-    public class CharacterRespawn : CharacterComponent {
+    public sealed class CharacterRespawn : CharacterComponent {
 
         [SerializeField]
         private RespawnPlatform RespawnPlatform;
 
-        [SerializeField]
-        private float _invincibilityTime = 2f;
+        protected override void Awake() {
+            base.Awake();
 
-        [SerializeField]
-        private float platformTimer = 4f;
+            if (Character == null)
+                return;
 
-        public override void OnBlastZoneExit() {
-            
+            // Subscribe to Character event
+            Character.OnBlastZoneExit += OnBlastZoneExit;
+        }
+
+        void OnDestroy() {
+            // Unsubscribe to Character event
+            if (Character)
+                Character.OnBlastZoneExit -= OnBlastZoneExit;
+        }
+
+        void OnBlastZoneExit() {
             Vector3 respawnPos = Stage.RespawnPosition;
             Character.transform.position = respawnPos;
             if (RespawnPlatform == null)
                 return;
-            RespawnPlatform instance = RespawnPlatform.Copy(respawnPos);
-            instance.Character = Character;
-            instance.InvincibilityTimer = _invincibilityTime;
-            instance.PlatformTimer = platformTimer;
+            RespawnPlatform.Copy(respawnPos);
         }
 
     }

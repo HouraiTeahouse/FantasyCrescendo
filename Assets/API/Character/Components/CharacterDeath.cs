@@ -9,14 +9,24 @@ namespace Genso.API {
         [SerializeField]
         private ParticleSystem deathPrefab;
 
-        private CharacterPhysics _physics;
-
         protected override void Awake() {
             base.Awake();
-            _physics = GetComponentInParent<CharacterPhysics>();
+            if (Character == null)
+                return;
+
+            // Subscribe to Character events
+            Character.OnBlastZoneExit += OnBlastZoneExit;
         }
 
-        public override void OnBlastZoneExit() {
+        void OnDestroy() {
+            if(Character == null)
+                return;
+
+            // Unsubscribe to Character events
+            Character.OnBlastZoneExit += OnBlastZoneExit;
+        }
+
+        void OnBlastZoneExit() {
 
             Vector3 position = Character.transform.position;
 
@@ -25,8 +35,6 @@ namespace Genso.API {
                 copy.transform.LookAt(transform.position - position);
                 copy.startColor = Character.PlayerColor;
             }
-
-
 
         }
 

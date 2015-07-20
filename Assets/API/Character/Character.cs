@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Gemso.API;
 using UnityEngine;
 
 namespace Genso.API {
@@ -11,7 +12,7 @@ namespace Genso.API {
     /// Author: James Liu
     /// Authored on 07/01/2015
     [RequireComponent(typeof(CapsuleCollider))]
-	public class Character : GensoBehaviour {
+	public class Character : GensoBehaviour, IDamageable, IKnocckbackable {
 
         private enum FacingMode { Rotation, Scale }
 
@@ -137,6 +138,8 @@ namespace Genso.API {
         public event Action OnGrounded;
         public event Action<Vector2> OnMove;
         public event Action OnBlastZoneExit;
+        public event Action<float> OnDamage;
+        public event Action OnKnockback;
 
         public float Height {
             get { return movementCollider.height; }
@@ -203,26 +206,6 @@ namespace Genso.API {
             hurtboxes = tempHurtboxes.ToArray();
         }
 
-        internal void AddCharacterComponent(CharacterComponent component) {
-            if(component == null)
-                throw new ArgumentNullException("component");
-
-            OnJump += component.OnJump;
-            OnGrounded += component.OnGrounded;
-            OnMove += component.OnMove;
-            OnBlastZoneExit += component.OnBlastZoneExit;
-        }
-
-        internal void RemoveCharacterComponent(CharacterComponent component) {
-            if(component == null)
-                throw new ArgumentNullException("component");
-
-            OnJump -= component.OnJump;
-            OnGrounded -= component.OnGrounded;
-            OnMove -= component.OnMove;
-            OnBlastZoneExit -= component.OnBlastZoneExit;
-        }
-
         public virtual void Move(Vector2 direction) {
             OnMove.SafeInvoke(direction);
         }
@@ -247,7 +230,15 @@ namespace Genso.API {
                 t += Util.dt;
             }
             IsInvincible = false;
-        } 
+        }
+
+        public void Damage(float damage) {
+            OnDamage.SafeInvoke(damage);
+        }
+
+        public void Knockback(float baseKnockback) {
+            OnKnockback.SafeInvoke();
+        }
 
     }
 

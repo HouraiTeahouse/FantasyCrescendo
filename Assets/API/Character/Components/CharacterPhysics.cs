@@ -33,7 +33,7 @@ namespace Genso.API {
         private float _helplessFallSpeed = 10f;
 
         [SerializeField]
-        private float[] _jumpHeight = new float[] { 3, 2 };
+        private float[] _jumpHeight = new float[] { 1.5f, 1.5f };
 
         private float FallSpeed {
             get {
@@ -62,6 +62,24 @@ namespace Genso.API {
         protected override void Awake() {
             base.Awake();
             _rigidbody = GetComponent<Rigidbody>();
+
+            if (Character == null)
+                return;
+
+            // Subscribe to Character events
+            Character.OnMove += OnMove;
+            Character.OnGrounded += OnGrounded;
+            Character.OnJump += OnJump;
+        }
+
+        void OnDestroy() {
+            if (Character == null)
+                return;
+
+            // Unsubscribe to Character events
+            Character.OnMove -= OnMove;
+            Character.OnGrounded -= OnGrounded;
+            Character.OnJump += OnJump;
         }
 
         private void FixedUpdate() {
@@ -75,7 +93,7 @@ namespace Genso.API {
             Velocity = velocity;
         }
 
-        public override void OnMove(Vector2 direction) {
+        void OnMove(Vector2 direction) {
             if (Math.Abs(direction.x) < float.Epsilon)
                 return;
 
@@ -95,12 +113,12 @@ namespace Genso.API {
 
         }
 
-        public override void OnGrounded() {
+        void OnGrounded() {
             if (Character.IsGrounded)
                 _jumpCount = 0;
         }
 
-        public override void OnJump() {
+        void OnJump() {
             // Cannot jump if already jumped the maximum number of times.
             if (_jumpCount >= _jumpHeight.Length - 1)
                 return;

@@ -19,11 +19,12 @@ namespace Genso.API {
         [SerializeField, MinMaxSlider(0, 180)]
         private Vector2 FovRange;
 
-        private Camera camera;
+        private Camera _camera;
         private HashSet<Transform> targets;
 
-        void Awake() {
-            camera = GetComponent<Camera>();
+        protected override void Awake() {
+            base.Awake();
+            _camera = GetComponent<Camera>();
             targets = new HashSet<Transform>();
         }
 
@@ -62,7 +63,7 @@ namespace Genso.API {
             targetPosition.z = transform.position.z;
 
             // Lerp both the FOV and the position at the desired speeds
-            camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, targetFOV, Util.dt * cameraSpeed);
+            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, targetFOV, Util.dt * cameraSpeed);
             transform.position = Vector3.Lerp(transform.position, targetPosition, Util.dt * cameraSpeed);
         }
 
