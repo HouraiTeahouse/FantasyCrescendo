@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
@@ -7,7 +8,8 @@ namespace Genso.API.Editor {
 
     public class GensoEditor
     {
-        private static string root = Regex.Replace(Application.dataPath, "Assets", "");
+        private static string buildRoot = Regex.Replace(Application.dataPath, "Assets", "") + "/Build/";
+        private static string copyRoot = Application.dataPath + "/Post Build/";
 
         [MenuItem("Assets/Create/Game Config")]
         public static void CreateConfig()
@@ -30,23 +32,26 @@ namespace Genso.API.Editor {
         [MenuItem("Genso/Build Windows", false, 51)]
         public static void BuildWindows()
         {
-            string buildFolder = root + "/Build/Windows/";
-            Build(buildFolder, BuildTarget.StandaloneWindows);
-            buildFolder = root + "/Build/Windows_64/";
-            Build(buildFolder, BuildTarget.StandaloneWindows64);
+            string buildFolder = buildRoot + "Windows/";
+            string copyFolder = copyRoot + "Windows/";
+            Build(buildFolder, BuildTarget.StandaloneWindows, copyFolder);
+            buildFolder = buildRoot + "Windows_64/";
+            Build(buildFolder, BuildTarget.StandaloneWindows64, copyFolder);
         }
 
         [MenuItem("Genso/Build Mac", false, 51)]
         public static void BuildMac()
         {
-            string buildFolder = root + "/Build/Mac/";
-            Build(buildFolder, BuildTarget.StandaloneOSXUniversal);
+            string buildFolder = buildRoot + "Mac/";
+            string copyFolder = copyRoot + "Mac/";
+            Build(buildFolder, BuildTarget.StandaloneOSXUniversal, copyFolder);
         }
 
         [MenuItem("Genso/Build Linux", false, 51)]
         public static void BuildLinux() {
-            string buildFolder = root + "/Build/Linux/";
-            Build(buildFolder, BuildTarget.StandaloneLinuxUniversal);
+            string buildFolder = buildRoot + "Linux/";
+            string copyFolder = copyRoot + "Linux/";
+            Build(buildFolder, BuildTarget.StandaloneLinuxUniversal, copyFolder);
         }
 
         [MenuItem("Genso/Build All", false, 101)]
@@ -56,7 +61,7 @@ namespace Genso.API.Editor {
             BuildLinux();
         }
 
-        public static void Build(string path, BuildTarget target) {
+        public static void Build(string path, BuildTarget target, string copyPath = null) {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             
@@ -67,16 +72,16 @@ namespace Genso.API.Editor {
             foreach(DirectoryInfo subdirectory in directory.GetDirectories())
                 subdirectory.Delete(true);
 
-            path += "genso";
+            string executablePath = path + "genso";
             switch (target) {
                 case BuildTarget.StandaloneWindows:
                 case BuildTarget.StandaloneWindows64:
-                    path += ".exe";
+                    executablePath += ".exe";
                     break;
                 case BuildTarget.StandaloneLinux:
                 case BuildTarget.StandaloneLinux64:
                 case BuildTarget.StandaloneLinuxUniversal:
-                    path += ".x86";
+                    executablePath += ".x86";
                     break;
             }
 
@@ -85,7 +90,25 @@ namespace Genso.API.Editor {
             for (var i = 0; i < scenes.Length; i++)
                 scenePaths[i] = scenes[i].path;
 
-            BuildPipeline.BuildPlayer(scenePaths, path, target, BuildOptions.None);
+            BuildPipeline.BuildPlayer(scenePaths, executablePath, target, BuildOptions.None);
+
+            if (copyPath == null)
+                return;
+
+            // Copy all Post Build files to output directory
+
+            //Now Create all of the directories
+            foreach (string dirPath in Directory.GetDirectories(copyPath, "*", 
+                SearchOption.AllDirectories))
+                Directory.CreateDirectory(dirPath.Replace(copyPath, path));
+
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(copyPath,
+                                                          "*.*",
+                                                          SearchOption.AllDirectories)) {
+                if(!newPath.Contains(".meta"))
+                    File.Copy(newPath, newPath.Replace(copyPath, path), true);   
+            }
         }
 
         public static void CopyAll(string startPath, string endPath) {
