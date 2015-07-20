@@ -5,7 +5,13 @@ namespace Genso.API.Editor {
 
     public class GensoEditor
     {
-       
+
+        [MenuItem("Assets/Create/Game Config")]
+        public static void CreateConfig()
+        {
+            CreateAsset<Config>();
+        }
+
         [MenuItem("Assets/Create/Character Data")]
         public static void CreateCharacterData() {
             CreateAsset<CharacterData>();
@@ -17,7 +23,6 @@ namespace Genso.API.Editor {
             PlayerPrefs.DeleteAll();
             Debug.Log("Player Prefs Cleared.");
         }
-
 
         /// <summary>
         /// Create new asset from <see cref="ScriptableObject"/> type with unique name at

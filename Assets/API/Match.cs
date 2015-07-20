@@ -56,7 +56,7 @@ namespace Genso.API {
 
         protected virtual Character InstantiateCharacter(int playerNumber)
         {
-            return Instantiate(GetCharacterPrefab(playerNumber));
+            return GetCharacterPrefab(playerNumber).Copy();
         }
 
     }

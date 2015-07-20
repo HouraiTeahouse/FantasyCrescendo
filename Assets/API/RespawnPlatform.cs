@@ -4,9 +4,10 @@ using System.Collections;
 namespace Genso.API {
     
     
-    public class RespawnPlatform : MonoBehaviour {
+    public class RespawnPlatform : GensoBehaviour {
 
         private Character character;
+        private Rigidbody physics;
 
         public Character Character {
             get { return character; }
@@ -15,17 +16,17 @@ namespace Genso.API {
                     return;
                 value.IsInvincible = true;
                 character = value;
+                physics = value.GetComponent<Rigidbody>();
+                if (physics != null)
+                    physics.velocity = Vector3.zero;
             }
         }
 
-        public float InvincibilityTimer {
-            get;
-            set;
-        }
+        [SerializeField]
+        private float _invicibilityTimer;
 
-        public float PlatformTimer {
-            get; set;
-        }
+        [SerializeField]
+        private float _platformTimer;
 
         private float timer = 0f;
         
@@ -37,7 +38,8 @@ namespace Genso.API {
 
 	        timer += Util.dt;
 
-            if(character.transform.position != transform.position || timer > PlatformTimer)
+            // TODO: Find better alternative to this hack
+            if (timer > _platformTimer || (physics != null && physics.velocity.magnitude > 0.5f))
                 Destroy(gameObject);
 
 	    }
@@ -46,7 +48,7 @@ namespace Genso.API {
             if (Character == null)
                 return;
 
-            Character.TemporaryInvincibility(InvincibilityTimer);
+            Character.TemporaryInvincibility(_invicibilityTimer);
         }
     }
 }

@@ -17,21 +17,27 @@ namespace Genso.API {
         {
             if (targetObject == null)
                 return null;
-            return Object.Instantiate(targetObject);
+            T obj = Object.Instantiate(targetObject);
+            obj.name = targetObject.name;
+            return obj;
         }
 
         public static T Copy<T>(this T targetObject, Vector3 position) where T : Object
         {
             if (targetObject == null)
                 return null;
-            return Object.Instantiate(targetObject, position, Quaternion.identity) as T;
+            var obj = Object.Instantiate(targetObject, position, Quaternion.identity) as T;
+            obj.name = targetObject.name;
+            return obj;
         }
 
         public static T Copy<T>(this T targetObject, Vector3 position, Quaternion rotation) where T : Object
         {
             if (targetObject == null)
                 return null;
-            return Object.Instantiate(targetObject, position, rotation) as T;
+            var obj = Object.Instantiate(targetObject, position, rotation) as T;
+            obj.name = targetObject.name;
+            return obj;
         }
 
         /// <summary>

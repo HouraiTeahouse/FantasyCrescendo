@@ -496,6 +496,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88851dc1741cb0a4692b05b5e10fd1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _invicibilityTimer: 2
+  _platformTimer: 4
 --- !u!114 &11496398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -514,7 +516,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _invicibilityTimer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _platformTimer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 103682}

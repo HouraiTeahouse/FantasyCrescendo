@@ -1,56 +1,43 @@
-﻿using Genso.API;
+﻿using System;
+using Genso.API;
 using UnityEngine;
 
 namespace Genso.API {
 
 
-    public class Game : Singleton<Game>
-    {
+    public class Game : Singleton<Game> {
 
-        #pragma warning disable 0649
-        [System.Serializable]
-        private class PlayerData
-        {
+        [SerializeField]
+        private Config _config;
 
-            public Color Color;
-            public Sprite Sprite;
-
+        private static Config Config {
+            get {
+                if (Instance == null)
+                    return null;
+                return Instance._config;
+            }
         }
-
-        [System.Serializable]
-        private class DebugData
-        {
-
-            public Color OffensiveHitboxColor = Color.red;
-            public Color DamageableHitboxColor = Color.yellow;
-            public Color InvincibleHitboxColor = Color.green;
-            public Color IntangiblHitboxColor = Color.blue;
-
+        
+        public static void CreateRespawnPlatform(Character target) {
+            if (target == null)
+                throw new ArgumentNullException("target");
+            RespawnPlatform platform = Config.RepsawnPlatformPrefab.Copy(target.position);
+            platform.Character = target;
         }
-        #pragma warning restore 0649
 
         public static int MaxPlayers
         {
-            get { return Instance._playerData.Length; }
+            get { return Config.GenericPlayerData.Length; }
         }
 
         public static LayerMask HurtboxLayers
         {
-            get { return Instance._hurtboxLayers; }
+            get { return Config.HurtboxLayers; }
         }
-
-        [SerializeField]
-        private LayerMask _hurtboxLayers;
-
-        [SerializeField]
-        private PlayerData[] _playerData;
-
-        [SerializeField]
-        private DebugData _debug;
 
         public static Color GetHitboxColor(HitboxType type)
         {
-            DebugData debugData = Instance._debug;
+            Config.DebugData debugData = Config.Debug;
             switch (type)
             {
                 case HitboxType.Offensive:
@@ -71,17 +58,17 @@ namespace Genso.API {
             PlayerIndicator newIndicator = new GameObject("P" + (playerNumber + 1) + " Indicator").AddComponent<PlayerIndicator>();
             newIndicator.Color = GetPlayerColor(playerNumber);
             newIndicator.Sprite = (playerNumber >= 0 && playerNumber <= MaxPlayers)
-                                      ? Instance._playerData[playerNumber].Sprite
+                                      ? Config.GenericPlayerData[playerNumber].IndicatorSprite
                                       : null;
+            newIndicator.gameObject.hideFlags = HideFlags.HideInHierarchy;
             return newIndicator;
         }
 
         public static Color GetPlayerColor(int playerNumber)
         {
-            Game instance = Instance;
-            if (instance == null)
+            if (Config == null)
                 return Color.white;
-            return playerNumber < 0 || playerNumber >= MaxPlayers ? Color.white : instance._playerData[playerNumber].Color;
+            return playerNumber < 0 || playerNumber >= MaxPlayers ? Color.white : Config.GenericPlayerData[playerNumber].Color;
         }
 
         void OnLevelWasLoaded(int level)
