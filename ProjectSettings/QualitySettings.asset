@@ -8,7 +8,7 @@ QualitySettings:
   m_QualitySettings:
   - serializedVersion: 2
     name: Aya (Fastest)
-    pixelLightCount: 0
+    pixelLightCount: 1
     shadows: 0
     shadowResolution: 0
     shadowProjection: 1
@@ -31,7 +31,7 @@ QualitySettings:
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Marsia (Fast)
-    pixelLightCount: 0
+    pixelLightCount: 1
     shadows: 0
     shadowResolution: 0
     shadowProjection: 1
@@ -40,7 +40,7 @@ QualitySettings:
     shadowCascade2Split: .333333343
     shadowCascade4Split: {x: .0666666701, y: .200000003, z: .466666669}
     blendWeights: 2
-    textureQuality: 0
+    textureQuality: 2
     anisotropicTextures: 0
     antiAliasing: 0
     softParticles: 0
@@ -63,7 +63,7 @@ QualitySettings:
     shadowCascade2Split: .333333343
     shadowCascade4Split: {x: .0666666701, y: .200000003, z: .466666669}
     blendWeights: 2
-    textureQuality: 0
+    textureQuality: 1
     anisotropicTextures: 1
     antiAliasing: 0
     softParticles: 0

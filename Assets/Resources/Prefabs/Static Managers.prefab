@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11452990}
   m_Layer: 0
   m_Name: Static Managers
-  m_TagString: Spawn
+  m_TagString: Static Managers
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c331a677c66a30f49935376486b8c281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keepBetweenScenes: 1
+  keepBetweenScenes: 0
 --- !u!114 &11451058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,10 +122,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 189600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 888c9459344b5c142996209c3a569b47, type: 3}
+  m_Script: {fileID: 11500000, guid: a8bd5a18adbce4446bd1214b4491aa71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keepBetweenScenes: 1
+  keepBetweenScenes: 0
   _hurtboxLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1caf9071eb694ef49996489c114232a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keepBetweenScenes: 1
+  keepBetweenScenes: 0
 --- !u!114 &11453928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputConfigurations: []
   defaultConfiguration: 
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
   ignoreTimescale: 0
 --- !u!1001 &100100000
 Prefab:

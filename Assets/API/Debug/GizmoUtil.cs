@@ -73,12 +73,12 @@ namespace Genso.API {
 
         public static void DrawHitbox(Collider hitbox, HitboxType type)
         {
-            DrawCollider3D(hitbox, GameSettings.GetHitboxColor(type));
+            DrawCollider3D(hitbox, Game.GetHitboxColor(type));
         }
 
         public static void DrawHitboxes(IEnumerable<Collider> hitboxes, HitboxType type, Predicate<Collider> filter = null)
         {
-            DrawColliders3D(hitboxes, GameSettings.GetHitboxColor(type), true, filter);
+            DrawColliders3D(hitboxes, Game.GetHitboxColor(type), true, filter);
         }
 
         public static void DrawCollider3D(Collider collider, Color color, bool solid = false)

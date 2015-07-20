@@ -6,8 +6,11 @@ public class TestSpawnPlayer : Match {
     [SerializeField]
     private Character[] characters;
 
+    private bool Added;
+
     void Start()  {
         Stage stage = FindObjectOfType<Stage>();
+        Added = false;
         if (stage != null) {
             SetCharacters(characters);   
             stage.StartMatch(this);
@@ -18,7 +21,10 @@ public class TestSpawnPlayer : Match {
         Character toSpawn = base.InstantiateCharacter(playerNumber);
         toSpawn.gameObject.AddComponent<CharacterDeath>();
         toSpawn.gameObject.AddComponent<CharacterRespawn>();
-        toSpawn.gameObject.AddComponent<TestInput>();
+        if (!Added) {
+            toSpawn.gameObject.AddComponent<TestInput>();
+            Added = true;
+        }
         return toSpawn;
     }
 

@@ -50,7 +50,7 @@ namespace Genso.API {
 
             for (var i = 0; i < match.PlayerCount; i++) {
                 Character spawnedCharacter = match.SpawnCharacter(i, spawnPoints[i]);
-                PlayerIndicator indicator = GameSettings.CreatePlayerIndicator(i);
+                PlayerIndicator indicator = Game.CreatePlayerIndicator(i);
                 indicator.Attach(spawnedCharacter);
             }
 

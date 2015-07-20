@@ -977,8 +977,6 @@ GameObject:
   - 54: {fileID: 5483394}
   - 114: {fileID: 11482868}
   - 114: {fileID: 11451884}
-  - 114: {fileID: 11437278}
-  - 114: {fileID: 11484674}
   m_Layer: 9
   m_Name: Marisa
   m_TagString: Player
@@ -2115,18 +2113,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _facingMode: 0
   triggerSizeRatio: 1.5
---- !u!114 &11437278
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 179158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9aaad2e4963c53408afb66bb06dc754, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deathPrefab: {fileID: 19856314, guid: 62f0d5fc0435caf4aaf1607f9fcb7863, type: 2}
 --- !u!114 &11451884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2177,20 +2163,6 @@ MonoBehaviour:
   _jumpHeight:
   - 1.5
   - 1.5
---- !u!114 &11484674
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 179158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beea648209a9c9042a7920440560d6f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RespawnPlatform: {fileID: 11444066, guid: 568a551bb74b11e4a80e44a23011534f, type: 2}
-  _invincibilityTime: 2
-  platformTimer: 4
 --- !u!114 &11496148
 MonoBehaviour:
   m_ObjectHideFlags: 1

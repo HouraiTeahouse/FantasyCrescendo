@@ -36,7 +36,7 @@ namespace Genso.API {
         public int PlayerNumber { get; set; }
 
         public Color PlayerColor {
-            get { return GameSettings.GetPlayerColor(PlayerNumber); }
+            get { return Game.GetPlayerColor(PlayerNumber); }
         }
 
         public ICharacterInput InputSource { get; set; }
@@ -172,16 +172,12 @@ namespace Genso.API {
             if(movement != Vector2.zero)
                 Move(movement);
 
-            if (IsGrounded) {
-
-                //Ensure that the character is walking in the right direction
-                if((movement.x > 0 && Facing) ||
-                   (movement.x < 0 && !Facing)) {
-                    Facing = !Facing;
-                }
-                    
+            //Ensure that the character is walking in the right direction
+            if ((movement.x > 0 && Facing) ||
+               (movement.x < 0 && !Facing))
+            {
+                Facing = !Facing;
             }
-
 
             if (InputSource.Jump)
                 Jump();
@@ -199,7 +195,7 @@ namespace Genso.API {
         void FindHurtboxes() {
             List<Collider> tempHurtboxes = new List<Collider>();
             foreach (Collider collider in GetComponentsInChildren<Collider>()) {
-                if (!collider.CheckLayer(GameSettings.HurtboxLayers))
+                if (!collider.CheckLayer(Game.HurtboxLayers))
                     continue;
                 Hurtbox.Register(this, collider);
                 tempHurtboxes.Add(collider);
