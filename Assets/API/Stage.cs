@@ -41,20 +41,13 @@ namespace Genso.API {
             }
         }
 
-        public void StartMatch(Match match)
-        {
-            if (match == null)
-                throw new ArgumentException("match");
-            if (match.PlayerCount > SupportedPlayerCount)
-                throw new InvalidOperationException("Cannot start a match when there are more players participating than supported by the selected stage");
-
-            for (var i = 0; i < match.PlayerCount; i++) {
-                Character spawnedCharacter = match.SpawnCharacter(i, spawnPoints[i]);
-                PlayerIndicator indicator = Game.CreatePlayerIndicator(i);
-                indicator.Attach(spawnedCharacter);
-            }
-
-        }
+		public static SpawnPoint GetSpawnPoint(int playerNumber) {
+			if(Instance == null)
+				throw new InvalidOperationException("Cannot get the spawn points of a stage that does not exist");
+			if(playerNumber < 0 || playerNumber > SupportedPlayerCount)
+				throw new InvalidOperationException();
+			return Instance.spawnPoints[playerNumber];
+		}
 
         protected override void Awake()
         {

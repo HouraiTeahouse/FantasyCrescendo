@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 3
+  m_CurrentQuality: 2
   m_QualitySettings:
   - serializedVersion: 2
     name: Aya (Fastest)
@@ -145,12 +145,12 @@ QualitySettings:
     particleRaycastBudget: 4096
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
-    Android: 5
-    BlackBerry: 5
-    Samsung TV: 5
-    Standalone: 5
-    WP8: 5
-    Web: 5
-    WebGL: 5
-    Windows Store Apps: 5
-    iPhone: 5
+    Android: 3
+    BlackBerry: 3
+    Samsung TV: 3
+    Standalone: 3
+    WP8: 3
+    Web: 3
+    WebGL: 3
+    Windows Store Apps: 3
+    iPhone: 3

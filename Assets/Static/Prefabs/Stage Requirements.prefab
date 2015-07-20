@@ -440,8 +440,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters:
-  - {fileID: 11434712, guid: 77e90760407a4104a9d3e187868be546, type: 2}
-  - {fileID: 11434712, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+  - {fileID: 11400000, guid: 4d181d06a10cdfd4499bf5bb68e30def, type: 2}
+  - {fileID: 11400000, guid: 4d181d06a10cdfd4499bf5bb68e30def, type: 2}
 --- !u!114 &11472834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -527,10 +527,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22469488}
   m_RootOrder: 0
-  m_AnchorMin: {x: .856367767, y: .903000057}
+  m_AnchorMin: {x: .551643908, y: .903000057}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -28.2000008, y: -7.4000001}
-  m_SizeDelta: {x: 56.5, y: 14.8000002}
+  m_AnchoredPosition: {x: -.100000381, y: -7.4000001}
+  m_SizeDelta: {x: .400001526, y: 14.8000002}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22469488
 RectTransform:

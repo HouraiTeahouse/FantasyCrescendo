@@ -41,10 +41,18 @@ namespace Genso.API {
         }
 
         [SerializeField, ResourcePath(typeof(GameObject))]
-        private string Prefab;
+        private string _prefab;
+		private Resource<GameObject> _prefabResource;
+
+		public Character Prefab {
+			get {
+				return _prefabResource.Load().GetComponent<Character>();
+			}
+		}
 
         void OnEnable() {
             _languageManager = LanguageManager.Instance;
+			_prefabResource = new Resource<GameObject>(_prefab);
         }
 
     }

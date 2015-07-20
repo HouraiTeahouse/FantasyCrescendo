@@ -17,6 +17,31 @@ namespace Genso.API {
                 return Instance._config;
             }
         }
+
+		public static Character SpawnPlayer(int playerNumber, CharacterData charData) {
+			// Load the prefab for the player
+			Character character = charData.Prefab;
+
+			// Instantiate a instance of the Character
+			Character instance = character.Copy();
+
+			// Create the player's indicator
+			PlayerIndicator newIndicator = new GameObject("P" + (playerNumber + 1) + " Indicator").AddComponent<PlayerIndicator>();
+			newIndicator.Color = GetPlayerColor(playerNumber);
+			newIndicator.Sprite = (playerNumber >= 0 && playerNumber <= MaxPlayers)
+				? Config.GenericPlayerData[playerNumber].IndicatorSprite
+					: null;
+
+			// Hide the indicator objects only if it is in the Editor
+#if UNITY_EDITOR
+			newIndicator.gameObject.hideFlags = HideFlags.HideInHierarchy;
+#endif
+
+			//Attach the indicator to the Character instance
+			newIndicator.Attach(instance);
+
+			return instance;
+		}
         
         public static void CreateRespawnPlatform(Character target) {
             if (target == null)
@@ -51,17 +76,6 @@ namespace Genso.API {
                 default:
                     return Color.white;
             }
-        }
-
-        public static PlayerIndicator CreatePlayerIndicator(int playerNumber)
-        {
-            PlayerIndicator newIndicator = new GameObject("P" + (playerNumber + 1) + " Indicator").AddComponent<PlayerIndicator>();
-            newIndicator.Color = GetPlayerColor(playerNumber);
-            newIndicator.Sprite = (playerNumber >= 0 && playerNumber <= MaxPlayers)
-                                      ? Config.GenericPlayerData[playerNumber].IndicatorSprite
-                                      : null;
-            newIndicator.gameObject.hideFlags = HideFlags.HideInHierarchy;
-            return newIndicator;
         }
 
         public static Color GetPlayerColor(int playerNumber)

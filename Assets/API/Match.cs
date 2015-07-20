@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
-using System.Collections.Generic;
 
 namespace Genso.API {
 
@@ -13,26 +14,28 @@ namespace Genso.API {
     public abstract class Match : GensoBehaviour
     {
 
-        private List<Character> selectedCharacters;
+        private List<CharacterData> selectedCharacters;
+		private static bool _isFinished;
+		private static int _winner;
+		
+		public int PlayerCount
+		{
+			get { return selectedCharacters.Count; }
+		}
 
-        protected virtual void Awake()
+		protected virtual void Awake()
         {
-            selectedCharacters = new List<Character>();
+            selectedCharacters = new List<CharacterData>();
         }
 
-        public int PlayerCount
-        {
-            get { return selectedCharacters.Count; }
-        }
-
-        public void SetCharcter(int playerNumber, Character character)
+		public void SetCharcter(int playerNumber, CharacterData character)
         {
             if (character == null)
                 throw new ArgumentNullException("character");
             selectedCharacters[playerNumber] = character;
         }
 
-        public void SetCharacters(IEnumerable<Character> characters)
+		public void SetCharacters(IEnumerable<CharacterData> characters)
         {
             if (characters == null)
                 throw new ArgumentNullException("characters");
@@ -40,24 +43,58 @@ namespace Genso.API {
             selectedCharacters.AddRange(characters);
         }
 
-        public Character SpawnCharacter(int playerNumber, SpawnPoint spawnPoint)
-        {
-            if(spawnPoint == null)
-                throw new ArgumentNullException("spawnPoint");
-            Character runtimeCharacter = InstantiateCharacter(playerNumber);
-            spawnPoint.EditSpawn(runtimeCharacter);
-            return runtimeCharacter;
-        }
+		/// <summary>
+		/// Finishes the match and declares a winner
+		/// </summary>
+		/// <param name="playerNumber">Player number.</param>
+		public static void DeclareWinner(int playerNumber) {
+			_isFinished  = true;
+			_winner = playerNumber;
+		}
 
-        public Character GetCharacterPrefab(int playerNumber)
-        {
-            return selectedCharacters[playerNumber];
-        }
+		IEnumerator MatchLoop() {
+			// Wait for the match to end
+			while(!_isFinished) {
+				yield return new WaitForEndOfFrame();
+			}
 
-        protected virtual Character InstantiateCharacter(int playerNumber)
-        {
-            return GetCharacterPrefab(playerNumber).Copy();
-        }
+			// Check for tie
+			if(_winner < 0 || _winner >= PlayerCount) {
+				// Initiate Sudden Death
+			} else {
+				// Declare winner
+			}
+		}
+
+		void OnDestroy() {
+			// On destruction of a match object, reset the winner
+			_isFinished = false;
+			_winner = -1;
+		}
+
+		void OnLevelWasLoaded(int level) {
+			if(Stage.Instance != null)
+				return;
+
+
+
+		}
+
+		public void StartMatch() {
+			if (PlayerCount > Stage.SupportedPlayerCount)
+				throw new InvalidOperationException("Cannot start a match when there are more players participating than supported by the selected stage");
+
+			// Spawn players
+			for(int i = 0; i < PlayerCount; i++) {
+				Character runtimeCharacter = Game.SpawnPlayer(i,selectedCharacters[i]);
+				OnSpawn(runtimeCharacter);
+				Stage.GetSpawnPoint(i).EditSpawn(runtimeCharacter);
+			}
+
+			StartCoroutine(MatchLoop());
+		}
+
+		protected abstract void OnSpawn(Character character);
 
     }
 
