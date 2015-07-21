@@ -9,7 +9,7 @@ Material:
   m_Name: Marisa Eyes
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 1
+  m_LightmapFlags: 2
   m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 67878f8b97ec61146b6c35d18184ca45, type: 3}
+          m_Texture: {fileID: 2800000, guid: 462e41b087d85e74083d11543087541f, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -54,7 +54,7 @@ Material:
         first:
           name: _EmissionMap
         second:
-          m_Texture: {fileID: 2800000, guid: 67878f8b97ec61146b6c35d18184ca45, type: 3}
+          m_Texture: {fileID: 2800000, guid: 462e41b087d85e74083d11543087541f, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -131,7 +131,7 @@ Material:
       data:
         first:
           name: _EmissionColor
-        second: {r: .632352948, g: .632352948, b: .632352948, a: 1}
+        second: {r: .860294104, g: .860294104, b: .860294104, a: 1}
       data:
         first:
           name: _Color

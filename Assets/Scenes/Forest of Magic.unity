@@ -127,6 +127,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 10875036, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: m_Intensity
+      value: .25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
   m_IsPrefabParent: 0
@@ -188,6 +192,48 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: 418b0d3379192d2408332077cf069fba, type: 3}
+--- !u!1001 &1308254869
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 453282, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: .67355442
+      objectReference: {fileID: 0}
+    - target: {fileID: 453282, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: .540038943
+      objectReference: {fileID: 0}
+    - target: {fileID: 453282, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -.496038318
+      objectReference: {fileID: 0}
+    - target: {fileID: 453282, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 453282, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 453282, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 453282, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 453282, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 77e90760407a4104a9d3e187868be546, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1514677969
 Prefab:
   m_ObjectHideFlags: 0
@@ -815,7 +861,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!108 &1774616661
 Light:
   m_ObjectHideFlags: 0
