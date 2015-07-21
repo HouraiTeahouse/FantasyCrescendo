@@ -111,10 +111,6 @@ namespace Genso.API.Editor {
             }
         }
 
-        public static void CopyAll(string startPath, string endPath) {
-            
-        }
-
         /// <summary>
         /// Create new asset from <see cref="ScriptableObject"/> type with unique name at
         /// selected folder in project window. Asset creation can be cancelled by pressing
