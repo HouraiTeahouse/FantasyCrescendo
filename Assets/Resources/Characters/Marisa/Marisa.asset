@@ -14,5 +14,10 @@ MonoBehaviour:
   firstNameKey: Character.Marisa.Name
   lastNameKey: Character.Marisa.LastName
   announcerKey: Character.Marisa.Announcer
-  portrait: 
-  _prefab: Characters/Marisa/marisa
+  alternatives:
+  - portrait: 
+    _prefab: Characters/Marisa/Prefabs/marisa
+  - portrait: 
+    _prefab: Characters/Marisa/Prefabs/marisa_alice
+  - portrait: 
+    _prefab: Characters/Marisa/Prefabs/marisa_meiling

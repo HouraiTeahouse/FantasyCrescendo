@@ -1,5 +1,4 @@
 ﻿using System;
-using Genso.API;
 using UnityEngine;
 
 namespace Genso.API {
@@ -20,7 +19,7 @@ namespace Genso.API {
 
 		public static Character SpawnPlayer(int playerNumber, CharacterData charData) {
 			// Load the prefab for the player
-			Character character = charData.Prefab;
+			Character character = charData.LoadPrefab((int)(UnityEngine.Random.value * charData.AlternativeCount));
 
 			// Instantiate a instance of the Character
 			Character instance = character.Copy();

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using SmartLocalization;
 
@@ -7,6 +8,41 @@ namespace Genso.API {
     public class CharacterData : ScriptableObject {
 
         private LanguageManager _languageManager;
+
+        [System.Serializable]
+        public class Alternative {
+
+
+            [SerializeField, ResourcePath(typeof(Sprite))]
+            private string portrait;
+            private Resource<Sprite> _portrait;
+            public Resource<Sprite> Portrait
+            {
+                get
+                {
+                    if (_portrait == null)
+                        _portrait = new Resource<Sprite>(portrait);
+                    return _portrait;
+                }
+            }
+
+            [SerializeField, ResourcePath(typeof(GameObject))]
+            private string _prefab;
+            private Resource<GameObject> _prefabResource;
+
+            public Character Prefab
+            {
+                get
+                {
+                    return _prefabResource.Load().GetComponent<Character>();
+                }
+            }
+
+            public void Initialize() {
+                _prefabResource = new Resource<GameObject>(_prefab);
+            }
+
+        }
 
         [SerializeField]
         private string firstNameKey;
@@ -26,34 +62,35 @@ namespace Genso.API {
             get { return FirstName + " " + LastName; }
         }
 
+        public int AlternativeCount {
+            get {
+                return alternatives == null ? 0 : alternatives.Length;
+            }
+        }
+
         [SerializeField]
         private string announcerKey;
 
-        [SerializeField, ResourcePath(typeof(Sprite))]
-        private string portrait;
-        private Resource<Sprite> _portrait;
-        public Resource<Sprite> Portrait {
-            get {
-                if(_portrait == null)
-                    _portrait = new Resource<Sprite>(portrait);
-                return _portrait;
-            }    
+        [SerializeField]
+        private Alternative[] alternatives;
+
+        public Sprite LoadPortrait(int alternativeChoice) {
+            if(alternativeChoice < 0 || alternativeChoice >= AlternativeCount)
+                throw new ArgumentException();
+            return alternatives[alternativeChoice].Portrait.Load();
         }
 
-        [SerializeField, ResourcePath(typeof(GameObject))]
-        private string _prefab;
-		private Resource<GameObject> _prefabResource;
-
-		public Character Prefab {
-			get {
-				return _prefabResource.Load().GetComponent<Character>();
-			}
-		}
+        public Character LoadPrefab(int alternativeChoice) {
+            if (alternativeChoice < 0 || alternativeChoice >= AlternativeCount)
+                throw new ArgumentException();
+            return alternatives[alternativeChoice].Prefab;
+        }
 
         void OnEnable() {
             if(!Application.isEditor || Application.isPlaying)
                 _languageManager = LanguageManager.Instance;
-			_prefabResource = new Resource<GameObject>(_prefab);
+            foreach(var alternative in alternatives)
+                alternative.Initialize();
         }
 
     }
