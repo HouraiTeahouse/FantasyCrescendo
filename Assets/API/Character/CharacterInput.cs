@@ -11,6 +11,8 @@ namespace Genso.API {
 
         bool Crouch { get; }
 
+        bool Attack { get; }
+
     }
 
 }

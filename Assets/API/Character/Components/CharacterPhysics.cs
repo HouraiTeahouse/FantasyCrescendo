@@ -120,7 +120,7 @@ namespace Genso.API {
 
         void OnJump() {
             // Cannot jump if already jumped the maximum number of times.
-            if (_jumpCount >= _jumpHeight.Length - 1)
+            if (_jumpCount >= _jumpHeight.Length)
                 return;
             
             // Apply upward force to jump

@@ -26,9 +26,9 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: w
+    positiveButton: 
     altNegativeButton: 
-    altPositiveButton: up
+    altPositiveButton: x
     gravity: 0
     dead: 0
     sensitivity: 100
@@ -61,6 +61,22 @@ InputManager:
     positiveButton: s
     altNegativeButton: 
     altPositiveButton: down
+    gravity: 0
+    dead: 0
+    sensitivity: 100
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: attack
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: z
+    altNegativeButton: 
+    altPositiveButton: 
     gravity: 0
     dead: 0
     sensitivity: 100

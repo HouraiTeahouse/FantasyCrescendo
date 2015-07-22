@@ -45,11 +45,11 @@ namespace Genso.API {
         public bool IsGrounded {
             get { return _grounded; }
             set {
-                bool changed = _grounded == value;
+                bool changed = _grounded != value;
                 _grounded = value;
                 if (value)
                     IsHelpless = false;
-                if(changed)
+                if (changed)
                     OnGrounded.SafeInvoke();
             }
         }
@@ -140,6 +140,7 @@ namespace Genso.API {
         public event Action OnBlastZoneExit;
         public event Action<float> OnDamage;
         public event Action OnKnockback;
+        public event Action OnAttack;
 
         public float Height {
             get { return movementCollider.height; }
@@ -150,14 +151,21 @@ namespace Genso.API {
         protected virtual void Awake() {
             FindHurtboxes();
 
-            // TODO: Find a better place to put this
-            CameraController.AddTarget(this);
-
             movementCollider = GetComponent<CapsuleCollider>();
             movementCollider.isTrigger = false;
 
             triggerCollider = gameObject.AddComponent<CapsuleCollider>();
             triggerCollider.isTrigger = true;
+        }
+
+        protected virtual void OnEnable() {
+            // TODO: Find a better place to put this
+            CameraController.AddTarget(this);
+        }
+
+        protected virtual void OnDisable() {
+            // TODO: Find a better place to put this
+            CameraController.RemoveTarget(this);
         }
 
         protected virtual void Update() {
@@ -185,8 +193,9 @@ namespace Genso.API {
             if (InputSource.Jump)
                 Jump();
 
+            if (InputSource.Attack)
+                Attack();
         }
-
 
         protected virtual void OnDrawGizmos() {
             FindHurtboxes();
@@ -220,6 +229,10 @@ namespace Genso.API {
 
         public void TemporaryInvincibility(float time) {
             StartCoroutine(TempInvincibility(time));
+        }
+
+        public void Attack() {
+            OnAttack.SafeInvoke();
         }
 
         IEnumerator TempInvincibility(float duration) {

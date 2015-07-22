@@ -25,6 +25,15 @@ namespace Genso.API {
         [SerializeField]
         private AnimationTrigger _airJump = new AnimationTrigger("air jump");
 
+        [SerializeField]
+        private AnimationTrigger _attack = new AnimationTrigger("attack");
+
+        [SerializeField]
+        private AnimationFloat _horizontalInput = new AnimationFloat("horizontal input");
+
+        [SerializeField]
+        private AnimationFloat _verticalInput = new AnimationFloat("vertical input");
+
         protected override void Awake() {
             base.Awake();
 
@@ -44,6 +53,9 @@ namespace Genso.API {
             _horizontalSpeed.Animator = _animator;
             _jump.Animator = _animator;
             _airJump.Animator = _animator;
+            _attack.Animator = _animator;
+            _horizontalInput.Animator = _animator;
+            _verticalInput.Animator = _animator;
 
             _grounded.Set(Character.IsGrounded);
 
@@ -53,7 +65,7 @@ namespace Genso.API {
             // Subscribe to Character events
             Character.OnGrounded += OnGrounded;
             Character.OnJump += OnJump;
-
+            Character.OnAttack += OnAttack;
         }
 
         void OnDestroy() {
@@ -63,6 +75,7 @@ namespace Genso.API {
             // Unsubscribe from Character events
             Character.OnGrounded -= OnGrounded;
             Character.OnJump -= OnJump;
+            Character.OnAttack -= OnAttack;
         }
 
         protected override void OnUpdate() {
@@ -74,6 +87,17 @@ namespace Genso.API {
             Vector2 velocity = _physics.Velocity;
             _horizontalSpeed.Set(Mathf.Abs(velocity.x));
             _verticalSpeed.Set(velocity.y);
+
+            if (InputSource == null)
+                return;
+
+            Vector2 movementInput = InputSource.Movement;
+            _horizontalInput.Set(Mathf.Abs(movementInput.x));
+            _verticalInput.Set(movementInput.y);
+        }
+
+        void OnAttack() {
+            _attack.Set();
         }
 
         void OnJump() {

@@ -8,8 +8,9 @@ namespace Genso.API {
     {
 
         private const string HorizontalAxis = "horizontal";
-        private const string VerticalAxis = "horizontal";
+        private const string VerticalAxis = "vertical";
         private const string JumpAxis = "jump";
+        private const string AttackButton = "attack";
 
         public Vector2 Movement
         {
@@ -33,6 +34,10 @@ namespace Genso.API {
                 // TODO: Implement properly with animations
                 return false;
             }
+        }
+
+        public bool Attack {
+            get { return Input.GetButtonDown(AttackButton); }
         }
 
         protected override void Awake()

@@ -17,7 +17,8 @@ namespace Genso.API {
             SetGrounded(true, other);
         }
 
-        void OnTriggerStay(Collider other) {
+        void OnTriggerStay(Collider other)
+        {
             SetGrounded(true, other);
         }
 
@@ -29,8 +30,9 @@ namespace Genso.API {
             if (Character == null || other == null)
                 return;
 
-            if (other.CompareTag("Platform"))
-                Character.IsGrounded = value;
+            if (other.CompareTag("Platform")) {
+                Character.IsGrounded = value;   
+            }
         }
     }
 

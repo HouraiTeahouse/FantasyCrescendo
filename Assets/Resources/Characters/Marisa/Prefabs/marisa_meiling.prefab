@@ -1319,7 +1319,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 443580}
-  - 95: {fileID: 9544080}
   m_Layer: 0
   m_Name: Marisa_tpose_clothed4th
   m_TagString: Untagged
@@ -1882,6 +1881,7 @@ GameObject:
   - 114: {fileID: 11434712}
   - 114: {fileID: 11482868}
   - 114: {fileID: 11451884}
+  - 95: {fileID: 9549044}
   m_Layer: 9
   m_Name: marisa_meiling
   m_TagString: Player
@@ -4312,19 +4312,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!95 &9544080
+--- !u!95 &9549044
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 155782}
+  m_GameObject: {fileID: 179158}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 114a83b22d7f35046888fbc687a6bb6c, type: 3}
   m_Controller: {fileID: 9100000, guid: 9adcc966fe629f744813b6f35ef39806, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -4371,6 +4371,15 @@ MonoBehaviour:
   _airJump:
     _name: air jump
     _hash: 1720790206
+  _attack:
+    _name: attack
+    _hash: 1203776827
+  _horizontalInput:
+    _name: horizontal input
+    _hash: 351900548
+  _verticalInput:
+    _name: vertical input
+    _hash: 1470956272
 --- !u!114 &11482868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4771,6 +4780,34 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: AirJumpTrigger._hash
       value: 1720790206
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _attack._hash
+      value: 1203776827
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _horizontalInput._hash
+      value: 351900548
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _verticalInput._hash
+      value: 1470956272
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _attack._name
+      value: attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _horizontalInput._name
+      value: horizontal input
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _verticalInput._name
+      value: vertical input
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

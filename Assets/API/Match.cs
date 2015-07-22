@@ -72,17 +72,22 @@ namespace Genso.API {
 			_winner = -1;
 		}
 
-		void OnLevelWasLoaded(int level) {
+        void OnLevelWasLoaded(int level)
+        {
+            Debug.Log("Hello");
+
 			if(Stage.Instance != null)
 				return;
 
-
+		    StartMatch();
 
 		}
 
 		public void StartMatch() {
 			if (PlayerCount > Stage.SupportedPlayerCount)
 				throw new InvalidOperationException("Cannot start a match when there are more players participating than supported by the selected stage");
+            
+            OnStartMatch();
 
 			// Spawn players
 			for(int i = 0; i < PlayerCount; i++) {
@@ -93,6 +98,9 @@ namespace Genso.API {
 
 			StartCoroutine(MatchLoop());
 		}
+
+        protected virtual void OnStartMatch() {
+        }
 
 		protected abstract void OnSpawn(Character character);
 

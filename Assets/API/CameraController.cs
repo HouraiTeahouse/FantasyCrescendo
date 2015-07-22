@@ -76,10 +76,23 @@ namespace Genso.API {
             Instance.targets.Add(targetTransform);
         }
 
+        public static void RemoveTarget(Component target) {
+            if (target == null || Instance == null)
+                return;
+
+            Instance.targets.Remove(target.transform);
+        }
+
         public static void AddTarget(GameObject target) {
             if (target == null)
                 throw new ArgumentNullException("target");
             AddTarget(target.transform);
+        }
+
+        public static void RemoveTarget(GameObject target) {
+            if (target == null)
+                return;
+            RemoveTarget(target.transform);
         }
 
     }

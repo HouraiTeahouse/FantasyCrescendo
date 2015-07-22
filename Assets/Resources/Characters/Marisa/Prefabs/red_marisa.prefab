@@ -1881,9 +1881,9 @@ GameObject:
   - 114: {fileID: 11434712}
   - 114: {fileID: 11482868}
   - 114: {fileID: 11451884}
-  - 95: {fileID: 9551528}
+  - 95: {fileID: 9593634}
   m_Layer: 9
-  m_Name: marisa_alice
+  m_Name: red_marisa
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3372,7 +3372,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.288986206, y: .66900003, z: -.306847155}
+  m_LocalPosition: {x: -1.01858377, y: .515738606, z: -.260255724}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 443580}
@@ -4312,7 +4312,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!95 &9551528
+--- !u!95 &9593634
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -4447,7 +4447,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: d0e3811c7c209cc43bf29098a1fbf0d3, type: 2}
+  - {fileID: 2100000, guid: 35b7aa284951024429d93a688c3fee5c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4483,7 +4483,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 18efdbf49ada54d48ac6726d07ccfd24, type: 2}
+  - {fileID: 2100000, guid: 0c32551929ecbe2489751890528790a8, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4520,7 +4520,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: d0e3811c7c209cc43bf29098a1fbf0d3, type: 2}
+  - {fileID: 2100000, guid: 35b7aa284951024429d93a688c3fee5c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4603,7 +4603,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 767ef1b2eb180ff47b5cc8ed1075a3bf, type: 2}
+  - {fileID: 2100000, guid: 03d8d0edd3f22154f851978a4e6ca767, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4640,7 +4640,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: d0e3811c7c209cc43bf29098a1fbf0d3, type: 2}
+  - {fileID: 2100000, guid: 35b7aa284951024429d93a688c3fee5c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4677,7 +4677,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 18efdbf49ada54d48ac6726d07ccfd24, type: 2}
+  - {fileID: 2100000, guid: 0c32551929ecbe2489751890528790a8, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4794,12 +4794,12 @@ Prefab:
       value: 1470956272
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: _horizontalInput._name
-      value: horizontal input
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
       propertyPath: _attack._name
       value: attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _horizontalInput._name
+      value: horizontal input
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _verticalInput._name
