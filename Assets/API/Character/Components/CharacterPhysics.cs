@@ -124,7 +124,9 @@ namespace Genso.API {
                 return;
             
             // Apply upward force to jump
-            Velocity += Vector3.up * Mathf.Sqrt(2f * _gravity * _jumpHeight[_jumpCount]);
+			Vector3 temp = Velocity;
+			temp.y = Mathf.Sqrt(2f * _gravity * _jumpHeight[_jumpCount]);
+			Velocity = temp;
 
             _jumpCount++;
         }
