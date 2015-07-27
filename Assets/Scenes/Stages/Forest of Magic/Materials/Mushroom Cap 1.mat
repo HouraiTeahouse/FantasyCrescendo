@@ -9,7 +9,7 @@ Material:
   m_Name: Mushroom Cap 1
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 1
+  m_LightmapFlags: 2
   m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
@@ -102,7 +102,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: 0
+        second: .829999983
       data:
         first:
           name: _BumpScale
@@ -126,13 +126,13 @@ Material:
       data:
         first:
           name: _Metallic
-        second: 0
+        second: .569999993
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: 0, g: 2, b: 1.08965492, a: 1}
+        second: {r: 0, g: 1, b: 1, a: 1}
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: 0, g: 0, b: 0, a: 1}
