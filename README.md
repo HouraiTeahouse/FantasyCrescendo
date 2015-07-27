@@ -31,7 +31,7 @@ This is an open project, intended to be a community driven project. Contribution
 ## Licensing
 First and foremost, Gensō Shōjokōsen is a derivative of Touhou project. Thus, we ask that any redistirbution or derivative of this project adhere to the guidelines created by ZUN, [viewable in English here](http://en.touhouwiki.net/wiki/Touhou_Wiki:Copyrights). 
 
-Furthermore, GensoShojokosen is licensed under two seperate liscenses depending what content is in question:  
+Furthermore, Gensō Shōjokōsen is licensed under two seperate liscenses depending what content is in question:  
 - The software (the written code) itself is under the GNU Public License Version v3.0. See [here](./SOFTWARE_LICENSE) for more information.
 - The content, virtually everything else, is under a CC BY-NC-SA v4.0 license. See [here!](./CONTENT_LICENSE) for more information.
 
