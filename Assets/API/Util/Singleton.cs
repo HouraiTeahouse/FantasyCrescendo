@@ -4,8 +4,8 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T> {
 
     private static T _instance;
 
-    [SerializeField]
-    private bool keepBetweenScenes;
+	[SerializeField]
+	private bool _dontDestroyOnLoad;
 
     public static T Instance {
         get {
@@ -20,12 +20,13 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T> {
     }
 
     protected virtual void Awake() {
-        if (_instance == null)
-            _instance = this as T;
-        else 
-            Destroy(_instance);
-        if(keepBetweenScenes)
-            DontDestroyOnLoad(this);
+        if (_instance == null) {
+			_instance = this as T;
+			if(_dontDestroyOnLoad)
+				DontDestroyOnLoad(this);
+		} else {
+			Destroy(gameObject);
+		}
     }
 
 }

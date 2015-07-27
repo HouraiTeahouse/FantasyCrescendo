@@ -74,7 +74,6 @@ namespace Genso.API {
 
         void OnLevelWasLoaded(int level)
         {
-            Debug.Log("Hello");
 
 			if(Stage.Instance != null)
 				return;

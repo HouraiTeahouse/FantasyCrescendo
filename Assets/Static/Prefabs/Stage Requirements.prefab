@@ -327,7 +327,7 @@ Light:
   serializedVersion: 6
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: .25
+  m_Intensity: .5
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7e5694bd3dd6a4f99a0f89041b12d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keepBetweenScenes: 0
+  _dontDestroyOnLoad: 0
   targetPositionBias: {x: 0, y: 1, z: 0}
   padding: {x: .100000001, y: .100000001}
   cameraSpeed: 5
@@ -461,7 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b773a6b7da2e425448f5d6db19fbae28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keepBetweenScenes: 0
+  _dontDestroyOnLoad: 0
   mainCamera: {fileID: 2043340}
 --- !u!114 &11445952
 MonoBehaviour:
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ba789e41df88a4eadce1a50853ab00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keepBetweenScenes: 0
+  _dontDestroyOnLoad: 0
   validCharacterStrings:
   - Player
 --- !u!114 &11453524

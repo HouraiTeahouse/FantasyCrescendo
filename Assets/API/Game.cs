@@ -17,6 +17,18 @@ namespace Genso.API {
             }
         }
 
+		protected override void Awake () {
+			base.Awake ();
+			if(_config == null) {
+				Config[] configs = Resources.FindObjectsOfTypeAll<Config>();
+				if(configs.Length > 0) {
+					_config = configs[0];
+				} else {
+					Debug.LogError("Game singledton does not have an assigned Config and no configs are found in resources");
+				}
+			}
+		}
+
 		public static Character SpawnPlayer(int playerNumber, CharacterData charData) {
 			// Load the prefab for the player
 			Character character = charData.LoadPrefab((int)(UnityEngine.Random.value * charData.AlternativeCount));
@@ -82,16 +94,6 @@ namespace Genso.API {
             if (Config == null)
                 return Color.white;
             return playerNumber < 0 || playerNumber >= MaxPlayers ? Color.white : Config.GenericPlayerData[playerNumber].Color;
-        }
-
-        void OnLevelWasLoaded(int level)
-        {
-            GameObject[] staticManagers = GameObject.FindGameObjectsWithTag("Static Managers");
-            foreach (GameObject tagged in staticManagers)
-            {
-                if (tagged != gameObject)
-                    Destroy(tagged);
-            }
         }
 
     }

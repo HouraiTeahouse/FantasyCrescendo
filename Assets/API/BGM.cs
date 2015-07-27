@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 using System.Collections;
 
 namespace Genso.API {
 
     public sealed class BGM : Singleton<BGM> {
+
+		[SerializeField]
+		private AudioMixerGroup mixerGroup;
 
         private static AudioSource bgmSource;
 
@@ -23,7 +27,11 @@ namespace Genso.API {
 
         protected override void Awake() {
             base.Awake();
-            bgmSource = gameObject.SafeGetComponent<AudioSource>();
+            bgmSource = gameObject.GetOrAddComponent<AudioSource>();
+			bgmSource.outputAudioMixerGroup = mixerGroup;
+			bgmSource.hideFlags = HideFlags.HideInInspector;
+			bgmSource.volume = 1f;
+			bgmSource.spatialBlend = 0f;
         }
 
         void OnDestroy() {
