@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.Callbacks;
 
 namespace Genso.API.Editor {
 
@@ -33,25 +34,22 @@ namespace Genso.API.Editor {
         public static void BuildWindows()
         {
             string buildFolder = buildRoot + "Windows/";
-            string copyFolder = copyRoot + "Windows/";
-            Build(buildFolder, BuildTarget.StandaloneWindows, copyFolder);
+            Build(buildFolder, BuildTarget.StandaloneWindows);
             buildFolder = buildRoot + "Windows_64/";
-            Build(buildFolder, BuildTarget.StandaloneWindows64, copyFolder);
+            Build(buildFolder, BuildTarget.StandaloneWindows64);
         }
 
         [MenuItem("Genso/Build Mac", false, 51)]
         public static void BuildMac()
         {
             string buildFolder = buildRoot + "Mac/";
-            string copyFolder = copyRoot + "Mac/";
-            Build(buildFolder, BuildTarget.StandaloneOSXUniversal, copyFolder);
+            Build(buildFolder, BuildTarget.StandaloneOSXUniversal);
         }
 
         [MenuItem("Genso/Build Linux", false, 51)]
         public static void BuildLinux() {
             string buildFolder = buildRoot + "Linux/";
-            string copyFolder = copyRoot + "Linux/";
-            Build(buildFolder, BuildTarget.StandaloneLinuxUniversal, copyFolder);
+            Build(buildFolder, BuildTarget.StandaloneLinuxUniversal);
         }
 
         [MenuItem("Genso/Build All", false, 101)]
@@ -61,7 +59,49 @@ namespace Genso.API.Editor {
             BuildLinux();
         }
 
-        public static void Build(string path, BuildTarget target, string copyPath = null) {
+		[PostProcessBuild]
+		private static void AddPostBuildFiles(BuildTarget target, string path) {
+
+			path = Path.GetDirectoryName(path) + "/";
+			string copyPath = copyRoot;
+			
+			switch(target) {
+				case BuildTarget.StandaloneWindows:
+				case BuildTarget.StandaloneWindows64:
+					copyPath += "Windows/";
+					break;
+				case BuildTarget.StandaloneOSXIntel:
+				case BuildTarget.StandaloneOSXIntel64:
+				case BuildTarget.StandaloneOSXUniversal:
+					copyPath += "Mac/";
+					break;
+				case BuildTarget.StandaloneLinux:
+				case BuildTarget.StandaloneLinux64:
+				case BuildTarget.StandaloneLinuxUniversal:
+					copyPath += "Linux/";
+					break;
+				default:
+					return;
+			}
+			Debug.Log (copyPath);
+
+			// Copy all Post Build files to output directory
+			
+			//Now Create all of the directories
+			foreach (string dirPath in Directory.GetDirectories(copyPath, "*", 
+			                                                    SearchOption.AllDirectories))
+				Directory.CreateDirectory(dirPath.Replace(copyPath, path));
+			
+			//Copy all the files & Replaces any files with the same name
+			foreach (string newPath in Directory.GetFiles(copyPath,
+			                                              "*.*",
+			                                              SearchOption.AllDirectories)) {
+				if(!newPath.Contains(".meta"))
+					File.Copy(newPath, newPath.Replace(copyPath, path), true);   
+			}
+		}
+
+        public static void Build(string path, BuildTarget target) {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             
@@ -91,24 +131,6 @@ namespace Genso.API.Editor {
                 scenePaths[i] = scenes[i].path;
 
             BuildPipeline.BuildPlayer(scenePaths, executablePath, target, BuildOptions.None);
-
-            if (copyPath == null)
-                return;
-
-            // Copy all Post Build files to output directory
-
-            //Now Create all of the directories
-            foreach (string dirPath in Directory.GetDirectories(copyPath, "*", 
-                SearchOption.AllDirectories))
-                Directory.CreateDirectory(dirPath.Replace(copyPath, path));
-
-            //Copy all the files & Replaces any files with the same name
-            foreach (string newPath in Directory.GetFiles(copyPath,
-                                                          "*.*",
-                                                          SearchOption.AllDirectories)) {
-                if(!newPath.Contains(".meta"))
-                    File.Copy(newPath, newPath.Replace(copyPath, path), true);   
-            }
         }
 
         /// <summary>
