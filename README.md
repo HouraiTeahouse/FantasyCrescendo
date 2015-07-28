@@ -1,10 +1,10 @@
-# Genso Shojokosen (幻想少女交戦)
+# Fantasy Crescendo ~ Rumble Dream Ensemble
 A open source Touhou x Smash Bros game created in Unity3D.
 
 ## About
-The Touhou Project (東方Project) ) is a Japanese doujin game series focused on bullet hell shooters made by the one-man developer Team Shanghai Alice. Its colorful cast of characters and largely self-defined setting of Gensokyo has attracted a large following on both sides of the Pacific.
+The Touhou Project (東方Project) is a Japanese doujin game series focused on bullet hell shooters made by the one-man developer Team Shanghai Alice. Its colorful cast of characters and largely self-defined setting of Gensokyo has attracted a large following on both sides of the Pacific.
 
-Gensō Shōjokōsen is a collaborative community project created by various Touhou fans to create a fan-game akin to that of Super Smash Bros with the same cast and setting seen in the canon Touhou games.
+*Fantasy Crescendo ~ Rumble Dream Ensemble* is a collaborative community project created by various Touhou fans to create a fan-game akin to that of Super Smash Bros with the same cast and setting seen in the canon Touhou games.
 
 This project does not only consist of code contributions, and many of the assets included are custom art, music, sound effects, and 3D designs created by fan submissions. For a full list of credits, see the [credits](./CREDITS.md) file in the repository.
 
