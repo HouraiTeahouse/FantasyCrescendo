@@ -23,14 +23,14 @@ namespace Genso.API.Editor {
             CreateAsset<CharacterData>();
         }
 
-        [MenuItem("Genso/Clear Player Prefs %#c")]
+        [MenuItem("Crescendo/Clear Player Prefs %#c")]
         public static void ClearPlayerPrefs()
         {
             PlayerPrefs.DeleteAll();
             Debug.Log("Player Prefs Cleared.");
         }
 
-        [MenuItem("Genso/Build Windows", false, 51)]
+        [MenuItem("Crescendo/Build Windows", false, 51)]
         public static void BuildWindows()
         {
             string buildFolder = buildRoot + "Windows/";
@@ -39,20 +39,20 @@ namespace Genso.API.Editor {
             Build(buildFolder, BuildTarget.StandaloneWindows64);
         }
 
-        [MenuItem("Genso/Build Mac", false, 51)]
+        [MenuItem("Crescendo/Build Mac", false, 51)]
         public static void BuildMac()
         {
             string buildFolder = buildRoot + "Mac/";
             Build(buildFolder, BuildTarget.StandaloneOSXUniversal);
         }
 
-        [MenuItem("Genso/Build Linux", false, 51)]
+        [MenuItem("Crescendo/Build Linux", false, 51)]
         public static void BuildLinux() {
             string buildFolder = buildRoot + "Linux/";
             Build(buildFolder, BuildTarget.StandaloneLinuxUniversal);
         }
 
-        [MenuItem("Genso/Build All", false, 101)]
+        [MenuItem("Crescendo/Build All", false, 101)]
         public static void BuildAll() {
             BuildWindows();
             BuildMac();
@@ -112,7 +112,7 @@ namespace Genso.API.Editor {
             foreach(DirectoryInfo subdirectory in directory.GetDirectories())
                 subdirectory.Delete(true);
 
-            string executablePath = path + "genso";
+            string executablePath = path + "fantasycrescendo";
             switch (target) {
                 case BuildTarget.StandaloneWindows:
                 case BuildTarget.StandaloneWindows64:
