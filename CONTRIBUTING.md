@@ -1,4 +1,4 @@
-## Contributing to GensoShojokosen
+## Contributing to FantasyCrescendo
 
 Hi there! We're thrilled that you'd like to contribute to this project. Your
 help is essential for keeping it great.
@@ -36,5 +36,5 @@ them as separate pull requests.
 - [Using Pull Requests](https://help.github.com/articles/using-pull-requests/)
 - [GitHub Help](https://help.github.com)
 
-[fork]: https://github.com/HouraiTeahouse/GensoShojokosen/fork
-[pr]: https://github.com/HouraiTeahouse/GensoShojokosen/compare
+[fork]: https://github.com/HouraiTeahouse/FantasyCrescendo/fork
+[pr]: https://github.com/HouraiTeahouse/FantasyCrescendo/compare
