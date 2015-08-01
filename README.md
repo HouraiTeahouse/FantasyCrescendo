@@ -1,10 +1,10 @@
-# Genso Shojokosen (幻想少女交戦)
+# Fantasy Crescendo ~ Rumble Dream Ensemble
 A open source Touhou x Smash Bros game created in Unity3D.
 
 ## About
-The Touhou Project (東方Project) ) is a Japanese doujin game series focused on bullet hell shooters made by the one-man developer Team Shanghai Alice. Its colorful cast of characters and largely self-defined setting of Gensokyo has attracted a large following on both sides of the Pacific.
+The Touhou Project (東方Project) is a Japanese doujin game series focused on bullet hell shooters made by the one-man developer Team Shanghai Alice. Its colorful cast of characters and largely self-defined setting of Gensokyo has attracted a large following on both sides of the Pacific.
 
-Gensō Shōjokōsen is a collaborative community project created by various Touhou fans to create a fan-game akin to that of Super Smash Bros with the same cast and setting seen in the canon Touhou games.
+*Fantasy Crescendo ~ Rumble Dream Ensemble* is a collaborative community project created by various Touhou fans to create a fan-game akin to that of Super Smash Bros with the same cast and setting seen in the canon Touhou games.
 
 This project does not only consist of code contributions, and many of the assets included are custom art, music, sound effects, and 3D designs created by fan submissions. For a full list of credits, see the [credits](./CREDITS.md) file in the repository.
 
@@ -20,7 +20,7 @@ This part is about to setting up a development enviroment for contributing to th
 ## Release Installation
 This part is about setting up and running released precompiled binaries.
 
-0. Visit the [Releases](https://github.com/HouraiTeahouse/GensoShojokosen/releases) page on this repository for the latest releases.
+0. Visit the [Releases](https://github.com/HouraiTeahouse/FantasyCrescendo/releases) page on this repository for the latest releases.
 0. On each release will be attached three ZIPs. One for Windows, one for Mac, one for Linux (Debian based distros only).
 0. Download and unzip the ZIPs.
 0. Run the main executable in the root directory of the extracted folder.
@@ -29,9 +29,9 @@ This part is about setting up and running released precompiled binaries.
 This is an open project, intended to be a community driven project. Contributions are very welcome. Code/software based contributions can be received and reviewed publicly on this repository. Non-code assets like BGM or 3D models are best sent to the project's open mailbox: simply mail teahouse.hourai@gmail.com. For more information, please read [this](./CONTRIBUTING.md).
 
 ## Licensing
-First and foremost, Gensō Shōjokōsen is a derivative of Touhou project. Thus, we ask that any redistirbution or derivative of this project adhere to the guidelines created by ZUN, [viewable in English here](http://en.touhouwiki.net/wiki/Touhou_Wiki:Copyrights). 
+First and foremost, *Fantasy Crescendo ~ Rumble Dream Ensemble* is a derivative of Touhou project. Thus, we ask that any redistirbution or derivative of this project adhere to the guidelines created by ZUN, [viewable in English here](http://en.touhouwiki.net/wiki/Touhou_Wiki:Copyrights). 
 
-Furthermore, Gensō Shōjokōsen is licensed under two seperate liscenses depending what content is in question:  
+Furthermore, *Fantasy Crescendo ~ Rumble Dream Ensemble* is licensed under two seperate liscenses depending what content is in question:  
 - The software (the written code) itself is under the GNU Public License Version v3.0. See [here](./SOFTWARE_LICENSE) for more information.
 - The content, virtually everything else, is under a CC BY-NC-SA v4.0 license. See [here!](./CONTENT_LICENSE) for more information.
 
