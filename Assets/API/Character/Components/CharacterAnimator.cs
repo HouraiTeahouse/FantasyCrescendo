@@ -34,8 +34,8 @@ namespace Crescendo.API {
         [SerializeField]
         private AnimationFloat _verticalInput = new AnimationFloat("vertical input");
 
-        protected override void Awake() {
-            base.Awake();
+        protected override void Start() {
+            base.Start();
 
             _animator = GetComponentInChildren<Animator>();
             _physics = GetComponent<CharacterPhysics>();

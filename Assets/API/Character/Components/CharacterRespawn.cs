@@ -5,8 +5,8 @@ namespace Crescendo.API {
 
     public sealed class CharacterRespawn : CharacterComponent {
 
-        protected override void Awake() {
-            base.Awake();
+        protected override void Start() {
+            base.Start();
 
             if (Character == null)
                 return;

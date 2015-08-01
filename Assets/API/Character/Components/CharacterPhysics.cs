@@ -59,8 +59,8 @@ namespace Crescendo.API {
         private int _jumpCount = 0;
         private bool _grounded;
 
-        protected override void Awake() {
-            base.Awake();
+        protected override void Start() {
+            base.Start();
             _rigidbody = GetComponent<Rigidbody>();
 
             if (Character == null)

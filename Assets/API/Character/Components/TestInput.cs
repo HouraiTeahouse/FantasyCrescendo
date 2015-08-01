@@ -40,9 +40,9 @@ namespace Crescendo.API {
             get { return Input.GetButtonDown(AttackButton); }
         }
 
-        protected override void Awake()
+        protected override void Start()
         {
-            base.Awake();
+            base.Start();
             InputSource = this;
         }
 

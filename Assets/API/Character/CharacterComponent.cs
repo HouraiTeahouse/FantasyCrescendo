@@ -18,7 +18,7 @@ namespace Crescendo.API {
             }
         }
 
-        protected virtual void Awake() {
+        protected virtual void Start() {
             Character = GetComponentInParent<Character>();
             if (Character == null) {
                 enabled = false;
