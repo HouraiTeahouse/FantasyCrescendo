@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     /// <summary>
     /// A utility behaviour with a large number of more succinct code shortcuts to make for shorter

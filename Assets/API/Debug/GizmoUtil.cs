@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     public sealed class GizmoDisposable : IDisposable {
 

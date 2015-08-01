@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     [RequireComponent(typeof(Camera))]
     public sealed class CameraController : Singleton<CameraController> {

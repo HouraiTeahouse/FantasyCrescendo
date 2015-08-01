@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Genso.API;
+using Crescendo.API;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public sealed class PlayerIndicator : MonoBehaviour {

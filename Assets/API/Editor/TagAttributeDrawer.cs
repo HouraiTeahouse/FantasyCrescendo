@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-namespace Genso.API.Editor
+namespace Crescendo.API.Editor
 {
 
     [CustomPropertyDrawer(typeof(TagAttribute))]

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
 
     public class Config : ScriptableObject {

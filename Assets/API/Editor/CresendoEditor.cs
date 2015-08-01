@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 
-namespace Genso.API.Editor {
+namespace Crescendo.API.Editor {
 
     public class GensoEditor
     {

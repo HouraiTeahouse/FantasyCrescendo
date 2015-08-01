@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     [RequireComponent(typeof(Text))]
     public sealed class FPSCounter : MonoBehaviour

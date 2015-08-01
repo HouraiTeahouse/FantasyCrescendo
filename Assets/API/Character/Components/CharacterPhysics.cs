@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(Rigidbody))]

@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using SmartLocalization;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     public class CharacterData : ScriptableObject {
 

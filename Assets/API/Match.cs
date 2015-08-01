@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
 
     /// <summary>

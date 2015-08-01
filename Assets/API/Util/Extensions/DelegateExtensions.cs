@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     /// <summary>
     /// A set of utility extension functions to make it easier to use various delegate functions.

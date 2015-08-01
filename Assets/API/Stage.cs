@@ -2,7 +2,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     /// <summary>
     /// A container behaviour for handling general data about the stage.

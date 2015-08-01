@@ -1,5 +1,5 @@
 ﻿
-namespace Genso.API {
+namespace Crescendo.API {
 
     public interface IKnocckbackable {
 

@@ -2,7 +2,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     [System.Serializable]
     public class Resource<T> where T : Object {

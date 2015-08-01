@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     public class GlobalCallbacks : Singleton<GlobalCallbacks> {
 

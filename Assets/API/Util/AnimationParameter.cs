@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     [Serializable]
     public abstract class BaseAnimationParameter {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     public static class UnityObjectExtensions
     {

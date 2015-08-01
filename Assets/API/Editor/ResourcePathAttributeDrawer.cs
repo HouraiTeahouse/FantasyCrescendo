@@ -4,7 +4,7 @@ using System;
 using System.Text.RegularExpressions;
 using UnityObject = UnityEngine.Object;
 
-namespace Genso.API.Editor {
+namespace Crescendo.API.Editor {
 
     [CustomPropertyDrawer(typeof(ResourcePathAttribute))]
     public class ResourcePathAttributeDrawer : PropertyDrawer {

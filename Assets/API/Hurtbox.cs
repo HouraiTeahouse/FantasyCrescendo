@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     public enum HitboxType {
 

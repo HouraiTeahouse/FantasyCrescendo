@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Genso.API
+namespace Crescendo.API
 {
 
     /// <summary>

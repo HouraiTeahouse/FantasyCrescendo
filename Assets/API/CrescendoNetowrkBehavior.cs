@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 
 
-namespace Genso.API {
+namespace Crescendo.API {
 
 	public class GensoNetworkBehaviour : NetworkBehaviour {
 		

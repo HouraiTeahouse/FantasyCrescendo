@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     [RequireComponent(typeof(ParticleSystem))]
     public class AutoDestroyParticleSystem : MonoBehaviour {

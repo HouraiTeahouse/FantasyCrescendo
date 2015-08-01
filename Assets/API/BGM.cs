@@ -2,7 +2,7 @@
 using UnityEngine.Audio;
 using System.Collections;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     public sealed class BGM : Singleton<BGM> {
 

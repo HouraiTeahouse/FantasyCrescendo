@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     [RequireComponent(typeof(Collider))]
     public class GroundCheck : CharacterComponent {

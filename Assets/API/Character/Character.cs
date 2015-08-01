@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Gemso.API;
 using UnityEngine;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     /// <summary>
     /// General character class for handling the physics and animations of individual characters

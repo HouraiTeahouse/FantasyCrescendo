@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using Genso.API;
-using DebugUtil = Genso.API.DebugUtil;
+using Crescendo.API;
+using DebugUtil = Crescendo.API.DebugUtil;
 
 /// <summary>
 /// Draws Colliders as Gizmos, permanentally seen in the Scene view.

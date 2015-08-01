@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using Genso.API;
+using Crescendo.API;
 using UnityEngine.UI;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     [RequireComponent(typeof(Text))]
     public class StockIndicator : MonoBehaviour {

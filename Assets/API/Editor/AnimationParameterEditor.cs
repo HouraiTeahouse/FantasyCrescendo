@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-namespace Genso.API.Editor {
+namespace Crescendo.API.Editor {
 
     [CustomPropertyDrawer(typeof(AnimationBool))]
     [CustomPropertyDrawer(typeof(AnimationInt))]

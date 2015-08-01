@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     [RequireComponent(typeof(Character))]
     public abstract class CharacterComponent : GensoBehaviour {

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Genso.API {
+namespace Crescendo.API {
 
     public static class DebugUtil {
 
