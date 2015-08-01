@@ -92,7 +92,9 @@ namespace Genso.API {
 			for(int i = 0; i < PlayerCount; i++) {
 				Character runtimeCharacter = Game.SpawnPlayer(i,selectedCharacters[i]);
 				OnSpawn(runtimeCharacter);
-				Stage.GetSpawnPoint(i).EditSpawn(runtimeCharacter);
+                Transform spawnPoint = Stage.GetSpawnPoint(i);
+                runtimeCharacter.position = spawnPoint.position;
+                runtimeCharacter.rotation = spawnPoint.rotation;
 			}
 
 			StartCoroutine(MatchLoop());

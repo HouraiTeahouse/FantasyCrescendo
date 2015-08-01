@@ -27,7 +27,7 @@ namespace Genso.API {
         /// <exception cref="ArgumentNullException">thrown if tags is null</exception>
         /// <returns>True if any of the tags match, False if none do.</returns>
         public static bool CompareTags(this GameObject obj, IEnumerable<string> tags) {
-            if(tags == null)
+            if (tags == null)
                 throw new ArgumentNullException("tags");
 
             var arrayTest = tags as string[];
@@ -44,6 +44,31 @@ namespace Genso.API {
             }
             return false;
         }
+
+        public static T[] GetComponents<T>(this IEnumerable<GameObject> objs, Predicate<GameObject> filter = null)
+        {
+            if (objs == null)
+                throw new ArgumentNullException("objs");
+
+            List<T> components = new List<T>();
+
+            var arrayTest = objs as GameObject[];
+            if (arrayTest != null)
+            {
+                foreach (GameObject go in arrayTest)
+                    if (go != null && (filter == null || filter(go)))
+                        components.AddRange(go.GetComponents<T>());
+            }
+            else
+            {
+                foreach (GameObject go in objs)
+                    if (go != null && (filter == null || filter(go)))
+                        components.AddRange(go.GetComponents<T>());
+            }
+
+            return components.ToArray();
+        }
+
 
         /// <summary>
         /// Enumerates all children of a GameObject.

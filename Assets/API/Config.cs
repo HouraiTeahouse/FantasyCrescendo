@@ -6,7 +6,14 @@ namespace Genso.API {
 
     public class Config : ScriptableObject {
 
+        [Tag]
+        public string playerTag;
 
+        [Tag]
+        public string spawnTag;
+
+        [Tag]
+        public string respawnTag;
 
         public LayerMask HurtboxLayers;
 

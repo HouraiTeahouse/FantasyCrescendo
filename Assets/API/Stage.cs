@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Genso.API {
 
@@ -14,15 +15,19 @@ namespace Genso.API {
         [SerializeField]
         private Camera mainCamera;
 
-        private SpawnPoint[] spawnPoints;
-        private Transform respawnPoint;
+        private Transform[] spawnPoints;
+        private Transform[] repsawnPoints;
 
         public static Transform Transform {
             get { return Instance.transform; }
         }
 
-        public static Vector3 RespawnPosition {
-            get { return Instance.respawnPoint.position; }
+        /// <summary>
+        /// Randomly selects one of the respawn positions to respawn to
+        /// </summary>
+        public static Transform RespawnPosition
+        {
+            get { return Instance.repsawnPoints[Random.Range(0, Instance.repsawnPoints.Length)]; }
         }
 
         /// <summary>
@@ -41,7 +46,7 @@ namespace Genso.API {
             }
         }
 
-		public static SpawnPoint GetSpawnPoint(int playerNumber) {
+		public static Transform GetSpawnPoint(int playerNumber) {
 			if(Instance == null)
 				throw new InvalidOperationException("Cannot get the spawn points of a stage that does not exist");
 			if(playerNumber < 0 || playerNumber > SupportedPlayerCount)
@@ -52,8 +57,9 @@ namespace Genso.API {
         protected override void Awake()
         {
             base.Awake();
-            spawnPoints = FindObjectsOfType<SpawnPoint>();
-            respawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
+            spawnPoints = GameObject.FindGameObjectsWithTag(Game.SpawnTag).GetComponents<Transform>();
+
+            repsawnPoints = GameObject.FindGameObjectWithTag(Game.RespawnTag).GetComponents<Transform>();
 
             // Sort the Spawn Points by name instead of by random spatial orientation
             Array.Sort(spawnPoints, (s1, s2) => s1.name.CompareTo(s2.name));

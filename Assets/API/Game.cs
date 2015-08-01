@@ -61,6 +61,18 @@ namespace Genso.API {
             platform.Character = target;
         }
 
+        public static string PlayerTag {
+            get { return Config.playerTag; }
+        }
+
+        public static string SpawnTag {
+            get { return Config.spawnTag; }
+        }
+
+        public static string RespawnTag {
+            get { return Config.respawnTag; }
+        }
+
         public static int MaxPlayers
         {
             get { return Config.GenericPlayerData.Length; }

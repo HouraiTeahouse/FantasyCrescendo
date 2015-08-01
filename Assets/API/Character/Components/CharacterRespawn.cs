@@ -24,8 +24,9 @@ namespace Genso.API {
         void OnBlastZoneExit() {
             if (!enabled)
                 return;
-            Vector3 respawnPos = Stage.RespawnPosition;
-            Character.transform.position = respawnPos;
+            Transform respawnPos = Stage.RespawnPosition;
+            Character.position = respawnPos.position;
+            Character.rotation = respawnPos.rotation;
             Game.CreateRespawnPlatform(Character);
         }
 
