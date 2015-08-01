@@ -7,7 +7,7 @@ using UnityEditor.Callbacks;
 
 namespace Crescendo.API.Editor {
 
-    public class GensoEditor
+    public static class CrescendoEditor
     {
         private static string buildRoot = Regex.Replace(Application.dataPath, "Assets", "") + "/Build/";
         private static string copyRoot = Application.dataPath + "/Post Build/";
@@ -22,6 +22,12 @@ namespace Crescendo.API.Editor {
         public static void CreateCharacterData() {
             CreateAsset<CharacterData>();
         }
+
+        [MenuItem("Assets/Create/BGM Group")]
+        public static void CreateStageData() {
+            CreateAsset<BGMGroup>();
+        }
+
 
         [MenuItem("Crescendo/Clear Player Prefs %#c")]
         public static void ClearPlayerPrefs()

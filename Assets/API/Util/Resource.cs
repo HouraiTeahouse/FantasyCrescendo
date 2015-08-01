@@ -16,6 +16,11 @@ namespace Crescendo.API {
             _path = path;
         }
 
+        public string Path
+        {
+            get { return _path; }
+        }
+
         public bool IsLoaded {
             get { return _asset != null; }
         }

@@ -29,7 +29,7 @@ namespace Crescendo.API {
             base.Awake();
             bgmSource = gameObject.GetOrAddComponent<AudioSource>();
 			bgmSource.outputAudioMixerGroup = mixerGroup;
-			bgmSource.hideFlags = HideFlags.HideInInspector;
+			//bgmSource.hideFlags = HideFlags.HideInInspector;
 			bgmSource.volume = 1f;
 			bgmSource.spatialBlend = 0f;
         }

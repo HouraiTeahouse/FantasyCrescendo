@@ -15,6 +15,9 @@ namespace Crescendo.API {
         [SerializeField]
         private Camera mainCamera;
 
+        [SerializeField]
+        private BGMGroup backgroundMusic;
+
         private Transform[] spawnPoints;
         private Transform[] repsawnPoints;
 
@@ -60,6 +63,9 @@ namespace Crescendo.API {
             spawnPoints = GameObject.FindGameObjectsWithTag(Game.SpawnTag).GetComponents<Transform>();
 
             repsawnPoints = GameObject.FindGameObjectWithTag(Game.RespawnTag).GetComponents<Transform>();
+            
+            if (backgroundMusic != null)
+                backgroundMusic.PlayRandom();
 
             // Sort the Spawn Points by name instead of by random spatial orientation
             Array.Sort(spawnPoints, (s1, s2) => s1.name.CompareTo(s2.name));
@@ -71,6 +77,7 @@ namespace Crescendo.API {
 
             if (mainCamera == null)
                 Debug.LogError("Stage has no Camera!");
+
         }
 
     }

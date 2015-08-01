@@ -519,7 +519,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 2032400}
+  backgroundMusic: {fileID: 11400000, guid: 94d1fbf8e989f23488f8e4178b9edc1b, type: 2}
 --- !u!114 &11445336
 MonoBehaviour:
   m_ObjectHideFlags: 1
