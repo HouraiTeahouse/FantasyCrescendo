@@ -25,6 +25,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T> {
 			if(_dontDestroyOnLoad)
 				DontDestroyOnLoad(this);
 		} else {
+            if (_instance == this)
+                return;
+            Debug.Log("Destroying " + gameObject + " because " + _instance + " already exists.");
 			Destroy(gameObject);
 		}
     }
