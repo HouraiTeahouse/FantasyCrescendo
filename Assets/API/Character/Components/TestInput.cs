@@ -31,8 +31,7 @@ namespace Crescendo.API {
         {
             get
             {
-                // TODO: Implement properly with animations
-                return false;
+				return Movement.y < 0;
             }
         }
 

@@ -4544,9 +4544,9 @@ MonoBehaviour:
   _walkSpeed: 3
   _dashSpeed: 5
   _airSpeed: 3
-  _maxFallSpeed: 10
-  _fastFallSpeed: 15
-  _helplessFallSpeed: 10
+  _maxFallSpeed: 6
+  _fastFallSpeed: 10
+  _helplessFallSpeed: 7
   _jumpHeight:
   - 1.5
   - 1.5
@@ -5144,6 +5144,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_UseGravity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _maxFallSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _fastFallSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _helplessFallSpeed
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

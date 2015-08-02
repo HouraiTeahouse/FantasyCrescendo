@@ -24,10 +24,10 @@ namespace Crescendo.API {
         private float _airSpeed = 3f;
 
         [SerializeField]
-        private float _maxFallSpeed = 10f;
+        private float _maxFallSpeed = 5f;
 
         [SerializeField]
-        private float _fastFallSpeed = 15f;
+        private float _fastFallSpeed = 10f;
 
         [SerializeField]
         private float _helplessFallSpeed = 10f;
@@ -38,9 +38,9 @@ namespace Crescendo.API {
         private float FallSpeed {
             get {
                 if (Character.IsHelpless)
-                    return _helplessFallSpeed;
+                    return -_helplessFallSpeed;
                 if(Character.IsFastFalling)
-                    return _fastFallSpeed;
+                    return -_fastFallSpeed;
                 return -_maxFallSpeed;
             }
         }
@@ -87,6 +87,10 @@ namespace Crescendo.API {
             _rigidbody.AddForce(0f, -_gravity, 0f);
 
             Vector3 velocity = Velocity;
+
+			if(Character.IsFastFalling)
+				velocity.y = -_fastFallSpeed;
+
             if (velocity.y < FallSpeed)
                 velocity.y = FallSpeed;
 

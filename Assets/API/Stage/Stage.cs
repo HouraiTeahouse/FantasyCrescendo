@@ -25,6 +25,18 @@ namespace Crescendo.API {
             get { return Instance.transform; }
         }
 
+		public static Vector3 Up {
+			get { return Transform.up; }
+		}
+
+		public static Vector3 Right {
+			get { return Transform.right; }
+		}
+
+		public static Vector3 Forward {
+			get { return Transform.forward; }
+		}
+
         /// <summary>
         /// Randomly selects one of the respawn positions to respawn to
         /// </summary>
