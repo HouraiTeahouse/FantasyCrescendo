@@ -1579,9 +1579,12 @@ GameObject:
   - 136: {fileID: 13651156}
   - 54: {fileID: 5447176}
   - 114: {fileID: 11467852}
-  - 114: {fileID: 11445340}
   - 114: {fileID: 11401630}
   - 95: {fileID: 9578158}
+  - 114: {fileID: 11443328}
+  - 114: {fileID: 11495264}
+  - 114: {fileID: 11464638}
+  - 114: {fileID: 11473132}
   m_Layer: 9
   m_Name: marisa_standard
   m_TagString: Player
@@ -4529,7 +4532,7 @@ MonoBehaviour:
   _verticalInput:
     _name: vertical input
     _hash: 1470956272
---- !u!114 &11445340
+--- !u!114 &11443328
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -4537,19 +4540,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 172530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5baa7e20c474cf445a93b255ae96fefe, type: 3}
+  m_Script: {fileID: 11500000, guid: a7524ccf289b53d4883219e7a02ad377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gravity: 9.85999966
-  _walkSpeed: 3
-  _dashSpeed: 5
-  _airSpeed: 3
-  _maxFallSpeed: 6
+  _jumpHeights:
+  - 1.5
+  - 1.5
+--- !u!114 &11464638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b2dbab74905e24299c06bf1a1b6ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxFallSpeed: 5
   _fastFallSpeed: 10
-  _helplessFallSpeed: 7
-  _jumpHeight:
-  - 1.5
-  - 1.5
+  _helplessFallSpeed: 10
 --- !u!114 &11467852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4563,6 +4573,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _facingMode: 0
   triggerSizeRatio: 1.5
+--- !u!114 &11473132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a95177ab369da419d5e11905200942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walkSpeed: 3
+  _dashSpeed: 5
+  _airSpeed: 3
+--- !u!114 &11495264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c1aad27932bea34bab80066bf37440a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gravity: 9.85999966
 --- !u!136 &13651156
 CapsuleCollider:
   m_ObjectHideFlags: 1

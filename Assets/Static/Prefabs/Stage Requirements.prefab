@@ -301,7 +301,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 50, y: 40, z: 3}
+  m_Size: {x: 50, y: 25, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6576696
 BoxCollider:
@@ -355,7 +355,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 4294967007
   m_Lightmapping: 4
   m_BounceIntensity: 1.84000003
   m_ShadowRadius: 0
@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 0
@@ -572,7 +572,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
@@ -737,8 +737,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stockCount: 5
   characters:
-  - {fileID: 11400000, guid: 4d181d06a10cdfd4499bf5bb68e30def, type: 2}
-  - {fileID: 11400000, guid: 4d181d06a10cdfd4499bf5bb68e30def, type: 2}
   - {fileID: 11400000, guid: 4d181d06a10cdfd4499bf5bb68e30def, type: 2}
   - {fileID: 11400000, guid: 4d181d06a10cdfd4499bf5bb68e30def, type: 2}
 --- !u!114 &11469616

@@ -11,13 +11,17 @@ namespace Crescendo.API {
     /// </summary>
     /// Author: James Liu
     /// Authored on 07/01/2015
+    [DisallowMultipleComponent]
     [RequireComponent(typeof(CapsuleCollider))]
+    [RequireComponent(typeof(Rigidbody))]
 	public class Character : GensoBehaviour, IDamageable, IKnocckbackable {
 
         private enum FacingMode { Rotation, Scale }
 
         private CapsuleCollider movementCollider;
         private CapsuleCollider triggerCollider;
+        private Rigidbody _rigidbody;
+        private Collider[] hurtboxes;
 
         [SerializeField]
         private FacingMode _facingMode = FacingMode.Rotation;
@@ -32,7 +36,30 @@ namespace Crescendo.API {
         private bool _dashing;
         private bool _invinicible;
 
-        private Collider[] hurtboxes;
+
+        public Vector3 Velocity
+        {
+            get { return _rigidbody.velocity; }
+            set { _rigidbody.velocity = value; }
+        }
+
+        public float Mass
+        {
+            get { return _rigidbody.mass; }
+            set { _rigidbody.mass = value; }
+        }
+
+        public void AddForce(Vector3 force) {
+            _rigidbody.AddForce(force);
+        }
+
+        public void AddForce(float x, float y) {
+            _rigidbody.AddForce(x, y, 0f);
+        }
+
+        public void AddForce(float x, float y, float z) {
+            _rigidbody.AddForce(x, y, z);
+        }
 
         public int PlayerNumber { get; set; }
 
@@ -156,6 +183,10 @@ namespace Crescendo.API {
 
             triggerCollider = gameObject.AddComponent<CapsuleCollider>();
             triggerCollider.isTrigger = true;
+
+            _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+
         }
 
         protected virtual void OnEnable() {

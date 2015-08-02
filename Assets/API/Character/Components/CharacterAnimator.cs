@@ -5,7 +5,6 @@ namespace Crescendo.API {
     public sealed class CharacterAnimator : CharacterComponent {
 
         private Animator _animator;
-        private CharacterPhysics _physics;
 
         [SerializeField]
         private AnimationBool _grounded = new AnimationBool("grounded");
@@ -38,7 +37,6 @@ namespace Crescendo.API {
             base.Start();
 
             _animator = GetComponentInChildren<Animator>();
-            _physics = GetComponent<CharacterPhysics>();
 
             // No point in continuing if an animator
             if (_animator == null) {
@@ -81,10 +79,7 @@ namespace Crescendo.API {
         protected override void OnUpdate() {
             _helpless.Set(Character.IsHelpless);
 
-            if (_physics == null)
-                return;
-
-            Vector2 velocity = _physics.Velocity;
+            Vector2 velocity = Character.Velocity;
             _horizontalSpeed.Set(Mathf.Abs(velocity.x));
             _verticalSpeed.Set(velocity.y);
 
