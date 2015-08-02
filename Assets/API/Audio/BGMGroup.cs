@@ -35,7 +35,6 @@ namespace Crescendo.API
             {
                 _bgmResource = new Resource<AudioClip>(_bgm);
                 playerPrefsKey = stageName + delimiter + _bgm + "_" + suffix;
-                Debug.Log(playerPrefsKey);
 
                 if (PlayerPrefs.HasKey(playerPrefsKey))
                     _weight = PlayerPrefs.GetFloat(playerPrefsKey);
