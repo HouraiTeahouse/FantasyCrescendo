@@ -5,13 +5,12 @@ namespace Crescendo.API {
     [RequireComponent(typeof(Collider))]
     public sealed class BlastZone : Singleton<BlastZone> {
 
-        [SerializeField]
-        private string[] validCharacterStrings = new string[] { "Player" };
+        private Collider col;
 
         protected override void Awake() {
             base.Awake();
 
-            var col = GetComponent<Collider>();
+            col = GetComponent<Collider>();
 
             // Make sure that the collider isn't a trigger
             col.isTrigger = true;
@@ -20,10 +19,9 @@ namespace Crescendo.API {
 
         void OnTriggerExit(Collider other) {
             // Filter only for player characters
-            if (!other.CompareTags(validCharacterStrings))
+            if (!other.CompareTag(Game.PlayerTag))
                 return;
 
-            // Find a character script somewhere in the hiearchy
             Character characterScript = other.GetComponentInParent<Character>() ??
                                         other.GetComponentInChildren<Character>();
 
@@ -31,6 +29,9 @@ namespace Crescendo.API {
                 Debug.Log("Was expecting" + other.name + " to be a Player, but no Character script was found.");
                 return;
             }
+
+            if (col.ClosestPointOnBounds(characterScript.position) == characterScript.position)
+                return;
 
             characterScript.BlastZoneExit();
         }
