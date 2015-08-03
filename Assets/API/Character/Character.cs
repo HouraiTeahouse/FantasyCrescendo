@@ -35,7 +35,9 @@ namespace Crescendo.API {
         private bool _facing;
         private bool _dashing;
         private bool _invinicible;
-
+		// Boolean indicating whether the player can move the character or not
+		// Could be used for attacking, knockback, stagger, etc
+		private bool _canMove = true;
 
         public Vector3 Velocity
         {
@@ -160,6 +162,16 @@ namespace Crescendo.API {
             }
         }
 
+		// I only added this to be consistent with the other state variables, I have no idea whether it's actually necessary
+		public bool CanMove {
+			get {
+				return _canMove;
+			}
+			set {
+				_canMove = value;
+			}
+		}
+
         public event Action OnJump;
         public event Action OnHelpless;
         public event Action OnGrounded;
@@ -186,7 +198,6 @@ namespace Crescendo.API {
 
             _rigidbody = GetComponent<Rigidbody>();
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-
         }
 
         protected virtual void OnEnable() {
@@ -211,7 +222,8 @@ namespace Crescendo.API {
 
             Vector2 movement = InputSource.Movement;
 
-            if(movement != Vector2.zero)
+			// Now checks CanMove
+            if(movement != Vector2.zero && CanMove)
                 Move(movement);
 
             //Ensure that the character is walking in the right direction
@@ -221,7 +233,8 @@ namespace Crescendo.API {
                 Facing = !Facing;
             }
 
-            if (InputSource.Jump)
+			// Now checks CanMove
+            if (InputSource.Jump && CanMove)
                 Jump();
 
             if (InputSource.Attack)
@@ -284,6 +297,14 @@ namespace Crescendo.API {
             OnKnockback.SafeInvoke();
         }
 
+		// Coroutine that prevents input from effecting character movement for a given amount of time (but retains velocity)
+		// **Properly locks movement on characters that are not aerial, but for some reason they will not play animations
+		// until they are grounded and all movement input is released**
+		public IEnumerator LockMovement(float time) {
+			CanMove = false;
+			yield return new WaitForSeconds (time);
+			CanMove = true;
+		}
     }
 
 }
