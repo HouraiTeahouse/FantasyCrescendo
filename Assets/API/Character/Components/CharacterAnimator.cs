@@ -77,22 +77,24 @@ namespace Crescendo.API {
         }
 
         protected override void OnUpdate() {
-            _helpless.Set(Character.IsHelpless);
+			_helpless.Set (Character.IsHelpless);
 
-            Vector2 velocity = Character.Velocity;
-            _horizontalSpeed.Set(Mathf.Abs(velocity.x));
-            _verticalSpeed.Set(velocity.y);
+			Vector2 velocity = Character.Velocity;
+			_horizontalSpeed.Set (Mathf.Abs (velocity.x));
+			_verticalSpeed.Set (velocity.y);
 
-            if (InputSource == null)
-                return;
+			if (InputSource == null)
+				return;
 
-            Vector2 movementInput = InputSource.Movement;
-            _horizontalInput.Set(Mathf.Abs(movementInput.x));
-            _verticalInput.Set(movementInput.y);
+			Vector2 movementInput = InputSource.Movement;
+			_horizontalInput.Set (Mathf.Abs (movementInput.x));
+			_verticalInput.Set (movementInput.y);
         }
 
         void OnAttack() {
             _attack.Set();
+			// Lock movement for the duration of the attack animation
+			StartCoroutine(Character.LockMovement(_animator.GetCurrentAnimatorStateInfo(0).length));
         }
 
         void OnJump() {
