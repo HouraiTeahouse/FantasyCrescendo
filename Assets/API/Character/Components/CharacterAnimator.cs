@@ -45,6 +45,10 @@ namespace Crescendo.API {
                 return;
             }
 
+            var animationBehaviors = _animator.GetBehaviours<CharacterAnimationBehaviour>();
+            foreach(var stateBehaviour in animationBehaviors)
+                stateBehaviour.SetCharacter(Character);
+
             _grounded.Animator = _animator;
             _helpless.Animator = _animator;
             _verticalSpeed.Animator = _animator;
