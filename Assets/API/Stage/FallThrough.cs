@@ -7,7 +7,6 @@ namespace Crescendo.API {
     {
 
         void OnCollisionEnter(Collision col) {
-
             Debug.Log(col.collider);
             if (!col.collider.CompareTag(Game.PlayerTag))
                 return;
@@ -20,7 +19,10 @@ namespace Crescendo.API {
 
             if(character.InputSource.Crouch)
                 ChangeIgnore(col.collider, true);
+        }
 
+        void OnTriggerExit(Collider other) {
+            ChangeIgnore(other, false);
         }
 
     }
