@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
+namespace UnityTest {
 
-namespace UnityTest
-{
-    public enum TestResultState : byte
-    {
+    public enum TestResultState : byte {
+
         Inconclusive = 0,
 
         /// <summary>
@@ -42,5 +38,7 @@ namespace UnityTest
         /// The test was cancelled by the user
         /// </summary>
         Cancelled = 7
+
     }
+
 }

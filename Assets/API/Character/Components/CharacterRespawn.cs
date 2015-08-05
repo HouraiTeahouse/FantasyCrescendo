@@ -2,7 +2,6 @@
 
 namespace Crescendo.API {
 
-
     public sealed class CharacterRespawn : CharacterComponent {
 
         protected override void Start() {
@@ -15,13 +14,13 @@ namespace Crescendo.API {
             Character.OnBlastZoneExit += OnBlastZoneExit;
         }
 
-        void OnDestroy() {
+        private void OnDestroy() {
             // Unsubscribe to Character event
             if (Character)
                 Character.OnBlastZoneExit -= OnBlastZoneExit;
         }
 
-        void OnBlastZoneExit() {
+        private void OnBlastZoneExit() {
             if (!enabled)
                 return;
             Transform respawnPos = Stage.RespawnPosition;

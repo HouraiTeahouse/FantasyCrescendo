@@ -1,27 +1,24 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace UnityTest
-{
-    public class IntComparer : ComparerBaseGeneric<int>
-    {
-        public enum CompareType
-        {
+namespace UnityTest {
+
+    public class IntComparer : ComparerBaseGeneric<int> {
+
+        public enum CompareType {
+
             Equal,
             NotEqual,
             Greater,
             GreaterOrEqual,
             Less,
             LessOrEqual
+
         };
 
         public CompareType compareType;
 
-        protected override bool Compare(int a, int b)
-        {
-            switch (compareType)
-            {
+        protected override bool Compare(int a, int b) {
+            switch (compareType) {
                 case CompareType.Equal:
                     return a == b;
                 case CompareType.NotEqual:
@@ -37,5 +34,7 @@ namespace UnityTest
             }
             throw new Exception();
         }
+
     }
+
 }

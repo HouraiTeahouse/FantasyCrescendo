@@ -1,89 +1,81 @@
-using System;
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects
-{
+namespace UnityStandardAssets.ImageEffects {
+
     [ExecuteInEditMode]
-    [RequireComponent (typeof (Camera))]
-    [AddComponentMenu ("Image Effects/Edge Detection/Edge Detection")]
-    public class EdgeDetection : PostEffectsBase
-    {
-        public enum EdgeDetectMode
-        {
+    [RequireComponent(typeof (Camera))]
+    [AddComponentMenu("Image Effects/Edge Detection/Edge Detection")]
+    public class EdgeDetection : PostEffectsBase {
+
+        public enum EdgeDetectMode {
+
             TriangleDepthNormals = 0,
             RobertsCrossDepthNormals = 1,
             SobelDepth = 2,
             SobelDepthThin = 3,
-            TriangleLuminance = 4,
+            TriangleLuminance = 4
+
         }
 
-
-        public EdgeDetectMode mode = EdgeDetectMode.SobelDepthThin;
-        public float sensitivityDepth = 1.0f;
-        public float sensitivityNormals = 1.0f;
-        public float lumThreshold = 0.2f;
+        private Material edgeDetectMaterial;
+        public Shader edgeDetectShader;
         public float edgeExp = 1.0f;
-        public float sampleDist = 1.0f;
         public float edgesOnly = 0.0f;
         public Color edgesOnlyBgColor = Color.white;
-
-        public Shader edgeDetectShader;
-        private Material edgeDetectMaterial = null;
+        public float lumThreshold = 0.2f;
+        public EdgeDetectMode mode = EdgeDetectMode.SobelDepthThin;
         private EdgeDetectMode oldMode = EdgeDetectMode.SobelDepthThin;
+        public float sampleDist = 1.0f;
+        public float sensitivityDepth = 1.0f;
+        public float sensitivityNormals = 1.0f;
 
+        public override bool CheckResources() {
+            CheckSupport(true);
 
-        public override bool CheckResources ()
-		{
-            CheckSupport (true);
-
-            edgeDetectMaterial = CheckShaderAndCreateMaterial (edgeDetectShader,edgeDetectMaterial);
+            edgeDetectMaterial = CheckShaderAndCreateMaterial(edgeDetectShader, edgeDetectMaterial);
             if (mode != oldMode)
-                SetCameraFlag ();
+                SetCameraFlag();
 
             oldMode = mode;
 
             if (!isSupported)
-                ReportAutoDisable ();
+                ReportAutoDisable();
             return isSupported;
         }
 
-
-        new void Start ()
-		{
-            oldMode	= mode;
+        private new void Start() {
+            oldMode = mode;
         }
 
-        void SetCameraFlag ()
-		{
+        private void SetCameraFlag() {
             if (mode == EdgeDetectMode.SobelDepth || mode == EdgeDetectMode.SobelDepthThin)
                 GetComponent<Camera>().depthTextureMode |= DepthTextureMode.Depth;
             else if (mode == EdgeDetectMode.TriangleDepthNormals || mode == EdgeDetectMode.RobertsCrossDepthNormals)
                 GetComponent<Camera>().depthTextureMode |= DepthTextureMode.DepthNormals;
         }
 
-        void OnEnable ()
-		{
+        private void OnEnable() {
             SetCameraFlag();
         }
 
         [ImageEffectOpaque]
-        void OnRenderImage (RenderTexture source, RenderTexture destination)
-		{
-            if (CheckResources () == false)
-			{
-                Graphics.Blit (source, destination);
+        private void OnRenderImage(RenderTexture source, RenderTexture destination) {
+            if (CheckResources() == false) {
+                Graphics.Blit(source, destination);
                 return;
             }
 
-            Vector2 sensitivity = new Vector2 (sensitivityDepth, sensitivityNormals);
-            edgeDetectMaterial.SetVector ("_Sensitivity", new Vector4 (sensitivity.x, sensitivity.y, 1.0f, sensitivity.y));
-            edgeDetectMaterial.SetFloat ("_BgFade", edgesOnly);
-            edgeDetectMaterial.SetFloat ("_SampleDistance", sampleDist);
-            edgeDetectMaterial.SetVector ("_BgColor", edgesOnlyBgColor);
-            edgeDetectMaterial.SetFloat ("_Exponent", edgeExp);
-            edgeDetectMaterial.SetFloat ("_Threshold", lumThreshold);
+            Vector2 sensitivity = new Vector2(sensitivityDepth, sensitivityNormals);
+            edgeDetectMaterial.SetVector("_Sensitivity", new Vector4(sensitivity.x, sensitivity.y, 1.0f, sensitivity.y));
+            edgeDetectMaterial.SetFloat("_BgFade", edgesOnly);
+            edgeDetectMaterial.SetFloat("_SampleDistance", sampleDist);
+            edgeDetectMaterial.SetVector("_BgColor", edgesOnlyBgColor);
+            edgeDetectMaterial.SetFloat("_Exponent", edgeExp);
+            edgeDetectMaterial.SetFloat("_Threshold", lumThreshold);
 
-            Graphics.Blit (source, destination, edgeDetectMaterial, (int) mode);
+            Graphics.Blit(source, destination, edgeDetectMaterial, (int) mode);
         }
+
     }
+
 }

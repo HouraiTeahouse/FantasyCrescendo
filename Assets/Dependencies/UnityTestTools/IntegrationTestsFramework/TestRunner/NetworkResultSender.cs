@@ -5,52 +5,57 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityTest.IntegrationTestRunner;
-
 #if UTT_SOCKETS_SUPPORTED
 using System.Net.Sockets;
-using System.Runtime.Serialization.Formatters.Binary;
+
 #endif
 
-namespace UnityTest
-{
-    public class NetworkResultSender : ITestRunnerCallback
-    {
-#if UTT_SOCKETS_SUPPORTED
-        private readonly TimeSpan m_ConnectionTimeout = TimeSpan.FromSeconds(5);
+namespace UnityTest {
 
-        private readonly string m_Ip;
-        private readonly int m_Port;
-#endif
+    public class NetworkResultSender : ITestRunnerCallback {
+
         private bool m_LostConnection;
 
-        public NetworkResultSender(string ip, int port)
-        {
+        public NetworkResultSender(string ip, int port) {
 #if UTT_SOCKETS_SUPPORTED
             m_Ip = ip;
             m_Port = port;
 #endif
         }
 
-        private bool SendDTO(ResultDTO dto)
-        {
-            if (m_LostConnection) return false;
-#if UTT_SOCKETS_SUPPORTED 
-            try
-            {
-                using (var tcpClient = new TcpClient())
-                {
+        public void RunStarted(string platform, List<TestComponent> testsToRun) {
+            SendDTO(ResultDTO.CreateRunStarted());
+        }
+
+        public void RunFinished(List<TestResult> testResults) {
+            SendDTO(ResultDTO.CreateRunFinished(testResults));
+        }
+
+        public void TestStarted(TestResult test) {
+            SendDTO(ResultDTO.CreateTestStarted(test));
+        }
+
+        public void TestFinished(TestResult test) {
+            SendDTO(ResultDTO.CreateTestFinished(test));
+        }
+
+        public void TestRunInterrupted(List<ITestComponent> testsNotRun) {
+            RunFinished(new List<TestResult>());
+        }
+
+        private bool SendDTO(ResultDTO dto) {
+            if (m_LostConnection)
+                return false;
+#if UTT_SOCKETS_SUPPORTED
+            try {
+                using (var tcpClient = new TcpClient()) {
                     var result = tcpClient.BeginConnect(m_Ip, m_Port, null, null);
                     var success = result.AsyncWaitHandle.WaitOne(m_ConnectionTimeout);
                     if (!success)
-                    {
                         return false;
-                    }
-                    try
-                    {
+                    try {
                         tcpClient.EndConnect(result);
-                    }
-                    catch (SocketException)
-                    {
+                    } catch (SocketException) {
                         m_LostConnection = true;
                         return false;
                     }
@@ -61,47 +66,27 @@ namespace UnityTest
                     tcpClient.Close();
                     Debug.Log("Sent " + dto.messageType);
                 }
-            }
-            catch (SocketException e)
-            {
+            } catch (SocketException e) {
                 Debug.LogException(e);
                 m_LostConnection = true;
                 return false;
             }
-#endif  // if UTT_SOCKETS_SUPPORTED
+#endif // if UTT_SOCKETS_SUPPORTED
             return true;
         }
 
-        public bool Ping()
-        {
+        public bool Ping() {
             var result = SendDTO(ResultDTO.CreatePing());
             m_LostConnection = false;
             return result;
         }
 
-        public void RunStarted(string platform, List<TestComponent> testsToRun)
-        {
-            SendDTO(ResultDTO.CreateRunStarted());
-        }
+#if UTT_SOCKETS_SUPPORTED
+        private readonly TimeSpan m_ConnectionTimeout = TimeSpan.FromSeconds(5);
 
-        public void RunFinished(List<TestResult> testResults)
-        {
-            SendDTO(ResultDTO.CreateRunFinished(testResults));
-        }
-
-        public void TestStarted(TestResult test)
-        {
-            SendDTO(ResultDTO.CreateTestStarted(test));
-        }
-
-        public void TestFinished(TestResult test)
-        {
-            SendDTO(ResultDTO.CreateTestFinished(test));
-        }
-
-        public void TestRunInterrupted(List<ITestComponent> testsNotRun)
-        {
-            RunFinished(new List<TestResult>());
-        }
+        private readonly string m_Ip;
+        private readonly int m_Port;
+#endif
     }
+
 }

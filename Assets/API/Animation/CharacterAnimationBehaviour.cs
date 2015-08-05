@@ -2,12 +2,12 @@
 
 namespace Crescendo.API {
 
-    public abstract  class CharacterAnimationBehaviour : StateMachineBehaviour {
+    public abstract class CharacterAnimationBehaviour : StateMachineBehaviour {
 
         private Character _character;
 
-        protected virtual  Character Character {
-            get { return _character;}
+        protected virtual Character Character {
+            get { return _character; }
             set { _character = value; }
         }
 

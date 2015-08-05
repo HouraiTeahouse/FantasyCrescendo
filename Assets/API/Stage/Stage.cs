@@ -9,73 +9,65 @@ namespace Crescendo.API {
     /// </summary>
     /// Author: James Liu
     /// Authored on: 07/01/2015
-    public sealed class Stage : Singleton<Stage>
-    {
-
-        [SerializeField]
-        private Camera mainCamera;
+    public sealed class Stage : Singleton<Stage> {
 
         [SerializeField]
         private BGMGroup backgroundMusic;
 
-        private Transform[] spawnPoints;
+        [SerializeField]
+        private Camera mainCamera;
+
         private Transform[] repsawnPoints;
+        private Transform[] spawnPoints;
 
         public static Transform Transform {
             get { return Instance.transform; }
         }
 
-		public static Vector3 Up {
-			get { return Transform.up; }
-		}
+        public static Vector3 Up {
+            get { return Transform.up; }
+        }
 
-		public static Vector3 Right {
-			get { return Transform.right; }
-		}
+        public static Vector3 Right {
+            get { return Transform.right; }
+        }
 
-		public static Vector3 Forward {
-			get { return Transform.forward; }
-		}
+        public static Vector3 Forward {
+            get { return Transform.forward; }
+        }
 
         /// <summary>
         /// Randomly selects one of the respawn positions to respawn to
         /// </summary>
-        public static Transform RespawnPosition
-        {
+        public static Transform RespawnPosition {
             get { return Instance.repsawnPoints[Random.Range(0, Instance.repsawnPoints.Length)]; }
         }
 
         /// <summary>
         /// The maximum number of supported players on this Stage
         /// </summary>
-        public static int SupportedPlayerCount
-        {
+        public static int SupportedPlayerCount {
             get { return Instance.spawnPoints.Length; }
         }
 
-        public static Camera Camera
-        {
-            get
-            {
-                return Instance.mainCamera;
-            }
+        public static Camera Camera {
+            get { return Instance.mainCamera; }
         }
 
-		public static Transform GetSpawnPoint(int playerNumber) {
-			if(Instance == null)
-				throw new InvalidOperationException("Cannot get the spawn points of a stage that does not exist");
-			if(playerNumber < 0 || playerNumber > SupportedPlayerCount)
-				throw new InvalidOperationException();
-			return Instance.spawnPoints[playerNumber];
-		}
+        public static Transform GetSpawnPoint(int playerNumber) {
+            if (Instance == null)
+                throw new InvalidOperationException("Cannot get the spawn points of a stage that does not exist");
+            if (playerNumber < 0 || playerNumber > SupportedPlayerCount)
+                throw new InvalidOperationException();
+            return Instance.spawnPoints[playerNumber];
+        }
 
-        protected override void Awake()
-        {
+        protected override void Awake() {
             base.Awake();
             spawnPoints = GameObject.FindGameObjectsWithTag(Game.SpawnTag).GetComponents<Transform>();
 
             repsawnPoints = GameObject.FindGameObjectWithTag(Game.RespawnTag).GetComponents<Transform>();
-            
+
             if (backgroundMusic != null)
                 backgroundMusic.PlayRandom();
 
@@ -89,10 +81,8 @@ namespace Crescendo.API {
 
             if (mainCamera == null)
                 Debug.LogError("Stage has no Camera!");
-
         }
 
     }
-
 
 }

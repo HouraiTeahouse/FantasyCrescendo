@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿public class CharacterSlot {
 
-public class CharacterSlot {
-	public string characterName	= "Name";
+    public string characterName = "Name";
 
-	public CharacterSlot( string n )
-	{
-		characterName = n;
-	}
+    public CharacterSlot(string n) {
+        characterName = n;
+    }
+
 }

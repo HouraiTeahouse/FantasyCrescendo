@@ -4,17 +4,16 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace UnityTest
-{
-    public class MemberResolver
-    {
-        private object m_CallingObjectRef;
-        private MemberInfo[] m_Callstack;
+namespace UnityTest {
+
+    public class MemberResolver {
+
         private readonly GameObject m_GameObject;
         private readonly string m_Path;
+        private object m_CallingObjectRef;
+        private MemberInfo[] m_Callstack;
 
-        public MemberResolver(GameObject gameObject, string path)
-        {
+        public MemberResolver(GameObject gameObject, string path) {
             path = path.Trim();
             ValidatePath(path);
 
@@ -22,10 +21,8 @@ namespace UnityTest
             m_Path = path.Trim();
         }
 
-        public object GetValue(bool useCache)
-        {
-            if (useCache && m_CallingObjectRef != null)
-            {
+        public object GetValue(bool useCache) {
+            if (useCache && m_CallingObjectRef != null) {
                 object val = m_CallingObjectRef;
                 for (int i = 0; i < m_Callstack.Length; i++)
                     val = GetValueFromMember(val, m_Callstack[i]);
@@ -37,17 +34,16 @@ namespace UnityTest
 
             m_CallingObjectRef = result;
             var tempCallstack = new List<MemberInfo>();
-            for (int i = 0; i < fullCallStack.Length; i++)
-            {
+            for (int i = 0; i < fullCallStack.Length; i++) {
                 var member = fullCallStack[i];
                 result = GetValueFromMember(result, member);
                 tempCallstack.Add(member);
-				if (result == null) return null;
-				var type = result.GetType();
+                if (result == null)
+                    return null;
+                var type = result.GetType();
 
-				//String is not a value type but we don't want to cache it
-				if (!IsValueType(type) && type != typeof(System.String))
-                {
+                //String is not a value type but we don't want to cache it
+                if (!IsValueType(type) && type != typeof (String)) {
                     tempCallstack.Clear();
                     m_CallingObjectRef = result;
                 }
@@ -56,10 +52,10 @@ namespace UnityTest
             return result;
         }
 
-        public Type GetMemberType()
-        {
+        public Type GetMemberType() {
             var callstack = GetCallstack();
-            if (callstack.Length == 0) return GetBaseObject().GetType();
+            if (callstack.Length == 0)
+                return GetBaseObject().GetType();
 
             var member = callstack[callstack.Length - 1];
             if (member is FieldInfo)
@@ -69,40 +65,7 @@ namespace UnityTest
             return null;
         }
 
-        #region Static wrappers
-        public static bool TryGetMemberType(GameObject gameObject, string path, out Type value)
-        {
-            try
-            {
-                var mr = new MemberResolver(gameObject, path);
-                value = mr.GetMemberType();
-                return true;
-            }
-            catch (InvalidPathException)
-            {
-                value = null;
-                return false;
-            }
-        }
-
-        public static bool TryGetValue(GameObject gameObject, string path, out object value)
-        {
-            try
-            {
-                var mr = new MemberResolver(gameObject, path);
-                value = mr.GetValue(false);
-                return true;
-            }
-            catch (InvalidPathException)
-            {
-                value = null;
-                return false;
-            }
-        }
-        #endregion
-
-        private object GetValueFromMember(object obj, MemberInfo memberInfo)
-        {
+        private object GetValueFromMember(object obj, MemberInfo memberInfo) {
             if (memberInfo is FieldInfo)
                 return (memberInfo as FieldInfo).GetValue(obj);
             if (memberInfo is MethodInfo)
@@ -110,9 +73,9 @@ namespace UnityTest
             throw new InvalidPathException(memberInfo.Name);
         }
 
-        private object GetBaseObject()
-        {
-            if (string.IsNullOrEmpty(m_Path)) return m_GameObject;
+        private object GetBaseObject() {
+            if (string.IsNullOrEmpty(m_Path))
+                return m_GameObject;
             var firstElement = m_Path.Split('.')[0];
             var comp = m_GameObject.GetComponent(firstElement);
             if (comp != null)
@@ -120,31 +83,28 @@ namespace UnityTest
             return m_GameObject;
         }
 
-        private MemberInfo[] GetCallstack()
-        {
-            if (m_Path == "") return new MemberInfo[0];
+        private MemberInfo[] GetCallstack() {
+            if (m_Path == "")
+                return new MemberInfo[0];
             var propsQueue = new Queue<string>(m_Path.Split('.'));
 
             Type type = GetBaseObject().GetType();
-            if (type != typeof(GameObject))
+            if (type != typeof (GameObject))
                 propsQueue.Dequeue();
 
             PropertyInfo propertyTemp;
             FieldInfo fieldTemp;
             var list = new List<MemberInfo>();
-            while (propsQueue.Count != 0)
-            {
+            while (propsQueue.Count != 0) {
                 var nameToFind = propsQueue.Dequeue();
                 fieldTemp = GetField(type, nameToFind);
-                if (fieldTemp != null)
-                {
+                if (fieldTemp != null) {
                     type = fieldTemp.FieldType;
                     list.Add(fieldTemp);
                     continue;
                 }
                 propertyTemp = GetProperty(type, nameToFind);
-                if (propertyTemp != null)
-                {
+                if (propertyTemp != null) {
                     type = propertyTemp.PropertyType;
                     var getMethod = GetGetMethod(propertyTemp);
                     list.Add(getMethod);
@@ -155,8 +115,7 @@ namespace UnityTest
             return list.ToArray();
         }
 
-        private void ValidatePath(string path)
-        {
+        private void ValidatePath(string path) {
             bool invalid = false;
             if (path.StartsWith(".") || path.EndsWith("."))
                 invalid = true;
@@ -169,40 +128,63 @@ namespace UnityTest
                 throw new InvalidPathException(path);
         }
 
-        private static bool IsValueType(Type type)
-        {
-            #if !UNITY_METRO
+        private static bool IsValueType(Type type) {
+#if !UNITY_METRO
             return type.IsValueType;
-            #else
+#else
             return false;
             #endif
         }
 
-        private static FieldInfo GetField(Type type, string fieldName)
-        {
-            #if !UNITY_METRO
+        private static FieldInfo GetField(Type type, string fieldName) {
+#if !UNITY_METRO
             return type.GetField(fieldName);
-            #else
+#else
             return null;
             #endif
         }
 
-        private static PropertyInfo GetProperty(Type type, string propertyName)
-        {
-            #if !UNITY_METRO
+        private static PropertyInfo GetProperty(Type type, string propertyName) {
+#if !UNITY_METRO
             return type.GetProperty(propertyName);
-            #else
+#else
             return null;
             #endif
         }
 
-        private static MethodInfo GetGetMethod(PropertyInfo propertyInfo)
-        {
-            #if !UNITY_METRO
+        private static MethodInfo GetGetMethod(PropertyInfo propertyInfo) {
+#if !UNITY_METRO
             return propertyInfo.GetGetMethod();
-            #else
+#else
             return null;
             #endif
         }
+
+        #region Static wrappers
+
+        public static bool TryGetMemberType(GameObject gameObject, string path, out Type value) {
+            try {
+                var mr = new MemberResolver(gameObject, path);
+                value = mr.GetMemberType();
+                return true;
+            } catch (InvalidPathException) {
+                value = null;
+                return false;
+            }
+        }
+
+        public static bool TryGetValue(GameObject gameObject, string path, out object value) {
+            try {
+                var mr = new MemberResolver(gameObject, path);
+                value = mr.GetValue(false);
+                return true;
+            } catch (InvalidPathException) {
+                value = null;
+                return false;
+            }
+        }
+
+        #endregion
     }
+
 }

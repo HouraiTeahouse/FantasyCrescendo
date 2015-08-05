@@ -12,58 +12,18 @@ namespace Crescendo.API {
     /// Author: James Liu
     /// Authored on 07/01/2015
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(CapsuleCollider))]
-    [RequireComponent(typeof(Rigidbody))]
-	public class Character : GensoBehaviour, IDamageable, IKnocckbackable {
+    [RequireComponent(typeof (Animator))]
+    [RequireComponent(typeof (Rigidbody))]
+    [RequireComponent(typeof (CapsuleCollider))]
+    public class Character : GensoBehaviour, IDamageable, IKnocckbackable {
 
-        private enum FacingMode { Rotation, Scale }
+        private ActionRestriction _canAttack;
+        private ActionRestriction _canJump;
+        private ActionRestriction _canMove;
 
-        private CapsuleCollider movementCollider;
-        private CapsuleCollider triggerCollider;
-        private Rigidbody _rigidbody;
         private Collider[] hurtboxes;
-
-        [SerializeField]
-        private FacingMode _facingMode = FacingMode.Rotation;
-
-        [SerializeField]
-        private float triggerSizeRatio = 1.5f;
-
-        // Private state variables
-        private bool _grounded;
-        private bool _helpless;
-        private bool _facing;
-        private bool _dashing;
-        private bool _invinicible;
-		// Boolean indicating whether the player can move the character or not
-		// Could be used for attacking, knockback, stagger, etc
-		private bool _canMove = true;
-
-        public Vector3 Velocity
-        {
-            get { return _rigidbody.velocity; }
-            set { _rigidbody.velocity = value; }
-        }
-
-        public float Mass
-        {
-            get { return _rigidbody.mass; }
-            set { _rigidbody.mass = value; }
-        }
-
-        public void AddForce(Vector3 force) {
-            _rigidbody.AddForce(force);
-        }
-
-        public void AddForce(float x, float y) {
-            _rigidbody.AddForce(x, y, 0f);
-        }
-
-        public void AddForce(float x, float y, float z) {
-            _rigidbody.AddForce(x, y, z);
-        }
-
-        public int PlayerNumber { get; set; }
+        private CapsuleCollider triggerCollider;
+        public int PlayerNumber { get; internal set; }
 
         public Color PlayerColor {
             get { return Game.GetPlayerColor(PlayerNumber); }
@@ -74,12 +34,11 @@ namespace Crescendo.API {
         public bool IsGrounded {
             get { return _grounded; }
             set {
-                bool changed = _grounded != value;
+                if (IsGrounded == value)
+                    return;
                 _grounded = value;
-                if (value)
-                    IsHelpless = false;
-                if (changed)
-                    OnGrounded.SafeInvoke();
+                animationData.Bools.Grounded.Set(value);
+                OnGrounded.SafeInvoke();
             }
         }
 
@@ -94,20 +53,20 @@ namespace Crescendo.API {
             get {
                 if (_facingMode == FacingMode.Scale)
                     return transform.localScale.x > 0;
-                else
-                    return transform.eulerAngles.y > 179f;
+                return transform.eulerAngles.y > 179f;
             }
             set {
-                if (_facing != value) {
-                    if (_facingMode == FacingMode.Rotation)
-                        transform.Rotate(0f, 180f, 0f);
-                    else {
-                        Vector3 temp = transform.localScale;
-                        temp.x *= -1;
-                        transform.localScale = temp;
-                    }
-                }
+                if (_facing == value)
+                    return;
+
                 _facing = value;
+                if (_facingMode == FacingMode.Rotation)
+                    transform.Rotate(0f, 180f, 0f);
+                else {
+                    Vector3 temp = transform.localScale;
+                    temp.x *= -1;
+                    transform.localScale = temp;
+                }
             }
         }
 
@@ -130,125 +89,82 @@ namespace Crescendo.API {
         }
 
         public bool IsDashing {
-            get {
-                return IsGrounded && _dashing;
-            }
-            set {
-                _dashing = value;
-            }
+            get { return IsGrounded && _dashing; }
+            set { _dashing = value; }
         }
 
         public bool IsFastFalling {
-            get {
-                return !IsGrounded && InputSource != null && InputSource.Crouch;
-            }
+            get { return !IsGrounded && InputSource != null && InputSource.Crouch; }
         }
 
         public bool IsCrouching {
-            get {
-                return IsGrounded && InputSource != null && InputSource.Crouch;
-            }
+            get { return IsGrounded && InputSource != null && InputSource.Crouch; }
         }
 
-        public bool IsHelpless {
-            get {
-                return !IsGrounded && _helpless;
-            }
-            set {
-                bool changed = _helpless == value;
-                _helpless = value;
-                if(changed)
-                    OnHelpless.SafeInvoke();
-            }
+        public bool CanMove {
+            get { return _canMove; }
+            set { _canMove.Value = value; }
         }
 
-		// I only added this to be consistent with the other state variables, I have no idea whether it's actually necessary
-		public bool CanMove {
-			get {
-				return _canMove;
-			}
-			set {
-				_canMove = value;
-			}
-		}
+        public bool CanJump {
+            get { return _canJump; }
+            set { _canJump.Value = value; }
+        }
+
+        public bool CanAttack {
+            get { return _canAttack; }
+            set { _canAttack.Value = value; }
+        }
+
+        public float Height {
+            get { return _movementCollider.height; }
+        }
+
+        public void Damage(float damage) {
+            if (!IsInvincible)
+                OnDamage.SafeInvoke(damage);
+        }
+
+        public void Knockback(float baseKnockback) {
+            OnKnockback.SafeInvoke();
+        }
+
+        public void AddForce(Vector3 force) {
+            _rigidbody.AddForce(force);
+        }
+
+        public void AddForce(float x, float y) {
+            _rigidbody.AddForce(x, y, 0f);
+        }
+
+        public void AddForce(float x, float y, float z) {
+            _rigidbody.AddForce(x, y, z);
+        }
 
         public event Action OnJump;
-        public event Action OnHelpless;
         public event Action OnGrounded;
         public event Action<Vector2> OnMove;
         public event Action OnBlastZoneExit;
         public event Action<float> OnDamage;
         public event Action OnKnockback;
-        public event Action OnAttack;
+        public event Action<bool> OnAttack;
 
-        public float Height {
-            get { return movementCollider.height; }
+        public event Func<bool> MovementRestrictions {
+            add { _canMove.Add(value); }
+            remove { _canMove.Remove(value); }
         }
 
-        #region Unity Callbacks
-
-        protected virtual void Awake() {
-            FindHurtboxes();
-
-            movementCollider = GetComponent<CapsuleCollider>();
-            movementCollider.isTrigger = false;
-
-            triggerCollider = gameObject.AddComponent<CapsuleCollider>();
-            triggerCollider.isTrigger = true;
-
-            _rigidbody = GetComponent<Rigidbody>();
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+        public event Func<bool> JumpRestrictions {
+            add { _canJump.Add(value); }
+            remove { _canJump.Remove(value); }
         }
 
-        protected virtual void OnEnable() {
-            // TODO: Find a better place to put this
-            CameraController.AddTarget(this);
+        public event Func<bool> AttackRestrictions {
+            add { _canAttack.Add(value); }
+            remove { _canAttack.Remove(value); }
         }
 
-        protected virtual void OnDisable() {
-            // TODO: Find a better place to put this
-            CameraController.RemoveTarget(this);
-        }
-
-        protected virtual void Update() {
-            // Sync Trigger and Movement Colliders
-            triggerCollider.center = movementCollider.center;
-            triggerCollider.direction = movementCollider.direction;
-            triggerCollider.height = movementCollider.height * triggerSizeRatio;
-            triggerCollider.radius = movementCollider.radius * triggerSizeRatio;
-
-            if (InputSource == null)
-                return;
-
-            Vector2 movement = InputSource.Movement;
-
-			// Now checks CanMove
-            if(movement != Vector2.zero && CanMove)
-                Move(movement);
-
-            //Ensure that the character is walking in the right direction
-            if ((movement.x > 0 && Facing) ||
-               (movement.x < 0 && !Facing))
-            {
-                Facing = !Facing;
-            }
-
-			// Now checks CanMove
-            if (InputSource.Jump && CanMove)
-                Jump();
-
-            if (InputSource.Attack)
-                Attack();
-        }
-
-        protected virtual void OnDrawGizmos() {
-            FindHurtboxes();
-            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
-            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Intangible, x => !x.enabled);
-        }
-        #endregion
-
-        void FindHurtboxes() {
+        private void FindHurtboxes() {
             List<Collider> tempHurtboxes = new List<Collider>();
             foreach (Collider collider in GetComponentsInChildren<Collider>()) {
                 if (!collider.CheckLayer(Game.HurtboxLayers))
@@ -260,7 +176,8 @@ namespace Crescendo.API {
         }
 
         public virtual void Move(Vector2 direction) {
-            OnMove.SafeInvoke(direction);
+            if (CanMove)
+                OnMove.SafeInvoke(direction);
         }
 
         public virtual void Jump() {
@@ -275,12 +192,27 @@ namespace Crescendo.API {
             StartCoroutine(TempInvincibility(time));
         }
 
-        public void Attack() {
-            OnAttack.SafeInvoke();
+        public void LockMovement(float time) {
+            StartCoroutine(TempLockMovement(time));
         }
 
-        IEnumerator TempInvincibility(float duration) {
+        public void Attack() {
+            if (!CanAttack)
+                return;
+            animationData.Triggers.Attack.Set();
+            OnAttack.SafeInvoke(false);
+        }
+
+        public void Special() {
+            if (!CanAttack)
+                return;
+            animationData.Triggers.Special.Set();
+            OnAttack.SafeInvoke(true);
+        }
+
+        private IEnumerator TempInvincibility(float duration) {
             IsInvincible = true;
+
             var t = 0f;
             while (t < duration) {
                 yield return null;
@@ -289,22 +221,238 @@ namespace Crescendo.API {
             IsInvincible = false;
         }
 
-        public void Damage(float damage) {
-            OnDamage.SafeInvoke(damage);
+        // Coroutine that prevents input from effecting character movement for a given amount of time (but retains velocity)
+        // **Properly locks movement on characters that are not aerial, but for some reason they will not play animations
+        // until they are grounded and all movement input is released**
+        private IEnumerator TempLockMovement(float time) {
+            CanMove = false;
+            yield return new WaitForSeconds(time);
+            CanMove = true;
         }
 
-        public void Knockback(float baseKnockback) {
-            OnKnockback.SafeInvoke();
+        private enum FacingMode {
+
+            Rotation,
+            Scale
+
         }
 
-		// Coroutine that prevents input from effecting character movement for a given amount of time (but retains velocity)
-		// **Properly locks movement on characters that are not aerial, but for some reason they will not play animations
-		// until they are grounded and all movement input is released**
-		public IEnumerator LockMovement(float time) {
-			CanMove = false;
-			yield return new WaitForSeconds (time);
-			CanMove = true;
-		}
+        private class ActionRestriction {
+
+            private List<Func<bool>> _restrictions;
+            public bool Value = true;
+
+            public ActionRestriction() {
+                _restrictions = new List<Func<bool>>();
+            }
+
+            public bool Evaluate() {
+                if (!Value)
+                    return false;
+                for (int i = 0; i < _restrictions.Count; i++) {
+                    if (!_restrictions[i]())
+                        return false;
+                }
+                return true;
+            }
+
+            public void Add(Func<bool> restriction) {
+                if (_restrictions.Contains(restriction))
+                    return;
+                _restrictions.Add(restriction);
+            }
+
+            public void Remove(Func<bool> restriction) {
+                _restrictions.Remove(restriction);
+            }
+
+            public static implicit operator bool(ActionRestriction restriction) {
+                return restriction.Evaluate();
+            }
+
+        }
+
+        [Serializable]
+        private class AnimationData {
+
+            [Serializable]
+            public class AnimationTriggers {
+                public AnimationTrigger Attack = new AnimationTrigger("attack");
+                public AnimationTrigger Special = new AnimationTrigger("special");
+
+                public void Initialize(Animator animator) {
+                    Attack.Animator = animator;
+                    Special.Animator = animator;
+                }
+            }
+
+            [Serializable]
+            public class AnimationFloats {
+                
+                public AnimationFloat HorizontalInput = new AnimationFloat("horizontal input");
+                public AnimationFloat VerticalInput = new AnimationFloat("vertical input");
+
+                public void Initialize(Animator animator) {
+                    HorizontalInput.Animator = animator;
+                    VerticalInput.Animator = animator;
+                }
+            }
+
+            [Serializable]
+            public class AnimationBools {
+
+                public AnimationBool Grounded = new AnimationBool("grounded");
+
+                public void Initialize(Animator animator) {
+                    Grounded.Animator = animator;
+                }
+            }
+
+            public AnimationBools Bools;
+            public AnimationFloats Floats;
+            public AnimationTriggers Triggers;
+
+            public void Initialize(Animator animator) {
+                Triggers.Initialize(animator);
+                Floats.Initialize(animator);
+                Bools.Initialize(animator);
+            }
+
+        }
+
+        #region Serialized Variables
+
+        [SerializeField]
+        private FacingMode _facingMode = FacingMode.Rotation;
+
+        [SerializeField]
+        private float triggerSizeRatio = 1.5f;
+
+        [SerializeField]
+        private AnimationData animationData;
+
+        #endregion
+
+        #region Required Components
+
+        private CapsuleCollider _movementCollider;
+        private Rigidbody _rigidbody;
+        private Animator _animator;
+
+        public CapsuleCollider MoevmentCollider {
+            get { return _movementCollider; }
+        }
+
+        public Rigidbody Rigidbody {
+            get { return _rigidbody; }
+        }
+
+        public Animator Animator {
+            get { return _animator; }
+        }
+
+        #endregion
+
+        #region State Variables
+
+        private bool _grounded;
+        private bool _helpless;
+        private bool _facing;
+        private bool _dashing;
+        private bool _invinicible;
+
+        #endregion
+
+        #region Physics Properties
+
+        public Vector3 Velocity {
+            get { return _rigidbody.velocity; }
+            set { _rigidbody.velocity = value; }
+        }
+
+        public float Mass {
+            get { return _rigidbody.mass; }
+            set { _rigidbody.mass = value; }
+        }
+
+        #endregion
+
+        #region Unity Callbacks
+
+        protected virtual void Awake() {
+            FindHurtboxes();
+
+            _movementCollider = GetComponent<CapsuleCollider>();
+            _movementCollider.isTrigger = false;
+
+            triggerCollider = gameObject.AddComponent<CapsuleCollider>();
+            triggerCollider.isTrigger = true;
+
+            _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+
+            _animator = GetComponent<Animator>();
+
+            animationData.Initialize(_animator);
+
+            var animationBehaviors = _animator.GetBehaviours<CharacterAnimationBehaviour>();
+            foreach (var stateBehaviour in animationBehaviors)
+                stateBehaviour.SetCharacter(this);
+
+            _canMove = new ActionRestriction();
+            _canJump = new ActionRestriction();
+            _canAttack = new ActionRestriction();
+        }
+
+        protected virtual void OnEnable() {
+            // TODO: Find a better place to put this
+            CameraController.AddTarget(this);
+        }
+
+        protected virtual void OnDisable() {
+            // TODO: Find a better place to put this
+            CameraController.RemoveTarget(this);
+        }
+
+        protected virtual void Update() {
+            // Sync Trigger and Movement Colliders
+            triggerCollider.center = _movementCollider.center;
+            triggerCollider.direction = _movementCollider.direction;
+            triggerCollider.height = _movementCollider.height*triggerSizeRatio;
+            triggerCollider.radius = _movementCollider.radius*triggerSizeRatio;
+            
+            if (InputSource == null)
+                return;
+
+            Vector2 movement = InputSource.Movement;
+
+            animationData.Floats.HorizontalInput.Set(Mathf.Abs(movement.x));
+            animationData.Floats.VerticalInput.Set(movement.y);
+
+            // Now checks CanMove
+            if (movement != Vector2.zero && CanMove)
+                Move(movement);
+
+            //Ensure that the character is walking in the right direction
+            if ((movement.x > 0 && Facing) ||
+                (movement.x < 0 && !Facing))
+                Facing = !Facing;
+
+            // Now checks CanMove
+            if (InputSource.Jump && CanMove)
+                Jump();
+
+            if (InputSource.Attack)
+                Attack();
+        }
+
+        protected virtual void OnDrawGizmos() {
+            FindHurtboxes();
+            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
+            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Intangible, x => !x.enabled);
+        }
+
+        #endregion
     }
 
 }

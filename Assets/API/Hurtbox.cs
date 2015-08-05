@@ -1,6 +1,6 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Crescendo.API {
 
@@ -16,25 +16,23 @@ namespace Crescendo.API {
 
     public static class Hurtbox {
 
-        static Hurtbox() {
-            HurtboxMap = new Dictionary<Collider, Character>();
-            GlobalCallbacks.OnLoad += delegate(int level) {
-                                          HurtboxMap.Clear();
-                                      };
-        }
-
         private static readonly Dictionary<Collider, Character> HurtboxMap;
 
+        static Hurtbox() {
+            HurtboxMap = new Dictionary<Collider, Character>();
+            GlobalCallbacks.OnLoad += delegate { HurtboxMap.Clear(); };
+        }
+
         public static void Register(Character character, Collider hurtbox) {
-            if(character == null)
+            if (character == null)
                 throw new ArgumentNullException("character");
-            if(hurtbox == null)
+            if (hurtbox == null)
                 throw new ArgumentNullException("hurtbox");
             HurtboxMap[hurtbox] = character;
         }
 
         public static Character GetCharacter(Collider hurtbox) {
-            if (hurtbox != null  && HurtboxMap.ContainsKey(hurtbox))
+            if (hurtbox != null && HurtboxMap.ContainsKey(hurtbox))
                 return HurtboxMap[hurtbox];
             return null;
         }

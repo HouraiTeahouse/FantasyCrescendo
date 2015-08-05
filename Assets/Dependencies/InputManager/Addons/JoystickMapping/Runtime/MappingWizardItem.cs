@@ -1,4 +1,5 @@
 #region [Copyright (c) 2014 Cristian Alexandru Geambasu]
+
 //	Distributed under the terms of an MIT-style license:
 //
 //	The MIT License
@@ -19,25 +20,30 @@
 //	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 //	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
 //	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
-using UnityEngine;
-using System.Collections;
 
-namespace TeamUtility.IO
-{
-	[System.Serializable]
-	public class MappingWizardItem
-	{
-		private string _axisName;
-		private MappingWizard.ScanType _scanType;
+namespace TeamUtility.IO {
 
-		public string AxisName { get { return _axisName; } }
-		public MappingWizard.ScanType ScanType { get { return _scanType; } }
+    [System.Serializable]
+    public class MappingWizardItem {
 
-		public MappingWizardItem(string axisName, MappingWizard.ScanType scanType)
-		{
-			_axisName = axisName;
-			_scanType = scanType;
-		}
-	}
+        private string _axisName;
+        private MappingWizard.ScanType _scanType;
+
+        public MappingWizardItem(string axisName, MappingWizard.ScanType scanType) {
+            _axisName = axisName;
+            _scanType = scanType;
+        }
+
+        public string AxisName {
+            get { return _axisName; }
+        }
+
+        public MappingWizard.ScanType ScanType {
+            get { return _scanType; }
+        }
+
+    }
+
 }

@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Crescendo.API {
 
-    [RequireComponent(typeof(ParticleSystem))]
+    [RequireComponent(typeof (ParticleSystem))]
     public class AutoDestroyParticleSystem : MonoBehaviour {
 
         private ParticleSystem _particleSystem;
 
-        void Awake() {
+        private void Awake() {
             _particleSystem = GetComponent<ParticleSystem>();
         }
 
-        void Update() {
-            if(_particleSystem == null || !_particleSystem.IsAlive())
+        private void Update() {
+            if (_particleSystem == null || !_particleSystem.IsAlive())
                 Destroy(gameObject);
         }
 
     }
-
 
 }

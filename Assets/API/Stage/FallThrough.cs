@@ -1,27 +1,22 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Crescendo.API {
-    
-    public class FallThrough : TriggerStageElement
-    {
 
-        void OnCollisionEnter(Collision col) {
-            Debug.Log(col.collider);
+    public class FallThrough : TriggerStageElement {
+
+        private void OnCollisionEnter(Collision col) {
             if (!col.collider.CompareTag(Game.PlayerTag))
                 return;
 
-            Character character = col.gameObject.GetComponentInParent<Character>();
+            var character = col.gameObject.GetComponentInParent<Character>();
             if (character == null)
                 return;
 
-            Debug.Log(character.InputSource.Crouch);
-
-            if(character.InputSource.Crouch)
+            if (character.InputSource.Crouch)
                 ChangeIgnore(col.collider, true);
         }
 
-        void OnTriggerExit(Collider other) {
+        private void OnTriggerExit(Collider other) {
             ChangeIgnore(other, false);
         }
 

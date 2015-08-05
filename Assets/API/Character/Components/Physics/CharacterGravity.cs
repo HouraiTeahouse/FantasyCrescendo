@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Crescendo.API {
 
@@ -13,9 +12,9 @@ namespace Crescendo.API {
             set { _gravity = Mathf.Abs(value); }
         }
 
-        void FixedUpdate() {
-            if(Character != null)
-                Character.AddForce(-Vector3.up * _gravity);
+        private void FixedUpdate() {
+            if (Character != null)
+                Character.AddForce(-Vector3.up*_gravity);
         }
 
     }

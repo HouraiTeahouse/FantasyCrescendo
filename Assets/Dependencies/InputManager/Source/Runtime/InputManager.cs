@@ -1,4 +1,5 @@
 #region [Copyright (c) 2014 Cristian Alexandru Geambasu]
+
 //	Distributed under the terms of an MIT-style license:
 //
 //	The MIT License
@@ -19,15 +20,15 @@
 //	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 //	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
 //	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#endregion
-using UnityEngine;
-using System;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace TeamUtility.IO
-{
+#endregion
+
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace TeamUtility.IO {
+
     /// <summary>
     /// Encapsulates a method that takes one parameter(the key) and returns 'true' if
     /// the key is accepted or 'false' if it isn't.
@@ -48,9 +49,250 @@ namespace TeamUtility.IO
     /// </summary>
     public delegate bool ScanHandler(ScanResult result);
 
-    public sealed class InputManager : MonoBehaviour
-    {
+    public sealed class InputManager : MonoBehaviour {
+
+        private void Awake() {
+            if (_instance != null)
+                Destroy(this);
+            else {
+                if (dontDestroyOnLoad)
+                    DontDestroyOnLoad(this);
+
+                _instance = this;
+                _keys = (KeyCode[]) Enum.GetValues(typeof (KeyCode));
+                _configurationTable = new Dictionary<string, InputConfiguration>();
+                _axesTable = new Dictionary<string, Dictionary<string, AxisConfiguration>>();
+
+                SetRawAxisNames();
+                Initialize();
+            }
+        }
+
+        private void SetRawAxisNames() {
+            _rawMouseAxes = new string[AxisConfiguration.MaxMouseAxes];
+            for (int i = 0; i < _rawMouseAxes.Length; i++)
+                _rawMouseAxes[i] = string.Concat("mouse_axis_", i);
+
+            _rawJoystickAxes = new string[AxisConfiguration.MaxJoysticks*AxisConfiguration.MaxJoystickAxes];
+            for (int i = 0; i < AxisConfiguration.MaxJoysticks; i++) {
+                for (int j = 0; j < AxisConfiguration.MaxJoystickAxes; j++)
+                    _rawJoystickAxes[i*AxisConfiguration.MaxJoystickAxes + j] = string.Concat("joy_", i, "_axis_", j);
+            }
+        }
+
+        private void Initialize() {
+            if (inputConfigurations.Count == 0)
+                return;
+
+            PopulateLookupTables();
+            if (string.IsNullOrEmpty(defaultConfiguration) || !_configurationTable.ContainsKey(defaultConfiguration))
+                _currentConfiguration = inputConfigurations[0];
+            else
+                _currentConfiguration = _configurationTable[defaultConfiguration];
+
+            foreach (InputConfiguration inputConfig in inputConfigurations) {
+                foreach (AxisConfiguration axisConfig in inputConfig.axes)
+                    axisConfig.Initialize();
+            }
+            ResetInputAxes();
+        }
+
+        private void PopulateLookupTables() {
+            _configurationTable.Clear();
+            foreach (InputConfiguration inputConfig in inputConfigurations) {
+                if (!_configurationTable.ContainsKey(inputConfig.name))
+                    _configurationTable.Add(inputConfig.name, inputConfig);
+#if UNITY_EDITOR
+                else {
+                    Debug.LogWarning("An input configuration named \'" + inputConfig.name +
+                                     "\' already exists in the lookup table");
+                }
+#endif
+            }
+
+            _axesTable.Clear();
+            foreach (InputConfiguration inputConfig in inputConfigurations) {
+                Dictionary<string, AxisConfiguration> table = new Dictionary<string, AxisConfiguration>();
+                foreach (AxisConfiguration axisConfig in inputConfig.axes) {
+                    if (!table.ContainsKey(axisConfig.name))
+                        table.Add(axisConfig.name, axisConfig);
+#if UNITY_EDITOR
+                    else {
+                        Debug.LogWarning(
+                                         string.Format(
+                                                       "Input configuration \'{0}\' already contains an axis named \'{1}\'",
+                                                       inputConfig.name,
+                                                       axisConfig.name));
+                    }
+#endif
+                }
+
+                _axesTable.Add(inputConfig.name, table);
+            }
+        }
+
+        private void Update() {
+            if (_currentConfiguration != null) {
+                int count = _currentConfiguration.axes.Count;
+                for (int i = 0; i < count; i++)
+                    _currentConfiguration.axes[i].Update();
+                if (RemoteUpdate != null)
+                    RemoteUpdate();
+
+                if (_scanFlags != ScanFlags.None)
+                    ScanInput();
+            } else {
+                if (_scanFlags != ScanFlags.None)
+                    StopInputScan();
+            }
+        }
+
+        private void ScanInput() {
+            float timeout = ignoreTimescale
+                                ? (Time.realtimeSinceStartup - _scanStartTime)
+                                : (Time.time - _scanStartTime);
+            if (!string.IsNullOrEmpty(_cancelScanButton) && GetButtonDown(_cancelScanButton) || timeout >= _scanTimeout) {
+                StopInputScan();
+                return;
+            }
+
+            bool scanSuccess = false;
+            if (((int) _scanFlags & (int) ScanFlags.Key) == (int) ScanFlags.Key)
+                scanSuccess = ScanKey();
+            if (!scanSuccess && (((int) _scanFlags & (int) ScanFlags.JoystickButton) == (int) ScanFlags.JoystickButton))
+                scanSuccess = ScanJoystickButton();
+            if (!scanSuccess && (((int) _scanFlags & (int) ScanFlags.JoystickAxis) == (int) ScanFlags.JoystickAxis))
+                scanSuccess = ScanJoystickAxis();
+            if (!scanSuccess && (((int) _scanFlags & (int) ScanFlags.MouseAxis) == (int) ScanFlags.MouseAxis))
+                ScanMouseAxis();
+        }
+
+        private bool ScanKey() {
+            int length = _keys.Length;
+            for (int i = 0; i < length; i++) {
+                if ((int) _keys[i] >= (int) KeyCode.JoystickButton0)
+                    break;
+
+                if (Input.GetKeyDown(_keys[i])) {
+                    _scanResult.scanFlags = ScanFlags.Key;
+                    _scanResult.key = _keys[i];
+                    _scanResult.joystick = -1;
+                    _scanResult.joystickAxis = -1;
+                    _scanResult.mouseAxis = -1;
+                    _scanResult.userData = _scanUserData;
+                    if (_scanHandler(_scanResult)) {
+                        _scanHandler = null;
+                        _scanResult.userData = null;
+                        _scanFlags = ScanFlags.None;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private bool ScanJoystickButton() {
+            for (int key = (int) KeyCode.JoystickButton0; key < (int) KeyCode.Joystick4Button19; key++) {
+                if (Input.GetKeyDown((KeyCode) key)) {
+                    _scanResult.scanFlags = ScanFlags.JoystickButton;
+                    _scanResult.key = (KeyCode) key;
+                    _scanResult.joystick = -1;
+                    _scanResult.joystickAxis = -1;
+                    _scanResult.mouseAxis = -1;
+                    _scanResult.userData = _scanUserData;
+                    if (_scanHandler(_scanResult)) {
+                        _scanHandler = null;
+                        _scanResult.userData = null;
+                        _scanFlags = ScanFlags.None;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private bool ScanJoystickAxis() {
+            int scanStart = _scanJoystick*AxisConfiguration.MaxJoystickAxes;
+            for (int i = 0; i < AxisConfiguration.MaxJoystickAxes; i++) {
+                if (Mathf.Abs(Input.GetAxisRaw(_rawJoystickAxes[scanStart + i])) >= 1.0f) {
+                    _scanResult.scanFlags = ScanFlags.JoystickAxis;
+                    _scanResult.key = KeyCode.None;
+                    _scanResult.joystick = _scanJoystick;
+                    _scanResult.joystickAxis = i;
+                    _scanResult.mouseAxis = -1;
+                    _scanResult.userData = _scanUserData;
+                    if (_scanHandler(_scanResult)) {
+                        _scanHandler = null;
+                        _scanResult.userData = null;
+                        _scanFlags = ScanFlags.None;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private bool ScanMouseAxis() {
+            for (int i = 0; i < _rawMouseAxes.Length; i++) {
+                if (Mathf.Abs(Input.GetAxis(_rawMouseAxes[i])) > 0.0f) {
+                    _scanResult.scanFlags = ScanFlags.MouseAxis;
+                    _scanResult.key = KeyCode.None;
+                    _scanResult.joystick = -1;
+                    _scanResult.joystickAxis = -1;
+                    _scanResult.mouseAxis = i;
+                    _scanResult.userData = _scanUserData;
+                    if (_scanHandler(_scanResult)) {
+                        _scanHandler = null;
+                        _scanResult.userData = null;
+                        _scanFlags = ScanFlags.None;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private void StopInputScan() {
+            _scanResult.scanFlags = ScanFlags.None;
+            _scanResult.key = KeyCode.None;
+            _scanResult.joystick = -1;
+            _scanResult.joystickAxis = -1;
+            _scanResult.mouseAxis = -1;
+            _scanResult.userData = _scanUserData;
+
+            _scanHandler(_scanResult);
+
+            _scanHandler = null;
+            _scanResult.userData = null;
+            _scanFlags = ScanFlags.None;
+        }
+
+        private void RaiseInputConfigurationChangedEvent(string configName) {
+            if (ConfigurationChanged != null)
+                ConfigurationChanged(configName);
+        }
+
+        private void RaiseConfigurationDirtyEvent(string configName) {
+            if (ConfigurationDirty != null)
+                ConfigurationDirty(configName);
+        }
+
+        private void RaiseLoadedEvent() {
+            if (Loaded != null)
+                Loaded();
+        }
+
+        private void RaiseSavedEvent() {
+            if (Saved != null)
+                Saved();
+        }
+
         #region [Fields]
+
         public event Action<string> ConfigurationChanged;
         public event Action<string> ConfigurationDirty;
         public event Action Loaded;
@@ -82,324 +324,37 @@ namespace TeamUtility.IO
 
         #endregion
 
-        private void Awake()
-        {
-            if(_instance != null)
-            {
-                UnityEngine.Object.Destroy(this);
-            }
-            else
-            {
-                if(dontDestroyOnLoad)
-                {
-                    UnityEngine.Object.DontDestroyOnLoad(this);
-                }
-
-                _instance = this;
-                _keys = (KeyCode[])Enum.GetValues(typeof(KeyCode));
-                _configurationTable = new Dictionary<string, InputConfiguration>();
-                _axesTable = new Dictionary<string, Dictionary<string, AxisConfiguration>>();
-
-                SetRawAxisNames();
-                Initialize();
-            }
-        }
-
-        private void SetRawAxisNames()
-        {
-            _rawMouseAxes = new string[AxisConfiguration.MaxMouseAxes];
-            for(int i = 0; i < _rawMouseAxes.Length; i++)
-            {
-                _rawMouseAxes[i] = string.Concat("mouse_axis_", i);
-            }
-
-            _rawJoystickAxes = new string[AxisConfiguration.MaxJoysticks * AxisConfiguration.MaxJoystickAxes];
-            for(int i = 0; i < AxisConfiguration.MaxJoysticks; i++)
-            {
-                for(int j = 0; j < AxisConfiguration.MaxJoystickAxes; j++)
-                {
-                    _rawJoystickAxes[i * AxisConfiguration.MaxJoystickAxes + j] = string.Concat("joy_", i, "_axis_", j);
-                }
-            }
-        }
-
-        private void Initialize()
-        {
-            if(inputConfigurations.Count == 0)
-                return;
-
-            PopulateLookupTables();
-            if(string.IsNullOrEmpty(defaultConfiguration) || !_configurationTable.ContainsKey(defaultConfiguration))
-                _currentConfiguration = inputConfigurations[0];
-            else
-                _currentConfiguration = _configurationTable[defaultConfiguration];
-
-            foreach(InputConfiguration inputConfig in inputConfigurations)
-            {
-                foreach(AxisConfiguration axisConfig in inputConfig.axes)
-                {
-                    axisConfig.Initialize();
-                }
-            }
-            ResetInputAxes();
-        }
-
-        private void PopulateLookupTables()
-        {
-            _configurationTable.Clear();
-            foreach(InputConfiguration inputConfig in inputConfigurations)
-            {
-                if(!_configurationTable.ContainsKey(inputConfig.name))
-                {
-                    _configurationTable.Add(inputConfig.name, inputConfig);
-                }
-#if UNITY_EDITOR
-                else
-                {
-                    Debug.LogWarning("An input configuration named \'" + inputConfig.name + "\' already exists in the lookup table");
-                }
-#endif
-            }
-
-            _axesTable.Clear();
-            foreach(InputConfiguration inputConfig in inputConfigurations)
-            {
-                Dictionary<string, AxisConfiguration> table = new Dictionary<string, AxisConfiguration>();
-                foreach(AxisConfiguration axisConfig in inputConfig.axes)
-                {
-                    if(!table.ContainsKey(axisConfig.name))
-                    {
-                        table.Add(axisConfig.name, axisConfig);
-                    }
-#if UNITY_EDITOR
-                    else
-                    {
-                        Debug.LogWarning(string.Format("Input configuration \'{0}\' already contains an axis named \'{1}\'", inputConfig.name, axisConfig.name));
-                    }
-#endif
-                }
-
-                _axesTable.Add(inputConfig.name, table);
-            }
-        }
-
-        private void Update()
-        {
-            if(_currentConfiguration != null)
-            {
-                int count = _currentConfiguration.axes.Count;
-                for(int i = 0; i < count; i++)
-                {
-                    _currentConfiguration.axes[i].Update();
-                }
-                if(RemoteUpdate != null)
-                    RemoteUpdate();
-
-                if(_scanFlags != ScanFlags.None)
-                    ScanInput();
-            }
-            else
-            {
-                if(_scanFlags != ScanFlags.None)
-                    StopInputScan();
-            }
-        }
-
-        private void ScanInput()
-        {
-            float timeout = ignoreTimescale ? (Time.realtimeSinceStartup - _scanStartTime) : (Time.time - _scanStartTime);
-            if(!string.IsNullOrEmpty(_cancelScanButton) && GetButtonDown(_cancelScanButton) || timeout >= _scanTimeout)
-            {
-                StopInputScan();
-                return;
-            }
-
-            bool scanSuccess = false;
-            if(((int)_scanFlags & (int)ScanFlags.Key) == (int)ScanFlags.Key)
-            {
-                scanSuccess = ScanKey();
-            }
-            if(!scanSuccess && (((int)_scanFlags & (int)ScanFlags.JoystickButton) == (int)ScanFlags.JoystickButton))
-            {
-                scanSuccess = ScanJoystickButton();
-            }
-            if(!scanSuccess && (((int)_scanFlags & (int)ScanFlags.JoystickAxis) == (int)ScanFlags.JoystickAxis))
-            {
-                scanSuccess = ScanJoystickAxis();
-            }
-            if(!scanSuccess && (((int)_scanFlags & (int)ScanFlags.MouseAxis) == (int)ScanFlags.MouseAxis))
-            {
-                ScanMouseAxis();
-            }
-        }
-
-        private bool ScanKey()
-        {
-            int length = _keys.Length;
-            for(int i = 0; i < length; i++)
-            {
-                if((int)_keys[i] >= (int)KeyCode.JoystickButton0)
-                    break;
-
-                if(Input.GetKeyDown(_keys[i]))
-                {
-                    _scanResult.scanFlags = ScanFlags.Key;
-                    _scanResult.key = _keys[i];
-                    _scanResult.joystick = -1;
-                    _scanResult.joystickAxis = -1;
-                    _scanResult.mouseAxis = -1;
-                    _scanResult.userData = _scanUserData;
-                    if(_scanHandler(_scanResult))
-                    {
-                        _scanHandler = null;
-                        _scanResult.userData = null;
-                        _scanFlags = ScanFlags.None;
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private bool ScanJoystickButton()
-        {
-            for(int key = (int)KeyCode.JoystickButton0; key < (int)KeyCode.Joystick4Button19; key++)
-            {
-                if(Input.GetKeyDown((KeyCode)key))
-                {
-                    _scanResult.scanFlags = ScanFlags.JoystickButton;
-                    _scanResult.key = (KeyCode)key;
-                    _scanResult.joystick = -1;
-                    _scanResult.joystickAxis = -1;
-                    _scanResult.mouseAxis = -1;
-                    _scanResult.userData = _scanUserData;
-                    if(_scanHandler(_scanResult))
-                    {
-                        _scanHandler = null;
-                        _scanResult.userData = null;
-                        _scanFlags = ScanFlags.None;
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private bool ScanJoystickAxis()
-        {
-            int scanStart = _scanJoystick * AxisConfiguration.MaxJoystickAxes;
-            for(int i = 0; i < AxisConfiguration.MaxJoystickAxes; i++)
-            {
-                if(Mathf.Abs(Input.GetAxisRaw(_rawJoystickAxes[scanStart + i])) >= 1.0f)
-                {
-                    _scanResult.scanFlags = ScanFlags.JoystickAxis;
-                    _scanResult.key = KeyCode.None;
-                    _scanResult.joystick = _scanJoystick;
-                    _scanResult.joystickAxis = i;
-                    _scanResult.mouseAxis = -1;
-                    _scanResult.userData = _scanUserData;
-                    if(_scanHandler(_scanResult))
-                    {
-                        _scanHandler = null;
-                        _scanResult.userData = null;
-                        _scanFlags = ScanFlags.None;
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private bool ScanMouseAxis()
-        {
-            for(int i = 0; i < _rawMouseAxes.Length; i++)
-            {
-                if(Mathf.Abs(Input.GetAxis(_rawMouseAxes[i])) > 0.0f)
-                {
-                    _scanResult.scanFlags = ScanFlags.MouseAxis;
-                    _scanResult.key = KeyCode.None;
-                    _scanResult.joystick = -1;
-                    _scanResult.joystickAxis = -1;
-                    _scanResult.mouseAxis = i;
-                    _scanResult.userData = _scanUserData;
-                    if(_scanHandler(_scanResult))
-                    {
-                        _scanHandler = null;
-                        _scanResult.userData = null;
-                        _scanFlags = ScanFlags.None;
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private void StopInputScan()
-        {
-            _scanResult.scanFlags = ScanFlags.None;
-            _scanResult.key = KeyCode.None;
-            _scanResult.joystick = -1;
-            _scanResult.joystickAxis = -1;
-            _scanResult.mouseAxis = -1;
-            _scanResult.userData = _scanUserData;
-
-            _scanHandler(_scanResult);
-
-            _scanHandler = null;
-            _scanResult.userData = null;
-            _scanFlags = ScanFlags.None;
-        }
-
-        private void RaiseInputConfigurationChangedEvent(string configName)
-        {
-            if(ConfigurationChanged != null)
-                ConfigurationChanged(configName);
-        }
-
-        private void RaiseConfigurationDirtyEvent(string configName)
-        {
-            if(ConfigurationDirty != null)
-                ConfigurationDirty(configName);
-        }
-
-        private void RaiseLoadedEvent()
-        {
-            if(Loaded != null)
-                Loaded();
-        }
-
-        private void RaiseSavedEvent()
-        {
-            if(Saved != null)
-                Saved();
-        }
-
         #region [Static Interface]
+
         /// <summary>
         /// A reference to the input manager instance. Use it to check if an input manager exists in the scene and
         /// to subscribe to the input manager's events.
         /// </summary>
-        public static InputManager Instance { get { return _instance; } }
-        public static InputConfiguration CurrentConfiguration { get { return _instance._currentConfiguration; } }
-        public static bool IsScanning { get { return _instance._scanFlags != ScanFlags.None; } }
-        public static bool IgnoreTimescale { get { return _instance.ignoreTimescale; } }
+        public static InputManager Instance {
+            get { return _instance; }
+        }
+
+        public static InputConfiguration CurrentConfiguration {
+            get { return _instance._currentConfiguration; }
+        }
+
+        public static bool IsScanning {
+            get { return _instance._scanFlags != ScanFlags.None; }
+        }
+
+        public static bool IgnoreTimescale {
+            get { return _instance.ignoreTimescale; }
+        }
 
         /// <summary>
         /// Returns true if any axis of the active input configuration is receiving input.
         /// </summary>
-        public static bool AnyInput()
-        {
+        public static bool AnyInput() {
             InputConfiguration inputConfig = _instance._currentConfiguration;
-            if(inputConfig != null)
-            {
+            if (inputConfig != null) {
                 int count = inputConfig.axes.Count;
-                for(int i = 0; i < count; i++)
-                {
-                    if(inputConfig.axes[i].AnyInput)
+                for (int i = 0; i < count; i++) {
+                    if (inputConfig.axes[i].AnyInput)
                         return true;
                 }
             }
@@ -412,15 +367,12 @@ namespace TeamUtility.IO
         /// If the specified input configuration is not active and the axis is of type
         /// DigialAxis, RemoteAxis, RemoteButton or AnalogButton this method will return false.
         /// </summary>
-        public static bool AnyInput(string inputConfigName)
-        {
+        public static bool AnyInput(string inputConfigName) {
             InputConfiguration inputConfig;
-            if(_instance._configurationTable.TryGetValue(inputConfigName, out inputConfig))
-            {
+            if (_instance._configurationTable.TryGetValue(inputConfigName, out inputConfig)) {
                 int count = inputConfig.axes.Count;
-                for(int i = 0; i < count; i++)
-                {
-                    if(inputConfig.axes[i].AnyInput)
+                for (int i = 0; i < count; i++) {
+                    if (inputConfig.axes[i].AnyInput)
                         return true;
                 }
             }
@@ -431,19 +383,21 @@ namespace TeamUtility.IO
         /// <summary>
         /// If an axis with the requested name exists, and it is of type 'RemoteAxis', the axis' value will be changed.
         /// </summary>
-        public static void SetRemoteAxisValue(string axisName, float value)
-        {
+        public static void SetRemoteAxisValue(string axisName, float value) {
             SetRemoteAxisValue(_instance._currentConfiguration.name, axisName, value);
         }
 
         /// <summary>
         /// If an axis with the requested name exists, and it is of type 'RemoteAxis', the axis' value will be changed.
         /// </summary>
-        public static void SetRemoteAxisValue(string inputConfigName, string axisName, float value)
-        {
+        public static void SetRemoteAxisValue(string inputConfigName, string axisName, float value) {
             AxisConfiguration axisConfig = GetAxisConfiguration(inputConfigName, axisName);
-            if(axisConfig == null)
-                throw new ArgumentException(string.Format("An axis named \'{0}\' does not exist in the input configuration named \'{1}\'", axisName, inputConfigName));
+            if (axisConfig == null) {
+                throw new ArgumentException(
+                    string.Format("An axis named \'{0}\' does not exist in the input configuration named \'{1}\'",
+                                  axisName,
+                                  inputConfigName));
+            }
 
             axisConfig.SetRemoteAxisValue(value);
         }
@@ -451,19 +405,22 @@ namespace TeamUtility.IO
         /// <summary>
         /// If an button with the requested name exists, and it is of type 'RemoteButton', the button's state will be changed.
         /// </summary>
-        public static void SetRemoteButtonValue(string buttonName, bool down, bool justChanged)
-        {
+        public static void SetRemoteButtonValue(string buttonName, bool down, bool justChanged) {
             SetRemoteButtonValue(_instance._currentConfiguration.name, buttonName, down, justChanged);
         }
 
         /// <summary>
         /// If an button with the requested name exists, and it is of type 'RemoteButton', the button's state will be changed.
         /// </summary>
-        public static void SetRemoteButtonValue(string inputConfigName, string buttonName, bool down, bool justChanged)
-        {
+        public static void SetRemoteButtonValue(string inputConfigName, string buttonName, bool down, bool justChanged) {
             AxisConfiguration axisConfig = GetAxisConfiguration(inputConfigName, buttonName);
-            if(axisConfig == null)
-                throw new ArgumentException(string.Format("A remote button named \'{0}\' does not exist in the input configuration named \'{1}\'", buttonName, inputConfigName));
+            if (axisConfig == null) {
+                throw new ArgumentException(
+                    string.Format(
+                                  "A remote button named \'{0}\' does not exist in the input configuration named \'{1}\'",
+                                  buttonName,
+                                  inputConfigName));
+            }
 
             axisConfig.SetRemoteButtonValue(down, justChanged);
         }
@@ -471,55 +428,45 @@ namespace TeamUtility.IO
         /// <summary>
         /// Resets the internal state of the input manager.
         /// </summary>
-        public static void Reinitialize()
-        {
+        public static void Reinitialize() {
             _instance.Initialize();
         }
 
         /// <summary>
         /// Changes the active input configuration.
         /// </summary>
-        public static void SetInputConfiguration(string name)
-        {
-            if(_instance._currentConfiguration != null && name == _instance._currentConfiguration.name)
+        public static void SetInputConfiguration(string name) {
+            if (_instance._currentConfiguration != null && name == _instance._currentConfiguration.name)
                 return;
 
-            if(_instance._configurationTable.TryGetValue(name, out _instance._currentConfiguration))
-            {
+            if (_instance._configurationTable.TryGetValue(name, out _instance._currentConfiguration)) {
                 ResetInputAxes();
                 _instance.RaiseInputConfigurationChangedEvent(name);
-            }
-            else
-            {
+            } else
                 throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist", name));
-            }
         }
 
-        public static InputConfiguration GetInputConfiguration(string name)
-        {
+        public static InputConfiguration GetInputConfiguration(string name) {
             InputConfiguration inputConfig = null;
-            if(_instance._configurationTable.TryGetValue(name, out inputConfig))
+            if (_instance._configurationTable.TryGetValue(name, out inputConfig))
                 return inputConfig;
 
             return null;
         }
 
-        public static AxisConfiguration GetAxisConfiguration(string inputConfigName, string axisName)
-        {
+        public static AxisConfiguration GetAxisConfiguration(string inputConfigName, string axisName) {
             Dictionary<string, AxisConfiguration> table;
-            if(_instance._axesTable.TryGetValue(inputConfigName, out table))
-            {
+            if (_instance._axesTable.TryGetValue(inputConfigName, out table)) {
                 AxisConfiguration axisConfig;
-                if(table.TryGetValue(axisName, out axisConfig))
+                if (table.TryGetValue(axisName, out axisConfig))
                     return axisConfig;
             }
 
             return null;
         }
 
-        public static InputConfiguration CreateInputConfiguration(string name)
-        {
-            if(_instance._configurationTable.ContainsKey(name))
+        public static InputConfiguration CreateInputConfiguration(string name) {
+            if (_instance._configurationTable.ContainsKey(name))
                 throw new ArgumentException(string.Format("An input configuration named \'{0}\' already exists", name));
 
             InputConfiguration inputConfig = new InputConfiguration(name);
@@ -536,46 +483,43 @@ namespace TeamUtility.IO
         /// If a default input configuration has not been set in the inspector, the active
         /// input configuration will become null and the input manager will stop working.
         /// </summary>
-        public static bool DeleteInputConfiguration(string name)
-        {
+        public static bool DeleteInputConfiguration(string name) {
             InputConfiguration inputConfig = GetInputConfiguration(name);
-            if(inputConfig == null)
+            if (inputConfig == null)
                 return false;
 
             _instance._axesTable.Remove(name);
             _instance._configurationTable.Remove(name);
             _instance.inputConfigurations.Remove(inputConfig);
-            if(_instance._currentConfiguration.name == inputConfig.name)
-            {
-                if(_instance.inputConfigurations.Count == 0 || string.IsNullOrEmpty(_instance.defaultConfiguration) ||
-                   !_instance._configurationTable.ContainsKey(_instance.defaultConfiguration))
-                {
+            if (_instance._currentConfiguration.name == inputConfig.name) {
+                if (_instance.inputConfigurations.Count == 0 || string.IsNullOrEmpty(_instance.defaultConfiguration) ||
+                    !_instance._configurationTable.ContainsKey(_instance.defaultConfiguration))
                     _instance._currentConfiguration = null;
-                }
                 else
-                {
                     _instance._currentConfiguration = _instance._configurationTable[_instance.defaultConfiguration];
-                }
             }
 
             return true;
         }
 
-        public static AxisConfiguration CreateButton(string inputConfigName, string buttonName, KeyCode primaryKey)
-        {
+        public static AxisConfiguration CreateButton(string inputConfigName, string buttonName, KeyCode primaryKey) {
             return CreateButton(inputConfigName, buttonName, primaryKey, KeyCode.None);
         }
 
-        public static AxisConfiguration CreateButton(string inputConfigName, string buttonName, KeyCode primaryKey, KeyCode secondaryKey)
-        {
+        public static AxisConfiguration CreateButton(string inputConfigName,
+                                                     string buttonName,
+                                                     KeyCode primaryKey,
+                                                     KeyCode secondaryKey) {
             InputConfiguration inputConfig = GetInputConfiguration(inputConfigName);
-            if(inputConfig == null)
-            {
-                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist", inputConfigName));
+            if (inputConfig == null) {
+                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist",
+                                                          inputConfigName));
             }
-            if(_instance._axesTable[inputConfigName].ContainsKey(buttonName))
-            {
-                string error = string.Format("The input configuration named {0} already contains an axis configuration named {1}", inputConfigName, buttonName);
+            if (_instance._axesTable[inputConfigName].ContainsKey(buttonName)) {
+                string error =
+                    string.Format("The input configuration named {0} already contains an axis configuration named {1}",
+                                  inputConfigName,
+                                  buttonName);
                 throw new ArgumentException(error);
             }
 
@@ -592,22 +536,40 @@ namespace TeamUtility.IO
             return axisConfig;
         }
 
-        public static AxisConfiguration CreateDigitalAxis(string inputConfigName, string axisName, KeyCode positive, KeyCode negative, float gravity, float sensitivity)
-        {
-            return CreateDigitalAxis(inputConfigName, axisName, positive, negative, KeyCode.None, KeyCode.None, gravity, sensitivity);
+        public static AxisConfiguration CreateDigitalAxis(string inputConfigName,
+                                                          string axisName,
+                                                          KeyCode positive,
+                                                          KeyCode negative,
+                                                          float gravity,
+                                                          float sensitivity) {
+            return CreateDigitalAxis(inputConfigName,
+                                     axisName,
+                                     positive,
+                                     negative,
+                                     KeyCode.None,
+                                     KeyCode.None,
+                                     gravity,
+                                     sensitivity);
         }
 
-        public static AxisConfiguration CreateDigitalAxis(string inputConfigName, string axisName, KeyCode positive, KeyCode negative,
-                                                          KeyCode altPositive, KeyCode altNegative, float gravity, float sensitivity)
-        {
+        public static AxisConfiguration CreateDigitalAxis(string inputConfigName,
+                                                          string axisName,
+                                                          KeyCode positive,
+                                                          KeyCode negative,
+                                                          KeyCode altPositive,
+                                                          KeyCode altNegative,
+                                                          float gravity,
+                                                          float sensitivity) {
             InputConfiguration inputConfig = GetInputConfiguration(inputConfigName);
-            if(inputConfig == null)
-            {
-                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist", inputConfigName));
+            if (inputConfig == null) {
+                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist",
+                                                          inputConfigName));
             }
-            if(_instance._axesTable[inputConfigName].ContainsKey(axisName))
-            {
-                string error = string.Format("The input configuration named {0} already contains an axis configuration named {1}", inputConfigName, axisName);
+            if (_instance._axesTable[inputConfigName].ContainsKey(axisName)) {
+                string error =
+                    string.Format("The input configuration named {0} already contains an axis configuration named {1}",
+                                  inputConfigName,
+                                  axisName);
                 throw new ArgumentException(error);
             }
 
@@ -628,19 +590,23 @@ namespace TeamUtility.IO
             return axisConfig;
         }
 
-        public static AxisConfiguration CreateMouseAxis(string inputConfigName, string axisName, int axis, float sensitivity)
-        {
+        public static AxisConfiguration CreateMouseAxis(string inputConfigName,
+                                                        string axisName,
+                                                        int axis,
+                                                        float sensitivity) {
             InputConfiguration inputConfig = GetInputConfiguration(inputConfigName);
-            if(inputConfig == null)
-            {
-                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist", inputConfigName));
+            if (inputConfig == null) {
+                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist",
+                                                          inputConfigName));
             }
-            if(_instance._axesTable[inputConfigName].ContainsKey(axisName))
-            {
-                string error = string.Format("The input configuration named {0} already contains an axis configuration named {1}", inputConfigName, axisName);
+            if (_instance._axesTable[inputConfigName].ContainsKey(axisName)) {
+                string error =
+                    string.Format("The input configuration named {0} already contains an axis configuration named {1}",
+                                  inputConfigName,
+                                  axisName);
                 throw new ArgumentException(error);
             }
-            if(axis < 0 || axis > 2)
+            if (axis < 0 || axis > 2)
                 throw new ArgumentOutOfRangeException("axis");
 
             AxisConfiguration axisConfig = new AxisConfiguration(axisName);
@@ -656,21 +622,27 @@ namespace TeamUtility.IO
             return axisConfig;
         }
 
-        public static AxisConfiguration CreateAnalogAxis(string inputConfigName, string axisName, int joystick, int axis, float sensitivity, float deadZone)
-        {
+        public static AxisConfiguration CreateAnalogAxis(string inputConfigName,
+                                                         string axisName,
+                                                         int joystick,
+                                                         int axis,
+                                                         float sensitivity,
+                                                         float deadZone) {
             InputConfiguration inputConfig = GetInputConfiguration(inputConfigName);
-            if(inputConfig == null)
-            {
-                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist", inputConfigName));
+            if (inputConfig == null) {
+                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist",
+                                                          inputConfigName));
             }
-            if(_instance._axesTable[inputConfigName].ContainsKey(axisName))
-            {
-                string error = string.Format("The input configuration named {0} already contains an axis configuration named {1}", inputConfigName, axisName);
+            if (_instance._axesTable[inputConfigName].ContainsKey(axisName)) {
+                string error =
+                    string.Format("The input configuration named {0} already contains an axis configuration named {1}",
+                                  inputConfigName,
+                                  axisName);
                 throw new ArgumentException(error);
             }
-            if(axis < 0 || axis >= AxisConfiguration.MaxJoystickAxes)
+            if (axis < 0 || axis >= AxisConfiguration.MaxJoystickAxes)
                 throw new ArgumentOutOfRangeException("axis");
-            if(joystick < 0 || joystick >= AxisConfiguration.MaxJoysticks)
+            if (joystick < 0 || joystick >= AxisConfiguration.MaxJoysticks)
                 throw new ArgumentOutOfRangeException("joystick");
 
             AxisConfiguration axisConfig = new AxisConfiguration(axisName);
@@ -688,16 +660,17 @@ namespace TeamUtility.IO
             return axisConfig;
         }
 
-        public static AxisConfiguration CreateRemoteAxis(string inputConfigName, string axisName)
-        {
+        public static AxisConfiguration CreateRemoteAxis(string inputConfigName, string axisName) {
             InputConfiguration inputConfig = GetInputConfiguration(inputConfigName);
-            if(inputConfig == null)
-            {
-                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist", inputConfigName));
+            if (inputConfig == null) {
+                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist",
+                                                          inputConfigName));
             }
-            if(_instance._axesTable[inputConfigName].ContainsKey(axisName))
-            {
-                string error = string.Format("The input configuration named {0} already contains an axis configuration named {1}", inputConfigName, axisName);
+            if (_instance._axesTable[inputConfigName].ContainsKey(axisName)) {
+                string error =
+                    string.Format("The input configuration named {0} already contains an axis configuration named {1}",
+                                  inputConfigName,
+                                  axisName);
                 throw new ArgumentException(error);
             }
 
@@ -716,16 +689,17 @@ namespace TeamUtility.IO
             return axisConfig;
         }
 
-        public static AxisConfiguration CreateRemoteButton(string inputConfigName, string buttonName)
-        {
+        public static AxisConfiguration CreateRemoteButton(string inputConfigName, string buttonName) {
             InputConfiguration inputConfig = GetInputConfiguration(inputConfigName);
-            if(inputConfig == null)
-            {
-                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist", inputConfigName));
+            if (inputConfig == null) {
+                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist",
+                                                          inputConfigName));
             }
-            if(_instance._axesTable[inputConfigName].ContainsKey(buttonName))
-            {
-                string error = string.Format("The input configuration named {0} already contains an axis configuration named {1}", inputConfigName, buttonName);
+            if (_instance._axesTable[inputConfigName].ContainsKey(buttonName)) {
+                string error =
+                    string.Format("The input configuration named {0} already contains an axis configuration named {1}",
+                                  inputConfigName,
+                                  buttonName);
                 throw new ArgumentException(error);
             }
 
@@ -744,21 +718,25 @@ namespace TeamUtility.IO
             return axisConfig;
         }
 
-        public static AxisConfiguration CreateAnalogButton(string inputConfigName, string buttonName, int joystick, int axis)
-        {
+        public static AxisConfiguration CreateAnalogButton(string inputConfigName,
+                                                           string buttonName,
+                                                           int joystick,
+                                                           int axis) {
             InputConfiguration inputConfig = GetInputConfiguration(inputConfigName);
-            if(inputConfig == null)
-            {
-                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist", inputConfigName));
+            if (inputConfig == null) {
+                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist",
+                                                          inputConfigName));
             }
-            if(_instance._axesTable[inputConfigName].ContainsKey(buttonName))
-            {
-                string error = string.Format("The input configuration named {0} already contains an axis configuration named {1}", inputConfigName, buttonName);
+            if (_instance._axesTable[inputConfigName].ContainsKey(buttonName)) {
+                string error =
+                    string.Format("The input configuration named {0} already contains an axis configuration named {1}",
+                                  inputConfigName,
+                                  buttonName);
                 throw new ArgumentException(error);
             }
-            if(axis < 0 || axis >= AxisConfiguration.MaxJoystickAxes)
+            if (axis < 0 || axis >= AxisConfiguration.MaxJoystickAxes)
                 throw new ArgumentOutOfRangeException("axis");
-            if(joystick < 0 || joystick >= AxisConfiguration.MaxJoysticks)
+            if (joystick < 0 || joystick >= AxisConfiguration.MaxJoysticks)
                 throw new ArgumentOutOfRangeException("joystick");
 
             AxisConfiguration axisConfig = new AxisConfiguration(buttonName);
@@ -778,16 +756,17 @@ namespace TeamUtility.IO
             return axisConfig;
         }
 
-        public static AxisConfiguration CreateEmptyAxis(string inputConfigName, string axisName)
-        {
+        public static AxisConfiguration CreateEmptyAxis(string inputConfigName, string axisName) {
             InputConfiguration inputConfig = GetInputConfiguration(inputConfigName);
-            if(inputConfig == null)
-            {
-                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist", inputConfigName));
+            if (inputConfig == null) {
+                throw new ArgumentException(string.Format("An input configuration named \'{0}\' does not exist",
+                                                          inputConfigName));
             }
-            if(_instance._axesTable[inputConfigName].ContainsKey(axisName))
-            {
-                string error = string.Format("The input configuration named {0} already contains an axis configuration named {1}", inputConfigName, axisName);
+            if (_instance._axesTable[inputConfigName].ContainsKey(axisName)) {
+                string error =
+                    string.Format("The input configuration named {0} already contains an axis configuration named {1}",
+                                  inputConfigName,
+                                  axisName);
                 throw new ArgumentException(error);
             }
 
@@ -801,12 +780,10 @@ namespace TeamUtility.IO
             return axisConfig;
         }
 
-        public static bool DeleteAxisConfiguration(string inputConfigName, string axisName)
-        {
+        public static bool DeleteAxisConfiguration(string inputConfigName, string axisName) {
             InputConfiguration inputConfig = GetInputConfiguration(inputConfigName);
             AxisConfiguration axisConfig = GetAxisConfiguration(inputConfigName, axisName);
-            if(inputConfig != null && axisConfig != null)
-            {
+            if (inputConfig != null && axisConfig != null) {
                 _instance._axesTable[inputConfig.name].Remove(axisConfig.name);
                 inputConfig.axes.Remove(axisConfig);
                 return true;
@@ -819,9 +796,11 @@ namespace TeamUtility.IO
         /// Scans for keyboard input and calls the handler with the result.
         /// Returns KeyCode.None if timeout is reached or the scan is canceled.
         /// </summary>
-        public static void StartKeyScan(KeyScanHandler scanHandler, float timeout, string cancelScanButton, params object[] userData)
-        {
-            if(_instance._scanFlags != ScanFlags.None)
+        public static void StartKeyScan(KeyScanHandler scanHandler,
+                                        float timeout,
+                                        string cancelScanButton,
+                                        params object[] userData) {
+            if (_instance._scanFlags != ScanFlags.None)
                 _instance.StopInputScan();
 
             _instance._scanTimeout = timeout;
@@ -829,9 +808,7 @@ namespace TeamUtility.IO
             _instance._scanStartTime = _instance.ignoreTimescale ? Time.realtimeSinceStartup : Time.time;
             _instance._cancelScanButton = cancelScanButton;
             _instance._scanUserData = userData;
-            _instance._scanHandler = (result) => {
-                return scanHandler(result.key, (object[])result.userData);
-            };
+            _instance._scanHandler = result => { return scanHandler(result.key, (object[]) result.userData); };
         }
 
 
@@ -839,9 +816,11 @@ namespace TeamUtility.IO
         /// Scans for mouse input and calls the handler with the result.
         /// Returns -1 if timeout is reached or the scan is canceled.
         /// </summary>
-        public static void StartMouseAxisScan(AxisScanHandler scanHandler, float timeout, string cancelScanButton, params object[] userData)
-        {
-            if(_instance._scanFlags != ScanFlags.None)
+        public static void StartMouseAxisScan(AxisScanHandler scanHandler,
+                                              float timeout,
+                                              string cancelScanButton,
+                                              params object[] userData) {
+            if (_instance._scanFlags != ScanFlags.None)
                 _instance.StopInputScan();
 
             _instance._scanTimeout = timeout;
@@ -849,21 +828,22 @@ namespace TeamUtility.IO
             _instance._scanStartTime = _instance.ignoreTimescale ? Time.realtimeSinceStartup : Time.time;
             _instance._cancelScanButton = cancelScanButton;
             _instance._scanUserData = userData;
-            _instance._scanHandler = (result) => {
-                return scanHandler(result.mouseAxis, (object[])result.userData);
-            };
+            _instance._scanHandler = result => { return scanHandler(result.mouseAxis, (object[]) result.userData); };
         }
 
         /// <summary>
         /// Scans for joystick input and calls the handler with the result.
         /// Returns -1 if timeout is reached or the scan is canceled.
         /// </summary>
-        public static void StartJoystickAxisScan(AxisScanHandler scanHandler, int joystick, float timeout, string cancelScanButton, params object[] userData)
-        {
-            if(joystick < 0 || joystick >= AxisConfiguration.MaxJoystickAxes)
+        public static void StartJoystickAxisScan(AxisScanHandler scanHandler,
+                                                 int joystick,
+                                                 float timeout,
+                                                 string cancelScanButton,
+                                                 params object[] userData) {
+            if (joystick < 0 || joystick >= AxisConfiguration.MaxJoystickAxes)
                 throw new ArgumentOutOfRangeException("joystick");
 
-            if(_instance._scanFlags != ScanFlags.None)
+            if (_instance._scanFlags != ScanFlags.None)
                 _instance.StopInputScan();
 
             _instance._scanTimeout = timeout;
@@ -872,17 +852,14 @@ namespace TeamUtility.IO
             _instance._cancelScanButton = cancelScanButton;
             _instance._scanJoystick = joystick;
             _instance._scanUserData = userData;
-            _instance._scanHandler = (result) => {
-                return scanHandler(result.mouseAxis, (object[])result.userData);
-            };
+            _instance._scanHandler = result => { return scanHandler(result.mouseAxis, (object[]) result.userData); };
         }
 
-        public static void StartScan(ScanSettings settings, ScanHandler scanHandler)
-        {
-            if(settings.joystick < 0 || settings.joystick >= AxisConfiguration.MaxJoystickAxes)
+        public static void StartScan(ScanSettings settings, ScanHandler scanHandler) {
+            if (settings.joystick < 0 || settings.joystick >= AxisConfiguration.MaxJoystickAxes)
                 throw new ArgumentException("The joystick id you want to scan for is out of range");
 
-            if(_instance._scanFlags != ScanFlags.None)
+            if (_instance._scanFlags != ScanFlags.None)
                 _instance.StopInputScan();
 
             _instance._scanTimeout = settings.timeout;
@@ -894,25 +871,22 @@ namespace TeamUtility.IO
             _instance._scanHandler = scanHandler;
         }
 
-        public static void CancelScan()
-        {
-            if(_instance._scanFlags != ScanFlags.None)
+        public static void CancelScan() {
+            if (_instance._scanFlags != ScanFlags.None)
                 _instance.StopInputScan();
         }
 
         /// <summary>
         /// Triggers the ConfigurationDirty event.
         /// </summary>
-        public static void SetConfigurationDirty(string inputConfigName)
-        {
+        public static void SetConfigurationDirty(string inputConfigName) {
             _instance.RaiseConfigurationDirtyEvent(inputConfigName);
         }
 
         /// <summary>
         /// Saves the input configurations in the XML format, in Application.persistentDataPath.
         /// </summary>
-        public static void Save()
-        {
+        public static void Save() {
 #if UNITY_WINRT && !UNITY_EDITOR
 			string filename = Application.persistentDataPath + "/input_config.xml";
 #else
@@ -924,14 +898,12 @@ namespace TeamUtility.IO
         /// <summary>
         /// Saves the input configurations in the XML format, at the specified location.
         /// </summary>
-        public static void Save(string filename)
-        {
+        public static void Save(string filename) {
             Save(new InputSaverXML(filename));
         }
 
-        public static void Save(IInputSaver inputSaver)
-        {
-            if(inputSaver == null)
+        public static void Save(IInputSaver inputSaver) {
+            if (inputSaver == null)
                 throw new ArgumentNullException("inputSaver");
 
             inputSaver.Save(_instance.inputConfigurations, _instance.defaultConfiguration);
@@ -941,8 +913,7 @@ namespace TeamUtility.IO
         /// <summary>
         /// Loads the input configurations saved in the XML format, from Application.persistentDataPath.
         /// </summary>
-        public static void Load()
-        {
+        public static void Load() {
 #if UNITY_WINRT && !UNITY_EDITOR
 			string filename = Application.persistentDataPath + "/input_config.xml";
 			if(UnityEngine.Windows.File.Exists(filename))
@@ -951,24 +922,20 @@ namespace TeamUtility.IO
 			}
 #else
             string filename = System.IO.Path.Combine(Application.persistentDataPath, "input_config.xml");
-            if(System.IO.File.Exists(filename))
-            {
+            if (System.IO.File.Exists(filename))
                 Load(new InputLoaderXML(filename));
-            }
 #endif
         }
 
         /// <summary>
         /// Loads the input configurations saved in the XML format, from the specified location.
         /// </summary>
-        public static void Load(string filename)
-        {
+        public static void Load(string filename) {
             Load(new InputLoaderXML(filename));
         }
 
-        public static void Load(IInputLoader inputLoader)
-        {
-            if(inputLoader == null)
+        public static void Load(IInputLoader inputLoader) {
+            if (inputLoader == null)
                 throw new ArgumentNullException("inputLoader");
 
             inputLoader.Load(out _instance.inputConfigurations, out _instance.defaultConfiguration);
@@ -977,149 +944,188 @@ namespace TeamUtility.IO
         }
 
         #region [UNITY Interface]
-        public static Vector3 acceleration { get { return Input.acceleration; } }
-        public static int accelerationEventCount { get { return Input.accelerationEventCount; } }
-        public static AccelerationEvent[] accelerationEvents { get { return Input.accelerationEvents; } }
-        public static bool anyKey { get { return Input.anyKey; } }
-        public static bool anyKeyDown { get { return Input.anyKeyDown; } }
-        public static Compass compass { get { return Input.compass; } }
-        public static string compositionString { get { return Input.compositionString; } }
-        public static DeviceOrientation deviceOrientation { get { return Input.deviceOrientation; } }
-        public static Gyroscope gyro { get { return Input.gyro; } }
-        public static bool imeIsSelected { get { return Input.imeIsSelected; } }
-        public static string inputString { get { return Input.inputString; } }
-        public static LocationService location { get { return Input.location; } }
-        public static Vector2 mousePosition { get { return Input.mousePosition; } }
-        public static bool mousePresent { get { return Input.mousePresent; } }
-        public static int touchCount { get { return Input.touchCount; } }
-        public static Touch[] touches { get { return Input.touches; } }
 
-        public static bool compensateSensors
-        {
+        public static Vector3 acceleration {
+            get { return Input.acceleration; }
+        }
+
+        public static int accelerationEventCount {
+            get { return Input.accelerationEventCount; }
+        }
+
+        public static AccelerationEvent[] accelerationEvents {
+            get { return Input.accelerationEvents; }
+        }
+
+        public static bool anyKey {
+            get { return Input.anyKey; }
+        }
+
+        public static bool anyKeyDown {
+            get { return Input.anyKeyDown; }
+        }
+
+        public static Compass compass {
+            get { return Input.compass; }
+        }
+
+        public static string compositionString {
+            get { return Input.compositionString; }
+        }
+
+        public static DeviceOrientation deviceOrientation {
+            get { return Input.deviceOrientation; }
+        }
+
+        public static Gyroscope gyro {
+            get { return Input.gyro; }
+        }
+
+        public static bool imeIsSelected {
+            get { return Input.imeIsSelected; }
+        }
+
+        public static string inputString {
+            get { return Input.inputString; }
+        }
+
+        public static LocationService location {
+            get { return Input.location; }
+        }
+
+        public static Vector2 mousePosition {
+            get { return Input.mousePosition; }
+        }
+
+        public static bool mousePresent {
+            get { return Input.mousePresent; }
+        }
+
+        public static int touchCount {
+            get { return Input.touchCount; }
+        }
+
+        public static Touch[] touches {
+            get { return Input.touches; }
+        }
+
+        public static bool compensateSensors {
             get { return Input.compensateSensors; }
             set { Input.compensateSensors = value; }
         }
 
-        public static Vector2 compositionCursorPos
-        {
+        public static Vector2 compositionCursorPos {
             get { return Input.compositionCursorPos; }
             set { Input.compositionCursorPos = value; }
         }
 
-        public static IMECompositionMode imeCompositionMode
-        {
+        public static IMECompositionMode imeCompositionMode {
             get { return Input.imeCompositionMode; }
             set { Input.imeCompositionMode = value; }
         }
 
-        public static bool multiTouchEnabled
-        {
+        public static bool multiTouchEnabled {
             get { return Input.multiTouchEnabled; }
             set { Input.multiTouchEnabled = value; }
         }
 
-        public static AccelerationEvent GetAccelerationEvent(int index)
-        {
+        public static AccelerationEvent GetAccelerationEvent(int index) {
             return Input.GetAccelerationEvent(index);
         }
 
-        public static float GetAxis(string name)
-        {
+        public static float GetAxis(string name) {
             AxisConfiguration axisConfig = GetAxisConfiguration(_instance._currentConfiguration.name, name);
-            if(axisConfig == null)
-                throw new ArgumentException(string.Format("An axis named \'{0}\' does not exist in the active input configuration", name));
+            if (axisConfig == null) {
+                throw new ArgumentException(
+                    string.Format("An axis named \'{0}\' does not exist in the active input configuration", name));
+            }
 
             return axisConfig.GetAxis();
         }
 
-        public static float GetAxisRaw(string name)
-        {
+        public static float GetAxisRaw(string name) {
             AxisConfiguration axisConfig = GetAxisConfiguration(_instance._currentConfiguration.name, name);
-            if(axisConfig == null)
-                throw new ArgumentException(string.Format("An axis named \'{0}\' does not exist in the active input configuration", name));
+            if (axisConfig == null) {
+                throw new ArgumentException(
+                    string.Format("An axis named \'{0}\' does not exist in the active input configuration", name));
+            }
 
             return axisConfig.GetAxisRaw();
         }
 
-        public static bool GetButton(string name)
-        {
+        public static bool GetButton(string name) {
             AxisConfiguration axisConfig = GetAxisConfiguration(_instance._currentConfiguration.name, name);
-            if(axisConfig == null)
-                throw new ArgumentException(string.Format("An button named \'{0}\' does not exist in the active input configuration", name));
+            if (axisConfig == null) {
+                throw new ArgumentException(
+                    string.Format("An button named \'{0}\' does not exist in the active input configuration", name));
+            }
 
             return axisConfig.GetButton();
         }
 
-        public static bool GetButtonDown(string name)
-        {
+        public static bool GetButtonDown(string name) {
             AxisConfiguration axisConfig = GetAxisConfiguration(_instance._currentConfiguration.name, name);
-            if(axisConfig == null)
-                throw new ArgumentException(string.Format("An button named \'{0}\' does not exist in the active input configuration", name));
+            if (axisConfig == null) {
+                throw new ArgumentException(
+                    string.Format("An button named \'{0}\' does not exist in the active input configuration", name));
+            }
 
             return axisConfig.GetButtonDown();
         }
 
-        public static bool GetButtonUp(string name)
-        {
+        public static bool GetButtonUp(string name) {
             AxisConfiguration axisConfig = GetAxisConfiguration(_instance._currentConfiguration.name, name);
-            if(axisConfig == null)
-                throw new ArgumentException(string.Format("An button named \'{0}\' does not exist in the active input configuration", name));
+            if (axisConfig == null) {
+                throw new ArgumentException(
+                    string.Format("An button named \'{0}\' does not exist in the active input configuration", name));
+            }
 
             return axisConfig.GetButtonUp();
         }
 
-        public static bool GetKey(KeyCode key)
-        {
+        public static bool GetKey(KeyCode key) {
             return Input.GetKey(key);
         }
 
-        public static bool GetKeyDown(KeyCode key)
-        {
+        public static bool GetKeyDown(KeyCode key) {
             return Input.GetKeyDown(key);
         }
 
-        public static bool GetKeyUp(KeyCode key)
-        {
+        public static bool GetKeyUp(KeyCode key) {
             return Input.GetKeyUp(key);
         }
 
-        public static bool GetMouseButton(int index)
-        {
+        public static bool GetMouseButton(int index) {
             return Input.GetMouseButton(index);
         }
 
-        public static bool GetMouseButtonDown(int index)
-        {
+        public static bool GetMouseButtonDown(int index) {
             return Input.GetMouseButtonDown(index);
         }
 
-        public static bool GetMouseButtonUp(int index)
-        {
+        public static bool GetMouseButtonUp(int index) {
             return Input.GetMouseButtonUp(index);
         }
 
-        public static Touch GetTouch(int index)
-        {
+        public static Touch GetTouch(int index) {
             return Input.GetTouch(index);
         }
 
-        public static string[] GetJoystickNames()
-        {
+        public static string[] GetJoystickNames() {
             return Input.GetJoystickNames();
         }
 
-        public static void ResetInputAxes()
-        {
+        public static void ResetInputAxes() {
             InputConfiguration inputConfig = _instance._currentConfiguration;
             int count = inputConfig.axes.Count;
-            for(int i = 0; i < count; i++)
-            {
+            for (int i = 0; i < count; i++)
                 inputConfig.axes[i].Reset();
-            }
             Input.ResetInputAxes();
         }
+
         #endregion
 
         #endregion
     }
+
 }

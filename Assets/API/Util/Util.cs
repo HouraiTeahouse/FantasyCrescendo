@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Util : MonoBehaviour {
 
@@ -18,6 +17,7 @@ public class Util : MonoBehaviour {
     }
 
     public static float MatchSign(float src, float sign) {
-        return (Sign((int)src) != Sign((int)sign)) ? -src : src;
+        return (Sign((int) src) != Sign((int) sign)) ? -src : src;
     }
+
 }

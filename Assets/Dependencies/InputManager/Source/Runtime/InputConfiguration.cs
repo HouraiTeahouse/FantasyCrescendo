@@ -1,4 +1,5 @@
 ﻿#region [Copyright (c) 2014 Cristian Alexandru Geambasu]
+
 //	Distributed under the terms of an MIT-style license:
 //
 //	The MIT License
@@ -19,43 +20,41 @@
 //	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 //	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
 //	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
-using UnityEngine;
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
-namespace TeamUtility.IO
-{
-	[Serializable]
-	public sealed class InputConfiguration
-	{
-		public string name;
-		public List<AxisConfiguration> axes;
-		public bool isExpanded;
-		
-		public InputConfiguration() :
-			this("New Configuration") { }
-		
-		public InputConfiguration(string name)
-		{
-			axes = new List<AxisConfiguration>();
-			this.name = name;
-			isExpanded = false;
-		}
-		
-		public static InputConfiguration Duplicate(InputConfiguration source)
-		{
-			InputConfiguration inputConfig = new InputConfiguration();
-			inputConfig.name = source.name;
-			
-			inputConfig.axes = new List<AxisConfiguration>(source.axes.Count);
-			for(int i = 0; i < source.axes.Count; i++)
-			{
-				inputConfig.axes.Add(AxisConfiguration.Duplicate(source.axes[i]));
-			}
-			
-			return inputConfig;
-		}
-	}
+namespace TeamUtility.IO {
+
+    [Serializable]
+    public sealed class InputConfiguration {
+
+        public List<AxisConfiguration> axes;
+        public bool isExpanded;
+        public string name;
+
+        public InputConfiguration() :
+            this("New Configuration") {}
+
+        public InputConfiguration(string name) {
+            axes = new List<AxisConfiguration>();
+            this.name = name;
+            isExpanded = false;
+        }
+
+        public static InputConfiguration Duplicate(InputConfiguration source) {
+            InputConfiguration inputConfig = new InputConfiguration();
+            inputConfig.name = source.name;
+
+            inputConfig.axes = new List<AxisConfiguration>(source.axes.Count);
+            for (int i = 0; i < source.axes.Count; i++)
+                inputConfig.axes.Add(AxisConfiguration.Duplicate(source.axes[i]));
+
+            return inputConfig;
+        }
+
+    }
+
 }

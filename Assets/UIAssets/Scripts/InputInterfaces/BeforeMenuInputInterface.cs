@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class BeforeMenuInputInterface : InputInterface {
 
-	public ScreenManager screenManager = null;
-	public Animator nextScreenAnimator = null;
+    public Animator nextScreenAnimator = null;
+    public ScreenManager screenManager = null;
 
-	// Use this for initialization
-	public override void processInputs()
-	{
-		if( Input.GetButton( "Jump" ) )
-		{
-			screenManager.OpenPanel( nextScreenAnimator );
-		}
-	}
+    // Use this for initialization
+    public override void processInputs() {
+        if (Input.GetButton("Jump"))
+            screenManager.OpenPanel(nextScreenAnimator);
+    }
+
 }

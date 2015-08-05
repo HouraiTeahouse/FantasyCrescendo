@@ -2,15 +2,13 @@
 
 namespace Crescendo.API {
 
-    [RequireComponent(typeof(Character))]
+    [RequireComponent(typeof (Character))]
     public abstract class CharacterComponent : GensoBehaviour {
 
         protected Character Character { get; private set; }
 
         protected ICharacterInput InputSource {
-            get {
-                return Character == null ? null : Character.InputSource;
-            }
+            get { return Character == null ? null : Character.InputSource; }
             set {
                 if (Character == null)
                     return;
@@ -22,7 +20,8 @@ namespace Crescendo.API {
             Character = GetComponentInParent<Character>();
             if (Character == null) {
                 enabled = false;
-                Debug.LogWarning(GetType() + " on " + name + " has not found a suitable Character component. Please attach one.");   
+                Debug.LogWarning(GetType() + " on " + name +
+                                 " has not found a suitable Character component. Please attach one.");
             }
         }
 
@@ -34,8 +33,7 @@ namespace Crescendo.API {
             OnUpdate();
         }
 
-        protected virtual void OnUpdate() {
-        }
+        protected virtual void OnUpdate() {}
 
     }
 

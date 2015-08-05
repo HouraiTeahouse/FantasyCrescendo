@@ -4,20 +4,19 @@ using Object = UnityEngine.Object;
 
 namespace Crescendo.API {
 
-    [System.Serializable]
+    [Serializable]
     public class Resource<T> where T : Object {
 
         private readonly string _path;
         private T _asset;
 
         public Resource(string path) {
-            if(path == null)
+            if (path == null)
                 throw new ArgumentNullException("path");
             _path = path;
         }
 
-        public string Path
-        {
+        public string Path {
             get { return _path; }
         }
 
@@ -30,25 +29,25 @@ namespace Crescendo.API {
         }
 
         public T Load() {
-            if(_asset != null)
+            if (_asset != null)
                 return _asset;
             Object loadedObject = Resources.Load(_path);
             if (loadedObject != null) {
                 var asT = loadedObject as T;
-                if (asT != null) {
+                if (asT != null)
                     _asset = asT;
-                } else {
-                    Debug.LogError("Tried to load asset of type" + typeof(T) + " at " + _path + 
-                        " and found an Object of type " + loadedObject.GetType() + " instead");
+                else {
+                    Debug.LogError("Tried to load asset of type" + typeof (T) + " at " + _path +
+                                   " and found an Object of type " + loadedObject.GetType() + " instead");
                 }
                 return _asset;
-            } 
-            Debug.LogError("Tried to load asset of type" + typeof(T) + " at " + _path + " and found nothing.");
+            }
+            Debug.LogError("Tried to load asset of type" + typeof (T) + " at " + _path + " and found nothing.");
             return null;
         }
 
         public virtual void Unload() {
-            if(IsLoaded)
+            if (IsLoaded)
                 Resources.UnloadAsset(_asset);
             _asset = null;
         }
@@ -56,4 +55,3 @@ namespace Crescendo.API {
     }
 
 }
-

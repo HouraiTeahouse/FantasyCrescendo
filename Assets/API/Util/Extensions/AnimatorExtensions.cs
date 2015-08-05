@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Crescendo.API {
 
-    public static class AnimatorExtensions
-    {
+    public static class AnimatorExtensions {
 
         public static bool IsInState(this Animator animator, int layerIndex, string stateName) {
             return animator.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);

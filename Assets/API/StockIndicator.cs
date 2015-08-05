@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using Crescendo.API;
 using UnityEngine.UI;
 
 namespace Crescendo.API {
 
-    [RequireComponent(typeof(Text))]
+    [RequireComponent(typeof (Text))]
     public class StockIndicator : MonoBehaviour {
 
         private StockMatch.StockCriteria criteria;
@@ -14,17 +13,17 @@ namespace Crescendo.API {
         private int index;
 
         // Use this for initialization
-        void Start() {
+        private void Start() {
             StockMatch match = FindObjectOfType<StockMatch>();
             criteria = match.GetPlayerData(index);
             display = GetComponent<Text>();
         }
 
         // Update is called once per frame
-        void Update() {
+        private void Update() {
             display.text = criteria.Lives.ToString();
         }
+
     }
 
 }
-

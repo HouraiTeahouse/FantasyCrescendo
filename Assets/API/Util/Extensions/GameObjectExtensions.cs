@@ -1,12 +1,10 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Crescendo.API {
 
-
-    public static class GameObjectExtensions
-    {
+    public static class GameObjectExtensions {
 
         /// <summary>
         /// Shorthand way to check if a GameObject's layer is included in a mask.
@@ -45,30 +43,27 @@ namespace Crescendo.API {
             return false;
         }
 
-        public static T[] GetComponents<T>(this IEnumerable<GameObject> objs, Predicate<GameObject> filter = null)
-        {
+        public static T[] GetComponents<T>(this IEnumerable<GameObject> objs, Predicate<GameObject> filter = null) {
             if (objs == null)
                 throw new ArgumentNullException("objs");
 
             List<T> components = new List<T>();
 
             var arrayTest = objs as GameObject[];
-            if (arrayTest != null)
-            {
-                foreach (GameObject go in arrayTest)
+            if (arrayTest != null) {
+                foreach (GameObject go in arrayTest) {
                     if (go != null && (filter == null || filter(go)))
                         components.AddRange(go.GetComponents<T>());
-            }
-            else
-            {
-                foreach (GameObject go in objs)
+                }
+            } else {
+                foreach (GameObject go in objs) {
                     if (go != null && (filter == null || filter(go)))
                         components.AddRange(go.GetComponents<T>());
+                }
             }
 
             return components.ToArray();
         }
-
 
         /// <summary>
         /// Enumerates all children of a GameObject.
@@ -76,18 +71,14 @@ namespace Crescendo.API {
         /// <param name="obj"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public static IEnumerable<GameObject> Children(this GameObject obj, Predicate<GameObject> filter = null) 
-        {
-            if (filter == null) 
-            {
-                foreach (Transform child in obj.transform) 
-                {
+        public static IEnumerable<GameObject> Children(this GameObject obj, Predicate<GameObject> filter = null) {
+            if (filter == null) {
+                foreach (Transform child in obj.transform) {
                     if (child != null && child != obj.transform)
                         yield return child.gameObject;
                 }
             } else {
-                foreach (Transform child in obj.transform)
-                {
+                foreach (Transform child in obj.transform) {
                     if (child != null && child != obj.transform && filter(child.gameObject))
                         yield return child.gameObject;
                 }
@@ -103,7 +94,7 @@ namespace Crescendo.API {
         /// <param name="name"><the name of the child to be found</param>
         /// <returns>Found child, null if not found.</returns>
         public static GameObject FindChild(this GameObject obj, string name) {
-            if(name == null)
+            if (name == null)
                 throw new ArgumentNullException("name");
             Transform child = obj.transform.Find(name);
             return child == null ? null : child.gameObject;
@@ -146,7 +137,7 @@ namespace Crescendo.API {
         }
 
         private static void SetActiveIfNot(this GameObject obj, bool state) {
-            if(obj != null && obj.activeSelf != state)
+            if (obj != null && obj.activeSelf != state)
                 obj.SetActive(state);
         }
 
@@ -158,9 +149,8 @@ namespace Crescendo.API {
                 foreach (GameObject obj in asArray)
                     obj.SetActiveIfNot(state);
             } else {
-                foreach (GameObject obj in objects) {
+                foreach (GameObject obj in objects)
                     obj.SetActiveIfNot(state);
-                }
             }
         }
 
@@ -170,8 +160,7 @@ namespace Crescendo.API {
         /// <typeparam name="T">the target type of Component to find/add.</typeparam>
         /// <param name="obj">the GameObject </param>
         /// <returns>the retrieved/added Component. Will never be null.</returns>
-        public static T GetOrAddComponent<T>(this GameObject obj) where T : Component
-        {
+        public static T GetOrAddComponent<T>(this GameObject obj) where T : Component {
             T retrievedComponent = obj.GetComponent<T>();
 
             if (retrievedComponent == null)
@@ -183,10 +172,10 @@ namespace Crescendo.API {
         public static T GetComponentAnywhere<T>(this GameObject obj) where T : class {
             T comp = obj.GetComponentInParent(typeof (T)) as T ?? obj.GetComponentInChildren(typeof (T)) as T;
 
-            if (comp == null)
-            {
+            if (comp == null) {
                 Debug.LogError("Expected to find obj of type "
-                   + typeof(T) + " but found none", obj);
+                               + typeof (T) + " but found none",
+                               obj);
             }
 
             return comp;
@@ -196,9 +185,9 @@ namespace Crescendo.API {
             HashSet<T> components = new HashSet<T>();
             T[] parents = obj.GetComponentsInParent(typeof (T)) as T[];
             T[] children = obj.GetComponentInChildren(typeof (T)) as T[];
-            if(parents != null)
+            if (parents != null)
                 components.UnionWith(parents);
-            if(children != null)
+            if (children != null)
                 components.UnionWith(children);
             T[] all = new T[components.Count];
             components.CopyTo(all);
@@ -214,12 +203,12 @@ namespace Crescendo.API {
         /// <param name="obj">the GameObject </param>
         /// <returns>the retrieved Component. Null if not found.</returns>
         public static T SafeGetComponent<T>(this GameObject obj) where T : class {
-            T retrievedComponent = obj.GetComponent(typeof(T)) as T;
+            T retrievedComponent = obj.GetComponent(typeof (T)) as T;
 
-            if (retrievedComponent == null)
-            {
+            if (retrievedComponent == null) {
                 Debug.LogError("Expected to find obj of type "
-                   + typeof(T) + " but found none", obj);
+                               + typeof (T) + " but found none",
+                               obj);
             }
 
             return retrievedComponent;
@@ -232,9 +221,8 @@ namespace Crescendo.API {
         /// <typeparam name="T">the target type of Component to find.</typeparam>
         /// <param name="obj">the GameObject </param>
         /// <returns>the retrieved Component. Null if not found.</returns>
-        public static T GetIComponent<T>(this GameObject obj) where T : class
-        {
-            return obj.GetComponent(typeof(T)) as T;
+        public static T GetIComponent<T>(this GameObject obj) where T : class {
+            return obj.GetComponent(typeof (T)) as T;
         }
 
         /// <summary>
@@ -244,9 +232,8 @@ namespace Crescendo.API {
         /// <typeparam name="T">the target type of Component to find.</typeparam>
         /// <param name="obj">the GameObject</param>
         /// <returns>the retrieved Components. Empty if not found.</returns>
-        public static T[] GetIComponents<T>(this GameObject obj) where T : class
-        {
-            return obj.GetComponents(typeof(T)) as T[];
+        public static T[] GetIComponents<T>(this GameObject obj) where T : class {
+            return obj.GetComponents(typeof (T)) as T[];
         }
 
         /// <summary>
@@ -256,9 +243,8 @@ namespace Crescendo.API {
         /// <typeparam name="T">the target type of Component to find.</typeparam>
         /// <param name="obj">the GameObject </param>
         /// <returns>the retrieved Component. Null if not found.</returns>
-        public static T GetIComponentInChildren<T>(this GameObject obj) where T : class
-        {
-            return obj.GetComponentInChildren(typeof(T)) as T;
+        public static T GetIComponentInChildren<T>(this GameObject obj) where T : class {
+            return obj.GetComponentInChildren(typeof (T)) as T;
         }
 
         /// <summary>
@@ -268,9 +254,8 @@ namespace Crescendo.API {
         /// <typeparam name="T">the target type of Component to find.</typeparam>
         /// <param name="obj">the GameObject</param>
         /// <returns>the retrieved Components. Empty if not found.</returns>
-        public static T[] GetIComponentsInChildren<T>(this GameObject obj) where T : class
-        {
-            return obj.GetComponentsInChildren(typeof(T)) as T[];
+        public static T[] GetIComponentsInChildren<T>(this GameObject obj) where T : class {
+            return obj.GetComponentsInChildren(typeof (T)) as T[];
         }
 
         /// <summary>
@@ -280,9 +265,8 @@ namespace Crescendo.API {
         /// <typeparam name="T">the target type of Component to find.</typeparam>
         /// <param name="obj">the GameObject </param>
         /// <returns>the retrieved Component. Null if not found.</returns>
-        public static T GetIComponentInParent<T>(this GameObject obj) where T : class
-        {
-            return obj.GetComponentInParent(typeof(T)) as T;
+        public static T GetIComponentInParent<T>(this GameObject obj) where T : class {
+            return obj.GetComponentInParent(typeof (T)) as T;
         }
 
         /// <summary>
@@ -292,11 +276,10 @@ namespace Crescendo.API {
         /// <typeparam name="T">the target type of Component to find.</typeparam>
         /// <param name="obj">the GameObject</param>
         /// <returns>the retrieved Components. Empty if not found.</returns>
-        public static T[] GetIComponentsInParent<T>(this GameObject obj) where T : class
-        {
-            return obj.GetComponentsInParent(typeof(T)) as T[];
+        public static T[] GetIComponentsInParent<T>(this GameObject obj) where T : class {
+            return obj.GetComponentsInParent(typeof (T)) as T[];
         }
+
     }
 
 }
-

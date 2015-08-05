@@ -1,4 +1,5 @@
 ﻿#region [Copyright (c) 2014 Cristian Alexandru Geambasu]
+
 //	Distributed under the terms of an MIT-style license:
 //
 //	The MIT License
@@ -19,15 +20,17 @@
 //	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 //	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
 //	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
-using UnityEngine;
-using System;
+
 using System.Collections.Generic;
 
-namespace TeamUtility.IO
-{
-	public interface IInputSaver
-	{
-		void Save(List<InputConfiguration> inputConfigurations, string defaultConfiguration);
-	}
+namespace TeamUtility.IO {
+
+    public interface IInputSaver {
+
+        void Save(List<InputConfiguration> inputConfigurations, string defaultConfiguration);
+
+    }
+
 }

@@ -12,34 +12,33 @@ namespace Crescendo.API {
         public static event Action OnApplicationUnfocused;
         public static event Action OnApplicationExit;
 
-        void Update() {
+        private void Update() {
             OnUpdate.SafeInvoke();
         }
 
-        void LateUpdate() {
+        private void LateUpdate() {
             OnLateUpdate.SafeInvoke();
         }
 
-        void FixedUpdate() {
+        private void FixedUpdate() {
             OnFixedUpdate.SafeInvoke();
         }
 
-        void OnApplicationFocus(bool focus) {
-            if(focus)
+        private void OnApplicationFocus(bool focus) {
+            if (focus)
                 OnApplicationFocused.SafeInvoke();
-            else 
+            else
                 OnApplicationUnfocused.SafeInvoke();
         }
 
-        void OnApplicationQuit() {
+        private void OnApplicationQuit() {
             OnApplicationExit.SafeInvoke();
         }
 
-        void OnLevelWasLoaded(int level) {
+        private void OnLevelWasLoaded(int level) {
             OnLoad.SafeInvoke(level);
         }
 
     }
-
 
 }

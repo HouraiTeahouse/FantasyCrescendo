@@ -411,8 +411,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 1, g: 1, b: 0, a: 1}
-  solid: 0
   includeChildren: 0
+  solid: 0
 --- !u!114 &11412766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -436,33 +436,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fceaeb339b971b429c4cc600acabd13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweakMode: 0
-  screenBlendMode: 1
-  hdr: 0
-  sepBlurSpread: 1.63999999
-  quality: 0
+  bloomBlurIterations: 2
   bloomIntensity: .25
   bloomThreshold: .75
   bloomThresholdColor: {r: 1, g: 1, b: 1, a: 1}
-  bloomBlurIterations: 2
-  hollywoodFlareBlurIterations: 2
-  flareRotation: 0
-  lensflareMode: 1
-  hollyStretchWidth: 2.5
-  lensflareIntensity: 0
-  lensflareThreshold: .300000012
-  lensFlareSaturation: .75
+  blurAndFlaresShader: {fileID: 4800000, guid: be6e39cf196f146d5be72fbefb18ed75, type: 3}
+  brightPassFilterShader: {fileID: 4800000, guid: 0aeaa4cb29f5d4e9c8455f04c8575c8c,
+    type: 3}
   flareColorA: {r: .400000006, g: .400000006, b: .800000012, a: .75}
   flareColorB: {r: .400000006, g: .800000012, b: .800000012, a: .75}
   flareColorC: {r: .800000012, g: .400000006, b: .800000012, a: .75}
   flareColorD: {r: .800000012, g: .400000006, b: 0, a: .75}
+  flareRotation: 0
+  hdr: 0
+  hollyStretchWidth: 2.5
+  hollywoodFlareBlurIterations: 2
+  lensflareIntensity: 0
+  lensflareMode: 1
+  lensFlareSaturation: .75
+  lensFlareShader: {fileID: 4800000, guid: 459fe69d2f6d74ddb92f04dbf45a866b, type: 3}
+  lensflareThreshold: .300000012
   lensFlareVignetteMask: {fileID: 2800000, guid: 95ef4804fe0be4c999ddaa383536cde8,
     type: 3}
-  lensFlareShader: {fileID: 4800000, guid: 459fe69d2f6d74ddb92f04dbf45a866b, type: 3}
+  quality: 0
+  screenBlendMode: 1
   screenBlendShader: {fileID: 4800000, guid: 7856cbff0a0ca45c787d5431eb805bb0, type: 3}
-  blurAndFlaresShader: {fileID: 4800000, guid: be6e39cf196f146d5be72fbefb18ed75, type: 3}
-  brightPassFilterShader: {fileID: 4800000, guid: 0aeaa4cb29f5d4e9c8455f04c8575c8c,
-    type: 3}
+  sepBlurSpread: 1.63999999
+  tweakMode: 0
 --- !u!114 &11421638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -496,8 +496,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  mainCamera: {fileID: 0}
   backgroundMusic: {fileID: 11400000, guid: 94d1fbf8e989f23488f8e4178b9edc1b, type: 2}
+  mainCamera: {fileID: 0}
 --- !u!114 &11445952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -510,8 +510,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  validCharacterStrings:
-  - Player
 --- !u!114 &11453524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -549,15 +547,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0923359e9e352a4b9b11c7b7161ad67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Radius: .400000006
-  m_SampleCount: 1
-  m_OcclusionIntensity: .5
   m_Blur: 2
   m_Downsampling: 2
-  m_OcclusionAttenuation: .769999981
   m_MinZ: .00999999978
-  m_SSAOShader: {fileID: 4800000, guid: 43ca18288c424f645aaa1e9e07f04c50, type: 3}
+  m_OcclusionAttenuation: .769999981
+  m_OcclusionIntensity: .5
+  m_Radius: .400000006
   m_RandomTexture: {fileID: 2800000, guid: a181ca8e3c62f3e4b8f183f6c586b032, type: 3}
+  m_SampleCount: 1
+  m_SSAOShader: {fileID: 4800000, guid: 43ca18288c424f645aaa1e9e07f04c50, type: 3}
 --- !u!114 &11463032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -595,36 +593,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd999d1b2cf94a45a5b0a47ce074bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redChannel:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  greenChannel:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
   blueChannel:
     serializedVersion: 2
     m_Curve:
@@ -640,23 +608,11 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  useDepthCorrection: 1
-  zCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  depthRedChannel:
+  colorCorrectionCurvesShader: {fileID: 4800000, guid: 62bcade1028c24ca1a39760ed84b9487,
+    type: 3}
+  colorCorrectionSelectiveShader: {fileID: 4800000, guid: e515e0f94cefc4c0db54b45cba621544,
+    type: 3}
+  depthBlueChannel:
     serializedVersion: 2
     m_Curve:
     - time: 0
@@ -686,7 +642,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  depthBlueChannel:
+  depthRedChannel:
     serializedVersion: 2
     m_Curve:
     - time: 0
@@ -701,18 +657,60 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+  greenChannel:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  mode: 1
+  redChannel:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   saturation: 1.25
   selectiveCc: 0
   selectiveFromColor: {r: 1, g: 1, b: 1, a: 1}
   selectiveToColor: {r: 1, g: 1, b: 1, a: 1}
-  mode: 1
-  updateTextures: 1
-  colorCorrectionCurvesShader: {fileID: 4800000, guid: 62bcade1028c24ca1a39760ed84b9487,
-    type: 3}
   simpleColorCorrectionCurvesShader: {fileID: 4800000, guid: 438ddd58d82c84d9eb1fdc56111702e1,
     type: 3}
-  colorCorrectionSelectiveShader: {fileID: 4800000, guid: e515e0f94cefc4c0db54b45cba621544,
-    type: 3}
+  updateTextures: 1
+  useDepthCorrection: 1
+  zCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11467576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -730,15 +728,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b349bce6fb1642144b4a33bec34ce054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stockCount: 5
   characters:
   - {fileID: 11400000, guid: 4d181d06a10cdfd4499bf5bb68e30def, type: 2}
   - {fileID: 11400000, guid: 4d181d06a10cdfd4499bf5bb68e30def, type: 2}
+  stockCount: 5
 --- !u!114 &11469616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -751,10 +749,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  targetPositionBias: {x: 0, y: 1, z: 0}
-  padding: {x: 0, y: 0}
   cameraSpeed: 3
   FovRange: {x: 30, y: 90}
+  padding: {x: 0, y: 0}
+  targetPositionBias: {x: 0, y: 1, z: 0}
 --- !u!114 &11472834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -767,8 +765,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 1, g: 1, b: 1, a: 1}
-  solid: 0
   includeChildren: 0
+  solid: 0
 --- !u!114 &11479466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -780,21 +778,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646b5bc27a658f447b1d929fd5ffbd70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 2
-  showGeneratedNormals: 0
-  offsetScale: .200000003
   blurRadius: 18
-  edgeThresholdMin: .0500000007
-  edgeThreshold: .200000003
-  edgeSharpness: 4
-  dlaaSharp: 0
-  ssaaShader: {fileID: 4800000, guid: b3728d1488b02490cbd196c7941bf1f8, type: 3}
   dlaaShader: {fileID: 4800000, guid: 017ca72b9e8a749058d13ebd527e98fa, type: 3}
+  dlaaSharp: 0
+  edgeSharpness: 4
+  edgeThreshold: .200000003
+  edgeThresholdMin: .0500000007
+  mode: 2
   nfaaShader: {fileID: 4800000, guid: ce0cb2621f6d84e21a87414e471a3cce, type: 3}
-  shaderFXAAPreset2: {fileID: 4800000, guid: 6f1418cffd12146f2a83be795f6fa5a7, type: 3}
-  shaderFXAAPreset3: {fileID: 4800000, guid: c182fa94a5a0a4c02870641efcd38cd5, type: 3}
+  offsetScale: .200000003
   shaderFXAAII: {fileID: 4800000, guid: cd5b323dcc592457790ff18b528f5e67, type: 3}
   shaderFXAAIII: {fileID: 4800000, guid: c547503fff0e8482ea5793727057041c, type: 3}
+  shaderFXAAPreset2: {fileID: 4800000, guid: 6f1418cffd12146f2a83be795f6fa5a7, type: 3}
+  shaderFXAAPreset3: {fileID: 4800000, guid: c182fa94a5a0a4c02870641efcd38cd5, type: 3}
+  showGeneratedNormals: 0
+  ssaaShader: {fileID: 4800000, guid: b3728d1488b02490cbd196c7941bf1f8, type: 3}
 --- !u!114 &11490914
 MonoBehaviour:
   m_ObjectHideFlags: 1

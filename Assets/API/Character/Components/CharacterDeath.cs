@@ -2,9 +2,7 @@
 
 namespace Crescendo.API {
 
-
     public class CharacterDeath : CharacterComponent {
-
 
         [SerializeField]
         private ParticleSystem deathPrefab;
@@ -18,16 +16,15 @@ namespace Crescendo.API {
             Character.OnBlastZoneExit += OnBlastZoneExit;
         }
 
-        void OnDestroy() {
-            if(Character == null)
+        private void OnDestroy() {
+            if (Character == null)
                 return;
 
             // Unsubscribe to Character events
             Character.OnBlastZoneExit += OnBlastZoneExit;
         }
 
-        void OnBlastZoneExit() {
-
+        private void OnBlastZoneExit() {
             Vector3 position = Character.transform.position;
 
             if (deathPrefab != null) {
@@ -35,7 +32,6 @@ namespace Crescendo.API {
                 copy.transform.LookAt(transform.position - position);
                 copy.startColor = Character.PlayerColor;
             }
-
         }
 
     }

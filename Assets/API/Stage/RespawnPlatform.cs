@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Crescendo.API {
-    
-    
+
     public class RespawnPlatform : GensoBehaviour {
+
+        [SerializeField]
+        private float _invicibilityTimer;
+
+        [SerializeField]
+        private float _platformTimer;
 
         private Character character;
         private Rigidbody physics;
+        private float timer;
 
         public Character Character {
             get { return character; }
@@ -22,33 +27,25 @@ namespace Crescendo.API {
             }
         }
 
-        [SerializeField]
-        private float _invicibilityTimer;
+        // Update is called once per frame
+        private void Update() {
+            if (character == null)
+                return;
 
-        [SerializeField]
-        private float _platformTimer;
-
-        private float timer = 0f;
-        
-	
-	    // Update is called once per frame
-	    void Update () {
-	        if (character == null)
-	            return;
-
-	        timer += Util.dt;
+            timer += Util.dt;
 
             // TODO: Find better alternative to this hack
             if (timer > _platformTimer || (physics != null && physics.velocity.magnitude > 0.5f))
                 Destroy(gameObject);
+        }
 
-	    }
-
-        void OnDestroy() {
+        private void OnDestroy() {
             if (Character == null)
                 return;
 
             Character.TemporaryInvincibility(_invicibilityTimer);
         }
+
     }
+
 }

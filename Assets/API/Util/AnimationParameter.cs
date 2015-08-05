@@ -4,46 +4,15 @@ using UnityEngine;
 namespace Crescendo.API {
 
     [Serializable]
-    public abstract class BaseAnimationParameter {
+    public abstract class BaseAnimationParameter : ISerializationCallbackReceiver {
 
-        [SerializeField]
-        private string _name;
+        private Animator _animator;
 
         [SerializeField]
         private int _hash;
 
-        private Animator _animator;
-
-        /// <summary>
-        /// The parameter name within the Animation Controller that identifies the parameter.
-        /// Changing this value will also change the hash property.
-        /// </summary>
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                _hash = Animator.StringToHash(_name);
-            }
-        }
-
-        /// <summary>
-        /// The corresponding hash value for the parameter.
-        /// </summary>
-        public int Hash
-        {
-            get { return _hash; }
-        }
-
-        /// <summary>
-        /// The target Animator this parameter belongs to. This must be set before using the parameter.
-        /// </summary>
-        public Animator Animator
-        {
-            get { return _animator; }
-            set { _animator = value; }
-        }
+        [SerializeField]
+        private string _name;
 
         /// <summary>
         /// Creates a unbound Animation parameter.
@@ -60,10 +29,44 @@ namespace Crescendo.API {
         /// </summary>
         /// <param name="animator">the Animator to bind to</param>
         /// <param name="name">the parameter name</param>
-        protected BaseAnimationParameter(Animator animator, string name)
-        {
+        protected BaseAnimationParameter(Animator animator, string name) {
             _animator = animator;
             Name = name;
+        }
+
+        /// <summary>
+        /// The parameter name within the Animation Controller that identifies the parameter.
+        /// Changing this value will also change the hash property.
+        /// </summary>
+        public string Name {
+            get { return _name; }
+            set {
+                _name = value;
+                _hash = Animator.StringToHash(_name);
+            }
+        }
+
+        /// <summary>
+        /// The corresponding hash value for the parameter.
+        /// </summary>
+        public int Hash {
+            get { return _hash; }
+        }
+
+        /// <summary>
+        /// The target Animator this parameter belongs to. This must be set before using the parameter.
+        /// </summary>
+        public Animator Animator {
+            get { return _animator; }
+            set { _animator = value; }
+        }
+
+        void ISerializationCallbackReceiver.OnBeforeSerialize() {
+            _hash = Animator.StringToHash(_name);
+        }
+
+        void ISerializationCallbackReceiver.OnAfterDeserialize() {
+            _hash = Animator.StringToHash(_name);
         }
 
     }
@@ -76,7 +79,7 @@ namespace Crescendo.API {
         /// The Animator property must be set after this to use it.
         /// </summary>
         /// <param name="name">the parameter name</param>
-        protected AnimationParameter(string name) : base(name) { }
+        protected AnimationParameter(string name) : base(name) {}
 
         /// <summary>
         /// Creates a bound Animation parameter.
@@ -84,7 +87,7 @@ namespace Crescendo.API {
         /// </summary>
         /// <param name="animator">the Animator to bind to</param>
         /// <param name="name">the parameter name</param>
-        protected AnimationParameter(Animator animator, string name) : base(animator, name) { }
+        protected AnimationParameter(Animator animator, string name) : base(animator, name) {}
 
         /// <summary>
         /// Gets the value of the Animation parameter from the Animator.
@@ -108,7 +111,7 @@ namespace Crescendo.API {
         /// The Animator property must be set after this to use it.
         /// </summary>
         /// <param name="name">the parameter name</param>
-        public AnimationBool(string name) : base(name) { }
+        public AnimationBool(string name) : base(name) {}
 
         /// <summary>
         /// Creates a bound Animation parameter.
@@ -116,7 +119,7 @@ namespace Crescendo.API {
         /// </summary>
         /// <param name="animator">the Animator to bind to</param>
         /// <param name="name">the parameter name</param>
-        public AnimationBool(Animator animator, string name) : base(animator, name) { }
+        public AnimationBool(Animator animator, string name) : base(animator, name) {}
 
         /// <summary>
         /// Gets the value of the Animation parameter from the Animator.
@@ -150,7 +153,7 @@ namespace Crescendo.API {
         /// The Animator property must be set after this to use it.
         /// </summary>
         /// <param name="name">the parameter name</param>
-        public AnimationFloat(string name) : base(name) { }
+        public AnimationFloat(string name) : base(name) {}
 
         /// <summary>
         /// Creates a bound Animation parameter.
@@ -176,12 +179,12 @@ namespace Crescendo.API {
             Animator.SetFloat(Hash, value);
         }
 
-        public static implicit operator float(AnimationFloat value)
-        {
+        public static implicit operator float(AnimationFloat value) {
             if (value == null)
                 throw new NullReferenceException();
             return value.Get();
         }
+
     }
 
     [Serializable]
@@ -192,7 +195,7 @@ namespace Crescendo.API {
         /// The Animator property must be set after this to use it.
         /// </summary>
         /// <param name="name">the parameter name</param>
-        public AnimationInt(string name) : base(name) { }
+        public AnimationInt(string name) : base(name) {}
 
         /// <summary>
         /// Creates a bound Animation parameter.
@@ -218,12 +221,12 @@ namespace Crescendo.API {
             Animator.SetInteger(Hash, value);
         }
 
-        public static implicit operator int(AnimationInt value)
-        {
+        public static implicit operator int(AnimationInt value) {
             if (value == null)
                 throw new NullReferenceException();
             return value.Get();
         }
+
     }
 
     [Serializable]
@@ -234,7 +237,7 @@ namespace Crescendo.API {
         /// The Animator property must be set after this to use it.
         /// </summary>
         /// <param name="name">the parameter name</param>
-        public AnimationTrigger(string name) : base(name) { }
+        public AnimationTrigger(string name) : base(name) {}
 
         /// <summary>
         /// Creates a bound Animation parameter.
@@ -242,14 +245,20 @@ namespace Crescendo.API {
         /// </summary>
         /// <param name="animator">the Animator to bind to</param>
         /// <param name="name">the parameter name</param>
-        public AnimationTrigger(Animator animator, string name) : base(animator, name) { }
+        public AnimationTrigger(Animator animator, string name) : base(animator, name) {}
 
         /// <summary>
-        /// Sets the trigger to true to the Animator.
+        /// Sets the trigger in the Animator.
         /// </summary>
-        /// <param name="value">the new value of the parameter</param>
         public void Set() {
             Animator.SetTrigger(Hash);
+        }
+
+        /// <summary>
+        /// Resets the trigger in the Animator.
+        /// </summary>
+        public void Reset() {
+            Animator.ResetTrigger(Hash);
         }
 
     }

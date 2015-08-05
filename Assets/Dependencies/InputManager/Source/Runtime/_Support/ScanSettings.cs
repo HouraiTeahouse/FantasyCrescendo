@@ -1,14 +1,13 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿namespace TeamUtility.IO {
 
-namespace TeamUtility.IO
-{
-	public struct ScanSettings
-	{
-		public ScanFlags scanFlags;
-		public int joystick;
-		public float timeout;
-		public string cancelScanButton;
-		public object userData;
-	}
+    public struct ScanSettings {
+
+        public string cancelScanButton;
+        public int joystick;
+        public ScanFlags scanFlags;
+        public float timeout;
+        public object userData;
+
+    }
+
 }

@@ -2,22 +2,22 @@
 
 namespace Crescendo.API {
 
-    [RequireComponent(typeof(BoxCollider))]
+    [RequireComponent(typeof (BoxCollider))]
     public class RestrainChildren : MonoBehaviour {
 
         private BoxCollider bounds;
 
-        void Awake() {
+        private void Awake() {
             bounds = GetComponent<BoxCollider>();
             bounds.enabled = false;
         }
 
-        void LateUpdate() {
+        private void LateUpdate() {
             var boundedArea = new Bounds(bounds.center, bounds.size);
             foreach (Transform child in transform)
                 child.localPosition = boundedArea.ClosestPoint(child.localPosition);
         }
-    }
 
+    }
 
 }

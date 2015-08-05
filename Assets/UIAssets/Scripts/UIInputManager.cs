@@ -1,63 +1,53 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class UIInputManager : MonoBehaviour {
 
-	public ScreenManager screenManager = null;
-	public List<GameObject> availableScreens = null;
-	
-	private List<Animator> animators = null;
-	private List<InputInterface> inputInterfaces = null;
+    private List<Animator> animators;
+    public List<GameObject> availableScreens = null;
+    private List<InputInterface> inputInterfaces;
+    public ScreenManager screenManager = null;
 
-	// Use this for initialization
-	void Start () {
-		animators = new List<Animator>();
-		inputInterfaces = new List<InputInterface>();
-		foreach( GameObject go in availableScreens )
-		{
-			Animator anim = go.GetComponent<Animator>();
-			InputInterface inputInterface = go.GetComponent<InputInterface>();
+    // Use this for initialization
+    private void Start() {
+        animators = new List<Animator>();
+        inputInterfaces = new List<InputInterface>();
+        foreach (GameObject go in availableScreens) {
+            Animator anim = go.GetComponent<Animator>();
+            InputInterface inputInterface = go.GetComponent<InputInterface>();
 
-			if( anim == null )
-			{
-				Debug.LogError( "The " + go.name + " must have an Animator component." );
-				GameObject.Destroy( this.gameObject );
-				return;
-			}
-			if( inputInterface == null )
-			{
-				Debug.LogError( "The " + go.name + " must have an InputInterface component." );
-				GameObject.Destroy( this.gameObject );
-				return;
-			}
+            if (anim == null) {
+                Debug.LogError("The " + go.name + " must have an Animator component.");
+                Destroy(gameObject);
+                return;
+            }
+            if (inputInterface == null) {
+                Debug.LogError("The " + go.name + " must have an InputInterface component.");
+                Destroy(gameObject);
+                return;
+            }
 
-			animators.Add( anim );
-			inputInterfaces.Add( inputInterface );
-		}
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		Animator openedAnimator = screenManager.getOpenedAnimator();
-		if( openedAnimator == null )
-		{
-			return;
-		}
+            animators.Add(anim);
+            inputInterfaces.Add(inputInterface);
+        }
+    }
 
-		int i = 0;
-		for( i = 0; i < animators.Count; i++ )
-		{
-			if( animators[i] == openedAnimator )
-			{
-				inputInterfaces[i].processInputs();
-				return;
-			}
-		}
+    // Update is called once per frame
+    private void Update() {
+        Animator openedAnimator = screenManager.getOpenedAnimator();
+        if (openedAnimator == null)
+            return;
 
-		Debug.LogError( "The current animator has no available inputInterface" );
-		GameObject.Destroy( this.gameObject );
-	
-	}
+        int i = 0;
+        for (i = 0; i < animators.Count; i++) {
+            if (animators[i] == openedAnimator) {
+                inputInterfaces[i].processInputs();
+                return;
+            }
+        }
+
+        Debug.LogError("The current animator has no available inputInterface");
+        Destroy(gameObject);
+    }
+
 }

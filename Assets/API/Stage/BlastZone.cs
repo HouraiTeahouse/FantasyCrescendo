@@ -2,7 +2,7 @@
 
 namespace Crescendo.API {
 
-    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof (Collider))]
     public sealed class BlastZone : Singleton<BlastZone> {
 
         private Collider col;
@@ -16,8 +16,7 @@ namespace Crescendo.API {
             col.isTrigger = true;
         }
 
-
-        void OnTriggerExit(Collider other) {
+        private void OnTriggerExit(Collider other) {
             // Filter only for player characters
             if (!other.CompareTag(Game.PlayerTag))
                 return;
@@ -39,4 +38,3 @@ namespace Crescendo.API {
     }
 
 }
-

@@ -11,7 +11,7 @@ namespace Crescendo.API {
             this.min = min;
             this.max = max;
         }
-    }
 
+    }
 
 }

@@ -1,4 +1,5 @@
 ﻿#region [Copyright (c) 2014 Cristian Alexandru Geambasu]
+
 //	Distributed under the terms of an MIT-style license:
 //
 //	The MIT License
@@ -19,32 +20,45 @@
 //	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 //	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
 //	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
-using UnityEngine;
-using System.IO;
-using System.Xml;
+
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using UnityEngine;
 
-namespace TeamUtility.IO
-{
-	[System.Serializable]
-	public class JoystickMapping : IEnumerable<AxisMapping>
-	{
-		private List<AxisMapping> _axes;
-		private string _name;
+namespace TeamUtility.IO {
 
-		public string Name { get { return _name; } }
-		public int AxisCount { get { return _axes.Count; } }
+    [System.Serializable]
+    public class JoystickMapping : IEnumerable<AxisMapping> {
 
-		public JoystickMapping()
-		{
-			_name = null;
-			_axes = new List<AxisMapping>();
-		}
+        private List<AxisMapping> _axes;
+        private string _name;
 
-		public void Load(string filename)
-		{
+        public JoystickMapping() {
+            _name = null;
+            _axes = new List<AxisMapping>();
+        }
+
+        public string Name {
+            get { return _name; }
+        }
+
+        public int AxisCount {
+            get { return _axes.Count; }
+        }
+
+        public IEnumerator<AxisMapping> GetEnumerator() {
+            return _axes.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return _axes.GetEnumerator();
+        }
+
+        public void Load(string filename) {
 #if UNITY_WINRT && !UNITY_EDITOR
 			if(UnityEngine.Windows.File.Exists(filename))
 			{
@@ -56,66 +70,49 @@ namespace TeamUtility.IO
                 }
             }
 #else
-            if(File.Exists(filename))
-			{
-				using(StreamReader reader = File.OpenText(filename))
-				{
-					InternalLoad(reader.ReadToEnd());
-				}
-			}
+            if (File.Exists(filename)) {
+                using (StreamReader reader = File.OpenText(filename))
+                    InternalLoad(reader.ReadToEnd());
+            }
 #endif
-		}
+        }
 
-		public void LoadFromResources(string path)
-		{
-			TextAsset textAsset = Resources.Load<TextAsset>(path);
-			if(textAsset != null)
-			{
-				InternalLoad(textAsset.text);
-				Resources.UnloadAsset(textAsset);
-			}
-		}
+        public void LoadFromResources(string path) {
+            TextAsset textAsset = Resources.Load<TextAsset>(path);
+            if (textAsset != null) {
+                InternalLoad(textAsset.text);
+                Resources.UnloadAsset(textAsset);
+            }
+        }
 
-		private void InternalLoad(string xmlData)
-		{
-			try
-			{
-				XmlDocument doc = new XmlDocument();
-				doc.LoadXml(xmlData);
+        private void InternalLoad(string xmlData) {
+            try {
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(xmlData);
 
-				_name = doc.DocumentElement.Attributes["name"].InnerText;
-				foreach(XmlNode axisNode in doc.DocumentElement)
-				{
-					string name = axisNode.Attributes["name"].InnerText;
-					KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), axisNode.Attributes["key"].InnerText, true);
-					int joystickAxis = int.Parse(axisNode.Attributes["joystickAxis"].InnerText);
-					MappingWizard.ScanType scanType = (MappingWizard.ScanType)System.Enum.Parse(typeof(MappingWizard.ScanType), axisNode.Attributes["scanType"].InnerText, true);
+                _name = doc.DocumentElement.Attributes["name"].InnerText;
+                foreach (XmlNode axisNode in doc.DocumentElement) {
+                    string name = axisNode.Attributes["name"].InnerText;
+                    KeyCode key =
+                        (KeyCode) System.Enum.Parse(typeof (KeyCode), axisNode.Attributes["key"].InnerText, true);
+                    int joystickAxis = int.Parse(axisNode.Attributes["joystickAxis"].InnerText);
+                    MappingWizard.ScanType scanType =
+                        (MappingWizard.ScanType)
+                        System.Enum.Parse(typeof (MappingWizard.ScanType),
+                                          axisNode.Attributes["scanType"].InnerText,
+                                          true);
 
-					if(scanType == MappingWizard.ScanType.Button)
-					{
-						_axes.Add(new AxisMapping(name, key));
-					}
-					else 
-					{
-						_axes.Add(new AxisMapping(name, joystickAxis));
-					}
-				}
-			}
-			catch
-			{
-				_name = null;
-				_axes.Clear();
-			}
-		}
+                    if (scanType == MappingWizard.ScanType.Button)
+                        _axes.Add(new AxisMapping(name, key));
+                    else
+                        _axes.Add(new AxisMapping(name, joystickAxis));
+                }
+            } catch {
+                _name = null;
+                _axes.Clear();
+            }
+        }
 
-		public IEnumerator<AxisMapping> GetEnumerator()
-		{
-			return _axes.GetEnumerator();
-		}
+    }
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return _axes.GetEnumerator();
-		}
-	}
 }

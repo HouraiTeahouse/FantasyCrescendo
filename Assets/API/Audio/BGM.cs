@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
-using System.Collections;
 
 namespace Crescendo.API {
 
     public sealed class BGM : Singleton<BGM> {
 
-		[SerializeField]
-		private AudioMixerGroup mixerGroup;
-
         private static AudioSource bgmSource;
+
+        [SerializeField]
+        private AudioMixerGroup mixerGroup;
 
         public static AudioClip CurrentlyPlaying {
             get { return bgmSource.clip; }
@@ -28,14 +27,14 @@ namespace Crescendo.API {
         protected override void Awake() {
             base.Awake();
             bgmSource = gameObject.GetOrAddComponent<AudioSource>();
-			bgmSource.outputAudioMixerGroup = mixerGroup;
-			bgmSource.hideFlags = HideFlags.HideInInspector;
-			bgmSource.volume = 1f;
-			bgmSource.loop = true;
-			bgmSource.spatialBlend = 0f;
+            bgmSource.outputAudioMixerGroup = mixerGroup;
+            bgmSource.hideFlags = HideFlags.HideInInspector;
+            bgmSource.volume = 1f;
+            bgmSource.loop = true;
+            bgmSource.spatialBlend = 0f;
         }
 
-        void OnDestroy() {
+        private void OnDestroy() {
             Destroy(bgmSource);
         }
 

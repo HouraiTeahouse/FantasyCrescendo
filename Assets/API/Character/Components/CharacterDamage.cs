@@ -1,29 +1,22 @@
-﻿
-namespace Crescendo.API
-{
-    
-    public class CharacterDamage : CharacterComponent
-    {
+﻿namespace Crescendo.API {
+
+    public class CharacterDamage : CharacterComponent {
 
         public float Damage { get; set; }
 
-        protected override void Start()
-        {
+        protected override void Start() {
             base.Start();
             Character.OnDamage += OnDamage;
         }
 
-        void OnDestroy()
-        {
+        private void OnDestroy() {
             Character.OnDamage -= OnDamage;
         }
 
-        void OnDamage(float amount)
-        {
+        private void OnDamage(float amount) {
             Damage += amount;
         }
 
     }
-
 
 }

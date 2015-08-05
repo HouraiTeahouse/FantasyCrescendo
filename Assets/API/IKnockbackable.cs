@@ -1,5 +1,4 @@
-﻿
-namespace Crescendo.API {
+﻿namespace Crescendo.API {
 
     public interface IKnocckbackable {
 

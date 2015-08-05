@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Crescendo.API {
 
-    public static class UnityObjectExtensions
-    {
+    public static class UnityObjectExtensions {
 
         /// <summary>
         /// Instantiates a copy of the Unity object.
@@ -13,8 +12,7 @@ namespace Crescendo.API {
         /// <typeparam name="T"></typeparam>
         /// <param name="targetObject"></param>
         /// <returns></returns>
-        public static T Copy<T>(this T targetObject) where T : Object
-        {
+        public static T Copy<T>(this T targetObject) where T : Object {
             if (targetObject == null)
                 return null;
             T obj = Object.Instantiate(targetObject);
@@ -22,8 +20,7 @@ namespace Crescendo.API {
             return obj;
         }
 
-        public static T Copy<T>(this T targetObject, Vector3 position) where T : Object
-        {
+        public static T Copy<T>(this T targetObject, Vector3 position) where T : Object {
             if (targetObject == null)
                 return null;
             var obj = Object.Instantiate(targetObject, position, Quaternion.identity) as T;
@@ -31,8 +28,7 @@ namespace Crescendo.API {
             return obj;
         }
 
-        public static T Copy<T>(this T targetObject, Vector3 position, Quaternion rotation) where T : Object
-        {
+        public static T Copy<T>(this T targetObject, Vector3 position, Quaternion rotation) where T : Object {
             if (targetObject == null)
                 return null;
             var obj = Object.Instantiate(targetObject, position, rotation) as T;
@@ -47,24 +43,17 @@ namespace Crescendo.API {
         /// </summary>
         /// <param name="targetObject"></param>
         /// <param name="allowDestroyingAssets"></param>
-        public static void Destroy<T>(this T targetObject, bool allowDestroyingAssets = false) where T : Object
-        {
+        public static void Destroy<T>(this T targetObject, bool allowDestroyingAssets = false) where T : Object {
             if (targetObject == null)
                 return;
 
-            if (Application.isPlaying)
-            {
+            if (Application.isPlaying) {
                 var gameObject = targetObject as GameObject;
                 if (gameObject != null)
-                {
                     gameObject.transform.parent = null;
-                }
                 Object.Destroy(targetObject);
-            }
-            else
-            {
+            } else
                 Object.DestroyImmediate(targetObject, allowDestroyingAssets);
-            }
         }
 
         /// <summary>
@@ -73,21 +62,21 @@ namespace Crescendo.API {
         /// </summary>
         /// <param name="targetObjects"></param>
         /// <param name="allowDestroyingAssets"></param>
-        public static void DestroyAll<T>(this IEnumerable<T> targetObjects, bool allowDestroyingAssets = false) where T : Object
-        {
+        public static void DestroyAll<T>(this IEnumerable<T> targetObjects, bool allowDestroyingAssets = false)
+            where T : Object {
             if (targetObjects == null)
                 return;
 
             Object[] arrayTest = targetObjects as Object[];
-            if (arrayTest != null)
+            if (arrayTest != null) {
                 for (var i = 0; i < arrayTest.Length; i++)
                     arrayTest[i].Destroy();
-            else
+            } else {
                 foreach (Object target in targetObjects)
                     target.Destroy();
+            }
         }
 
     }
-
 
 }

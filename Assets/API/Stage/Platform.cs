@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Crescendo.API {
 
@@ -8,37 +7,35 @@ namespace Crescendo.API {
 
         private Collider[] _toIgnore;
 
-        void Awake()
-        {
+        private void Awake() {
             var colliders = new List<Collider>();
-            foreach (var col in GetComponentsInChildren<Collider>())
+            foreach (var col in GetComponentsInChildren<Collider>()) {
                 if (!col.isTrigger)
                     colliders.Add(col);
+            }
             _toIgnore = colliders.ToArray();
         }
 
-        protected void ChangeIgnore(Collider target, bool state)
-        {
+        protected void ChangeIgnore(Collider target, bool state) {
             if (target == null || !target.CompareTag(Game.PlayerTag))
                 return;
 
             foreach (var col in _toIgnore)
                 Physics.IgnoreCollision(col, target, state);
         }
+
     }
 
     public class Platform : TriggerStageElement {
 
-        void OnTriggerEnter(Collider other) {
+        private void OnTriggerEnter(Collider other) {
             ChangeIgnore(other, true);
         }
 
-        void OnTriggerExit(Collider other) {
+        private void OnTriggerExit(Collider other) {
             ChangeIgnore(other, false);
         }
 
     }
 
 }
-
-    

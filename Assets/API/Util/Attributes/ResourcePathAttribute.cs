@@ -4,23 +4,16 @@ using UnityEngine;
 namespace Crescendo.API {
 
     [AttributeUsage(AttributeTargets.Field)]
-    public class ResourcePathAttribute : PropertyAttribute
-    {
+    public class ResourcePathAttribute : PropertyAttribute {
 
-        public Type TargetType
-        {
-            get;
-            private set;
-        }
-
-        public ResourcePathAttribute(Type assetType)
-        {
+        public ResourcePathAttribute(Type assetType) {
             if (assetType == null)
-                assetType = typeof(UnityEngine.Object);
+                assetType = typeof (UnityEngine.Object);
             TargetType = assetType;
         }
+
+        public Type TargetType { get; private set; }
 
     }
 
 }
-

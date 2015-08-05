@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using Crescendo.API;
-using DebugUtil = Crescendo.API.DebugUtil;
+﻿using Crescendo.API;
+using UnityEngine;
 
 /// <summary>
 /// Draws Colliders as Gizmos, permanentally seen in the Scene view.
@@ -14,14 +13,14 @@ public class DrawCollider3D : TestScript {
     [SerializeField]
     private Color color;
 
+    [SerializeField]
+    private bool includeChildren;
+
     //If set to true, it will draw it solid, visible to all
     [SerializeField]
     private bool solid;
 
-    [SerializeField]
-    private bool includeChildren;
-
-    void OnDrawGizmos() {
+    private void OnDrawGizmos() {
         Collider[] colliders = includeChildren ? GetComponentsInChildren<Collider>() : GetComponents<Collider>();
 
         if (colliders == null)
