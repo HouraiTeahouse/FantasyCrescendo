@@ -10,7 +10,10 @@ GameObject:
   - 4: {fileID: 414274}
   - 54: {fileID: 5431290}
   - 65: {fileID: 6585840}
+  - 65: {fileID: 6560282}
   - 114: {fileID: 11444066}
+  - 114: {fileID: 11459762}
+  - 114: {fileID: 11411438}
   m_Layer: 0
   m_Name: Respawn Platform
   m_TagString: Platform
@@ -473,6 +476,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &6560282
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103682}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.10000002, y: 1.39958, z: 1}
+  m_Center: {x: 0, y: -.709164619, z: 0}
 --- !u!65 &6585840
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -485,6 +500,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: .0625, z: 1}
   m_Center: {x: 0, y: -.03125, z: 0}
+--- !u!114 &11411438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d41267a815f78428c7252b6c64b69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11444066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -498,6 +524,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _invicibilityTimer: 2
   _platformTimer: 4
+--- !u!114 &11459762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ca6f211519ec94f8ac40a607eb407c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11496398
 MonoBehaviour:
   m_ObjectHideFlags: 1

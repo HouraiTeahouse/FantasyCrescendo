@@ -446,6 +446,13 @@ namespace Crescendo.API {
                 Attack();
         }
 
+        protected virtual void OnAnimatorMove() {
+
+            //TODO: Merge Physics and Animation Movements here
+            
+            //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;
+        }
+
         protected virtual void OnDrawGizmos() {
             FindHurtboxes();
             GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
