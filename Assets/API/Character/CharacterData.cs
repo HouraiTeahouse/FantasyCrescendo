@@ -51,6 +51,8 @@ namespace Crescendo.API {
         private void OnEnable() {
             if (!Application.isEditor || Application.isPlaying)
                 _languageManager = LanguageManager.Instance;
+            if (alternatives == null)
+                return;
             foreach (var alternative in alternatives)
                 alternative.Initialize();
         }

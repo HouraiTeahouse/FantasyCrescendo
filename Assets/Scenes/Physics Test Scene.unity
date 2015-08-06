@@ -490,6 +490,98 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: colorCorrectionCurvesShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: colorCorrectionSelectiveShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: depthBlueChannel.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: depthBlueChannel.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: depthGreenChannel.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: depthGreenChannel.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: depthRedChannel.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: depthRedChannel.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: saturation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: simpleColorCorrectionCurvesShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465406, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: useDepthCorrection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: bloomIntensity
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: bloomThreshold
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: blurAndFlaresShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: brightPassFilterShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: lensFlareShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: lensFlareVignetteMask
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: quality
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: screenBlendShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415134, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
+      propertyPath: sepBlurSpread
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 44885fdd44d21a3488da3a7efea93ced, type: 2}
   m_IsPrefabParent: 0

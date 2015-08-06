@@ -12,6 +12,7 @@ namespace Crescendo.API.Editor {
         private static string buildRoot = Regex.Replace(Application.dataPath, "Assets", "") + "/Build/";
         private static string copyRoot = Application.dataPath + "/Post Build/";
 
+        #region Asset Create Menu Items
         [MenuItem("Assets/Create/Game Config")]
         public static void CreateConfig()
         {
@@ -27,8 +28,9 @@ namespace Crescendo.API.Editor {
         public static void CreateStageData() {
             CreateAsset<BGMGroup>();
         }
+        #endregion
 
-
+        #region Util Menu Items
         [MenuItem("Crescendo/Clear Player Prefs %#c")]
         public static void ClearPlayerPrefs()
         {
@@ -64,8 +66,9 @@ namespace Crescendo.API.Editor {
             BuildMac();
             BuildLinux();
         }
+        #endregion
 
-		[PostProcessBuild]
+        [PostProcessBuild]
 		private static void AddPostBuildFiles(BuildTarget target, string path) {
 
 			path = Path.GetDirectoryName(path) + "/";

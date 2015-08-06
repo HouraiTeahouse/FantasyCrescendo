@@ -9,11 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
-  m_Name: Marisa
+  m_Name: wriggle_nightbug_data
   m_EditorClassIdentifier: 
-  firstNameKey: Character.Marisa.Name
-  lastNameKey: Character.Marisa.LastName
-  announcerKey: Character.Marisa.Announcer
-  alternatives:
-  - portrait: 
-    _prefab: Characters/Marisa/marisa_standard
+  alternatives: []
+  announcerKey: 
+  firstNameKey: 
+  lastNameKey: 

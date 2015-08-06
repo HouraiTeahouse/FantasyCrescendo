@@ -876,7 +876,7 @@ namespace TeamUtility.Editor
 		{
 			GUILayout.BeginArea(screenRect);
 			_mainPanelScrollPos = EditorGUILayout.BeginScrollView(_mainPanelScrollPos);
-			inputConfig.name = EditorGUILayout.TextField("Name", inputConfig.name);
+			inputConfig.name = EditorGUILayout.TextField("FullName", inputConfig.name);
 			EditorGUILayout.Space();
 			EditorGUILayout.BeginHorizontal();
 			GUI.enabled = (!EditorApplication.isPlaying && _inputManager.defaultConfiguration != inputConfig.name);
@@ -905,7 +905,7 @@ namespace TeamUtility.Editor
 			
 			GUILayout.BeginArea(screenRect);
 			_mainPanelScrollPos = GUILayout.BeginScrollView(_mainPanelScrollPos);
-			axisConfig.name = EditorGUILayout.TextField("Name", axisConfig.name);
+			axisConfig.name = EditorGUILayout.TextField("FullName", axisConfig.name);
 			axisConfig.description = EditorGUILayout.TextField("Description", axisConfig.description);
 			
 			//	Positive Key
