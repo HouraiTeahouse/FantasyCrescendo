@@ -21,7 +21,6 @@ namespace Crescendo.API {
         private ActionRestriction _canJump;
         private ActionRestriction _canMove;
 
-        private Collider[] hurtboxes;
         private CapsuleCollider triggerCollider;
         public int PlayerNumber { get; internal set; }
 
@@ -80,9 +79,6 @@ namespace Crescendo.API {
                     Debug.Log(name + " is now invincible.");
                 else
                     Debug.Log(name + " is no longer invincible.");
-
-                foreach (var hurtbox in hurtboxes)
-                    hurtbox.enabled = !value;
 
                 _invinicible = value;
             }
@@ -162,17 +158,6 @@ namespace Crescendo.API {
         public event Func<bool> AttackRestrictions {
             add { _canAttack.Add(value); }
             remove { _canAttack.Remove(value); }
-        }
-
-        private void FindHurtboxes() {
-            List<Collider> tempHurtboxes = new List<Collider>();
-            foreach (Collider collider in GetComponentsInChildren<Collider>()) {
-                if (!collider.CheckLayer(Game.HurtboxLayers))
-                    continue;
-                Hurtbox.Register(this, collider);
-                tempHurtboxes.Add(collider);
-            }
-            hurtboxes = tempHurtboxes.ToArray();
         }
 
         public virtual void Move(Vector2 direction) {
@@ -380,8 +365,6 @@ namespace Crescendo.API {
         #region Unity Callbacks
 
         protected virtual void Awake() {
-            FindHurtboxes();
-
             _movementCollider = GetComponent<CapsuleCollider>();
             _movementCollider.isTrigger = false;
 
@@ -451,12 +434,6 @@ namespace Crescendo.API {
             //TODO: Merge Physics and Animation Movements here
             
             //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;
-        }
-
-        protected virtual void OnDrawGizmos() {
-            FindHurtboxes();
-            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Damageable, x => x.enabled);
-            GizmoUtil.DrawHitboxes(hurtboxes, HitboxType.Intangible, x => !x.enabled);
         }
 
         #endregion

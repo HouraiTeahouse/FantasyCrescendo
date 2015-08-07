@@ -11,13 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d63a0fef2e38a40b0aeb78a0688cc5, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  playerTag: Player
-  spawnTag: Spawn
-  respawnTag: Respawn
-  HurtboxLayers:
-    serializedVersion: 2
-    m_Bits: 2048
   _respawnPlatformPrefab: Prefabs/Respawn Platform
+  Debug:
+    DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: .125490203}
+    IntangiblHitboxColor: {r: 0, g: 0, b: 1, a: .250980407}
+    InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: .250980407}
+    OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: .250980407}
   GenericPlayerData:
   - Color: {r: 1, g: 0, b: 0, a: 1}
     IndicatorSprite: {fileID: 21300000, guid: 816592cbf3040774ca20da1e1caf487c, type: 3}
@@ -27,8 +26,9 @@ MonoBehaviour:
     IndicatorSprite: {fileID: 21300000, guid: 816592cbf3040774ca20da1e1caf487c, type: 3}
   - Color: {r: 0, g: 1, b: 0, a: 1}
     IndicatorSprite: {fileID: 21300000, guid: 816592cbf3040774ca20da1e1caf487c, type: 3}
-  Debug:
-    OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}
-    DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
-    InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
-    IntangiblHitboxColor: {r: 0, g: 0, b: 1, a: 1}
+  HurtboxLayers:
+    serializedVersion: 2
+    m_Bits: 2048
+  playerTag: Player
+  respawnTag: Respawn
+  spawnTag: Spawn
