@@ -1675,7 +1675,7 @@ GameObject:
   - 114: {fileID: 11464638}
   - 114: {fileID: 11473132}
   m_Layer: 9
-  m_Name: marisa_standard
+  m_Name: marisa_kirisame
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4468,7 +4468,7 @@ Animator:
   m_GameObject: {fileID: 172530}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 6d82c3dfe07bbdb4892def41abeec894, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9adcc966fe629f744813b6f35ef39806, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4cd5d523f9a051747a5037ffed9a3954, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5187,6 +5187,10 @@ Prefab:
       propertyPath: animationBool._hash
       value: -877370616
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4cd5d523f9a051747a5037ffed9a3954, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 172530}
