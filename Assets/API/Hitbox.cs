@@ -7,9 +7,19 @@ namespace Crescendo.API {
     [RequireComponent(typeof(SphereCollider))]
     public sealed class Hitbox : MonoBehaviour {
 
+        public enum Type {
+            Offensive,
+            Damageable,
+            Invincible,
+            Intangible,
+            Shield,
+            Absorb,
+            Reflective
+        }
+
         #region Serializable Fields
         [SerializeField]
-        private HitboxType type;
+        private Type type;
 
         [SerializeField]
         private int _priority = 100;

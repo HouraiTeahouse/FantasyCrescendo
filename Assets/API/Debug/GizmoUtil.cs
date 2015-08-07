@@ -67,12 +67,12 @@ namespace Crescendo.API {
             return new GizmoDisposable(color, transform.localToWorldMatrix);
         }
 
-        public static void DrawHitbox(Collider hitbox, HitboxType type) {
+        public static void DrawHitbox(Collider hitbox, Hitbox.Type type) {
             DrawCollider3D(hitbox, Game.GetHitboxColor(type));
         }
 
         public static void DrawHitboxes(IEnumerable<Collider> hitboxes,
-                                        HitboxType type,
+                                        Hitbox.Type type,
                                         Predicate<Collider> filter = null) {
             DrawColliders3D(hitboxes, Game.GetHitboxColor(type), true, filter);
         }
