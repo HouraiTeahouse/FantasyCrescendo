@@ -72,15 +72,26 @@ namespace Crescendo.API {
         /// <param name="filter"></param>
         /// <returns></returns>
         public static IEnumerable<GameObject> Children(this GameObject obj, Predicate<GameObject> filter = null) {
+            if(obj == null)
+                throw new ArgumentNullException("obj");
+            if (obj.transform.childCount <= 0)
+                yield break;
+
             if (filter == null) {
                 foreach (Transform child in obj.transform) {
                     if (child != null && child != obj.transform)
-                        yield return child.gameObject;
+                        continue;
+                    yield return child.gameObject;
+                    foreach (var descendant in child.gameObject.Children())
+                        yield return descendant;
                 }
             } else {
                 foreach (Transform child in obj.transform) {
-                    if (child != null && child != obj.transform && filter(child.gameObject))
-                        yield return child.gameObject;
+                    if (child != null && child != obj.transform)
+                        continue;
+                    yield return child.gameObject;
+                    foreach (var descendant in child.gameObject.Children())
+                        yield return descendant;
                 }
             }
         }
