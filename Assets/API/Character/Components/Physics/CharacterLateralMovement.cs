@@ -2,6 +2,8 @@
 
 namespace Crescendo.API {
 
+    [DisallowMultipleComponent]
+    [RequiredCharacterComponent]
     public class CharacterLateralMovement : CharacterComponent {
 
         [SerializeField]

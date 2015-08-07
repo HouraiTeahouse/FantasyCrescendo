@@ -1,4 +1,4 @@
-﻿namespace Gemso.API {
+﻿namespace Crescendo.API {
 
     public interface IDamageable {
 

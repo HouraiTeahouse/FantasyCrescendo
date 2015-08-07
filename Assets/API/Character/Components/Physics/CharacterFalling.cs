@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace Genso.API {
 
+    [DisallowMultipleComponent]
+    [RequiredCharacterComponent]
     public class CharacterFalling : CharacterComponent {
 
         [SerializeField]

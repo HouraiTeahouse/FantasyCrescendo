@@ -1,5 +1,8 @@
-﻿namespace Crescendo.API {
+﻿using UnityEngine;
 
+namespace Crescendo.API {
+
+    [DisallowMultipleComponent]
     public class CharacterDamage : CharacterComponent {
 
         public float Damage { get; set; }

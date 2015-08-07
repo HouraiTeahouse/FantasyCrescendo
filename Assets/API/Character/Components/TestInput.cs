@@ -2,6 +2,7 @@
 
 namespace Crescendo.API {
 
+    [DisallowMultipleComponent]
     public class TestInput : CharacterComponent, ICharacterInput {
 
         private const string HorizontalAxis = "horizontal";

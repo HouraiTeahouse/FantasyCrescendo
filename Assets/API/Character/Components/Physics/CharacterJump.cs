@@ -2,6 +2,8 @@
 
 namespace Crescendo.API {
 
+    [DisallowMultipleComponent]
+    [RequiredCharacterComponent]
     public class CharacterJump : CharacterComponent {
 
         private const float defaultGravity = 9.86f;

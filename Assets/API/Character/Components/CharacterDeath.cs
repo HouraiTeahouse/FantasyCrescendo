@@ -2,6 +2,7 @@
 
 namespace Crescendo.API {
 
+    [DisallowMultipleComponent]
     public class CharacterDeath : CharacterComponent {
 
         [SerializeField]

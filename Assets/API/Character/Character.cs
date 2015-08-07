@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Gemso.API;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using System.Linq;
+#endif
 
 namespace Crescendo.API {
 
@@ -38,34 +41,6 @@ namespace Crescendo.API {
                 _grounded = value;
                 animationData.Bools.Grounded.Set(value);
                 OnGrounded.SafeInvoke();
-            }
-        }
-
-        /// <summary>
-        /// The direction the character is currently facing.
-        /// If set to true, the character faces the right.
-        /// If set to false, the character faces the left.
-        /// 
-        /// The method in which the character is flipped depends on what the Facing Mode parameter is set to.
-        /// </summary>
-        public bool Facing {
-            get {
-                if (_facingMode == FacingMode.Scale)
-                    return transform.localScale.x > 0;
-                return transform.eulerAngles.y > 179f;
-            }
-            set {
-                if (_facing == value)
-                    return;
-
-                _facing = value;
-                if (_facingMode == FacingMode.Rotation)
-                    transform.Rotate(0f, 180f, 0f);
-                else {
-                    Vector3 temp = transform.localScale;
-                    temp.x *= -1;
-                    transform.localScale = temp;
-                }
             }
         }
 
@@ -215,13 +190,6 @@ namespace Crescendo.API {
             CanMove = true;
         }
 
-        private enum FacingMode {
-
-            Rotation,
-            Scale
-
-        }
-
         private class ActionRestriction {
 
             private List<Func<bool>> _restrictions;
@@ -308,13 +276,18 @@ namespace Crescendo.API {
         #region Serialized Variables
 
         [SerializeField]
-        private FacingMode _facingMode = FacingMode.Rotation;
-
-        [SerializeField]
         private float triggerSizeRatio = 1.5f;
 
         [SerializeField]
+        private string _internalName;
+
+        [SerializeField]
         private AnimationData animationData;
+
+        public string InternalName {
+            get { return _internalName; }
+            set { _internalName = value; }
+        }
 
         #endregion
 
@@ -363,7 +336,6 @@ namespace Crescendo.API {
         #endregion
 
         #region Unity Callbacks
-
         protected virtual void Awake() {
             _movementCollider = GetComponent<CapsuleCollider>();
             _movementCollider.isTrigger = false;
@@ -385,6 +357,8 @@ namespace Crescendo.API {
             _canMove = new ActionRestriction();
             _canJump = new ActionRestriction();
             _canAttack = new ActionRestriction();
+
+            AttachRequiredComponents();
         }
 
         protected virtual void OnEnable() {
@@ -395,6 +369,10 @@ namespace Crescendo.API {
         protected virtual void OnDisable() {
             // TODO: Find a better place to put this
             CameraController.RemoveTarget(this);
+        }
+        
+        protected virtual void Reset() {
+            AttachRequiredComponents();
         }
 
         protected virtual void Update() {
@@ -416,11 +394,6 @@ namespace Crescendo.API {
             if (movement != Vector2.zero && CanMove)
                 Move(movement);
 
-            //Ensure that the character is walking in the right direction
-            if ((movement.x > 0 && Facing) ||
-                (movement.x < 0 && !Facing))
-                Facing = !Facing;
-
             // Now checks CanMove
             if (InputSource.Jump && CanMove)
                 Jump();
@@ -435,8 +408,22 @@ namespace Crescendo.API {
             
             //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;
         }
-
         #endregion
+
+        private void AttachRequiredComponents() {
+            var componentTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                                  from assemblyType in domainAssembly.GetTypes()
+                                  where
+                                      typeof(CharacterComponent).IsAssignableFrom(assemblyType) &&
+                                      !assemblyType.IsAbstract &&
+                                      assemblyType.IsDefined(typeof(RequiredCharacterComponentAttribute), true)
+                                  select assemblyType).ToArray();
+
+            foreach (var requriedType in componentTypes) {
+                if (requriedType != null)
+                    this.GetOrAddComponent(requriedType);
+            }
+        }
     }
 
 }

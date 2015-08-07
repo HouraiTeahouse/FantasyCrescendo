@@ -2,6 +2,7 @@
 
 namespace Crescendo.API {
 
+    [DisallowMultipleComponent]
     public sealed class CharacterRespawn : CharacterComponent {
 
         protected override void Start() {

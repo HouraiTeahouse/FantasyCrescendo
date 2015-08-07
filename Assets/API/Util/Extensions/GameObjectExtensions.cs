@@ -172,12 +172,11 @@ namespace Crescendo.API {
         /// <param name="obj">the GameObject </param>
         /// <returns>the retrieved/added Component. Will never be null.</returns>
         public static T GetOrAddComponent<T>(this GameObject obj) where T : Component {
-            T retrievedComponent = obj.GetComponent<T>();
+            return obj.GetComponent<T>() ?? obj.AddComponent<T>();
+        }
 
-            if (retrievedComponent == null)
-                retrievedComponent = obj.gameObject.AddComponent<T>();
-
-            return retrievedComponent;
+        public static Component GetOrAddComponent(this GameObject obj, Type componentType) {
+            return obj.GetComponent(componentType) ?? obj.AddComponent(componentType);
         }
 
         public static T GetComponentAnywhere<T>(this GameObject obj) where T : class {

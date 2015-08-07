@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Crescendo.API {
@@ -19,6 +20,10 @@ namespace Crescendo.API {
 
         public static T GetOrAddComponent<T>(this Component component) where T : Component {
             return component.gameObject.GetOrAddComponent<T>();
+        }
+
+        public static Component GetOrAddComponent(this Component component, Type componentType) {
+            return component.gameObject.GetOrAddComponent(componentType);
         }
 
         public static T GetIComponent<T>(this Component component) where T : class {
