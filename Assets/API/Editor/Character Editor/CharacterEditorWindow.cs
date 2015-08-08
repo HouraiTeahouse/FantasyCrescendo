@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
+using UnityObject = UnityEngine.Object;
 
 namespace Crescendo.API.Editor {
 
-    public class CharacterEditorWindow : EditorWindow {
+    public class CharacterEditorWindow : SelectableEditorWindow<GameObject> {
 
-        public CharacterEditorData Target { get; set; }
+        public CharacterEditorData Target {
+            get { return _target; }
+            set {
+                if (_target == value)
+                    return;
+                _target = value;
+                OnTargetChange();
+            }
+        }
 
         private enum Tab {
             General = 0,
@@ -18,6 +27,10 @@ namespace Crescendo.API.Editor {
         private Tab tab;
         private string[] tabNames;
 
+        private CharacterEditorData _target;
+        private SerializedObject serializedObject;
+        private List<string> ignoredProperties;
+
         private Dictionary<string, string> characters;
             
         [MenuItem("Window/Character")]
@@ -26,23 +39,33 @@ namespace Crescendo.API.Editor {
         }
 
         void OnEnable() {
+
+            // Filter only GameObjects with Character scripts on either itself or one of it's ancestors
+            SelectionMode = SelectionMode.TopLevel | SelectionMode.ExcludePrefab;
+            Filter = o => o.GetComponentInParent<Character>() != null;
+
             tabNames = Enum.GetNames(typeof(Tab));
+            ignoredProperties = new List<string>();
+        }
+
+        void OnTargetChange() {
+            if (Target == null) {
+                serializedObject = null;
+                return;
+            }
+
+            serializedObject = new SerializedObject(Target);
+        }
+
+        protected override void OnSelectionChange() {
+            base.OnSelectionChange();
+            foreach(var selected in Selection)
+                Debug.Log(selected);
         }
 
         void OnGUI() {
-            FindCharactersa();
             Toolbar();
             EditArea();
-        }
-
-        void FindCharactersa() {
-            if(characters == null)
-                characters = new Dictionary<string, string>();
-
-            foreach (var path in AssetUtil.FindAssetPaths<CharacterEditorData>()) {
-                string characterName = Regex.Replace(path, ".*/(.*?)\\.asset", "$1");
-                characters[characterName] = path;
-            }
         }
 
         private void EditArea() {
@@ -57,12 +80,63 @@ namespace Crescendo.API.Editor {
                     break;
             }
         }
-
+        
+        #region General Data Editor
         private void GeneralData() {
             if (Target == null)
                 return;
+            if(serializedObject == null)
+                serializedObject = new SerializedObject(Target);
 
-            EditorGUILayout.LabelField(Target.InternalName);
+            ignoredProperties.Clear();
+            ignoredProperties.Add("m_Script");
+
+            DisplayBasicData();
+
+            SerializedProperty current = serializedObject.GetIterator();
+            current.Next(true);
+            while (current.NextVisible(false)) {
+                if (ignoredProperties.Contains(current.name))
+                    continue;
+                EditorGUILayout.PropertyField(current);
+            }
+
+            if (Target.DefaultModel != null) {
+                ShowMaterialData();
+            }
+                
+            if (GUI.changed)
+                serializedObject.ApplyModifiedProperties();
+        }
+
+        void DisplayBasicData() {
+            EditorGUILayout.LabelField("Full Name", Target.FullName);
+            EditorGUILayout.LabelField("Internal Name", Target.InternalName);
+        }
+
+        void ShowMaterialData() {
+            HashSet<Material> materials = new HashSet<Material>();
+            foreach (var renderer in EditorUtil.GetComponentsInChildren<Renderer>(Target.DefaultModel)) {
+                //Debug.Log(renderer);
+                //materials.UnionWith(renderer.materials);
+          }
+
+            foreach(var material in materials)
+                EditorGUILayout.LabelField(material.name);
+
+        }
+
+        #endregion
+
+        void PropertyField(string name, SerializedProperty parent = null, Action<SerializedProperty> drawCall = null) {
+            SerializedProperty property = parent == null
+                                              ? serializedObject.FindProperty(name)
+                                              : parent.FindPropertyRelative(name);
+            if (drawCall != null)
+                drawCall(property);
+            else
+                EditorGUILayout.PropertyField(property);
+            ignoredProperties.Add(property.name);
         }
 
         private void PalleteEidtor() {
@@ -77,17 +151,7 @@ namespace Crescendo.API.Editor {
             EditorGUILayout.EndHorizontal();
 
             if(GUILayout.Button("Create a new Character"))
-                CreateCharacterPrompt();
-
-            foreach (var character in characters) {
-                if (GUILayout.Button(character.Key)) {
-                    Target = AssetDatabase.LoadAssetAtPath<CharacterEditorData>(character.Value);
-                }
-            }
-        }
-
-        private void CreateCharacterPrompt() {
-            ScriptableWizard.DisplayWizard<CreateCharacterDialog>("Create Character", "Create");
+                CreateCharacterDialog.Show();
         }
 
         #region Toolbar
@@ -101,7 +165,7 @@ namespace Crescendo.API.Editor {
 
         void ToolbarLeft() {
             if (GUILayout.Button("Create", EditorStyles.toolbarButton))
-                CreateCharacterPrompt();
+                CreateCharacterDialog.Show();
 
             if (Target == null)
                 return;

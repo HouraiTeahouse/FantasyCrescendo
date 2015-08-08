@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEditor;
 
 namespace Crescendo.API.Editor{
@@ -8,13 +9,28 @@ namespace Crescendo.API.Editor{
     /// </summary>
     public abstract class ScriptlessEditor : UnityEditor.Editor {
 
-        public override void OnInspectorGUI() {
+        private List<string> toIgnore = new List<string>();
+
+        protected virtual void OnEnable() {
+            toIgnore = new List<string>();
+            toIgnore.Add("m_Script");
+        }
+
+        public void AddException(string propertyName) {
+            toIgnore.Add(propertyName);
+        }
+
+        public new void DrawDefaultInspector() {
             SerializedProperty iterator = serializedObject.GetIterator();
             iterator.Next(true);
             while (iterator.NextVisible(false)) {
-                if (iterator.name != "m_Script")
+                if (!toIgnore.Contains(iterator.name))
                     EditorGUILayout.PropertyField(iterator, true);
             }
+        }
+
+        public override void OnInspectorGUI() {
+            DrawDefaultInspector();
         }
 
     }

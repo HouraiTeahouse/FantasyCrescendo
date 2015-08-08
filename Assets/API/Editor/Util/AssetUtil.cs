@@ -1,12 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEditor;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Crescendo.API {
+namespace Crescendo.API.Editor {
 
+    [InitializeOnLoad]
     public static class AssetUtil {
+
+        private static Dictionary<string, string> delayedMoves; 
+
+        static AssetUtil() {
+            delayedMoves = new Dictionary<string, string>();
+            EditorApplication.update += Update;
+        }
+
+        static void Update() {
+            if (delayedMoves.Count <= 0)
+                return;
+
+            Debug.Log(delayedMoves.Count);
+
+            List<string> toRemove = new List<string>();
+
+            foreach (var pair in delayedMoves) {
+                string result = AssetDatabase.ValidateMoveAsset(pair.Key, pair.Value);
+                Debug.Log(result);
+                if (!result.IsNullOrEmpty())
+                    continue;
+                AssetDatabase.MoveAsset(pair.Key, pair.Value);
+                toRemove.Add(pair.Key);
+            }
+
+            foreach (var key in toRemove)
+                delayedMoves.Remove(key);
+        }
+
+
+        public static bool IsAsset(this Object obj) {
+            return obj != null && AssetDatabase.Contains(obj);
+        }
 
         public static string CreateAssetPath(params string[] folderNames) {
             if (folderNames == null)
@@ -35,19 +71,61 @@ namespace Crescendo.API {
                 throw new ArgumentNullException("obj");
             if (suffix == null)
                 suffix = "asset";
-
-            if (!string.IsNullOrEmpty(AssetDatabase.GetAssetPath(obj)))
+            
+            if (obj.IsAsset())
                 return;
-
+            
             // Create folder if it doesn't already exist
             CreateFolder(folder);
 
             AssetDatabase.CreateAsset(obj, "Assets/" + folder + "/" + obj.name + "." + suffix);
         }
 
-        public static string[] FindAssetPaths<T>() where T : Object {
+        public static void MoveAsset(string targetFolder, Object asset) {
+            if(targetFolder == null)
+                throw new ArgumentNullException("targetFolder");
+            if(asset == null)
+                throw new ArgumentNullException("asset");
+
+            if (!asset.IsAsset()) {
+                var gameObject = asset as GameObject;
+                var component = asset as Component;
+                if (component != null)
+                    gameObject = component.gameObject;
+                if (gameObject != null) {
+                    // Assign asset to the object's prefab
+                    Debug.Log("Is a GameObject, extracting Prefab...");
+                    asset = asset.GetPrefab();
+                }
+            }
+
+            Debug.Log(asset);
+
+            if (asset.IsAsset()) {
+                string assetPath = AssetDatabase.GetAssetPath(asset);
+                Debug.Log(assetPath);
+                Debug.Log(Path.GetFileName(assetPath));
+
+                // Create the folder if it doesn't already exist
+                CreateFolder(targetFolder);
+                
+                string destination = "Assets/" + targetFolder + "/" + Path.GetFileName(assetPath);
+                string result = AssetDatabase.ValidateMoveAsset(assetPath, destination);
+
+                if (result.IsNullOrEmpty()) {
+                    AssetDatabase.MoveAsset(assetPath, destination);
+                } else {
+                    delayedMoves.Add(assetPath, destination);   
+                }
+            }
+        }
+
+        public static string[] FindAssetPaths<T>(string nameFilter = null) where T : Object {
             List<string> paths = new List<string>();
-            foreach (var guid in AssetDatabase.FindAssets("t:" + typeof(T).Name))
+            string search = "t:" + typeof (T).Name;
+            if (nameFilter != null)
+                search += " " + nameFilter;
+            foreach (var guid in AssetDatabase.FindAssets(search))
                 paths.Add(AssetDatabase.GUIDToAssetPath(guid));
             return paths.ToArray();
         }
@@ -62,10 +140,11 @@ namespace Crescendo.API {
             string[] folders = path.Split('/');
             var currentPath = "Assets";
             for (var i = 0; i < folders.Length; i++) {
-                if (string.IsNullOrEmpty(folders[i]))
+                if (folders[i].IsNullOrEmpty())
                     continue;
 
                 string newPath = currentPath + "/" + folders[i];
+
                 if (!AssetDatabase.IsValidFolder(currentPath + "/" + folders[i]))
                     AssetDatabase.CreateFolder(currentPath, folders[i]);
                 currentPath = newPath;

@@ -82,16 +82,16 @@ namespace Crescendo.API {
             platform.Character = target;
         }
 
-        public static Color GetHitboxColor(HitboxType type) {
+        public static Color GetHitboxColor(Hitbox.Type type) {
             Config.DebugData debugData = Config.Debug;
             switch (type) {
-                case HitboxType.Offensive:
+                case Hitbox.Type.Offensive:
                     return debugData.OffensiveHitboxColor;
-                case HitboxType.Damageable:
+                case Hitbox.Type.Damageable:
                     return debugData.DamageableHitboxColor;
-                case HitboxType.Invincible:
+                case Hitbox.Type.Invincible:
                     return debugData.IntangiblHitboxColor;
-                case HitboxType.Intangible:
+                case Hitbox.Type.Intangible:
                     return debugData.InvincibleHitboxColor;
                 default:
                     return Color.white;

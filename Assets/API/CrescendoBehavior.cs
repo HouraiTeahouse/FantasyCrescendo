@@ -107,6 +107,18 @@ namespace Crescendo.API {
 
         #endregion
 
+        #region Transform Functions
+
+        public void Rotate(float x, float y, float z) {
+            transform.Rotate(x, y, z);
+        }
+
+        public void Rotate(Vector3 eulerRotation) {
+            transform.Rotate(eulerRotation);
+        }
+
+        #endregion
+
         #region GameObject Properties
 
         public int layer {

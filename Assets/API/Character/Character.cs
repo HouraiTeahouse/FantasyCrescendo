@@ -410,7 +410,7 @@ namespace Crescendo.API {
         }
         #endregion
 
-        private void AttachRequiredComponents() {
+        public void AttachRequiredComponents() {
             var componentTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
                                   where

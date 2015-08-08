@@ -7,7 +7,7 @@ namespace Crescendo.API {
     public class CharacterData : ScriptableObject {
 
         private LanguageManager _languageManager;
-
+        
         [SerializeField]
         private Alternative[] alternatives;
 

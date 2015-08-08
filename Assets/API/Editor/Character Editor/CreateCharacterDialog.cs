@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Crescendo.API.Editor;
 using UnityEditor;
 
@@ -10,21 +9,34 @@ namespace Crescendo.API {
         private CharacterEditorData data;
 
         private GUIContent _nameContent;
+        private Character _sourceObject;
 
         void OnEnable() {
             data = CreateInstance<CharacterEditorData>();
         }
 
+        public static void Show(Character reference = null) {
+             var wizard = DisplayWizard<CreateCharacterDialog>("Create Character", "Create");
+             wizard._sourceObject = reference;
+            if (reference != null) {
+                string[] nameParts = reference.name.Split(new char[] {' ', '_', '/'});
+                if (nameParts.Length >= 1)
+                    wizard.data.FirstName = nameParts[0];
+                if (nameParts.Length >= 2)
+                    wizard.data.LastName = nameParts[1];
+            }
+        }
+
         protected override bool DrawWizardGUI() {
             string oldName = data.InternalName;
-            data.FirstName = EditorGUILayout.TextField("First FullName", data.FirstName);
-            data.LastName = EditorGUILayout.TextField("Last FullName", data.LastName);
-            data.NameStyle = (NameType) EditorGUILayout.EnumPopup("FullName Style", data.NameStyle);
+            data.FirstName = EditorGUILayout.TextField("First Name", data.FirstName);
+            data.LastName = EditorGUILayout.TextField("Last Name", data.LastName);
+            data.NameStyle = (NameType) EditorGUILayout.EnumPopup("Name Style", data.NameStyle);
 
             data.InternalName = data.FullName.ToLower().Replace(' ', '_');
 
-            EditorGUILayout.LabelField("Full FullName", data.FullName);
-            EditorGUILayout.LabelField("Internal FullName", data.InternalName);
+            EditorGUILayout.LabelField("Full Name", data.FullName);
+            EditorGUILayout.LabelField("Internal Name", data.InternalName);
             return oldName == data.InternalName;
         }
 
@@ -43,6 +55,27 @@ namespace Crescendo.API {
             }
 
             data.Generate();
+
+            GameObject prefabSource;
+
+            if (_sourceObject == null) {
+                prefabSource = new GameObject(data.InternalName);
+            } else {
+                prefabSource = _sourceObject.gameObject;
+            }
+
+            prefabSource.GetOrAddComponent<Character>().InternalName = data.InternalName;
+
+            Object prefab = prefabSource.GetPrefab();
+            if (prefab == null) {
+                prefab = PrefabUtil.CreatePrefab(data.RootFolder, prefabSource);
+            } else{
+                AssetUtil.MoveAsset(data.RootFolder, prefab);
+            }
+
+            data.DefaultModel = prefab as GameObject;
+
+            Selection.activeGameObject = prefabSource;
 
             CharacterEditorWindow.ShowWindow().Target = data;
         }
