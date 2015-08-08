@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
@@ -8,10 +9,10 @@ namespace Crescendo.API {
 
         private Animator _animator;
 
-        [SerializeField]
+        [SerializeField, Hide]
         private int _hash;
 
-        [SerializeField]
+        [SerializeField, AnimVar]
         private string _name;
 
         /// <summary>

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using System.Text;
 using UnityEditor;
+using Vexe.Runtime.Extensions;
 using UnityObject = UnityEngine.Object;
 
 namespace Crescendo.API.Editor {
@@ -52,12 +54,8 @@ namespace Crescendo.API.Editor {
         public static T GetComponentInChildren<T>(GameObject prefab) where T : class {
             if(prefab == null)
                 throw new ArgumentNullException("prefab");
-            foreach (var child in prefab.Children()) {
-                T instance = child.GetIComponent<T>();
-                if (instance != null)
-                    return instance;
-            }
-            return null;
+
+            return prefab.GetChildren().Select(child => child.GetIComponent<T>()).FirstOrDefault(instance => instance != null);
         }
 
         /// <summary>
@@ -73,12 +71,9 @@ namespace Crescendo.API.Editor {
         public static T[] GetComponentsInChildren<T>(GameObject prefab) where T : class {
             if (prefab == null)
                 throw new ArgumentNullException("prefab");
-            List<T> instances = new List<T>();
-            foreach (var child in prefab.Children()) {
-                Debug.Log(child);
-                instances.AddRange(child.GetIComponents<T>());
-            }
-            return instances.ToArray();
+
+
+            return prefab.GetChildren().SelectMany(child => child.GetIComponents<T>()).ToArray();
         }
 
         public static T GetComponentInChildren<T>(Component prefab) where T : class{

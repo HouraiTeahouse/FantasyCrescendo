@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -64,7 +65,7 @@ namespace Crescendo.API {
 
         protected override void Awake() {
             base.Awake();
-            spawnPoints = GameObject.FindGameObjectsWithTag(Game.SpawnTag).GetComponents<Transform>();
+            spawnPoints = GameObject.FindGameObjectsWithTag(Game.SpawnTag).Select(go => go.transform).ToArray();
 
             repsawnPoints = GameObject.FindGameObjectWithTag(Game.RespawnTag).GetComponents<Transform>();
 

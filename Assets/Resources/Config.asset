@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d63a0fef2e38a40b0aeb78a0688cc5, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
+  _id: 2530
+  dbg: 0
   _respawnPlatformPrefab: Prefabs/Respawn Platform
   Debug:
     DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: .125490203}

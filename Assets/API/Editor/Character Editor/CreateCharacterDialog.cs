@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Crescendo.API.Editor;
 using UnityEditor;
+using Vexe.Runtime.Extensions;
 
 namespace Crescendo.API {
 
@@ -73,7 +74,7 @@ namespace Crescendo.API {
                 AssetUtil.MoveAsset(data.RootFolder, prefab);
             }
 
-            data.DefaultModel = prefab as GameObject;
+            data.Prefab = prefab as GameObject;
 
             Selection.activeGameObject = prefabSource;
 

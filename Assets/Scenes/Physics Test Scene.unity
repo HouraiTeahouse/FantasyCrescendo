@@ -1364,6 +1364,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5509e6e06a509f48b729759d4dc62f6, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &1581254737
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408876, guid: fe366e3677b08c94ba6f51dbb876c9d0, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -5.63999987
+      objectReference: {fileID: 0}
+    - target: {fileID: 408876, guid: fe366e3677b08c94ba6f51dbb876c9d0, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 3.47600007
+      objectReference: {fileID: 0}
+    - target: {fileID: 408876, guid: fe366e3677b08c94ba6f51dbb876c9d0, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: .228
+      objectReference: {fileID: 0}
+    - target: {fileID: 408876, guid: fe366e3677b08c94ba6f51dbb876c9d0, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408876, guid: fe366e3677b08c94ba6f51dbb876c9d0, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: .707106829
+      objectReference: {fileID: 0}
+    - target: {fileID: 408876, guid: fe366e3677b08c94ba6f51dbb876c9d0, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408876, guid: fe366e3677b08c94ba6f51dbb876c9d0, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: .707106709
+      objectReference: {fileID: 0}
+    - target: {fileID: 408876, guid: fe366e3677b08c94ba6f51dbb876c9d0, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: fe366e3677b08c94ba6f51dbb876c9d0, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1636217365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,6 +1523,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b349bce6fb1642144b4a33bec34ce054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: -1
+  dbg: 0
   characters:
   - {fileID: 0}
   - {fileID: 0}

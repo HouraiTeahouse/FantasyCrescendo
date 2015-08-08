@@ -1,8 +1,5 @@
-﻿using System;
-using SmartLocalization.Editor;
-using UnityEditor;
-using UnityEditor.Animations;
-using UnityEngine;
+﻿using UnityEngine;
+using Vexe.Runtime.Extensions;
 
 namespace Crescendo.API.Editor {
 
@@ -21,13 +18,7 @@ namespace Crescendo.API.Editor {
 
         #region Serialized Fields
         [SerializeField]
-        private GameObject _defaultModel;
-
-        [SerializeField]
-        private AnimatorController _defaultAnimatorController;
-
-        [SerializeField]
-        private Avatar _defaultAvatar;
+        private GameObject _prefab;
 
         [SerializeField]
         private string _firstName = "Marisa";
@@ -42,10 +33,8 @@ namespace Crescendo.API.Editor {
         private Texture2D _generalPortrait;
 
         [SerializeField]
-        private MonoScript _standardScripts;
-        #endregion
-
         private CharacterData _runtimeData;
+        #endregion
 
         #region Name Properties
         public string FirstName {
@@ -111,9 +100,9 @@ namespace Crescendo.API.Editor {
 
         #region Model Properties
 
-        public GameObject DefaultModel {
-            get { return _defaultModel; }
-            set { _defaultModel = value; }
+        public GameObject Prefab {
+            get { return _prefab; }
+            set { _prefab = value; }
         }
 
         #endregion
@@ -126,9 +115,9 @@ namespace Crescendo.API.Editor {
             AssetUtil.CreateFolder(RuntimeResources);
 
             if (RuntimeData == null) {
-                CharacterData temp = ScriptableObject.CreateInstance<CharacterData>();
-                temp.name = InternalName + RuntimeDataSuffix;
-                AssetUtil.CreateAsset(RuntimeResources, temp);
+                _runtimeData = ScriptableObject.CreateInstance<CharacterData>();
+                _runtimeData.name = InternalName + RuntimeDataSuffix;
+                AssetUtil.CreateAsset(RuntimeResources, _runtimeData);
             }
 
         }

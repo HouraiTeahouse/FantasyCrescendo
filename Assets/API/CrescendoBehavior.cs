@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
     /// <summary>
     /// A utility behaviour with a large number of more succinct code shortcuts to make for shorter
     /// </summary>
-    public abstract class GensoBehaviour : MonoBehaviour {
+    public abstract class GensoBehaviour : BaseBehaviour {
         #region GameObject Functions
 
         public bool CompareLayer(int layerMask) {

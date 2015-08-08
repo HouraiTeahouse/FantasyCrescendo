@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
@@ -38,7 +39,7 @@ namespace Crescendo.API {
             [SerializeField, Range(0f, 1f)]
             private float _baseWeight = 1f;
 
-            [SerializeField, ResourcePath(typeof (AudioClip))]
+            [SerializeField, ResourcePath]
             private string _bgm;
 
             private Resource<AudioClip> _bgmResource;

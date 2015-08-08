@@ -1,25 +1,26 @@
 ﻿using UnityEngine;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
-    public class Config : ScriptableObject {
+    public class Config : BaseScriptableObject {
 
         private Resource<GameObject> _Respawn;
 
-        [SerializeField, ResourcePath(typeof (GameObject))]
+        [SerializeField, ResourcePath]
         private string _respawnPlatformPrefab;
 
         public DebugData Debug;
         public PlayerData[] GenericPlayerData;
         public LayerMask HurtboxLayers;
 
-        [Tag]
+        [Tags]
         public string playerTag;
 
-        [Tag]
+        [Tags]
         public string respawnTag;
 
-        [Tag]
+        [Tags]
         public string spawnTag;
 
         public RespawnPlatform RepsawnPlatformPrefab {

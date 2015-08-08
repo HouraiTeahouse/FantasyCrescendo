@@ -11,12 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79aa4b811f46cdb47b8139165e585c25, type: 3}
   m_Name: marisa_kirisame
   m_EditorClassIdentifier: 
-  _defaultModel: {fileID: 0}
-  _defaultAnimatorController: {fileID: 9100000, guid: 4cd5d523f9a051747a5037ffed9a3954,
-    type: 2}
-  _defaultAvatar: {fileID: 0}
+  _prefab: {fileID: 0}
   _firstName: Marisa
   _lastName: Kirisame
   _nameType: 1
   _generalPortrait: {fileID: 0}
-  _standardScripts: {fileID: 0}
+  _runtimeData: {fileID: 0}

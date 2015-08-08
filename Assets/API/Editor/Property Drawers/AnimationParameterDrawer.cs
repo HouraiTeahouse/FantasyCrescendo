@@ -1,22 +1,51 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using Vexe.Editor.Drawers;
+using Vexe.Editor.Types;
 
 namespace Crescendo.API.Editor {
 
-    [CustomPropertyDrawer(typeof(AnimationBool))]
-    [CustomPropertyDrawer(typeof(AnimationInt))]
-    [CustomPropertyDrawer(typeof(AnimationFloat))]
-    [CustomPropertyDrawer(typeof(AnimationTrigger))]
-    public class AnimationParameterDrawer : PropertyDrawer {
+    internal class AnimationBoolDrawer : ObjectDrawer<AnimationBool> {
 
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            SerializedProperty name = property.FindPropertyRelative("_name");
-            SerializedProperty hash = property.FindPropertyRelative("_hash");
+        public override void OnGUI() {
+            Debug.Log("Hello");
+            EditorMember name = FindRelativeMember("_name");
+            name.DisplayText = displayText;
+            MemberField(name);
+        }
 
-            EditorGUI.PropertyField(position, name, label);
-            hash.intValue = Animator.StringToHash(name.stringValue);
+    }
+
+    internal class AnimationFloatDrawer : ObjectDrawer<AnimationFloat> {
+
+        public override void OnGUI() {
+            Debug.Log("Hello");
+            EditorMember name = FindRelativeMember("_name");
+            name.DisplayText = displayText;
+            MemberField(name);
+        }
+
+    }
+
+    internal class AnimationIntDrawer : ObjectDrawer<AnimationInt> {
+
+        public override void OnGUI() {
+            Debug.Log("Hello");
+            EditorMember name = FindRelativeMember("_name");
+            name.DisplayText = displayText;
+            MemberField(name);
+        }
+
+    }
+
+    internal class AnimationTirggerDrawer : ObjectDrawer<AnimationTrigger>{
+
+        public override void OnGUI() {
+            Debug.Log("Hello");
+            EditorMember name = FindRelativeMember("_name");
+            name.DisplayText = displayText;
+            MemberField(name);
         }
 
     }

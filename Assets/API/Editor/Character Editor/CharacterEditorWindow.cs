@@ -101,7 +101,7 @@ namespace Crescendo.API.Editor {
                 EditorGUILayout.PropertyField(current);
             }
 
-            if (Target.DefaultModel != null) {
+            if (Target.Prefab != null) {
                 ShowMaterialData();
             }
                 
@@ -116,7 +116,7 @@ namespace Crescendo.API.Editor {
 
         void ShowMaterialData() {
             HashSet<Material> materials = new HashSet<Material>();
-            foreach (var renderer in EditorUtil.GetComponentsInChildren<Renderer>(Target.DefaultModel)) {
+            foreach (var renderer in EditorUtil.GetComponentsInChildren<Renderer>(Target.Prefab)) {
                 //Debug.Log(renderer);
                 //materials.UnionWith(renderer.materials);
           }

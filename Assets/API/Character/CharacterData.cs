@@ -1,10 +1,11 @@
 ﻿using System;
 using SmartLocalization;
 using UnityEngine;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
-    public class CharacterData : ScriptableObject {
+    public class CharacterData : BaseScriptableObject {
 
         private LanguageManager _languageManager;
         
@@ -62,12 +63,12 @@ namespace Crescendo.API {
 
             private Resource<Sprite> _portrait;
 
-            [SerializeField, ResourcePath(typeof (GameObject))]
+            [SerializeField, ResourcePath(typeof(GameObject))]
             private string _prefab;
 
             private Resource<GameObject> _prefabResource;
 
-            [SerializeField, ResourcePath(typeof (Sprite))]
+            [SerializeField, ResourcePath]
             private string portrait;
 
             public Resource<Sprite> Portrait {
