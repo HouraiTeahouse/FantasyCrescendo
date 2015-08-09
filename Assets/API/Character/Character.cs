@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Vexe.Runtime.Extensions;
-
+using Vexe.Runtime.Types;
 #if UNITY_EDITOR
 using System.Linq;
 #endif
@@ -16,9 +16,8 @@ namespace Crescendo.API {
     /// Author: James Liu
     /// Authored on 07/01/2015
     [DisallowMultipleComponent]
-    [RequireComponent(typeof (Animator))]
-    [RequireComponent(typeof (Rigidbody))]
-    [RequireComponent(typeof (CapsuleCollider))]
+    [DefineCategories("Animation")]
+    [RequireComponent(typeof (Animator), typeof(Rigidbody), typeof(CapsuleCollider))]
     public class Character : GensoBehaviour, IDamageable, IKnocckbackable {
 
         private ActionRestriction _canAttack;
@@ -26,12 +25,15 @@ namespace Crescendo.API {
         private ActionRestriction _canMove;
 
         private CapsuleCollider triggerCollider;
+        
+        [DontSerialize, Hide]
         public int PlayerNumber { get; internal set; }
 
         public Color PlayerColor {
             get { return Game.GetPlayerColor(PlayerNumber); }
         }
 
+        [DontSerialize, Hide]
         public ICharacterInput InputSource { get; set; }
 
         public bool IsGrounded {
@@ -40,7 +42,7 @@ namespace Crescendo.API {
                 if (IsGrounded == value)
                     return;
                 _grounded = value;
-                animationData.Bools.Grounded.Set(value);
+                Animator.Bools(__grounded, value);
                 OnGrounded.SafeInvoke();
             }
         }
@@ -89,7 +91,7 @@ namespace Crescendo.API {
         }
 
         public float Height {
-            get { return _movementCollider.height; }
+            get { return MoevmentCollider.height; }
         }
 
         public void Damage(float damage) {
@@ -102,15 +104,15 @@ namespace Crescendo.API {
         }
 
         public void AddForce(Vector3 force) {
-            _rigidbody.AddForce(force);
+            Rigidbody.AddForce(force);
         }
 
         public void AddForce(float x, float y) {
-            _rigidbody.AddForce(x, y, 0f);
+            Rigidbody.AddForce(x, y, 0f);
         }
 
         public void AddForce(float x, float y, float z) {
-            _rigidbody.AddForce(x, y, z);
+            Rigidbody.AddForce(x, y, z);
         }
 
         public event Action OnJump;
@@ -160,14 +162,14 @@ namespace Crescendo.API {
         public void Attack() {
             if (!CanAttack)
                 return;
-            animationData.Triggers.Attack.Set();
+            Animator.SetTrigger(_attack);
             OnAttack.SafeInvoke(false);
         }
 
         public void Special() {
             if (!CanAttack)
                 return;
-            animationData.Triggers.Special.Set();
+            Animator.SetTrigger(_special);
             OnAttack.SafeInvoke(true);
         }
 
@@ -226,53 +228,30 @@ namespace Crescendo.API {
 
         }
 
-        [Serializable]
-        private class AnimationData {
+        [Serialize]
+        [Category("Animation")]
+        [AnimVar(ParameterType.Trigger)]
+        private int _attack;
 
-            [Serializable]
-            public class AnimationTriggers {
-                public AnimationTrigger Attack = new AnimationTrigger("attack");
-                public AnimationTrigger Special = new AnimationTrigger("special");
+        [Serialize]
+        [Category("Animation")]
+        [AnimVar(ParameterType.Trigger)]
+        private int _special;
 
-                public void Initialize(Animator animator) {
-                    Attack.Animator = animator;
-                    Special.Animator = animator;
-                }
-            }
+        [Serialize]
+        [Category("Animation")]
+        [AnimVar(ParameterType.Float)]
+        private int _horizontalInput;
 
-            [Serializable]
-            public class AnimationFloats {
-                
-                public AnimationFloat HorizontalInput = new AnimationFloat("horizontal input");
-                public AnimationFloat VerticalInput = new AnimationFloat("vertical input");
+        [Serialize]
+        [Category("Animation")]
+        [AnimVar(ParameterType.Float)]
+        private int _verticalInput;
 
-                public void Initialize(Animator animator) {
-                    HorizontalInput.Animator = animator;
-                    VerticalInput.Animator = animator;
-                }
-            }
-
-            [Serializable]
-            public class AnimationBools {
-
-                public AnimationBool Grounded = new AnimationBool("grounded");
-
-                public void Initialize(Animator animator) {
-                    Grounded.Animator = animator;
-                }
-            }
-
-            public AnimationBools Bools;
-            public AnimationFloats Floats;
-            public AnimationTriggers Triggers;
-
-            public void Initialize(Animator animator) {
-                Triggers.Initialize(animator);
-                Floats.Initialize(animator);
-                Bools.Initialize(animator);
-            }
-
-        }
+        [Serialize]
+        [Category("Animation")]
+        [AnimVar(ParameterType.Bool)]
+        private int __grounded;
 
         #region Serialized Variables
 
@@ -281,9 +260,6 @@ namespace Crescendo.API {
 
         [SerializeField]
         private string _internalName;
-
-        [SerializeField]
-        private AnimationData animationData;
 
         public string InternalName {
             get { return _internalName; }
@@ -294,21 +270,14 @@ namespace Crescendo.API {
 
         #region Required Components
 
-        private CapsuleCollider _movementCollider;
-        private Rigidbody _rigidbody;
-        private Animator _animator;
+        [DontSerialize, Hide]
+        public CapsuleCollider MoevmentCollider { get; private set; }
 
-        public CapsuleCollider MoevmentCollider {
-            get { return _movementCollider; }
-        }
+        [DontSerialize, Hide]
+        public Rigidbody Rigidbody { get; private set; }
 
-        public Rigidbody Rigidbody {
-            get { return _rigidbody; }
-        }
-
-        public Animator Animator {
-            get { return _animator; }
-        }
+        [DontSerialize, Hide]
+        public Animator Animator { get; private set; }
 
         #endregion
 
@@ -325,33 +294,31 @@ namespace Crescendo.API {
         #region Physics Properties
 
         public Vector3 Velocity {
-            get { return _rigidbody.velocity; }
-            set { _rigidbody.velocity = value; }
+            get { return Rigidbody.velocity; }
+            set { Rigidbody.velocity = value; }
         }
 
         public float Mass {
-            get { return _rigidbody.mass; }
-            set { _rigidbody.mass = value; }
+            get { return Rigidbody.mass; }
+            set { Rigidbody.mass = value; }
         }
 
         #endregion
 
         #region Unity Callbacks
         protected virtual void Awake() {
-            _movementCollider = GetComponent<CapsuleCollider>();
-            _movementCollider.isTrigger = false;
+            MoevmentCollider = GetComponent<CapsuleCollider>();
+            MoevmentCollider.isTrigger = false;
 
             triggerCollider = gameObject.AddComponent<CapsuleCollider>();
             triggerCollider.isTrigger = true;
 
-            _rigidbody = GetComponent<Rigidbody>();
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+            Rigidbody = GetComponent<Rigidbody>();
+            Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
 
-            _animator = GetComponent<Animator>();
+            Animator = GetComponent<Animator>();
 
-            animationData.Initialize(_animator);
-
-            var animationBehaviors = _animator.GetBehaviours<CharacterAnimationBehaviour>();
+            var animationBehaviors = Animator.GetBehaviours<CharacterAnimationBehaviour>();
             foreach (var stateBehaviour in animationBehaviors)
                 stateBehaviour.SetCharacter(this);
 
@@ -378,18 +345,18 @@ namespace Crescendo.API {
 
         protected virtual void Update() {
             // Sync Trigger and Movement Colliders
-            triggerCollider.center = _movementCollider.center;
-            triggerCollider.direction = _movementCollider.direction;
-            triggerCollider.height = _movementCollider.height*triggerSizeRatio;
-            triggerCollider.radius = _movementCollider.radius*triggerSizeRatio;
+            triggerCollider.center = MoevmentCollider.center;
+            triggerCollider.direction = MoevmentCollider.direction;
+            triggerCollider.height = MoevmentCollider.height*triggerSizeRatio;
+            triggerCollider.radius = MoevmentCollider.radius*triggerSizeRatio;
             
             if (InputSource == null)
                 return;
 
             Vector2 movement = InputSource.Movement;
 
-            animationData.Floats.HorizontalInput.Set(Mathf.Abs(movement.x));
-            animationData.Floats.VerticalInput.Set(movement.y);
+            Animator.Floats(_horizontalInput, Mathf.Abs(movement.x));
+            Animator.Floats(_verticalInput, movement.y);
 
             // Now checks CanMove
             if (movement != Vector2.zero && CanMove)
@@ -415,10 +382,10 @@ namespace Crescendo.API {
             var componentTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                   from assemblyType in domainAssembly.GetTypes()
                                   where
-                                      typeof(CharacterComponent).IsAssignableFrom(assemblyType) &&
+                                      assemblyType.IsA<Component>()&&
                                       !assemblyType.IsAbstract &&
                                       assemblyType.IsDefined(typeof(RequiredCharacterComponentAttribute), true)
-                                  select assemblyType).ToArray();
+                                  select assemblyType);
 
             foreach (var requriedType in componentTypes) {
                 if (requriedType != null)

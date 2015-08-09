@@ -6,7 +6,9 @@ using Vexe.Editor.Types;
 
 namespace Crescendo.API.Editor {
 
-    internal class AnimationBoolDrawer : ObjectDrawer<AnimationBool> {
+    public class AnimationBoolDrawer : ObjectDrawer<AnimationBool> {
+
+        
 
         public override void OnGUI() {
             Debug.Log("Hello");
@@ -17,7 +19,7 @@ namespace Crescendo.API.Editor {
 
     }
 
-    internal class AnimationFloatDrawer : ObjectDrawer<AnimationFloat> {
+    public class AnimationFloatDrawer : ObjectDrawer<AnimationFloat> {
 
         public override void OnGUI() {
             Debug.Log("Hello");
@@ -28,7 +30,7 @@ namespace Crescendo.API.Editor {
 
     }
 
-    internal class AnimationIntDrawer : ObjectDrawer<AnimationInt> {
+    public class AnimationIntDrawer : ObjectDrawer<AnimationInt> {
 
         public override void OnGUI() {
             Debug.Log("Hello");
@@ -39,7 +41,7 @@ namespace Crescendo.API.Editor {
 
     }
 
-    internal class AnimationTirggerDrawer : ObjectDrawer<AnimationTrigger>{
+    public class AnimationTirggerDrawer : ObjectDrawer<AnimationTrigger>{
 
         public override void OnGUI() {
             Debug.Log("Hello");

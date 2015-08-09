@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
@@ -10,8 +11,9 @@ namespace Crescendo.API {
         private CharacterGravity _gravity;
         private int _jumpCount;
 
-        [SerializeField]
-        private AnimationTrigger animationTrigger = new AnimationTrigger("jump");
+        [Serialize]
+        [AnimVar(ParameterType.Trigger)]
+        private int _jumpTrigger;
 
         [SerializeField]
         private float[] _jumpHeights = {1.5f, 1.5f};
@@ -28,7 +30,6 @@ namespace Crescendo.API {
             base.Start();
 
             _gravity = GetComponentInChildren<CharacterGravity>();
-            animationTrigger.Animator = Character.Animator;
             
             Character.OnJump += OnJump;
             Character.OnGrounded += OnGrounded;
@@ -50,7 +51,7 @@ namespace Crescendo.API {
             _jumpCount++;
 
             // Trigger animation
-            animationTrigger.Set();
+            Animator.SetTrigger(_jumpTrigger);
         }
 
         private void OnGrounded() {

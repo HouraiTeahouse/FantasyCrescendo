@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEditor;
+using UnityEngine;
 using Vexe.Runtime.Extensions;
 
 namespace Crescendo.API.Editor {
@@ -114,7 +116,7 @@ namespace Crescendo.API.Editor {
             //Create the Runtime Resources folder if it doesn't already exist
             AssetUtil.CreateFolder(RuntimeResources);
 
-            if (RuntimeData == null) {
+            if (RuntimeData == null && !EditorApplication.isPlayingOrWillChangePlaymode) {
                 _runtimeData = ScriptableObject.CreateInstance<CharacterData>();
                 _runtimeData.name = InternalName + RuntimeDataSuffix;
                 AssetUtil.CreateAsset(RuntimeResources, _runtimeData);
@@ -125,3 +127,4 @@ namespace Crescendo.API.Editor {
     }
 
 }
+#endif

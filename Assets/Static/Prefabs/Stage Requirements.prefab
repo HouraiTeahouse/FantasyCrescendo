@@ -117,9 +117,9 @@ GameObject:
   - 81: {fileID: 8105652}
   - 114: {fileID: 11454024}
   - 114: {fileID: 11479466}
-  - 114: {fileID: 11469616}
   - 114: {fileID: 11444210}
   - 114: {fileID: 11492308}
+  - 114: {fileID: 11469616}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -690,14 +690,26 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190902}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b349bce6fb1642144b4a33bec34ce054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 8642
+  dbg: 0
+  _serializationData:
+    serializedObjects:
+    - {fileID: 11400000, guid: f2066cfb303b0214882bc708ab3fd19e, type: 2}
+    serializedStrings:
+      keys:
+      - CharacterData[] characters
+      - int stockCount
+      values:
+      - '[0,0]'
+      - 5
   characters:
-  - {fileID: 11400000, guid: c551656e2337ec145a71d39ff7da7fb5, type: 2}
-  - {fileID: 11400000, guid: c551656e2337ec145a71d39ff7da7fb5, type: 2}
+  - {fileID: 11400000, guid: f2066cfb303b0214882bc708ab3fd19e, type: 2}
+  - {fileID: 11400000, guid: f2066cfb303b0214882bc708ab3fd19e, type: 2}
   stockCount: 5
 --- !u!114 &11469616
 MonoBehaviour:
@@ -775,7 +787,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186296}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fceaeb339b971b429c4cc600acabd13, type: 3}
   m_Name: 

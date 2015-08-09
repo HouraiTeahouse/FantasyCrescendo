@@ -6,7 +6,7 @@ namespace Crescendo.API {
     /// <summary>
     /// A utility behaviour with a large number of more succinct code shortcuts to make for shorter
     /// </summary>
-    public abstract class GensoBehaviour : BaseBehaviour {
+    public abstract class GensoBehaviour : BetterBehaviour {
         #region GameObject Functions
 
         public bool CompareLayer(int layerMask) {

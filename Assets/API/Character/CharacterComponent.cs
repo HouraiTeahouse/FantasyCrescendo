@@ -7,6 +7,14 @@ namespace Crescendo.API {
 
         protected Character Character { get; private set; }
 
+        protected Animator Animator {
+            get {
+                if (Character == null)
+                    return null;
+                return Character.Animator;
+            }
+        }
+
         protected ICharacterInput InputSource {
             get { return Character == null ? null : Character.InputSource; }
             set {
