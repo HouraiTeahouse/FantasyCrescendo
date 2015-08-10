@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Vexe.Runtime.Extensions;
@@ -13,13 +12,11 @@ namespace Crescendo.API {
     [DisallowMultipleComponent]
     public abstract class CharacterDamageable : CharacterComponent, IDamageable {
         
-        public abstract float DamageValue { get; protected set; }
-        
         // The Damage Value used internally for calculation of various aspects of the game, like knockback
         protected internal abstract float InternalDamage { get; protected set; }
 
-        private List<DamageModifier> _damageModifiers;
-        private List<HealingModifier> _healingModifiers;  
+        private PriorityList<DamageModifier> _damageModifiers; 
+        private PriorityList<HealingModifier> _healingModifiers;  
 
         public event Action<IHealingSource, float> OnHeal;
         public event Action<IDamageSource, float> OnDamage;
@@ -52,8 +49,8 @@ namespace Crescendo.API {
 
             float damage = Mathf.Abs(source.BaseDamage);
 
-            for (var i = 0; i < _damageModifiers.Count; i++)
-                damage = _damageModifiers[i](source, damage);
+            foreach(var modifier in _damageModifiers)
+                damage = modifier(source, damage);
 
             HandleDamage(source, damage);
             OnDamage.SafeInvoke(source, damage);
@@ -65,8 +62,8 @@ namespace Crescendo.API {
 
             float healing = Mathf.Abs(source.BaseHealing);
 
-            for (var i = 0; i < _healingModifiers.Count; i++)
-                healing = _healingModifiers[i](source, healing);
+            foreach (var modifier in _healingModifiers)
+                healing = modifier(source, healing);
 
             HandleHealing(source, healing);
             OnHeal.SafeInvoke(source, healing);
@@ -83,8 +80,6 @@ namespace Crescendo.API {
     }
 
     public class CharacterDamage : CharacterDamageable {
-
-        public override float DamageValue { get; protected set; }
 
         protected internal override float InternalDamage { get; protected set; }
 
