@@ -1,49 +1,46 @@
 ﻿using UnityEngine;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
     public class RespawnPlatform : GensoBehaviour {
 
-        [SerializeField]
+        [Serialize]
         private float _invicibilityTimer;
 
-        [SerializeField]
+        [Serialize]
         private float _platformTimer;
 
-        private Character character;
-        private Rigidbody physics;
-        private float timer;
+        private Character _character;
+        private Invincibility _invincibility;
+        private float _timer;
 
         public Character Character {
-            get { return character; }
+            get { return _character; }
             set {
                 if (value == null)
                     return;
-                value.IsInvincible = true;
-                character = value;
-                physics = value.GetComponent<Rigidbody>();
-                if (physics != null)
-                    physics.velocity = Vector3.zero;
+
+                _character = value;
+                if (_character != null) {
+                    _character.Velocity = Vector3.zero;
+                    _invincibility = _character.AddStatus<Invincibility>(_invicibilityTimer + _platformTimer);
+                }
             }
         }
 
         // Update is called once per frame
         private void Update() {
-            if (character == null)
+            if (_character == null)
                 return;
 
-            timer += Util.dt;
+            _timer += Util.dt;
 
             // TODO: Find better alternative to this hack
-            if (timer > _platformTimer || (physics != null && physics.velocity.magnitude > 0.5f))
+            if (_timer > _platformTimer || (Character.Velocity.magnitude > 0.5f)) {
+                _invincibility.Duration -= _platformTimer;
                 Destroy(gameObject);
-        }
-
-        private void OnDestroy() {
-            if (Character == null)
-                return;
-
-            Character.TemporaryInvincibility(_invicibilityTimer);
+            }
         }
 
     }

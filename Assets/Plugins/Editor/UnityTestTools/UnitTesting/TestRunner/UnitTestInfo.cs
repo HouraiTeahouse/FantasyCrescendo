@@ -39,10 +39,10 @@ namespace UnityTest {
         public string ClassName { get; private set; }
         public string FullClassName { get; private set; }
         public string Namespace { get; private set; }
-        public string FullName { get; }
+        public string FullName { get; private set; }
         public string[] Categories { get; private set; }
         public string AssemblyPath { get; private set; }
-        public string Id { get; }
+        public string Id { get; private set; }
         public bool IsIgnored { get; private set; }
 
         private string GetAssemblyPath(TestMethod testMethod) {

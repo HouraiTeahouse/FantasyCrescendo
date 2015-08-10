@@ -8,6 +8,7 @@ namespace Crescendo.API {
         bool Jump { get; }
         bool Crouch { get; }
         bool Attack { get; }
+        bool Special { get; }
 
     }
 

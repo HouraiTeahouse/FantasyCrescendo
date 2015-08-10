@@ -4,7 +4,7 @@ namespace Crescendo.API {
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    public class CharacterLateralMovement : CharacterComponent {
+    public class CharacterMovement : RestrictableCharacterComponent {
 
         [SerializeField]
         private float _airSpeed = 3f;

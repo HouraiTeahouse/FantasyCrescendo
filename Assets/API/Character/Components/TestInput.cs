@@ -9,6 +9,7 @@ namespace Crescendo.API {
         private const string VerticalAxis = "vertical";
         private const string JumpAxis = "jump";
         private const string AttackButton = "attack";
+        private const string SpecialButton = "special";
 
         public Vector2 Movement {
             get {
@@ -28,6 +29,10 @@ namespace Crescendo.API {
 
         public bool Attack {
             get { return Input.GetButtonDown(AttackButton); }
+        }
+
+        public bool Special {
+            get { return Input.GetButtonDown(SpecialButton); }
         }
 
         protected override void Start() {
