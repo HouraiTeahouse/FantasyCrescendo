@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
@@ -9,16 +10,16 @@ namespace Crescendo.API {
 
         private Camera _camera;
 
-        [SerializeField]
+        [Serialize, Show]
         private float cameraSpeed = 1f;
 
-        [SerializeField, MinMaxSlider(0, 180)]
+        [Serialize, Show, vSlider(0, 100)]
         private Vector2 FovRange;
 
-        [SerializeField]
+        [Serialize, Show]
         private Vector2 padding;
 
-        [SerializeField]
+        [Serialize, Show]
         private Vector3 targetPositionBias;
 
         private HashSet<Transform> targets;

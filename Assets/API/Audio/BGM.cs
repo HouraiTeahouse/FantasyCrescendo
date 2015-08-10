@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
+using Vexe.Runtime.Extensions;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
@@ -7,7 +9,7 @@ namespace Crescendo.API {
 
         private static AudioSource bgmSource;
 
-        [SerializeField]
+        [Serialize, Show]
         private AudioMixerGroup mixerGroup;
 
         public static AudioClip CurrentlyPlaying {

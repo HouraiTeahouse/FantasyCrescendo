@@ -1,36 +1,39 @@
 ﻿using UnityEngine;
+using Vexe.Runtime.Types;
 
-public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T> {
+namespace Crescendo.API {
 
-    private static T _instance;
+    public abstract class Singleton<T> : BetterBehaviour where T : Singleton<T> {
 
-    [SerializeField]
-    private bool _dontDestroyOnLoad;
+        private static T _instance;
 
-    public static T Instance {
-        get {
-            if (_instance == null) {
-                _instance = FindObjectOfType<T>();
+        [Serialize, Show, Default(false)]
+        private bool _dontDestroyOnLoad;
+
+        public static T Instance {
+            get {
                 if (_instance == null) {
-                    Debug.LogError("Something is trying to access the " + typeof (T) +
-                                   " Singleton instance, but none exists.");
+                    _instance = FindObjectOfType<T>();
+                    if (_instance == null) {
+                        Debug.LogError("Something is trying to access the " + typeof(T) +
+                                       " Singleton instance, but none exists.");
+                    }
                 }
+                return _instance;
             }
-            return _instance;
+        }
+
+        protected virtual void Awake() {
+            if (_instance == null) {
+                _instance = this as T;
+                if (_dontDestroyOnLoad)
+                    DontDestroyOnLoad(this);
+            } else {
+                if (_instance == this)
+                    return;
+                Debug.Log("Destroying " + gameObject + " because " + _instance + " already exists.");
+                Destroy(gameObject);
+            }
         }
     }
-
-    protected virtual void Awake() {
-        if (_instance == null) {
-            _instance = this as T;
-            if (_dontDestroyOnLoad)
-                DontDestroyOnLoad(this);
-        } else {
-            if (_instance == this)
-                return;
-            Debug.Log("Destroying " + gameObject + " because " + _instance + " already exists.");
-            Destroy(gameObject);
-        }
-    }
-
 }
