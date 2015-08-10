@@ -45,7 +45,7 @@ namespace UnityStandardAssets.ImageEffects {
                 return;
             }
 
-            Camera cam = GetComponent<Camera>();
+            var cam = GetComponent<Camera>();
             Transform camtr = cam.transform;
             float camNear = cam.nearClipPlane;
             float camFar = cam.farClipPlane;
@@ -82,7 +82,7 @@ namespace UnityStandardAssets.ImageEffects {
             frustumCorners.SetRow(2, bottomRight);
             frustumCorners.SetRow(3, bottomLeft);
 
-            var camPos = camtr.position;
+            Vector3 camPos = camtr.position;
             float FdotC = camPos.y - height;
             float paramK = (FdotC <= 0.0f ? 1.0f : 0.0f);
             fogMaterial.SetMatrix("_FrustumCornersWS", frustumCorners);
@@ -90,10 +90,10 @@ namespace UnityStandardAssets.ImageEffects {
             fogMaterial.SetVector("_HeightParams", new Vector4(height, FdotC, paramK, heightDensity*0.5f));
             fogMaterial.SetVector("_DistanceParams", new Vector4(-Mathf.Max(startDistance, 0.0f), 0, 0, 0));
 
-            var sceneMode = RenderSettings.fogMode;
-            var sceneDensity = RenderSettings.fogDensity;
-            var sceneStart = RenderSettings.fogStartDistance;
-            var sceneEnd = RenderSettings.fogEndDistance;
+            FogMode sceneMode = RenderSettings.fogMode;
+            float sceneDensity = RenderSettings.fogDensity;
+            float sceneStart = RenderSettings.fogStartDistance;
+            float sceneEnd = RenderSettings.fogEndDistance;
             Vector4 sceneParams;
             bool linear = (sceneMode == FogMode.Linear);
             float diff = linear ? sceneEnd - sceneStart : 0.0f;
@@ -105,7 +105,7 @@ namespace UnityStandardAssets.ImageEffects {
             fogMaterial.SetVector("_SceneFogParams", sceneParams);
             fogMaterial.SetVector("_SceneFogMode", new Vector4((int) sceneMode, useRadialDistance ? 1 : 0, 0, 0));
 
-            int pass = 0;
+            var pass = 0;
             if (distanceFog && heightFog)
                 pass = 0; // distance + height
             else if (distanceFog)

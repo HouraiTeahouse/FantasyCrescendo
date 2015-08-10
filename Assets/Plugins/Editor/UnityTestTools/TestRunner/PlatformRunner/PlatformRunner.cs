@@ -1,27 +1,21 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace UnityTest.IntegrationTests
-{
-    public class PlatformRunner
-    {
-        public static BuildTarget defaultBuildTarget
-        {
-            get
-            {
-                var target = EditorPrefs.GetString("ITR-platformRunnerBuildTarget");
+namespace UnityTest.IntegrationTests {
+
+    public class PlatformRunner {
+
+        public static BuildTarget defaultBuildTarget {
+            get {
+                string target = EditorPrefs.GetString("ITR-platformRunnerBuildTarget");
                 BuildTarget buildTarget;
-                try
-                {
-                    buildTarget = (BuildTarget)Enum.Parse(typeof(BuildTarget), target);
-                }
-                catch
-                {
+                try {
+                    buildTarget = (BuildTarget) Enum.Parse(typeof (BuildTarget), target);
+                } catch {
                     return GetDefaultBuildTarget();
                 }
                 return buildTarget;
@@ -30,65 +24,58 @@ namespace UnityTest.IntegrationTests
         }
 
         [MenuItem("Unity Test Tools/Platform Runner/Run current scene %#&r")]
-        public static void BuildAndRunCurrentScene()
-        {
+        public static void BuildAndRunCurrentScene() {
             Debug.Log("Building and running current test for " + defaultBuildTarget);
             BuildAndRunInPlayer(new PlatformRunnerConfiguration(defaultBuildTarget));
         }
 
         [MenuItem("Unity Test Tools/Platform Runner/Run on platform %#r")]
-        public static void RunInPlayer()
-        {
-            var w = EditorWindow.GetWindow(typeof(PlatformRunnerSettingsWindow));
+        public static void RunInPlayer() {
+            EditorWindow w = EditorWindow.GetWindow(typeof (PlatformRunnerSettingsWindow));
             w.Show();
         }
 
-        public static void BuildAndRunInPlayer(PlatformRunnerConfiguration configuration)
-        {
+        public static void BuildAndRunInPlayer(PlatformRunnerConfiguration configuration) {
             NetworkResultsReceiver.StopReceiver();
 
             var settings = new PlayerSettingConfigurator(false);
 
-            if (configuration.sendResultsOverNetwork)
-            {
-                try
-                {
+            if (configuration.sendResultsOverNetwork) {
+                try {
                     var l = new TcpListener(IPAddress.Any, configuration.port);
                     l.Start();
-                    configuration.port = ((IPEndPoint)l.Server.LocalEndPoint).Port;
+                    configuration.port = ((IPEndPoint) l.Server.LocalEndPoint).Port;
                     l.Stop();
-                }
-                catch (SocketException e)
-                {
+                } catch (SocketException e) {
                     Debug.LogException(e);
-					if (InternalEditorUtility.inBatchMode)
-                    	EditorApplication.Exit(Batch.returnCodeRunError);
+                    if (InternalEditorUtility.inBatchMode)
+                        EditorApplication.Exit(Batch.returnCodeRunError);
                 }
             }
 
             if (InternalEditorUtility.inBatchMode)
                 settings.AddConfigurationFile(TestRunnerConfigurator.batchRunFileMarker, "");
 
-            if (configuration.sendResultsOverNetwork)
+            if (configuration.sendResultsOverNetwork) {
                 settings.AddConfigurationFile(TestRunnerConfigurator.integrationTestsNetwork,
                                               string.Join("\n", configuration.GetConnectionIPs()));
+            }
 
             settings.ChangeSettingsForIntegrationTests();
 
             AssetDatabase.Refresh();
 
-            var result = BuildPipeline.BuildPlayer(configuration.scenes,
-                                                   configuration.GetTempPath(),
-                                                   configuration.buildTarget,
-                                                   BuildOptions.AutoRunPlayer | BuildOptions.Development);
+            string result = BuildPipeline.BuildPlayer(configuration.scenes,
+                                                      configuration.GetTempPath(),
+                                                      configuration.buildTarget,
+                                                      BuildOptions.AutoRunPlayer | BuildOptions.Development);
 
             settings.RevertSettingsChanges();
             settings.RemoveAllConfigurationFiles();
 
             AssetDatabase.Refresh();
 
-            if (!string.IsNullOrEmpty(result))
-            {
+            if (!string.IsNullOrEmpty(result)) {
                 if (InternalEditorUtility.inBatchMode)
                     EditorApplication.Exit(Batch.returnCodeRunError);
                 return;
@@ -96,22 +83,18 @@ namespace UnityTest.IntegrationTests
 
             if (configuration.sendResultsOverNetwork)
                 NetworkResultsReceiver.StartReceiver(configuration);
-			else if (InternalEditorUtility.inBatchMode)
+            else if (InternalEditorUtility.inBatchMode)
                 EditorApplication.Exit(Batch.returnCodeTestsOk);
         }
 
-        private static BuildTarget GetDefaultBuildTarget()
-        {
-            switch (EditorUserBuildSettings.selectedBuildTargetGroup)
-            {
+        private static BuildTarget GetDefaultBuildTarget() {
+            switch (EditorUserBuildSettings.selectedBuildTargetGroup) {
                 case BuildTargetGroup.Android:
                     return BuildTarget.Android;
                 case BuildTargetGroup.WebPlayer:
                     return BuildTarget.WebPlayer;
-                default:
-                {
-                    switch (Application.platform)
-                    {
+                default: {
+                    switch (Application.platform) {
                         case RuntimePlatform.WindowsPlayer:
                             return BuildTarget.StandaloneWindows;
                         case RuntimePlatform.OSXPlayer:
@@ -123,5 +106,7 @@ namespace UnityTest.IntegrationTests
                 }
             }
         }
+
     }
+
 }

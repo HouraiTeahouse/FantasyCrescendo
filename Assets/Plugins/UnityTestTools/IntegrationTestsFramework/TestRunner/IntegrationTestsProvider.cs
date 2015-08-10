@@ -16,7 +16,7 @@ namespace UnityTest.IntegrationTestRunner {
 
         public IntegrationTestsProvider(IEnumerable<ITestComponent> tests) {
             testToRun = tests;
-            foreach (var test in tests.OrderBy(component => component)) {
+            foreach (ITestComponent test in tests.OrderBy(component => component)) {
                 if (test.IsTestGroup())
                     throw new Exception(test.Name + " is test a group");
                 AddTestToList(test);
@@ -26,7 +26,7 @@ namespace UnityTest.IntegrationTestRunner {
         }
 
         private void AddTestToList(ITestComponent test) {
-            var group = test.GetTestGroup();
+            ITestComponent group = test.GetTestGroup();
             if (!testCollection.ContainsKey(group))
                 testCollection.Add(group, new HashSet<ITestComponent>());
             testCollection[group].Add(test);
@@ -36,7 +36,7 @@ namespace UnityTest.IntegrationTestRunner {
         }
 
         public ITestComponent GetNextTest() {
-            var test = testCollection[currentTestGroup].First();
+            ITestComponent test = testCollection[currentTestGroup].First();
             testCollection[currentTestGroup].Remove(test);
             test.EnableTest(true);
             return test;
@@ -62,7 +62,7 @@ namespace UnityTest.IntegrationTestRunner {
             testCollection.Remove(testGroup);
             testGroup.EnableTest(false);
 
-            var parentTestGroup = testGroup.GetTestGroup();
+            ITestComponent parentTestGroup = testGroup.GetTestGroup();
             if (parentTestGroup == null)
                 return null;
 
@@ -71,8 +71,8 @@ namespace UnityTest.IntegrationTestRunner {
         }
 
         private ITestComponent FindInnerTestGroup(ITestComponent group) {
-            var innerGroups = testCollection[group];
-            foreach (var innerGroup in innerGroups) {
+            HashSet<ITestComponent> innerGroups = testCollection[group];
+            foreach (ITestComponent innerGroup in innerGroups) {
                 if (!innerGroup.IsTestGroup())
                     continue;
                 innerGroup.EnableTest(true);
@@ -86,8 +86,8 @@ namespace UnityTest.IntegrationTestRunner {
         }
 
         public List<ITestComponent> GetRemainingTests() {
-            var remainingTests = new List<ITestComponent>();
-            foreach (var test in testCollection)
+            List<ITestComponent> remainingTests = new List<ITestComponent>();
+            foreach (KeyValuePair<ITestComponent, HashSet<ITestComponent>> test in testCollection)
                 remainingTests.AddRange(test.Value);
             return remainingTests;
         }

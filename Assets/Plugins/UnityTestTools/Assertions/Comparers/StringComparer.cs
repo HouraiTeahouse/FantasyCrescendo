@@ -24,13 +24,13 @@ namespace UnityTest {
             }
             switch (compareType) {
                 case CompareType.Equal:
-                    return String.Compare(a, b, comparisonType) == 0;
+                    return string.Compare(a, b, comparisonType) == 0;
                 case CompareType.NotEqual:
-                    return String.Compare(a, b, comparisonType) != 0;
+                    return string.Compare(a, b, comparisonType) != 0;
                 case CompareType.Longer:
-                    return String.Compare(a, b, comparisonType) > 0;
+                    return string.Compare(a, b, comparisonType) > 0;
                 case CompareType.Shorter:
-                    return String.Compare(a, b, comparisonType) < 0;
+                    return string.Compare(a, b, comparisonType) < 0;
             }
             throw new Exception();
         }

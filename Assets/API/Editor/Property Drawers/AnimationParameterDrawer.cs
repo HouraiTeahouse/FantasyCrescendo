@@ -1,14 +1,8 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
-using Vexe.Editor.Drawers;
-using Vexe.Editor.Types;
 
 namespace Crescendo.API.Editor {
 
     public class AnimationBoolDrawer : ObjectDrawer<AnimationBool> {
-
-        
 
         public override void OnGUI() {
             Debug.Log("Hello");
@@ -41,7 +35,7 @@ namespace Crescendo.API.Editor {
 
     }
 
-    public class AnimationTirggerDrawer : ObjectDrawer<AnimationTrigger>{
+    public class AnimationTirggerDrawer : ObjectDrawer<AnimationTrigger> {
 
         public override void OnGUI() {
             Debug.Log("Hello");
@@ -53,4 +47,3 @@ namespace Crescendo.API.Editor {
     }
 
 }
-

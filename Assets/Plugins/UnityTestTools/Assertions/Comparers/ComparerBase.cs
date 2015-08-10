@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Object = System.Object;
 
 namespace UnityTest {
 
@@ -43,8 +42,8 @@ namespace UnityTest {
         }
 
         public override string GetFailureMessage() {
-            var message = GetType().Name + " assertion failed.\n" + go.name + "." + thisPropertyPath + " " +
-                          compareToType;
+            string message = GetType().Name + " assertion failed.\n" + go.name + "." + thisPropertyPath + " " +
+                             compareToType;
             switch (compareToType) {
                 case CompareToType.CompareToObject:
                     message += " (" + other + ")." + otherPropertyPath + " failed.";
@@ -81,7 +80,7 @@ namespace UnityTest {
 
         public T2 constantValueGeneric;
 
-        public override Object ConstValue {
+        public override object ConstValue {
             get { return constantValueGeneric; }
             set { constantValueGeneric = (T2) value; }
         }
@@ -90,7 +89,7 @@ namespace UnityTest {
             get { return true; }
         }
 
-        public override Object GetDefaultConstValue() {
+        public override object GetDefaultConstValue() {
             return default(T2);
         }
 
@@ -103,7 +102,7 @@ namespace UnityTest {
         }
 
         protected override bool Compare(object a, object b) {
-            var type = typeof (T2);
+            Type type = typeof (T2);
             if (b == null && IsValueType(type))
                 throw new ArgumentException("Null was passed to a value-type argument");
             return Compare((T1) a, (T2) b);

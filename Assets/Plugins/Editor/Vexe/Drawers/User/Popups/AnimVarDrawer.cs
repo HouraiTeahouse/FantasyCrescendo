@@ -1,23 +1,100 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text.RegularExpressions;
-using System.Xml.Xsl;
 using UnityEngine;
+using Vexe.Editor.Types;
 using Vexe.Runtime.Extensions;
 using Vexe.Runtime.Types;
 
-namespace Vexe.Editor.Drawers
-{
+namespace Vexe.Editor.Drawers {
     public class AnimVarDrawer : AttributeDrawer<AnimVarAttribute> {
 
-        protected AnimatorControllerParameter[] Parameters;
+        private abstract class TargetValue {
+
+            protected readonly EditorMember Member;
+
+            protected TargetValue(EditorMember member) {
+                Member = member;
+            }
+
+            public abstract int FindCurrent(AnimatorControllerParameter[] parameters, string[] names);
+
+            public abstract void SetValue(AnimatorControllerParameter acp);
+
+        }
+
+        private class HashValue : TargetValue {
+
+            public HashValue(EditorMember member) : base(member) { }
+
+            public override int FindCurrent(AnimatorControllerParameter[] parameters, string[] names) {
+                return parameters.Select(param => param.nameHash).ToArray().IndexOf((int) Member.Value);
+            }
+
+            public override void SetValue(AnimatorControllerParameter acp) {
+                Member.Value = acp == null ? 0 : acp.nameHash;
+            }
+
+        }
+
+        private class StringValue : TargetValue {
+
+            public StringValue(EditorMember member) : base(member) { }
+
+            public override int FindCurrent(AnimatorControllerParameter[] parameters, string[] names) {
+                return names.IndexOf(Member.Value as string);
+            }
+
+            public override void SetValue(AnimatorControllerParameter acp) {
+                Member.Value = acp == null ? "" : acp.name;
+            }
+
+        }
+
+        private class ACPValue : TargetValue {
+
+            public ACPValue(EditorMember member) : base(member) { }
+
+            public override int FindCurrent(AnimatorControllerParameter[] parameters, string[] names) {
+                return parameters.IndexOf(Member.Value);
+            }
+
+            public override void SetValue(AnimatorControllerParameter acp) {
+                Member.Value = acp;
+            }
+
+        }
+
+        // A mapping of which AnimatorControllerParameterType goes to which ParameterType value
+        private static Dictionary<AnimatorControllerParameterType, ParameterType> mapping;
+
+        // All valid controller parameters to be displayed
+        private AnimatorControllerParameter[] _parameters;
+
+        // A cached array of names for each of the valid controller parameters
+        // For use in the Popup control used by this drawer
+        private string[] _names;
+
+        // The currently selected index on the Popup
+        private int _current;
+
+        // The currently selected parameter
         private AnimatorControllerParameter _currentParameter;
 
+        // A mask for which kinds of controller parameters to show
+        // By default, this value should show all parameter types
+        // This would be of type AnimatorControllerParameterType, but Unity explicitly chose values that were hard to make masks with
+        // So a custom enum with mask-friendly values was made
         private ParameterType _mask;
 
+        // The Animator component that corresponds with this drawer
         private Animator _animator;
-        protected Animator animator {
+
+        // A polymorphic object 
+        private TargetValue _value;
+
+        private Animator Animator {
             get {
                 if (_animator == null) {
                     string getterMethod = attribute.GetAnimatorMethod;
@@ -31,50 +108,39 @@ namespace Vexe.Editor.Drawers
             }
         }
 
-        public bool IsValid(AnimatorControllerParameter parameter) {
-            if (_mask == ParameterType.All)
-                return true;
-            
-            switch (parameter.type) {
-                case AnimatorControllerParameterType.Float:
-                    return (_mask & ParameterType.Float) != 0;
-                case AnimatorControllerParameterType.Int:
-                    return (_mask & ParameterType.Int) != 0;
-                case AnimatorControllerParameterType.Bool:
-                    return (_mask & ParameterType.Bool) != 0;
-                case AnimatorControllerParameterType.Trigger:
-                    return (_mask & ParameterType.Trigger) != 0;
-                default:
-                    return false;
-            }
-        }
-
-        public virtual AnimatorControllerParameter Current {
+        private AnimatorControllerParameter Current {
             get {
                 if (!Ready)
                     return _currentParameter = null;
                 return _currentParameter;
             }
             set {
-                _current = Parameters.IndexOfZeroIfNotFound(value);
-                _currentParameter = (!Ready || Parameters.IsEmpty()) ? null : Parameters[_current];
-                if(memberType.IsA<string>())
-                    member.Value = _currentParameter == null ? "" : _currentParameter.name;
-                else if (memberType.IsA<int>())
-                    member.Value = _currentParameter == null ? 0 : _currentParameter.nameHash;
-                else //Assuming it is a AnimatorControllerParameter
-                    member.Value = _currentParameter;
+                _current = _parameters.IndexOfZeroIfNotFound(value);
+                _currentParameter = (!Ready || _parameters.IsEmpty()) ? null : _parameters[_current];
+                _value.SetValue(_currentParameter);
             }
         }
 
-        private string[] _names;
-        private int _current;
-
-        protected bool Ready {
-            get { return animator != null && animator.runtimeAnimatorController != null; }
+        // A simple check to see if both a animator is attached, and a controller is used in it
+        private bool Ready {
+            get { return Animator != null && Animator.runtimeAnimatorController != null; }
         }
 
         protected override void Initialize() {
+            if (mapping == null) {
+                mapping = new Dictionary<AnimatorControllerParameterType, ParameterType>();
+                foreach (string name in Enum.GetNames(typeof(AnimatorControllerParameterType))) {
+                    var acpt = (AnimatorControllerParameterType) Enum.Parse(typeof(AnimatorControllerParameterType), name, true);
+                    var pt = (ParameterType) Enum.Parse(typeof(ParameterType), name, true);
+                    mapping[acpt] = pt;
+                }
+            }
+            if (memberType.IsA<string>())
+                _value = new StringValue(member);
+            else if (memberType.IsA<int>())
+                _value = new HashValue(member);
+            else //Assuming it is a AnimatorControllerParameter
+                _value = new ACPValue(member);
             _mask = attribute.Filter;
             FetchVariables();
         }
@@ -83,28 +149,26 @@ namespace Vexe.Editor.Drawers
             if (!Ready)
                 return;
 
-            Parameters = animator.parameters.Where(param => IsValid(param)).ToArray();
-            _names = Parameters.Select(param => param.name).ToArray();
+            // Select matching parameters from the Animator
+            _parameters = Animator.parameters.Where(param => (_mask & mapping[param.type]) != 0).ToArray();
+            _names = _parameters.Select(param => param.name).ToArray();
 
-            if (Parameters.IsEmpty())
-                _names = new[] {"N/A"};
-            else {
+            if (_parameters.IsEmpty()) {
+                _parameters = new AnimatorControllerParameter[] { null };
+                _names = new[] { "N/A" };
+            } else {
                 // Try to find a match
-                int index = -1;
-                if (memberType.IsA<int>()) {
-                    index = Parameters.Select(param => param.nameHash).ToArray().IndexOf((int)member.Value);
-                } else if (memberType.IsA<string>()) {
-                    index = _names.IndexOf(member.Value as string);
-                } else { // Assuming it is a AnimationControllerParameter
-                    index = Parameters.IndexOf(member.Value as AnimatorControllerParameter);
-                }
+                int index = _value.FindCurrent(_parameters, _names);
+
+                // Attempt to automatch if the search fails
                 if (!attribute.AutoMatch.IsNullOrEmpty() && index < 0) {
                     string match = displayText.Remove(displayText.IndexOf(attribute.AutoMatch));
                     match = Regex.Replace(match, @"\s+", "");
                     index = _names.IndexOf(match);
                 }
 
-                Current = index >= 0 ? Parameters[index] : Parameters[0];
+                // Assign the current value
+                Current = index >= 0 ? _parameters[index] : _parameters[0];
             }
         }
 
@@ -119,15 +183,13 @@ namespace Vexe.Editor.Drawers
                     }
                 }
             } else {
-                if(Parameters.IsNullOrEmpty())
+                if (_parameters.IsNullOrEmpty())
                     FetchVariables();
 
                 var selection = gui.Popup(displayText, _current, _names);
                 {
-                    if (Parameters.IsEmpty())
-                        Current = null;
-                    else if (_current != selection || Current != Parameters[selection])
-                        Current = Parameters[_current = selection];
+                    if (_current != selection || Current != _parameters[selection])
+                        Current = _parameters[_current = selection];
                 }
             }
         }
@@ -135,6 +197,5 @@ namespace Vexe.Editor.Drawers
         public override bool CanHandle(Type memberType) {
             return memberType.IsA<string>() || memberType.IsA<int>() || memberType.IsA<AnimatorControllerParameter>();
         }
-
     }
 }

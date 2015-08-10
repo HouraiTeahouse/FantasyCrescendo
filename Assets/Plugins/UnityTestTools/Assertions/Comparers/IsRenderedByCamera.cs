@@ -15,8 +15,8 @@ namespace UnityTest {
         public CompareType compareType;
 
         protected override bool Compare(Renderer renderer, Camera camera) {
-            var planes = GeometryUtility.CalculateFrustumPlanes(camera);
-            var isVisible = GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
+            bool isVisible = GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
             switch (compareType) {
                 case CompareType.IsVisible:
                     return isVisible;

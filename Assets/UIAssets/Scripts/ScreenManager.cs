@@ -49,7 +49,7 @@ public class ScreenManager : MonoBehaviour {
 
         //Save the currently selected button that was used to open this Screen. (CloseCurrent will modify it)
         Debug.Log(EventSystem.current);
-        var newPreviouslySelected = EventSystem.current.currentSelectedGameObject;
+        GameObject newPreviouslySelected = EventSystem.current.currentSelectedGameObject;
 
         //Move the Screen to front.
         anim.transform.SetAsLastSibling();
@@ -72,8 +72,8 @@ public class ScreenManager : MonoBehaviour {
     //Finds the first Selectable element in the providade hierarchy.
     private static GameObject FindFirstEnabledSelectable(GameObject gameObject) {
         GameObject go = null;
-        var selectables = gameObject.GetComponentsInChildren<Selectable>(true);
-        foreach (var selectable in selectables) {
+        Selectable[] selectables = gameObject.GetComponentsInChildren<Selectable>(true);
+        foreach (Selectable selectable in selectables) {
             if (selectable.IsActive() && selectable.IsInteractable()) {
                 go = selectable.gameObject;
                 break;
@@ -105,8 +105,8 @@ public class ScreenManager : MonoBehaviour {
     //Coroutine that will detect when the Closing animation is finished and it will deactivate the
     //hierarchy.
     private IEnumerator DisablePanelDeleyed(Animator anim) {
-        bool closedStateReached = false;
-        bool wantToClose = true;
+        var closedStateReached = false;
+        var wantToClose = true;
         while (!closedStateReached && wantToClose) {
             if (!anim.IsInTransition(0))
                 closedStateReached = anim.GetCurrentAnimatorStateInfo(0).IsName(k_ClosedStateName);

@@ -65,7 +65,7 @@ namespace UnityStandardAssets.ImageEffects {
                 return;
             }
 
-            Vector2 sensitivity = new Vector2(sensitivityDepth, sensitivityNormals);
+            var sensitivity = new Vector2(sensitivityDepth, sensitivityNormals);
             edgeDetectMaterial.SetVector("_Sensitivity", new Vector4(sensitivity.x, sensitivity.y, 1.0f, sensitivity.y));
             edgeDetectMaterial.SetFloat("_BgFade", edgesOnly);
             edgeDetectMaterial.SetFloat("_SampleDistance", sampleDist);

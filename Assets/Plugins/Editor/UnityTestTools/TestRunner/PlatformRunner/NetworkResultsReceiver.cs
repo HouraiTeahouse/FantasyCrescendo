@@ -4,68 +4,45 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace UnityTest
-{
-    [Serializable]
-    public class NetworkResultsReceiver : EditorWindow
-    {
-        public static NetworkResultsReceiver Instance = null;
+namespace UnityTest {
 
-        private string m_StatusLabel;
-        private TcpListener m_Listener;
+    [Serializable]
+    public class NetworkResultsReceiver : EditorWindow {
+
+        public static NetworkResultsReceiver Instance;
 
         [SerializeField]
         private PlatformRunnerConfiguration m_Configuration;
 
+        private TcpListener m_Listener;
+        private string m_StatusLabel;
         private List<ITestResult> m_TestResults = new List<ITestResult>();
 
-        #region steering variables
-        private bool m_RunFinished;
-        private bool m_Repaint;
-
-        private TimeSpan m_TestTimeout = TimeSpan.Zero;
-        private DateTime m_LastMessageReceived;
-        private bool m_Running;
-
-        public TimeSpan ReceiveMessageTimeout = TimeSpan.FromSeconds(30);
-        private readonly TimeSpan m_InitialConnectionTimeout = TimeSpan.FromSeconds(300);
-        private bool m_TestFailed;
-        #endregion
-
-        private void AcceptCallback(TcpClient client)
-        {
+        private void AcceptCallback(TcpClient client) {
             m_Repaint = true;
             ResultDTO dto;
-            try
-            {
+            try {
                 m_LastMessageReceived = DateTime.Now;
-                using (var stream = client.GetStream())
-                {
+                using (NetworkStream stream = client.GetStream()) {
                     var bf = new DTOFormatter();
-                    dto = (ResultDTO)bf.Deserialize(stream);
+                    dto = (ResultDTO) bf.Deserialize(stream);
                     stream.Close();
                 }
                 client.Close();
-            }
-            catch (ObjectDisposedException e)
-            {
+            } catch (ObjectDisposedException e) {
                 Debug.LogException(e);
                 m_StatusLabel = "Got disconnected";
                 return;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Debug.LogException(e);
                 return;
             }
 
-            switch (dto.messageType)
-            {
+            switch (dto.messageType) {
                 case ResultDTO.MessageType.TestStarted:
                     m_StatusLabel = dto.testName;
                     m_TestTimeout = TimeSpan.FromSeconds(dto.testTimeout);
@@ -73,7 +50,8 @@ namespace UnityTest
                 case ResultDTO.MessageType.TestFinished:
                     m_TestResults.Add(dto.testResult);
                     m_TestTimeout = TimeSpan.Zero;
-                    if (dto.testResult.Executed && dto.testResult.ResultState != TestResultState.Ignored && !dto.testResult.IsSuccess)
+                    if (dto.testResult.Executed && dto.testResult.ResultState != TestResultState.Ignored &&
+                        !dto.testResult.IsSuccess)
                         m_TestFailed = true;
                     break;
                 case ResultDTO.MessageType.RunStarted:
@@ -82,26 +60,21 @@ namespace UnityTest
                     break;
                 case ResultDTO.MessageType.RunFinished:
                     WriteResultsToLog(dto, m_TestResults);
-                    if (!string.IsNullOrEmpty(m_Configuration.resultsDir))
-                    {
-                        var platform = m_Configuration.runInEditor ? "Editor" : m_Configuration.buildTarget.ToString();
+                    if (!string.IsNullOrEmpty(m_Configuration.resultsDir)) {
+                        string platform = m_Configuration.runInEditor
+                                              ? "Editor"
+                                              : m_Configuration.buildTarget.ToString();
                         var resultWriter = new XmlResultWriter(dto.loadedLevelName, platform, m_TestResults.ToArray());
-                        try
-                        {
+                        try {
                             if (!Directory.Exists(m_Configuration.resultsDir))
-                            {
                                 Directory.CreateDirectory(m_Configuration.resultsDir);
-                            }
-                            var filePath = Path.Combine(m_Configuration.resultsDir, dto.loadedLevelName + ".xml");
+                            string filePath = Path.Combine(m_Configuration.resultsDir, dto.loadedLevelName + ".xml");
                             File.WriteAllText(filePath, resultWriter.GetTestResult());
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             Debug.LogException(e);
                         }
                     }
-                    if (dto.levelCount - dto.loadedLevel == 1)
-                    {
+                    if (dto.levelCount - dto.loadedLevel == 1) {
                         m_Running = false;
                         m_RunFinished = true;
                     }
@@ -111,10 +84,9 @@ namespace UnityTest
             }
         }
 
-        private void WriteResultsToLog(ResultDTO dto, List<ITestResult> list)
-        {
+        private void WriteResultsToLog(ResultDTO dto, List<ITestResult> list) {
             string result = "Run finished for: " + dto.loadedLevelName;
-            var failCount = list.Count(t => t.Executed && !t.IsSuccess);
+            int failCount = list.Count(t => t.Executed && !t.IsSuccess);
             if (failCount == 0)
                 result += "\nAll tests passed";
             else
@@ -126,89 +98,78 @@ namespace UnityTest
                 Debug.LogWarning(result);
         }
 
-        public void Update()
-        {
+        public void Update() {
             if (EditorApplication.isCompiling
-                && m_Listener != null)
-            {
+                && m_Listener != null) {
                 m_Running = false;
                 m_Listener.Stop();
                 return;
             }
 
-            if (m_Running)
-            {
-                try
-                {
-                    if (m_Listener != null && m_Listener.Pending())
-                    {
-                        using (var client = m_Listener.AcceptTcpClient())
-                        {
+            if (m_Running) {
+                try {
+                    if (m_Listener != null && m_Listener.Pending()) {
+                        using (TcpClient client = m_Listener.AcceptTcpClient()) {
                             AcceptCallback(client);
                             client.Close();
                         }
                     }
-                }
-                catch (InvalidOperationException e)
-                {
+                } catch (InvalidOperationException e) {
                     m_StatusLabel = "Exception happened: " + e.Message;
                     Repaint();
                     Debug.LogException(e);
                 }
             }
 
-            if (m_Running)
-            {
-                var adjustedtestTimeout =  m_TestTimeout.Add(m_TestTimeout);
-                var timeout = ReceiveMessageTimeout > adjustedtestTimeout ? ReceiveMessageTimeout : adjustedtestTimeout;
-                if ((DateTime.Now - m_LastMessageReceived) > timeout)
-                {
+            if (m_Running) {
+                TimeSpan adjustedtestTimeout = m_TestTimeout.Add(m_TestTimeout);
+                TimeSpan timeout = ReceiveMessageTimeout > adjustedtestTimeout
+                                       ? ReceiveMessageTimeout
+                                       : adjustedtestTimeout;
+                if ((DateTime.Now - m_LastMessageReceived) > timeout) {
                     Debug.LogError("Timeout when waiting for test results");
                     m_RunFinished = true;
                 }
             }
-            if (m_RunFinished)
-            {
+            if (m_RunFinished) {
                 if (InternalEditorUtility.inBatchMode)
                     EditorApplication.Exit(m_TestFailed ? Batch.returnCodeTestsFailed : Batch.returnCodeTestsOk);
                 Close();
             }
-            if (m_Repaint) Repaint();
+            if (m_Repaint)
+                Repaint();
         }
 
-        public void OnEnable()
-        {
+        public void OnEnable() {
             minSize = new Vector2(300, 100);
 
             //Unity 5.0.0 quirk throws an exception on setting the postion when in batch mode
-            if( !UnityEditorInternal.InternalEditorUtility.inBatchMode ) 
+            if (!InternalEditorUtility.inBatchMode)
                 position = new Rect(position.xMin, position.yMin, 300, 100);
             title = "Test run monitor";
             Instance = this;
             m_StatusLabel = "Initializing...";
-            if (EditorApplication.isCompiling) return;
+            if (EditorApplication.isCompiling)
+                return;
             EnableServer();
         }
 
-        private void EnableServer()
-        {
-			if (m_Configuration == null) throw new Exception("No result receiver server configuration.");
+        private void EnableServer() {
+            if (m_Configuration == null)
+                throw new Exception("No result receiver server configuration.");
 
-            var ipAddress = IPAddress.Any;
+            IPAddress ipAddress = IPAddress.Any;
             if (m_Configuration.ipList != null && m_Configuration.ipList.Count == 1)
                 ipAddress = IPAddress.Parse(m_Configuration.ipList.Single());
 
-            var ipAddStr = Equals(ipAddress, IPAddress.Any) ? "[All interfaces]" : ipAddress.ToString();
-            
-			m_Listener = new TcpListener(ipAddress, m_Configuration.port);
+            string ipAddStr = Equals(ipAddress, IPAddress.Any) ? "[All interfaces]" : ipAddress.ToString();
+
+            m_Listener = new TcpListener(ipAddress, m_Configuration.port);
             m_StatusLabel = "Waiting for connection on: " + ipAddStr + ":" + m_Configuration.port;
-            
-            try
-            {
+
+            try {
                 m_Listener.Start(100);
-            }
-            catch (SocketException e)
-            {
+            } catch (SocketException e) {
                 m_StatusLabel = "Exception happened: " + e.Message;
                 Repaint();
                 Debug.LogException(e);
@@ -217,46 +178,55 @@ namespace UnityTest
             m_LastMessageReceived = DateTime.Now + m_InitialConnectionTimeout;
         }
 
-        public void OnDisable()
-        {
+        public void OnDisable() {
             Instance = null;
             if (m_Listener != null)
                 m_Listener.Stop();
         }
 
-        public void OnGUI()
-        {
+        public void OnGUI() {
             EditorGUILayout.LabelField("Status:", EditorStyles.boldLabel);
             EditorGUILayout.LabelField(m_StatusLabel);
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Stop"))
-            {
+            if (GUILayout.Button("Stop")) {
                 StopReceiver();
                 if (InternalEditorUtility.inBatchMode)
                     EditorApplication.Exit(Batch.returnCodeRunError);
             }
         }
 
-        public static void StartReceiver(PlatformRunnerConfiguration configuration)
-        {
-            var w = (NetworkResultsReceiver)GetWindow(typeof(NetworkResultsReceiver), false);
+        public static void StartReceiver(PlatformRunnerConfiguration configuration) {
+            var w = (NetworkResultsReceiver) GetWindow(typeof (NetworkResultsReceiver), false);
             w.SetConfiguration(configuration);
-			if (!EditorApplication.isCompiling)
-			{
-				w.EnableServer();
-			}
+            if (!EditorApplication.isCompiling)
+                w.EnableServer();
             w.Show(true);
         }
 
-        private void SetConfiguration(PlatformRunnerConfiguration configuration)
-        {
+        private void SetConfiguration(PlatformRunnerConfiguration configuration) {
             m_Configuration = configuration;
         }
 
-        public static void StopReceiver()
-        {
-            if (Instance == null) return;
+        public static void StopReceiver() {
+            if (Instance == null)
+                return;
             Instance.Close();
         }
+
+        #region steering variables
+
+        private bool m_RunFinished;
+        private bool m_Repaint;
+
+        private TimeSpan m_TestTimeout = TimeSpan.Zero;
+        private DateTime m_LastMessageReceived;
+        private bool m_Running;
+
+        public TimeSpan ReceiveMessageTimeout = TimeSpan.FromSeconds(30);
+        private readonly TimeSpan m_InitialConnectionTimeout = TimeSpan.FromSeconds(300);
+        private bool m_TestFailed;
+
+        #endregion
     }
+
 }

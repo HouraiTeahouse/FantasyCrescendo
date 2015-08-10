@@ -55,10 +55,10 @@ namespace Crescendo.API {
             Character character = charData.LoadPrefab((int) (UnityEngine.Random.value*charData.AlternativeCount));
 
             // Instantiate a instance of the Character
-            Character instance = character.Copy();
+            Character instance = character.InstantiateNew();
 
             // Create the player's indicator
-            PlayerIndicator newIndicator =
+            var newIndicator =
                 new GameObject("P" + (playerNumber + 1) + " Indicator").AddComponent<PlayerIndicator>();
             newIndicator.Color = GetPlayerColor(playerNumber);
             newIndicator.Sprite = (playerNumber >= 0 && playerNumber <= MaxPlayers)
@@ -79,7 +79,7 @@ namespace Crescendo.API {
         public static void CreateRespawnPlatform(Character target) {
             if (target == null)
                 throw new ArgumentNullException("target");
-            RespawnPlatform platform = Config.RepsawnPlatformPrefab.Copy(target.position);
+            RespawnPlatform platform = Config.RepsawnPlatformPrefab.InstantiateNew(target.position);
             platform.Character = target;
         }
 

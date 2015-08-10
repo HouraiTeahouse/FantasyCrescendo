@@ -26,7 +26,7 @@ namespace UnityTest {
 
             if (transfer is Reader)
                 dto.testResult = new SerializableTestResult();
-            SerializableTestResult str = (SerializableTestResult) dto.testResult;
+            var str = (SerializableTestResult) dto.testResult;
 
             transfer.Transfer(ref str.resultState);
             transfer.Transfer(ref str.message);
@@ -101,7 +101,7 @@ namespace UnityTest {
             }
 
             public void Transfer(ref string val) {
-                var bytes = System.Text.Encoding.BigEndianUnicode.GetBytes(val);
+                byte[] bytes = System.Text.Encoding.BigEndianUnicode.GetBytes(val);
                 int length = bytes.Length;
                 Transfer(ref length);
                 _stream.Write(bytes, 0, bytes.Length);
@@ -152,9 +152,9 @@ namespace UnityTest {
             }
 
             public void Transfer(ref string val) {
-                int length = 0;
+                var length = 0;
                 Transfer(ref length);
-                var bytes = new byte[length];
+                byte[] bytes = new byte[length];
                 _stream.Read(bytes, 0, length);
                 val = System.Text.Encoding.BigEndianUnicode.GetString(bytes);
             }

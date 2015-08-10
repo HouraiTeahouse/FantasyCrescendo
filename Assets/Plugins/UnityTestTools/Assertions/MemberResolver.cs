@@ -24,26 +24,26 @@ namespace UnityTest {
         public object GetValue(bool useCache) {
             if (useCache && m_CallingObjectRef != null) {
                 object val = m_CallingObjectRef;
-                for (int i = 0; i < m_Callstack.Length; i++)
+                for (var i = 0; i < m_Callstack.Length; i++)
                     val = GetValueFromMember(val, m_Callstack[i]);
                 return val;
             }
 
             object result = GetBaseObject();
-            var fullCallStack = GetCallstack();
+            MemberInfo[] fullCallStack = GetCallstack();
 
             m_CallingObjectRef = result;
-            var tempCallstack = new List<MemberInfo>();
-            for (int i = 0; i < fullCallStack.Length; i++) {
-                var member = fullCallStack[i];
+            List<MemberInfo> tempCallstack = new List<MemberInfo>();
+            for (var i = 0; i < fullCallStack.Length; i++) {
+                MemberInfo member = fullCallStack[i];
                 result = GetValueFromMember(result, member);
                 tempCallstack.Add(member);
                 if (result == null)
                     return null;
-                var type = result.GetType();
+                Type type = result.GetType();
 
                 //String is not a value type but we don't want to cache it
-                if (!IsValueType(type) && type != typeof (String)) {
+                if (!IsValueType(type) && type != typeof (string)) {
                     tempCallstack.Clear();
                     m_CallingObjectRef = result;
                 }
@@ -53,11 +53,11 @@ namespace UnityTest {
         }
 
         public Type GetMemberType() {
-            var callstack = GetCallstack();
+            MemberInfo[] callstack = GetCallstack();
             if (callstack.Length == 0)
                 return GetBaseObject().GetType();
 
-            var member = callstack[callstack.Length - 1];
+            MemberInfo member = callstack[callstack.Length - 1];
             if (member is FieldInfo)
                 return (member as FieldInfo).FieldType;
             if (member is MethodInfo)
@@ -76,8 +76,8 @@ namespace UnityTest {
         private object GetBaseObject() {
             if (string.IsNullOrEmpty(m_Path))
                 return m_GameObject;
-            var firstElement = m_Path.Split('.')[0];
-            var comp = m_GameObject.GetComponent(firstElement);
+            string firstElement = m_Path.Split('.')[0];
+            Component comp = m_GameObject.GetComponent(firstElement);
             if (comp != null)
                 return comp;
             return m_GameObject;
@@ -86,7 +86,7 @@ namespace UnityTest {
         private MemberInfo[] GetCallstack() {
             if (m_Path == "")
                 return new MemberInfo[0];
-            var propsQueue = new Queue<string>(m_Path.Split('.'));
+            Queue<string> propsQueue = new Queue<string>(m_Path.Split('.'));
 
             Type type = GetBaseObject().GetType();
             if (type != typeof (GameObject))
@@ -94,9 +94,9 @@ namespace UnityTest {
 
             PropertyInfo propertyTemp;
             FieldInfo fieldTemp;
-            var list = new List<MemberInfo>();
+            List<MemberInfo> list = new List<MemberInfo>();
             while (propsQueue.Count != 0) {
-                var nameToFind = propsQueue.Dequeue();
+                string nameToFind = propsQueue.Dequeue();
                 fieldTemp = GetField(type, nameToFind);
                 if (fieldTemp != null) {
                     type = fieldTemp.FieldType;
@@ -106,7 +106,7 @@ namespace UnityTest {
                 propertyTemp = GetProperty(type, nameToFind);
                 if (propertyTemp != null) {
                     type = propertyTemp.PropertyType;
-                    var getMethod = GetGetMethod(propertyTemp);
+                    MethodInfo getMethod = GetGetMethod(propertyTemp);
                     list.Add(getMethod);
                     continue;
                 }
@@ -116,7 +116,7 @@ namespace UnityTest {
         }
 
         private void ValidatePath(string path) {
-            bool invalid = false;
+            var invalid = false;
             if (path.StartsWith(".") || path.EndsWith("."))
                 invalid = true;
             if (path.IndexOf("..") >= 0)

@@ -1,12 +1,4 @@
-﻿// SL_NGUISpriteAtlas.cs
-//
-// Written by Niklas Borglund and Jakob Hillerström
-//
-
-//#define SMARTLOC_NGUI //<--- UNCOMMENT THIS FOR NGUI CLASSES
-
-
-
+﻿
 #if SMARTLOC_NGUI
 using UnityEngine;
 using System.Collections;

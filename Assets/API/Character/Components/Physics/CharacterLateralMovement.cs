@@ -39,7 +39,7 @@ namespace Crescendo.API {
 
             Vector3 vel = Character.Velocity;
 
-            if (Character.IsGrounded) {
+            if (Character.IsIsGrounded) {
                 if (Character.IsDashing)
                     vel.x = _dashSpeed;
                 else

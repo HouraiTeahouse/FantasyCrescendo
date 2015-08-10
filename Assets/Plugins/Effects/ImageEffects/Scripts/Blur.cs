@@ -68,7 +68,7 @@ namespace UnityStandardAssets.ImageEffects {
 
         // Downsamples the texture to a quarter resolution.
         private void DownSample4x(RenderTexture source, RenderTexture dest) {
-            float off = 1.0f;
+            var off = 1.0f;
             Graphics.BlitMultiTap(source,
                                   dest,
                                   material,
@@ -89,7 +89,7 @@ namespace UnityStandardAssets.ImageEffects {
             DownSample4x(source, buffer);
 
             // Blur the small texture
-            for (int i = 0; i < iterations; i++) {
+            for (var i = 0; i < iterations; i++) {
                 RenderTexture buffer2 = RenderTexture.GetTemporary(rtW, rtH, 0);
                 FourTapCone(buffer, buffer2, i);
                 RenderTexture.ReleaseTemporary(buffer);

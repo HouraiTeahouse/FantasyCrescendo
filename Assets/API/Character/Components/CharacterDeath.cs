@@ -30,7 +30,7 @@ namespace Crescendo.API {
             Vector3 position = Character.transform.position;
 
             if (deathPrefab != null) {
-                ParticleSystem copy = deathPrefab.Copy(position);
+                ParticleSystem copy = deathPrefab.InstantiateNew(position);
                 copy.transform.LookAt(transform.position - position);
                 copy.startColor = Character.PlayerColor;
             }

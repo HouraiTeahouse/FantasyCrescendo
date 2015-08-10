@@ -58,7 +58,7 @@ namespace UnityStandardAssets.ImageEffects {
             if (useDepthTexture)
                 GetComponent<Camera>().depthTextureMode |= DepthTextureMode.Depth;
 
-            int divider = 4;
+            var divider = 4;
             if (resolution == SunShaftsResolution.Normal)
                 divider = 2;
             else if (resolution == SunShaftsResolution.High)
@@ -84,7 +84,9 @@ namespace UnityStandardAssets.ImageEffects {
             sunShaftsMaterial.SetVector("_SunThreshold", sunThreshold);
 
             if (!useDepthTexture) {
-                var format = GetComponent<Camera>().hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
+                RenderTextureFormat format = GetComponent<Camera>().hdr
+                                                 ? RenderTextureFormat.DefaultHDR
+                                                 : RenderTextureFormat.Default;
                 RenderTexture tmpBuffer = RenderTexture.GetTemporary(source.width, source.height, 0, format);
                 RenderTexture.active = tmpBuffer;
                 GL.ClearWithSkybox(false, GetComponent<Camera>());
@@ -107,7 +109,7 @@ namespace UnityStandardAssets.ImageEffects {
             sunShaftsMaterial.SetVector("_BlurRadius4", new Vector4(ofs, ofs, 0.0f, 0.0f));
             sunShaftsMaterial.SetVector("_SunPosition", new Vector4(v.x, v.y, v.z, maxRadius));
 
-            for (int it2 = 0; it2 < radialBlurIterations; it2++) {
+            for (var it2 = 0; it2 < radialBlurIterations; it2++) {
                 // each iteration takes 2 * 6 samples
                 // we update _BlurRadius each time to cheaply get a very smooth look
 

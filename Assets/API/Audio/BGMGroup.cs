@@ -19,7 +19,7 @@ namespace Crescendo.API {
 
         private void OnEnable() {
             selection = new WeightedRNG<Resource<AudioClip>>();
-            foreach (var bgmData in backgroundMusicData) {
+            foreach (BGMData bgmData in backgroundMusicData) {
                 bgmData.Initialize(Name);
                 selection[bgmData.BGM] = bgmData.Weight;
             }

@@ -76,7 +76,7 @@ namespace UnityStandardAssets.ImageEffects {
             CheckResources(); // textures might not be created if we're tweaking UI while disabled
 
             if (redChannel != null && greenChannel != null && blueChannel != null) {
-                for (float i = 0.0f; i <= 1.0f; i += 1.0f/255.0f) {
+                for (var i = 0.0f; i <= 1.0f; i += 1.0f/255.0f) {
                     float rCh = Mathf.Clamp(redChannel.Evaluate(i), 0.0f, 1.0f);
                     float gCh = Mathf.Clamp(greenChannel.Evaluate(i), 0.0f, 1.0f);
                     float bCh = Mathf.Clamp(blueChannel.Evaluate(i), 0.0f, 1.0f);

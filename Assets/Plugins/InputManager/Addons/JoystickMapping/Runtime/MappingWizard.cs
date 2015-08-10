@@ -1,29 +1,4 @@
-﻿#region [Copyright (c) 2014 Cristian Alexandru Geambasu]
-
-//	Distributed under the terms of an MIT-style license:
-//
-//	The MIT License
-//
-//	Copyright (c) 2014 Cristian Alexandru Geambasu
-//
-//	Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
-//	and associated documentation files (the "Software"), to deal in the Software without restriction, 
-//	including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-//	and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
-//	subject to the following conditions:
-//
-//	The above copyright notice and this permission notice shall be included in all copies or substantial 
-//	portions of the Software.
-//
-//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
-//	INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
-//	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-//	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
-//	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-#endregion
-
-using System.IO;
+﻿using System.IO;
 using System.Xml;
 using UnityEngine;
 
@@ -67,7 +42,7 @@ namespace TeamUtility.IO {
             _mappingName = string.Empty;
             _axisDisplayNames = new[] {"X", "Y", "3rd(Scrollwheel)", "4th", "5th", "6th", "7th", "8th", "9th", "10th"};
             _rawJoystickAxes = new string[10];
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
                 _rawJoystickAxes[i] = "joy_0_axis_" + i;
 
             try {
@@ -80,14 +55,14 @@ namespace TeamUtility.IO {
         }
 
         private void LoadTestDefinition() {
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.LoadXml(_testDefinition.text);
 
             _items = new MappingWizardItem[doc.DocumentElement.ChildNodes.Count];
-            for (int i = 0; i < _items.Length; i++) {
+            for (var i = 0; i < _items.Length; i++) {
                 XmlNode axis = doc.DocumentElement.ChildNodes[i];
                 string name = axis.Attributes["name"].InnerText;
-                ScanType scanType =
+                var scanType =
                     (ScanType) System.Enum.Parse(typeof (ScanType), axis.Attributes["scanType"].InnerText, true);
 
                 _items[i] = new MappingWizardItem(name, scanType);
@@ -97,15 +72,15 @@ namespace TeamUtility.IO {
         private void Update() {
             if (_items != null && _items.Length > 0 && _currentItem < _items.Length) {
                 if (_items[_currentItem].ScanType == ScanType.Button) {
-                    for (int i = (int) KeyCode.JoystickButton0; i <= (int) KeyCode.JoystickButton19; i++) {
-                        KeyCode key = (KeyCode) i;
+                    for (var i = (int) KeyCode.JoystickButton0; i <= (int) KeyCode.JoystickButton19; i++) {
+                        var key = (KeyCode) i;
                         if (Input.GetKeyDown(key)) {
                             _lastKeyCode = key;
                             break;
                         }
                     }
                 } else {
-                    for (int i = 0; i < _rawJoystickAxes.Length; i++) {
+                    for (var i = 0; i < _rawJoystickAxes.Length; i++) {
                         if (Mathf.Abs(Input.GetAxis(_rawJoystickAxes[i])) > _axisDetectTreshold) {
                             _lastAxis = i;
                             break;
@@ -119,7 +94,7 @@ namespace TeamUtility.IO {
             GUI.skin = _guiSkin;
 
             if (_items == null || _items.Length == 0) {
-                Rect errorPosition = new Rect(0.0f, 0.0f, Screen.width, Screen.height);
+                var errorPosition = new Rect(0.0f, 0.0f, Screen.width, Screen.height);
                 GUI.Label(errorPosition,
                           "<color=red><size=20><b>Test definition is empty or corrupted!</b></size></color>",
                           "centered_label");
@@ -155,7 +130,7 @@ namespace TeamUtility.IO {
 
             GUI.enabled = _items[_currentItem].ScanType == ScanType.Button && _lastKeyCode != KeyCode.None ||
                           _items[_currentItem].ScanType == ScanType.Axis && _lastAxis >= 0;
-            Rect buttonPosition = new Rect(Screen.width/2 - 100.0f, Screen.height - 34.0f, 200.0f, 24.0f);
+            var buttonPosition = new Rect(Screen.width/2 - 100.0f, Screen.height - 34.0f, 200.0f, 24.0f);
             if (GUI.Button(buttonPosition, "Continue")) {
                 if (_items[_currentItem].ScanType == ScanType.Button)
                     _results[_currentItem] = new AxisMapping(_items[_currentItem].AxisName, _lastKeyCode);
@@ -175,8 +150,8 @@ namespace TeamUtility.IO {
             _mappingName = GUI.TextField(new Rect(Screen.width/2 - 100.0f, Screen.height/2 - 12.0f, 200.0f, 24.0f),
                                          _mappingName);
 
-            Rect cancelButtonPosition = new Rect(Screen.width/2 - 205.0f, Screen.height - 34.0f, 200.0f, 24.0f);
-            Rect saveButtonPosition = new Rect(Screen.width/2 + 5.0f, Screen.height - 34.0f, 200.0f, 24.0f);
+            var cancelButtonPosition = new Rect(Screen.width/2 - 205.0f, Screen.height - 34.0f, 200.0f, 24.0f);
+            var saveButtonPosition = new Rect(Screen.width/2 + 5.0f, Screen.height - 34.0f, 200.0f, 24.0f);
             if (GUI.Button(cancelButtonPosition, "Cancel")) {
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
@@ -198,7 +173,7 @@ namespace TeamUtility.IO {
         }
 
         private void SaveMappingResults() {
-            XmlWriterSettings settings = new XmlWriterSettings();
+            var settings = new XmlWriterSettings();
             settings.Encoding = System.Text.Encoding.UTF8;
             settings.Indent = true;
 
@@ -213,7 +188,7 @@ namespace TeamUtility.IO {
             writer.WriteStartDocument(true);
             writer.WriteStartElement("Mapping");
             writer.WriteAttributeString("name", _mappingName);
-            for (int i = 0; i < _results.Length; i++)
+            for (var i = 0; i < _results.Length; i++)
                 WriteMappingResult(_results[i], writer);
 
             writer.WriteEndElement();

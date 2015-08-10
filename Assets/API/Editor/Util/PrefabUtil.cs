@@ -1,12 +1,9 @@
-﻿using System;
+﻿using UnityEditor;
 using UnityEngine;
-using System.Collections;
-using NSubstitute.Exceptions;
-using UnityEditor;
 using UnityObject = UnityEngine.Object;
 
 namespace Crescendo.API.Editor {
-    
+
     public static class PrefabUtil {
 
         public static bool IsPrefab(this UnityObject obj) {
@@ -37,7 +34,7 @@ namespace Crescendo.API.Editor {
         public static UnityObject GetPrefab(this UnityObject obj) {
             if (obj == null)
                 return null;
-            
+
             PrefabType type = PrefabUtility.GetPrefabType(obj);
 
             UnityObject prefab = null;
@@ -55,8 +52,9 @@ namespace Crescendo.API.Editor {
             return prefab;
         }
 
-        public static UnityObject CreatePrefab(string folderPath, GameObject obj = null, ReplacePrefabOptions options = ReplacePrefabOptions.ConnectToPrefab) {
-            
+        public static UnityObject CreatePrefab(string folderPath,
+                                               GameObject obj = null,
+                                               ReplacePrefabOptions options = ReplacePrefabOptions.ConnectToPrefab) {
             //Create Folder if it doesn't already exist
             AssetUtil.CreateFolder(folderPath);
 
@@ -64,11 +62,9 @@ namespace Crescendo.API.Editor {
 
             if (obj == null)
                 return PrefabUtility.CreateEmptyPrefab(folderPath + "New Prefab.prefab");
-            else
-                return PrefabUtility.CreatePrefab(folderPath +"/" + obj.name + ".prefab", obj, options);
-
+            return PrefabUtility.CreatePrefab(folderPath + "/" + obj.name + ".prefab", obj, options);
         }
-    }
 
+    }
 
 }

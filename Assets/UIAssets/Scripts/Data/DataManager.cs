@@ -63,7 +63,7 @@ public class DataManager : MonoBehaviour {
         int i;
 
         for (i = 0; i < numberOfPlayers; i++) {
-            PlayerOptions po = new PlayerOptions();
+            var po = new PlayerOptions();
             po.setNumber(i);
             if (i == 0)
                 po.setPlayerType(PlayerOptions.PlayerType.PLAYER);
@@ -78,7 +78,7 @@ public class DataManager : MonoBehaviour {
     /// </summary>
     /// <returns><c>true</c>, if the battle can start, <c>false</c> otherwise.</returns>
     public bool isReadyToStartGame() {
-        int counter = 0;
+        var counter = 0;
         int i;
 
         for (i = 0; i < numberOfPlayers; i++) {

@@ -15,7 +15,7 @@ public class IntegrationTestAttribute : Attribute {
     public bool IncludeOnScene(string scenePath) {
         if (scenePath == m_Path)
             return true;
-        var fileName = Path.GetFileNameWithoutExtension(scenePath);
+        string fileName = Path.GetFileNameWithoutExtension(scenePath);
         return fileName == m_Path;
     }
 

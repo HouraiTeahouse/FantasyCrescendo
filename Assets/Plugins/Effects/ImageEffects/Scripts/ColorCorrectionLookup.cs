@@ -37,13 +37,13 @@ namespace UnityStandardAssets.ImageEffects {
         }
 
         public void SetIdentityLut() {
-            int dim = 16;
-            var newC = new Color[dim*dim*dim];
+            var dim = 16;
+            Color[] newC = new Color[dim*dim*dim];
             float oneOverDim = 1.0f/(1.0f*dim - 1.0f);
 
-            for (int i = 0; i < dim; i++) {
-                for (int j = 0; j < dim; j++) {
-                    for (int k = 0; k < dim; k++) {
+            for (var i = 0; i < dim; i++) {
+                for (var j = 0; j < dim; j++) {
+                    for (var k = 0; k < dim; k++) {
                         newC[i + (j*dim) + (k*dim*dim)] = new Color((i*1.0f)*oneOverDim,
                                                                     (j*1.0f)*oneOverDim,
                                                                     (k*1.0f)*oneOverDim,
@@ -83,12 +83,12 @@ namespace UnityStandardAssets.ImageEffects {
                     return;
                 }
 
-                var c = temp2DTex.GetPixels();
-                var newC = new Color[c.Length];
+                Color[] c = temp2DTex.GetPixels();
+                Color[] newC = new Color[c.Length];
 
-                for (int i = 0; i < dim; i++) {
-                    for (int j = 0; j < dim; j++) {
-                        for (int k = 0; k < dim; k++) {
+                for (var i = 0; i < dim; i++) {
+                    for (var j = 0; j < dim; j++) {
+                        for (var k = 0; k < dim; k++) {
                             int j_ = dim - j - 1;
                             newC[i + (j*dim) + (k*dim*dim)] = c[k*dim + i + j_*dim*dim];
                         }

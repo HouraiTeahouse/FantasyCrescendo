@@ -47,9 +47,10 @@ namespace Crescendo.API {
             if (IsLocked)
                 return;
 
-            _selection = UnityEditor.Selection.GetFiltered(typeof (T), SelectionMode).Select(selected => selected as T).ToArray();
+            _selection =
+                UnityEditor.Selection.GetFiltered(typeof (T), SelectionMode).Select(selected => selected as T).ToArray();
         }
-    }
 
+    }
 
 }

@@ -137,7 +137,7 @@ namespace Vexe.Editor.GUIs
 		/// Returns the dropped value
 		/// </summary>
 		public T RegisterFieldForDrop<T>(Rect fieldRect, Func<UnityObject[], UnityObject> getDroppedObject, Predicate<UnityObject[]> isDropAccepted) where T : UnityObject
-		{;
+		{
 			Event currentEvent = Event.current;
 			EventType eventType = currentEvent.type;
 			T result = null;

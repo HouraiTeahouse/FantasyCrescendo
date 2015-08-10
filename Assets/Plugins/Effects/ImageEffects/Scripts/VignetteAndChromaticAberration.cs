@@ -67,7 +67,7 @@ namespace UnityStandardAssets.ImageEffects {
 
                     Graphics.Blit(source, color2A, m_ChromAberrationMaterial, 0);
 
-                    for (int i = 0; i < 2; i++) {
+                    for (var i = 0; i < 2; i++) {
                         // maybe make iteration count tweakable
                         m_SeparableBlurMaterial.SetVector("offsets",
                                                           new Vector4(0.0f, blurSpread*oneOverBaseSize, 0.0f, 0.0f));

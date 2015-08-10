@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using UnityEditor;
-using Object = UnityEngine.Object;
+using UnityEngine;
 
 namespace Crescendo.API.Editor {
 
@@ -15,27 +12,27 @@ namespace Crescendo.API.Editor {
     /// </summary>
     public abstract class LockableEditorWindow : EditorWindow, IHasCustomMenu {
 
-        [System.NonSerialized]
-        GUIStyle lockButtonStyle;
+        [NonSerialized]
+        private GUIStyle lockButtonStyle;
 
-        [System.NonSerialized]
-        bool locked = false;
+        [NonSerialized]
+        private bool locked;
 
         public bool IsLocked {
             get { return locked; }
             set { locked = value; }
         }
 
-        void ShowButton(Rect position) {
+        void IHasCustomMenu.AddItemsToMenu(GenericMenu menu) {
+            menu.AddItem(new GUIContent("Lock"), locked, () => { locked = !locked; });
+        }
+
+        private void ShowButton(Rect position) {
             if (lockButtonStyle == null)
                 lockButtonStyle = "IN LockButton";
             locked = GUI.Toggle(position, locked, GUIContent.none, lockButtonStyle);
         }
-        
-        void IHasCustomMenu.AddItemsToMenu(GenericMenu menu) {
-            menu.AddItem(new GUIContent("Lock"), locked, () => {
-                locked = !locked;
-            });
-        }
+
     }
+
 }

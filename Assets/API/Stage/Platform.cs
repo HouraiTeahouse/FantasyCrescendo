@@ -8,8 +8,8 @@ namespace Crescendo.API {
         private Collider[] _toIgnore;
 
         private void Awake() {
-            var colliders = new List<Collider>();
-            foreach (var col in GetComponentsInChildren<Collider>()) {
+            List<Collider> colliders = new List<Collider>();
+            foreach (Collider col in GetComponentsInChildren<Collider>()) {
                 if (!col.isTrigger)
                     colliders.Add(col);
             }
@@ -20,7 +20,7 @@ namespace Crescendo.API {
             if (target == null || !target.CompareTag(Game.PlayerTag))
                 return;
 
-            foreach (var col in _toIgnore)
+            foreach (Collider col in _toIgnore)
                 Physics.IgnoreCollision(col, target, state);
         }
 

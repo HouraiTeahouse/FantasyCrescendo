@@ -83,11 +83,11 @@ namespace UnityTest {
                 return false;
             if (string.IsNullOrEmpty(expectedExceptionList.Trim()))
                 return true;
-            foreach (var expectedException in expectedExceptionList.Split(',').Select(e => e.Trim())) {
+            foreach (string expectedException in expectedExceptionList.Split(',').Select(e => e.Trim())) {
                 if (exception == expectedException)
                     return true;
-                var exceptionType = Type.GetType(exception) ?? GetTypeByName(exception);
-                var expectedExceptionType = Type.GetType(expectedException) ?? GetTypeByName(expectedException);
+                Type exceptionType = Type.GetType(exception) ?? GetTypeByName(exception);
+                Type expectedExceptionType = Type.GetType(expectedException) ?? GetTypeByName(expectedException);
                 if (exceptionType != null && expectedExceptionType != null &&
                     IsAssignableFrom(expectedExceptionType, exceptionType))
                     return true;
@@ -137,7 +137,7 @@ namespace UnityTest {
 
         public static IEnumerable<Type> GetTypesWithHelpAttribute(string sceneName) {
 #if !UNITY_METRO
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
                 Type[] types = null;
 
                 try {
@@ -152,7 +152,7 @@ namespace UnityTest {
                     continue;
 
                 foreach (Type type in types) {
-                    var attributes = type.GetCustomAttributes(typeof (IntegrationTest.DynamicTestAttribute), true);
+                    object[] attributes = type.GetCustomAttributes(typeof (IntegrationTest.DynamicTestAttribute), true);
                     if (attributes.Length == 1) {
                         var a = attributes.Single() as IntegrationTest.DynamicTestAttribute;
                         if (a.IncludeOnScene(sceneName))
@@ -234,15 +234,15 @@ namespace UnityTest {
         public int CompareTo(ITestComponent obj) {
             if (obj == NullTestComponent)
                 return 1;
-            var result = gameObject.name.CompareTo(obj.gameObject.name);
+            int result = gameObject.name.CompareTo(obj.gameObject.name);
             if (result == 0)
                 result = gameObject.GetInstanceID().CompareTo(obj.gameObject.GetInstanceID());
             return result;
         }
 
         public bool IsTestGroup() {
-            for (int i = 0; i < gameObject.transform.childCount; i++) {
-                var childTc = gameObject.transform.GetChild(i).GetComponent(typeof (TestComponent));
+            for (var i = 0; i < gameObject.transform.childCount; i++) {
+                Component childTc = gameObject.transform.GetChild(i).GetComponent(typeof (TestComponent));
                 if (childTc != null)
                     return true;
             }
@@ -254,7 +254,7 @@ namespace UnityTest {
         }
 
         public ITestComponent GetTestGroup() {
-            var parent = gameObject.transform.parent;
+            Transform parent = gameObject.transform.parent;
             if (parent == null)
                 return NullTestComponent;
             return parent.GetComponent<TestComponent>();
@@ -291,7 +291,7 @@ namespace UnityTest {
         #region Static helpers
 
         public static TestComponent CreateDynamicTest(Type type) {
-            var go = CreateTest(type.Name);
+            GameObject go = CreateTest(type.Name);
             go.hideFlags |= HideFlags.DontSave;
             go.SetActive(false);
 
@@ -300,7 +300,7 @@ namespace UnityTest {
             tc.dynamicTypeName = type.AssemblyQualifiedName;
 
 #if !UNITY_METRO
-            foreach (var typeAttribute in type.GetCustomAttributes(false)) {
+            foreach (object typeAttribute in type.GetCustomAttributes(false)) {
                 if (typeAttribute is IntegrationTest.TimeoutAttribute)
                     tc.timeout = (typeAttribute as IntegrationTest.TimeoutAttribute).timeout;
                 else if (typeAttribute is IntegrationTest.IgnoreAttribute)
@@ -336,10 +336,11 @@ namespace UnityTest {
         }
 
         public static List<TestComponent> FindAllTestsOnScene() {
-            var tests = Resources.FindObjectsOfTypeAll(typeof (TestComponent)).Cast<TestComponent>();
+            IEnumerable<TestComponent> tests =
+                Resources.FindObjectsOfTypeAll(typeof (TestComponent)).Cast<TestComponent>();
 #if UNITY_EDITOR
             tests = tests.Where(t => {
-                                    var p = PrefabUtility.GetPrefabType(t);
+                                    PrefabType p = PrefabUtility.GetPrefabType(t);
                                     return p != PrefabType.Prefab && p != PrefabType.ModelPrefab;
                                 });
 
@@ -356,12 +357,12 @@ namespace UnityTest {
         }
 
         public static void DestroyAllDynamicTests() {
-            foreach (var dynamicTestComponent in FindAllDynamicTestsOnScene())
+            foreach (TestComponent dynamicTestComponent in FindAllDynamicTestsOnScene())
                 DestroyImmediate(dynamicTestComponent.gameObject);
         }
 
         public static void DisableAllTests() {
-            foreach (var t in FindAllTestsOnScene())
+            foreach (TestComponent t in FindAllTestsOnScene())
                 t.EnableTest(false);
         }
 

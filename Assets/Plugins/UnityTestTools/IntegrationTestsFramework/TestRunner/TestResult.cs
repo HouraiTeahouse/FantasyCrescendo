@@ -123,9 +123,9 @@ namespace UnityTest {
 
         public string FullName {
             get {
-                var fullName = Name;
+                string fullName = Name;
                 if (m_Go != null) {
-                    var tempGo = m_Go.transform.parent;
+                    Transform tempGo = m_Go.transform.parent;
                     while (tempGo != null) {
                         fullName = tempGo.name + "." + fullName;
                         tempGo = tempGo.transform.parent;
@@ -156,7 +156,7 @@ namespace UnityTest {
         }
 
         public int CompareTo(TestResult other) {
-            var result = Name.CompareTo(other.Name);
+            int result = Name.CompareTo(other.Name);
             if (result == 0)
                 result = m_Go.GetInstanceID().CompareTo(other.m_Go.GetInstanceID());
             return result;

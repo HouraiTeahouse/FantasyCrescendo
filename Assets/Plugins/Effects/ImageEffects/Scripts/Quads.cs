@@ -24,7 +24,7 @@ namespace UnityStandardAssets.ImageEffects {
             if (meshes == null)
                 return;
 
-            for (int i = 0; i < meshes.Length; i++) {
+            for (var i = 0; i < meshes.Length; i++) {
                 if (null != meshes[i]) {
                     Object.DestroyImmediate(meshes[i]);
                     meshes[i] = null;
@@ -45,8 +45,8 @@ namespace UnityStandardAssets.ImageEffects {
 
             meshes = new Mesh[meshCount];
 
-            int i = 0;
-            int index = 0;
+            var i = 0;
+            var index = 0;
             for (i = 0; i < totalQuads; i += maxQuads) {
                 int quads = Mathf.FloorToInt(Mathf.Clamp((totalQuads - i), 0, maxQuads));
 
@@ -61,12 +61,12 @@ namespace UnityStandardAssets.ImageEffects {
             var mesh = new Mesh();
             mesh.hideFlags = HideFlags.DontSave;
 
-            var verts = new Vector3[triCount*4];
-            var uvs = new Vector2[triCount*4];
-            var uvs2 = new Vector2[triCount*4];
-            var tris = new int[triCount*6];
+            Vector3[] verts = new Vector3[triCount*4];
+            Vector2[] uvs = new Vector2[triCount*4];
+            Vector2[] uvs2 = new Vector2[triCount*4];
+            int[] tris = new int[triCount*6];
 
-            for (int i = 0; i < triCount; i++) {
+            for (var i = 0; i < triCount; i++) {
                 int i4 = i*4;
                 int i6 = i*6;
 
@@ -75,7 +75,7 @@ namespace UnityStandardAssets.ImageEffects {
                 float x = Mathf.Floor(vertexWithOffset%totalWidth)/totalWidth;
                 float y = Mathf.Floor(vertexWithOffset/totalWidth)/totalHeight;
 
-                Vector3 position = new Vector3(x*2 - 1, y*2 - 1, 1.0f);
+                var position = new Vector3(x*2 - 1, y*2 - 1, 1.0f);
 
                 verts[i4 + 0] = position;
                 verts[i4 + 1] = position;

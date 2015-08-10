@@ -67,7 +67,7 @@ public static class IntegrationTest {
     }
 
     private static GameObject FindTestObject(GameObject go) {
-        var temp = go;
+        GameObject temp = go;
         while (temp.transform.parent != null) {
             if (temp.GetComponent("TestComponent") != null)
                 return temp;
@@ -127,7 +127,7 @@ public static class IntegrationTest {
         }
 
         public bool IncludeOnScene(string sceneName) {
-            var fileName = Path.GetFileNameWithoutExtension(sceneName);
+            string fileName = Path.GetFileNameWithoutExtension(sceneName);
             return fileName == m_SceneName;
         }
 

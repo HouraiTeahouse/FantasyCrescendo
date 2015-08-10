@@ -1,25 +1,20 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
+namespace UnityTest {
 
-namespace UnityTest
-{
-    public class IntegrationTestsRunnerSettings : ProjectSettingsBase
-    {
+    public class IntegrationTestsRunnerSettings : ProjectSettingsBase {
+
         public bool blockUIWhenRunning = true;
         public bool pauseOnTestFailure;
-        
-        public void ToggleBlockUIWhenRunning ()
-        {
+
+        public void ToggleBlockUIWhenRunning() {
             blockUIWhenRunning = !blockUIWhenRunning;
-            Save ();
+            Save();
         }
-        
-        public void TogglePauseOnTestFailure()
-        {
+
+        public void TogglePauseOnTestFailure() {
             pauseOnTestFailure = !pauseOnTestFailure;
-            Save ();
+            Save();
         }
+
     }
+
 }

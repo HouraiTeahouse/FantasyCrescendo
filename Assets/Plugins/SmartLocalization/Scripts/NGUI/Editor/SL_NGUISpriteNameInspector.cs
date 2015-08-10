@@ -1,10 +1,4 @@
-﻿// SL_NGUISpriteNameInspector.cs
-//
-// Written by Niklas Borglund and Jakob Hillerström
-//
-
-//#define SMARTLOC_NGUI //<--- UNCOMMENT THIS FOR NGUI CLASSES
-
+﻿
 #if SMARTLOC_NGUI
 namespace SmartLocalization.Editor
 {

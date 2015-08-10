@@ -21,7 +21,7 @@ namespace UnityStandardAssets.ImageEffects {
 
             // Assign the source texture to a property from a shader
             material.SetTexture("_MainTex", source);
-            bool invertY = true; // source.texelSize.y < 0.0f;
+            var invertY = true; // source.texelSize.y < 0.0f;
 
             // Set up the simple Matrix
             GL.PushMatrix();
@@ -37,7 +37,7 @@ namespace UnityStandardAssets.ImageEffects {
             float y1 = 1.0f/-cotangent;
             float y2 = 1.0f/cotangent;
 
-            float sc = 1.0f; // magic constant (for now)
+            var sc = 1.0f; // magic constant (for now)
 
             x1 *= dist*sc;
             x2 *= dist*sc;
@@ -46,7 +46,7 @@ namespace UnityStandardAssets.ImageEffects {
 
             float z1 = -dist;
 
-            for (int i = 0; i < material.passCount; i++) {
+            for (var i = 0; i < material.passCount; i++) {
                 material.SetPass(i);
 
                 GL.Begin(GL.QUADS);
@@ -82,13 +82,13 @@ namespace UnityStandardAssets.ImageEffects {
             float y2;
 
             RenderTexture.active = dest;
-            bool invertY = true; // source.texelSize.y < 0.0ff;
+            var invertY = true; // source.texelSize.y < 0.0ff;
 
             // Set up the simple Matrix
             GL.PushMatrix();
             GL.LoadOrtho();
 
-            for (int i = 0; i < material.passCount; i++) {
+            for (var i = 0; i < material.passCount; i++) {
                 material.SetPass(i);
 
                 float y1_;
@@ -180,13 +180,13 @@ namespace UnityStandardAssets.ImageEffects {
 
             // Assign the source texture to a property from a shader
             material.SetTexture("_MainTex", source);
-            bool invertY = true; // source.texelSize.y < 0.0f;
+            var invertY = true; // source.texelSize.y < 0.0f;
 
             // Set up the simple Matrix
             GL.PushMatrix();
             GL.LoadOrtho();
 
-            for (int i = 0; i < material.passCount; i++) {
+            for (var i = 0; i < material.passCount; i++) {
                 material.SetPass(i);
 
                 GL.Begin(GL.QUADS);

@@ -25,9 +25,9 @@ namespace Crescendo.API {
             if (target == null || !target.CompareTag(Game.PlayerTag))
                 return;
 
-            Character character = target.GetComponentInParent<Character>();
+            var character = target.GetComponentInParent<Character>();
 
-            character.IsGrounded = targetValue;
+            character.IsIsGrounded = targetValue;
         }
 
     }

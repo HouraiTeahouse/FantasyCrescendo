@@ -1,28 +1,3 @@
-#region [Copyright (c) 2014 Cristian Alexandru Geambasu]
-
-//	Distributed under the terms of an MIT-style license:
-//
-//	The MIT License
-//
-//	Copyright (c) 2014 Cristian Alexandru Geambasu
-//
-//	Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
-//	and associated documentation files (the "Software"), to deal in the Software without restriction, 
-//	including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-//	and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
-//	subject to the following conditions:
-//
-//	The above copyright notice and this permission notice shall be included in all copies or substantial 
-//	portions of the Software.
-//
-//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
-//	INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
-//	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-//	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
-//	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-#endregion
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -70,12 +45,12 @@ namespace TeamUtility.IO {
 
         private void SetRawAxisNames() {
             _rawMouseAxes = new string[AxisConfiguration.MaxMouseAxes];
-            for (int i = 0; i < _rawMouseAxes.Length; i++)
+            for (var i = 0; i < _rawMouseAxes.Length; i++)
                 _rawMouseAxes[i] = string.Concat("mouse_axis_", i);
 
             _rawJoystickAxes = new string[AxisConfiguration.MaxJoysticks*AxisConfiguration.MaxJoystickAxes];
-            for (int i = 0; i < AxisConfiguration.MaxJoysticks; i++) {
-                for (int j = 0; j < AxisConfiguration.MaxJoystickAxes; j++)
+            for (var i = 0; i < AxisConfiguration.MaxJoysticks; i++) {
+                for (var j = 0; j < AxisConfiguration.MaxJoystickAxes; j++)
                     _rawJoystickAxes[i*AxisConfiguration.MaxJoystickAxes + j] = string.Concat("joy_", i, "_axis_", j);
             }
         }
@@ -134,7 +109,7 @@ namespace TeamUtility.IO {
         private void Update() {
             if (_currentConfiguration != null) {
                 int count = _currentConfiguration.axes.Count;
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                     _currentConfiguration.axes[i].Update();
                 if (RemoteUpdate != null)
                     RemoteUpdate();
@@ -156,7 +131,7 @@ namespace TeamUtility.IO {
                 return;
             }
 
-            bool scanSuccess = false;
+            var scanSuccess = false;
             if (((int) _scanFlags & (int) ScanFlags.Key) == (int) ScanFlags.Key)
                 scanSuccess = ScanKey();
             if (!scanSuccess && (((int) _scanFlags & (int) ScanFlags.JoystickButton) == (int) ScanFlags.JoystickButton))
@@ -169,7 +144,7 @@ namespace TeamUtility.IO {
 
         private bool ScanKey() {
             int length = _keys.Length;
-            for (int i = 0; i < length; i++) {
+            for (var i = 0; i < length; i++) {
                 if ((int) _keys[i] >= (int) KeyCode.JoystickButton0)
                     break;
 
@@ -193,7 +168,7 @@ namespace TeamUtility.IO {
         }
 
         private bool ScanJoystickButton() {
-            for (int key = (int) KeyCode.JoystickButton0; key < (int) KeyCode.Joystick4Button19; key++) {
+            for (var key = (int) KeyCode.JoystickButton0; key < (int) KeyCode.Joystick4Button19; key++) {
                 if (Input.GetKeyDown((KeyCode) key)) {
                     _scanResult.scanFlags = ScanFlags.JoystickButton;
                     _scanResult.key = (KeyCode) key;
@@ -215,7 +190,7 @@ namespace TeamUtility.IO {
 
         private bool ScanJoystickAxis() {
             int scanStart = _scanJoystick*AxisConfiguration.MaxJoystickAxes;
-            for (int i = 0; i < AxisConfiguration.MaxJoystickAxes; i++) {
+            for (var i = 0; i < AxisConfiguration.MaxJoystickAxes; i++) {
                 if (Mathf.Abs(Input.GetAxisRaw(_rawJoystickAxes[scanStart + i])) >= 1.0f) {
                     _scanResult.scanFlags = ScanFlags.JoystickAxis;
                     _scanResult.key = KeyCode.None;
@@ -236,7 +211,7 @@ namespace TeamUtility.IO {
         }
 
         private bool ScanMouseAxis() {
-            for (int i = 0; i < _rawMouseAxes.Length; i++) {
+            for (var i = 0; i < _rawMouseAxes.Length; i++) {
                 if (Mathf.Abs(Input.GetAxis(_rawMouseAxes[i])) > 0.0f) {
                     _scanResult.scanFlags = ScanFlags.MouseAxis;
                     _scanResult.key = KeyCode.None;
@@ -353,7 +328,7 @@ namespace TeamUtility.IO {
             InputConfiguration inputConfig = _instance._currentConfiguration;
             if (inputConfig != null) {
                 int count = inputConfig.axes.Count;
-                for (int i = 0; i < count; i++) {
+                for (var i = 0; i < count; i++) {
                     if (inputConfig.axes[i].AnyInput)
                         return true;
                 }
@@ -371,7 +346,7 @@ namespace TeamUtility.IO {
             InputConfiguration inputConfig;
             if (_instance._configurationTable.TryGetValue(inputConfigName, out inputConfig)) {
                 int count = inputConfig.axes.Count;
-                for (int i = 0; i < count; i++) {
+                for (var i = 0; i < count; i++) {
                     if (inputConfig.axes[i].AnyInput)
                         return true;
                 }
@@ -469,7 +444,7 @@ namespace TeamUtility.IO {
             if (_instance._configurationTable.ContainsKey(name))
                 throw new ArgumentException(string.Format("An input configuration named \'{0}\' already exists", name));
 
-            InputConfiguration inputConfig = new InputConfiguration(name);
+            var inputConfig = new InputConfiguration(name);
             _instance.inputConfigurations.Add(inputConfig);
             _instance._configurationTable.Add(name, inputConfig);
             _instance._axesTable.Add(name, new Dictionary<string, AxisConfiguration>());
@@ -523,14 +498,14 @@ namespace TeamUtility.IO {
                 throw new ArgumentException(error);
             }
 
-            AxisConfiguration axisConfig = new AxisConfiguration(buttonName);
+            var axisConfig = new AxisConfiguration(buttonName);
             axisConfig.type = InputType.Button;
             axisConfig.positive = primaryKey;
             axisConfig.altPositive = secondaryKey;
             axisConfig.Initialize();
             inputConfig.axes.Add(axisConfig);
 
-            var table = _instance._axesTable[inputConfigName];
+            Dictionary<string, AxisConfiguration> table = _instance._axesTable[inputConfigName];
             table.Add(buttonName, axisConfig);
 
             return axisConfig;
@@ -573,7 +548,7 @@ namespace TeamUtility.IO {
                 throw new ArgumentException(error);
             }
 
-            AxisConfiguration axisConfig = new AxisConfiguration(axisName);
+            var axisConfig = new AxisConfiguration(axisName);
             axisConfig.type = InputType.DigitalAxis;
             axisConfig.positive = positive;
             axisConfig.negative = negative;
@@ -584,7 +559,7 @@ namespace TeamUtility.IO {
             axisConfig.Initialize();
             inputConfig.axes.Add(axisConfig);
 
-            var table = _instance._axesTable[inputConfigName];
+            Dictionary<string, AxisConfiguration> table = _instance._axesTable[inputConfigName];
             table.Add(axisName, axisConfig);
 
             return axisConfig;
@@ -609,14 +584,14 @@ namespace TeamUtility.IO {
             if (axis < 0 || axis > 2)
                 throw new ArgumentOutOfRangeException("axis");
 
-            AxisConfiguration axisConfig = new AxisConfiguration(axisName);
+            var axisConfig = new AxisConfiguration(axisName);
             axisConfig.type = InputType.MouseAxis;
             axisConfig.axis = axis;
             axisConfig.sensitivity = sensitivity;
             axisConfig.Initialize();
             inputConfig.axes.Add(axisConfig);
 
-            var table = _instance._axesTable[inputConfigName];
+            Dictionary<string, AxisConfiguration> table = _instance._axesTable[inputConfigName];
             table.Add(axisName, axisConfig);
 
             return axisConfig;
@@ -645,7 +620,7 @@ namespace TeamUtility.IO {
             if (joystick < 0 || joystick >= AxisConfiguration.MaxJoysticks)
                 throw new ArgumentOutOfRangeException("joystick");
 
-            AxisConfiguration axisConfig = new AxisConfiguration(axisName);
+            var axisConfig = new AxisConfiguration(axisName);
             axisConfig.type = InputType.AnalogAxis;
             axisConfig.axis = axis;
             axisConfig.joystick = joystick;
@@ -654,7 +629,7 @@ namespace TeamUtility.IO {
             axisConfig.Initialize();
             inputConfig.axes.Add(axisConfig);
 
-            var table = _instance._axesTable[inputConfigName];
+            Dictionary<string, AxisConfiguration> table = _instance._axesTable[inputConfigName];
             table.Add(axisName, axisConfig);
 
             return axisConfig;
@@ -674,7 +649,7 @@ namespace TeamUtility.IO {
                 throw new ArgumentException(error);
             }
 
-            AxisConfiguration axisConfig = new AxisConfiguration(axisName);
+            var axisConfig = new AxisConfiguration(axisName);
             axisConfig.type = InputType.RemoteAxis;
             axisConfig.positive = KeyCode.None;
             axisConfig.negative = KeyCode.None;
@@ -683,7 +658,7 @@ namespace TeamUtility.IO {
             axisConfig.Initialize();
             inputConfig.axes.Add(axisConfig);
 
-            var table = _instance._axesTable[inputConfigName];
+            Dictionary<string, AxisConfiguration> table = _instance._axesTable[inputConfigName];
             table.Add(axisName, axisConfig);
 
             return axisConfig;
@@ -703,7 +678,7 @@ namespace TeamUtility.IO {
                 throw new ArgumentException(error);
             }
 
-            AxisConfiguration axisConfig = new AxisConfiguration(buttonName);
+            var axisConfig = new AxisConfiguration(buttonName);
             axisConfig.type = InputType.RemoteButton;
             axisConfig.positive = KeyCode.None;
             axisConfig.negative = KeyCode.None;
@@ -712,7 +687,7 @@ namespace TeamUtility.IO {
             axisConfig.Initialize();
             inputConfig.axes.Add(axisConfig);
 
-            var table = _instance._axesTable[inputConfigName];
+            Dictionary<string, AxisConfiguration> table = _instance._axesTable[inputConfigName];
             table.Add(buttonName, axisConfig);
 
             return axisConfig;
@@ -739,7 +714,7 @@ namespace TeamUtility.IO {
             if (joystick < 0 || joystick >= AxisConfiguration.MaxJoysticks)
                 throw new ArgumentOutOfRangeException("joystick");
 
-            AxisConfiguration axisConfig = new AxisConfiguration(buttonName);
+            var axisConfig = new AxisConfiguration(buttonName);
             axisConfig.type = InputType.AnalogButton;
             axisConfig.joystick = joystick;
             axisConfig.axis = axis;
@@ -750,7 +725,7 @@ namespace TeamUtility.IO {
             axisConfig.Initialize();
             inputConfig.axes.Add(axisConfig);
 
-            var table = _instance._axesTable[inputConfigName];
+            Dictionary<string, AxisConfiguration> table = _instance._axesTable[inputConfigName];
             table.Add(buttonName, axisConfig);
 
             return axisConfig;
@@ -770,11 +745,11 @@ namespace TeamUtility.IO {
                 throw new ArgumentException(error);
             }
 
-            AxisConfiguration axisConfig = new AxisConfiguration(axisName);
+            var axisConfig = new AxisConfiguration(axisName);
             axisConfig.Initialize();
             inputConfig.axes.Add(axisConfig);
 
-            var table = _instance._axesTable[inputConfigName];
+            Dictionary<string, AxisConfiguration> table = _instance._axesTable[inputConfigName];
             table.Add(axisName, axisConfig);
 
             return axisConfig;
@@ -1118,7 +1093,7 @@ namespace TeamUtility.IO {
         public static void ResetInputAxes() {
             InputConfiguration inputConfig = _instance._currentConfiguration;
             int count = inputConfig.axes.Count;
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
                 inputConfig.axes[i].Reset();
             Input.ResetInputAxes();
         }

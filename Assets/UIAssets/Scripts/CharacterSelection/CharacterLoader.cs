@@ -37,11 +37,11 @@ public class CharacterLoader : MonoBehaviour {
     }
 
     public void fillPanel() {
-        int i = 0;
+        var i = 0;
         List<CharacterSlot> characters = dataManager.getAvailableCharacters();
         for (i = 0; i < characters.Count; i++) {
             GameObject go = Instantiate(characterSlotPanel);
-            Text text = go.GetComponentInChildren<Text>();
+            var text = go.GetComponentInChildren<Text>();
             if (text == null) {
                 Debug.LogError("Couldn't find the text component in the character slot.");
                 return;
@@ -52,11 +52,11 @@ public class CharacterLoader : MonoBehaviour {
     }
 
     public void fillPlayerSlots() {
-        int i = 0;
+        var i = 0;
         List<PlayerOptions> playerOptions = dataManager.getPlayerOptions();
         for (i = 0; i < playerOptions.Count; i++) {
             GameObject go = Instantiate(playerSlotPanel);
-            PlayerSlotUI psu = go.GetComponent<PlayerSlotUI>();
+            var psu = go.GetComponent<PlayerSlotUI>();
             if (psu == null) {
                 Debug.LogError("The player slot object should have a PlayerSlotUI component.");
                 return;

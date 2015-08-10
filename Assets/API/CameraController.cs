@@ -49,7 +49,7 @@ namespace Crescendo.API {
             Vector2 size = (Vector2) max - (Vector2) min;
 
             // Calculate the actual padding to use
-            Vector2 actualPadding = new Vector2(1 + 2*padding.x, 1 + 2*padding.y);
+            var actualPadding = new Vector2(1 + 2*padding.x, 1 + 2*padding.y);
 
             // Compute Hadamard product between size and inverse padding to add the padding desired.
             size = new Vector2(size.x*actualPadding.x, size.y*actualPadding.y);

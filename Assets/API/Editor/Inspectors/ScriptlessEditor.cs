@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace Crescendo.API.Editor{
-    
+namespace Crescendo.API.Editor {
+
     /// <summary>
     /// Removes the extra "Script" field on any editor derived from this.
     /// </summary>
@@ -35,12 +35,14 @@ namespace Crescendo.API.Editor{
 
     }
 
-    [CustomEditor(typeof(MonoBehaviour), true, isFallback = true)]
+    [CustomEditor(typeof (MonoBehaviour), true, isFallback = true)]
     internal sealed class MonoBehaviourEditor : ScriptlessEditor {
+
     }
 
-    [CustomEditor(typeof(ScriptableObject), true, isFallback = true)]
+    [CustomEditor(typeof (ScriptableObject), true, isFallback = true)]
     internal sealed class ScriptableObjectEditor : ScriptlessEditor {
+
     }
 
 }

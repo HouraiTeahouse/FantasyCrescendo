@@ -79,7 +79,7 @@ namespace Crescendo.API {
             OnStartMatch();
 
             // Spawn players
-            for (int i = 0; i < PlayerCount; i++) {
+            for (var i = 0; i < PlayerCount; i++) {
                 Character runtimeCharacter = Game.SpawnPlayer(i, selectedCharacters[i]);
                 OnSpawn(runtimeCharacter);
                 Transform spawnPoint = Stage.GetSpawnPoint(i);

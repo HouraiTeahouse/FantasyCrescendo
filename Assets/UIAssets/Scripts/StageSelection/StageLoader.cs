@@ -25,10 +25,10 @@ public class StageLoader : MonoBehaviour {
         }
 
         List<string> stageNames = dataManager.getAvailableStages();
-        int i = 0;
+        var i = 0;
         for (i = 0; i < stageNames.Count; i++) {
             GameObject go = Instantiate(stageSlotButton);
-            StageSlotUI stu = go.GetComponent<StageSlotUI>();
+            var stu = go.GetComponent<StageSlotUI>();
             if (stu == null) {
                 Debug.LogError("The Stage Loader can't find the data manager object in the scene.");
                 return;

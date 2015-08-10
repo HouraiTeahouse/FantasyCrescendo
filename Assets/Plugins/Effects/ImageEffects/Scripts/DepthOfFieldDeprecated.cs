@@ -123,7 +123,7 @@ namespace UnityStandardAssets.ImageEffects {
         }
 
         private int GetDividerBasedOnQuality() {
-            int divider = 1;
+            var divider = 1;
             if (resolution == DofResolution.Medium)
                 divider = 2;
             else if (resolution == DofResolution.Low)
@@ -167,7 +167,7 @@ namespace UnityStandardAssets.ImageEffects {
                 blurForeground = blurForeground && (focalPoint > (_camera.nearClipPlane + Mathf.Epsilon));
             } else {
                 if (objectFocus) {
-                    var vpPoint = _camera.WorldToViewportPoint(objectFocus.position);
+                    Vector3 vpPoint = _camera.WorldToViewportPoint(objectFocus.position);
                     vpPoint.z = (vpPoint.z)/(_camera.farClipPlane);
                     focalDistance01 = vpPoint.z;
                 } else
@@ -359,7 +359,7 @@ namespace UnityStandardAssets.ImageEffects {
 
         private void AddBokeh(RenderTexture bokehInfo, RenderTexture tempTex, RenderTexture finalTarget) {
             if (bokehMaterial) {
-                var meshes = Quads.GetMeshes(tempTex.width, tempTex.height);
+                Mesh[] meshes = Quads.GetMeshes(tempTex.width, tempTex.height);
 
                 // quads: exchanging more triangles with less overdraw
 

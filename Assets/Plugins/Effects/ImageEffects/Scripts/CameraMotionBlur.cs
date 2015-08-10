@@ -124,17 +124,17 @@ namespace UnityStandardAssets.ImageEffects {
                 StartFrame();
 
             // use if possible new RG format ... fallback to half otherwise
-            var rtFormat = SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.RGHalf)
-                               ? RenderTextureFormat.RGHalf
-                               : RenderTextureFormat.ARGBHalf;
+            RenderTextureFormat rtFormat = SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.RGHalf)
+                                               ? RenderTextureFormat.RGHalf
+                                               : RenderTextureFormat.ARGBHalf;
 
             // get temp textures
             RenderTexture velBuffer = RenderTexture.GetTemporary(divRoundUp(source.width, velocityDownsample),
                                                                  divRoundUp(source.height, velocityDownsample),
                                                                  0,
                                                                  rtFormat);
-            int tileWidth = 1;
-            int tileHeight = 1;
+            var tileWidth = 1;
+            var tileHeight = 1;
             maxVelocity = Mathf.Max(2.0f, maxVelocity);
 
             float _maxVelocity = maxVelocity; // calculate 'k'
@@ -214,7 +214,7 @@ namespace UnityStandardAssets.ImageEffects {
 
                 float distMag = distanceVector.magnitude;
 
-                float farHeur = 1.0f;
+                var farHeur = 1.0f;
 
                 // pitch (vertical)
                 farHeur = (Vector3.Angle(transform.up, prevFrameUp)/_camera.fieldOfView)*(source.width*0.75f);

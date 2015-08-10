@@ -7,27 +7,27 @@ namespace UnityTest.IntegrationTestRunner {
         private readonly List<ITestRunnerCallback> m_CallbackList = new List<ITestRunnerCallback>();
 
         public void RunStarted(string platform, List<TestComponent> testsToRun) {
-            foreach (var unitTestRunnerCallback in m_CallbackList)
+            foreach (ITestRunnerCallback unitTestRunnerCallback in m_CallbackList)
                 unitTestRunnerCallback.RunStarted(platform, testsToRun);
         }
 
         public void RunFinished(List<TestResult> testResults) {
-            foreach (var unitTestRunnerCallback in m_CallbackList)
+            foreach (ITestRunnerCallback unitTestRunnerCallback in m_CallbackList)
                 unitTestRunnerCallback.RunFinished(testResults);
         }
 
         public void TestStarted(TestResult test) {
-            foreach (var unitTestRunnerCallback in m_CallbackList)
+            foreach (ITestRunnerCallback unitTestRunnerCallback in m_CallbackList)
                 unitTestRunnerCallback.TestStarted(test);
         }
 
         public void TestFinished(TestResult test) {
-            foreach (var unitTestRunnerCallback in m_CallbackList)
+            foreach (ITestRunnerCallback unitTestRunnerCallback in m_CallbackList)
                 unitTestRunnerCallback.TestFinished(test);
         }
 
         public void TestRunInterrupted(List<ITestComponent> testsNotRun) {
-            foreach (var unitTestRunnerCallback in m_CallbackList)
+            foreach (ITestRunnerCallback unitTestRunnerCallback in m_CallbackList)
                 unitTestRunnerCallback.TestRunInterrupted(testsNotRun);
         }
 

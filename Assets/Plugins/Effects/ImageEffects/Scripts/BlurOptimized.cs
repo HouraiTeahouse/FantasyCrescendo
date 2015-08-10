@@ -63,9 +63,9 @@ namespace UnityStandardAssets.ImageEffects {
             rt.filterMode = FilterMode.Bilinear;
             Graphics.Blit(source, rt, blurMaterial, 0);
 
-            var passOffs = blurType == BlurType.StandardGauss ? 0 : 2;
+            int passOffs = blurType == BlurType.StandardGauss ? 0 : 2;
 
-            for (int i = 0; i < blurIterations; i++) {
+            for (var i = 0; i < blurIterations; i++) {
                 float iterationOffs = (i*1.0f);
                 blurMaterial.SetVector("_Parameter",
                                        new Vector4(blurSize*widthMod + iterationOffs,

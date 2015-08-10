@@ -1,29 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Crescendo.API {
 
     [DisallowMultipleComponent]
+    [RequiredCharacterComponent]
     public class CharacterFacing : CharacterComponent {
-
-        private enum FacingMode {
-            Rotation,
-            Scale
-        }
-
-        [SerializeField]
-        private FacingMode _facingMode;
 
         private bool _facing;
 
-        void Update() {
-            Vector2 movement = InputSource.Movement;
-
-            //Ensure that the character is walking in the right direction
-            if ((movement.x > 0 && Facing) ||
-                (movement.x < 0 && !Facing))
-                Facing = !Facing;
-        }
+        [SerializeField]
+        private FacingMode _facingMode;
 
         /// <summary>
         /// The direction the character is currently facing.
@@ -52,6 +38,25 @@ namespace Crescendo.API {
                 }
             }
         }
+
+        private void Update() {
+            Vector2 movement = InputSource.Movement;
+
+            GetComponent<IDamageable>();
+
+            //Ensure that the character is walking in the right direction
+            if ((movement.x > 0 && Facing) ||
+                (movement.x < 0 && !Facing))
+                Facing = !Facing;
+        }
+
+        private enum FacingMode {
+
+            Rotation,
+            Scale
+
+        }
+
     }
 
 }

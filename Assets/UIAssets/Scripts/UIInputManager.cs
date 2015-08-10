@@ -13,8 +13,8 @@ public class UIInputManager : MonoBehaviour {
         animators = new List<Animator>();
         inputInterfaces = new List<InputInterface>();
         foreach (GameObject go in availableScreens) {
-            Animator anim = go.GetComponent<Animator>();
-            InputInterface inputInterface = go.GetComponent<InputInterface>();
+            var anim = go.GetComponent<Animator>();
+            var inputInterface = go.GetComponent<InputInterface>();
 
             if (anim == null) {
                 Debug.LogError("The " + go.name + " must have an Animator component.");
@@ -38,7 +38,7 @@ public class UIInputManager : MonoBehaviour {
         if (openedAnimator == null)
             return;
 
-        int i = 0;
+        var i = 0;
         for (i = 0; i < animators.Count; i++) {
             if (animators[i] == openedAnimator) {
                 inputInterfaces[i].processInputs();

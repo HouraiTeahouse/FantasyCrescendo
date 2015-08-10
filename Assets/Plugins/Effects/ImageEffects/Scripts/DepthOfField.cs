@@ -89,7 +89,7 @@ namespace UnityStandardAssets.ImageEffects {
         private void CreateComputeResources() {
             if (cbDrawArgs == null) {
                 cbDrawArgs = new ComputeBuffer(1, 16, ComputeBufferType.DrawIndirect);
-                var args = new int[4];
+                int[] args = new int[4];
                 args[0] = 0;
                 args[1] = 1;
                 args[2] = 0;
@@ -199,7 +199,7 @@ namespace UnityStandardAssets.ImageEffects {
 
                     rtLow = RenderTexture.GetTemporary(source.width, source.height, 0, source.format);
 
-                    var dest2 = RenderTexture.GetTemporary(source.width, source.height, 0, source.format);
+                    RenderTexture dest2 = RenderTexture.GetTemporary(source.width, source.height, 0, source.format);
 
                     // capture COC
                     WriteCoc(source, false);

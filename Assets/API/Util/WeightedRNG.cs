@@ -21,7 +21,7 @@ namespace Crescendo.API {
             if (collection == null)
                 return;
 
-            foreach (var element in collection)
+            foreach (T element in collection)
                 this[element] = 1f;
         }
 
@@ -29,7 +29,7 @@ namespace Crescendo.API {
             if (dictionary == null)
                 return;
 
-            foreach (var element in dictionary)
+            foreach (KeyValuePair<T, float> element in dictionary)
                 this[element.Key] = element.Value;
         }
 
@@ -49,7 +49,7 @@ namespace Crescendo.API {
                 return default(T);
 
             float randomValue = Random.value*weightSum;
-            foreach (var element in weights) {
+            foreach (KeyValuePair<T, float> element in weights) {
                 randomValue -= element.Value;
                 if (randomValue <= 0)
                     return element.Key;

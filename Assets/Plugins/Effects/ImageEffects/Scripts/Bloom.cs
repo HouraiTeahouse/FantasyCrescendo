@@ -108,11 +108,11 @@ namespace UnityStandardAssets.ImageEffects {
             if (doHdr)
                 realBlendMode = BloomScreenBlendMode.Add;
 
-            var rtFormat = (doHdr) ? RenderTextureFormat.ARGBHalf : RenderTextureFormat.Default;
-            var rtW2 = source.width/2;
-            var rtH2 = source.height/2;
-            var rtW4 = source.width/4;
-            var rtH4 = source.height/4;
+            RenderTextureFormat rtFormat = (doHdr) ? RenderTextureFormat.ARGBHalf : RenderTextureFormat.Default;
+            int rtW2 = source.width/2;
+            int rtH2 = source.height/2;
+            int rtW4 = source.width/4;
+            int rtH4 = source.height/4;
 
             float widthOverHeight = (1.0f*source.width)/(1.0f*source.height);
             float oneOverBaseSize = 1.0f/512.0f;
@@ -143,7 +143,7 @@ namespace UnityStandardAssets.ImageEffects {
             else if (bloomBlurIterations > 10)
                 bloomBlurIterations = 10;
 
-            for (int iter = 0; iter < bloomBlurIterations; iter++) {
+            for (var iter = 0; iter < bloomBlurIterations; iter++) {
                 float spreadForPass = (1.0f + (iter*0.25f))*sepBlurSpread;
 
                 // vertical blur
@@ -264,7 +264,7 @@ namespace UnityStandardAssets.ImageEffects {
                     Graphics.Blit(rtFlares4, quarterRezColor, blurAndFlaresMaterial, 1);
 
                     // additional blur passes
-                    for (int iter = 0; iter < hollywoodFlareBlurIterations; iter++) {
+                    for (var iter = 0; iter < hollywoodFlareBlurIterations; iter++) {
                         stretchWidth = (hollyStretchWidth*2.0f/widthOverHeight)*oneOverBaseSize;
 
                         blurAndFlaresMaterial.SetVector("_Offsets",
@@ -299,7 +299,7 @@ namespace UnityStandardAssets.ImageEffects {
                 RenderTexture.ReleaseTemporary(rtFlares4);
             }
 
-            int blendPass = (int) realBlendMode;
+            var blendPass = (int) realBlendMode;
 
             //if (Mathf.Abs(chromaticBloom) < Mathf.Epsilon)
             //	blendPass += 4;

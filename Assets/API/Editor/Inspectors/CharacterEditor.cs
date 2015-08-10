@@ -1,17 +1,13 @@
 ﻿using System.Linq;
 using UnityEngine;
-using UnityEditor;
-using Vexe.Editor.Drawers;
-using Vexe.Editor.Types;
-using Vexe.Runtime.Extensions;
 
-namespace  Crescendo.API.Editor {
-    
+namespace Crescendo.API.Editor {
+
     public class CharacterEditor : ObjectDrawer<Character> {
 
         private Character _character;
-        private EditorMember _internalName;
         private CharacterEditorData _editorData;
+        private EditorMember _internalName;
 
         protected override void Initialize() {
             base.Initialize();
@@ -27,12 +23,10 @@ namespace  Crescendo.API.Editor {
             _editorData = gui.Object("Editor Data", _editorData);
             if (_editorData == null) {
                 _internalName.Value = "";
-                if (GUILayout.Button("Create Character Data")) {
+                if (GUILayout.Button("Create Character Data"))
                     CreateCharacterDialog.Show(_character);
-                }
-            } else {
+            } else
                 _internalName.Value = _editorData.InternalName;
-            }
             MemberField();
         }
 

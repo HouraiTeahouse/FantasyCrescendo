@@ -1,26 +1,24 @@
-﻿using UnityEngine;
-using Crescendo.API.Editor;
+﻿using Crescendo.API.Editor;
 using UnityEditor;
-using Vexe.Runtime.Extensions;
+using UnityEngine;
 
 namespace Crescendo.API {
 
     public class CreateCharacterDialog : ScriptableWizard {
 
-        private CharacterEditorData data;
-
         private GUIContent _nameContent;
         private Character _sourceObject;
+        private CharacterEditorData data;
 
-        void OnEnable() {
+        private void OnEnable() {
             data = CreateInstance<CharacterEditorData>();
         }
 
         public static void Show(Character reference = null) {
-             var wizard = DisplayWizard<CreateCharacterDialog>("Create Character", "Create");
-             wizard._sourceObject = reference;
+            var wizard = DisplayWizard<CreateCharacterDialog>("Create Character", "Create");
+            wizard._sourceObject = reference;
             if (reference != null) {
-                string[] nameParts = reference.name.Split(new char[] {' ', '_', '/'});
+                string[] nameParts = reference.name.Split(' ', '_', '/');
                 if (nameParts.Length >= 1)
                     wizard.data.FirstName = nameParts[0];
                 if (nameParts.Length >= 2)
@@ -41,14 +39,14 @@ namespace Crescendo.API {
             return oldName == data.InternalName;
         }
 
-        void OnWizardCreate() {
+        private void OnWizardCreate() {
             // Check if the character data already exists
             if (AssetDatabase.IsValidFolder(data.RootFolder)) {
                 bool result = EditorUtility.DisplayDialog("Error",
-                                                            "A character with the internal name of \"" + data.InternalName +
-                                                            "\" already exists. Either edit the existing Character, or delete and restart.",
-                                                            "Delete",
-                                                            "Cancel");
+                                                          "A character with the internal name of \"" + data.InternalName +
+                                                          "\" already exists. Either edit the existing Character, or delete and restart.",
+                                                          "Delete",
+                                                          "Cancel");
                 if (result)
                     AssetDatabase.DeleteAsset(data.RootFolder);
                 else
@@ -59,20 +57,18 @@ namespace Crescendo.API {
 
             GameObject prefabSource;
 
-            if (_sourceObject == null) {
+            if (_sourceObject == null)
                 prefabSource = new GameObject(data.InternalName);
-            } else {
+            else
                 prefabSource = _sourceObject.gameObject;
-            }
 
             prefabSource.GetOrAddComponent<Character>().InternalName = data.InternalName;
 
             Object prefab = prefabSource.GetPrefab();
-            if (prefab == null) {
+            if (prefab == null)
                 prefab = PrefabUtil.CreatePrefab(data.RootFolder, prefabSource);
-            } else{
+            else
                 AssetUtil.MoveAsset(data.RootFolder, prefab);
-            }
 
             data.Prefab = prefab as GameObject;
 
@@ -80,5 +76,7 @@ namespace Crescendo.API {
 
             CharacterEditorWindow.ShowWindow().Target = data;
         }
+
     }
+
 }

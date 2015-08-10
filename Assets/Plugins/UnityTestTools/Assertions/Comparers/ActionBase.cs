@@ -33,7 +33,7 @@ namespace UnityTest {
             if (m_MemberResolver == null)
                 m_MemberResolver = new MemberResolver(go, thisPropertyPath);
             m_ObjVal = m_MemberResolver.GetValue(UseCache);
-            var result = Compare(m_ObjVal);
+            bool result = Compare(m_ObjVal);
             return result;
         }
 
@@ -44,12 +44,13 @@ namespace UnityTest {
         }
 
         public virtual string GetConfigurationDescription() {
-            string result = "";
+            var result = "";
 #if !UNITY_METRO
             foreach (
-                var prop in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                                     .Where(info => info.FieldType.IsSerializable)) {
-                var value = prop.GetValue(this);
+                FieldInfo prop in
+                    GetType().GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                             .Where(info => info.FieldType.IsSerializable)) {
+                object value = prop.GetValue(this);
                 if (value is double)
                     value = ((double) value).ToString("0.########");
                 if (value is float)
@@ -74,9 +75,9 @@ namespace UnityTest {
 #else
             var newObj = (ActionBase) this.MemberwiseClone();
 #endif
-            var fields = GetFields(GetType());
-            foreach (var field in fields) {
-                var value = field.GetValue(this);
+            IEnumerable<FieldInfo> fields = GetFields(GetType());
+            foreach (FieldInfo field in fields) {
+                object value = field.GetValue(this);
                 if (value is GameObject) {
                     if (value as GameObject == oldGameObject)
                         value = newGameObject;

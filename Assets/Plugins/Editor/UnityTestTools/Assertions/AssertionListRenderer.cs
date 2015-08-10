@@ -1,43 +1,29 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace UnityTest
-{
-    public interface IListRenderer
-    {
+namespace UnityTest {
+
+    public interface IListRenderer {
+
         void Render(IEnumerable<AssertionComponent> allAssertions, List<string> foldMarkers);
+
     }
 
-    public abstract class AssertionListRenderer<T> : IListRenderer
-    {
-        private static class Styles
-        {
-            public static readonly GUIStyle redLabel;
-            static Styles()
-            {
-                redLabel = new GUIStyle(EditorStyles.label);
-                redLabel.normal.textColor = Color.red;
-            }
-        }
+    public abstract class AssertionListRenderer<T> : IListRenderer {
 
-        public void Render(IEnumerable<AssertionComponent> allAssertions, List<string> foldMarkers)
-        {
-            foreach (var grouping in GroupResult(allAssertions))
-            {
-                var key = GetStringKey(grouping.Key);
+        public void Render(IEnumerable<AssertionComponent> allAssertions, List<string> foldMarkers) {
+            foreach (IGrouping<T, AssertionComponent> grouping in GroupResult(allAssertions)) {
+                string key = GetStringKey(grouping.Key);
                 bool isFolded = foldMarkers.Contains(key);
-                if (key != "")
-                {
+                if (key != "") {
                     EditorGUILayout.BeginHorizontal();
 
                     EditorGUI.BeginChangeCheck();
                     isFolded = PrintFoldout(isFolded,
                                             grouping.Key);
-                    if (EditorGUI.EndChangeCheck())
-                    {
+                    if (EditorGUI.EndChangeCheck()) {
                         if (isFolded)
                             foldMarkers.Add(key);
                         else
@@ -47,26 +33,22 @@ namespace UnityTest
                     if (isFolded)
                         continue;
                 }
-                foreach (var assertionComponent in grouping)
-                {
+                foreach (AssertionComponent assertionComponent in grouping) {
                     EditorGUILayout.BeginVertical();
                     EditorGUILayout.BeginHorizontal();
 
                     if (key != "")
                         GUILayout.Space(15);
 
-                    var assertionKey = assertionComponent.GetHashCode().ToString();
+                    string assertionKey = assertionComponent.GetHashCode().ToString();
                     bool isDetailsFolded = foldMarkers.Contains(assertionKey);
 
                     EditorGUI.BeginChangeCheck();
                     if (GUILayout.Button("",
                                          EditorStyles.foldout,
                                          GUILayout.Width(15)))
-                    {
                         isDetailsFolded = !isDetailsFolded;
-                    }
-                    if (EditorGUI.EndChangeCheck())
-                    {
+                    if (EditorGUI.EndChangeCheck()) {
                         if (isDetailsFolded)
                             foldMarkers.Add(assertionKey);
                         else
@@ -75,51 +57,47 @@ namespace UnityTest
                     PrintFoldedAssertionLine(assertionComponent);
                     EditorGUILayout.EndHorizontal();
 
-                    if (isDetailsFolded)
-                    {
+                    if (isDetailsFolded) {
                         EditorGUILayout.BeginHorizontal();
                         if (key != "")
                             GUILayout.Space(15);
                         PrintAssertionLineDetails(assertionComponent);
                         EditorGUILayout.EndHorizontal();
                     }
-                    GUILayout.Box("", new[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
+                    GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1));
 
                     EditorGUILayout.EndVertical();
                 }
             }
         }
 
-        protected abstract IEnumerable<IGrouping<T, AssertionComponent>> GroupResult(IEnumerable<AssertionComponent> assertionComponents);
+        protected abstract IEnumerable<IGrouping<T, AssertionComponent>> GroupResult(
+            IEnumerable<AssertionComponent> assertionComponents);
 
-        protected virtual string GetStringKey(T key)
-        {
+        protected virtual string GetStringKey(T key) {
             return key.GetHashCode().ToString();
         }
 
-        protected virtual bool PrintFoldout(bool isFolded, T key)
-        {
+        protected virtual bool PrintFoldout(bool isFolded, T key) {
             var content = new GUIContent(GetFoldoutDisplayName(key));
-            var size = EditorStyles.foldout.CalcSize(content);
+            Vector2 size = EditorStyles.foldout.CalcSize(content);
 
-            var rect = GUILayoutUtility.GetRect(content,
-                                                EditorStyles.foldout,
-                                                GUILayout.MaxWidth(size.x));
-            var res = EditorGUI.Foldout(rect,
-                                        !isFolded,
-                                        content,
-                                        true);
+            Rect rect = GUILayoutUtility.GetRect(content,
+                                                 EditorStyles.foldout,
+                                                 GUILayout.MaxWidth(size.x));
+            bool res = EditorGUI.Foldout(rect,
+                                         !isFolded,
+                                         content,
+                                         true);
 
             return !res;
         }
 
-        protected virtual string GetFoldoutDisplayName(T key)
-        {
+        protected virtual string GetFoldoutDisplayName(T key) {
             return key.ToString();
         }
 
-        protected virtual void PrintFoldedAssertionLine(AssertionComponent assertionComponent)
-        {
+        protected virtual void PrintFoldedAssertionLine(AssertionComponent assertionComponent) {
             EditorGUILayout.BeginHorizontal();
 
             EditorGUILayout.BeginVertical(GUILayout.MaxWidth(300));
@@ -130,30 +108,25 @@ namespace UnityTest
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(GUILayout.MaxWidth(250));
-            var labelStr = assertionComponent.Action.GetType().Name;
-            var labelStr2 = assertionComponent.Action.GetConfigurationDescription();
+            string labelStr = assertionComponent.Action.GetType().Name;
+            string labelStr2 = assertionComponent.Action.GetConfigurationDescription();
             if (labelStr2 != "")
                 labelStr += "( " + labelStr2 + ")";
             EditorGUILayout.LabelField(labelStr);
             EditorGUILayout.EndVertical();
 
-            if (assertionComponent.Action is ComparerBase)
-            {
+            if (assertionComponent.Action is ComparerBase) {
                 var comparer = assertionComponent.Action as ComparerBase;
 
                 var otherStrVal = "(no value selected)";
                 EditorGUILayout.BeginVertical();
                 EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(300));
-                switch (comparer.compareToType)
-                {
+                switch (comparer.compareToType) {
                     case ComparerBase.CompareToType.CompareToObject:
-                        if (comparer.other != null)
-                        {
+                        if (comparer.other != null) {
                             PrintPath(comparer.other,
                                       comparer.otherPropertyPath);
-                        }
-                        else
-                        {
+                        } else {
                             EditorGUILayout.LabelField(otherStrVal,
                                                        Styles.redLabel);
                         }
@@ -169,17 +142,13 @@ namespace UnityTest
                 }
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
-            }
-            else
-            {
+            } else
                 EditorGUILayout.LabelField("");
-            }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Space();
         }
 
-        protected virtual void PrintAssertionLineDetails(AssertionComponent assertionComponent)
-        {
+        protected virtual void PrintAssertionLineDetails(AssertionComponent assertionComponent) {
             EditorGUILayout.BeginHorizontal();
 
 
@@ -187,9 +156,9 @@ namespace UnityTest
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Attached to",
                                        GUILayout.Width(70));
-            var sss = EditorStyles.objectField.CalcSize(new GUIContent(assertionComponent.gameObject.name));
+            Vector2 sss = EditorStyles.objectField.CalcSize(new GUIContent(assertionComponent.gameObject.name));
             EditorGUILayout.ObjectField(assertionComponent.gameObject,
-                                        typeof(GameObject),
+                                        typeof (GameObject),
                                         true,
                                         GUILayout.Width(sss.x));
             EditorGUILayout.EndHorizontal();
@@ -215,37 +184,46 @@ namespace UnityTest
             EditorGUILayout.EndHorizontal();
         }
 
-        private void PrintPath(GameObject go, string propertyPath)
-        {
-            string contentString = "";
+        private void PrintPath(GameObject go, string propertyPath) {
+            var contentString = "";
             GUIStyle styleThisPath = EditorStyles.label;
-            if (go != null)
-            {
-                var sss = EditorStyles.objectField.CalcSize(new GUIContent(go.name));
+            if (go != null) {
+                Vector2 sss = EditorStyles.objectField.CalcSize(new GUIContent(go.name));
                 EditorGUILayout.ObjectField(
-                    go,
-                    typeof(GameObject),
-                    true,
-                    GUILayout.Width(sss.x));
+                                            go,
+                                            typeof (GameObject),
+                                            true,
+                                            GUILayout.Width(sss.x));
 
                 if (!string.IsNullOrEmpty(propertyPath))
                     contentString = "." + propertyPath;
-            }
-            else
-            {
+            } else {
                 contentString = "(no value selected)";
                 styleThisPath = Styles.redLabel;
             }
 
             var content = new GUIContent(contentString,
                                          contentString);
-            var rect = GUILayoutUtility.GetRect(content,
-                                                EditorStyles.label,
-                                                GUILayout.MaxWidth(200));
+            Rect rect = GUILayoutUtility.GetRect(content,
+                                                 EditorStyles.label,
+                                                 GUILayout.MaxWidth(200));
 
             EditorGUI.LabelField(rect,
                                  content,
                                  styleThisPath);
         }
+
+        private static class Styles {
+
+            public static readonly GUIStyle redLabel;
+
+            static Styles() {
+                redLabel = new GUIStyle(EditorStyles.label);
+                redLabel.normal.textColor = Color.red;
+            }
+
+        }
+
     }
+
 }

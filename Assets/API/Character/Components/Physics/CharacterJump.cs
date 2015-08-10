@@ -11,12 +11,12 @@ namespace Crescendo.API {
         private CharacterGravity _gravity;
         private int _jumpCount;
 
-        [Serialize]
-        [AnimVar(ParameterType.Trigger)]
-        private int _jumpTrigger;
-
         [SerializeField]
         private float[] _jumpHeights = {1.5f, 1.5f};
+
+        [Serialize]
+        [AnimVar(Filter = ParameterType.Trigger)]
+        private int _jumpTrigger;
 
         public int JumpCount {
             get { return _jumpCount; }
@@ -30,7 +30,7 @@ namespace Crescendo.API {
             base.Start();
 
             _gravity = GetComponentInChildren<CharacterGravity>();
-            
+
             Character.OnJump += OnJump;
             Character.OnGrounded += OnGrounded;
             Character.JumpRestrictions += CanJump;
@@ -41,7 +41,7 @@ namespace Crescendo.API {
         }
 
         private void OnJump() {
-            var g = _gravity == null ? _gravity.Gravity : defaultGravity;
+            float g = _gravity == null ? _gravity.Gravity : defaultGravity;
 
             // Apply upward force to jump
             Vector3 temp = Character.Velocity;
@@ -55,7 +55,7 @@ namespace Crescendo.API {
         }
 
         private void OnGrounded() {
-            if (Character.IsGrounded)
+            if (Character.IsIsGrounded)
                 _jumpCount = 0;
         }
 

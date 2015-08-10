@@ -8,7 +8,7 @@ namespace Crescendo.API {
     public class CharacterData : BaseScriptableObject {
 
         private LanguageManager _languageManager;
-        
+
         [SerializeField]
         private Alternative[] alternatives;
 
@@ -54,7 +54,7 @@ namespace Crescendo.API {
                 _languageManager = LanguageManager.Instance;
             if (alternatives == null)
                 return;
-            foreach (var alternative in alternatives)
+            foreach (Alternative alternative in alternatives)
                 alternative.Initialize();
         }
 
@@ -63,7 +63,7 @@ namespace Crescendo.API {
 
             private Resource<Sprite> _portrait;
 
-            [SerializeField, ResourcePath(typeof(GameObject))]
+            [SerializeField, ResourcePath(typeof (GameObject))]
             private string _prefab;
 
             private Resource<GameObject> _prefabResource;

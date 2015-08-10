@@ -1,11 +1,11 @@
-// #define IMITATE_BATCH_MODE //uncomment if you want to imitate batch mode behaviour in non-batch mode mode run
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityTest.IntegrationTestRunner;
+using Object = UnityEngine.Object;
 
 namespace UnityTest {
 
@@ -55,17 +55,17 @@ namespace UnityTest {
                 return;
 
             if (m_Configurator.sendResultsOverNetwork) {
-                var nrs = m_Configurator.ResolveNetworkConnection();
+                ITestRunnerCallback nrs = m_Configurator.ResolveNetworkConnection();
                 if (nrs != null)
                     TestRunnerCallback.Add(nrs);
             }
 
             TestComponent.DestroyAllDynamicTests();
-            var dynamicTestTypes = TestComponent.GetTypesWithHelpAttribute(Application.loadedLevelName);
-            foreach (var dynamicTestType in dynamicTestTypes)
+            IEnumerable<Type> dynamicTestTypes = TestComponent.GetTypesWithHelpAttribute(Application.loadedLevelName);
+            foreach (Type dynamicTestType in dynamicTestTypes)
                 TestComponent.CreateDynamicTest(dynamicTestType);
 
-            var tests = TestComponent.FindAllTestsOnScene();
+            List<TestComponent> tests = TestComponent.FindAllTestsOnScene();
 
             InitRunner(tests, dynamicTestTypes.Select(type => type.AssemblyQualifiedName).ToList());
         }
@@ -74,11 +74,11 @@ namespace UnityTest {
             Application.logMessageReceived += LogHandler;
 
             // Init dynamic tests
-            foreach (var typeName in dynamicTestsToRun) {
-                var t = Type.GetType(typeName);
+            foreach (string typeName in dynamicTestsToRun) {
+                Type t = Type.GetType(typeName);
                 if (t == null)
                     continue;
-                var scriptComponents = Resources.FindObjectsOfTypeAll(t) as MonoBehaviour[];
+                MonoBehaviour[] scriptComponents = Resources.FindObjectsOfTypeAll(t) as MonoBehaviour[];
                 if (scriptComponents.Length == 0) {
                     Debug.LogWarning(t + " not found. Skipping.");
                     continue;
@@ -101,14 +101,15 @@ namespace UnityTest {
         }
 
         private static IEnumerable<TestComponent> ParseListForGroups(IEnumerable<TestComponent> tests) {
-            var results = new HashSet<TestComponent>();
-            foreach (var testResult in tests) {
+            HashSet<TestComponent> results = new HashSet<TestComponent>();
+            foreach (TestComponent testResult in tests) {
                 if (testResult.IsTestGroup()) {
-                    var childrenTestResult = testResult.gameObject.GetComponentsInChildren(typeof (TestComponent), true)
-                                                       .Where(t => t != testResult)
-                                                       .Cast<TestComponent>()
-                                                       .ToArray();
-                    foreach (var result in childrenTestResult) {
+                    TestComponent[] childrenTestResult =
+                        testResult.gameObject.GetComponentsInChildren(typeof (TestComponent), true)
+                                  .Where(t => t != testResult)
+                                  .Cast<TestComponent>()
+                                  .ToArray();
+                    foreach (TestComponent result in childrenTestResult) {
                         if (!result.IsTestGroup())
                             results.Add(result);
                     }
@@ -128,13 +129,13 @@ namespace UnityTest {
 
         public void OnDestroy() {
             if (currentTest != null) {
-                var testResult = m_ResultList.Single(result => result.TestComponent == currentTest);
+                TestResult testResult = m_ResultList.Single(result => result.TestComponent == currentTest);
                 testResult.messages += "Test run interrupted (crash?)";
                 LogMessage(k_InterruptedMessage);
                 FinishTest(TestResult.ResultType.Failed);
             }
             if (currentTest != null || (m_TestsProvider != null && m_TestsProvider.AnyTestsLeft())) {
-                var remainingTests = m_TestsProvider.GetRemainingTests();
+                List<ITestComponent> remainingTests = m_TestsProvider.GetRemainingTests();
                 TestRunnerCallback.TestRunInterrupted(remainingTests.ToList());
             }
             Application.logMessageReceived -= LogHandler;
@@ -142,7 +143,7 @@ namespace UnityTest {
 
         private void LogHandler(string condition, string stacktrace, LogType type) {
             if (!condition.StartsWith(k_StartedMessage) && !condition.StartsWith(k_FinishedMessage)) {
-                var msg = condition;
+                string msg = condition;
                 if (msg.StartsWith(k_Prefix))
                     msg = msg.Substring(k_Prefix.Length + 1);
                 if (currentTest != null && msg.EndsWith("(" + currentTest.name + ')'))
@@ -151,7 +152,7 @@ namespace UnityTest {
             }
             switch (type) {
                 case LogType.Exception: {
-                    var exceptionType = condition.Substring(0, condition.IndexOf(':'));
+                    string exceptionType = condition.Substring(0, condition.IndexOf(':'));
                     if (currentTest != null && currentTest.IsExceptionExpected(exceptionType)) {
                         m_TestMessages += exceptionType + " was expected\n";
                         if (currentTest.ShouldSucceedOnException())
@@ -188,7 +189,7 @@ namespace UnityTest {
                 if (currentTest != null) {
                     if (m_TestState == TestState.Running) {
                         if (currentTest.ShouldSucceedOnAssertions()) {
-                            var assertionsToCheck =
+                            AssertionComponent[] assertionsToCheck =
                                 currentTest.gameObject.GetComponentsInChildren<AssertionComponent>()
                                            .Where(a => a.enabled)
                                            .ToArray();
@@ -284,7 +285,7 @@ namespace UnityTest {
             m_StartTime = Time.time;
             currentTest = m_TestsProvider.GetNextTest() as TestComponent;
 
-            var testResult = m_ResultList.Single(result => result.TestComponent == currentTest);
+            TestResult testResult = m_ResultList.Single(result => result.TestComponent == currentTest);
 
             if (currentTest != null && currentTest.IsExludedOnThisPlatform()) {
                 m_TestState = TestState.Ignored;
@@ -303,7 +304,7 @@ namespace UnityTest {
 
         private void FinishTest(TestResult.ResultType result) {
             m_TestsProvider.FinishTest(currentTest);
-            var testResult = m_ResultList.Single(t => t.GameObject == currentTest.gameObject);
+            TestResult testResult = m_ResultList.Single(t => t.GameObject == currentTest.gameObject);
             testResult.resultType = result;
             testResult.duration = Time.time - m_StartTime;
             testResult.messages = m_TestMessages;
@@ -331,10 +332,10 @@ namespace UnityTest {
 
         public static TestRunner GetTestRunner() {
             TestRunner testRunnerComponent = null;
-            var testRunnerComponents = Resources.FindObjectsOfTypeAll(typeof (TestRunner));
+            Object[] testRunnerComponents = Resources.FindObjectsOfTypeAll(typeof (TestRunner));
 
             if (testRunnerComponents.Count() > 1) {
-                foreach (var t in testRunnerComponents)
+                foreach (Object t in testRunnerComponents)
                     DestroyImmediate(((TestRunner) t).gameObject);
             } else if (!testRunnerComponents.Any())
                 testRunnerComponent = Create().GetComponent<TestRunner>();
@@ -356,12 +357,12 @@ namespace UnityTest {
             const string internalEditorUtilityClassName =
                 "UnityEditorInternal.InternalEditorUtility, UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
 
-            var t = Type.GetType(internalEditorUtilityClassName, false);
+            Type t = Type.GetType(internalEditorUtilityClassName, false);
             if (t == null)
                 return false;
 
             const string inBatchModeProperty = "inBatchMode";
-            var prop = t.GetProperty(inBatchModeProperty);
+            PropertyInfo prop = t.GetProperty(inBatchModeProperty);
             return (bool) prop.GetValue(null, null);
 #else // if !UNITY_METRO
             return false;

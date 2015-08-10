@@ -14,7 +14,7 @@ namespace Crescendo.API {
 
         // Use this for initialization
         private void Start() {
-            StockMatch match = FindObjectOfType<StockMatch>();
+            var match = FindObjectOfType<StockMatch>();
             criteria = match.GetPlayerData(index);
             display = GetComponent<Text>();
         }

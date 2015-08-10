@@ -6,43 +6,36 @@ using System.Security;
 using System.Text;
 using UnityEngine;
 
-namespace UnityTest
-{
-    public class XmlResultWriter
-    {
-        private readonly StringBuilder m_ResultWriter = new StringBuilder();
-        private int m_Indend;
-        private readonly string m_SuiteName;
-        private readonly ITestResult[] m_Results;
-        string m_Platform;
+namespace UnityTest {
 
-        public XmlResultWriter(string suiteName, string platform, ITestResult[] results)
-        {
+    public class XmlResultWriter {
+
+        private const string k_NUnitVersion = "2.6.2-Unity";
+        private readonly ITestResult[] m_Results;
+        private readonly StringBuilder m_ResultWriter = new StringBuilder();
+        private readonly string m_SuiteName;
+        private int m_Indend;
+        private string m_Platform;
+
+        public XmlResultWriter(string suiteName, string platform, ITestResult[] results) {
             m_SuiteName = suiteName;
             m_Results = results;
             m_Platform = platform;
         }
 
-        private const string k_NUnitVersion = "2.6.2-Unity";
-
-        public string GetTestResult()
-        {
+        public string GetTestResult() {
             InitializeXmlFile(m_SuiteName, new ResultSummarizer(m_Results));
-            foreach (var result in m_Results)
-            {
+            foreach (ITestResult result in m_Results)
                 WriteResultElement(result);
-            }
             TerminateXmlFile();
             return m_ResultWriter.ToString();
         }
 
-        private void InitializeXmlFile(string resultsName, ResultSummarizer summaryResults)
-        {
+        private void InitializeXmlFile(string resultsName, ResultSummarizer summaryResults) {
             WriteHeader();
 
             DateTime now = DateTime.Now;
-            var attributes = new Dictionary<string, string>
-            {
+            Dictionary<string, string> attributes = new Dictionary<string, string> {
                 {"name", "Unity Tests"},
                 {"total", summaryResults.TestsRun.ToString()},
                 {"errors", summaryResults.Errors.ToString()},
@@ -64,95 +57,76 @@ namespace UnityTest
             WriteOpeningElement("results");
         }
 
-        private void WriteOpeningElement(string elementName)
-        {
+        private void WriteOpeningElement(string elementName) {
             WriteOpeningElement(elementName, new Dictionary<string, string>());
         }
 
-        private void WriteOpeningElement(string elementName, Dictionary<string, string> attributes)
-        {
+        private void WriteOpeningElement(string elementName, Dictionary<string, string> attributes) {
             WriteOpeningElement(elementName, attributes, false);
         }
 
-
-        private void WriteOpeningElement(string elementName, Dictionary<string, string> attributes, bool closeImmediatelly)
-        {
+        private void WriteOpeningElement(string elementName,
+                                         Dictionary<string, string> attributes,
+                                         bool closeImmediatelly) {
             WriteIndend();
             m_Indend++;
             m_ResultWriter.Append("<");
             m_ResultWriter.Append(elementName);
-            foreach (var attribute in attributes)
-            {
+            foreach (KeyValuePair<string, string> attribute in attributes)
                 m_ResultWriter.AppendFormat(" {0}=\"{1}\"", attribute.Key, SecurityElement.Escape(attribute.Value));
-            }
-            if (closeImmediatelly)
-            {
+            if (closeImmediatelly) {
                 m_ResultWriter.Append(" /");
                 m_Indend--;
             }
             m_ResultWriter.AppendLine(">");
         }
 
-        private void WriteIndend()
-        {
-            for (int i = 0; i < m_Indend; i++)
-            {
+        private void WriteIndend() {
+            for (var i = 0; i < m_Indend; i++)
                 m_ResultWriter.Append("  ");
-            }
         }
 
-        private void WriteClosingElement(string elementName)
-        {
+        private void WriteClosingElement(string elementName) {
             m_Indend--;
             WriteIndend();
             m_ResultWriter.AppendLine("</" + elementName + ">");
         }
 
-        private void WriteHeader()
-        {
+        private void WriteHeader() {
             m_ResultWriter.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             m_ResultWriter.AppendLine("<!--This file represents the results of running a test suite-->");
         }
 
-        static string GetEnvironmentUserName()
-        {
+        private static string GetEnvironmentUserName() {
             return Environment.UserName;
         }
 
-        static string GetEnvironmentMachineName()
-        {
+        private static string GetEnvironmentMachineName() {
             return Environment.MachineName;
         }
 
-        static string GetEnvironmentUserDomainName()
-        {
+        private static string GetEnvironmentUserDomainName() {
             return Environment.UserDomainName;
         }
 
-        static string GetEnvironmentVersion()
-        {
+        private static string GetEnvironmentVersion() {
             return Environment.Version.ToString();
         }
 
-        static string GetEnvironmentOSVersion()
-        {
+        private static string GetEnvironmentOSVersion() {
             return Environment.OSVersion.ToString();
         }
 
-        static string GetEnvironmentOSVersionPlatform()
-        {
+        private static string GetEnvironmentOSVersionPlatform() {
             return Environment.OSVersion.Platform.ToString();
         }
 
-        static string EnvironmentGetCurrentDirectory()
-        {
+        private static string EnvironmentGetCurrentDirectory() {
             return Environment.CurrentDirectory;
         }
 
-        private void WriteEnvironment( string targetPlatform )
-        {
-            var attributes = new Dictionary<string, string>
-            {
+        private void WriteEnvironment(string targetPlatform) {
+            Dictionary<string, string> attributes = new Dictionary<string, string> {
                 {"nunit-version", k_NUnitVersion},
                 {"clr-version", GetEnvironmentVersion()},
                 {"os-version", GetEnvironmentOSVersion()},
@@ -167,20 +141,16 @@ namespace UnityTest
             WriteOpeningElement("environment", attributes, true);
         }
 
-        private void WriteCultureInfo()
-        {
-            var attributes = new Dictionary<string, string>
-            {
+        private void WriteCultureInfo() {
+            Dictionary<string, string> attributes = new Dictionary<string, string> {
                 {"current-culture", CultureInfo.CurrentCulture.ToString()},
                 {"current-uiculture", CultureInfo.CurrentUICulture.ToString()}
             };
             WriteOpeningElement("culture-info", attributes, true);
         }
 
-        private void WriteTestSuite(string resultsName, ResultSummarizer summaryResults)
-        {
-            var attributes = new Dictionary<string, string>
-            {
+        private void WriteTestSuite(string resultsName, ResultSummarizer summaryResults) {
+            Dictionary<string, string> attributes = new Dictionary<string, string> {
                 {"name", resultsName},
                 {"type", "Assembly"},
                 {"executed", "True"},
@@ -191,12 +161,10 @@ namespace UnityTest
             WriteOpeningElement("test-suite", attributes);
         }
 
-        private void WriteResultElement(ITestResult result)
-        {
+        private void WriteResultElement(ITestResult result) {
             StartTestElement(result);
 
-            switch (result.ResultState)
-            {
+            switch (result.ResultState) {
                 case TestResultState.Ignored:
                 case TestResultState.NotRunnable:
                 case TestResultState.Skipped:
@@ -213,30 +181,45 @@ namespace UnityTest
                     if (result.Message != null)
                         WriteReasonElement(result);
                     break;
-            };
+            }
+            ;
 
             WriteClosingElement("test-case");
         }
 
-        private void TerminateXmlFile()
-        {
+        private void TerminateXmlFile() {
             WriteClosingElement("results");
             WriteClosingElement("test-suite");
             WriteClosingElement("test-results");
         }
 
+        private void WriteCData(string text) {
+            if (string.IsNullOrEmpty(text))
+                return;
+            m_ResultWriter.AppendFormat("<![CDATA[{0}]]>", text);
+            m_ResultWriter.AppendLine();
+        }
+
+        public void WriteToFile(string resultDestiantion, string resultFileName) {
+            try {
+                string path = Path.Combine(resultDestiantion, resultFileName);
+                Debug.Log("Saving results in " + path);
+                File.WriteAllText(path, GetTestResult(), Encoding.UTF8);
+            } catch (Exception e) {
+                Debug.LogError("Error while opening file");
+                Debug.LogException(e);
+            }
+        }
+
         #region Element Creation Helpers
 
-        private void StartTestElement(ITestResult result)
-        {
-            var attributes = new Dictionary<string, string>
-            {
+        private void StartTestElement(ITestResult result) {
+            Dictionary<string, string> attributes = new Dictionary<string, string> {
                 {"name", result.FullName},
                 {"executed", result.Executed.ToString()}
             };
             string resultString;
-            switch (result.ResultState)
-            {
+            switch (result.ResultState) {
                 case TestResultState.Cancelled:
                     resultString = TestResultState.Failure.ToString();
                     break;
@@ -245,16 +228,14 @@ namespace UnityTest
                     break;
             }
             attributes.Add("result", resultString);
-            if (result.Executed)
-            {
+            if (result.Executed) {
                 attributes.Add("success", result.IsSuccess.ToString());
                 attributes.Add("time", result.Duration.ToString("#####0.000", NumberFormatInfo.InvariantInfo));
             }
             WriteOpeningElement("test-case", attributes);
         }
 
-        private void WriteReasonElement(ITestResult result)
-        {
+        private void WriteReasonElement(ITestResult result) {
             WriteOpeningElement("reason");
             WriteOpeningElement("message");
             WriteCData(result.Message);
@@ -262,8 +243,7 @@ namespace UnityTest
             WriteClosingElement("reason");
         }
 
-        private void WriteFailureElement(ITestResult result)
-        {
+        private void WriteFailureElement(ITestResult result) {
             WriteOpeningElement("failure");
             WriteOpeningElement("message");
             WriteCData(result.Message);
@@ -276,28 +256,6 @@ namespace UnityTest
         }
 
         #endregion
-
-        private void WriteCData(string text)
-        {
-            if (string.IsNullOrEmpty(text)) 
-				return;
-            m_ResultWriter.AppendFormat("<![CDATA[{0}]]>", text);
-            m_ResultWriter.AppendLine();
-        }
-
-        public void WriteToFile(string resultDestiantion, string resultFileName)
-        {
-            try
-            {
-                var path = Path.Combine(resultDestiantion, resultFileName);
-                Debug.Log("Saving results in " + path);
-                File.WriteAllText(path, GetTestResult(), Encoding.UTF8);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("Error while opening file");
-                Debug.LogException(e);
-            }
-        }
     }
+
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
@@ -63,7 +64,7 @@ namespace UnityTest {
 
         public string GetCreationLocation() {
             if (!string.IsNullOrEmpty(m_CreatedInFilePath)) {
-                var idx = m_CreatedInFilePath.LastIndexOf("\\") + 1;
+                int idx = m_CreatedInFilePath.LastIndexOf("\\") + 1;
                 return string.Format("{0}, line {1} ({2})",
                                      m_CreatedInFilePath.Substring(idx),
                                      m_CreatedInFileLine,
@@ -86,7 +87,7 @@ namespace UnityTest {
         private void OnComponentCopy() {
             if (m_ActionBase == null)
                 return;
-            var oldActionList =
+            IEnumerable<Object> oldActionList =
                 Resources.FindObjectsOfTypeAll(typeof (AssertionComponent))
                          .Where(o => ((AssertionComponent) o).m_ActionBase == m_ActionBase && o != this);
 
@@ -123,7 +124,7 @@ namespace UnityTest {
                 if (repeatCheckFrame)
                     m_CheckOnFrame += repeatEveryFrame;
                 else
-                    m_CheckOnFrame = Int32.MaxValue;
+                    m_CheckOnFrame = int.MaxValue;
                 return true;
             }
             return false;
@@ -305,9 +306,9 @@ namespace UnityTest {
 
 #if !UNITY_METRO
             var stackTrace = new StackTrace(true);
-            var thisFileName = stackTrace.GetFrame(0).GetFileName();
-            for (int i = 1; i < stackTrace.FrameCount; i++) {
-                var stackFrame = stackTrace.GetFrame(i);
+            string thisFileName = stackTrace.GetFrame(0).GetFileName();
+            for (var i = 1; i < stackTrace.FrameCount; i++) {
+                StackFrame stackFrame = stackTrace.GetFrame(i);
                 if (stackFrame.GetFileName() != thisFileName) {
                     string filePath = stackFrame.GetFileName().Substring(Application.dataPath.Length - "Assets".Length);
                     ac.m_CreatedInFilePath = filePath;

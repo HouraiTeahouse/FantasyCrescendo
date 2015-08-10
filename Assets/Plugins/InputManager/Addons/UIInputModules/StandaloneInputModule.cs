@@ -1,32 +1,3 @@
-#region [License]
-
-//	The MIT License (MIT)
-//	
-//	Copyright (c) 2014, Unity Technologies
-//	Copyright (c) 2014, Cristian Alexandru Geambasu
-//
-//	Permission is hereby granted, free of charge, to any person obtaining a copy
-//	of this software and associated documentation files (the "Software"), to deal
-//	in the Software without restriction, including without limitation the rights
-//	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//	copies of the Software, and to permit persons to whom the Software is
-//	furnished to do so, subject to the following conditions:
-//
-//	The above copyright notice and this permission notice shall be included in
-//	all copies or substantial portions of the Software.
-//
-//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//	THE SOFTWARE.
-//
-//	https://bitbucket.org/Unity-Technologies/ui
-
-#endregion
-
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -140,7 +111,7 @@ namespace TeamUtility.IO {
             if (!base.ShouldActivateModule())
                 return false;
 
-            var shouldActivate = InputManager.GetButtonDown(m_SubmitButton);
+            bool shouldActivate = InputManager.GetButtonDown(m_SubmitButton);
             shouldActivate |= InputManager.GetButtonDown(m_CancelButton);
             shouldActivate |= !Mathf.Approximately(InputManager.GetAxisRaw(m_HorizontalAxis), 0.0f);
             shouldActivate |= !Mathf.Approximately(InputManager.GetAxisRaw(m_VerticalAxis), 0.0f);
@@ -154,7 +125,7 @@ namespace TeamUtility.IO {
             m_MousePosition = InputManager.mousePosition;
             m_LastMousePosition = InputManager.mousePosition;
 
-            var toSelect = eventSystem.currentSelectedGameObject;
+            GameObject toSelect = eventSystem.currentSelectedGameObject;
             if (toSelect == null)
                 toSelect = eventSystem.lastSelectedGameObject;
             if (toSelect == null)
@@ -189,7 +160,7 @@ namespace TeamUtility.IO {
             if (eventSystem.currentSelectedGameObject == null)
                 return false;
 
-            var data = GetBaseEventData();
+            BaseEventData data = GetBaseEventData();
             if (InputManager.GetButtonDown(m_SubmitButton))
                 ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, data, ExecuteEvents.submitHandler);
 
@@ -241,7 +212,7 @@ namespace TeamUtility.IO {
             Vector2 movement = GetRawMoveVector();
 
             // Debug.Log(m_ProcessingEvent.rawType + " axis:" + m_AllowAxisEvents + " value:" + "(" + x + "," + y + ")");
-            var axisEventData = GetAxisEventData(movement.x, movement.y, 0.6f);
+            AxisEventData axisEventData = GetAxisEventData(movement.x, movement.y, 0.6f);
             if (!Mathf.Approximately(axisEventData.moveVector.x, 0f)
                 || !Mathf.Approximately(axisEventData.moveVector.y, 0f))
                 ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, axisEventData, ExecuteEvents.moveHandler);
@@ -253,12 +224,12 @@ namespace TeamUtility.IO {
         /// Process all mouse events.
         /// </summary>
         private void ProcessMouseEvent() {
-            var mouseData = GetMousePointerEventData();
+            MouseState mouseData = GetMousePointerEventData();
 
-            var pressed = mouseData.AnyPressesThisFrame();
-            var released = mouseData.AnyReleasesThisFrame();
+            bool pressed = mouseData.AnyPressesThisFrame();
+            bool released = mouseData.AnyReleasesThisFrame();
 
-            var leftButtonData = mouseData.GetButtonState(PointerEventData.InputButton.Left).eventData;
+            MouseButtonEventData leftButtonData = mouseData.GetButtonState(PointerEventData.InputButton.Left).eventData;
 
             if (!UseMouse(pressed, released, leftButtonData.buttonData))
                 return;
@@ -275,7 +246,7 @@ namespace TeamUtility.IO {
             ProcessDrag(mouseData.GetButtonState(PointerEventData.InputButton.Middle).eventData.buttonData);
 
             if (!Mathf.Approximately(leftButtonData.buttonData.scrollDelta.sqrMagnitude, 0.0f)) {
-                var scrollHandler =
+                GameObject scrollHandler =
                     ExecuteEvents.GetEventHandler<IScrollHandler>(
                                                                   leftButtonData.buttonData.pointerCurrentRaycast
                                                                                 .gameObject);
@@ -294,7 +265,7 @@ namespace TeamUtility.IO {
             if (eventSystem.currentSelectedGameObject == null)
                 return false;
 
-            var data = GetBaseEventData();
+            BaseEventData data = GetBaseEventData();
             ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, data, ExecuteEvents.updateSelectedHandler);
             return data.used;
         }
@@ -303,8 +274,8 @@ namespace TeamUtility.IO {
         /// Process the current mouse press.
         /// </summary>
         private void ProcessMousePress(MouseButtonEventData data) {
-            var pointerEvent = data.buttonData;
-            var currentOverGo = pointerEvent.pointerCurrentRaycast.gameObject;
+            PointerEventData pointerEvent = data.buttonData;
+            GameObject currentOverGo = pointerEvent.pointerCurrentRaycast.gameObject;
 
             // PointerDown notification
             if (data.PressedThisFrame()) {
@@ -320,9 +291,9 @@ namespace TeamUtility.IO {
                 // search for the control that will receive the press
                 // if we can't find a press handler set the press
                 // handler to be what would receive a click.
-                var newPressed = ExecuteEvents.ExecuteHierarchy(currentOverGo,
-                                                                pointerEvent,
-                                                                ExecuteEvents.pointerDownHandler);
+                GameObject newPressed = ExecuteEvents.ExecuteHierarchy(currentOverGo,
+                                                                       pointerEvent,
+                                                                       ExecuteEvents.pointerDownHandler);
 
                 // didnt find a press handler... search for a click handler
                 if (newPressed == null)
@@ -333,7 +304,7 @@ namespace TeamUtility.IO {
                 float time = Time.unscaledTime;
 
                 if (newPressed == pointerEvent.lastPress) {
-                    var diffTime = time - pointerEvent.clickTime;
+                    float diffTime = time - pointerEvent.clickTime;
                     if (diffTime < 0.3f)
                         ++pointerEvent.clickCount;
                     else
@@ -363,7 +334,7 @@ namespace TeamUtility.IO {
                 // Debug.Log("KeyCode: " + pointer.eventData.keyCode);
 
                 // see if we mouse up on the same element that we clicked on...
-                var pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
+                GameObject pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
 
                 // PointerClick and Drop events
                 if (pointerEvent.pointerPress == pointerUpHandler && pointerEvent.eligibleForClick)
@@ -398,7 +369,7 @@ namespace TeamUtility.IO {
             UnityEngine.EventSystems.StandaloneInputModule[] im =
                 FindObjectsOfType<UnityEngine.EventSystems.StandaloneInputModule>();
             if (im.Length > 0) {
-                for (int i = 0; i < im.Length; i++) {
+                for (var i = 0; i < im.Length; i++) {
                     im[i].gameObject.AddComponent<StandaloneInputModule>();
                     DestroyImmediate(im[i]);
                 }

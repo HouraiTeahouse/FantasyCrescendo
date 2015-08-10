@@ -1,29 +1,35 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace UnityTest
-{
+namespace UnityTest {
+
     [Serializable]
-    public class UnitTestResult : ITestResult
-    {
-        public bool Executed { get; set; }
-        public string Name { get { return Test.MethodName; } }
-        public string FullName { get { return Test.FullName; } }
-        public TestResultState ResultState { get; set; }
+    public class UnitTestResult : ITestResult {
+
         public UnitTestInfo Test { get; set; }
-        public string Id { get { return Test.Id; } }
+        public bool Outdated { get; set; }
+        public bool Executed { get; set; }
+
+        public string Name {
+            get { return Test.MethodName; }
+        }
+
+        public string FullName {
+            get { return Test.FullName; }
+        }
+
+        public TestResultState ResultState { get; set; }
+
+        public string Id {
+            get { return Test.Id; }
+        }
+
         public double Duration { get; set; }
         public string Message { get; set; }
         public string StackTrace { get; set; }
         public bool IsIgnored { get; set; }
-
         public string Logs { get; set; }
 
-        public bool Outdated { get; set; }
-
-        public void Update(ITestResult source, bool outdated)
-        {
+        public void Update(ITestResult source, bool outdated) {
             ResultState = source.ResultState;
             Duration = source.Duration;
             Message = source.Message;
@@ -36,26 +42,23 @@ namespace UnityTest
 
         #region Helper methods
 
-        public bool IsFailure
-        {
+        public bool IsFailure {
             get { return ResultState == TestResultState.Failure; }
         }
 
-        public bool IsError
-        {
+        public bool IsError {
             get { return ResultState == TestResultState.Error; }
         }
 
-        public bool IsSuccess
-        {
+        public bool IsSuccess {
             get { return ResultState == TestResultState.Success; }
         }
 
-        public bool IsInconclusive
-        {
+        public bool IsInconclusive {
             get { return ResultState == TestResultState.Inconclusive; }
         }
 
         #endregion
     }
+
 }

@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
 using Object = UnityEngine.Object;
 
 namespace Crescendo.API.Editor {
@@ -12,14 +11,14 @@ namespace Crescendo.API.Editor {
     [InitializeOnLoad]
     public static class AssetUtil {
 
-        private static Dictionary<string, string> delayedMoves; 
+        private static Dictionary<string, string> delayedMoves;
 
         static AssetUtil() {
             delayedMoves = new Dictionary<string, string>();
             EditorApplication.update += Update;
         }
 
-        static void Update() {
+        private static void Update() {
             if (delayedMoves.Count <= 0)
                 return;
 
@@ -27,7 +26,7 @@ namespace Crescendo.API.Editor {
 
             List<string> toRemove = new List<string>();
 
-            foreach (var pair in delayedMoves) {
+            foreach (KeyValuePair<string, string> pair in delayedMoves) {
                 string result = AssetDatabase.ValidateMoveAsset(pair.Key, pair.Value);
                 Debug.Log(result);
                 if (!result.IsNullOrEmpty())
@@ -36,10 +35,9 @@ namespace Crescendo.API.Editor {
                 toRemove.Add(pair.Key);
             }
 
-            foreach (var key in toRemove)
+            foreach (string key in toRemove)
                 delayedMoves.Remove(key);
         }
-
 
         public static bool IsAsset(this Object obj) {
             return obj != null && AssetDatabase.Contains(obj);
@@ -72,10 +70,10 @@ namespace Crescendo.API.Editor {
                 throw new ArgumentNullException("obj");
             if (suffix == null)
                 suffix = "asset";
-            
+
             if (obj.IsAsset())
                 return;
-            
+
             // Create folder if it doesn't already exist
             CreateFolder(folder);
 
@@ -83,9 +81,9 @@ namespace Crescendo.API.Editor {
         }
 
         public static void MoveAsset(string targetFolder, Object asset) {
-            if(targetFolder == null)
+            if (targetFolder == null)
                 throw new ArgumentNullException("targetFolder");
-            if(asset == null)
+            if (asset == null)
                 throw new ArgumentNullException("asset");
 
             if (!asset.IsAsset()) {
@@ -109,15 +107,14 @@ namespace Crescendo.API.Editor {
 
                 // Create the folder if it doesn't already exist
                 CreateFolder(targetFolder);
-                
+
                 string destination = "Assets/" + targetFolder + "/" + Path.GetFileName(assetPath);
                 string result = AssetDatabase.ValidateMoveAsset(assetPath, destination);
 
-                if (result.IsNullOrEmpty()) {
+                if (result.IsNullOrEmpty())
                     AssetDatabase.MoveAsset(assetPath, destination);
-                } else {
-                    delayedMoves.Add(assetPath, destination);   
-                }
+                else
+                    delayedMoves.Add(assetPath, destination);
             }
         }
 
@@ -126,7 +123,7 @@ namespace Crescendo.API.Editor {
             string search = "t:" + typeof (T).Name;
             if (nameFilter != null)
                 search += " " + nameFilter;
-            foreach (var guid in AssetDatabase.FindAssets(search))
+            foreach (string guid in AssetDatabase.FindAssets(search))
                 paths.Add(AssetDatabase.GUIDToAssetPath(guid));
             return paths.ToArray();
         }
@@ -151,7 +148,6 @@ namespace Crescendo.API.Editor {
                 currentPath = newPath;
             }
         }
-
 
     }
 

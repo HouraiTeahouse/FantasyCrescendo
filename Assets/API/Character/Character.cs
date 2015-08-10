@@ -6,6 +6,7 @@ using Vexe.Runtime.Extensions;
 using Vexe.Runtime.Types;
 #if UNITY_EDITOR
 using System.Linq;
+
 #endif
 
 namespace Crescendo.API {
@@ -17,15 +18,14 @@ namespace Crescendo.API {
     /// Authored on 07/01/2015
     [DisallowMultipleComponent]
     [DefineCategories("Animation")]
-    [RequireComponent(typeof (Animator), typeof(Rigidbody), typeof(CapsuleCollider))]
+    [RequireComponent(typeof (Animator), typeof (Rigidbody), typeof (CapsuleCollider))]
     public class Character : GensoBehaviour, IDamageable, IKnocckbackable {
 
         private ActionRestriction _canAttack;
         private ActionRestriction _canJump;
         private ActionRestriction _canMove;
-
         private CapsuleCollider triggerCollider;
-        
+
         [DontSerialize, Hide]
         public int PlayerNumber { get; internal set; }
 
@@ -36,21 +36,21 @@ namespace Crescendo.API {
         [DontSerialize, Hide]
         public ICharacterInput InputSource { get; set; }
 
-        public bool IsGrounded {
-            get { return _grounded; }
+        public bool IsIsGrounded {
+            get { return _isGrounded; }
             set {
-                if (IsGrounded == value)
+                if (IsIsGrounded == value)
                     return;
-                _grounded = value;
-                Animator.Bools(__grounded, value);
+                _isGrounded = value;
+                Animator.Bools(_grounded, value);
                 OnGrounded.SafeInvoke();
             }
         }
 
         public bool IsInvincible {
-            get { return _invinicible; }
+            get { return _isInvincible; }
             set {
-                if (_invinicible == value)
+                if (_isInvincible == value)
                     return;
 
                 if (value)
@@ -58,21 +58,21 @@ namespace Crescendo.API {
                 else
                     Debug.Log(name + " is no longer invincible.");
 
-                _invinicible = value;
+                _isInvincible = value;
             }
         }
 
         public bool IsDashing {
-            get { return IsGrounded && _dashing; }
-            set { _dashing = value; }
+            get { return IsIsGrounded && _isDashing; }
+            set { _isDashing = value; }
         }
 
         public bool IsFastFalling {
-            get { return !IsGrounded && InputSource != null && InputSource.Crouch; }
+            get { return !IsIsGrounded && InputSource != null && InputSource.Crouch; }
         }
 
         public bool IsCrouching {
-            get { return IsGrounded && InputSource != null && InputSource.Crouch; }
+            get { return IsIsGrounded && InputSource != null && InputSource.Crouch; }
         }
 
         public bool CanMove {
@@ -103,6 +103,21 @@ namespace Crescendo.API {
             OnKnockback.SafeInvoke();
         }
 
+        public event Func<bool> MovementRestrictions {
+            add { _canMove.Add(value); }
+            remove { _canMove.Remove(value); }
+        }
+
+        public event Func<bool> JumpRestrictions {
+            add { _canJump.Add(value); }
+            remove { _canJump.Remove(value); }
+        }
+
+        public event Func<bool> AttackRestrictions {
+            add { _canAttack.Add(value); }
+            remove { _canAttack.Remove(value); }
+        }
+
         public void AddForce(Vector3 force) {
             Rigidbody.AddForce(force);
         }
@@ -123,21 +138,6 @@ namespace Crescendo.API {
         public event Action OnKnockback;
         public event Action<bool> OnAttack;
 
-        public event Func<bool> MovementRestrictions {
-            add { _canMove.Add(value); }
-            remove { _canMove.Remove(value); }
-        }
-
-        public event Func<bool> JumpRestrictions {
-            add { _canJump.Add(value); }
-            remove { _canJump.Remove(value); }
-        }
-
-        public event Func<bool> AttackRestrictions {
-            add { _canAttack.Add(value); }
-            remove { _canAttack.Remove(value); }
-        }
-
         public virtual void Move(Vector2 direction) {
             if (CanMove)
                 OnMove.SafeInvoke(direction);
@@ -147,7 +147,7 @@ namespace Crescendo.API {
             OnJump.SafeInvoke();
         }
 
-        public void BlastZoneExit() {
+        internal void BlastZoneExit() {
             OnBlastZoneExit.SafeInvoke();
         }
 
@@ -193,6 +193,23 @@ namespace Crescendo.API {
             CanMove = true;
         }
 
+        public void AttachRequiredComponents() {
+            IEnumerable<Type> componentTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                                                from assemblyType in domainAssembly.GetTypes()
+                                                where
+                                                    assemblyType.IsA<Component>() &&
+                                                    !assemblyType.IsAbstract &&
+                                                    assemblyType.IsDefined(
+                                                                           typeof (RequiredCharacterComponentAttribute),
+                                                                           true)
+                                                select assemblyType);
+
+            foreach (Type requriedType in componentTypes) {
+                if (requriedType != null)
+                    this.GetOrAddComponent(requriedType);
+            }
+        }
+
         private class ActionRestriction {
 
             private List<Func<bool>> _restrictions;
@@ -205,7 +222,7 @@ namespace Crescendo.API {
             public bool Evaluate() {
                 if (!Value)
                     return false;
-                for (int i = 0; i < _restrictions.Count; i++) {
+                for (var i = 0; i < _restrictions.Count; i++) {
                     if (!_restrictions[i]())
                         return false;
                 }
@@ -228,30 +245,34 @@ namespace Crescendo.API {
 
         }
 
+        #region Animator Variables
+
         [Serialize]
         [Category("Animation")]
-        [AnimVar(ParameterType.Trigger)]
+        [AnimVar(Filter = ParameterType.Bool)]
+        private int _grounded;
+
+        [Serialize]
+        [Category("Animation")]
+        [AnimVar(Filter = ParameterType.Trigger)]
         private int _attack;
 
         [Serialize]
         [Category("Animation")]
-        [AnimVar(ParameterType.Trigger)]
-        private int _special;
-
-        [Serialize]
-        [Category("Animation")]
-        [AnimVar(ParameterType.Float)]
+        [AnimVar(Filter = ParameterType.Float)]
         private int _horizontalInput;
 
         [Serialize]
         [Category("Animation")]
-        [AnimVar(ParameterType.Float)]
-        private int _verticalInput;
+        [AnimVar(Filter = ParameterType.Trigger)]
+        private int _special;
 
         [Serialize]
         [Category("Animation")]
-        [AnimVar(ParameterType.Bool)]
-        private int __grounded;
+        [AnimVar(Filter = ParameterType.Float)]
+        private int _verticalInput;
+
+        #endregion
 
         #region Serialized Variables
 
@@ -283,11 +304,11 @@ namespace Crescendo.API {
 
         #region State Variables
 
-        private bool _grounded;
+        private bool _isGrounded;
         private bool _helpless;
         private bool _facing;
-        private bool _dashing;
-        private bool _invinicible;
+        private bool _isDashing;
+        private bool _isInvincible;
 
         #endregion
 
@@ -306,6 +327,7 @@ namespace Crescendo.API {
         #endregion
 
         #region Unity Callbacks
+
         protected virtual void Awake() {
             MoevmentCollider = GetComponent<CapsuleCollider>();
             MoevmentCollider.isTrigger = false;
@@ -318,8 +340,8 @@ namespace Crescendo.API {
 
             Animator = GetComponent<Animator>();
 
-            var animationBehaviors = Animator.GetBehaviours<CharacterAnimationBehaviour>();
-            foreach (var stateBehaviour in animationBehaviors)
+            CharacterAnimationBehaviour[] animationBehaviors = Animator.GetBehaviours<CharacterAnimationBehaviour>();
+            foreach (CharacterAnimationBehaviour stateBehaviour in animationBehaviors)
                 stateBehaviour.SetCharacter(this);
 
             _canMove = new ActionRestriction();
@@ -338,7 +360,7 @@ namespace Crescendo.API {
             // TODO: Find a better place to put this
             CameraController.RemoveTarget(this);
         }
-        
+
         protected virtual void Reset() {
             AttachRequiredComponents();
         }
@@ -349,7 +371,7 @@ namespace Crescendo.API {
             triggerCollider.direction = MoevmentCollider.direction;
             triggerCollider.height = MoevmentCollider.height*triggerSizeRatio;
             triggerCollider.radius = MoevmentCollider.radius*triggerSizeRatio;
-            
+
             if (InputSource == null)
                 return;
 
@@ -371,27 +393,12 @@ namespace Crescendo.API {
         }
 
         protected virtual void OnAnimatorMove() {
-
             //TODO: Merge Physics and Animation Movements here
-            
+
             //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;
         }
+
         #endregion
-
-        public void AttachRequiredComponents() {
-            var componentTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                                  from assemblyType in domainAssembly.GetTypes()
-                                  where
-                                      assemblyType.IsA<Component>()&&
-                                      !assemblyType.IsAbstract &&
-                                      assemblyType.IsDefined(typeof(RequiredCharacterComponentAttribute), true)
-                                  select assemblyType);
-
-            foreach (var requriedType in componentTypes) {
-                if (requriedType != null)
-                    this.GetOrAddComponent(requriedType);
-            }
-        }
     }
 
 }

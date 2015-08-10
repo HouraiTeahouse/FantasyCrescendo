@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Crescendo.API {
-    
+
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(SphereCollider))]
+    [RequireComponent(typeof (SphereCollider))]
     public sealed class Hitbox : MonoBehaviour {
 
         public enum Type {
+
             Offensive,
             Damageable,
             Invincible,
@@ -15,9 +15,29 @@ namespace Crescendo.API {
             Shield,
             Absorb,
             Reflective
+
+        }
+
+        private ParticleSystem _effect;
+        private AudioSource _soundEffect;
+
+        // Represents the source Character that owns this Hitbox
+        // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
+        // If this is a Damageable type Hitbox (AKA a Hurtbox) this is the character that the damage and knockback is applied to.
+        private Character _source;
+
+        private void Awake() {
+            _source = GetComponentInParent<Character>();
+            _effect = GetComponent<ParticleSystem>();
+            _soundEffect = GetComponent<AudioSource>();
+        }
+
+        private void OnDrawGizmos() {
+            GizmoUtil.DrawColliders3D(GetComponentsInChildren<Collider>(), Game.GetHitboxColor(type), true);
         }
 
         #region Serializable Fields
+
         [SerializeField]
         private Type type;
 
@@ -41,9 +61,11 @@ namespace Crescendo.API {
 
         [SerializeField]
         private bool _absorbable;
+
         #endregion
 
         #region Public Access Properties
+
         public int Priority {
             get { return _priority; }
             set { _priority = value; }
@@ -78,25 +100,8 @@ namespace Crescendo.API {
             get { return _absorbable; }
             set { _absorbable = value; }
         }
+
         #endregion
-
-        // Represents the source Character that owns this Hitbox
-        // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
-        // If this is a Damageable type Hitbox (AKA a Hurtbox) this is the character that the damage and knockback is applied to.
-        private Character _source;
-        private ParticleSystem _effect;
-        private AudioSource _soundEffect;
-
-        void Awake() {
-            _source = GetComponentInParent<Character>();
-            _effect = GetComponent<ParticleSystem>();
-            _soundEffect = GetComponent<AudioSource>();
-        }
-
-        void OnDrawGizmos() {
-            GizmoUtil.DrawColliders3D(GetComponentsInChildren<Collider>(), Game.GetHitboxColor(type), true);
-        }
-
     }
 
 }

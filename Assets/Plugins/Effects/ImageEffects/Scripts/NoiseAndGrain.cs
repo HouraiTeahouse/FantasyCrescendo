@@ -127,8 +127,8 @@ namespace UnityStandardAssets.ImageEffects {
 
             GL.Begin(GL.QUADS);
 
-            for (float x1 = 0.0f; x1 < 1.0f; x1 += stepSizeX) {
-                for (float y1 = 0.0f; y1 < 1.0f; y1 += stepSizeY) {
+            for (var x1 = 0.0f; x1 < 1.0f; x1 += stepSizeX) {
+                for (var y1 = 0.0f; y1 < 1.0f; y1 += stepSizeY) {
                     float tcXStart = Random.Range(0.0f, 1.0f);
                     float tcYStart = Random.Range(0.0f, 1.0f);
 

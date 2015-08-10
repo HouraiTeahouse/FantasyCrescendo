@@ -51,19 +51,19 @@ namespace UnityTest {
 
             m_IPEndPointList.Clear();
 
-            foreach (var line in text.Split(new[] {'\n'}, StringSplitOptions.RemoveEmptyEntries)) {
-                var idx = line.IndexOf(':');
+            foreach (string line in text.Split(new[] {'\n'}, StringSplitOptions.RemoveEmptyEntries)) {
+                int idx = line.IndexOf(':');
                 if (idx == -1)
                     throw new Exception(line);
-                var ip = line.Substring(0, idx);
-                var port = line.Substring(idx + 1);
-                m_IPEndPointList.Add(new IPEndPoint(IPAddress.Parse(ip), Int32.Parse(port)));
+                string ip = line.Substring(0, idx);
+                string port = line.Substring(idx + 1);
+                m_IPEndPointList.Add(new IPEndPoint(IPAddress.Parse(ip), int.Parse(port)));
             }
 #endif // if UTT_SOCKETS_SUPPORTED
         }
 
         private static string GetTextFromTextAsset(string fileName) {
-            var nameWithoutExtension = fileName.Substring(0, fileName.LastIndexOf('.'));
+            string nameWithoutExtension = fileName.Substring(0, fileName.LastIndexOf('.'));
             var resultpathFile = Resources.Load(nameWithoutExtension) as TextAsset;
             return resultpathFile != null ? resultpathFile.text : null;
         }
@@ -94,18 +94,21 @@ namespace UnityTest {
         public static List<string> GetAvailableNetworkIPs() {
 #if UTT_SOCKETS_SUPPORTED
             if (!NetworkInterface.GetIsNetworkAvailable())
-                return new List<String> {IPAddress.Loopback.ToString()};
+                return new List<string> {IPAddress.Loopback.ToString()};
 
-            var ipList = new List<UnicastIPAddressInformation>();
-            var allIpsList = new List<UnicastIPAddressInformation>();
+            List<UnicastIPAddressInformation> ipList = new List<UnicastIPAddressInformation>();
+            List<UnicastIPAddressInformation> allIpsList = new List<UnicastIPAddressInformation>();
 
-            foreach (var netInterface in NetworkInterface.GetAllNetworkInterfaces()) {
+            foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces()) {
                 if (netInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 &&
                     netInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet)
                     continue;
 
-                var ipAdresses = netInterface.GetIPProperties().UnicastAddresses
-                                             .Where(a => a.Address.AddressFamily == AddressFamily.InterNetwork);
+                IEnumerable<UnicastIPAddressInformation> ipAdresses = netInterface.GetIPProperties().UnicastAddresses
+                                                                                  .Where(
+                                                                                         a =>
+                                                                                         a.Address.AddressFamily ==
+                                                                                         AddressFamily.InterNetwork);
                 allIpsList.AddRange(ipAdresses);
 
                 if (netInterface.OperationalStatus != OperationalStatus.Up)
@@ -120,12 +123,12 @@ namespace UnityTest {
 
             // sort ip list by their masks to predict which ip belongs to lan network
             ipList.Sort((ip1, ip2) => {
-                            var mask1 = BitConverter.ToInt32(ip1.IPv4Mask.GetAddressBytes().Reverse().ToArray(), 0);
-                            var mask2 = BitConverter.ToInt32(ip2.IPv4Mask.GetAddressBytes().Reverse().ToArray(), 0);
+                            int mask1 = BitConverter.ToInt32(ip1.IPv4Mask.GetAddressBytes().Reverse().ToArray(), 0);
+                            int mask2 = BitConverter.ToInt32(ip2.IPv4Mask.GetAddressBytes().Reverse().ToArray(), 0);
                             return mask2.CompareTo(mask1);
                         });
             if (ipList.Count == 0)
-                return new List<String> {IPAddress.Loopback.ToString()};
+                return new List<string> {IPAddress.Loopback.ToString()};
             return ipList.Select(i => i.Address.ToString()).ToList();
 #else
             return new List<string>();
@@ -134,16 +137,16 @@ namespace UnityTest {
 
         public ITestRunnerCallback ResolveNetworkConnection() {
 #if UTT_SOCKETS_SUPPORTED
-            var nrsList =
+            List<NetworkResultSender> nrsList =
                 m_IPEndPointList.Select(
                                         ipEndPoint =>
                                         new NetworkResultSender(ipEndPoint.Address.ToString(), ipEndPoint.Port))
                                 .ToList();
 
-            var timeout = TimeSpan.FromSeconds(30);
+            TimeSpan timeout = TimeSpan.FromSeconds(30);
             DateTime startTime = DateTime.Now;
             while ((DateTime.Now - startTime) < timeout) {
-                foreach (var networkResultSender in nrsList) {
+                foreach (NetworkResultSender networkResultSender in nrsList) {
                     try {
                         if (!networkResultSender.Ping())
                             continue;

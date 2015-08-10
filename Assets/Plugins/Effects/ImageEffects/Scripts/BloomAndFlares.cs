@@ -109,7 +109,7 @@ namespace UnityStandardAssets.ImageEffects {
             if (doHdr)
                 realBlendMode = BloomScreenBlendMode.Add;
 
-            var rtFormat = (doHdr) ? RenderTextureFormat.ARGBHalf : RenderTextureFormat.Default;
+            RenderTextureFormat rtFormat = (doHdr) ? RenderTextureFormat.ARGBHalf : RenderTextureFormat.Default;
             RenderTexture halfRezColor = RenderTexture.GetTemporary(source.width/2, source.height/2, 0, rtFormat);
             RenderTexture quarterRezColor = RenderTexture.GetTemporary(source.width/4, source.height/4, 0, rtFormat);
             RenderTexture secondQuarterRezColor = RenderTexture.GetTemporary(source.width/4,
@@ -138,7 +138,7 @@ namespace UnityStandardAssets.ImageEffects {
             if (bloomBlurIterations < 1)
                 bloomBlurIterations = 1;
 
-            for (int iter = 0; iter < bloomBlurIterations; iter++) {
+            for (var iter = 0; iter < bloomBlurIterations; iter++) {
                 float spreadForPass = (1.0f + (iter*0.5f))*sepBlurSpread;
                 separableBlurMaterial.SetVector("offsets", new Vector4(0.0f, spreadForPass*oneOverBaseSize, 0.0f, 0.0f));
 
@@ -218,7 +218,7 @@ namespace UnityStandardAssets.ImageEffects {
                     thirdQuarterRezColor.DiscardContents();
 
                     if (lensflareMode == (LensflareStyle34) 1) {
-                        for (int itera = 0; itera < hollywoodFlareBlurIterations; itera++) {
+                        for (var itera = 0; itera < hollywoodFlareBlurIterations; itera++) {
                             separableBlurMaterial.SetVector("offsets",
                                                             new Vector4(
                                                                 (hollyStretchWidth*2.0f/widthOverHeight)*oneOverBaseSize,
@@ -243,7 +243,7 @@ namespace UnityStandardAssets.ImageEffects {
                     } else {
                         // (c) combined
 
-                        for (int ix = 0; ix < hollywoodFlareBlurIterations; ix++) {
+                        for (var ix = 0; ix < hollywoodFlareBlurIterations; ix++) {
                             separableBlurMaterial.SetVector("offsets",
                                                             new Vector4(
                                                                 (hollyStretchWidth*2.0f/widthOverHeight)*oneOverBaseSize,

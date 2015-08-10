@@ -1,18 +1,14 @@
-// ****************************************************************
-// Based on nUnit 2.6.2 (http://www.nunit.org/)
-// ****************************************************************
-
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace UnityTest
-{
+namespace UnityTest {
+
     /// <summary>
     /// Summary description for ResultSummarizer.
     /// </summary>
-    public class ResultSummarizer
-    {
+    public class ResultSummarizer {
+
+        private TimeSpan m_Duration;
         private int m_ErrorCount;
         private int m_FailureCount;
         private int m_IgnoreCount;
@@ -23,16 +19,12 @@ namespace UnityTest
         private int m_SuccessCount;
         private int m_TestsRun;
 
-        private TimeSpan m_Duration;
-
-        public ResultSummarizer(IEnumerable<ITestResult> results)
-        {
-            foreach (var result in results)
+        public ResultSummarizer(IEnumerable<ITestResult> results) {
+            foreach (ITestResult result in results)
                 Summarize(result);
         }
 
-        public bool Success
-        {
+        public bool Success {
             get { return m_FailureCount == 0; }
         }
 
@@ -41,8 +33,7 @@ namespace UnityTest
         /// have been summarized. Any tests excluded by use of
         /// Category or Explicit attributes are not counted.
         /// </summary>
-        public int ResultCount
-        {
+        public int ResultCount {
             get { return m_ResultCount; }
         }
 
@@ -51,40 +42,35 @@ namespace UnityTest
         /// is the same as ResultCount, less any Skipped, Ignored
         /// or NonRunnable tests.
         /// </summary>
-        public int TestsRun
-        {
+        public int TestsRun {
             get { return m_TestsRun; }
         }
 
         /// <summary>
         /// Returns the number of tests that passed
         /// </summary>
-        public int Passed
-        {
+        public int Passed {
             get { return m_SuccessCount; }
         }
 
         /// <summary>
         /// Returns the number of test cases that had an error.
         /// </summary>
-        public int Errors
-        {
+        public int Errors {
             get { return m_ErrorCount; }
         }
 
         /// <summary>
         /// Returns the number of test cases that failed.
         /// </summary>
-        public int Failures
-        {
+        public int Failures {
             get { return m_FailureCount; }
         }
 
         /// <summary>
         /// Returns the number of test cases that failed.
         /// </summary>
-        public int Inconclusive
-        {
+        public int Inconclusive {
             get { return m_InconclusiveCount; }
         }
 
@@ -93,53 +79,44 @@ namespace UnityTest
         /// due to errors in the signature of the class or method.
         /// Such tests are also counted as Errors.
         /// </summary>
-        public int NotRunnable
-        {
+        public int NotRunnable {
             get { return m_NotRunnable; }
         }
 
         /// <summary>
         /// Returns the number of test cases that were skipped.
         /// </summary>
-        public int Skipped
-        {
+        public int Skipped {
             get { return m_SkipCount; }
         }
 
-        public int Ignored
-        {
+        public int Ignored {
             get { return m_IgnoreCount; }
         }
 
-        public double Duration
-        {
+        public double Duration {
             get { return m_Duration.TotalSeconds; }
         }
 
-        public int TestsNotRun
-        {
+        public int TestsNotRun {
             get { return m_SkipCount + m_IgnoreCount + m_NotRunnable; }
         }
 
-        public void Summarize(ITestResult result)
-        {
+        public void Summarize(ITestResult result) {
             m_Duration += TimeSpan.FromSeconds(result.Duration);
             m_ResultCount++;
-            
-            if(!result.Executed)
-            {
-                if(result.IsIgnored)
-                {
+
+            if (!result.Executed) {
+                if (result.IsIgnored) {
                     m_IgnoreCount++;
                     return;
                 }
-                
+
                 m_SkipCount++;
                 return;
             }
-            
-            switch (result.ResultState)
-            {
+
+            switch (result.ResultState) {
                 case TestResultState.Success:
                     m_SuccessCount++;
                     m_TestsRun++;
@@ -159,6 +136,7 @@ namespace UnityTest
                     break;
                 case TestResultState.NotRunnable:
                     m_NotRunnable++;
+
                     // errorCount++;
                     break;
                 case TestResultState.Ignored:
@@ -169,5 +147,7 @@ namespace UnityTest
                     break;
             }
         }
+
     }
+
 }

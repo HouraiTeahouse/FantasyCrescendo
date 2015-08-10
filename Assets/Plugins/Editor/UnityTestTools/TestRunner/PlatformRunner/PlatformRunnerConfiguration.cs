@@ -8,37 +8,31 @@ using UnityEditor;
 using UnityEngine;
 
 [Serializable]
-public class PlatformRunnerConfiguration
-{
-    public string[] scenes = new string[0];
-    public BuildTarget buildTarget;
-    public bool runInEditor;
-    public string projectName = EditorApplication.currentScene;
+public class PlatformRunnerConfiguration {
 
-    public string resultsDir = null;
-    public bool sendResultsOverNetwork;
+    public BuildTarget buildTarget;
     public List<string> ipList;
     public int port;
+    public string projectName = EditorApplication.currentScene;
+    public string resultsDir = null;
+    public bool runInEditor;
+    public string[] scenes = new string[0];
+    public bool sendResultsOverNetwork;
 
-    public PlatformRunnerConfiguration(BuildTarget buildTarget)
-    {
+    public PlatformRunnerConfiguration(BuildTarget buildTarget) {
         this.buildTarget = buildTarget;
         projectName = EditorApplication.currentScene;
     }
 
     public PlatformRunnerConfiguration()
-        : this(BuildTarget.StandaloneWindows)
-    {
-    }
+        : this(BuildTarget.StandaloneWindows) {}
 
-    public string GetTempPath()
-    {
+    public string GetTempPath() {
         if (string.IsNullOrEmpty(projectName))
             projectName = Path.GetTempFileName();
 
-        var path = Path.Combine("Temp", projectName);
-        switch (buildTarget)
-        {
+        string path = Path.Combine("Temp", projectName);
+        switch (buildTarget) {
             case BuildTarget.StandaloneWindows:
             case BuildTarget.StandaloneWindows64:
                 return path + ".exe";
@@ -53,25 +47,21 @@ public class PlatformRunnerConfiguration
         }
     }
 
-    public string[] GetConnectionIPs()
-    {
+    public string[] GetConnectionIPs() {
         return ipList.Select(ip => ip + ":" + port).ToArray();
     }
 
-    public static int TryToGetFreePort()
-    {
-        var port = -1;
-        try
-        {
+    public static int TryToGetFreePort() {
+        int port = -1;
+        try {
             var l = new TcpListener(IPAddress.Any, 0);
             l.Start();
-            port = ((IPEndPoint)l.Server.LocalEndPoint).Port;
+            port = ((IPEndPoint) l.Server.LocalEndPoint).Port;
             l.Stop();
-        }
-        catch (SocketException e)
-        {
+        } catch (SocketException e) {
             Debug.LogException(e);
         }
         return port;
     }
+
 }

@@ -31,8 +31,8 @@ public class StockMatch : Match {
 
     private void Update() {
         int winner = -1;
-        int aliveCount = 0;
-        for (int i = 0; i < criteria.Count; i++) {
+        var aliveCount = 0;
+        for (var i = 0; i < criteria.Count; i++) {
             if (criteria[i].Alive) {
                 if (aliveCount == 0)
                     winner = i;

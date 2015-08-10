@@ -66,17 +66,17 @@ namespace UnityStandardAssets.ImageEffects {
             fastBloomMaterial.SetVector("_Parameter", new Vector4(blurSize*widthMod, 0.0f, threshold, intensity));
             source.filterMode = FilterMode.Bilinear;
 
-            var rtW = source.width/divider;
-            var rtH = source.height/divider;
+            int rtW = source.width/divider;
+            int rtH = source.height/divider;
 
             // downsample
             RenderTexture rt = RenderTexture.GetTemporary(rtW, rtH, 0, source.format);
             rt.filterMode = FilterMode.Bilinear;
             Graphics.Blit(source, rt, fastBloomMaterial, 1);
 
-            var passOffs = blurType == BlurType.Standard ? 0 : 2;
+            int passOffs = blurType == BlurType.Standard ? 0 : 2;
 
-            for (int i = 0; i < blurIterations; i++) {
+            for (var i = 0; i < blurIterations; i++) {
                 fastBloomMaterial.SetVector("_Parameter",
                                             new Vector4(blurSize*widthMod + (i*1.0f), 0.0f, threshold, intensity));
 

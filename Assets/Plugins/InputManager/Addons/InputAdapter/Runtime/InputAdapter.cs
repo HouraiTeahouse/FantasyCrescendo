@@ -172,11 +172,11 @@ namespace TeamUtility.IO {
         }
 
         private void UpdateInputDevice() {
-            bool anyJoystickKey = false;
+            var anyJoystickKey = false;
 
             if (_inputDevice == InputDevice.Joystick) {
                 if (InputManager.anyKey) {
-                    for (int i = 0; i <= 19; i++) {
+                    for (var i = 0; i <= 19; i++) {
                         if (InputManager.GetKey((KeyCode) (_firstJoystickKey + i))) {
                             anyJoystickKey = true;
                             break;
@@ -191,7 +191,7 @@ namespace TeamUtility.IO {
                 }
             } else {
                 if (InputManager.anyKey) {
-                    for (int i = 0; i <= 19; i++) {
+                    for (var i = 0; i <= 19; i++) {
                         if (InputManager.GetKey((KeyCode) (_firstJoystickKey + i))) {
                             anyJoystickKey = true;
                             break;
@@ -277,7 +277,7 @@ namespace TeamUtility.IO {
 #if UNITY_EDITOR
         [UnityEditor.MenuItem("Team Utility/Input Manager/Create Input Adapter", false, 3)]
         private static void Create() {
-            GameObject gameObject = new GameObject("Input Adapter");
+            var gameObject = new GameObject("Input Adapter");
             gameObject.AddComponent<InputAdapter>();
 
             UnityEditor.Selection.activeGameObject = gameObject;
@@ -368,7 +368,7 @@ namespace TeamUtility.IO {
                         !Mathf.Approximately(_instance._currentDpadValues.y, 0.0f));
             }
 
-            bool state = false;
+            var state = false;
             switch (button) {
                 case InputDPADButton.Left_Up:
                     state = (_instance._currentDpadValues.x <= -1.0f && _instance._currentDpadValues.y >= 1.0f);
@@ -411,7 +411,7 @@ namespace TeamUtility.IO {
                          Mathf.Approximately(_instance._lastDpadValues.y, 0.0f)));
             }
 
-            bool state = false;
+            var state = false;
             switch (button) {
                 case InputDPADButton.Left_Up:
                     state = (_instance._currentDpadValues.x <= -1.0f && _instance._lastDpadValues.x > -1.0f &&
@@ -458,7 +458,7 @@ namespace TeamUtility.IO {
                          !Mathf.Approximately(_instance._lastDpadValues.y, 0.0f)));
             }
 
-            bool state = false;
+            var state = false;
             switch (button) {
                 case InputDPADButton.Left_Up:
                     state = (_instance._currentDpadValues.x > -1.0f && _instance._lastDpadValues.x <= -1.0f &&

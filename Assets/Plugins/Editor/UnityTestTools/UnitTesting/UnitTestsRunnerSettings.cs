@@ -1,30 +1,27 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
+namespace UnityTest {
 
-namespace UnityTest
-{
+    public class UnitTestsRunnerSettings : ProjectSettingsBase {
 
-    public class UnitTestsRunnerSettings : ProjectSettingsBase
-    {
-        public bool runOnRecompilation;
-        public bool horizontalSplit = true;
         public bool autoSaveSceneBeforeRun;
+        public bool horizontalSplit = true;
+        public bool runOnRecompilation;
         public bool runTestOnANewScene;
 
         public void ToggleRunTestOnANewScene() {
             runTestOnANewScene = !runTestOnANewScene;
-            Save ();
+            Save();
         }
-        
+
         public void ToggleAutoSaveSceneBeforeRun() {
             autoSaveSceneBeforeRun = !autoSaveSceneBeforeRun;
-            Save ();
+            Save();
         }
-        
+
         public void ToggleHorizontalSplit() {
             horizontalSplit = !horizontalSplit;
-            Save ();
+            Save();
         }
+
     }
+
 }

@@ -132,13 +132,13 @@ namespace UnityStandardAssets.ImageEffects {
             float y2;
 
             RenderTexture.active = dest;
-            bool invertY = true; // source.texelSize.y < 0.0ff;
+            var invertY = true; // source.texelSize.y < 0.0ff;
 
             // Set up the simple Matrix
             GL.PushMatrix();
             GL.LoadOrtho();
 
-            for (int i = 0; i < material.passCount; i++) {
+            for (var i = 0; i < material.passCount; i++) {
                 material.SetPass(i);
 
                 float y1_;

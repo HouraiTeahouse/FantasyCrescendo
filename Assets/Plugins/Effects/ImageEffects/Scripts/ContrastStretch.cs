@@ -99,7 +99,7 @@ namespace UnityStandardAssets.ImageEffects {
         }
 
         private void OnEnable() {
-            for (int i = 0; i < 2; ++i) {
+            for (var i = 0; i < 2; ++i) {
                 if (!adaptRenderTex[i]) {
                     adaptRenderTex[i] = new RenderTexture(1, 1, 0);
                     adaptRenderTex[i].hideFlags = HideFlags.HideAndDontSave;
@@ -108,7 +108,7 @@ namespace UnityStandardAssets.ImageEffects {
         }
 
         private void OnDisable() {
-            for (int i = 0; i < 2; ++i) {
+            for (var i = 0; i < 2; ++i) {
                 DestroyImmediate(adaptRenderTex[i]);
                 adaptRenderTex[i] = null;
             }

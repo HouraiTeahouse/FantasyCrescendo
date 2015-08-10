@@ -1,8 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Vexe.Runtime.Types
-{
+namespace Vexe.Runtime.Types {
     [Flags]
     public enum ParameterType {
         Float = 1,
@@ -12,21 +11,23 @@ namespace Vexe.Runtime.Types
         All = 15
     }
 
-	/// <summary>
-	/// Apply this to a string to get a popup of all the available variables in the Animator component that's attached to the owner's gameObject
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-	public class AnimVarAttribute : DrawnAttribute {
-
-	    public AnimVarAttribute(ParameterType filter = ParameterType.All) {
-	        Filter = filter;
-	    }
+    /// <summary>
+    /// Apply this to a string to get a popup of all the available variables in the Animator component that's attached to the owner's gameObject
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
+    public class AnimVarAttribute : DrawnAttribute {
+        
+        private ParameterType _filter = ParameterType.All;
 
         /// <summary>
         /// A filter on the types of 
         /// </summary>
-	    public ParameterType Filter { get; set; }
-        
+	    public ParameterType Filter 
+        {
+            get { return _filter;  }
+            set { _filter = value; }
+        }
+
         /// <summary>
         /// A method to get the animator in case it wasn't attached to the target's gameObject
         /// If this was left out, the drawer will use the target's gameObject to get the animator from
@@ -43,5 +44,5 @@ namespace Vexe.Runtime.Types
         /// so make sure you use the right value otherwise you might get unexpected results
         /// </summary>
         public string AutoMatch { get; set; }
-	}
+    }
 }

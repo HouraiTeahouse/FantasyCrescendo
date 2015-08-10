@@ -1,11 +1,4 @@
-﻿/*
-	Interesting links
-	https://gist.github.com/stramit/c98b992c43f7313084ac
-	https://gist.github.com/flarb/052467190b84657f10d2
-	http://forum.unity3d.com/threads/custom-cursor-how-can-i-simulate-mouse-clicks.268513/
- */
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -36,7 +29,7 @@ public class CursorInputModule : PointerInputModule {
     // Process is called once per tick
     public override void Process() {
         // For each player
-        for (int i = 0; i < cursorObjects.Count; i++) {
+        for (var i = 0; i < cursorObjects.Count; i++) {
             // Getting objects related to player (i+1)
             GameObject cursorObject = cursorObjects[i];
             GetPointerData(i, out pointer, true);

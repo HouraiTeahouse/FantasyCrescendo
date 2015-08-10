@@ -31,7 +31,7 @@ public class PlayerSlotUI : MonoBehaviour {
 
     public void updateUIMode(PlayerOptions.PlayerType pt) {
         GameObject levelTextParent = levelText.transform.parent.gameObject;
-        Text buttonText = playerModeBtn.GetComponentInChildren<Text>();
+        var buttonText = playerModeBtn.GetComponentInChildren<Text>();
         if (buttonText == null) {
             Debug.LogError("Unable to get player slot button text.");
             return;

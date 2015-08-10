@@ -10,7 +10,7 @@ namespace UnityStandardAssets.ImageEffects {
         private static bool HasMeshes() {
             if (meshes == null)
                 return false;
-            for (int i = 0; i < meshes.Length; i++) {
+            for (var i = 0; i < meshes.Length; i++) {
                 if (null == meshes[i])
                     return false;
             }
@@ -22,7 +22,7 @@ namespace UnityStandardAssets.ImageEffects {
             if (meshes == null)
                 return;
 
-            for (int i = 0; i < meshes.Length; i++) {
+            for (var i = 0; i < meshes.Length; i++) {
                 if (null != meshes[i]) {
                     Object.DestroyImmediate(meshes[i]);
                     meshes[i] = null;
@@ -43,8 +43,8 @@ namespace UnityStandardAssets.ImageEffects {
 
             meshes = new Mesh[meshCount];
 
-            int i = 0;
-            int index = 0;
+            var i = 0;
+            var index = 0;
             for (i = 0; i < totalTris; i += maxTris) {
                 int tris = Mathf.FloorToInt(Mathf.Clamp((totalTris - i), 0, maxTris));
 
@@ -59,19 +59,19 @@ namespace UnityStandardAssets.ImageEffects {
             var mesh = new Mesh();
             mesh.hideFlags = HideFlags.DontSave;
 
-            var verts = new Vector3[triCount*3];
-            var uvs = new Vector2[triCount*3];
-            var uvs2 = new Vector2[triCount*3];
-            var tris = new int[triCount*3];
+            Vector3[] verts = new Vector3[triCount*3];
+            Vector2[] uvs = new Vector2[triCount*3];
+            Vector2[] uvs2 = new Vector2[triCount*3];
+            int[] tris = new int[triCount*3];
 
-            for (int i = 0; i < triCount; i++) {
+            for (var i = 0; i < triCount; i++) {
                 int i3 = i*3;
                 int vertexWithOffset = triOffset + i;
 
                 float x = Mathf.Floor(vertexWithOffset%totalWidth)/totalWidth;
                 float y = Mathf.Floor(vertexWithOffset/totalWidth)/totalHeight;
 
-                Vector3 position = new Vector3(x*2 - 1, y*2 - 1, 1.0f);
+                var position = new Vector3(x*2 - 1, y*2 - 1, 1.0f);
 
                 verts[i3 + 0] = position;
                 verts[i3 + 1] = position;

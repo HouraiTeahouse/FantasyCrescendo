@@ -64,7 +64,7 @@ namespace UnityStandardAssets.ImageEffects {
                 rt.filterMode = FilterMode.Bilinear;
             }
 
-            int basePassNr = (int) quality;
+            var basePassNr = (int) quality;
             basePassNr *= 2;
             Graphics.Blit(source,
                           rt,

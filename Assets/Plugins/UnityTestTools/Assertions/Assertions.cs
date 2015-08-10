@@ -5,7 +5,8 @@ namespace UnityTest {
     public static class Assertions {
 
         public static void CheckAssertions() {
-            var assertions = Object.FindObjectsOfType(typeof (AssertionComponent)) as AssertionComponent[];
+            AssertionComponent[] assertions =
+                Object.FindObjectsOfType(typeof (AssertionComponent)) as AssertionComponent[];
             CheckAssertions(assertions);
         }
 
@@ -20,9 +21,9 @@ namespace UnityTest {
         public static void CheckAssertions(AssertionComponent[] assertions) {
             if (!Debug.isDebugBuild)
                 return;
-            foreach (var assertion in assertions) {
+            foreach (AssertionComponent assertion in assertions) {
                 assertion.checksPerformed++;
-                var result = assertion.Action.Compare();
+                bool result = assertion.Action.Compare();
                 if (!result) {
                     assertion.hasFailed = true;
                     assertion.Action.Fail(assertion);

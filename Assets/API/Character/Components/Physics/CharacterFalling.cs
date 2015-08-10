@@ -14,9 +14,7 @@ namespace Genso.API {
         private float _maxFallSpeed = 5f;
 
         private float FallSpeed {
-            get {
-                return Character.IsFastFalling ? _fastFallSpeed : _maxFallSpeed;
-            }
+            get { return Character.IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
         private void FixedUpdate() {

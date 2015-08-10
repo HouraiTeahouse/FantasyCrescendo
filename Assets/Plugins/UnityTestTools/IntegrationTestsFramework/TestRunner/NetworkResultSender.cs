@@ -49,8 +49,8 @@ namespace UnityTest {
 #if UTT_SOCKETS_SUPPORTED
             try {
                 using (var tcpClient = new TcpClient()) {
-                    var result = tcpClient.BeginConnect(m_Ip, m_Port, null, null);
-                    var success = result.AsyncWaitHandle.WaitOne(m_ConnectionTimeout);
+                    IAsyncResult result = tcpClient.BeginConnect(m_Ip, m_Port, null, null);
+                    bool success = result.AsyncWaitHandle.WaitOne(m_ConnectionTimeout);
                     if (!success)
                         return false;
                     try {
@@ -76,7 +76,7 @@ namespace UnityTest {
         }
 
         public bool Ping() {
-            var result = SendDTO(ResultDTO.CreatePing());
+            bool result = SendDTO(ResultDTO.CreatePing());
             m_LostConnection = false;
             return result;
         }

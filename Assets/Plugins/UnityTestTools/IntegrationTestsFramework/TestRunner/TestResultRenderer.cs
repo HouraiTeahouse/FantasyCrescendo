@@ -35,7 +35,7 @@ public class TestResultRenderer {
 
             m_ScrollPosition = GUILayout.BeginScrollView(m_ScrollPosition, GUILayout.ExpandWidth(true));
             var text = "";
-            foreach (var testGroup in m_TestCollection) {
+            foreach (KeyValuePair<string, List<ITestResult>> testGroup in m_TestCollection) {
                 text += "<b><size=18>" + testGroup.Key + "</size></b>\n";
                 text += string.Join("\n",
                                     testGroup.Value

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using System.Text;
 using UnityEditor;
-using Vexe.Runtime.Extensions;
+using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
 namespace Crescendo.API.Editor {
-    
+
     public static class EditorUtil {
 
 /*       
@@ -52,10 +48,13 @@ namespace Crescendo.API.Editor {
         /// <param name="prefab"></param>
         /// <returns></returns>
         public static T GetComponentInChildren<T>(GameObject prefab) where T : class {
-            if(prefab == null)
+            if (prefab == null)
                 throw new ArgumentNullException("prefab");
 
-            return prefab.GetChildren().Select(child => child.GetIComponent<T>()).FirstOrDefault(instance => instance != null);
+            return
+                prefab.GetChildren()
+                      .Select(child => child.GetComponent<T>())
+                      .FirstOrDefault(instance => instance != null);
         }
 
         /// <summary>
@@ -73,11 +72,11 @@ namespace Crescendo.API.Editor {
                 throw new ArgumentNullException("prefab");
 
 
-            return prefab.GetChildren().SelectMany(child => child.GetIComponents<T>()).ToArray();
+            return prefab.GetChildren().SelectMany(child => child.GetComponents<T>()).ToArray();
         }
 
-        public static T GetComponentInChildren<T>(Component prefab) where T : class{
-            if(prefab == null)
+        public static T GetComponentInChildren<T>(Component prefab) where T : class {
+            if (prefab == null)
                 throw new ArgumentNullException("prefab");
             return GetComponentInChildren<T>(prefab.gameObject);
         }
@@ -93,10 +92,10 @@ namespace Crescendo.API.Editor {
         }
 
         public static void Space(int? space = null) {
-            if(space == null)
+            if (space == null)
                 GUILayout.FlexibleSpace();
             else
-                GUILayout.Space((int)space);
+                GUILayout.Space((int) space);
         }
 
     }
