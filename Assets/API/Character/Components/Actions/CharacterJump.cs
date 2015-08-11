@@ -19,6 +19,7 @@ namespace Crescendo.API {
         [AnimVar(Filter = ParameterType.Trigger, AutoMatch = "Trigger")]
         private int _jumpTrigger;
 
+        [DontSerialize, Hide]
         public int JumpCount { get; private set; }
 
         public event Action OnJump;

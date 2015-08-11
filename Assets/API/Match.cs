@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Vexe.Runtime.Types;
 using UnityObject = UnityEngine.Object;
 
 namespace Crescendo.API {
@@ -10,88 +12,78 @@ namespace Crescendo.API {
     /// </summary>
     /// Author: James Liu
     /// Authored on: 07/01/2015
-    public abstract class Match : GensoBehaviour {
+    public sealed class Match : Singleton<Match> {
 
-        private static bool _isFinished;
-        private static int _winner;
-        private List<CharacterData> selectedCharacters;
+        private struct Selection {
 
-        public int PlayerCount {
-            get { return selectedCharacters.Count; }
+            public CharacterData CharacterData;
+            public int Pallete;
+
+            public Character Load() {
+                return CharacterData.LoadPrefab(Pallete);
+            }
+
         }
 
-        protected virtual void Awake() {
-            selectedCharacters = new List<CharacterData>();
+        [Serialize]
+        private static List<IMatchRule> _matchRules;
+
+        [Serialize]
+        private List<Selection> selectedCharacters;
+
+        public static int PlayerCount {
+            get { return Selected == null ? 0 : Selected.Count; }
         }
 
-        public void SetCharcter(int playerNumber, CharacterData character) {
+        private static List<Selection> Selected {
+            get { return Instance == null ? null : Instance.selectedCharacters; }
+        }
+
+        public static void SetCharcter(int playerNumber, CharacterData character, int pallete = 1) {
             if (character == null)
                 throw new ArgumentNullException("character");
-            selectedCharacters[playerNumber] = character;
+            if(Instance == null)
+                throw new InvalidOperationException();
+            Selected[playerNumber] = new Selection {
+                CharacterData = character, Pallete = pallete
+            };
         }
 
-        public void SetCharacters(IEnumerable<CharacterData> characters) {
-            if (characters == null)
-                throw new ArgumentNullException("characters");
-            selectedCharacters.Clear();
-            selectedCharacters.AddRange(characters);
-        }
-
-        /// <summary>
-        /// Finishes the match and declares a winner
-        /// </summary>
-        /// <param name="playerNumber">Player number.</param>
-        public static void DeclareWinner(int playerNumber) {
-            _isFinished = true;
-            _winner = playerNumber;
-        }
-
-        private IEnumerator MatchLoop() {
+        private static IEnumerator MatchLoop() {
             // Wait for the match to end
-            while (!_isFinished)
+            while (!_matchRules.Any(rule => rule.IsFinished)) {
+                foreach(var rule in _matchRules)
+                    rule.OnMatchUpdate();
                 yield return new WaitForEndOfFrame();
-
-            // Check for tie
-            if (_winner < 0 || _winner >= PlayerCount) {
-                // Initiate Sudden Death
             }
+
+            Character winner = _matchRules.Select(rule => rule.Winner).FirstOrDefault(character => character != null);
+
+            foreach (var rule in _matchRules)
+                rule.OnMatchEnd();
         }
 
-        private void OnDestroy() {
-            // On destruction of a match object, reset the winner
-            _isFinished = false;
-            _winner = -1;
-        }
-
-        private void OnLevelWasLoaded(int level) {
-            if (Stage.Instance != null)
-                return;
-
-            StartMatch();
-        }
-
-        public void StartMatch() {
-            if (PlayerCount > Stage.SupportedPlayerCount) {
+        public static void Begin() {
+            if (Instance == null || Stage.Instance == null || PlayerCount > Stage.SupportedPlayerCount) {
                 throw new InvalidOperationException(
                     "Cannot start a match when there are more players participating than supported by the selected stage");
             }
 
-            OnStartMatch();
+            foreach (var rule in _matchRules)
+                rule.OnMatchStart();
 
             // Spawn players
             for (var i = 0; i < PlayerCount; i++) {
-                Character runtimeCharacter = Game.SpawnPlayer(i, selectedCharacters[i]);
-                OnSpawn(runtimeCharacter);
+                Character runtimeCharacter = Game.SpawnPlayer(i, Selected[i].Load());
+                foreach(var rule in _matchRules)
+                    rule.OnSpawn(runtimeCharacter);
                 Transform spawnPoint = Stage.GetSpawnPoint(i);
                 runtimeCharacter.position = spawnPoint.position;
                 runtimeCharacter.rotation = spawnPoint.rotation;
             }
 
-            StartCoroutine(MatchLoop());
+            Instance.StartCoroutine(MatchLoop());
         }
-
-        protected virtual void OnStartMatch() {}
-        protected abstract void OnSpawn(Character character);
 
     }
 

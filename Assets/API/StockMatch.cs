@@ -1,91 +1,100 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Crescendo.API;
 using UnityEngine;
+using Vexe.Runtime.Extensions;
+using Vexe.Runtime.Types;
 
-public class StockMatch : Match {
+namespace Crescendo.API {
 
-    //TODO: Remove UI Code from this class
+    public class Stock : CharacterComponent {
 
-
-    [SerializeField]
-    private CharacterData[] characters;
-
-    private List<StockCriteria> criteria;
-
-    //TODO: cleanup
-
-    [SerializeField]
-    private int stockCount = 5;
-
-    public StockCriteria GetPlayerData(int playerNumber) {
-        return criteria[playerNumber];
-    }
-
-    //TODO: Remove this hack
-    protected override void Awake() {
-        base.Awake();
-        criteria = new List<StockCriteria>();
-        SetCharacters(characters);
-        StartMatch();
-    }
-
-    private void Update() {
-        int winner = -1;
-        var aliveCount = 0;
-        for (var i = 0; i < criteria.Count; i++) {
-            if (criteria[i].Alive) {
-                if (aliveCount == 0)
-                    winner = i;
-                else
-                    winner = -1;
-                aliveCount++;
-            }
-        }
-
-        if (aliveCount == 0)
-            Debug.Log("Sudden Death");
-        else if (winner > 0)
-            DeclareWinner(winner);
-    }
-
-    protected override void OnStartMatch() {
-        criteria.Clear();
-    }
-
-    protected override void OnSpawn(Character character) {
-        GameObject characterObject = character.gameObject;
-        if (criteria.Count == 0)
-            characterObject.AddComponent<TestInput>();
-        criteria.Add(new StockCriteria(character, stockCount));
-        characterObject.AddComponent<CharacterDeath>();
-        characterObject.AddComponent<CharacterRespawn>();
-    }
-
-    public class StockCriteria {
-
+        private CharacterRespawn _respawn;
         private int _lives;
-        private Character target;
-
-        public StockCriteria(Character character, int count) {
-            _lives = count;
-            target = character;
-            target.OnBlastZoneExit += OnDeath;
-        }
-
         public bool Alive {
-            get { return _lives > 0; }
+            get { return Lives > 0; }
         }
 
         public int Lives {
             get { return _lives; }
+            internal set {
+                _lives = value;
+                if(_respawn != null)
+                    _respawn.enabled = Alive;
+                if(Character != null)
+                    Character.gameObject.SetActive(Alive);
+            }
         }
 
-        private void OnDeath() {
-            _lives--;
-            if (!Alive) {
-                target.gameObject.SetActive(false);
-                target.GetComponent<CharacterRespawn>().enabled = false;
+        protected override void Start() {
+            base.Start();
+            Character.OnBlastZoneExit += () => Lives--;
+            Character.GetOrAddComponent<CharacterDeath>();
+            _respawn = Character.GetOrAddComponent<CharacterRespawn>();
+        }
+
+    }
+
+
+    public class StockMatch : IMatchRule {
+
+        //TODO: Remove UI Code from this class
+
+        //TODO: cleanup
+
+        [Serialize]
+        private readonly int stock = 5;
+
+        private readonly List<Stock> characterStocks;
+
+        public StockMatch() {
+            characterStocks = new List<Stock>();
+        }
+
+        public StockMatch(int stockCount) {
+            stock = stockCount;
+        }
+
+        public void OnMatchUpdate() {
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsFinished {
+            get {
+                return characterStocks.Sum(s => s.Alive ? 1 : 0) > 1;
             }
+        }
+
+        public Character Winner {
+            get {
+                Stock winner = null;
+                foreach (var characterStock in characterStocks.Where(s => s.Alive)) {
+                    if (winner == null)
+                        winner = characterStock;
+                    else
+                        winner = characterStock.Lives > winner.Lives ? characterStock : winner;
+                }
+                return winner == null ? null : winner.Character;
+            }
+        }
+
+        public void OnMatchStart() {
+            characterStocks.Clear();
+        }
+
+        public void OnMatchEnd() {
+        }
+
+        public void OnSpawn(Character character) {
+            // TODO: Remove this hack
+            if (characterStocks.Count == 0)
+                character.GetOrAddComponent<TestInput>();
+
+            var characterStock = character.GetOrAddComponent<Stock>();
+            characterStock.Lives = stock;
+            characterStocks.Add(characterStock);
+
+            character.GetOrAddComponent<CharacterDamage>();
         }
 
     }

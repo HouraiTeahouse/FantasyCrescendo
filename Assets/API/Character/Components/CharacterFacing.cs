@@ -40,6 +40,9 @@ namespace Crescendo.API {
         }
 
         private void Update() {
+            if (InputSource == null)
+                return;
+
             Vector2 movement = InputSource.Movement;
 
             GetComponent<IDamageable>();

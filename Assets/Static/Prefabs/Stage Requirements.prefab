@@ -62,7 +62,7 @@ GameObject:
   - 224: {fileID: 22469488}
   - 223: {fileID: 22388948}
   - 114: {fileID: 11421638}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - 222: {fileID: 22253316}
   - 114: {fileID: 11453524}
   - 114: {fileID: 11499726}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FPS Counter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 427500}
   - 114: {fileID: 11432082}
-  - 114: {fileID: 11467680}
+  - 114: {fileID: 11478726}
   m_Layer: 0
   m_Name: Stage Requirements
   m_TagString: Untagged
@@ -155,7 +155,7 @@ GameObject:
   - 222: {fileID: 22283850}
   - 114: {fileID: 11463032}
   - 114: {fileID: 11402216}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - 222: {fileID: 22293130}
   - 114: {fileID: 11409178}
   - 114: {fileID: 11412766}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,9 +457,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b773a6b7da2e425448f5d6db19fbae28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
+  _id: 9640
+  dbg: 0
+  _serializationData:
+    serializedObjects:
+    - {fileID: 11400000, guid: 94d1fbf8e989f23488f8e4178b9edc1b, type: 2}
+    - {fileID: 2059828}
+    serializedStrings:
+      keys:
+      - BGMGroup backgroundMusic
+      - Camera mainCamera
+      - bool _dontDestroyOnLoad
+      values:
+      - 0
+      - 1
+      - false
   backgroundMusic: {fileID: 11400000, guid: 94d1fbf8e989f23488f8e4178b9edc1b, type: 2}
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 2059828}
 --- !u!114 &11444210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -600,7 +614,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ba789e41df88a4eadce1a50853ab00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
+  _id: -1
+  dbg: 0
+  _serializationData:
+    serializedObjects: []
+    serializedStrings:
+      keys:
+      - bool _dontDestroyOnLoad
+      values:
+      - false
 --- !u!114 &11453524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -684,33 +706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b5306bb29f9a3e408702ea0c58d6ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11467680
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 190902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b349bce6fb1642144b4a33bec34ce054, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _id: 8642
-  dbg: 0
-  _serializationData:
-    serializedObjects:
-    - {fileID: 11400000, guid: f2066cfb303b0214882bc708ab3fd19e, type: 2}
-    serializedStrings:
-      keys:
-      - CharacterData[] characters
-      - int stockCount
-      values:
-      - '[0,0]'
-      - 5
-  characters:
-  - {fileID: 11400000, guid: f2066cfb303b0214882bc708ab3fd19e, type: 2}
-  - {fileID: 11400000, guid: f2066cfb303b0214882bc708ab3fd19e, type: 2}
-  stockCount: 5
 --- !u!114 &11469616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -722,11 +717,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7e5694bd3dd6a4f99a0f89041b12d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
-  cameraSpeed: 3
-  FovRange: {x: 30, y: 90}
-  padding: {x: 0, y: 0}
-  targetPositionBias: {x: 0, y: 1, z: 0}
+  _id: -24326
+  dbg: 0
+  _serializationData:
+    serializedObjects: []
+    serializedStrings:
+      keys:
+      - float cameraSpeed
+      - Vector2 FovRange
+      - Vector2 padding
+      - Vector3 targetPositionBias
+      - bool _dontDestroyOnLoad
+      values:
+      - 3.0
+      - '{"x":30.0,"y":90.0}'
+      - '{"x":0.0,"y":0.0}'
+      - '{"x":0.0,"y":1.0,"z":0.0}'
+      - false
 --- !u!114 &11472834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -741,6 +748,17 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   includeChildren: 0
   solid: 0
+--- !u!114 &11478726
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17334edcb457b34bb2758be16719112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11479466
 MonoBehaviour:
   m_ObjectHideFlags: 1

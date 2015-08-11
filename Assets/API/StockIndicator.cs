@@ -6,7 +6,7 @@ namespace Crescendo.API {
     [RequireComponent(typeof (Text))]
     public class StockIndicator : MonoBehaviour {
 
-        private StockMatch.StockCriteria criteria;
+        private Stock criteria;
         private Text display;
 
         [SerializeField]
@@ -14,14 +14,14 @@ namespace Crescendo.API {
 
         // Use this for initialization
         private void Start() {
-            var match = FindObjectOfType<StockMatch>();
+/*            var match = FindObjectOfType<StockMatch>();
             criteria = match.GetPlayerData(index);
-            display = GetComponent<Text>();
+            display = GetComponent<Text>();*/
         }
 
         // Update is called once per frame
         private void Update() {
-            display.text = criteria.Lives.ToString();
+/*            display.text = criteria.Lives.ToString();*/
         }
 
     }

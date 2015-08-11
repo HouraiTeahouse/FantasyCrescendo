@@ -50,12 +50,9 @@ namespace Crescendo.API {
             }
         }
 
-        public static Character SpawnPlayer(int playerNumber, CharacterData charData) {
-            // Load the prefab for the player
-            Character character = charData.LoadPrefab((int) (UnityEngine.Random.value*charData.AlternativeCount));
-
+        public static Character SpawnPlayer(int playerNumber, Character characterPrefab) {
             // Instantiate a instance of the Character
-            Character instance = character.InstantiateNew();
+            Character instance = characterPrefab.InstantiateNew();
 
             // Create the player's indicator
             var newIndicator =

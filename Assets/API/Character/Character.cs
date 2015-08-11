@@ -77,7 +77,6 @@ namespace Crescendo.API {
         }
 
         public event Action OnGrounded;
-        public event Action<Vector2> OnMove;
         public event Action OnBlastZoneExit;
         public event Action OnKnockback;
 

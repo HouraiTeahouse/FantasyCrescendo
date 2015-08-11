@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using Vexe.Runtime.Extensions;
 using Object = UnityEngine.Object;
 
 namespace Crescendo.API.Editor {

@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
     [RequireComponent(typeof (Character))]
     public abstract class CharacterComponent : GensoBehaviour {
 
-        protected Character Character { get; private set; }
+        [DontSerialize, Hide]
+        public Character Character { get; private set; }
 
         protected Animator Animator {
             get {

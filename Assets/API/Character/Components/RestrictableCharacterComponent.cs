@@ -14,7 +14,7 @@ namespace Crescendo.API {
                 if (_restricted)
                     return true;
                 for (var i = 0; i < _restrictions.Count; i++) {
-                    if (_restrictions[i]())
+                    if (!_restrictions[i]())
                         return true;
                 }
                 return false;

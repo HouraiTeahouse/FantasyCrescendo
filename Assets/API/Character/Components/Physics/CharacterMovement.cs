@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Crescendo.API {
 
@@ -15,26 +16,19 @@ namespace Crescendo.API {
         [SerializeField]
         private float _walkSpeed = 3f;
 
-        protected override void Start() {
-            base.Start();
+        public event Action OnMove;
 
-            if (Character == null)
+        void Update() {
+            if (InputSource == null)
                 return;
 
-            // Subscribe to Character events
-            Character.OnMove += OnMove;
+            Vector2 movement = InputSource.Movement;
+            if(movement.sqrMagnitude > 0.1)
+                Move(movement);
         }
 
-        private void OnDestroy() {
-            if (Character == null)
-                return;
-
-            // Unsubscribe to Character events
-            Character.OnMove -= OnMove;
-        }
-
-        private void OnMove(Vector2 direction) {
-            if (Mathf.Abs(direction.x) < float.Epsilon)
+        public void Move(Vector2 direction) {
+            if (Restricted || Mathf.Abs(direction.x) < float.Epsilon)
                 return;
 
             Vector3 vel = Character.Velocity;

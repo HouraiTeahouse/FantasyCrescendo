@@ -3,6 +3,7 @@ using Vexe.Runtime.Types;
 
 namespace Crescendo.API {
 
+    [DefineCategories("Tags")]
     public class Config : BaseScriptableObject {
 
         private Resource<GameObject> _Respawn;
@@ -14,13 +15,13 @@ namespace Crescendo.API {
         public PlayerData[] GenericPlayerData;
         public LayerMask HurtboxLayers;
 
-        [Tags]
+        [Tags, Category("Tags")]
         public string playerTag;
 
-        [Tags]
+        [Tags, Category("Tags")]
         public string respawnTag;
 
-        [Tags]
+        [Tags, Category("Tags")]
         public string spawnTag;
 
         public RespawnPlatform RepsawnPlatformPrefab {

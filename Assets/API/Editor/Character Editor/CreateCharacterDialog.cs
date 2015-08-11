@@ -1,8 +1,8 @@
-﻿using Crescendo.API.Editor;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
+using Vexe.Runtime.Extensions;
 
-namespace Crescendo.API {
+namespace Crescendo.API.Editor {
 
     public class CreateCharacterDialog : ScriptableWizard {
 

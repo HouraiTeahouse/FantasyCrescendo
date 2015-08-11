@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11451058}
   - 114: {fileID: 11453928}
   - 114: {fileID: 11429446}
+  - 114: {fileID: 11444624}
   - 114: {fileID: 11452990}
   - 114: {fileID: 11400058}
   m_Layer: 0
@@ -55,7 +56,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c331a677c66a30f49935376486b8c281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
+  _id: 10088
+  dbg: 0
+  _serializationData:
+    serializedObjects: []
+    serializedStrings:
+      keys:
+      - bool _dontDestroyOnLoad
+      values:
+      - false
+--- !u!114 &11444624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dd3fbb792fc2c4dbea0f255c4286e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: -26514
+  dbg: 0
+  _serializationData:
+    serializedObjects:
+    - {fileID: 11400000, guid: 9bc243bf2aff00a4aa9650e1f825c133, type: 2}
+    serializedStrings:
+      keys:
+      - List<IMatchRule> _matchRules
+      - List<Selection> selectedCharacters
+      - bool _dontDestroyOnLoad
+      values:
+      - '{"$content":[{"stock":5,"$type":"Crescendo.API.StockMatch"}]}'
+      - '{"$content":[{"CharacterData":0,"Pallete":0},{"CharacterData":null,"Pallete":0}]}'
+      - true
 --- !u!114 &11451058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -67,7 +101,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8bd5a18adbce4446bd1214b4491aa71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
+  _id: 10084
+  dbg: 0
+  _serializationData:
+    serializedObjects:
+    - {fileID: 11400000, guid: e8deedefff49636498e1245042b68630, type: 2}
+    serializedStrings:
+      keys:
+      - Config _config
+      - bool _dontDestroyOnLoad
+      values:
+      - 0
+      - false
   _config: {fileID: 11400000, guid: e8deedefff49636498e1245042b68630, type: 2}
 --- !u!114 &11452990
 MonoBehaviour:
@@ -80,8 +125,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1caf9071eb694ef49996489c114232a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
-  mixerGroup: {fileID: 24392500, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
+  _id: 10090
+  dbg: 0
+  _serializationData:
+    serializedObjects: []
+    serializedStrings:
+      keys:
+      - AudioMixerGroup mixerGroup
+      - bool _dontDestroyOnLoad
+      values:
+      - null
+      - false
 --- !u!114 &11453928
 MonoBehaviour:
   m_ObjectHideFlags: 1
