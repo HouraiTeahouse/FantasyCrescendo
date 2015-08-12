@@ -34,7 +34,7 @@ namespace Hourai {
             _gravity = GetComponentInChildren<CharacterGravity>();
 
             Character.OnGrounded += delegate {
-                                        if (Character.IsIsGrounded)
+                                        if (Character.IsGrounded)
                                             JumpCount = 0;
                                     };
             Restrictions += delegate {

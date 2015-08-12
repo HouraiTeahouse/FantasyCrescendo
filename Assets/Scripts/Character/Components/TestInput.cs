@@ -10,6 +10,7 @@ namespace Hourai {
         private const string JumpAxis = "jump";
         private const string AttackButton = "attack";
         private const string SpecialButton = "special";
+        private const string ShieldButton = "shield";
 
         public Vector2 Movement {
             get {
@@ -33,6 +34,10 @@ namespace Hourai {
 
         public bool Special {
             get { return Input.GetButtonDown(SpecialButton); }
+        }
+
+        public bool Shield {
+            get { return Input.GetButton(ShieldButton); }
         }
 
         protected override void Start() {

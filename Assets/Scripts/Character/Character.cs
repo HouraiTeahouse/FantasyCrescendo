@@ -18,8 +18,6 @@ namespace Hourai {
     [DefineCategories("Animation")]
     [RequireComponent(typeof (Animator), typeof (Rigidbody), typeof (CapsuleCollider))]
     public class Character : HouraiBehaviour {
-        
-        private CapsuleCollider triggerCollider;
 
         [DontSerialize, Hide]
         public int PlayerNumber { get; internal set; }
@@ -31,10 +29,10 @@ namespace Hourai {
         [DontSerialize, Hide]
         public ICharacterInput InputSource { get; set; }
 
-        public bool IsIsGrounded {
+        public bool IsGrounded {
             get { return _isGrounded; }
             set {
-                if (IsIsGrounded == value)
+                if (IsGrounded == value)
                     return;
                 _isGrounded = value;
                 Animator.SetBool(_grounded, value);
@@ -43,24 +41,8 @@ namespace Hourai {
         }
 
         public bool IsDashing {
-            get { return IsIsGrounded && _isDashing; }
+            get { return IsGrounded && _isDashing; }
             set { _isDashing = value; }
-        }
-
-        public bool IsFastFalling {
-            get { return !IsIsGrounded && InputSource != null && InputSource.Crouch; }
-        }
-
-        public bool IsCrouching {
-            get { return IsIsGrounded && InputSource != null && InputSource.Crouch; }
-        }
-
-        public float Height {
-            get { return MovementCollider.height; }
-        }
-
-        public void Knockback(float baseKnockback) {
-            OnKnockback.SafeInvoke();
         }
 
         public void AddForce(Vector3 force) {
@@ -77,7 +59,6 @@ namespace Hourai {
 
         public event Action OnGrounded;
         public event Action OnBlastZoneExit;
-        public event Action OnKnockback;
 
         internal void BlastZoneExit() {
             OnBlastZoneExit.SafeInvoke();
@@ -139,6 +120,9 @@ namespace Hourai {
 
         #region Required Components
 
+        private CapsuleCollider _triggerCollider;
+        private CharacterDamageable _damageable;
+
         [DontSerialize, Hide]
         public CapsuleCollider MovementCollider { get; private set; }
 
@@ -147,6 +131,16 @@ namespace Hourai {
 
         [DontSerialize, Hide]
         public Animator Animator { get; private set; }
+
+        [DontSerialize, Hide]
+        public CharacterDamageable Damage {
+            get {
+                if (_damageable == null)
+                    _damageable = GetComponentInChildren<CharacterDamageable>();
+                return _damageable;
+            }
+            private set { _damageable = value; }
+        }
 
         #endregion
 
@@ -177,8 +171,8 @@ namespace Hourai {
             MovementCollider = GetComponent<CapsuleCollider>();
             MovementCollider.isTrigger = false;
 
-            triggerCollider = gameObject.AddComponent<CapsuleCollider>();
-            triggerCollider.isTrigger = true;
+            _triggerCollider = gameObject.AddComponent<CapsuleCollider>();
+            _triggerCollider.isTrigger = true;
 
             Rigidbody = GetComponent<Rigidbody>();
             Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
@@ -208,10 +202,10 @@ namespace Hourai {
 
         protected virtual void Update() {
             // Sync Trigger and Movement Colliders
-            triggerCollider.center = MovementCollider.center;
-            triggerCollider.direction = MovementCollider.direction;
-            triggerCollider.height = MovementCollider.height*triggerSizeRatio;
-            triggerCollider.radius = MovementCollider.radius*triggerSizeRatio;
+            _triggerCollider.center = MovementCollider.center;
+            _triggerCollider.direction = MovementCollider.direction;
+            _triggerCollider.height = MovementCollider.height*triggerSizeRatio;
+            _triggerCollider.radius = MovementCollider.radius*triggerSizeRatio;
 
             if (InputSource == null)
                 return;

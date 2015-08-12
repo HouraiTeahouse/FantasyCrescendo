@@ -13,14 +13,18 @@ namespace Genso.API {
         [SerializeField]
         private float _maxFallSpeed = 5f;
 
-        private float FallSpeed {
-            get { return Character.IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
+        public bool IsFastFalling {
+            get { return Character != null && InputSource != null && !Character.IsGrounded && InputSource.Crouch; }
+        }
+
+        public float FallSpeed {
+            get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
         private void FixedUpdate() {
             Vector3 velocity = Character.Velocity;
 
-            if (Character.IsFastFalling || velocity.y < -FallSpeed)
+            if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;
 
             Character.Velocity = velocity;

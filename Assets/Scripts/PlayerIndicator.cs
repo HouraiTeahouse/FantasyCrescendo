@@ -37,7 +37,7 @@ public sealed class PlayerIndicator : MonoBehaviour {
         spriteRenderer.enabled = haveTarget;
         if (haveTarget) {
             Vector3 up = transform.up = target.up;
-            transform.position = target.position + up*target.Height + positionBias;
+            transform.position = target.position + up * target.MovementCollider.height + positionBias;
         }
     }
 

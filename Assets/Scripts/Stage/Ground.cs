@@ -27,7 +27,7 @@ namespace Hourai {
 
             var character = target.GetComponentInParent<Character>();
 
-            character.IsIsGrounded = targetValue;
+            character.IsGrounded = targetValue;
         }
 
     }

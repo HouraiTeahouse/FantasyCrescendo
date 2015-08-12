@@ -9,6 +9,7 @@ namespace Hourai {
         bool Crouch { get; }
         bool Attack { get; }
         bool Special { get; }
+        bool Shield { get; }
 
     }
 

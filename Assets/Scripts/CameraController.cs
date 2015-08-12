@@ -8,6 +8,13 @@ namespace Hourai {
     [RequireComponent(typeof (Camera))]
     public sealed class CameraController : Singleton<CameraController> {
 
+        static CameraController() {
+            targets = new HashSet<Transform>();
+            Game.OnLoad += delegate(int level) {
+                               targets.RemoveWhere(target => target == null);
+                           };
+        }
+
         private Camera _camera;
 
         [Serialize, Show]
@@ -22,7 +29,7 @@ namespace Hourai {
         [Serialize, Show]
         private Vector3 targetPositionBias;
 
-        private HashSet<Transform> targets;
+        private static HashSet<Transform> targets;
 
         protected override void Awake() {
             base.Awake();
@@ -76,14 +83,14 @@ namespace Hourai {
             if (Instance == null)
                 throw new InvalidOperationException("There is no CameraController instance in this scene.");
             Transform targetTransform = target.transform;
-            Instance.targets.Add(targetTransform);
+            targets.Add(targetTransform);
         }
 
         public static void RemoveTarget(Component target) {
             if (target == null || Instance == null)
                 return;
 
-            Instance.targets.Remove(target.transform);
+            targets.Remove(target.transform);
         }
 
         public static void AddTarget(GameObject target) {

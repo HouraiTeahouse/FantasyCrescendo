@@ -31,8 +31,7 @@ namespace Hourai {
             remove { _restrictions.Remove(value); }
         }
 
-        protected override void Start() {
-            base.Start();
+        void Awake() {
             _restrictions = new List<Func<bool>>();
         }
 

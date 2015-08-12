@@ -45,9 +45,9 @@ GameObject:
   - 65: {fileID: 6543638}
   - 114: {fileID: 11410694}
   - 114: {fileID: 11445952}
-  m_Layer: 8
+  m_Layer: 31
   m_Name: Blast Zone
-  m_TagString: Blast Zone
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -614,7 +614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ba789e41df88a4eadce1a50853ab00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: -1
+  _id: -1732
   dbg: 0
   _serializationData:
     serializedObjects: []

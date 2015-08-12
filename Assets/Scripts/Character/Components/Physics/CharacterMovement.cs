@@ -33,7 +33,7 @@ namespace Hourai {
 
             Vector3 vel = Character.Velocity;
 
-            if (Character.IsIsGrounded) {
+            if (Character.IsGrounded) {
                 if (Character.IsDashing)
                     vel.x = _dashSpeed;
                 else
