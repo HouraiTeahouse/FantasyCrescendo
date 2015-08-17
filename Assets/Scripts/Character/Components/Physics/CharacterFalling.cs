@@ -13,28 +13,34 @@ namespace Genso.API {
         [SerializeField]
         private float _maxFallSpeed = 5f;
 
-        [SerializeField]
-        private bool _fastFallInputted = false;
+        private bool _fastFall;
 
         public bool IsFastFalling {
-            get { return Character != null && InputSource != null && !Character.IsGrounded && _fastFallInputted;}
+            get { return Character != null && !Character.IsGrounded && _fastFall; }
         }
 
         public float FallSpeed {
             get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
-        private void FixedUpdate() {
-            Vector3 velocity = Character.Velocity;
+        protected override void Start() {
+            base.Start();
+            Character.OnGrounded += OnGrounded;
+        }
 
+        private void OnGrounded() {
+            if(Character.IsGrounded)
+               _fastFall = false;
+        }
+
+        private void FixedUpdate() {
+            if (Character == null)
+                return;
+
+            Vector3 velocity = Character.Velocity;
             
-            if (!IsFastFalling && InputSource != null && InputSource.Crouch){
-                _fastFallInputted = true;    
-            }
-            
-            if (Character.IsGrounded){
-                _fastFallInputted = false;
-            }
+            if (!IsFastFalling && InputSource != null && InputSource.Crouch)
+                _fastFall = true;
 
             if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;
