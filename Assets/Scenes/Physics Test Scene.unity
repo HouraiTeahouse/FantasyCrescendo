@@ -616,10 +616,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 11444624, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
-      propertyPath: _serializationData.serializedStrings.values.Array.data[1]
-      value: '{"$content":[{"CharacterData":0,"Pallete":0},{"CharacterData":0,"Pallete":0}]}'
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11453928, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
   m_IsPrefabParent: 0

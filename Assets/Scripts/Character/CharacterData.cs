@@ -1,13 +1,10 @@
 ﻿using System;
-using SmartLocalization;
 using UnityEngine;
 using Vexe.Runtime.Types;
 
 namespace Hourai {
 
     public class CharacterData : BaseScriptableObject {
-
-        private LanguageManager _languageManager;
 
         [SerializeField]
         private Alternative[] alternatives;
@@ -16,17 +13,17 @@ namespace Hourai {
         private string announcerKey;
 
         [SerializeField]
-        private string firstNameKey;
+        private string _firstNameKey;
 
         [SerializeField]
-        private string lastNameKey;
+        private string _lastNameKey;
 
         public string FirstName {
-            get { return _languageManager.GetTextValue(firstNameKey); }
+            get { return _firstNameKey; }
         }
 
         public string LastName {
-            get { return _languageManager.GetTextValue(firstNameKey); }
+            get { return _lastNameKey; }
         }
 
         public string Name {
@@ -50,8 +47,6 @@ namespace Hourai {
         }
 
         private void OnEnable() {
-            if (!Application.isEditor || Application.isPlaying)
-                _languageManager = LanguageManager.Instance;
             if (alternatives == null)
                 return;
             foreach (Alternative alternative in alternatives)

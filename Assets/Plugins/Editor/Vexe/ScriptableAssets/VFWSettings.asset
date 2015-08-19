@@ -11,31 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd76edddd05535e47b1e1b320d9a9be0, type: 3}
   m_Name: VFWSettings
   m_EditorClassIdentifier: 
-  _serializationData:
-    serializedObjects: []
-    serializedStrings:
-      keys:
-      - bool UseHungarianNotation
-      - CategoryDisplay DefaultDisplay
-      - int DefaultSpacing
-      - string _memberFormat
-      - string _sequenceFormat
-      - string _dictionaryFormat
-      - bool DisplayReadonlyIfTrue
-      values:
-      - true
-      - '"BoxedMembersArea,Headers,BoxedHeaders"'
-      - 10
-      - '"$nicename"'
-      - '"$nicename ($count)"'
-      - '"$nicename ($count)"'
-      - true
-  _serializerType:
-    _name: Vexe.Runtime.Serialization.FullSerializerBackend, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  _id: 412
+  _id: -1
   dbg: 0
-  UseHungarianNotation: 1
-  DefaultDisplay: 28
+  UseHungarianNotation: 0
+  DefaultDisplay: 4
   DefaultSpacing: 10
+  _memberFormat: $nicename
+  _sequenceFormat: $nicename ($count)
+  _dictionaryFormat: $nicename ($count)
   DisplayReadonlyIfTrue: 1

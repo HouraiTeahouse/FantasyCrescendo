@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using Vexe.Runtime.Extensions;
+using Vexe.Runtime.Types;
 
 namespace Hourai {
 
@@ -45,8 +46,8 @@ namespace Hourai {
         }
 
         #endregion
-
-        [SerializeField]
+        
+        [Serialize, Inline]
         private Config _config;
 
         private static Config Config {
