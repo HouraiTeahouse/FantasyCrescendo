@@ -66,8 +66,8 @@ namespace Hourai.SmashBrew {
         protected override void Awake() {
             base.Awake();
 
-            spawnPoints = Game.GetSpawnPoints();
-            repsawnPoints = Game.GetRespawnPoint();
+            spawnPoints = SmashGame.GetSpawnPoints();
+            repsawnPoints = SmashGame.GetRespawnPoints();
 
             if (backgroundMusic != null)
                 backgroundMusic.PlayRandom();

@@ -17,7 +17,7 @@ namespace Hourai.SmashBrew {
         }
 
         protected void ChangeIgnore(Collider target, bool state) {
-            if (target == null || !Game.IsPlayer(target))
+            if (target == null || !SmashGame.IsPlayer(target))
                 return;
 
             foreach (Collider col in _toIgnore)

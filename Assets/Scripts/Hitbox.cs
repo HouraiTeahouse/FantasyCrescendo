@@ -33,7 +33,7 @@ namespace Hourai.SmashBrew {
         }
 
         private void OnDrawGizmos() {
-            GizmoUtil.DrawColliders3D(GetComponentsInChildren<Collider>(), Game.GetHitboxColor(type), true);
+            GizmoUtil.DrawColliders3D(GetComponentsInChildren<Collider>(), SmashGame.GetHitboxColor(type), true);
         }
 
         #region Serializable Fields

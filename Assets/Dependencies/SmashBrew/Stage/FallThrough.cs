@@ -5,7 +5,7 @@ namespace Hourai.SmashBrew {
     public class FallThrough : TriggerStageElement {
 
         private void Check(Collider col) {
-            if (!Game.IsPlayer(col))
+            if (!SmashGame.IsPlayer(col))
                 return;
 
             var character = col.gameObject.GetComponentInParent<Character>();

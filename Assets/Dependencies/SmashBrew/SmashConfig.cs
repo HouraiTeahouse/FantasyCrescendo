@@ -2,9 +2,8 @@
 using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
-
-    [DefineCategories("Tags")]
-    public class Config : BaseScriptableObject {
+    
+    public class SmashConfig : GameConfig {
 
         private Resource<GameObject> _Respawn;
 
@@ -14,12 +13,6 @@ namespace Hourai.SmashBrew {
         public DebugData Debug;
         public PlayerData[] GenericPlayerData;
         public LayerMask HurtboxLayers;
-
-        [Tags, Category("Tags")]
-        public string playerTag;
-
-        [Tags, Category("Tags")]
-        public string respawnTag;
 
         [Tags, Category("Tags")]
         public string spawnTag;

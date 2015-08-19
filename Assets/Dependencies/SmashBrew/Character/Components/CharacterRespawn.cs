@@ -27,7 +27,7 @@ namespace Hourai.SmashBrew {
             Transform respawnPos = Stage.RespawnPosition;
             Character.position = respawnPos.position;
             Character.rotation = respawnPos.rotation;
-            Game.CreateRespawnPlatform(Character);
+            SmashGame.CreateRespawnPlatform(Character);
         }
 
     }

@@ -23,7 +23,7 @@ namespace Hourai.SmashBrew {
         public int PlayerNumber { get; internal set; }
 
         public Color PlayerColor {
-            get { return Game.GetPlayerColor(PlayerNumber); }
+            get { return SmashGame.GetPlayerColor(PlayerNumber); }
         }
 
         [DontSerialize, Hide]

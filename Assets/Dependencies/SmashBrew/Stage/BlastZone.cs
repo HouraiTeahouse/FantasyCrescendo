@@ -18,7 +18,7 @@ namespace Hourai.SmashBrew {
 
         private void OnTriggerExit(Collider other) {
             // Filter only for player characters
-            if (!Game.IsPlayer(other))
+            if (!SmashGame.IsPlayer(other))
                 return;
 
             Character characterScript = other.GetComponentInParent<Character>() ??

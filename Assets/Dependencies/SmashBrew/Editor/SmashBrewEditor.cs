@@ -21,9 +21,9 @@ namespace Hourai.SmashBrew.Editor {
 
         #region Asset Create Menu Items
 
-        [MenuItem("Assets/Create/Game Config")]
+        [MenuItem("Assets/Create/SmashBrew/Config")]
         static void CreateConfig() {
-            AssetUtil.CreateAssetInProjectWindow<Config>();
+            AssetUtil.CreateAssetInProjectWindow<SmashConfig>();
         }
 
         #endregion

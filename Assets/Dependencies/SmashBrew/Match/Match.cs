@@ -73,7 +73,7 @@ namespace Hourai.SmashBrew {
 
             // Spawn players
             for (var i = 0; i < PlayerCount; i++) {
-                Character runtimeCharacter = Game.SpawnPlayer(i, Selected[i].Load());
+                Character runtimeCharacter = SmashGame.SpawnPlayer(i, Selected[i].Load());
                 foreach(var rule in _matchRules)
                     rule.OnSpawn(runtimeCharacter);
                 Transform spawnPoint = Stage.GetSpawnPoint(i);

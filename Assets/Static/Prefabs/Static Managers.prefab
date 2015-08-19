@@ -8,8 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 404724}
-  - 114: {fileID: 11451058}
-  - 114: {fileID: 11453928}
+  - 114: {fileID: 11488736}
   - 114: {fileID: 11444624}
   - 114: {fileID: 11452990}
   m_Layer: 0
@@ -45,41 +44,16 @@ MonoBehaviour:
   _id: -26514
   dbg: 0
   _serializationData:
-    serializedObjects:
-    - {fileID: 11400000, guid: 9bc243bf2aff00a4aa9650e1f825c133, type: 2}
+    serializedObjects: []
     serializedStrings:
       keys:
       - List<IMatchRule> _matchRules
       - List<Selection> selectedCharacters
       - bool _dontDestroyOnLoad
       values:
-      - '{"$content":[{"stock":5,"$type":"Hourai.StockMatch"}]}'
-      - '{"$content":[{"CharacterData":0,"Pallete":0},{"CharacterData":0,"Pallete":0}]}'
+      - '{"$content":[]}'
+      - '{"$content":[{"CharacterData":null,"Pallete":0},{"CharacterData":null,"Pallete":0}]}'
       - false
---- !u!114 &11451058
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8bd5a18adbce4446bd1214b4491aa71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _id: 10084
-  dbg: 0
-  _serializationData:
-    serializedObjects:
-    - {fileID: 11400000, guid: e8deedefff49636498e1245042b68630, type: 2}
-    serializedStrings:
-      keys:
-      - Config _config
-      - bool _dontDestroyOnLoad
-      values:
-      - 0
-      - false
-  _config: {fileID: 11400000, guid: e8deedefff49636498e1245042b68630, type: 2}
 --- !u!114 &11452990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,7 +77,7 @@ MonoBehaviour:
       values:
       - 0
       - false
---- !u!114 &11453928
+--- !u!114 &11488736
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -111,13 +85,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 189600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb91bdba6520fd248bbc41b14d02e9a0, type: 3}
+  m_Script: {fileID: 11500000, guid: a8bd5a18adbce4446bd1214b4491aa71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputConfigurations: []
-  defaultConfiguration: 
-  dontDestroyOnLoad: 0
-  ignoreTimescale: 0
+  _id: -30190
+  dbg: 0
+  _serializationData:
+    serializedObjects:
+    - {fileID: 11400000, guid: e8deedefff49636498e1245042b68630, type: 2}
+    serializedStrings:
+      keys:
+      - SmashConfig _config
+      - bool _dontDestroyOnLoad
+      values:
+      - 0
+      - false
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

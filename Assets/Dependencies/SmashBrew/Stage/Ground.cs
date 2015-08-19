@@ -22,7 +22,7 @@ namespace Hourai.SmashBrew {
         }
 
         private void Change(Collider target, bool targetValue) {
-            if (target == null || !Game.IsPlayer(target))
+            if (target == null || !SmashGame.IsPlayer(target))
                 return;
 
             var character = target.GetComponentInParent<Character>();
