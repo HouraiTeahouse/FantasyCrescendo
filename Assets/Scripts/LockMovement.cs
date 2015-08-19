@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Hourai {
+namespace Hourai.SmashBrew {
 
     public class LockMovement : CharacterAnimationBehaviour {
 

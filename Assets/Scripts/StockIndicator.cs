@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai {
+namespace Hourai.SmashBrew {
 
     [RequireComponent(typeof (Text))]
     public class StockIndicator : MonoBehaviour {

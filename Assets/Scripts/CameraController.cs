@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vexe.Runtime.Types;
 
-namespace Hourai {
+namespace Hourai.SmashBrew {
 
     [RequireComponent(typeof (Camera))]
     public sealed class CameraController : Singleton<CameraController> {

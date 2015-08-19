@@ -1,18 +1,22 @@
 ﻿using UnityEngine;
 
-public class ConstantRotation : MonoBehaviour {
+namespace Hourai {
 
-    [SerializeField]
-    private Vector3 rotationPerSecond;
+    public class ConstantRotation : MonoBehaviour {
 
-    public Vector3 RotationPerSecond {
-        get { return rotationPerSecond; }
-        set { rotationPerSecond = value; }
-    }
+        [SerializeField]
+        private Vector3 rotationPerSecond;
 
-    // Update is called once per frame
-    private void Update() {
-        transform.Rotate(RotationPerSecond*Util.dt);
+        public Vector3 RotationPerSecond {
+            get { return rotationPerSecond; }
+            set { rotationPerSecond = value; }
+        }
+
+        // Update is called once per frame
+        private void Update() {
+            transform.Rotate(RotationPerSecond * Util.dt);
+        }
+
     }
 
 }
