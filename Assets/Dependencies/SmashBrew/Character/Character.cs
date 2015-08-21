@@ -1,10 +1,12 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using UnityEngine;
 using Vexe.Runtime.Extensions;
 using Vexe.Runtime.Types;
 #if UNITY_EDITOR
 using System.Linq;
+using UnityEditor;
 #endif
 
 namespace Hourai.SmashBrew {
@@ -14,10 +16,30 @@ namespace Hourai.SmashBrew {
     /// </summary>
     /// Author: James Liu
     /// Authored on 07/01/2015
+#if UNITY_EDITOR
+    [InitializeOnLoad]
+#endif
     [DisallowMultipleComponent]
     [DefineCategories("Animation")]
     [RequireComponent(typeof (Animator), typeof (Rigidbody), typeof (CapsuleCollider))]
     public class Character : HouraiBehaviour {
+
+        private static readonly Type[] RequiredComponents; 
+
+        static Character() {
+            var componentType = typeof (Component);
+            var requiredComponentType = typeof (RequiredCharacterComponentAttribute);
+            // Use reflection to find required Components for Characters and statuses
+            // Enumerate all concrete Component types
+            RequiredComponents = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                                    from assemblyType in domainAssembly.GetTypes()
+                                    where
+                                        assemblyType != null &&
+                                        !assemblyType.IsAbstract &&
+                                        assemblyType.IsA(componentType) && 
+                                        assemblyType.IsDefined(requiredComponentType, true)
+                                    select assemblyType).ToArray();
+        }
 
         [DontSerialize, Hide]
         public int PlayerNumber { get; internal set; }
@@ -28,6 +50,14 @@ namespace Hourai.SmashBrew {
 
         [DontSerialize, Hide]
         public ICharacterInput InputSource { get; set; }
+
+        public override float LocalTimeScale {
+            get { return base.LocalTimeScale; }
+            set {
+                base.LocalTimeScale = value;
+                Animator.speed = value;
+            }
+        }
 
         public bool IsGrounded {
             get { return _isGrounded; }
@@ -65,34 +95,16 @@ namespace Hourai.SmashBrew {
         }
 
         void AttachRequiredComponents() {
-            IEnumerable<Type> componentTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                                                from assemblyType in domainAssembly.GetTypes()
-                                                where
-                                                    assemblyType.IsA<Component>() &&
-                                                    !assemblyType.IsAbstract &&
-                                                    assemblyType.IsDefined(
-                                                                           typeof (RequiredCharacterComponentAttribute),
-                                                                           true)
-                                                select assemblyType);
-
-            foreach (Type requriedType in componentTypes) {
-                if (requriedType != null)
-                    this.GetOrAddComponent(requriedType);
-            }
+            foreach (Type requriedType in RequiredComponents)
+                this.GetOrAddComponent(requriedType);
         }
 
-        public T AddStatus<T>(float duration) where T : Status {
-            T status = gameObject.AddComponent<T>();
-            status.StartStatus(duration);
-            return status;
+        public T ApplyStatus<T>(float duration = -1f) where T : Status {
+            T instance = GetComponentInChildren<T>() ?? gameObject.AddComponent<T>();
+            instance.StartStatus(duration);
+            return instance;
         }
-
-        public void RemoveStatus<T>() where T : Status {
-            T status = GetComponent<T>();
-            if(status != null)
-                Destroy(status);
-        }
-
+        
         #region Animator Variables
         [Serialize]
         [Category("Animation")]
@@ -113,6 +125,7 @@ namespace Hourai.SmashBrew {
         [Serialize]
         private float triggerSizeRatio = 1.5f;
 
+        [Serialize, Hide]
         public string InternalName {
             get;
             set;
@@ -200,19 +213,27 @@ namespace Hourai.SmashBrew {
             AttachRequiredComponents();
         }
 
+        /// <summary>
+        /// Called every frame.
+        /// </summary>
         protected virtual void Update() {
-            // Sync Trigger and Movement Colliders
-            _triggerCollider.center = MovementCollider.center;
-            _triggerCollider.direction = MovementCollider.direction;
-            _triggerCollider.height = MovementCollider.height*triggerSizeRatio;
-            _triggerCollider.radius = MovementCollider.radius*triggerSizeRatio;
-
             if (InputSource == null)
                 return;
 
             Vector2 movement = InputSource.Movement;
             Animator.SetFloat(_horizontalInput, Mathf.Abs(movement.x));
             Animator.SetFloat(_verticalInput, movement.y);
+        }
+
+        /// <summary>
+        /// Called every physics update.
+        /// </summary>
+        protected virtual void FixedUpdate() {
+            // Sync Trigger and Movement Colliders
+            _triggerCollider.center = MovementCollider.center;
+            _triggerCollider.direction = MovementCollider.direction;
+            _triggerCollider.height = MovementCollider.height*triggerSizeRatio;
+            _triggerCollider.radius = MovementCollider.radius*triggerSizeRatio;
         }
 
         protected virtual void OnAnimatorMove() {

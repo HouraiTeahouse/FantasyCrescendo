@@ -6,11 +6,23 @@ using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
-    public class SmashGame : ConfigurableGame<SmashConfig> {
+    public static class SmashExtensions {
 
-        public static bool IsPlayer(Component obj) {
-            return obj.CompareTag(Config.PlayerTag);
+        public static bool IsPlayer(this GameObject gameObj) {
+            return gameObj != null && gameObj.CompareTag(SmashGame.Config.PlayerTag);
         }
+
+        public static bool IsPlayer(this Component obj) {
+            return obj != null && obj.CompareTag(SmashGame.Config.PlayerTag);
+        }
+
+        public static bool IsHurtbox(this Collider collider) {
+            return collider != null && ((1 << collider.gameObject.layer) & SmashGame.Config.HurtboxLayers) != 0;
+        }
+
+    }
+
+    public class SmashGame : ConfigurableGame<SmashConfig> {
 
         public static Transform[] GetSpawnPoints() {
             return GetPoints(Config.spawnTag);
@@ -18,14 +30,6 @@ namespace Hourai.SmashBrew {
 
         private static Transform[] GetPoints(string tag) {
             return GameObject.FindGameObjectsWithTag(tag).Select(go => go.transform).ToArray();
-        }
-
-        public static bool IsHurtbox(Component obj) {
-            return IsHurtbox(obj.gameObject);
-        }
-
-        public static bool IsHurtbox(GameObject obj) {
-            return ((1 << obj.layer) & Config.HurtboxLayers) != 0;
         }
 
         public static int MaxPlayers {

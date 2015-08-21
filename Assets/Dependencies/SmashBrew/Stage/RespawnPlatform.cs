@@ -24,7 +24,7 @@ namespace Hourai.SmashBrew {
                 _character = value;
                 if (_character != null) {
                     _character.Velocity = Vector3.zero;
-                    _invincibility = _character.AddStatus<Invincibility>(_invicibilityTimer + _platformTimer);
+                    _invincibility = _character.ApplyStatus<Invincibility>(_invicibilityTimer + _platformTimer);
                 }
             }
         }

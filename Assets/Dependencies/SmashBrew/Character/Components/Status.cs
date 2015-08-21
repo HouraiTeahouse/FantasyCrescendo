@@ -8,48 +8,44 @@ namespace Hourai.SmashBrew {
         
         private float _duration = Mathf.Infinity;
 
-        public bool Started { get; private set; }
-
         public float EllapsedTime { get; private set; }
 
         public float Duration {
             get { return _duration; }
             set {
-                Duration = value;
-                if (EllapsedTime > Duration)
-                    EndStatus();
+                _duration = value;
+                enabled = EllapsedTime < Duration;
             }
         }
 
-        protected sealed override void Start() {
-            base.Start();
-            Started = false;
+        void Awake() {
+            enabled = false;
+        }
+
+        void FixedUpdate() {
+            EllapsedTime += FixedDeltaTime;
+            OnStatusUpdate(FixedDeltaTime);
+            enabled = EllapsedTime < Duration;
+        }
+
+        void OnEnable() {
             EllapsedTime = 0f;
             OnStatusStart();
         }
 
-        void Update() {
-            if (Started)
-                EllapsedTime += Util.dt;
-            OnStatusUpdate();
-            if (EllapsedTime > Duration)
-                EndStatus();
+        void OnDisable() {
+            OnStatusEnd();
         }
 
         public void StartStatus(float duration = -1) {
             if(duration > 0)
                 Duration = duration;
-            Started = true;
+            enabled = true;
         }
 
-        public void EndStatus() {
-            OnStatusEnd();
-            Destroy(this);
-        }
-
-        protected abstract void OnStatusStart();
-        protected abstract void OnStatusUpdate();
-        protected abstract void OnStatusEnd();
+        protected virtual void OnStatusStart() {}
+        protected virtual void OnStatusUpdate(float dt) {}
+        protected virtual void OnStatusEnd() {}
 
     }
 
