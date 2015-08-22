@@ -114,9 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94788b0036fe7fc41be4c65deceea27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  splashGraphics:
-  - {fileID: 1641091659}
-  - {fileID: 316118997}
   alphaOverTime:
     serializedVersion: 2
     m_Curve:
@@ -145,6 +142,9 @@ MonoBehaviour:
   disableWhileLoading:
   - {fileID: 1024771386}
   - {fileID: 1810637717}
+  splashGraphics:
+  - {fileID: 1641091659}
+  - {fileID: 316118997}
   targetSceneName: Forest of Magic
 --- !u!4 &191772275
 Transform:
