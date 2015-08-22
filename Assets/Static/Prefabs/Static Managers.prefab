@@ -48,11 +48,11 @@ MonoBehaviour:
     serializedStrings:
       keys:
       - List<IMatchRule> _matchRules
-      - List<Selection> selectedCharacters
+      - Selection[] _selected
       - bool _dontDestroyOnLoad
       values:
       - '{"$content":[]}'
-      - '{"$content":[{"CharacterData":null,"Pallete":0},{"CharacterData":null,"Pallete":0}]}'
+      - '[]'
       - false
 --- !u!114 &11452990
 MonoBehaviour:

@@ -14,11 +14,6 @@ MonoBehaviour:
   _id: 2530
   dbg: 0
   _respawnPlatformPrefab: Prefabs/Respawn Platform
-  Debug:
-    DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: .125490203}
-    IntangiblHitboxColor: {r: 0, g: 0, b: 1, a: .250980407}
-    InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: .250980407}
-    OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: .250980407}
   GenericPlayerData:
   - Color: {r: 1, g: 0, b: 0, a: 1}
     IndicatorSprite: {fileID: 21300000, guid: 816592cbf3040774ca20da1e1caf487c, type: 3}
@@ -32,3 +27,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   spawnTag: Spawn
+  DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
+  IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}
+  InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
+  OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}

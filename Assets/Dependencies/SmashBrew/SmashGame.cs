@@ -70,16 +70,15 @@ namespace Hourai.SmashBrew {
         }
 
         public static Color GetHitboxColor(Hitbox.Type type) {
-            SmashConfig.DebugData debugData = Config.Debug;
             switch (type) {
                 case Hitbox.Type.Offensive:
-                    return debugData.OffensiveHitboxColor;
+                    return Config.OffensiveHitboxColor;
                 case Hitbox.Type.Damageable:
-                    return debugData.DamageableHitboxColor;
+                    return Config.DamageableHitboxColor;
                 case Hitbox.Type.Invincible:
-                    return debugData.IntangiblHitboxColor;
+                    return Config.IntangibleHitboxColor;
                 case Hitbox.Type.Intangible:
-                    return debugData.InvincibleHitboxColor;
+                    return Config.InvincibleHitboxColor;
                 default:
                     return Color.white;
             }

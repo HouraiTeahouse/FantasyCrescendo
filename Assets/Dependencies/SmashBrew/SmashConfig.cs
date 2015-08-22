@@ -3,14 +3,14 @@ using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
     
+    [DefineCategories("Tags", "Debug")]
     public class SmashConfig : GameConfig {
 
         private Resource<GameObject> _Respawn;
 
-        [SerializeField, ResourcePath]
+        [SerializeField, ResourcePath(typeof(GameObject))]
         private string _respawnPlatformPrefab;
-
-        public DebugData Debug;
+        
         public PlayerData[] GenericPlayerData;
         public LayerMask HurtboxLayers;
 
@@ -25,6 +25,18 @@ namespace Hourai.SmashBrew {
             _Respawn = new Resource<GameObject>(_respawnPlatformPrefab);
         }
 
+        [Category("Debug")]
+        public Color DamageableHitboxColor = Color.yellow;
+
+        [Category("Debug")]
+        public Color IntangibleHitboxColor = Color.blue;
+
+        [Category("Debug")]
+        public Color InvincibleHitboxColor = Color.green;
+
+        [Category("Debug")]
+        public Color OffensiveHitboxColor = Color.red;
+
         [System.Serializable]
         public class PlayerData {
 
@@ -32,17 +44,7 @@ namespace Hourai.SmashBrew {
             public Sprite IndicatorSprite;
 
         }
-
-        [System.Serializable]
-        public class DebugData {
-
-            public Color DamageableHitboxColor = Color.yellow;
-            public Color IntangiblHitboxColor = Color.blue;
-            public Color InvincibleHitboxColor = Color.green;
-            public Color OffensiveHitboxColor = Color.red;
-
-        }
-
+        
     }
 
 }
