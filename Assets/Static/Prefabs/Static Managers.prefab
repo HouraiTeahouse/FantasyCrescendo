@@ -9,8 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 404724}
   - 114: {fileID: 11488736}
-  - 114: {fileID: 11444624}
   - 114: {fileID: 11452990}
+  - 114: {fileID: 11416700}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: EditorOnly
@@ -30,7 +30,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11444624
+--- !u!114 &11416700
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -38,22 +38,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 189600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1dd3fbb792fc2c4dbea0f255c4286e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d5a00fc0b20eb240980c9f4f1bfbba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: -26514
-  dbg: 0
-  _serializationData:
-    serializedObjects: []
-    serializedStrings:
-      keys:
-      - List<IMatchRule> _matchRules
-      - Selection[] _selected
-      - bool _dontDestroyOnLoad
-      values:
-      - '{"$content":[]}'
-      - '[]'
-      - false
+  testCharacters:
+  - data: {fileID: 11400000, guid: 269f1fed9f288184d9f757cbe6312b62, type: 2}
+    pallete: 0
+  - data: {fileID: 11400000, guid: 269f1fed9f288184d9f757cbe6312b62, type: 2}
+    pallete: 0
+  - data: {fileID: 11400000, guid: 269f1fed9f288184d9f757cbe6312b62, type: 2}
+    pallete: 0
+  - data: {fileID: 11400000, guid: 269f1fed9f288184d9f757cbe6312b62, type: 2}
+    pallete: 0
 --- !u!114 &11452990
 MonoBehaviour:
   m_ObjectHideFlags: 1

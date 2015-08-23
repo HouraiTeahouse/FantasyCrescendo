@@ -39,10 +39,8 @@ namespace Hourai.SmashBrew {
             base.Start();
 
             // No point in continuing if Character is null
-            if(Character == null)
+            if (Character == null)
                 Destroy(this);
-
-            Debug.Log(Character.PlayerNumber);
 
             // Create Shield Object
             _shieldObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);

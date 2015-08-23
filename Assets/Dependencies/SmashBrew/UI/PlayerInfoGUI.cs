@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew.UI {
@@ -12,6 +13,7 @@ namespace Hourai.SmashBrew.UI {
         private List<GameObject> _displays;
 
         void Awake() {
+            Graphic graphic = GetComponent<Graphic>();
             Match.OnMatchStart += OnMatchStart;
         }
 
@@ -29,7 +31,7 @@ namespace Hourai.SmashBrew.UI {
             var displayNumber = 0;
 
             while (playerNumber < SmashGame.MaxPlayers && displayNumber < _displays.Count) {
-                Tuple<CharacterData, int> selection = Match.GetCharacterMatchData(playerNumber);
+                CharacterMatchData selection = Match.GetCharacterMatchData(playerNumber);
                 GameObject display = _displays[displayNumber];
 
                 // Ignore null displays
@@ -39,7 +41,7 @@ namespace Hourai.SmashBrew.UI {
                 }
 
                 // Ignore null characters
-                if (selection.Item1 == null) {
+                if (selection == null || selection.SpawnedInstance == null) {
                     playerNumber++;
                     continue;
                 }
@@ -48,7 +50,7 @@ namespace Hourai.SmashBrew.UI {
 
                 // Update the display with the Character information
                 foreach (ICharacterGUIComponent component in display.GetComponentsInChildren<ICharacterGUIComponent>())
-                    component.SetCharacterData(selection.Item1, selection.Item2, playerNumber);
+                    component.SetCharacterData(selection);
 
                 display.name = "Player " + (playerNumber + 1) + " Display";
 

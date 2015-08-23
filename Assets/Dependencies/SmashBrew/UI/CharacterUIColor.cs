@@ -9,7 +9,7 @@ namespace Hourai.SmashBrew.UI {
 
     [ExecuteInEditMode]
     [RequireComponent(typeof(Graphic))]
-    public class CharacterColorGraphic : BetterBehaviour, ICharacterGUIComponent {
+    public class CharacterUIColor : BetterBehaviour, ICharacterGUIComponent {
 
         private Graphic _graphic;
 
@@ -72,8 +72,10 @@ namespace Hourai.SmashBrew.UI {
             _graphic.color = AdjustedColor;
         }
 
-        public void SetCharacterData(CharacterData data, int pallete, int playerNumber) {
-            PlayerNumber = playerNumber;
+        public void SetCharacterData(CharacterMatchData data) {
+            if (data == null)
+                return;
+            PlayerNumber = data.PlayerNumber;
         }
 
     }

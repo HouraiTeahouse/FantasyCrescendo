@@ -51,7 +51,7 @@ namespace Hourai.SmashBrew {
             characterStocks = new List<Stock>();
         }
 
-        public StockMatch(int stockCount) {
+        public StockMatch(int stockCount) : this() {
             stock = stockCount;
         }
 

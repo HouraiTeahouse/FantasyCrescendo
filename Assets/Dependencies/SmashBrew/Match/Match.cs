@@ -8,31 +8,77 @@ using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
     
+    public sealed class CharacterMatchData {
 
-    public sealed class Match : Singleton<Match> {
+        public readonly CharacterData Data;
+        public readonly int Pallete;
 
-        public static Tuple<CharacterData, int> GetCharacterMatchData(int playerNumber) {
+        [DontSerialize, Hide]
+        public int PlayerNumber { get; internal set; }
+
+        [DontSerialize, Hide]
+        public Character SpawnedInstance { get; private set; }
+
+        internal CharacterMatchData() {
+            Data = null;
+            Pallete = 0;
+            PlayerNumber = 0;
+            SpawnedInstance = null;
+        }
+
+        internal CharacterMatchData(CharacterData data, int pallete) {
+            if (data == null)
+                throw new ArgumentNullException("data");
+            if (data.AlternativeCount <= 0)
+                throw new ArgumentException("A Character Data must have at least one pallete choice.");
+            pallete = Mathf.Clamp(pallete, 0, data.AlternativeCount - 1);
+            Data = data;
+            Pallete = pallete;
+        }
+
+        internal Character Spawn(Transform location = null) {
+            Vector3 position = location != null ? location.position : Vector3.zero;
+            Quaternion rotation = location != null ? location.rotation : Quaternion.identity;
+
+            Character prefab = Data.LoadPrefab(Pallete);
+            if (prefab == null)
+                return null;
+            SpawnedInstance = SmashGame.SpawnPlayer(PlayerNumber, prefab);
+            SpawnedInstance.position = position;
+            SpawnedInstance.rotation = rotation;
+            return SpawnedInstance;
+        }
+
+    }
+
+    public static class Match {
+
+        static Match() {
+            _matchRules = new List<IMatchRule>();
+            _selected = new CharacterMatchData[SmashGame.MaxPlayers];
+        }
+
+        public static CharacterMatchData GetCharacterMatchData(int playerNumber) {
             if (playerNumber < 0 || playerNumber >= SmashGame.MaxPlayers)
                 throw new ArgumentException("playerNumber");
-            return _selected[playerNumber];
+            CharacterMatchData data = _selected[playerNumber];
+            if (data != null)
+                data.PlayerNumber = playerNumber;
+            return data;
         }
 
         public static event Action OnMatchStart;
-
-        [Serialize]
+        public static event Action<CharacterMatchData> OnSpawnCharacter;
+        
         private static List<IMatchRule> _matchRules;
-
-        [Serialize]
-        private static Tuple<CharacterData, int>[] _selected; 
+        private static CharacterMatchData[] _selected; 
 
         /// <summary>
         /// The current number of Players selected.
         /// </summary>
         public static int PlayerCount {
             get {
-                if (_selected == null)
-                    return 0;
-                return _selected.Count(selection => selection.Item1 != null);
+                return _selected == null ? 0 : _selected.Count(selection => selection != null);
             }
         }
 
@@ -42,34 +88,15 @@ namespace Hourai.SmashBrew {
         [DontSerialize, Hide]
         public static bool InMatch { get; private set; }
 
-        /// <summary>
-        /// Called on instantiation.
-        /// </summary>
-        protected override void Awake() {
-            base.Awake();
-            int playerCount = SmashGame.MaxPlayers;
-            if (_selected == null) {
-                _selected = new Tuple<CharacterData, int>[playerCount];
-            } else if (_selected.Length != playerCount) {
-                var temp = new Tuple<CharacterData, int>[playerCount];
-                Array.Copy(_selected, temp, Mathf.Min(playerCount, _selected.Length));
-                _selected = temp;
-            }
-        }
-
-        public static void SetCharcter(int playerNumber, CharacterData character, int pallete = 1) {
+        public static void SetCharcter(int playerNumber, CharacterData character, int pallete = 0) {
             if (character == null)
                 throw new ArgumentNullException("character");
-            if(Instance == null)
-                throw new InvalidOperationException();
-            _selected[playerNumber] = new Tuple<CharacterData, int>(character, pallete);
+            _selected[playerNumber] = new CharacterMatchData(character, pallete);
         }
 
-        /// <summary>
-        /// Called on instance destruction.
-        /// </summary>
-        private void OnDestroy() {
-            InMatch = false;
+        public static void AddMatchRule(IMatchRule rule) {
+            if (rule != null)
+                _matchRules.Add(rule);
         }
 
         private static IEnumerator MatchLoop() {
@@ -97,7 +124,7 @@ namespace Hourai.SmashBrew {
             if (InMatch)
                 return;
 
-            if (Instance == null || Stage.Instance == null || PlayerCount > Stage.SupportedPlayerCount ) {
+            if (Stage.Instance == null || PlayerCount > Stage.SupportedPlayerCount ) {
                 throw new InvalidOperationException(
                     "Cannot start a match when there are more players participating than supported by the selected stage");
             }
@@ -109,22 +136,23 @@ namespace Hourai.SmashBrew {
             int playerCount = PlayerCount;
             var currentPlayer = 0;
             for (var i = 0; i < PlayerCount; i++) {
-                CharacterData data = _selected[i].Item1;
-                if (data == null)
+                if (_selected[i] == null)
                     continue;
-                Character prefab = data.LoadPrefab(_selected[i].Item2);
-                Character runtimeCharacter = SmashGame.SpawnPlayer(i, prefab);
+                _selected[i].PlayerNumber = i;
+
                 Transform spawnPoint = Stage.GetSpawnPoint(currentPlayer);
-                runtimeCharacter.position = spawnPoint.position;
-                runtimeCharacter.rotation = spawnPoint.rotation;
+                Character runtimeCharacter = _selected[i].Spawn(spawnPoint);
+                if (runtimeCharacter == null)
+                    continue;
                 foreach (IMatchRule rule in _matchRules)
                     rule.OnSpawn(runtimeCharacter);
+                OnSpawnCharacter.SafeInvoke(_selected[i]);
                 currentPlayer++;
             }
 
             OnMatchStart.SafeInvoke();
 
-            Instance.StartCoroutine(MatchLoop());
+            Game.StaticCoroutine(MatchLoop());
         }
 
     }

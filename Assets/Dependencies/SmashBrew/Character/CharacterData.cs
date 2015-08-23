@@ -10,6 +10,9 @@ namespace Hourai.SmashBrew {
         private Alternative[] alternatives;
 
         [SerializeField]
+        private Sprite icon;
+
+        [SerializeField]
         private string announcerKey;
 
         [SerializeField]
@@ -34,10 +37,14 @@ namespace Hourai.SmashBrew {
             get { return alternatives == null ? 0 : alternatives.Length; }
         }
 
+        public Sprite Icon {
+            get { return icon; }
+        }
+
         public Sprite LoadPortrait(int alternativeChoice) {
             if (alternativeChoice < 0 || alternativeChoice >= AlternativeCount)
                 throw new ArgumentException();
-            return alternatives[alternativeChoice].Portrait.Load();
+            return alternatives[alternativeChoice].Portrait;
         }
 
         public Character LoadPrefab(int alternativeChoice) {
@@ -55,23 +62,17 @@ namespace Hourai.SmashBrew {
 
         [Serializable]
         public class Alternative {
-
-            private Resource<Sprite> _portrait;
+      
 
             [SerializeField, ResourcePath(typeof (GameObject))]
             private string _prefab;
-
             private Resource<GameObject> _prefabResource;
 
-            [SerializeField, ResourcePath]
-            private string portrait;
+            [SerializeField]
+            private Sprite _portrait;
 
-            public Resource<Sprite> Portrait {
-                get {
-                    if (_portrait == null)
-                        _portrait = new Resource<Sprite>(portrait);
-                    return _portrait;
-                }
+            public Sprite Portrait {
+                get { return _portrait;  }
             }
 
             public Character Prefab {
