@@ -15,7 +15,6 @@ namespace Hourai.SmashBrew.UI {
 
         void Update() {
             if (Component == null) {
-                Debug.Log("No Stock");
                 if (ExcessDisplay)
                     ExcessDisplay.gameObject.SetActiveIfNot(false);
                 for (var i = 0; i < standardIndicators.Length; i++)

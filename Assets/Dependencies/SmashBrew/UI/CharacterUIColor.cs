@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEditor;
 using UnityEngine.UI;
 using Vexe.Runtime.Types;
-using Vexe.Runtime.Extensions;
 
 namespace Hourai.SmashBrew.UI {
 
@@ -66,16 +63,27 @@ namespace Hourai.SmashBrew.UI {
             return input;
         }
 
+        void Awake() {
+            _graphic = GetComponent<Graphic>();
+        }
+
+#if UNITY_EDITOR
         void Update() {
+            if(Application.isPlaying)
             if (_graphic == null)
                 _graphic = GetComponent<Graphic>();
             _graphic.color = AdjustedColor;
         }
+#endif
 
         public void SetCharacterData(CharacterMatchData data) {
             if (data == null)
                 return;
             PlayerNumber = data.PlayerNumber;
+            if (_graphic == null)
+                _graphic = GetComponent<Graphic>();
+            if (_graphic)
+                _graphic.color = AdjustedColor;
         }
 
     }

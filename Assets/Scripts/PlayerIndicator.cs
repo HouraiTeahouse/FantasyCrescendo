@@ -32,6 +32,7 @@ namespace Hourai.SmashBrew.UI {
             _cUIColor = GetComponent<CharacterUIColor>();
             _rTransform = GetComponent<RectTransform>();
             _rTransform.parent = SmashGame.FindGUI().transform;
+            _rTransform.localScale = Vector3.one;
         }
 
         private void LateUpdate() {
