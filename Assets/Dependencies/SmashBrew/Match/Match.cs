@@ -43,9 +43,8 @@ namespace Hourai.SmashBrew {
             Character prefab = Data.LoadPrefab(Pallete);
             if (prefab == null)
                 return null;
-            SpawnedInstance = SmashGame.SpawnPlayer(PlayerNumber, prefab);
-            SpawnedInstance.position = position;
-            SpawnedInstance.rotation = rotation;
+            SpawnedInstance = prefab.InstantiateNew(position, rotation);
+            SpawnedInstance.PlayerNumber = PlayerNumber;
             return SpawnedInstance;
         }
 

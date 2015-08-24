@@ -25,8 +25,6 @@ namespace Hourai.SmashBrew.UI {
             }
 
             int stock = Component.Lives;
-
-            Debug.Log(stock);
             bool excess = stock > standardIndicators.Length;
             if(ExcessDisplay)
                 ExcessDisplay.gameObject.SetActiveIfNot(excess);

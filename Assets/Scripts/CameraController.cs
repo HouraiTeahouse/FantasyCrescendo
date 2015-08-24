@@ -17,6 +17,10 @@ namespace Hourai.SmashBrew {
 
         private Camera _camera;
 
+        public static Camera Camera {
+            get { return Instance ? Instance._camera : null; }
+        }
+
         [Serialize, Show]
         private float cameraSpeed = 1f;
 

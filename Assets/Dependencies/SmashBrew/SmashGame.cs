@@ -36,32 +36,6 @@ namespace Hourai.SmashBrew {
             get { return Config.GenericPlayerData.Length; }
         }
 
-        public static Character SpawnPlayer(int playerNumber, Character characterPrefab) {
-            // Instantiate a instance of the Character
-            Character instance = characterPrefab.InstantiateNew();
-
-            // Set Player's number
-            instance.PlayerNumber = playerNumber;
-
-            // Create the player's indicator
-            var newIndicator =
-                new GameObject("P" + (playerNumber + 1) + " Indicator").AddComponent<PlayerIndicator>();
-            newIndicator.Color = GetPlayerColor(playerNumber);
-            newIndicator.Sprite = (playerNumber >= 0 && playerNumber <= MaxPlayers)
-                                      ? Config.GenericPlayerData[playerNumber].IndicatorSprite
-                                      : null;
-
-            // Hide the indicator objects only if it is in the Editor
-#if UNITY_EDITOR
-            newIndicator.gameObject.hideFlags = HideFlags.HideInHierarchy;
-#endif
-
-            //Attach the indicator to the Character instance
-            newIndicator.Attach(instance);
-
-            return instance;
-        }
-
         public static void CreateRespawnPlatform(Character target) {
             if (target == null)
                 throw new ArgumentNullException("target");

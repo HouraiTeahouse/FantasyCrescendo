@@ -1,45 +1,52 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
-namespace Hourai.SmashBrew {
+namespace Hourai.SmashBrew.UI {
 
-    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Text), typeof(CharacterUIColor))]
     public sealed class PlayerIndicator : MonoBehaviour {
 
+        [SerializeField]
         private Vector3 positionBias = new Vector3(0f, 1f, 0f);
-        private SpriteRenderer spriteRenderer;
-        private Character target;
 
-        public Color Color {
-            get { return spriteRenderer ? spriteRenderer.color : Color.clear; }
-            set {
-                if (spriteRenderer)
-                    spriteRenderer.color = value;
-            }
-        }
+        [SerializeField]
+        private string _format;
 
-        public Sprite Sprite {
-            get { return spriteRenderer ? spriteRenderer.sprite : null; }
+        private RectTransform _rTransform;
+        private CharacterUIColor _cUIColor;
+        private Text _text;
+
+        private Character _target;
+        private CapsuleCollider _collider;
+
+        public Character Target {
+            get { return _target; }
             set {
-                if (spriteRenderer)
-                    spriteRenderer.sprite = value;
+                _target = value;
+                _collider = _target ? _target.MovementCollider : null;
             }
         }
 
         private void Awake() {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-
-        public void Attach(Character targetCharacter) {
-            target = targetCharacter;
+            _text = GetComponent<Text>();
+            _cUIColor = GetComponent<CharacterUIColor>();
+            _rTransform = GetComponent<RectTransform>();
+            _rTransform.parent = SmashGame.FindGUI().transform;
         }
 
         private void LateUpdate() {
-            bool haveTarget = target != null;
-            spriteRenderer.enabled = haveTarget;
-            if (haveTarget) {
-                Vector3 up = transform.up = target.up;
-                transform.position = target.position + up * target.MovementCollider.height + positionBias;
+            if (Target == null) {
+                _text.enabled = false;
+                return;
             }
+
+            _text.text = (Target.PlayerNumber + 1).ToString(_format);
+            _cUIColor.PlayerNumber = Target.PlayerNumber;
+
+            Bounds bounds = _collider.bounds;
+            Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + positionBias;
+            _rTransform.position = CameraController.Camera.WorldToScreenPoint(worldPosition);
+            
         }
 
     }
