@@ -11,7 +11,7 @@ GameObject:
   - 222: {fileID: 22273952}
   - 114: {fileID: 11473926}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Player Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -519,10 +519,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add6af3eab78bba48b726bd985a44939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
   levelText: {fileID: 11473934}
-  playerModeBtn: {fileID: 173970}
-  playerImage: {fileID: 173952}
+  playerImage: {fileID: 11473926}
+  playerModeBtn: {fileID: 11473972}
+  playerNumber: 0
   type: 2
 --- !u!114 &11473948
 MonoBehaviour:

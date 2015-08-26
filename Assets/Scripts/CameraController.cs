@@ -66,7 +66,7 @@ namespace Hourai.SmashBrew {
             // Compute Hadamard product between size and inverse padding to add the padding desired.
             size = new Vector2(size.x*actualPadding.x, size.y*actualPadding.y);
 
-            // Calculate the target field of view for the proper level of zoom
+            // Calculate the target field of view for the proper cpuLevel of zoom
             float targetFOV = 2f*Mathf.Atan(size.x*0.5f/Mathf.Abs(transform.position.z - targetPosition.z))*
                               Mathf.Rad2Deg;
 

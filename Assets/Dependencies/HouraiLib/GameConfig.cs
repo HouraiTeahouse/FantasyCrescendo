@@ -1,13 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using Vexe.Runtime.Extensions;
 using Vexe.Runtime.Types;
 
 namespace Hourai {
 
-    [DefineCategories("Tags")]
+    [DefineCategories("Tags", "PlayerPrefs")]
     public abstract class GameConfig : BaseScriptableObject {
         
-        [Serialize, Show, Tags, Category("Tags"), Default("Player")]
+        [Serialize, Show, Tags, Category("Tags"), Default("HumanPlayer")]
         private string _playerTag;
 
         public string PlayerTag {
@@ -27,6 +30,31 @@ namespace Hourai {
         public string GUITag {
             get { return _guiTag; }
         }
+
+        [Serialize, Show, Category("PlayerPrefs")]
+        private Dictionary<string, bool> bools;
+
+        [Serialize, Show, Category("PlayerPrefs")]
+        private Dictionary<string, int> ints;
+
+        [Serialize, Show, Category("PlayerPrefs")]
+        private Dictionary<string, string> strings;
+
+        [Serialize, Show, Category("PlayerPrefs")]
+        private Dictionary<string, float> floats;
+
+        protected virtual void OnEnable() {
+            FillPref(bools, Prefs.SetBool);
+            FillPref(ints, Prefs.SetInt);
+            FillPref(strings, Prefs.SetString);
+            FillPref(floats, Prefs.SetFloat);
+        }
+
+        private void FillPref<T>(Dictionary<string, T> dictionary, Action<string, T> set) {
+            foreach (KeyValuePair<string, T> b in dictionary.Where(b => !PlayerPrefs.HasKey(b.Key)))
+                set.SafeInvoke(b.Key, b.Value);
+        }
+
     }
 
 }

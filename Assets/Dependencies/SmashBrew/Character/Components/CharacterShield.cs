@@ -60,7 +60,7 @@ namespace Hourai.SmashBrew {
             render.reflectionProbeUsage = ReflectionProbeUsage.Off;
             render.useLightProbes = false;
 
-            // Make sure the Color of the shield matches the Player
+            // Make sure the Color of the shield matches the HumanPlayer
             Color shieldColor = Character.PlayerColor;
             shieldColor.a = _shieldMaterial.color.a;
             render.material.color = shieldColor;

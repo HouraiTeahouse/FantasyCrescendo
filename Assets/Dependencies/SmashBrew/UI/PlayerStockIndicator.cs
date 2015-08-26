@@ -5,7 +5,7 @@ using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew.UI {
 
-    public class PlayerStockIndicator : CharacterGUIComponent<Stock> {
+    public class PlayerStockIndicator : PlayerGuiComponent<Stock> {
 
         [Serialize, Show]
         private NumberText ExcessDisplay;

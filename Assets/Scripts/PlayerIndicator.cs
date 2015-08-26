@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
-    [RequireComponent(typeof(Text), typeof(CharacterUIColor))]
+    [RequireComponent(typeof(Text), typeof(PlayerUiColor))]
     public sealed class PlayerIndicator : MonoBehaviour {
 
         [SerializeField]
@@ -13,7 +13,7 @@ namespace Hourai.SmashBrew.UI {
         private string _format;
 
         private RectTransform _rTransform;
-        private CharacterUIColor _cUIColor;
+        private PlayerUiColor _cUIColor;
         private Text _text;
 
         private Character _target;
@@ -29,9 +29,9 @@ namespace Hourai.SmashBrew.UI {
 
         private void Awake() {
             _text = GetComponent<Text>();
-            _cUIColor = GetComponent<CharacterUIColor>();
+            _cUIColor = GetComponent<PlayerUiColor>();
             _rTransform = GetComponent<RectTransform>();
-            _rTransform.parent = SmashGame.FindGUI().transform;
+            _rTransform.SetParent(SmashGame.FindGUI().transform);
             _rTransform.localScale = Vector3.one;
         }
 
@@ -42,7 +42,7 @@ namespace Hourai.SmashBrew.UI {
             }
 
             _text.text = (Target.PlayerNumber + 1).ToString(_format);
-            _cUIColor.PlayerNumber = Target.PlayerNumber;
+            _cUIColor.SetPlayerData(Match.GetPlayerData(Target.PlayerNumber));
 
             Bounds bounds = _collider.bounds;
             Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + positionBias;

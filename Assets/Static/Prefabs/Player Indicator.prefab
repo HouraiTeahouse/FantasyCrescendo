@@ -11,8 +11,8 @@ GameObject:
   - 222: {fileID: 22231686}
   - 114: {fileID: 11429496}
   - 114: {fileID: 11466766}
-  - 114: {fileID: 11481990}
   - 114: {fileID: 11401674}
+  - 114: {fileID: 11486576}
   m_Layer: 5
   m_Name: Player Indicator
   m_TagString: Untagged
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: cfe4813e0409c6148a1fbf1db2e3d307, type: 3}
     m_FontSize: 55
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 0
---- !u!114 &11481990
+--- !u!114 &11486576
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -81,23 +81,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 124338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd57a218d1321c747b02b067953fad4e, type: 3}
+  m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: -47902
+  _id: -211812
   dbg: 0
   _serializationData:
     serializedObjects: []
     serializedStrings:
       keys:
-      - int PlayerNumber
       - float _saturation
       - float _alpha
       - AnimationCurve _red
       - AnimationCurve _blue
       - AnimationCurve _green
       values:
-      - 0
       - 1.0
       - 1.0
       - '{"keys":[{"time":0.0,"value":0.0,"tangentMode":0,"inTangent":0.0,"outTangent":1.0},{"time":1.0,"value":1.0,"tangentMode":0,"inTangent":1.0,"outTangent":0.0}],"preWrapMode":"ClampForever","postWrapMode":"ClampForever"}'

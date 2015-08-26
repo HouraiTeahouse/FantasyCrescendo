@@ -11,7 +11,7 @@ namespace Hourai.SmashBrew {
         /// <summary>
         /// Called on script instantiation.
         /// </summary>
-        private void Awake() {
+        private void Start() {
             Match.Begin();
             Destroy(this);
         }

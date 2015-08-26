@@ -56,7 +56,6 @@ namespace Hourai.SmashBrew {
         }
 
         public void OnMatchUpdate() {
-            throw new System.NotImplementedException();
         }
 
         public bool IsFinished {

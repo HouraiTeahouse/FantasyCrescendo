@@ -25,17 +25,19 @@ namespace Hourai.SmashBrew {
             _Respawn = new Resource<GameObject>(_respawnPlatformPrefab);
         }
 
-        [Category("Debug")]
-        public Color DamageableHitboxColor = Color.yellow;
+        public readonly Color CPUColor = Color.grey;
 
         [Category("Debug")]
-        public Color IntangibleHitboxColor = Color.blue;
+        public readonly Color DamageableHitboxColor = Color.yellow;
 
         [Category("Debug")]
-        public Color InvincibleHitboxColor = Color.green;
+        public readonly Color IntangibleHitboxColor = Color.blue;
 
         [Category("Debug")]
-        public Color OffensiveHitboxColor = Color.red;
+        public readonly Color InvincibleHitboxColor = Color.green;
+
+        [Category("Debug")]
+        public readonly Color OffensiveHitboxColor = Color.red;
 
         [System.Serializable]
         public class PlayerData {

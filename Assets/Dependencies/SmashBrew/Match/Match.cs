@@ -7,78 +7,44 @@ using Vexe.Runtime.Extensions;
 using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
-    
-    public sealed class CharacterMatchData {
-
-        public readonly CharacterData Data;
-        public readonly int Pallete;
-
-        [DontSerialize, Hide]
-        public int PlayerNumber { get; internal set; }
-
-        [DontSerialize, Hide]
-        public Character SpawnedInstance { get; private set; }
-
-        internal CharacterMatchData() {
-            Data = null;
-            Pallete = 0;
-            PlayerNumber = 0;
-            SpawnedInstance = null;
-        }
-
-        internal CharacterMatchData(CharacterData data, int pallete) {
-            if (data == null)
-                throw new ArgumentNullException("data");
-            if (data.AlternativeCount <= 0)
-                throw new ArgumentException("A Character Data must have at least one pallete choice.");
-            pallete = Mathf.Clamp(pallete, 0, data.AlternativeCount - 1);
-            Data = data;
-            Pallete = pallete;
-        }
-
-        internal Character Spawn(Transform location = null) {
-            Vector3 position = location != null ? location.position : Vector3.zero;
-            Quaternion rotation = location != null ? location.rotation : Quaternion.identity;
-
-            Character prefab = Data.LoadPrefab(Pallete);
-            if (prefab == null)
-                return null;
-            SpawnedInstance = prefab.InstantiateNew(position, rotation);
-            SpawnedInstance.PlayerNumber = PlayerNumber;
-            return SpawnedInstance;
-        }
-
-    }
 
     public static class Match {
 
         static Match() {
             _matchRules = new List<IMatchRule>();
-            _selected = new CharacterMatchData[SmashGame.MaxPlayers];
+            _selected = new Player[SmashGame.MaxPlayers];
+            for (var i = 0; i < SmashGame.MaxPlayers; i++)
+                _selected[i] = new Player(i);
         }
 
-        public static CharacterMatchData GetCharacterMatchData(int playerNumber) {
+        public static Player GetPlayerData(int playerNumber) {
             if (playerNumber < 0 || playerNumber >= SmashGame.MaxPlayers)
                 throw new ArgumentException("playerNumber");
-            CharacterMatchData data = _selected[playerNumber];
-            if (data != null)
-                data.PlayerNumber = playerNumber;
-            return data;
+            return _selected[playerNumber];
+        }
+
+        public static IEnumerable<Player> Players {
+            get {
+                foreach (var player in _selected)
+                    yield return player;
+            }
+        }
+
+        public static IEnumerable<Player> ActivePlayers {
+            get { return _selected.Where(player => player.Type != Player.PlayerType.Disabled); }
         }
 
         public static event Action OnMatchStart;
-        public static event Action<CharacterMatchData> OnSpawnCharacter;
+        public static event Action<Player> OnSpawnCharacter;
         
         private static List<IMatchRule> _matchRules;
-        private static CharacterMatchData[] _selected; 
+        private static Player[] _selected;
 
         /// <summary>
         /// The current number of Players selected.
         /// </summary>
         public static int PlayerCount {
-            get {
-                return _selected == null ? 0 : _selected.Count(selection => selection != null);
-            }
+            get { return ActivePlayers.Count(); }
         }
 
         /// <summary>
@@ -86,12 +52,6 @@ namespace Hourai.SmashBrew {
         /// </summary>
         [DontSerialize, Hide]
         public static bool InMatch { get; private set; }
-
-        public static void SetCharcter(int playerNumber, CharacterData character, int pallete = 0) {
-            if (character == null)
-                throw new ArgumentNullException("character");
-            _selected[playerNumber] = new CharacterMatchData(character, pallete);
-        }
 
         public static void AddMatchRule(IMatchRule rule) {
             if (rule != null)
@@ -134,18 +94,15 @@ namespace Hourai.SmashBrew {
             // Spawn players
             int playerCount = PlayerCount;
             var currentPlayer = 0;
-            for (var i = 0; i < PlayerCount; i++) {
-                if (_selected[i] == null)
-                    continue;
-                _selected[i].PlayerNumber = i;
 
+            foreach(Player player in ActivePlayers) {
                 Transform spawnPoint = Stage.GetSpawnPoint(currentPlayer);
-                Character runtimeCharacter = _selected[i].Spawn(spawnPoint);
+                Character runtimeCharacter = player.Spawn(spawnPoint);
                 if (runtimeCharacter == null)
                     continue;
                 foreach (IMatchRule rule in _matchRules)
                     rule.OnSpawn(runtimeCharacter);
-                OnSpawnCharacter.SafeInvoke(_selected[i]);
+                OnSpawnCharacter.SafeInvoke(player);
                 currentPlayer++;
             }
 

@@ -12,7 +12,7 @@ namespace Hourai {
         private bool _paused;
         private float _oldTimeScale;
 
-        public bool Paused {
+        public virtual bool Paused {
             get { return _paused; }
             set {
                 if (_paused == value)
@@ -28,7 +28,7 @@ namespace Hourai {
         }
 
         // All the things that require an actual instance
-        #region Global Callbacks 
+        #region Global Callbacks
 
         public static event Action OnUpdate;
         public static event Action OnLateUpdate;

@@ -25,7 +25,7 @@ namespace Hourai.SmashBrew {
                                         other.GetComponentInChildren<Character>();
 
             if (characterScript == null) {
-                Debug.Log("Was expecting" + other.name + " to be a Player, but no Character script was found.");
+                Debug.Log("Was expecting" + other.name + " to be a HumanPlayer, but no Character script was found.");
                 return;
             }
 

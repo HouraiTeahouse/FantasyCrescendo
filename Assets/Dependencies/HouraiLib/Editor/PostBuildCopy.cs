@@ -53,10 +53,10 @@ namespace Hourai {
             }
         }
 
-        [MenuItem("Hourai/Clear Player Prefs %#c")]
+        [MenuItem("Hourai/Clear HumanPlayer Prefs %#c")]
         static void ClearPlayerPrefs() {
             PlayerPrefs.DeleteAll();
-            Debug.Log("Player Prefs Cleared.");
+            Debug.Log("HumanPlayer Prefs Cleared.");
         }
 
         [MenuItem("Hourai/Build Windows", false, 51)]

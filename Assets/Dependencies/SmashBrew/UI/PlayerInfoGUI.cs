@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Vexe.Runtime.Extensions;
@@ -17,41 +18,39 @@ namespace Hourai.SmashBrew.UI {
         private List<GameObject> _displays;
 
         void Awake() {
-            Match.OnMatchStart += _displays.Clear;
-            Match.OnSpawnCharacter += OnSpawn;
+            Match.OnMatchStart += OnMatchStart;
         }
 
         void OnDestroy() {
-            Match.OnMatchStart -= _displays.Clear;
-            Match.OnSpawnCharacter -= OnSpawn;
+            Match.OnMatchStart -= OnMatchStart;
         }
 
-        void OnSpawn(CharacterMatchData data) {
-            if (data == null || _displays.Count <= 0)
-                return;
+        void OnMatchStart() {
+            _displays = _displays.Where(display => display != null).ToList();
+            IEnumerator<Player> players = Match.ActivePlayers.GetEnumerator();
+            foreach (var display in _displays) {
+                if (!players.MoveNext()) {
+                    display.SetActiveIfNot(false);
+                    continue;
+                }
 
-            GameObject display = null;
-            while (_displays.Count > 0 && display == null) {
-                display = _displays[0];
-                _displays.RemoveAt(0);
+                if (playerIndicatorPrefab != null)
+                {
+                    PlayerIndicator indicator = playerIndicatorPrefab.InstantiateNew();
+                    indicator.Target = players.Current.SpawnedCharacter;
+                }
+
+                display.SetActive(true);
+
+                // Update the display with the Character information
+                foreach (IPlayerGUIComponent component in display.GetComponentsInChildren<IPlayerGUIComponent>())
+                    component.SetPlayerData(players.Current);
+
+                display.name = "Player " + (players.Current.PlayerNumber + 1) + " Display";
             }
+        }
 
-            if (display == null)
-                return;
-
-            if (playerIndicatorPrefab != null) {
-                PlayerIndicator indicator = playerIndicatorPrefab.InstantiateNew();
-                indicator.Target = data.SpawnedInstance;
-            }
-
-            _displays.Remove(display);
-            display.SetActive(true);
-
-            // Update the display with the Character information
-            foreach (ICharacterGUIComponent component in display.GetComponentsInChildren<ICharacterGUIComponent>())
-                component.SetCharacterData(data);
-
-            display.name = "Player " + (data.PlayerNumber + 1) + " Display";
+        void OnSpawn(Player data) {
         }
 
     }

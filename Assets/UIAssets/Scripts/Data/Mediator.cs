@@ -5,14 +5,12 @@ public class Command {
 
 }
 
-public delegate void MediatorCallback<T>(T c) where T : Command;
-
 public class Mediator {
 
     //make sure you're using the System.Collections.Generic namespace
     private Dictionary<Type, Delegate> _subscribers = new Dictionary<Type, Delegate>();
 
-    public void Subscribe<T>(MediatorCallback<T> callback) where T : Command {
+    public void Subscribe<T>(Action<T> callback) where T : Command {
         if (callback == null)
             throw new ArgumentNullException("callback");
         Type tp = typeof (T);
@@ -22,7 +20,7 @@ public class Mediator {
             _subscribers.Add(tp, callback);
     }
 
-    public void DeleteSubscriber<T>(MediatorCallback<T> callback) where T : Command {
+    public void DeleteSubscriber<T>(Action<T> callback) where T : Command {
         if (callback == null)
             throw new ArgumentNullException("callback");
         Type tp = typeof (T);

@@ -15,7 +15,7 @@ namespace Hourai {
         private readonly SortedList<int, List<T>> _items;
 
         // The priority cache. In exchange for using a bit more memory. This allows for faster checks
-        // like in Contains, which would otherwise involve iterating through every priority level and running
+        // like in Contains, which would otherwise involve iterating through every priority cpuLevel and running
         // Contains on every bucket
         private readonly Dictionary<T, int> _priorities;
 

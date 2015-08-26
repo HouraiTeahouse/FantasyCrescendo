@@ -150,7 +150,7 @@ namespace UnityStandardAssets.ImageEffects {
                 rtTempSrc = rtTempDst;
             }
 
-            // Update viewer's adaptation level
+            // Update viewer's adaptation cpuLevel
             CalculateAdaptation(rtTempSrc);
 
             // Apply contrast strech to the original scene, using currently adapted parameters
