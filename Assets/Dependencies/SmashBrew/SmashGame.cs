@@ -9,15 +9,15 @@ namespace Hourai.SmashBrew {
     public static class SmashExtensions {
 
         public static bool IsPlayer(this GameObject gameObj) {
-            return gameObj != null && gameObj.CompareTag(SmashGame.Config.PlayerTag);
+            return gameObj && gameObj.CompareTag(SmashGame.Config.PlayerTag);
         }
 
         public static bool IsPlayer(this Component obj) {
-            return obj != null && obj.CompareTag(SmashGame.Config.PlayerTag);
+            return obj && obj.CompareTag(SmashGame.Config.PlayerTag);
         }
 
         public static bool IsHurtbox(this Collider collider) {
-            return collider != null && ((1 << collider.gameObject.layer) & SmashGame.Config.HurtboxLayers) != 0;
+            return collider && ((1 << collider.gameObject.layer) & SmashGame.Config.HurtboxLayers) != 0;
         }
 
     }

@@ -8,7 +8,6 @@ namespace Hourai {
     public class Resource<T> where T : Object {
 
         private readonly string _path;
-        private T _asset;
 
         public Resource(string path) {
             if (path == null)
@@ -21,26 +20,24 @@ namespace Hourai {
         }
 
         public bool IsLoaded {
-            get { return _asset != null; }
+            get { return Asset; }
         }
 
-        public T Asset {
-            get { return _asset; }
-        }
+        public T Asset { get; private set; }
 
         public T Load() {
-            if (_asset != null)
-                return _asset;
+            if (IsLoaded)
+                return Asset;
             Object loadedObject = Resources.Load(_path);
             if (loadedObject != null) {
                 var asT = loadedObject as T;
                 if (asT != null)
-                    _asset = asT;
+                    Asset = asT;
                 else {
                     Debug.LogError("Tried to load asset of type" + typeof (T) + " at " + _path +
                                    " and found an Object of type " + loadedObject.GetType() + " instead");
                 }
-                return _asset;
+                return Asset;
             }
             Debug.LogError("Tried to load asset of type" + typeof (T) + " at " + _path + " and found nothing.");
             return null;
@@ -48,8 +45,8 @@ namespace Hourai {
 
         public virtual void Unload() {
             if (IsLoaded)
-                Resources.UnloadAsset(_asset);
-            _asset = null;
+                Resources.UnloadAsset(Asset);
+            Asset = null;
         }
 
     }

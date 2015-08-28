@@ -16,7 +16,7 @@ namespace Hourai.SmashBrew {
         private bool _fastFall;
 
         public bool IsFastFalling {
-            get { return Character != null && !Character.IsGrounded && _fastFall; }
+            get { return Character && !Character.IsGrounded && _fastFall; }
         }
 
         public float FallSpeed {

@@ -4,17 +4,19 @@ using Vexe.Runtime.Extensions;
 using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
-
+ 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     public class CharacterAttack : RestrictableCharacterComponent {
 
-        [Serialize, Show, AnimVar(Filter = ParameterType.Trigger, AutoMatch = "Trigger")]
+        [SerializeField]
+        [AnimVar(Filter = ParameterType.Trigger, AutoMatch = "Trigger")]
         private int _attackTrigger;
 
         public event Action OnAttack;
 
-        void Update() {
+        protected override void OnUpdate() {
+            base.OnUpdate();
             if(InputSource != null && InputSource.Attack)
                 Attack();
         }

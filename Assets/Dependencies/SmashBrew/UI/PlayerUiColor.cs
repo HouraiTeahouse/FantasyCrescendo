@@ -28,7 +28,7 @@ namespace Hourai.SmashBrew.UI {
 
         public virtual Color AdjustedColor {
             get {
-                Color rawColor = _player != null ? _player.GetColor() : Color.clear;
+                Color rawColor = _player != null ? _player.Color : Color.clear;
 
                 rawColor.r = _red.Evaluate(rawColor.r);
                 rawColor.g = _green.Evaluate(rawColor.g);

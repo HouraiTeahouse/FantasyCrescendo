@@ -15,7 +15,7 @@ namespace Hourai.SmashBrew {
         }
 
         private void FixedUpdate() {
-            if (Character != null)
+            if (Character)
                 Character.AddForce(-Vector3.up*_gravity);
         }
 

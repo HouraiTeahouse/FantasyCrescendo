@@ -3,7 +3,6 @@ using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
-    [RequireComponent(typeof (Character))]
     public abstract class CharacterComponent : HouraiBehaviour {
 
         [DontSerialize, Hide]

@@ -8,7 +8,7 @@ using Vexe.Runtime.Types;
 namespace Hourai {
 
     [DefineCategories("Tags", "PlayerPrefs")]
-    public abstract class GameConfig : BaseScriptableObject {
+    public abstract class GameConfig : BetterScriptableObject {
         
         [Serialize, Show, Tags, Category("Tags"), Default("HumanPlayer")]
         private string _playerTag;

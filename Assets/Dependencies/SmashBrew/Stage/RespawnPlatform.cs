@@ -22,10 +22,11 @@ namespace Hourai.SmashBrew {
                     return;
 
                 _character = value;
-                if (_character != null) {
-                    _character.Velocity = Vector3.zero;
-                    _invincibility = _character.ApplyStatus<Invincibility>(_invicibilityTimer + _platformTimer);
-                }
+                if (!_character)
+                    return;
+
+                _character.Velocity = Vector3.zero;
+                _invincibility = _character.ApplyStatus<Invincibility>(_invicibilityTimer + _platformTimer);
             }
         }
 

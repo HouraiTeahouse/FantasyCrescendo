@@ -69,18 +69,18 @@ namespace Hourai.SmashBrew {
             spawnPoints = SmashGame.GetSpawnPoints();
             repsawnPoints = SmashGame.GetRespawnPoints();
 
-            if (backgroundMusic != null)
+            if (backgroundMusic)
                 backgroundMusic.PlayRandom();
 
             // Sort the Spawn Points by name instead of by random spatial orientation
             Array.Sort(spawnPoints, (s1, s2) => s1.name.CompareTo(s2.name));
 
-            if (mainCamera != null)
+            if (mainCamera)
                 return;
 
             mainCamera = Camera.main ?? FindObjectOfType<Camera>();
 
-            if (mainCamera == null)
+            if (mainCamera)
                 Debug.LogError("Stage has no Camera!");
         }
 

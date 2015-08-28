@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using Vexe.Runtime.Extensions;
 using Vexe.Runtime.Types;
 #if UNITY_EDITOR
@@ -21,7 +22,8 @@ namespace Hourai.SmashBrew {
 #endif
     [DisallowMultipleComponent]
     [DefineCategories("Animation")]
-    [RequireComponent(typeof (Animator), typeof (Rigidbody), typeof (CapsuleCollider))]
+    [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
+    [RequireComponent(typeof(NetworkAnimator), typeof(NetworkTransform))]
     public class Character : HouraiBehaviour {
 
         private static readonly Type[] RequiredComponents; 
@@ -42,22 +44,10 @@ namespace Hourai.SmashBrew {
         }
 
         [DontSerialize, Hide]
-        public int PlayerNumber { get; internal set; }
-
-        public Color PlayerColor {
-            get { return SmashGame.GetPlayerColor(PlayerNumber); }
-        }
+        public Player Player { get; internal set; }
 
         [DontSerialize, Hide]
         public ICharacterInput InputSource { get; set; }
-
-        public override float LocalTimeScale {
-            get { return base.LocalTimeScale; }
-            set {
-                base.LocalTimeScale = value;
-                Animator.speed = value;
-            }
-        }
 
         public bool IsGrounded {
             get { return _isGrounded; }
@@ -125,11 +115,8 @@ namespace Hourai.SmashBrew {
         [Serialize]
         private float triggerSizeRatio = 1.5f;
 
-        [Serialize, Hide]
-        public string InternalName {
-            get;
-            set;
-        }
+        [Serialize, HideInInspector]
+        public string InternalName;
 
         #region Required Components
 
@@ -145,7 +132,6 @@ namespace Hourai.SmashBrew {
         [DontSerialize, Hide]
         public Animator Animator { get; private set; }
 
-        [DontSerialize, Hide]
         public CharacterDamageable Damage {
             get {
                 if (_damageable == null)
@@ -209,7 +195,7 @@ namespace Hourai.SmashBrew {
             CameraController.RemoveTarget(this);
         }
 
-        protected virtual void Reset() {
+        public void Reset() {
             AttachRequiredComponents();
         }
 

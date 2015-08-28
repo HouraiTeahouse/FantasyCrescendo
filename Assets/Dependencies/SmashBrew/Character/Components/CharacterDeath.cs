@@ -29,11 +29,12 @@ namespace Hourai.SmashBrew {
         private void OnBlastZoneExit() {
             Vector3 position = Character.transform.position;
 
-            if (deathPrefab != null) {
-                ParticleSystem copy = deathPrefab.InstantiateNew(position);
-                copy.transform.LookAt(transform.position - position);
-                copy.startColor = Character.PlayerColor;
-            }
+            if (!deathPrefab)
+                return;
+
+            ParticleSystem copy = deathPrefab.InstantiateNew(position);
+            copy.transform.LookAt(transform.position - position);
+            copy.startColor = Character.Player.Color;
         }
 
     }

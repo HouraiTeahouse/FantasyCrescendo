@@ -99,7 +99,7 @@ namespace Hourai {
 
         protected override void Awake() {
             base.Awake();
-            if (_config != null)
+            if (_config)
                 return;
             T[] configs = Resources.FindObjectsOfTypeAll<T>();
             if (configs.Length > 0)

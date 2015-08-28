@@ -19,9 +19,9 @@ namespace Hourai.SmashBrew {
             get { return _lives; }
             internal set {
                 _lives = value;
-                if(_respawn != null)
+                if(_respawn)
                     _respawn.enabled = Alive;
-                if(Character != null)
+                if(Character)
                     Character.gameObject.SetActive(Alive);
             }
         }

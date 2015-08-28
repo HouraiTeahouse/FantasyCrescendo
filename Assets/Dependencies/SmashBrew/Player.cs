@@ -37,14 +37,17 @@ namespace Hourai.SmashBrew {
                 Character = null;
         }
 
-        public Color GetColor() {
-            switch (Type) {
-                case PlayerType.HumanPlayer:
-                    return SmashGame.GetPlayerColor(PlayerNumber);
-                case PlayerType.CPU:
-                    return SmashGame.Config.CPUColor;
-                default:
-                    return Color.clear;
+        public Color Color {
+            get {
+                switch (Type)
+                {
+                    case PlayerType.HumanPlayer:
+                        return SmashGame.GetPlayerColor(PlayerNumber);
+                    case PlayerType.CPU:
+                        return SmashGame.Config.CPUColor;
+                    default:
+                        return Color.clear;
+                }   
             }
         }
 
@@ -64,7 +67,7 @@ namespace Hourai.SmashBrew {
             if (prefab == null)
                 return null;
             SpawnedCharacter = prefab.InstantiateNew(pos, rot);
-            SpawnedCharacter.PlayerNumber = PlayerNumber;
+            SpawnedCharacter.Player = this;
             return SpawnedCharacter;
         }
 

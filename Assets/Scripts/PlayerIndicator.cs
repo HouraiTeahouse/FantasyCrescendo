@@ -41,8 +41,8 @@ namespace Hourai.SmashBrew.UI {
                 return;
             }
 
-            _text.text = (Target.PlayerNumber + 1).ToString(_format);
-            _cUIColor.SetPlayerData(Match.GetPlayerData(Target.PlayerNumber));
+            _text.text = (Target.Player.PlayerNumber + 1).ToString(_format);
+            _cUIColor.SetPlayerData(Match.GetPlayerData(Target.Player.PlayerNumber));
 
             Bounds bounds = _collider.bounds;
             Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + positionBias;

@@ -24,8 +24,11 @@ namespace Hourai.SmashBrew {
         void Awake() {
             Match.AddMatchRule(new StockMatch(stockCount));
 
-            int index = 0;
-            foreach (var player in Match.Players) {
+            var index = 0;
+            foreach (var player in Match.Players)
+            {
+                if (index >= testCharacters.Length)
+                    break;
                 if (player == null || testCharacters[index] == null)
                     continue;
                 player.Character = testCharacters[index].data;

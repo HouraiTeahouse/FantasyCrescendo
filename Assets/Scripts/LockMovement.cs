@@ -8,7 +8,7 @@ namespace Hourai.SmashBrew {
             get { return base.Character; }
             set {
                 base.Character = value;
-                if (value != null)
+                if (value)
                     _movement = value.GetComponentInChildren<CharacterMovement>();
             }
         }
