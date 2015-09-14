@@ -90,7 +90,7 @@ namespace Hourai.SmashBrew {
             OnShieldBreak.SafeInvoke();
         }
 
-        public void Damage(IDamageSource source) {
+        public void Damage(IDamager source) {
             
         }
 

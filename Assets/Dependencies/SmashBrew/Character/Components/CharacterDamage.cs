@@ -5,9 +5,7 @@ using Vexe.Runtime.Extensions;
 
 namespace Hourai.SmashBrew {
 
-    public delegate float DamageModifier(IDamageSource source, float damage);
-
-    public delegate float HealingModifier(IHealingSource source, float damage);
+    public delegate float Modifier<T>(T source, float damage);
 
     [DisallowMultipleComponent]
     public abstract class CharacterDamageable : CharacterComponent, IDamageable {
@@ -15,35 +13,44 @@ namespace Hourai.SmashBrew {
         // The Damage Value used internally for calculation of various aspects of the game, like knockback
         protected internal abstract float InternalDamage { get; protected set; }
 
-        private PriorityList<DamageModifier> _damageModifiers; 
-        private PriorityList<HealingModifier> _healingModifiers;  
+        private PriorityList<Modifier<IDamager>> _damageModifiers; 
+        private PriorityList<Modifier<IHealer>> _healingModifiers;  
 
-        public event Action<IHealingSource, float> OnHeal;
-        public event Action<IDamageSource, float> OnDamage;
+        public event Action<IHealer, float> OnHeal;
+        public event Action<IDamager, float> OnDamage;
 
-        public bool AddDamageModifier(DamageModifier modifier, int priority = 0) {
+        void Awake() {
+            _damageModifiers = new PriorityList<Modifier<IDamager>>();
+            _healingModifiers = new PriorityList<Modifier<IHealer>>();
+        }
+
+        public bool AddDamageModifier(Modifier<IDamager> modifier, int priority = 0)
+        {
             if (modifier == null || _damageModifiers.Contains(modifier))
                 return false;
             _damageModifiers.Add(modifier);
             return true;
         }
 
-        public bool RemoveDamageModifier(DamageModifier modifier) {
+        public bool RemoveDamageModifier(Modifier<IDamager> modifier)
+        {
             return _damageModifiers.Remove(modifier);
         }
 
-        public bool AddHealingModifier(HealingModifier modifier, int priority = 0) {
+        public bool AddHealingModifier(Modifier<IHealer> modifier, int priority = 0)
+        {
             if (modifier == null || _healingModifiers.Contains(modifier))
                 return false;
             _healingModifiers.Add(modifier);
             return true;
         }
 
-        public bool RemoveHealingModifier(HealingModifier modifier) {
+        public bool RemoveHealingModifier(Modifier<IHealer> modifier)
+        {
             return _healingModifiers.Remove(modifier);
         }
 
-        public void Damage(IDamageSource source) {
+        public void Damage(IDamager source) {
             if (source == null)
                 return;
 
@@ -56,7 +63,7 @@ namespace Hourai.SmashBrew {
             OnDamage.SafeInvoke(source, damage);
         }
 
-        public void Heal(IHealingSource source) {
+        public void Heal(IHealer source) {
             if (source == null)
                 return;
 
@@ -69,11 +76,11 @@ namespace Hourai.SmashBrew {
             OnHeal.SafeInvoke(source, healing);
         }
 
-        protected virtual void HandleDamage(IDamageSource source, float damage) {
+        protected virtual void HandleDamage(IDamager source, float damage) {
             InternalDamage += damage;
         }
 
-        protected virtual void HandleHealing(IHealingSource source, float damage) {
+        protected virtual void HandleHealing(IHealer source, float damage) {
             InternalDamage -= damage;
         }
 

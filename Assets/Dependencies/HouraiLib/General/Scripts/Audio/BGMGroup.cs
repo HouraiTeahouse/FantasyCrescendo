@@ -3,7 +3,7 @@ using Vexe.Runtime.Types;
 
 namespace Hourai {
 
-    public class BGMGroup : ScriptableObject {
+    public class BGMGroup : BaseScriptableObject {
 
         [SerializeField, Tooltip("The name of the BGM group")]
         private string _name;
@@ -36,10 +36,10 @@ namespace Hourai {
             private const string delimiter = "/";
             private const string suffix = "weight";
 
-            [SerializeField, Range(0f, 1f)]
+            [SerializeField, fSlider(0f, 1f)]
             private float _baseWeight = 1f;
 
-            [SerializeField, ResourcePath]
+            [SerializeField, ResourcePath(typeof(AudioClip))]
             private string _bgm;
 
             private Resource<AudioClip> _bgmResource;

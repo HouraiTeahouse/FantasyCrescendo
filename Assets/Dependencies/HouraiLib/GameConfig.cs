@@ -31,16 +31,16 @@ namespace Hourai {
             get { return _guiTag; }
         }
 
-        [Serialize, Show, Category("PlayerPrefs")]
+        [Serialize, Show, Category("PlayerPrefs"), Display(Dict.HorizontalPairs)]
         private Dictionary<string, bool> bools;
 
-        [Serialize, Show, Category("PlayerPrefs")]
+        [Serialize, Show, Category("PlayerPrefs"), Display(Dict.HorizontalPairs)]
         private Dictionary<string, int> ints;
 
-        [Serialize, Show, Category("PlayerPrefs")]
+        [Serialize, Show, Category("PlayerPrefs"), Display(Dict.HorizontalPairs)]
         private Dictionary<string, string> strings;
 
-        [Serialize, Show, Category("PlayerPrefs")]
+        [Serialize, Show, Category("PlayerPrefs"), Display(Dict.HorizontalPairs)]
         private Dictionary<string, float> floats;
 
         protected virtual void OnEnable() {

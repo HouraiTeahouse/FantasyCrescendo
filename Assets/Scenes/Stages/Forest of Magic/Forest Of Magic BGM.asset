@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc499824a4c59764ca509f7fcf8394aa, type: 3}
   m_Name: Forest Of Magic BGM
   m_EditorClassIdentifier: 
+  _id: 9290
+  dbg: 0
   _name: Forest Of Magic
   backgroundMusicData:
-  - _bgm: Audio/BGM/Love Colored Magic Definitely Final I Dont Want To Work On This
+  - _baseWeight: 1
+    _bgm: Audio/BGM/Love Colored Magic Definitely Final I Dont Want To Work On This
       Anymore
-    _baseWeight: 1

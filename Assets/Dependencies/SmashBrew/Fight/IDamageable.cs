@@ -2,11 +2,11 @@
 
     public interface IDamageable {
 
-        void Damage(IDamageSource source);
+        void Damage(IDamager source);
 
     }
 
-    public interface IDamageSource {
+    public interface IDamager {
 
         float BaseDamage { get; }
 
@@ -14,11 +14,11 @@
 
     public interface IHealable {
 
-        void Heal(IHealingSource source);
+        void Heal(IHealer source);
 
     }
 
-    public interface IHealingSource {
+    public interface IHealer {
 
         float BaseHealing { get; }
 

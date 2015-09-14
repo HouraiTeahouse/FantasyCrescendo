@@ -3,7 +3,7 @@ using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
     
-    [DefineCategories("Tags", "Debug")]
+    [DefineCategories("Tags", "Debug", "Player Prefs")]
     public class SmashConfig : GameConfig {
 
         private Resource<GameObject> _Respawn;

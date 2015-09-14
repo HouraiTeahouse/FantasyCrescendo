@@ -15,7 +15,7 @@
                 Character.Damage.RemoveDamageModifier(InvincibilityModifier);
         }
 
-        float InvincibilityModifier(IDamageSource source, float damage) {
+        float InvincibilityModifier(IDamager source, float damage) {
             return enabled ? damage : 0f;
         }
 
