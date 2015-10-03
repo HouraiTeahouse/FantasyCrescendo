@@ -1,11 +1,10 @@
-﻿#warning Upgrade NOTE: unity_Scale shader variable was removed; replaced 'unity_Scale.w' with '1.0'
-
-Shader "Sprites/Billboard"
+﻿Shader "Sprites/Billboard"
 {
 	Properties
 	{
 		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
 		_Color("Tint", Color) = (1,1,1,1)
+		_Scale("Scale", Float) = 1.0
 		[MaterialToggle] PixelSnap("Pixel snap", Float) = 0
 	}
 
@@ -48,13 +47,14 @@ Shader "Sprites/Billboard"
 			};
 
 			fixed4 _Color;
+			fixed _Scale;
 
 			v2f vert(appdata_t IN)
 			{
 				v2f OUT;
 				OUT.vertex = mul(UNITY_MATRIX_P,
 							 mul(UNITY_MATRIX_MV, float4(0.0, 0.0, 0.0, 1.0))
-						     + float4(IN.vertex.x, IN.vertex.y, IN.vertex.z, 0.0));
+						     + _Scale * float4(IN.vertex.x, IN.vertex.y, IN.vertex.z, 0.0));
 				OUT.texcoord = IN.texcoord;
 				OUT.color = IN.color * _Color;
 				#ifdef PIXELSNAP_ON
