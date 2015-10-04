@@ -1,4 +1,4 @@
-﻿Shader "Sprites/Billboard"
+﻿Shader "Sprites/Billboard Colorized"
 {
 	Properties
 	{
@@ -54,7 +54,7 @@
 							 mul(UNITY_MATRIX_MV, float4(0.0, 0.0, 0.0, 1.0))
 						     + _Scale * float4(IN.vertex.x, IN.vertex.y, IN.vertex.z, 0.0));
 				OUT.texcoord = IN.texcoord;
-				OUT.color = IN.color * _Color;
+				OUT.color = IN.color;
 				return OUT;
 			}
 
@@ -62,20 +62,14 @@
 			sampler2D _AlphaTex;
 			float _AlphaSplitEnabled;
 
-			fixed4 SampleSpriteTexture(float2 uv)
-			{
-				fixed4 color = tex2D(_MainTex, uv);
-				if (_AlphaSplitEnabled)
-					color.a = tex2D(_AlphaTex, uv).r;
-
-				return color;
-			}
-
 			fixed4 frag(v2f IN) : SV_Target
 			{
-				fixed4 c = SampleSpriteTexture(IN.texcoord) * IN.color;
-			c.rgb *= c.a;
-			return c;
+				fixed4 targetColor = IN.color;
+				fixed4 texColor = tex2D(_MainTex, IN.texcoord);
+				fixed greyScale = (texColor.r + texColor.g + texColor.b) / 3;
+				fixed4 a = (1, 1, 1, texColor.a * targetColor.a);
+				fixed4 b = lerp(targetColor, _Color, greyScale);
+				return a*b;
 			}
 			ENDCG
 		}
