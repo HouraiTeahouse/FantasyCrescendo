@@ -30,7 +30,7 @@ namespace Hourai.Editor {
                                                                                       type.IsDefined<BuildOnly>(true)
                                                                                 from obj in Resources.FindObjectsOfTypeAll(type)
                                                                                 select obj;
-
+        /*
         [PostProcessScene]
         private static void RemoveScripts() {
             if (BuildPipeline.isBuildingPlayer)
@@ -40,7 +40,7 @@ namespace Hourai.Editor {
                 foreach (UnityObject obj in BuildOnlyComponents)
                     UnityObject.DestroyImmediate(obj);
         }
-
+        */
     }
 
 }

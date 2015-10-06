@@ -1,12 +1,10 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Vexe.Runtime.Extensions;
 using Vexe.Runtime.Types;
-#if UNITY_EDITOR
 using System.Linq;
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 

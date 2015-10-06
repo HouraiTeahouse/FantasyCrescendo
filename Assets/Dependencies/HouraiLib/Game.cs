@@ -30,6 +30,8 @@ namespace Hourai {
         // All the things that require an actual instance
         #region Global Callbacks
 
+        public static event Action OnGameStart;
+
         public static event Action OnUpdate;
         public static event Action OnLateUpdate;
         public static event Action OnFixedUpdate;
@@ -37,6 +39,10 @@ namespace Hourai {
         public static event Action OnApplicationFocused;
         public static event Action OnApplicationUnfocused;
         public static event Action OnApplicationExit;
+
+        private void Start() {
+            OnGameStart.SafeInvoke();
+        }
 
         private void Update() {
             OnUpdate.SafeInvoke();
