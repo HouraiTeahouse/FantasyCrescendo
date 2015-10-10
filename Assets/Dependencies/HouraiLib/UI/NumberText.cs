@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Reflection.Emit;
-using Vexe.Runtime.Extensions;
 
 namespace Hourai {
 
@@ -32,8 +29,7 @@ namespace Hourai {
             if (_text == null)
                 _text = GetComponent<Text>();
 
-            _text.text = _format.IsNullOrEmpty() ? _number.ToString() : _number.ToString(_format);
-
+            _text.text = string.IsNullOrEmpty(_format) ? _number.ToString() : _number.ToString(_format);
         }
     }
 }

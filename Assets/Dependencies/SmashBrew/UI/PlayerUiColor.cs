@@ -1,29 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew.UI {
 
     [ExecuteInEditMode]
     [RequireComponent(typeof (Graphic))]
-    public class PlayerUiColor : BetterBehaviour, IPlayerGUIComponent {
+    public class PlayerUiColor : MonoBehaviour, IPlayerGUIComponent {
 
         private Graphic _graphic;
         private Player _player;
+        
+        [SerializeField, Range(0f, 1f)]
+        private float _saturation = 1f;
+        
+        [SerializeField, Range(0f, 1f)]
+        private float _alpha = 1f;
 
-        [Serialize, Show, fSlider(0f, 1f), Default(1f)]
-        private float _saturation;
-
-        [Serialize, Show, fSlider(0f, 1f), Default(1f)]
-        private float _alpha;
-
-        [Serialize, Show]
+        [SerializeField]
         private AnimationCurve _red = AnimationCurve.Linear(0, 0, 1f, 1f);
-
-        [Serialize, Show]
+        
+        [SerializeField]
         private AnimationCurve _blue = AnimationCurve.Linear(0, 0, 1f, 1f);
-
-        [Serialize, Show]
+        
+        [SerializeField]
         private AnimationCurve _green = AnimationCurve.Linear(0, 0, 1f, 1f);
 
         public virtual Color AdjustedColor {

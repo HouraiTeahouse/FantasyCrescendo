@@ -1,10 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
-    public class CharacterData : BaseScriptableObject {
+    public class CharacterData : ScriptableObject {
 
         [SerializeField]
         private Alternative[] alternatives;
@@ -64,7 +63,7 @@ namespace Hourai.SmashBrew {
         public class Alternative {
       
 
-            [SerializeField, ResourcePath(typeof (GameObject))]
+            [SerializeField]
             private string _prefab;
             private Resource<GameObject> _prefabResource;
 

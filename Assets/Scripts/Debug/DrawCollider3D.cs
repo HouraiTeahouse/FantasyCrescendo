@@ -8,9 +8,6 @@ namespace Hourai {
     /// Good for general establishing of boundaries.
     /// Currently does not support CapsuleColliders
     /// </summary>
-    /// Author: James Liu
-    /// Authored on 07/01/2015
-    [EditorOnly]
     public class DrawCollider3D : MonoBehaviour
     {
 

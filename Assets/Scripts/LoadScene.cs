@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Vexe.Runtime.Types;
 
 namespace Hourai {
 
-    public class LoadScene : BaseBehaviour {
+    public class LoadScene : MonoBehaviour {
 
-        [SerializeField, Show, SelectScene]
+        [SerializeField]
         private string scene;
         
         void Start() {

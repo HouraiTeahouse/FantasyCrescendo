@@ -1,42 +1,39 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew.UI {
 
     public class PlayerStockIndicator : PlayerGuiComponent<Stock> {
 
-        [Serialize, Show]
+        [SerializeField]
         private NumberText ExcessDisplay;
 
-        [Serialize, Show]
+        [SerializeField]
         private GameObject[] standardIndicators;
 
         void Update() {
             if (Component == null) {
                 if (ExcessDisplay)
-                    ExcessDisplay.gameObject.SetActiveIfNot(false);
+                    ExcessDisplay.gameObject.SetActive(false);
                 for (var i = 0; i < standardIndicators.Length; i++)
                     if (standardIndicators[i])
-                        standardIndicators[i].SetActiveIfNot(false);
+                        standardIndicators[i].SetActive(false);
                 return;
             }
 
             int stock = Component.Lives;
             bool excess = stock > standardIndicators.Length;
             if(ExcessDisplay)
-                ExcessDisplay.gameObject.SetActiveIfNot(excess);
+                ExcessDisplay.gameObject.SetActive(excess);
             if (excess) {
                 if (ExcessDisplay)
                     ExcessDisplay.Number = stock;
                 for (var i = 0; i < standardIndicators.Length; i++)
                     if(standardIndicators[i])
-                        standardIndicators[i].SetActiveIfNot(i == 0);
+                        standardIndicators[i].SetActive(i == 0);
             } else {
                 for (var i = 0; i < standardIndicators.Length; i++)
                     if (standardIndicators[i])
-                        standardIndicators[i].SetActiveIfNot(i < stock);
+                        standardIndicators[i].SetActive(i < stock);
             }
         }
 

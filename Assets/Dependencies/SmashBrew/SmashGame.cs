@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
@@ -33,13 +31,14 @@ namespace Hourai.SmashBrew {
         }
 
         public static int MaxPlayers {
-            get { return Config.GenericPlayerData.Length; }
+            get { return Config.PlayerColors.Length; }
         }
 
         public static void CreateRespawnPlatform(Character target) {
             if (target == null)
                 throw new ArgumentNullException("target");
-            RespawnPlatform platform = Config.RepsawnPlatformPrefab.InstantiateNew(target.position);
+            RespawnPlatform platform = Instantiate(Config.RepsawnPlatformPrefab);
+            platform.transform.position = target.position;
             platform.Character = target;
         }
 
@@ -63,7 +62,7 @@ namespace Hourai.SmashBrew {
                 return Color.white;
             return playerNumber < 0 || playerNumber >= MaxPlayers
                        ? Color.white
-                       : Config.GenericPlayerData[playerNumber].Color;
+                       : Config.PlayerColors[playerNumber];
         }
 
     }

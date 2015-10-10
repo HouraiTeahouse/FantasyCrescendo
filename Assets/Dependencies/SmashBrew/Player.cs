@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
 
 namespace Hourai.SmashBrew {
     
@@ -14,7 +13,7 @@ namespace Hourai.SmashBrew {
 
         };
 
-        public readonly int PlayerNumber;
+        public int PlayerNumber;
         public CharacterData Character;
 
         private Character _spawnedInstance;
@@ -66,7 +65,9 @@ namespace Hourai.SmashBrew {
             Character prefab = Character.LoadPrefab(Pallete);
             if (prefab == null)
                 return null;
-            SpawnedCharacter = prefab.InstantiateNew(pos, rot);
+            SpawnedCharacter = UnityEngine.Object.Instantiate(prefab);
+            SpawnedCharacter.position = pos;
+            SpawnedCharacter.rotation = rot;
             SpawnedCharacter.Player = this;
             return SpawnedCharacter;
         }

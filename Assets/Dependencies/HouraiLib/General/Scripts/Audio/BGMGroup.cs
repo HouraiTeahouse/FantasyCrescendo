@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using Vexe.Runtime.Types;
 
 namespace Hourai {
 
-    public class BGMGroup : BaseScriptableObject {
+    public class BGMGroup : ScriptableObject {
 
         [SerializeField, Tooltip("The name of the BGM group")]
         private string _name;
@@ -36,10 +35,10 @@ namespace Hourai {
             private const string delimiter = "/";
             private const string suffix = "weight";
 
-            [SerializeField, fSlider(0f, 1f)]
+            [SerializeField, Range(0f, 1f)]
             private float _baseWeight = 1f;
 
-            [SerializeField, ResourcePath(typeof(AudioClip))]
+            [SerializeField]
             private string _bgm;
 
             private Resource<AudioClip> _bgmResource;

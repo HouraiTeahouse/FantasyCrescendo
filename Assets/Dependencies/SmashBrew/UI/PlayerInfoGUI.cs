@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew.UI {
 
-    public class PlayerInfoGUI : BaseBehaviour {
+    public class PlayerInfoGUI : MonoBehaviour {
 
         [SerializeField]
         private PlayerIndicator playerIndicatorPrefab;
@@ -30,13 +25,13 @@ namespace Hourai.SmashBrew.UI {
             IEnumerator<Player> players = Match.ActivePlayers.GetEnumerator();
             foreach (var display in _displays) {
                 if (!players.MoveNext()) {
-                    display.SetActiveIfNot(false);
+                    display.SetActive(false);
                     continue;
                 }
 
                 if (playerIndicatorPrefab)
                 {
-                    PlayerIndicator indicator = playerIndicatorPrefab.InstantiateNew();
+                    PlayerIndicator indicator = Instantiate(playerIndicatorPrefab);
                     indicator.Target = players.Current.SpawnedCharacter;
                 }
 

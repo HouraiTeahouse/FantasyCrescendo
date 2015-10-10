@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
 using Object = UnityEngine.Object;
 
 namespace Hourai.Editor {
@@ -30,7 +29,7 @@ namespace Hourai.Editor {
             foreach (KeyValuePair<string, string> pair in delayedMoves) {
                 string result = AssetDatabase.ValidateMoveAsset(pair.Key, pair.Value);
                 Debug.Log(result);
-                if (!result.IsNullOrEmpty())
+                if (!string.IsNullOrEmpty(result))
                     continue;
                 AssetDatabase.MoveAsset(pair.Key, pair.Value);
                 toRemove.Add(pair.Key);
@@ -124,7 +123,7 @@ namespace Hourai.Editor {
                 string destination = "Assets/" + targetFolder + "/" + Path.GetFileName(assetPath);
                 string result = AssetDatabase.ValidateMoveAsset(assetPath, destination);
 
-                if (result.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(result))
                     AssetDatabase.MoveAsset(assetPath, destination);
                 else
                     delayedMoves.Add(assetPath, destination);
@@ -151,7 +150,7 @@ namespace Hourai.Editor {
             string[] folders = path.Split('/');
             var currentPath = "Assets";
             for (var i = 0; i < folders.Length; i++) {
-                if (folders[i].IsNullOrEmpty())
+                if (string.IsNullOrEmpty(folders[i]))
                     continue;
 
                 string newPath = currentPath + "/" + folders[i];

@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hourai;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
+    [DisallowMultipleComponent]
     public class Stock : CharacterComponent {
 
         private CharacterRespawn _respawn;
@@ -29,8 +27,8 @@ namespace Hourai.SmashBrew {
         protected override void Start() {
             base.Start();
             Character.OnBlastZoneExit += () => Lives--;
-            Character.GetOrAddComponent<CharacterDeath>();
-            _respawn = Character.GetOrAddComponent<CharacterRespawn>();
+            Character.gameObject.AddComponent<CharacterDeath>();
+            _respawn = Character.gameObject.AddComponent<CharacterRespawn>();
         }
 
     }
@@ -42,10 +40,10 @@ namespace Hourai.SmashBrew {
 
         //TODO: cleanup
 
-        [Serialize]
-        private readonly int stock = 5;
+        [SerializeField]
+        private int stock = 5;
 
-        private readonly List<Stock> characterStocks;
+        private List<Stock> characterStocks;
 
         public StockMatch() {
             characterStocks = new List<Stock>();
@@ -87,13 +85,13 @@ namespace Hourai.SmashBrew {
         public void OnSpawn(Character character) {
             // TODO: Remove this hack
             if (characterStocks.Count == 0)
-                character.GetOrAddComponent<TestInput>();
+                character.gameObject.AddComponent<TestInput>();
 
-            var characterStock = character.GetOrAddComponent<Stock>();
+            var characterStock = character.gameObject.AddComponent<Stock>();
             characterStock.Lives = stock;
             characterStocks.Add(characterStock);
 
-            character.GetOrAddComponent<CharacterDamage>();
+            character.gameObject.AddComponent<CharacterDamage>();
         }
 
     }

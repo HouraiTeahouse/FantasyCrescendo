@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
@@ -50,7 +48,6 @@ namespace Hourai.SmashBrew {
         /// <summary>
         /// Whether or not there is currently a match being executed.
         /// </summary>
-        [DontSerialize, Hide]
         public static bool InMatch { get; private set; }
 
         public static void AddMatchRule(IMatchRule rule) {
@@ -102,11 +99,15 @@ namespace Hourai.SmashBrew {
                     continue;
                 foreach (IMatchRule rule in _matchRules)
                     rule.OnSpawn(runtimeCharacter);
-                OnSpawnCharacter.SafeInvoke(player);
+
+                if(OnSpawnCharacter != null)
+                    OnSpawnCharacter(player);
+
                 currentPlayer++;
             }
 
-            OnMatchStart.SafeInvoke();
+            if(OnMatchStart != null)
+                OnMatchStart();
 
             Game.StaticCoroutine(MatchLoop());
         }

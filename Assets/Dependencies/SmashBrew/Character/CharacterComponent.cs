@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
     public abstract class CharacterComponent : HouraiBehaviour {
-
-        [DontSerialize, Hide]
+        
         public Character Character { get; private set; }
 
         protected Animator Animator {

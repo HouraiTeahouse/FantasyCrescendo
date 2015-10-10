@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Vexe.Runtime.Extensions;
 
 namespace Hourai.SmashBrew {
 
@@ -32,7 +31,8 @@ namespace Hourai.SmashBrew {
             if (!deathPrefab)
                 return;
 
-            ParticleSystem copy = deathPrefab.InstantiateNew(position);
+            ParticleSystem copy = Instantiate(deathPrefab);
+            copy.transform.position = position;
             copy.transform.LookAt(transform.position - position);
             copy.startColor = Character.Player.Color;
         }

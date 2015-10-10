@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
@@ -13,20 +11,20 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private Material _shieldMaterial;
 
-        [Serialize, Default(100f)]
-        private float _maxHP;
+        [SerializeField]
+        private float _maxHP = 100f;
 
-        [Serialize, Default(10f)]
-        private float _regenerationRate;
+        [SerializeField]
+        private float _regenerationRate = 10f;
 
-        [Serialize, Default(25f)]
-        private float _depletionRate;
+        [SerializeField]
+        private float _depletionRate = 25f;
 
-        [Serialize, Default(30f)]
-        private float _resetHP;
-        
-        [Serialize, Default(1.5f)]
-        private float _shieldSize;
+        [SerializeField]
+        private float _resetHP = 30f;
+
+        [SerializeField]
+        private float _shieldSize = 1.5f;
 
         private float _currentHP;
 
@@ -87,7 +85,8 @@ namespace Hourai.SmashBrew {
         }
 
         void ShieldBreak() {
-            OnShieldBreak.SafeInvoke();
+            if(OnShieldBreak != null)
+                OnShieldBreak();
         }
 
         public void Damage(IDamager source) {

@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
     public class RespawnPlatform : HouraiBehaviour {
 
-        [Serialize]
+        [SerializeField]
         private float _invicibilityTimer;
 
-        [Serialize]
+        [SerializeField]
         private float _platformTimer;
 
         private Character _character;

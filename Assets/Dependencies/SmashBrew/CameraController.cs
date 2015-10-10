@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
@@ -21,16 +20,16 @@ namespace Hourai.SmashBrew {
             get { return Instance ? Instance._camera : null; }
         }
 
-        [Serialize, Show]
+        [SerializeField]
         private float cameraSpeed = 1f;
 
-        [Serialize, Show, vSlider(0, 100)]
+        [SerializeField]
         private Vector2 FovRange;
 
-        [Serialize, Show]
+        [SerializeField]
         private Vector2 padding;
 
-        [Serialize, Show]
+        [SerializeField]
         private Vector3 targetPositionBias;
 
         private static HashSet<Transform> targets;

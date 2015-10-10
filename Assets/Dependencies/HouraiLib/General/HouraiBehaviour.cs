@@ -1,13 +1,11 @@
-﻿using System;
-using UnityEngine;
-using Vexe.Runtime.Types;
+﻿using UnityEngine;
 
 namespace Hourai {
 
     /// <summary>
     /// A utility behaviour with a large number of more succinct code shortcuts to make for shorter
     /// </summary>
-    public abstract class HouraiBehaviour : BetterBehaviour {
+    public abstract class HouraiBehaviour : MonoBehaviour {
 
         #region Time Properties
 

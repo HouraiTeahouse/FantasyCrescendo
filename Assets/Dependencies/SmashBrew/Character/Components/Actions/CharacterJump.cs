@@ -1,7 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
 
@@ -15,11 +13,9 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private float[] _jumpHeights = {1.5f, 1.5f};
 
-        [Serialize]
-        [AnimVar(Filter = ParameterType.Trigger, AutoMatch = "Trigger")]
+        [SerializeField]
         private int _jumpTrigger;
 
-        [DontSerialize, Hide]
         public int JumpCount { get; private set; }
 
         public event Action OnJump;
@@ -42,7 +38,7 @@ namespace Hourai.SmashBrew {
                             };
         }
 
-        void Update() {
+        protected override void OnUpdate() {
             if (InputSource != null && InputSource.Jump)
                 Jump();
         }
@@ -64,7 +60,8 @@ namespace Hourai.SmashBrew {
             // Trigger animation
             Animator.SetTrigger(_jumpTrigger);
 
-            OnJump.SafeInvoke();
+            if(OnJump != null)
+                OnJump();
         }
 
     }

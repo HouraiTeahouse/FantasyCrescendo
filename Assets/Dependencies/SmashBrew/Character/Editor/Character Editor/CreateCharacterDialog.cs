@@ -1,7 +1,6 @@
 ﻿using Hourai.Editor;
 using UnityEditor;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
 
 namespace Hourai.SmashBrew.Editor {
 
@@ -63,7 +62,12 @@ namespace Hourai.SmashBrew.Editor {
             else
                 prefabSource = _sourceObject.gameObject;
 
-            prefabSource.GetOrAddComponent<Character>().InternalName = data.InternalName;
+            Character c = prefabSource.GetComponent<Character>();
+
+            if (c == null)
+                throw new System.ArgumentNullException("Prefab does not have a Character script attached.");
+
+            c.InternalName = data.InternalName;
 
             Object prefab = prefabSource.GetPrefab();
             if (prefab == null)

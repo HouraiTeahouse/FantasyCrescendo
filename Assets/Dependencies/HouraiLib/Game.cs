@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai {
     
@@ -41,34 +39,42 @@ namespace Hourai {
         public static event Action OnApplicationExit;
 
         private void Start() {
-            OnGameStart.SafeInvoke();
+            if(OnGameStart != null)
+                OnGameStart();
         }
 
         private void Update() {
-            OnUpdate.SafeInvoke();
+            if(OnUpdate != null)
+                OnUpdate();
         }
 
         private void LateUpdate() {
-            OnLateUpdate.SafeInvoke();
+            if(OnLateUpdate != null)
+                OnLateUpdate();
         }
 
         private void FixedUpdate() {
-            OnFixedUpdate.SafeInvoke();
+            if(OnFixedUpdate != null)
+                OnFixedUpdate();
         }
 
         private void OnApplicationFocus(bool focus) {
             if (focus)
-                OnApplicationFocused.SafeInvoke();
+                if(OnApplicationFocused != null)
+                    OnApplicationFocused();
             else
-                OnApplicationUnfocused.SafeInvoke();
+                if(OnApplicationUnfocused != null)
+                    OnApplicationUnfocused();
         }
 
         private void OnApplicationQuit() {
-            OnApplicationExit.SafeInvoke();
+            if(OnApplicationExit != null)
+                OnApplicationExit();
         }
 
         private void OnLevelWasLoaded(int level) {
-            OnLoad.SafeInvoke(level);
+            if(OnLoad != null)
+                OnLoad(level);
         }
 
         #endregion
@@ -96,7 +102,7 @@ namespace Hourai {
 
     public abstract class ConfigurableGame<T> : Game where T : GameConfig {
 
-        [Serialize, Show, Inline]
+        [SerializeField]
         private T _config;
 
         public static T Config {

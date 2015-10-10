@@ -18,7 +18,7 @@ public class CursorInputModule : PointerInputModule {
     private PointerEventData pointer;
 
     // Use this for initialization
-    private void Start() {
+    protected override void Start() {
         base.Start();
         if (cursorObjects == null || eventSystem == null) {
             Debug.LogError("Set the game objects in the cursor module.");

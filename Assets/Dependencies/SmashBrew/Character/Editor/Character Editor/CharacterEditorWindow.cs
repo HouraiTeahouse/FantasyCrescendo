@@ -141,10 +141,11 @@ namespace Hourai.SmashBrew.Editor {
 
         private void ShowMaterialData() {
             HashSet<Material> materials = new HashSet<Material>();
-            foreach (Renderer renderer in EditorUtil.GetComponentsInChildren<Renderer>(Target.Prefab)) {
-                //Debug.Log(renderer);
-                //materials.UnionWith(renderer.materials);
-            }
+            //TODO: Reimplement
+            // foreach (Renderer renderer in EditorUtil.GetComponentsInChildren<Renderer>(Target.Prefab)) {
+            //Debug.Log(renderer);
+            //materials.UnionWith(renderer.materials);
+            //}
 
             foreach (Material material in materials)
                 EditorGUILayout.LabelField(material.name);

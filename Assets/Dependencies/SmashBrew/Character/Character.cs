@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Networking;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -19,7 +17,6 @@ namespace Hourai.SmashBrew {
     [InitializeOnLoad]
 #endif
     [DisallowMultipleComponent]
-    [DefineCategories("Animation")]
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     [RequireComponent(typeof(NetworkAnimator), typeof(NetworkTransform))]
     public class Character : HouraiBehaviour {
@@ -36,15 +33,12 @@ namespace Hourai.SmashBrew {
                                     where
                                         assemblyType != null &&
                                         !assemblyType.IsAbstract &&
-                                        assemblyType.IsA(componentType) && 
+                                        componentType.IsAssignableFrom(assemblyType) && 
                                         assemblyType.IsDefined(requiredComponentType, true)
                                     select assemblyType).ToArray();
         }
-
-        [DontSerialize, Hide]
+        
         public Player Player { get; internal set; }
-
-        [DontSerialize, Hide]
         public ICharacterInput InputSource { get; set; }
 
         public bool IsGrounded {
@@ -54,7 +48,8 @@ namespace Hourai.SmashBrew {
                     return;
                 _isGrounded = value;
                 Animator.SetBool(_grounded, value);
-                OnGrounded.SafeInvoke();
+                if(OnGrounded != null)
+                    OnGrounded();
             }
         }
 
@@ -79,12 +74,14 @@ namespace Hourai.SmashBrew {
         public event Action OnBlastZoneExit;
 
         internal void BlastZoneExit() {
-            OnBlastZoneExit.SafeInvoke();
+            if(OnBlastZoneExit != null)
+                OnBlastZoneExit();
         }
 
         void AttachRequiredComponents() {
             foreach (Type requriedType in RequiredComponents)
-                this.GetOrAddComponent(requriedType);
+                if(gameObject.GetComponent(requriedType) == null)
+                    gameObject.AddComponent(requriedType);
         }
 
         public T ApplyStatus<T>(float duration = -1f) where T : Status {
@@ -92,42 +89,31 @@ namespace Hourai.SmashBrew {
             instance.StartStatus(duration);
             return instance;
         }
-        
+
         #region Animator Variables
-        [Serialize]
-        [Category("Animation")]
-        [AnimVar(Filter = ParameterType.Bool)]
+        [SerializeField]
         private int _grounded;
 
-        [Serialize]
-        [Category("Animation")]
-        [AnimVar(Filter = ParameterType.Float)]
+        [SerializeField]
         private int _horizontalInput;
 
-        [Serialize]
-        [Category("Animation")]
-        [AnimVar(Filter = ParameterType.Float)]
+        [SerializeField]
         private int _verticalInput;
         #endregion
 
-        [Serialize]
+        [SerializeField]
         private float triggerSizeRatio = 1.5f;
 
-        [Serialize, HideInInspector]
+        [SerializeField, HideInInspector]
         public string InternalName;
 
         #region Required Components
 
         private CapsuleCollider _triggerCollider;
         private CharacterDamageable _damageable;
-
-        [DontSerialize, Hide]
+        
         public CapsuleCollider MovementCollider { get; private set; }
-
-        [DontSerialize, Hide]
         public Rigidbody Rigidbody { get; private set; }
-
-        [DontSerialize, Hide]
         public Animator Animator { get; private set; }
 
         public CharacterDamageable Damage {

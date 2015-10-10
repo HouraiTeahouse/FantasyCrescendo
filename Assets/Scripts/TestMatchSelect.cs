@@ -3,8 +3,7 @@ using UnityEngine;
 using System.Collections;
 
 namespace Hourai.SmashBrew {
-
-    [EditorOnly]
+    
     public class TestMatchSelect : MonoBehaviour {
 
         [Serializable]

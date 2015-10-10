@@ -1,7 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai.SmashBrew {
  
@@ -10,7 +8,6 @@ namespace Hourai.SmashBrew {
     public class CharacterAttack : RestrictableCharacterComponent {
 
         [SerializeField]
-        [AnimVar(Filter = ParameterType.Trigger, AutoMatch = "Trigger")]
         private int _attackTrigger;
 
         public event Action OnAttack;
@@ -26,8 +23,9 @@ namespace Hourai.SmashBrew {
                 return;
 
             Animator.SetTrigger(_attackTrigger);
-
-            OnAttack.SafeInvoke();
+            
+            if(OnAttack != null)
+                OnAttack();
         }
 
     }

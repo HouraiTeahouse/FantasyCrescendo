@@ -1,20 +1,19 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using Vexe.Runtime.Types;
 
-public class SplashScreen : BetterBehaviour {
+public class SplashScreen : MonoBehaviour {
 
-    [Serialize]
+    [SerializeField]
     private AnimationCurve alphaOverTime;
 
-    [Serialize]
+    [SerializeField]
     private GameObject[] disableWhileLoading;
 
-    [Serialize]
+    [SerializeField]
     private Graphic[] splashGraphics;
 
-    [Serialize, SelectScene]
+    [SerializeField]
     private string targetSceneName;
 
     // Use this for initialization

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
 
 namespace Hourai.SmashBrew {
 
@@ -60,7 +58,9 @@ namespace Hourai.SmashBrew {
                 damage = modifier(source, damage);
 
             HandleDamage(source, damage);
-            OnDamage.SafeInvoke(source, damage);
+
+            if(OnDamage != null)
+                OnDamage(source, damage);
         }
 
         public void Heal(IHealer source) {
@@ -73,7 +73,9 @@ namespace Hourai.SmashBrew {
                 healing = modifier(source, healing);
 
             HandleHealing(source, healing);
-            OnHeal.SafeInvoke(source, healing);
+
+            if(OnHeal != null)
+                OnHeal(source, healing);
         }
 
         protected virtual void HandleDamage(IDamager source, float damage) {

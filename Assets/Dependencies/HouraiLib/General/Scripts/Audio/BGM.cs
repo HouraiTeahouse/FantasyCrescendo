@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
-using Vexe.Runtime.Extensions;
-using Vexe.Runtime.Types;
 
 namespace Hourai {
 
@@ -9,7 +7,7 @@ namespace Hourai {
 
         private static AudioSource bgmSource;
 
-        [Serialize, Show]
+        [SerializeField]
         private AudioMixerGroup mixerGroup;
 
         public static AudioClip CurrentlyPlaying {
@@ -28,7 +26,7 @@ namespace Hourai {
 
         protected override void Awake() {
             base.Awake();
-            bgmSource = gameObject.GetOrAddComponent<AudioSource>();
+            bgmSource = gameObject.AddComponent<AudioSource>();
             bgmSource.outputAudioMixerGroup = mixerGroup;
             bgmSource.hideFlags = HideFlags.HideInInspector;
             bgmSource.volume = 1f;

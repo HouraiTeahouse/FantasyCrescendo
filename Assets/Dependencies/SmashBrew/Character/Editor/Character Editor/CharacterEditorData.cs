@@ -2,7 +2,6 @@
 using Hourai.Editor;
 using UnityEditor;
 using UnityEngine;
-using Vexe.Runtime.Extensions;
 
 namespace Hourai.SmashBrew.Editor {
 
@@ -85,9 +84,9 @@ namespace Hourai.SmashBrew.Editor {
 
         public string FullName {
             get {
-                if (_firstName.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(_firstName))
                     return _lastName;
-                if (_lastName.IsNullOrEmpty() || _nameType == NameType.Single)
+                if (string.IsNullOrEmpty(_lastName) || _nameType == NameType.Single)
                     return _firstName;
                 if (_nameType == NameType.SurnameFirst)
                     return LastName + " " + FirstName;

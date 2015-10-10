@@ -1,9 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
-using Vexe.Runtime.Extensions;
-
-namespace Hourai.SmashBrew {
+﻿namespace Hourai.SmashBrew {
     
     public interface IMatchRule {
 

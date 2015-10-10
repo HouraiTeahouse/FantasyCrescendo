@@ -39,7 +39,7 @@ namespace Hourai.SmashBrew {
             }
         }
 
-        private void Update() {
+        protected override void OnUpdate() {
             if (InputSource == null)
                 return;
 

@@ -62,18 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1caf9071eb694ef49996489c114232a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 10090
-  dbg: 0
-  _serializationData:
-    serializedObjects:
-    - {fileID: 24392500, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
-    serializedStrings:
-      keys:
-      - AudioMixerGroup mixerGroup
-      - bool _dontDestroyOnLoad
-      values:
-      - 0
-      - false
+  _dontDestroyOnLoad: 0
+  mixerGroup: {fileID: 24392500, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
 --- !u!114 &11488736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85,18 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8bd5a18adbce4446bd1214b4491aa71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: -30190
-  dbg: 0
-  _serializationData:
-    serializedObjects:
-    - {fileID: 11400000, guid: e8deedefff49636498e1245042b68630, type: 2}
-    serializedStrings:
-      keys:
-      - SmashConfig _config
-      - bool _dontDestroyOnLoad
-      values:
-      - 0
-      - false
+  _dontDestroyOnLoad: 0
+  _config: {fileID: 11400000, guid: e8deedefff49636498e1245042b68630, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

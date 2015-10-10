@@ -11,57 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d63a0fef2e38a40b0aeb78a0688cc5, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  _id: 2530
-  dbg: 0
-  _serializationData:
-    serializedObjects:
-    - {fileID: 21300000, guid: 816592cbf3040774ca20da1e1caf487c, type: 3}
-    serializedStrings:
-      keys:
-      - string _respawnPlatformPrefab
-      - PlayerData[] GenericPlayerData
-      - LayerMask HurtboxLayers
-      - string spawnTag
-      - Color CPUColor
-      - Color DamageableHitboxColor
-      - Color IntangibleHitboxColor
-      - Color InvincibleHitboxColor
-      - Color OffensiveHitboxColor
-      - string _playerTag
-      - string _respawnTag
-      - string _guiTag
-      - Dictionary<string, bool> bools
-      - Dictionary<string, int> ints
-      - Dictionary<string, string> strings
-      - Dictionary<string, float> floats
-      values:
-      - '"Prefabs/Respawn Platform"'
-      - '[{"Color":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"IndicatorSprite":0},{"Color":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},"IndicatorSprite":0},{"Color":{"r":1.0,"g":1.0,"b":0.0,"a":1.0},"IndicatorSprite":0},{"Color":{"r":0.0,"g":1.0,"b":0.0,"a":1.0},"IndicatorSprite":0}]'
-      - '{"value":2048}'
-      - '"Spawn"'
-      - '{"r":0.5,"g":0.5,"b":0.5,"a":1.0}'
-      - '{"r":1.0,"g":0.921568632125854,"b":0.0156862754374743,"a":1.0}'
-      - '{"r":0.0,"g":0.0,"b":1.0,"a":1.0}'
-      - '{"r":0.0,"g":1.0,"b":0.0,"a":1.0}'
-      - '{"r":1.0,"g":0.0,"b":0.0,"a":1.0}'
-      - '"Player"'
-      - '"Respawn"'
-      - '"GUI"'
-      - '{}'
-      - '{}'
-      - '{}'
-      - '{}'
+  _playerTag: Player
+  _respawnTag: Respawn
+  _guiTag: GUI
   _respawnPlatformPrefab: Prefabs/Respawn Platform
-  GenericPlayerData:
-  - Color: {r: 1, g: 0, b: 0, a: 1}
-    IndicatorSprite: {fileID: 21300000, guid: 816592cbf3040774ca20da1e1caf487c, type: 3}
-  - Color: {r: 0, g: 0, b: 1, a: 1}
-    IndicatorSprite: {fileID: 21300000, guid: 816592cbf3040774ca20da1e1caf487c, type: 3}
-  - Color: {r: 1, g: 1, b: 0, a: 1}
-    IndicatorSprite: {fileID: 21300000, guid: 816592cbf3040774ca20da1e1caf487c, type: 3}
-  - Color: {r: 0, g: 1, b: 0, a: 1}
-    IndicatorSprite: {fileID: 21300000, guid: 816592cbf3040774ca20da1e1caf487c, type: 3}
+  PlayerColors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
   HurtboxLayers:
     serializedVersion: 2
     m_Bits: 2048
   spawnTag: Spawn
+  CPUColor: {r: .5, g: .5, b: .5, a: 1}
+  DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
+  IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}
+  InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
+  OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}

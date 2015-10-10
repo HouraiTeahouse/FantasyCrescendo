@@ -16,9 +16,7 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private float _walkSpeed = 3f;
 
-        public event Action OnMove;
-
-        void Update() {
+        protected override void OnUpdate() {
             if (InputSource == null)
                 return;
 
