@@ -17,12 +17,10 @@ namespace Hourai.SmashBrew {
             Character.OnBlastZoneExit += OnBlastZoneExit;
         }
 
-        private void OnDestroy() {
-            if (Character == null)
-                return;
-
-            // Unsubscribe to Character events
-            Character.OnBlastZoneExit += OnBlastZoneExit;
+        protected override void OnDestroy() {
+            base.OnDestroy();
+            if (Character != null)
+                Character.OnBlastZoneExit += OnBlastZoneExit;
         }
 
         private void OnBlastZoneExit() {

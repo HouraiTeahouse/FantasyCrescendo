@@ -30,6 +30,12 @@ namespace Hourai.SmashBrew {
                 Debug.LogWarning(GetType() + " on " + name +
                                  " has not found a suitable Character component. Please attach one.");
             }
+            Character.AddCharacterComponent(this);
+        }
+
+        protected virtual void OnDestroy() {
+            if(Character)
+                Character.RemoveCharacterComponent(this);
         }
 
         protected void Update() {

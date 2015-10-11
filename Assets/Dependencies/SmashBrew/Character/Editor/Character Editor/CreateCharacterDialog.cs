@@ -65,9 +65,9 @@ namespace Hourai.SmashBrew.Editor {
             Character c = prefabSource.GetComponent<Character>();
 
             if (c == null)
-                throw new System.ArgumentNullException("Prefab does not have a Character script attached.");
+                c = prefabSource.AddComponent<Character>();
 
-            c.InternalName = data.InternalName;
+            //c.InternalName = data.InternalName;
 
             Object prefab = prefabSource.GetPrefab();
             if (prefab == null)

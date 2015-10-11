@@ -87,6 +87,7 @@ namespace Hourai.SmashBrew {
         void ShieldBreak() {
             if(OnShieldBreak != null)
                 OnShieldBreak();
+            _currentHP = _resetHP;
         }
 
         public void Damage(IDamager source) {

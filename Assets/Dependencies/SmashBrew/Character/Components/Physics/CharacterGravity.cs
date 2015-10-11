@@ -1,23 +1,13 @@
 ﻿using UnityEngine;
 
 namespace Hourai.SmashBrew {
+    
+    public partial class Character : HouraiBehaviour {
+        
 
-    [DisallowMultipleComponent]
-    [RequiredCharacterComponent]
-    public class CharacterGravity : CharacterComponent {
-
-        [SerializeField]
-        private float _gravity = 9.86f;
-
-        public float Gravity {
-            get { return _gravity; }
-            set { _gravity = Mathf.Abs(value); }
-        }
-
-        private void FixedUpdate() {
-            if (Character)
-                Character.AddForce(-Vector3.up*_gravity);
-        }
+        //void FixedUpdate() {
+        //  AddForce(-Vector3.up*_gravity);
+        //}
 
     }
 

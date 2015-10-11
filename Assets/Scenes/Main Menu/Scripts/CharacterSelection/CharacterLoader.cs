@@ -42,7 +42,6 @@ namespace Hourai.SmashBrew.UI {
         }
 
         public void fillPanel() {
-            var i = 0;
             foreach (var character in dataManager.getAvailableCharacters()) {
                 GameObject go = Instantiate(characterSlotPrefab);
                 var text = go.GetComponentInChildren<Text>();
@@ -56,7 +55,6 @@ namespace Hourai.SmashBrew.UI {
         }
 
         public void fillPlayerSlots() {
-            var i = 0;
             foreach(Player player in Match.Players) {
                 GameObject go = Instantiate(playerSlotPrefab);
                 var psu = go.GetComponent<PlayerSlotUI>();

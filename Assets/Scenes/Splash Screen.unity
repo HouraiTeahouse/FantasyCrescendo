@@ -85,6 +85,10 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &5306181 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 117700, guid: c8fbeb9101f616f40956f46ce85bb87a, type: 2}
+  m_PrefabInternal: {fileID: 1855397093}
 --- !u!1 &23215533
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,24 +183,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94788b0036fe7fc41be4c65deceea27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 15920
-  dbg: 0
-  _serializationData:
-    serializedObjects:
-    - {fileID: 316118997}
-    - {fileID: 23215534}
-    - {fileID: 1641091659}
-    serializedStrings:
-      keys:
-      - AnimationCurve alphaOverTime
-      - GameObject[] disableWhileLoading
-      - Graphic[] splashGraphics
-      - string targetSceneName
-      values:
-      - '{"keys":[{"time":0.0,"value":0.0,"tangentMode":0,"inTangent":0.0,"outTangent":0.0},{"time":1.0,"value":1.0,"tangentMode":0,"inTangent":0.0,"outTangent":0.0},{"time":2.0,"value":1.0,"tangentMode":0,"inTangent":-2.42097348746029E-06,"outTangent":-2.42097348746029E-06},{"time":3.0,"value":0.0,"tangentMode":0,"inTangent":0.0,"outTangent":0.0}],"preWrapMode":"ClampForever","postWrapMode":"ClampForever"}'
-      - '[]'
-      - '[0,1,2]'
-      - '"Forest of Magic"'
+  alphaOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: -0
+      tangentMode: 21
+    - time: 2
+      value: 1
+      inSlope: 0
+      outSlope: -1
+      tangentMode: 21
+    - time: 3
+      value: 0
+      inSlope: -1
+      outSlope: .0204050783
+      tangentMode: 5
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  disableWhileLoading:
+  - {fileID: 5306181}
+  - {fileID: 539015253}
+  splashGraphics:
+  - {fileID: 316118997}
+  - {fileID: 23215534}
+  - {fileID: 1641091659}
+  targetSceneName: Forest of Magic
 --- !u!4 &191772275
 Transform:
   m_ObjectHideFlags: 0
@@ -355,6 +374,10 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 316118994}
+--- !u!1 &539015253 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 123506, guid: c8fbeb9101f616f40956f46ce85bb87a, type: 2}
+  m_PrefabInternal: {fileID: 1855397093}
 --- !u!224 &1389028398 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22419328, guid: c8fbeb9101f616f40956f46ce85bb87a,

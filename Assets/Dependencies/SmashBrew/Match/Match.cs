@@ -89,7 +89,6 @@ namespace Hourai.SmashBrew {
                 rule.OnMatchStart();
 
             // Spawn players
-            int playerCount = PlayerCount;
             var currentPlayer = 0;
 
             foreach(Player player in ActivePlayers) {

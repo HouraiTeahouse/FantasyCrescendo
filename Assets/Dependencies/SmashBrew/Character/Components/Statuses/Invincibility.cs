@@ -10,7 +10,8 @@
                 Character.Damage.AddDamageModifier(InvincibilityModifier, int.MaxValue);
         }
 
-        void OnDestroy() {
+        protected override void OnDestroy() {
+            base.OnDestroy();
             if (Character.Damage)
                 Character.Damage.RemoveDamageModifier(InvincibilityModifier);
         }
