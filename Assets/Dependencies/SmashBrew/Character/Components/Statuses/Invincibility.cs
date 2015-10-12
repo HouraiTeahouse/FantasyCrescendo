@@ -4,16 +4,14 @@
 
         protected override void Start() {
             base.Start();
-            if (Character.Damage == null)
-                Destroy(this);
-            else
-                Character.Damage.AddDamageModifier(InvincibilityModifier, int.MaxValue);
+            if (Character)
+                Character.AddDefensiveModifier(InvincibilityModifier, int.MaxValue);
         }
 
         protected override void OnDestroy() {
             base.OnDestroy();
-            if (Character.Damage)
-                Character.Damage.RemoveDamageModifier(InvincibilityModifier);
+            if(Character)
+                Character.RemoveDefensiveModifier(InvincibilityModifier);
         }
 
         float InvincibilityModifier(IDamager source, float damage) {

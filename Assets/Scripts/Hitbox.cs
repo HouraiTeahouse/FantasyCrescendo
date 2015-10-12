@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
-    [RequireComponent(typeof (SphereCollider))]
-    public sealed class Hitbox : MonoBehaviour {
+    [RequireComponent(typeof (Collider))]
+    public sealed class Hitbox : MonoBehaviour, IDamager {
+
+        public static readonly string Tag = "Hitbox";
+        public const int Layer = 10;
 
         public enum Type {
 
@@ -24,17 +28,54 @@ namespace Hourai.SmashBrew {
         // Represents the source Character that owns this Hitbox
         // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
         // If this is a Damageable type Hitbox (AKA a Hurtbox) this is the character that the damage and knockback is applied to.
-        private Character _source;
+        public Character Source {
+            get; set; }
 
         private void Awake() {
-            _source = GetComponentInParent<Character>();
+            Source = GetComponentInParent<Character>();
             _effect = GetComponent<ParticleSystem>();
             _soundEffect = GetComponent<AudioSource>();
+
+            gameObject.tag = Tag;
+            gameObject.layer = Layer;
+
+            Collider[] colliders = GetComponents<Collider>();
+            for (var i = 0; i < colliders.Length; i++)
+                colliders[i].isTrigger = true;
         }
 
-        private void OnDrawGizmos() {
+        #region Unity Callbacks
+         void OnDrawGizmos() {
             GizmoUtil.DrawColliders3D(GetComponentsInChildren<Collider>(), SmashGame.GetHitboxColor(type), true);
         }
+        
+        void OnTriggerEnter(Collider other) {
+            if (!other.CompareTag(Tag))
+                return;
+            Hitbox otherHitbox = other.GetComponent<Hitbox>();
+            if (otherHitbox == null)
+                return;
+            Character target = otherHitbox.Source;
+            if (target == null)
+                return;
+            
+            switch(type) {
+                case Type.Damageable:
+                    if (Source == null)
+                        break;
+                    switch (otherHitbox.type) {
+                        case Type.Offensive:
+                            Source.Damage(otherHitbox);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        #endregion
 
         #region Serializable Fields
 
@@ -99,6 +140,12 @@ namespace Hourai.SmashBrew {
         public bool Absorbable {
             get { return _absorbable; }
             set { _absorbable = value; }
+        }
+
+        public float BaseDamage {
+            get {
+                return Source == null ? _damage : Source.ModifyDamage(_damage);
+            }
         }
 
         #endregion

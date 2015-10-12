@@ -20,7 +20,7 @@ namespace Hourai.SmashBrew {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     [RequireComponent(typeof(NetworkAnimator), typeof(NetworkTransform))]
-    public partial class Character : HouraiBehaviour {
+    public partial class Character : HouraiBehaviour, IDamageable, IKnockbackable, IHealable {
 
         private static readonly Type[] RequiredComponents;
 
@@ -31,13 +31,29 @@ namespace Hourai.SmashBrew {
         private static readonly int _animSpecial = Animator.StringToHash("special");
         private static readonly int _animJump = Animator.StringToHash("jump");
 
-        private HashSet<CharacterComponent> components;
+        private enum FacingMode {
 
-        private bool _facing;
+            Rotation,
+            Scale
 
-        [SerializeField]
-        private FacingMode _facingMode;
+        }
 
+        static Character() {
+            var componentType = typeof(Component);
+            var requiredComponentType = typeof(RequiredCharacterComponentAttribute);
+            // Use reflection to find required Components for Characters and statuses
+            // Enumerate all concrete Component types
+            RequiredComponents = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                                  from assemblyType in domainAssembly.GetTypes()
+                                  where
+                                      assemblyType != null &&
+                                      !assemblyType.IsAbstract &&
+                                      componentType.IsAssignableFrom(assemblyType) &&
+                                      assemblyType.IsDefined(requiredComponentType, true)
+                                  select assemblyType).ToArray();
+        }
+
+        #region Public Properties
         /// <summary>
         /// The direction the character is currently facing.
         /// If set to true, the character faces the right.
@@ -63,36 +79,11 @@ namespace Hourai.SmashBrew {
             }
         }
 
-        private enum FacingMode {
-
-            Rotation,
-            Scale
-
-        }
-
-        [SerializeField]
-        private float _gravity = 9.86f;
-
         public float Gravity {
             get { return _gravity; }
             set { _gravity = Mathf.Abs(value); }
         }
 
-        static Character() {
-            var componentType = typeof (Component);
-            var requiredComponentType = typeof (RequiredCharacterComponentAttribute);
-            // Use reflection to find required Components for Characters and statuses
-            // Enumerate all concrete Component types
-            RequiredComponents = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                                    from assemblyType in domainAssembly.GetTypes()
-                                    where
-                                        assemblyType != null &&
-                                        !assemblyType.IsAbstract &&
-                                        componentType.IsAssignableFrom(assemblyType) && 
-                                        assemblyType.IsDefined(requiredComponentType, true)
-                                    select assemblyType).ToArray();
-        }
-        
         public Player Player { get; internal set; }
         public ICharacterInput InputSource { get; set; }
 
@@ -103,13 +94,10 @@ namespace Hourai.SmashBrew {
                     return;
                 _isGrounded = value;
                 Animator.SetBool(_animGrounded, value);
-                if(OnGrounded != null)
+                if (OnGrounded != null)
                     OnGrounded();
             }
         }
-
-        [SerializeField]
-        private float[] _jumpHeights = { 1.5f, 1.5f };
 
         public int JumpCount { get; private set; }
 
@@ -121,24 +109,39 @@ namespace Hourai.SmashBrew {
             get { return IsGrounded && _isDashing; }
             set { _isDashing = value; }
         }
+        #endregion
 
-        public void AddForce(Vector3 force) {
-            Rigidbody.AddForce(force);
-        }
+        #region Runtime Variables
+        private bool _facing;
+        private HashSet<CharacterComponent> components;
 
-        public void AddForce(float x, float y) {
-            Rigidbody.AddForce(x, y, 0f);
-        }
+        private PriorityList<Modifier<IDamager>> _defensiveModifiers;
+        private PriorityList<Modifier<IHealer>> _healingModifiers;
 
-        public void AddForce(float x, float y, float z) {
-            Rigidbody.AddForce(x, y, z);
-        }
+        private PriorityList<Func<float, float>> _offensiveModifiers;
+        private PriorityList<Func<float, float>> _healingOutModifiers;
+        #endregion
 
+        #region Serialized Variables
+        [SerializeField]
+        private float _gravity = 9.86f;
+
+        [SerializeField]
+        private float[] _jumpHeights = { 1.5f, 1.5f };
+
+        [SerializeField]
+        private FacingMode _facingMode;
+        #endregion
+
+        #region Public Events
         public event Action OnGrounded;
         public event Action OnBlastZoneExit;
         public event Action OnAttack;
         public event Action OnSpecial;
         public event Action OnJump;
+        public event Action<IDamager, float> OnDamage;
+        public event Action<IHealer, float> OnHeal;
+        #endregion
 
         internal void BlastZoneExit() {
             if(OnBlastZoneExit != null)
@@ -151,27 +154,12 @@ namespace Hourai.SmashBrew {
                     gameObject.AddComponent(requriedType);
         }
 
-        public T ApplyStatus<T>(float duration = -1f) where T : Status {
-            T instance = GetComponentInChildren<T>() ?? gameObject.AddComponent<T>();
-            instance.StartStatus(duration);
-            return instance;
-        }
-
         #region Required Components
-        private CharacterDamageable _damageable;
+        private CharacterDamage _damageable;
         
         public CapsuleCollider MovementCollider { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
         public Animator Animator { get; private set; }
-
-        public CharacterDamageable Damage {
-            get {
-                if (_damageable == null)
-                    _damageable = GetComponentInChildren<CharacterDamageable>();
-                return _damageable;
-            }
-            private set { _damageable = value; }
-        }
         #endregion
 
         #region State Variables
@@ -191,6 +179,7 @@ namespace Hourai.SmashBrew {
         }
         #endregion
 
+        #region Public Action Methods
         public void Attack() {
             //if (Restricted)
             //    return;
@@ -212,7 +201,7 @@ namespace Hourai.SmashBrew {
         }
         
         public void Jump() {
-            if (JumpCount >= _jumpHeights.Length)//Restricted)
+            if (JumpCount >= MaxJumpCount)//Restricted)
                 return;
 
             float g = Gravity;
@@ -231,6 +220,64 @@ namespace Hourai.SmashBrew {
                 OnJump();
         }
 
+        public T ApplyStatus<T>(float duration = -1f) where T : Status {
+            T instance = GetComponentInChildren<T>() ?? gameObject.AddComponent<T>();
+            instance.StartStatus(duration);
+            return instance;
+        }
+
+        public void Damage(IDamager source) {
+            if (_damageable == null)
+                _damageable = GetComponent<CharacterDamage>();
+
+            if (source == null || _damageable == null)
+                return;
+
+            float damage = Mathf.Abs(source.BaseDamage);
+
+            if (_defensiveModifiers.Count > 0)
+                foreach (var modifier in _defensiveModifiers)
+                    damage = modifier(source, damage);
+
+            _damageable.Damage(source, damage);
+
+            if (OnDamage != null)
+                OnDamage(source, damage);
+        }
+
+        public void Knockback(IKnockbackSource source, float knockback) {
+            throw new NotImplementedException();
+        }
+
+        public void Heal(IHealer source) {
+            if (_damageable == null)
+                _damageable = GetComponent<CharacterDamage>();
+            if (source == null || _damageable == null)
+                return;
+
+            float healing = Mathf.Abs(source.BaseHealing);
+
+            if (_healingModifiers.Count > 0)
+                foreach (var modifier in _healingModifiers)
+                    healing = modifier(source, healing);
+
+            _damageable.Heal(source, healing);
+
+            if (OnHeal != null)
+                OnHeal(source, healing);
+        }
+        #endregion
+
+        #region Internal Methods
+        internal float ModifyDamage(float baseDamage) {
+            if (_offensiveModifiers.Count <= 0)
+                return baseDamage;
+            float damage = baseDamage;
+            foreach (var modifier in _offensiveModifiers)
+                damage = modifier(damage);
+            return damage;
+        }
+
         internal void AddCharacterComponent(CharacterComponent component) {
             if (component == null)
                 return;
@@ -242,10 +289,52 @@ namespace Hourai.SmashBrew {
                 return;
             components.Remove(component);
         }
+        #endregion
+
+        #region Damage Methods
+        public bool AddOffensiveModifier(Func<float, float> modifier, int priority = 0) {
+            if (modifier == null || _offensiveModifiers.Contains(modifier))
+                return false;
+            _offensiveModifiers.Add(modifier);
+            return true;
+        }
+
+        public bool RemoveOffensiveModifier(Func<float, float> modifier) {
+            return _offensiveModifiers.Remove(modifier);
+        }
+
+        public bool AddDefensiveModifier(Modifier<IDamager> modifier, int priority = 0) {
+            if (modifier == null || _defensiveModifiers.Contains(modifier))
+                return false;
+            _defensiveModifiers.Add(modifier);
+            return true;
+        }
+
+        public bool RemoveDefensiveModifier(Modifier<IDamager> modifier) {
+            return _defensiveModifiers.Remove(modifier);
+        }
+
+        public bool AddHealingModifier(Modifier<IHealer> modifier, int priority = 0) {
+            if (modifier == null || _healingModifiers.Contains(modifier))
+                return false;
+            _healingModifiers.Add(modifier);
+            return true;
+        }
+
+        public bool RemoveHealingModifier(Modifier<IHealer> modifier) {
+            return _healingModifiers.Remove(modifier);
+        }
+        #endregion
 
         #region Unity Callbacks
         protected virtual void Awake() {
             components = new HashSet<CharacterComponent>();
+
+            _defensiveModifiers = new PriorityList<Modifier<IDamager>>();
+            _healingModifiers = new PriorityList<Modifier<IHealer>>();
+
+            _offensiveModifiers = new PriorityList<Func<float, float>>();
+            _healingOutModifiers = new PriorityList<Func<float, float>>();
 
             MovementCollider = GetComponent<CapsuleCollider>();
             MovementCollider.isTrigger = false;
@@ -296,7 +385,7 @@ namespace Hourai.SmashBrew {
         /// Called every physics update.
         /// </summary>
         protected virtual void FixedUpdate() {
-            AddForce(-Vector3.up*_gravity);
+            Rigidbody.AddForce(-Vector3.up*_gravity);
 
             if (InputSource == null)
                 return;
