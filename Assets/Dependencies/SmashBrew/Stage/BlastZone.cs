@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 namespace Hourai.SmashBrew {
 
@@ -6,23 +7,23 @@ namespace Hourai.SmashBrew {
     public sealed class BlastZone : Singleton<BlastZone> {
 
         private Collider col;
+        public event Action<Character> OnBlastZoneExit;
 
         protected override void Awake() {
             base.Awake();
 
             col = GetComponent<Collider>();
-
+            
             // Make sure that the collider isn't a trigger
             col.isTrigger = true;
         }
 
         private void OnTriggerExit(Collider other) {
             // Filter only for player characters
-            if (!SmashGame.IsPlayer(other))
+            if (OnBlastZoneExit == null || !SmashGame.IsPlayer(other))
                 return;
 
-            Character characterScript = other.GetComponentInParent<Character>() ??
-                                        other.GetComponentInChildren<Character>();
+            Character characterScript = other.transform.root.GetComponentInChildren<Character>();
 
             if (characterScript == null) {
                 Debug.Log("Was expecting" + other.name + " to be a HumanPlayer, but no Character script was found.");
@@ -32,7 +33,7 @@ namespace Hourai.SmashBrew {
             if (col.ClosestPointOnBounds(characterScript.position) == characterScript.position)
                 return;
 
-            characterScript.BlastZoneExit();
+            OnBlastZoneExit(characterScript);
         }
 
     }

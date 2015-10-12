@@ -7,7 +7,7 @@ namespace Hourai.SmashBrew {
     [DisallowMultipleComponent]
     public class Stock : CharacterComponent {
 
-        private CharacterRespawn _respawn;
+        private StockRespawn _respawn;
         private int _lives;
         public bool Alive {
             get { return Lives > 0; }
@@ -23,12 +23,19 @@ namespace Hourai.SmashBrew {
                     Character.gameObject.SetActive(Alive);
             }
         }
+    }
 
-        protected override void Start() {
-            base.Start();
-            Character.OnBlastZoneExit += () => Lives--;
-            Character.gameObject.AddComponent<CharacterDeath>();
-            _respawn = Character.gameObject.AddComponent<CharacterRespawn>();
+    public class StockRespawn : Respawn {
+
+        protected override void OnBlastZoneExit(Character player) {
+            Stock s = player.GetComponent<Stock>();
+            if (s) {
+                s.Lives--;
+                if(s.Alive)
+                    base.OnBlastZoneExit(player);
+            } else {
+                base.OnBlastZoneExit(player);
+            }
         }
 
     }
@@ -77,6 +84,7 @@ namespace Hourai.SmashBrew {
 
         public void OnMatchStart() {
             characterStocks.Clear();
+            BlastZone.Instance.gameObject.AddComponent<StockRespawn>();
         }
 
         public void OnMatchEnd() {

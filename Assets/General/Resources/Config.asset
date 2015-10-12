@@ -25,7 +25,7 @@ MonoBehaviour:
     m_Bits: 2048
   spawnTag: Spawn
   CPUColor: {r: .5, g: .5, b: .5, a: 1}
-  DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
-  IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}
-  InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
-  OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}
+  DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: .125490203}
+  IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: .125490203}
+  InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: .125490203}
+  OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: .125490203}

@@ -135,18 +135,12 @@ namespace Hourai.SmashBrew {
 
         #region Public Events
         public event Action OnGrounded;
-        public event Action OnBlastZoneExit;
         public event Action OnAttack;
         public event Action OnSpecial;
         public event Action OnJump;
         public event Action<IDamager, float> OnDamage;
         public event Action<IHealer, float> OnHeal;
         #endregion
-
-        internal void BlastZoneExit() {
-            if(OnBlastZoneExit != null)
-                OnBlastZoneExit();
-        }
 
         void AttachRequiredComponents() {
             foreach (Type requriedType in RequiredComponents)
@@ -221,7 +215,9 @@ namespace Hourai.SmashBrew {
         }
 
         public T ApplyStatus<T>(float duration = -1f) where T : Status {
-            T instance = GetComponentInChildren<T>() ?? gameObject.AddComponent<T>();
+            T instance = GetComponent<T>();
+            if(instance == null)
+                instance = gameObject.AddComponent<T>();
             instance.StartStatus(duration);
             return instance;
         }
@@ -328,6 +324,8 @@ namespace Hourai.SmashBrew {
 
         #region Unity Callbacks
         protected virtual void Awake() {
+            gameObject.tag = SmashGame.Config.PlayerTag;
+
             components = new HashSet<CharacterComponent>();
 
             _defensiveModifiers = new PriorityList<Modifier<IDamager>>();
