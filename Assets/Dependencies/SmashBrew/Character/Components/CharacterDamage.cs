@@ -6,10 +6,10 @@ namespace Hourai.SmashBrew {
     public delegate float Modifier<T>(T source, float damage);
 
     [DisallowMultipleComponent]
-    public class CharacterDamage : CharacterComponent {
+    public abstract class CharacterDamage : CharacterComponent {
         
         // The Damage Value used internally for calculation of various aspects of the game, like knockback
-        protected internal float CurrentDamage { get; protected set; }
+        public abstract float CurrentDamage { get; set; }
 
         public virtual void Damage(IDamager source, float damage) {
             CurrentDamage += damage;
@@ -20,4 +20,21 @@ namespace Hourai.SmashBrew {
         }
 
     }
+
+    public class CharacterPercentDamage : CharacterDamage {
+
+        [SerializeField]
+        private float _damage = 0f;
+
+        public override float CurrentDamage {
+            get {
+                return _damage;
+            }
+            set {
+                _damage = value;
+            }
+        }
+
+    }
+
 }

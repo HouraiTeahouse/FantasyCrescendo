@@ -24,6 +24,8 @@ namespace Hourai.SmashBrew {
 
         private static readonly Type[] RequiredComponents;
 
+        private const int PlayerLayer = 9;
+
         private static readonly int _animGrounded = Animator.StringToHash("grounded");
         private static readonly int _animHInput = Animator.StringToHash("horizontal input");
         private static readonly int _animVInput = Animator.StringToHash("vertical input");
@@ -336,6 +338,8 @@ namespace Hourai.SmashBrew {
 
             MovementCollider = GetComponent<CapsuleCollider>();
             MovementCollider.isTrigger = false;
+
+            gameObject.layer = PlayerLayer;
 
             Rigidbody = GetComponent<Rigidbody>();
             Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;

@@ -9,7 +9,7 @@ namespace Hourai.SmashBrew {
                 return;
 
             var character = col.gameObject.GetComponentInParent<Character>();
-            if (character == null)
+            if (character == null || character.InputSource == null)
                 return;
 
             if (character.InputSource.Crouch)

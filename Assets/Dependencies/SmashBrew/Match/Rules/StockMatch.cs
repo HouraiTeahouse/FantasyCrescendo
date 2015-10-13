@@ -99,7 +99,7 @@ namespace Hourai.SmashBrew {
             characterStock.Lives = stock;
             characterStocks.Add(characterStock);
 
-            character.gameObject.AddComponent<CharacterDamage>();
+            character.gameObject.AddComponent<CharacterPercentDamage>();
         }
 
     }

@@ -8,7 +8,8 @@ namespace Hourai.SmashBrew {
     public sealed class Hitbox : MonoBehaviour, IDamager {
 
         public static readonly string Tag = "Hitbox";
-        public const int Layer = 10;
+        public const int HitboxLayer = 10;
+        public const int HurtboxLayer = 11;
 
         public enum Type {
 
@@ -24,6 +25,7 @@ namespace Hourai.SmashBrew {
 
         private ParticleSystem _effect;
         private AudioSource _soundEffect;
+        private Collider[] colliders;
 
         // Represents the source Character that owns this Hitbox
         // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
@@ -37,9 +39,17 @@ namespace Hourai.SmashBrew {
             _soundEffect = GetComponent<AudioSource>();
 
             gameObject.tag = Tag;
-            gameObject.layer = Layer;
+            switch(type) {
+                case Type.Damageable:
+                case Type.Shield:
+                    gameObject.layer = HurtboxLayer;
+                    break;
+                default:
+                    gameObject.layer = HitboxLayer;
+                    break;
+            }
 
-            Collider[] colliders = GetComponents<Collider>();
+            colliders = GetComponents<Collider>();
             for (var i = 0; i < colliders.Length; i++)
                 colliders[i].isTrigger = true;
         }
@@ -50,6 +60,7 @@ namespace Hourai.SmashBrew {
         }
         
         void OnTriggerEnter(Collider other) {
+            Debug.Log(other);
             if (!other.CompareTag(Tag))
                 return;
             Hitbox otherHitbox = other.GetComponent<Hitbox>();
@@ -58,12 +69,15 @@ namespace Hourai.SmashBrew {
             Character target = otherHitbox.Source;
             if (target == null)
                 return;
-            
-            switch(type) {
+
+            switch (type) {
                 case Type.Damageable:
                     if (Source == null)
                         break;
                     switch (otherHitbox.type) {
+                        case Type.Damageable:
+                            Debug.Log("Two hurtboxes should not collide with each other.");
+                            break;
                         case Type.Offensive:
                             Source.Damage(otherHitbox);
                             break;

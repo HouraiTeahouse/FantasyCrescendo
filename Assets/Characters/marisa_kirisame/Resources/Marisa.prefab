@@ -3539,7 +3539,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159410}
-  m_LocalRotation: {x: .704296887, y: .0168106779, z: .709426284, w: -.0199410003}
+  m_LocalRotation: {x: .704296947, y: .0168106798, z: .709426343, w: -.0199410021}
   m_LocalPosition: {x: .436120659, y: .0266445521, z: .571552992}
   m_LocalScale: {x: .611564934, y: .611565053, z: .611564994}
   m_Children:
@@ -4350,7 +4350,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.716031671, y: .5, z: -.125590563}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 449442}
@@ -4399,7 +4399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a95177ab369da419d5e11905200942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _airSpeed: 3
+  _airSpeed: 1.5
   _dashSpeed: 5
   _walkSpeed: 3
 --- !u!114 &11406118
@@ -4526,11 +4526,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _facingMode: 0
   _gravity: 9.85999966
   _jumpHeights:
   - 1.5
   - 1.5
+  _facingMode: 0
 --- !u!114 &11455734
 MonoBehaviour:
   m_ObjectHideFlags: 1
