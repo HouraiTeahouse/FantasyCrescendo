@@ -60,26 +60,27 @@ namespace Hourai.SmashBrew {
         }
         
         void OnTriggerEnter(Collider other) {
-            Debug.Log(other);
             if (!other.CompareTag(Tag))
                 return;
             Hitbox otherHitbox = other.GetComponent<Hitbox>();
             if (otherHitbox == null)
                 return;
             Character target = otherHitbox.Source;
-            if (target == null)
+            if (target == null || Source == target)
                 return;
 
-            switch (type) {
+            Debug.Log(other.ToString() + this.ToString());
+            Debug.Log(type.ToString() + otherHitbox.type.ToString());
+            switch (otherHitbox.type) {
                 case Type.Damageable:
-                    if (Source == null)
-                        break;
-                    switch (otherHitbox.type) {
+                    switch (type) {
                         case Type.Damageable:
                             Debug.Log("Two hurtboxes should not collide with each other.");
                             break;
                         case Type.Offensive:
-                            Source.Damage(otherHitbox);
+                            Debug.Log("Hello");
+                            if(otherHitbox.Source != null)
+                                otherHitbox.Source.Damage(this);
                             break;
                         default:
                             break;
