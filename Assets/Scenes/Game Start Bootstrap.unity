@@ -112,8 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8ba33510a1f9d43843948d0806798b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: -35284
-  dbg: 0
   scene: Splash Screen
 --- !u!4 &358177910
 Transform:
@@ -127,7 +125,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!1001 &2027860160
+--- !u!1001 &1538425134
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -167,20 +165,20 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 189600, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 189600, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
       propertyPath: m_Name
       value: Static Managers (Bootstraped)
       objectReference: {fileID: 0}
-    - target: {fileID: 11488736, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
-      propertyPath: _serializationData.serializedStrings.values.Array.data[1]
-      value: true
-      objectReference: {fileID: 0}
     - target: {fileID: 11452990, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
-      propertyPath: _serializationData.serializedStrings.values.Array.data[1]
-      value: true
+      propertyPath: _dontDestroyOnLoad
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11488736, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
+      propertyPath: _dontDestroyOnLoad
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 189600, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
+      propertyPath: m_TagString
+      value: GameController
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11416700, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
