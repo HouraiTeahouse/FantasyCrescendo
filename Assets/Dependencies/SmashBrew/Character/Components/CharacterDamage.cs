@@ -11,12 +11,19 @@ namespace Hourai.SmashBrew {
         // The Damage Value used internally for calculation of various aspects of the game, like knockback
         public abstract float CurrentDamage { get; set; }
 
+        private const float MinDamage = 0f;
+        private const float MaxDamage = 999f;
+
         public virtual void Damage(IDamager source, float damage) {
             CurrentDamage += damage;
+            if (CurrentDamage > MaxDamage)
+                CurrentDamage = MaxDamage;
         }
 
         public virtual void Heal(IHealer source, float damage) {
             CurrentDamage -= damage;
+            if (CurrentDamage < MinDamage)
+                CurrentDamage = MinDamage;
         }
 
     }

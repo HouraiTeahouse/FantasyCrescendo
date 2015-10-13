@@ -21,7 +21,7 @@ namespace Hourai.SmashBrew.UI {
             _numberText.enabled = visible;
 
             if (visible)
-                _numberText.Number = Component.CurrentDamage;
+                _numberText.Number = Mathf.Floor(Component.CurrentDamage);
         }
 
     }

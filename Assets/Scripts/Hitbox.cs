@@ -30,11 +30,32 @@ namespace Hourai.SmashBrew {
         // Represents the source Character that owns this Hitbox
         // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
         // If this is a Damageable type Hitbox (AKA a Hurtbox) this is the character that the damage and knockback is applied to.
-        public Character Source {
-            get; set; }
+        public Character Source { get; set; }
+
+        private IDamageable _damageable;
+        private IKnockbackable _knockbackable;
+
+        public IDamageable Damageable {
+            get {
+                return _damageable;
+            }
+        }
+
+        public IKnockbackable Knockbackable {
+            get {
+                return _knockbackable;
+            }
+        }
 
         private void Awake() {
             Source = GetComponentInParent<Character>();
+            if(Source) {
+                _damageable = Source;
+                _knockbackable = Source;
+            } else {
+               _damageable = GetComponentInParent<IDamageable>();
+                _knockbackable = GetComponentInParent<IKnockbackable>();
+            }
             _effect = GetComponent<ParticleSystem>();
             _soundEffect = GetComponent<AudioSource>();
 
@@ -65,12 +86,7 @@ namespace Hourai.SmashBrew {
             Hitbox otherHitbox = other.GetComponent<Hitbox>();
             if (otherHitbox == null)
                 return;
-            Character target = otherHitbox.Source;
-            if (target == null || Source == target)
-                return;
-
-            Debug.Log(other.ToString() + this.ToString());
-            Debug.Log(type.ToString() + otherHitbox.type.ToString());
+            
             switch (otherHitbox.type) {
                 case Type.Damageable:
                     switch (type) {
@@ -78,9 +94,8 @@ namespace Hourai.SmashBrew {
                             Debug.Log("Two hurtboxes should not collide with each other.");
                             break;
                         case Type.Offensive:
-                            Debug.Log("Hello");
-                            if(otherHitbox.Source != null)
-                                otherHitbox.Source.Damage(this);
+                            if(otherHitbox.Damageable != null)
+                                otherHitbox.Damageable.Damage(this);
                             break;
                         default:
                             break;
@@ -121,7 +136,6 @@ namespace Hourai.SmashBrew {
         #endregion
 
         #region Public Access Properties
-
         public int Priority {
             get { return _priority; }
             set { _priority = value; }
