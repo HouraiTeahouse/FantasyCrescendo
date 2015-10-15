@@ -5,7 +5,7 @@ namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Collider))]
-    public sealed class Hitbox : MonoBehaviour, IDamager, IKnockbackSource {
+    public sealed class Hitbox : MonoBehaviour, IDamager, IKnockbacker {
 
         public static readonly string Tag = "Hitbox";
         public const int HitboxLayer = 10;

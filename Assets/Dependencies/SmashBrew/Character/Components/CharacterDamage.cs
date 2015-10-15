@@ -3,8 +3,6 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
-    public delegate float Modifier<T>(T source, float damage);
-
     [DisallowMultipleComponent]
     public abstract class CharacterDamage : CharacterComponent {
         

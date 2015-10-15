@@ -34,10 +34,8 @@ namespace Hourai.SmashBrew {
         private static readonly int _animJump = Animator.StringToHash("jump");
 
         private enum FacingMode {
-
             Rotation,
             Scale
-
         }
 
         static Character() {
@@ -113,18 +111,43 @@ namespace Hourai.SmashBrew {
             get { return IsGrounded && _isDashing; }
             set { _isDashing = value; }
         }
+        
+        /// <summary>
+        /// A dynamically constructed data structure handling the 
+        /// </summary>
+        public ModifierList<IHealer> Healing {
+            get; private set;
+        }
+
+        public ModifierList DamageDealt {
+            get; private set;
+        }
+
+        public ModifierList KnockbackDealt {
+            get; private set;
+        }
+
+        public ModifierList<IDamager> DamageTaken {
+            get; private set;
+        }
+
+        public ModifierList<IKnockbacker> KnockbackTaken {
+            get; private set;
+        }
+
+        private CharacterDamage Damageable {
+            get {
+                if (!_damageable)
+                    _damageable = GetComponent<CharacterDamage>();
+                return _damageable;
+            }
+        }
         #endregion
 
         #region Runtime Variables
         private bool _facing;
         private HashSet<CharacterComponent> components;
         private HashSet<Collider> ground;
-
-        private PriorityList<Modifier<IDamager>> _defensiveModifiers;
-        private PriorityList<Modifier<IHealer>> _healingModifiers;
-
-        private PriorityList<Func<float, float>> _offensiveModifiers;
-        private PriorityList<Func<float, float>> _healingOutModifiers;
         #endregion
 
         #region Serialized Variables
@@ -228,17 +251,13 @@ namespace Hourai.SmashBrew {
         }
 
         public void Damage(IDamager source) {
-            if (_damageable == null)
-                _damageable = GetComponent<CharacterDamage>();
-
-            if (source == null || _damageable == null)
+            if (source == null || Damageable == null)
                 return;
 
             float damage = Mathf.Abs(source.BaseDamage);
 
-            if (_defensiveModifiers.Count > 0)
-                foreach (var modifier in _defensiveModifiers)
-                    damage = modifier(source, damage);
+            if (DamageTaken.Count > 0)
+                damage = DamageTaken.Modifiy(source, damage);
 
             _damageable.Damage(source, damage);
 
@@ -246,34 +265,36 @@ namespace Hourai.SmashBrew {
                 OnDamage(source, damage);
         }
 
-        public void Knockback(IKnockbackSource source) {
+        public void Knockback(IKnockbacker source) {
             if (source == null)
                 return;
 
             float angle = Mathf.Deg2Rad * source.Angle;
-            float damage = (_damageable != null) ? _damageable.CurrentDamage : 0f;
+            float damage = (Damageable != null) ? Damageable.CurrentDamage : 0f;
 
             float knockback = source.BaseKnockback + source.Scaling * damage;
+
+            if (KnockbackTaken.Count > 0)
+                knockback = KnockbackTaken.Modifiy(source, knockback);
 
             Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
             if (source.FlipDirection)
                 direction.x *= -1;
 
+            Facing = direction.x > 0;
+
             Rigidbody.AddForce(direction * knockback);
         }
 
         public void Heal(IHealer source) {
-            if (_damageable == null)
-                _damageable = GetComponent<CharacterDamage>();
-            if (source == null || _damageable == null)
+            if (source == null || Damageable == null)
                 return;
 
             float healing = Mathf.Abs(source.BaseHealing);
 
-            if (_healingModifiers.Count > 0)
-                foreach (var modifier in _healingModifiers)
-                    healing = modifier(source, healing);
+            if (Healing.Count > 0)
+                healing = Healing.Modifiy(source, healing);
 
             _damageable.Heal(source, healing);
 
@@ -284,12 +305,9 @@ namespace Hourai.SmashBrew {
 
         #region Internal Methods
         internal float ModifyDamage(float baseDamage) {
-            if (_offensiveModifiers.Count <= 0)
+            if (DamageDealt.Count <= 0)
                 return baseDamage;
-            float damage = baseDamage;
-            foreach (var modifier in _offensiveModifiers)
-                damage = modifier(damage);
-            return damage;
+            return DamageDealt.Modifiy(baseDamage);
         }
 
         internal void AddCharacterComponent(CharacterComponent component) {
@@ -305,41 +323,6 @@ namespace Hourai.SmashBrew {
         }
         #endregion
 
-        #region Damage Methods
-        public bool AddOffensiveModifier(Func<float, float> modifier, int priority = 0) {
-            if (modifier == null || _offensiveModifiers.Contains(modifier))
-                return false;
-            _offensiveModifiers.Add(modifier);
-            return true;
-        }
-
-        public bool RemoveOffensiveModifier(Func<float, float> modifier) {
-            return _offensiveModifiers.Remove(modifier);
-        }
-
-        public bool AddDefensiveModifier(Modifier<IDamager> modifier, int priority = 0) {
-            if (modifier == null || _defensiveModifiers.Contains(modifier))
-                return false;
-            _defensiveModifiers.Add(modifier);
-            return true;
-        }
-
-        public bool RemoveDefensiveModifier(Modifier<IDamager> modifier) {
-            return _defensiveModifiers.Remove(modifier);
-        }
-
-        public bool AddHealingModifier(Modifier<IHealer> modifier, int priority = 0) {
-            if (modifier == null || _healingModifiers.Contains(modifier))
-                return false;
-            _healingModifiers.Add(modifier);
-            return true;
-        }
-
-        public bool RemoveHealingModifier(Modifier<IHealer> modifier) {
-            return _healingModifiers.Remove(modifier);
-        }
-        #endregion
-
         #region Unity Callbacks
         protected virtual void Awake() {
             gameObject.tag = SmashGame.Config.PlayerTag;
@@ -347,11 +330,12 @@ namespace Hourai.SmashBrew {
             components = new HashSet<CharacterComponent>();
             ground = new HashSet<Collider>();
 
-            _defensiveModifiers = new PriorityList<Modifier<IDamager>>();
-            _healingModifiers = new PriorityList<Modifier<IHealer>>();
+            DamageTaken = new ModifierList<IDamager>();
+            KnockbackTaken = new ModifierList<IKnockbacker>();
+            Healing = new ModifierList<IHealer>();
 
-            _offensiveModifiers = new PriorityList<Func<float, float>>();
-            _healingOutModifiers = new PriorityList<Func<float, float>>();
+            DamageDealt = new ModifierList();
+            KnockbackDealt = new ModifierList();
 
             MovementCollider = GetComponent<CapsuleCollider>();
             MovementCollider.isTrigger = false;
@@ -389,18 +373,6 @@ namespace Hourai.SmashBrew {
         }
 
         /// <summary>
-        /// Called every frame.
-        /// </summary>
-        protected virtual void Update() {
-            if (InputSource == null)
-                return;
-
-            Vector2 movement = InputSource.Movement;
-            Animator.SetFloat(_animHInput, Mathf.Abs(movement.x));
-            Animator.SetFloat(_animVInput, movement.y);
-        }
-
-        /// <summary>
         /// Called every physics update.
         /// </summary>
         protected virtual void FixedUpdate() {
@@ -410,6 +382,9 @@ namespace Hourai.SmashBrew {
                 return;
             
             Vector2 movement = InputSource.Movement;
+            
+            Animator.SetFloat(_animHInput, Mathf.Abs(movement.x));
+            Animator.SetFloat(_animVInput, movement.y);
 
             //Ensure that the character is walking in the right direction
             if ((movement.x > 0 && Facing) ||
