@@ -425,14 +425,11 @@ namespace Hourai.SmashBrew {
                 if ((points[i].point - bottom).sqrMagnitude < r2)
                     ground.Add(points[i].otherCollider);
             IsGrounded = ground.Count > 0;
-            Debug.Log(IsGrounded);
-            Debug.Break();
         }
 
         protected virtual void OnCollisionExit(Collision col) {
             if(ground.Remove(col.collider))
                 IsGrounded = ground.Count > 0;
-            Debug.Log(IsGrounded);
         }
         #endregion
     }
