@@ -91,11 +91,13 @@ namespace Hourai.SmashBrew {
 
         public bool IsGrounded {
             get { return _isGrounded; }
-            set {
+            private set {
                 if (IsGrounded == value)
                     return;
                 _isGrounded = value;
                 Animator.SetBool(_animGrounded, value);
+                if (_isGrounded)
+                    JumpCount = 0;
                 if (OnGrounded != null)
                     OnGrounded();
             }
@@ -116,6 +118,7 @@ namespace Hourai.SmashBrew {
         #region Runtime Variables
         private bool _facing;
         private HashSet<CharacterComponent> components;
+        private HashSet<Collider> ground;
 
         private PriorityList<Modifier<IDamager>> _defensiveModifiers;
         private PriorityList<Modifier<IHealer>> _healingModifiers;
@@ -329,6 +332,7 @@ namespace Hourai.SmashBrew {
             gameObject.tag = SmashGame.Config.PlayerTag;
 
             components = new HashSet<CharacterComponent>();
+            ground = new HashSet<Collider>();
 
             _defensiveModifiers = new PriorityList<Modifier<IDamager>>();
             _healingModifiers = new PriorityList<Modifier<IHealer>>();
@@ -411,6 +415,24 @@ namespace Hourai.SmashBrew {
             //TODO: Merge Physics and Animation Movements here
 
             //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;
+        }
+
+        protected virtual void OnCollisionEnter(Collision col) {
+            ContactPoint[] points = col.contacts;
+            float r2 = MovementCollider.radius * MovementCollider.radius;
+            Vector3 bottom = transform.TransformPoint(MovementCollider.center - Vector3.up * MovementCollider.height / 2);
+            for (var i = 0; i < points.Length; i++)
+                if ((points[i].point - bottom).sqrMagnitude < r2)
+                    ground.Add(points[i].otherCollider);
+            IsGrounded = ground.Count > 0;
+            Debug.Log(IsGrounded);
+            Debug.Break();
+        }
+
+        protected virtual void OnCollisionExit(Collision col) {
+            if(ground.Remove(col.collider))
+                IsGrounded = ground.Count > 0;
+            Debug.Log(IsGrounded);
         }
         #endregion
     }
