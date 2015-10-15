@@ -159,6 +159,9 @@ namespace Hourai.SmashBrew {
 
         [SerializeField]
         private FacingMode _facingMode;
+
+        [SerializeField]
+        private GameObject airJumpFX;
         #endregion
 
         #region Public Events
@@ -237,6 +240,9 @@ namespace Hourai.SmashBrew {
 
             // Trigger animation
             Animator.SetTrigger(_animJump);
+
+            if (!IsGrounded && airJumpFX)
+                Instantiate(airJumpFX, transform.position, Quaternion.Euler(90f, 0f, 0f));
 
             if (OnJump != null)
                 OnJump();
