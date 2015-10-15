@@ -84,6 +84,10 @@ namespace Hourai.SmashBrew {
             set { _gravity = Mathf.Abs(value); }
         }
 
+        public bool IsHit {
+            get { return _hitstun > 0; }
+        }
+
         public Player Player { get; internal set; }
         public ICharacterInput InputSource { get; set; }
 
@@ -188,6 +192,8 @@ namespace Hourai.SmashBrew {
         #endregion
 
         #region State Variables
+        private Vector3 _oldVelocity;
+        private float _hitstun;
         private bool _isGrounded;
         private bool _isDashing;
         #endregion
@@ -283,13 +289,19 @@ namespace Hourai.SmashBrew {
             if (KnockbackTaken.Count > 0)
                 knockback = KnockbackTaken.Modifiy(source, knockback);
 
+            // Apply approriate hitstun for the knockback
+            // TODO: Make ratio editable from the Editor
+            _hitstun = 0.4f * knockback / 60f;
+
             Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
             if (source.FlipDirection)
                 direction.x *= -1;
 
+            // Flip the character in the right direction accordingly
             Facing = direction.x > 0;
 
+            // Apply the physics force to knock the character in that direction
             Rigidbody.AddForce(direction * knockback);
         }
 
@@ -382,7 +394,13 @@ namespace Hourai.SmashBrew {
         /// Called every physics update.
         /// </summary>
         protected virtual void FixedUpdate() {
+            float dt = Time.fixedDeltaTime;
             Rigidbody.AddForce(-Vector3.up*_gravity);
+
+            _oldVelocity = Rigidbody.velocity;
+
+            if (IsHit)
+                _hitstun -= dt;
 
             if (InputSource == null)
                 return;
@@ -413,6 +431,20 @@ namespace Hourai.SmashBrew {
 
         protected virtual void OnCollisionEnter(Collision col) {
             ContactPoint[] points = col.contacts;
+            if (points.Length <= 0)
+                return;
+
+            if (IsHit) {
+                Vector3 point = points[0].point;
+                Vector3 normal = points[0].normal;
+                Vector3 reflection = _oldVelocity - 2 * Vector2.Dot(_oldVelocity, normal) * normal;
+                Debug.DrawRay(point, reflection, Color.green);
+                Debug.DrawRay(point, normal, Color.red);
+                Debug.DrawRay(point, -_oldVelocity, Color.yellow);
+                Rigidbody.velocity = Vector3.ClampMagnitude(reflection, 0.8f * _oldVelocity.magnitude);
+            }
+
+
             float r2 = MovementCollider.radius * MovementCollider.radius;
             Vector3 bottom = transform.TransformPoint(MovementCollider.center - Vector3.up * MovementCollider.height / 2);
             for (var i = 0; i < points.Length; i++)
