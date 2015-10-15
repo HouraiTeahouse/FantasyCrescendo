@@ -9,6 +9,8 @@ namespace Hourai.SmashBrew {
         // The Damage Value used internally for calculation of various aspects of the game, like knockback
         public abstract float CurrentDamage { get; set; }
 
+        public float DefaultDamage { get; set; }
+
         protected const float MinDamage = 0f;
         protected const float MaxDamage = 999.9999f;
 

@@ -28,10 +28,13 @@ namespace Hourai.SmashBrew {
     public class StockRespawn : Respawn {
 
         protected override void OnBlastZoneExit(Character player) {
-            Stock s = player.GetComponent<Stock>();
-            if (s) {
-                s.Lives--;
-                if(s.Alive)
+            Stock stock = player.GetComponent<Stock>();
+            CharacterPercentDamage damage = player.GetComponent<CharacterPercentDamage>();
+            if (damage)
+                damage.CurrentDamage = damage.DefaultDamage;
+            if (stock) {
+                stock.Lives--;
+                if(stock.Alive)
                     base.OnBlastZoneExit(player);
             } else {
                 base.OnBlastZoneExit(player);
