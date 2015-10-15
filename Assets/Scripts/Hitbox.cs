@@ -5,7 +5,7 @@ namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Collider))]
-    public sealed class Hitbox : MonoBehaviour, IDamager {
+    public sealed class Hitbox : MonoBehaviour, IDamager, IKnockbackSource {
 
         public static readonly string Tag = "Hitbox";
         public const int HitboxLayer = 10;
@@ -96,6 +96,8 @@ namespace Hourai.SmashBrew {
                         case Type.Offensive:
                             if(otherHitbox.Damageable != null)
                                 otherHitbox.Damageable.Damage(this);
+                            if (otherHitbox.Knockbackable != null)
+                                otherHitbox.Knockbackable.Knockback(this);
                             break;
                         default:
                             break;
@@ -156,7 +158,7 @@ namespace Hourai.SmashBrew {
             set { _baseKnockback = value; }
         }
 
-        public float KnockbackScaling {
+        public float Scaling {
             get { return _knockbackScaling; }
             set { _knockbackScaling = value; }
         }
@@ -177,6 +179,12 @@ namespace Hourai.SmashBrew {
             }
         }
 
+        public bool FlipDirection {
+            get {
+                //TODO: Implement properly
+                return false;
+            }
+        }
         #endregion
     }
 

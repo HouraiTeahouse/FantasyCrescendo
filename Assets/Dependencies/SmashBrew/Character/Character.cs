@@ -246,8 +246,21 @@ namespace Hourai.SmashBrew {
                 OnDamage(source, damage);
         }
 
-        public void Knockback(IKnockbackSource source, float knockback) {
-            throw new NotImplementedException();
+        public void Knockback(IKnockbackSource source) {
+            if (source == null)
+                return;
+
+            float angle = Mathf.Deg2Rad * source.Angle;
+            float damage = (_damageable != null) ? _damageable.CurrentDamage : 0f;
+
+            float knockback = source.BaseKnockback + source.Scaling * damage;
+
+            Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+
+            if (source.FlipDirection)
+                direction.x *= -1;
+
+            Rigidbody.AddForce(direction * knockback);
         }
 
         public void Heal(IHealer source) {

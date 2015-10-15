@@ -26,12 +26,14 @@
 
     public interface IKnockbackable {
 
-        void Knockback(IKnockbackSource source, float knockback);
+        void Knockback(IKnockbackSource source);
 
     }
 
     public interface IKnockbackSource {
 
+        bool FlipDirection { get; }
+        float Angle { get; }
         float BaseKnockback { get; }
         float Scaling { get; }
 
