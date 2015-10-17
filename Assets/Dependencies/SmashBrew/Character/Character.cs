@@ -38,6 +38,13 @@ namespace Hourai.SmashBrew {
             Scale
         }
 
+        [Serializable]
+        private class AttackMetadata {
+            public Attack.Type _type;
+            public Attack.Direction _direction;
+            public AttackData[] _data;
+        }
+
         static Character() {
             var componentType = typeof(Component);
             var requiredComponentType = typeof(RequiredCharacterComponentAttribute);
@@ -152,6 +159,7 @@ namespace Hourai.SmashBrew {
         private bool _facing;
         private HashSet<CharacterComponent> components;
         private HashSet<Collider> ground;
+        private EnumMap<Attack.Type, EnumMap<Attack.Direction, AttackMetadata>> attackCache;
         #endregion
 
         #region Serialized Variables
@@ -166,6 +174,9 @@ namespace Hourai.SmashBrew {
 
         [SerializeField]
         private GameObject airJumpFX;
+
+        [SerializeField]
+        private AttackMetadata[] attacks;
         #endregion
 
         #region Public Events
@@ -367,6 +378,14 @@ namespace Hourai.SmashBrew {
 
             AttachRequiredComponents();
 
+            attackCache = new EnumMap<Attack.Type, EnumMap<Attack.Direction, AttackMetadata>>();
+            foreach (Attack.Type val in Enum.GetValues(typeof(Attack.Type)))
+                attackCache[val] = new EnumMap<Attack.Direction, AttackMetadata>();
+
+            foreach (AttackMetadata data in attacks)
+                attackCache[data._type][data._direction] = data;
+            
+
             CharacterAnimationBehaviour[] animationBehaviors = Animator.GetBehaviours<CharacterAnimationBehaviour>();
             foreach (CharacterAnimationBehaviour stateBehaviour in animationBehaviors)
                 stateBehaviour.SetCharacter(this);
@@ -443,7 +462,6 @@ namespace Hourai.SmashBrew {
                 Debug.DrawRay(point, -_oldVelocity, Color.yellow);
                 Rigidbody.velocity = Vector3.ClampMagnitude(reflection, 0.8f * _oldVelocity.magnitude);
             }
-
 
             float r2 = MovementCollider.radius * MovementCollider.radius;
             Vector3 bottom = transform.TransformPoint(MovementCollider.center - Vector3.up * MovementCollider.height / 2);
