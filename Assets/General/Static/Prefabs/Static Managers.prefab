@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 404724}
   - 114: {fileID: 11488736}
-  - 114: {fileID: 11452990}
+  - 114: {fileID: 11420750}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: EditorOnly
@@ -29,7 +29,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11452990
+--- !u!114 &11420750
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -41,7 +41,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  mixerGroup: {fileID: 24392500, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
+  musicMixerGroup: {fileID: 24392500, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
+  sfxMixerGroup: {fileID: 24373952, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
 --- !u!114 &11488736
 MonoBehaviour:
   m_ObjectHideFlags: 1

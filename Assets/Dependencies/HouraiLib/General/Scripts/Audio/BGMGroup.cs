@@ -25,7 +25,7 @@ namespace Hourai {
         }
 
         public void PlayRandom() {
-            BGM.Play(selection.Select().Load());
+            AudioManager.PlayBGM(selection.Select().Load());
             Resources.UnloadUnusedAssets();
         }
 
