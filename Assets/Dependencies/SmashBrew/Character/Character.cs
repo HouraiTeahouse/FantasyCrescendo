@@ -174,18 +174,15 @@ namespace Hourai.SmashBrew {
 
         [SerializeField]
         private GameObject airJumpFX;
-
-        [SerializeField]
-        private AttackMetadata[] attacks;
         #endregion
 
         #region Public Events
         public event Action OnGrounded;
-        public event Action OnAttack;
         public event Action OnSpecial;
         public event Action OnJump;
         public event Action<IDamager, float> OnDamage;
         public event Action<IHealer, float> OnHeal;
+        public event Action<Attack.Type, Attack.Direction> OnAttack;
         #endregion
 
         void AttachRequiredComponents() {
@@ -222,24 +219,9 @@ namespace Hourai.SmashBrew {
         #endregion
 
         #region Public Action Methods
-        public void Attack() {
-            //if (Restricted)
-            //    return;
-
-            Animator.SetTrigger(_animAttack);
-            
+        public void Attack(Attack.Type type, Attack.Direction direction) {
             if(OnAttack != null)
-                OnAttack();
-        }
-
-        public void Special() {
-            //if (Restricted)
-            //    return;
-
-            Animator.SetTrigger(_animSpecial);
-
-            if (OnSpecial != null)
-                OnSpecial();
+                OnAttack(type, direction);
         }
         
         public void Jump() {
@@ -375,16 +357,9 @@ namespace Hourai.SmashBrew {
             Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
 
             Animator = GetComponent<Animator>();
+            Animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
 
             AttachRequiredComponents();
-
-            attackCache = new EnumMap<Attack.Type, EnumMap<Attack.Direction, AttackMetadata>>();
-            foreach (Attack.Type val in Enum.GetValues(typeof(Attack.Type)))
-                attackCache[val] = new EnumMap<Attack.Direction, AttackMetadata>();
-
-            foreach (AttackMetadata data in attacks)
-                attackCache[data._type][data._direction] = data;
-            
 
             CharacterAnimationBehaviour[] animationBehaviors = Animator.GetBehaviours<CharacterAnimationBehaviour>();
             foreach (CharacterAnimationBehaviour stateBehaviour in animationBehaviors)
@@ -437,9 +412,8 @@ namespace Hourai.SmashBrew {
             if (InputSource.Jump)
                 Jump();
             else if (InputSource.Attack)
-                Attack();
-            else if (InputSource.Special)
-                Special();
+                Animator.SetTrigger(_animAttack);
+            Animator.SetBool(_animSpecial, InputSource.Special);
         }
 
         protected virtual void OnAnimatorMove() {
