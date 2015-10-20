@@ -38,13 +38,6 @@ namespace Hourai.SmashBrew {
             Scale
         }
 
-        [Serializable]
-        private class AttackMetadata {
-            public Attack.Type _type;
-            public Attack.Direction _direction;
-            public AttackData[] _data;
-        }
-
         static Character() {
             var componentType = typeof(Component);
             var requiredComponentType = typeof(RequiredCharacterComponentAttribute);
@@ -153,13 +146,17 @@ namespace Hourai.SmashBrew {
                 return _damageable;
             }
         }
+
+        public int BoneCount {
+            get { return _bones.Length; }
+        }
         #endregion
 
         #region Runtime Variables
         private bool _facing;
         private HashSet<CharacterComponent> components;
         private HashSet<Collider> ground;
-        private EnumMap<Attack.Type, EnumMap<Attack.Direction, AttackMetadata>> attackCache;
+        private Transform[] _bones;
         #endregion
 
         #region Serialized Variables
@@ -182,7 +179,7 @@ namespace Hourai.SmashBrew {
         public event Action OnJump;
         public event Action<IDamager, float> OnDamage;
         public event Action<IHealer, float> OnHeal;
-        public event Action<Attack.Type, Attack.Direction> OnAttack;
+        public event Action<Attack.Type, Attack.Direction, int> OnAttack;
         #endregion
 
         void AttachRequiredComponents() {
@@ -219,9 +216,9 @@ namespace Hourai.SmashBrew {
         #endregion
 
         #region Public Action Methods
-        public void Attack(Attack.Type type, Attack.Direction direction) {
+        public void Attack(Attack.Type type, Attack.Direction direction, int index) {
             if(OnAttack != null)
-                OnAttack(type, direction);
+                OnAttack(type, direction, index);
         }
         
         public void Jump() {
@@ -312,6 +309,12 @@ namespace Hourai.SmashBrew {
             if (OnHeal != null)
                 OnHeal(source, healing);
         }
+        
+        public Transform GetBone(int boneIndex) {
+            if (boneIndex < 0 || boneIndex >= BoneCount)
+                return transform;
+            return _bones[boneIndex];
+        }
         #endregion
 
         #region Internal Methods
@@ -361,9 +364,11 @@ namespace Hourai.SmashBrew {
 
             AttachRequiredComponents();
 
+            _bones = new HashSet<Transform>(GetComponentsInChildren<SkinnedMeshRenderer>().SelectMany(smr => smr.bones)).ToArray();
+
             CharacterAnimationBehaviour[] animationBehaviors = Animator.GetBehaviours<CharacterAnimationBehaviour>();
             foreach (CharacterAnimationBehaviour stateBehaviour in animationBehaviors)
-                stateBehaviour.SetCharacter(this);
+                stateBehaviour.Initialize(this);
         }
 
         protected virtual void OnEnable() {

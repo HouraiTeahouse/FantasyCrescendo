@@ -19,6 +19,45 @@ namespace Hourai.SmashBrew {
             Back,
             Down
         }
+        
+        [Serializable]
+        public class HitboxData {
+            public int Bone = -1;
+            public Vector3 Offset;
+            public float Radius = 1f;
+            public float[] TogglePoints;
+
+            private Hitbox hitbox;
+            private GameObject hitboxGameObject;
+            private int index;
+
+            public void Initialize(Character character, Attack parent, int hitboxIndex) {
+                hitboxGameObject = new GameObject("hb_" + hitboxIndex + "_" + parent._direction + "_" + parent._type + "_" + parent.index);
+                Transform hitboxTransform = hitboxGameObject.transform;
+                hitboxTransform.parent = character.GetBone(Bone);
+                hitboxTransform.localPosition = Offset;
+                hitboxTransform.localRotation = Quaternion.identity;
+                hitboxTransform.localScale = Vector3.one;
+                hitboxGameObject.AddComponent<SphereCollider>().radius = Radius;
+                hitbox = hitboxGameObject.AddComponent<Hitbox>();
+                hitboxGameObject.SetActive(false);
+                Array.Sort(TogglePoints);
+            }
+
+            public void OnTransition() {
+                hitboxGameObject.SetActive(false);
+                index = -1;
+            }
+
+            public void Update(float normalizedTime, Animator animator) {
+                if (index >= TogglePoints.Length)
+                    return;
+                if(normalizedTime > TogglePoints[index + 1]) {
+                    index++;
+                    hitboxGameObject.SetActive(hitboxGameObject.activeSelf);
+                }
+            }
+        }
 
         [SerializeField]
         private Direction _direction;
@@ -27,80 +66,46 @@ namespace Hourai.SmashBrew {
         private Type _type;
 
         [SerializeField]
-        private AttackData _data;
+        private int index;
+
+        [SerializeField]
+        private HitboxData[] _data;
+
+        private Character _character;
+
+        public override void Initialize(Character character) {
+            if (!character)
+                return;
+            _character = character;
+            for (var i = 0; i < _data.Length; i++)
+                _data[i].Initialize(character, this, i);
+        }
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-            if (!Character) {
+            if (!_character) {
                 Destroy(this);
                 return;
             }
             // Set any events
-            Character.Attack(_type, _direction);
-            if (_data)
-                _data.Transition();
+            _character.Attack(_type, _direction, index);
+
+            Transition();
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-            if (_data)
-                _data.Update(animator, stateInfo);
+            float t = stateInfo.normalizedTime;
+            for (var i = 0; i < _data.Length; i++)
+                _data[i].Update(t, animator);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-            if (_data)
-                _data.Transition();
+            Transition();
         }
 
-    }
-
-    public class AttackData : ScriptableObject {
-
-        [SerializeField]
-        private Avatar avatar;
-
-        [Serializable]
-        public class HitboxData {
-            public int bone;
-            public Vector3 Offset;
-            public float Radius;
-            public float Start;
-            public float End;
-
-            private Hitbox hitbox;
-
-            public void OnTransition() {
-                if (hitbox)
-                    Destroy(hitbox.gameObject);
-            }
-
-            public void Update(float normalizedTime, Animator animator) {
-                if(hitbox) {
-                    if (normalizedTime > End)
-                        Destroy(hitbox.gameObject);
-                } else {
-                    if (normalizedTime > Start && normalizedTime < End)
-                        hitbox = CreateHitbox();
-                }
-            }
-
-            Hitbox CreateHitbox() {
-                // TODO: Implement
-                return null;
-            }
-
+        void Transition() {
+            for (var i = 0; i < _data.Length; i++)
+                _data[i].OnTransition();
         }
 
-        [SerializeField]
-        private HitboxData[] _hitboxes;
-
-        public void Update(Animator animator, AnimatorStateInfo stateInfo) {
-            float t = stateInfo.normalizedTime;
-            for (var i = 0; i < _hitboxes.Length; i++)
-                _hitboxes[i].Update(t, animator);
-        }
-
-        public void Transition() {
-            for (var i = 0; i < _hitboxes.Length; i++)
-                _hitboxes[i].OnTransition();
-        }
     }
 }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 80365571370aa6c48b906014ef04a7e3
-timeCreated: 1443737723
+timeCreated: 1445212812
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -358,10 +358,21 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'Ctrl_Waist' has translation animation that
+      will be discarded.\n\t'Ctrl_Waist' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\t'Ctrl_Chest' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'Ctrl_FK_Hand_Left001'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Ctrl_Pinkie_Right'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Ctrl_MiddleFinger_Right'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Ctrl_IndexFinger_Right'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Ctrl_MiddleFinger_left'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Ctrl_Neck'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5

@@ -9,7 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 404724}
   - 114: {fileID: 11488736}
-  - 114: {fileID: 11420750}
+  - 114: {fileID: 11413356}
+  - 114: {fileID: 11454796}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: EditorOnly
@@ -29,7 +30,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11420750
+--- !u!114 &11413356
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -43,6 +44,18 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   musicMixerGroup: {fileID: 24392500, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
   sfxMixerGroup: {fileID: 24373952, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
+--- !u!114 &11454796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb2d6abee4122f04d8e9498364b8fcf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeScale: 1
 --- !u!114 &11488736
 MonoBehaviour:
   m_ObjectHideFlags: 1
