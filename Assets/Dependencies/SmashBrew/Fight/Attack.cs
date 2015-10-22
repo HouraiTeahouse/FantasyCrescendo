@@ -28,33 +28,35 @@ namespace Hourai.SmashBrew {
             public float[] TogglePoints;
 
             private Hitbox hitbox;
-            private GameObject hitboxGameObject;
+            private GameObject gameObject;
             private int index;
 
             public void Initialize(Character character, Attack parent, int hitboxIndex) {
-                hitboxGameObject = new GameObject("hb_" + hitboxIndex + "_" + parent._direction + "_" + parent._type + "_" + parent.index);
-                Transform hitboxTransform = hitboxGameObject.transform;
+                gameObject = new GameObject("hb_" + hitboxIndex + "_" + parent._direction + "_" + parent._type + "_" + parent.index);
+                Transform hitboxTransform = gameObject.transform;
                 hitboxTransform.parent = character.GetBone(Bone);
                 hitboxTransform.localPosition = Offset;
                 hitboxTransform.localRotation = Quaternion.identity;
                 hitboxTransform.localScale = Vector3.one;
-                hitboxGameObject.AddComponent<SphereCollider>().radius = Radius;
-                hitbox = hitboxGameObject.AddComponent<Hitbox>();
-                hitboxGameObject.SetActive(false);
+                gameObject.AddComponent<SphereCollider>().radius = Radius;
+                hitbox = gameObject.AddComponent<Hitbox>();
+                gameObject.SetActive(false);
                 Array.Sort(TogglePoints);
             }
 
             public void OnTransition() {
-                hitboxGameObject.SetActive(false);
+                gameObject.SetActive(false);
                 index = -1;
+                Debug.Log(index);
             }
 
             public void Update(float normalizedTime, Animator animator) {
-                if (index >= TogglePoints.Length)
+                Debug.Log(normalizedTime + " " + index + " " + (TogglePoints.Length - 1));
+                if (index >= TogglePoints.Length - 1)
                     return;
                 if(normalizedTime > TogglePoints[index + 1]) {
                     index++;
-                    hitboxGameObject.SetActive(hitboxGameObject.activeSelf);
+                    gameObject.SetActive(!gameObject.activeSelf);
                 }
             }
         }
@@ -106,6 +108,5 @@ namespace Hourai.SmashBrew {
             for (var i = 0; i < _data.Length; i++)
                 _data[i].OnTransition();
         }
-
     }
 }

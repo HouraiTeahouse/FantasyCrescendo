@@ -12,7 +12,6 @@ namespace Hourai.SmashBrew {
         public const int HurtboxLayer = 11;
 
         public enum Type {
-
             Offensive,
             Damageable,
             Invincible,
@@ -20,7 +19,6 @@ namespace Hourai.SmashBrew {
             Shield,
             Absorb,
             Reflective
-
         }
 
         private ParticleSystem _effect;
@@ -187,5 +185,4 @@ namespace Hourai.SmashBrew {
         }
         #endregion
     }
-
 }

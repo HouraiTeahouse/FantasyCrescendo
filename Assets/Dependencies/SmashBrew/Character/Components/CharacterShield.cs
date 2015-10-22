@@ -63,6 +63,8 @@ namespace Hourai.SmashBrew {
             shieldColor.a = _shieldMaterial.color.a;
             render.material.color = shieldColor;
 
+            _shieldObj.SetActive(false);
+
             _currentHP = _maxHP;
         }
 
