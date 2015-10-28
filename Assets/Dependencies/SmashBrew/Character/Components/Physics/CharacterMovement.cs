@@ -16,15 +16,6 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private float _walkSpeed = 3f;
 
-        protected override void OnUpdate() {
-            if (InputSource == null)
-                return;
-
-            Vector2 movement = InputSource.Movement;
-            if(movement.sqrMagnitude > 0.1)
-                Move(movement);
-        }
-
         public void Move(Vector2 direction) {
             if (Restricted || Mathf.Abs(direction.x) < float.Epsilon)
                 return;

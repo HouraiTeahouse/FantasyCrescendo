@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 404724}
   - 114: {fileID: 11488736}
   - 114: {fileID: 11413356}
-  - 114: {fileID: 11454796}
+  - 114: {fileID: 11486768}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: EditorOnly
@@ -44,7 +44,7 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   musicMixerGroup: {fileID: 24392500, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
   sfxMixerGroup: {fileID: 24373952, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
---- !u!114 &11454796
+--- !u!114 &11486768
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -52,10 +52,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 189600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb2d6abee4122f04d8e9498364b8fcf6, type: 3}
+  m_Script: {fileID: -822479833, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeScale: 1
+  m_NetworkPort: 7777
+  m_ServerBindToIP: 0
+  m_ServerBindAddress: 
+  m_NetworkAddress: localhost
+  m_DontDestroyOnLoad: 0
+  m_RunInBackground: 1
+  m_ScriptCRCCheck: 1
+  m_SendPeerInfo: 0
+  m_MaxDelay: .00999999978
+  m_LogLevel: 2
+  m_PlayerPrefab: {fileID: 0}
+  m_AutoCreatePlayer: 1
+  m_PlayerSpawnMethod: 0
+  m_OfflineScene: 
+  m_OnlineScene: 
+  m_SpawnPrefabs: []
+  m_CustomConfig: 0
+  m_MaxConnections: 4
+  m_ConnectionConfig:
+    m_PacketSize: 1500
+    m_FragmentSize: 500
+    m_ResendTimeout: 1200
+    m_DisconnectTimeout: 2000
+    m_ConnectTimeout: 2000
+    m_MinUpdateTimeout: 10
+    m_PingTimeout: 500
+    m_ReducedPingTimeout: 100
+    m_AllCostTimeout: 20
+    m_NetworkDropThreshold: 5
+    m_OverflowDropThreshold: 5
+    m_MaxConnectionAttempt: 10
+    m_AckDelay: 33
+    m_MaxCombinedReliableMessageSize: 100
+    m_MaxCombinedReliableMessageCount: 10
+    m_MaxSentMessageQueueSize: 128
+    m_IsAcksLong: 0
+    m_Channels: []
+  m_Channels: 
+  m_UseSimulator: 0
+  m_SimulatedLatency: 1
+  m_PacketLossPercentage: 0
+  m_MatchHost: mm.unet.unity3d.com
+  m_MatchPort: 443
+  isNetworkActive: 0
+  matchMaker: {fileID: 0}
+  matchName: default
+  matchSize: 4
 --- !u!114 &11488736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
+  _timeScale: 1
   _config: {fileID: 11400000, guid: e8deedefff49636498e1245042b68630, type: 2}
 --- !u!1001 &100100000
 Prefab:

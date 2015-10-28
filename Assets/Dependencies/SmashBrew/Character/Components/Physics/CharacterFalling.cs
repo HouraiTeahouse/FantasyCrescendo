@@ -39,8 +39,8 @@ namespace Hourai.SmashBrew {
 
             Vector3 velocity = Character.Velocity;
             
-            if (!IsFastFalling && InputSource != null && InputSource.Crouch)
-                _fastFall = true;
+            //if (!IsFastFalling && InputSource != null && InputSource.Movement.y < 0)
+            //    _fastFall = true;
 
             if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;

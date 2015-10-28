@@ -9,11 +9,11 @@ namespace Hourai.SmashBrew {
                 return;
 
             var character = col.gameObject.GetComponentInParent<Character>();
-            if (character == null || character.InputSource == null)
-                return;
+            //if (character == null || character.InputSource == null)
+            //    return;
 
-            if (character.InputSource.Crouch)
-                ChangeIgnore(col, true);
+            //if (character.InputSource.Crouch)
+            //    ChangeIgnore(col, true);
         }
 
         private void OnCollisionStay(Collision col) {

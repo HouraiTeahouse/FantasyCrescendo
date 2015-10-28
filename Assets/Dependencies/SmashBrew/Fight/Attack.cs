@@ -47,11 +47,9 @@ namespace Hourai.SmashBrew {
             public void OnTransition() {
                 gameObject.SetActive(false);
                 index = -1;
-                Debug.Log(index);
             }
 
             public void Update(float normalizedTime, Animator animator) {
-                Debug.Log(normalizedTime + " " + index + " " + (TogglePoints.Length - 1));
                 if (index >= TogglePoints.Length - 1)
                     return;
                 if(normalizedTime > TogglePoints[index + 1]) {

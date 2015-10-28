@@ -4,6 +4,7 @@ using System.Collections;
 
 namespace Hourai {
     
+    [AddComponentMenu("")]          //Assure that this cannot be added to a GameObject from the Editor
     internal sealed class TimeBasedAudio : MonoBehaviour {
 
         private AudioSource _audio;
@@ -27,7 +28,7 @@ namespace Hourai {
         }
 
         void Update() {
-            _audio.pitch = Time.timeScale * Pitch;
+            _audio.pitch = Game.TimeScale * Pitch;
             if (DestroyObject && !_audio.isPlaying) {
                 if (DestroyGameObject)
                     Destroy(gameObject);

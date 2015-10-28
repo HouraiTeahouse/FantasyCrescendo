@@ -29,9 +29,9 @@ namespace Hourai.SmashBrew {
 
         protected override void OnBlastZoneExit(Character player) {
             Stock stock = player.GetComponent<Stock>();
-            CharacterPercentDamage damage = player.GetComponent<CharacterPercentDamage>();
+            Damage damage = player.GetComponent<Damage>();
             if (damage)
-                damage.CurrentDamage = damage.DefaultDamage;
+                damage.Reset();
             if (stock) {
                 stock.Lives--;
                 if(stock.Alive)
@@ -102,7 +102,7 @@ namespace Hourai.SmashBrew {
             characterStock.Lives = stock;
             characterStocks.Add(characterStock);
 
-            character.gameObject.AddComponent<CharacterPercentDamage>();
+            character.gameObject.AddComponent<Damage>();
         }
 
     }

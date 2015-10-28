@@ -14,15 +14,6 @@ namespace Hourai.SmashBrew {
             }
         }
 
-        protected ICharacterInput InputSource {
-            get { return Character == null ? null : Character.InputSource; }
-            set {
-                if (Character == null)
-                    return;
-                Character.InputSource = value;
-            }
-        }
-
         protected virtual void Start() {
             Character = GetComponentInParent<Character>();
             if (Character == null) {

@@ -6,7 +6,7 @@ namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    public sealed class CharacterShield : RestrictableCharacterComponent, IDamageable {
+    public sealed class Shield : RestrictableCharacterComponent, IDamageable {
 
         [SerializeField]
         private Material _shieldMaterial;
@@ -68,23 +68,20 @@ namespace Hourai.SmashBrew {
             _currentHP = _maxHP;
         }
 
-        void FixedUpdate() {
-            if (InputSource == null)
-                return;
+        //void FixedUpdate() {
+        //    bool active = InputSource.Shield && Character.IsGrounded && InputSource.Movement == Vector2.zero;
 
-            bool active = InputSource.Shield && Character.IsGrounded && InputSource.Movement == Vector2.zero;
+        //    _shieldObj.SetActive(active);
+        //    _currentHP += (active ? -_depletionRate : _regenerationRate) * Time.fixedDeltaTime;
 
-            _shieldObj.SetActive(active);
-            _currentHP += (active ? -_depletionRate : _regenerationRate) * Time.fixedDeltaTime;
+        //    if (_currentHP < 0)
+        //        ShieldBreak();
+        //    else if (_currentHP > _maxHP)
+        //        _currentHP = _maxHP;
 
-            if (_currentHP < 0)
-                ShieldBreak();
-            else if (_currentHP > _maxHP)
-                _currentHP = _maxHP;
-
-            _shieldTransform.localPosition = Character.MovementCollider.center;
-            _shieldTransform.localScale = Vector3.one * _shieldSize * (_currentHP/_maxHP);
-        }
+        //    _shieldTransform.localPosition = Character.MovementCollider.center;
+        //    _shieldTransform.localScale = Vector3.one * _shieldSize * (_currentHP/_maxHP);
+        //}
 
         void ShieldBreak() {
             if(OnShieldBreak != null)
@@ -92,7 +89,7 @@ namespace Hourai.SmashBrew {
             _currentHP = _resetHP;
         }
 
-        public void Damage(IDamager source) {
+        public void Damage(object source, float damage) {
             
         }
 

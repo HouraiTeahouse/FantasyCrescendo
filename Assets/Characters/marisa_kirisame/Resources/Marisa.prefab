@@ -1925,6 +1925,7 @@ GameObject:
   - 114: {fileID: 11446238}
   - 114: {fileID: 11493130}
   - 114: {fileID: 11400236}
+  - 114: {fileID: 11401256}
   m_Layer: 0
   m_Name: marisa
   m_TagString: Untagged
@@ -4402,6 +4403,17 @@ MonoBehaviour:
   _airSpeed: 1.5
   _dashSpeed: 5
   _walkSpeed: 3
+--- !u!114 &11401256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2b94a0636e46c4cb96bd39320a06df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11406118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4432,7 +4444,7 @@ MonoBehaviour:
   m_Script: {fileID: 1590678366, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animator: {fileID: 0}
+  m_Animator: {fileID: 9524700}
   m_ParameterSendBits: 0
   param0: 
   param1: 
@@ -4531,6 +4543,7 @@ MonoBehaviour:
   - 1.5
   - 1.5
   _facingMode: 0
+  _rootBone: {fileID: 173338}
   airJumpFX: {fileID: 146318, guid: 3ecf1237402b8254faca4ff6e81dd98f, type: 2}
 --- !u!114 &11455734
 MonoBehaviour:
@@ -4582,7 +4595,7 @@ MonoBehaviour:
     i14: 14
     i15: 204
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &11468436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5483,6 +5496,14 @@ Prefab:
       propertyPath: m_CollisionDetection
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPlayerAuthority
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Animator
+      value: 
+      objectReference: {fileID: 9524700}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 181868}

@@ -20,18 +20,11 @@ namespace Hourai.SmashBrew {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     [RequireComponent(typeof(NetworkAnimator), typeof(NetworkTransform))]
-    public partial class Character : HouraiBehaviour, IDamageable, IKnockbackable, IHealable {
+    public partial class Character : HouraiNetworkBehaviour {
 
         private static readonly Type[] RequiredComponents;
 
         private const int PlayerLayer = 9;
-
-        private static readonly int _animGrounded = Animator.StringToHash("grounded");
-        private static readonly int _animHInput = Animator.StringToHash("horizontal input");
-        private static readonly int _animVInput = Animator.StringToHash("vertical input");
-        private static readonly int _animAttack = Animator.StringToHash("attack");
-        private static readonly int _animSpecial = Animator.StringToHash("special");
-        private static readonly int _animJump = Animator.StringToHash("jump");
 
         private enum FacingMode {
             Rotation,
@@ -89,16 +82,14 @@ namespace Hourai.SmashBrew {
         }
 
         public Player Player { get; internal set; }
-        public ICharacterInput InputSource { get; set; }
 
         public bool IsGrounded {
-            get { return _isGrounded; }
+            get { return Animator.GetBool(CharacterAnimVars.Grounded); }
             private set {
                 if (IsGrounded == value)
                     return;
-                _isGrounded = value;
-                Animator.SetBool(_animGrounded, value);
-                if (_isGrounded)
+                Animator.SetBool(CharacterAnimVars.Grounded, value);
+                if (value)
                     JumpCount = 0;
                 if (OnGrounded != null)
                     OnGrounded();
@@ -115,13 +106,6 @@ namespace Hourai.SmashBrew {
             get { return IsGrounded && _isDashing; }
             set { _isDashing = value; }
         }
-        
-        /// <summary>
-        /// A dynamically constructed data structure handling the 
-        /// </summary>
-        public ModifierList<IHealer> Healing {
-            get; private set;
-        }
 
         public ModifierList DamageDealt {
             get; private set;
@@ -131,20 +115,8 @@ namespace Hourai.SmashBrew {
             get; private set;
         }
 
-        public ModifierList<IDamager> DamageTaken {
-            get; private set;
-        }
-
         public ModifierList<IKnockbacker> KnockbackTaken {
             get; private set;
-        }
-
-        private CharacterDamage Damageable {
-            get {
-                if (!_damageable)
-                    _damageable = GetComponent<CharacterDamage>();
-                return _damageable;
-            }
         }
 
         public int BoneCount {
@@ -170,15 +142,23 @@ namespace Hourai.SmashBrew {
         private FacingMode _facingMode;
 
         [SerializeField]
+        private GameObject _rootBone;
+
+        [SerializeField]
         private GameObject airJumpFX;
         #endregion
 
         #region Public Events
+        [SyncEvent]
         public event Action OnGrounded;
+
+        [SyncEvent]
         public event Action OnSpecial;
+
+        [SyncEvent]
         public event Action OnJump;
-        public event Action<IDamager, float> OnDamage;
-        public event Action<IHealer, float> OnHeal;
+
+        [SyncEvent]
         public event Action<Attack.Type, Attack.Direction, int> OnAttack;
         #endregion
 
@@ -189,8 +169,6 @@ namespace Hourai.SmashBrew {
         }
 
         #region Required Components
-        private CharacterDamage _damageable;
-        
         public CapsuleCollider MovementCollider { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
         public Animator Animator { get; private set; }
@@ -199,7 +177,6 @@ namespace Hourai.SmashBrew {
         #region State Variables
         private Vector3 _oldVelocity;
         private float _hitstun;
-        private bool _isGrounded;
         private bool _isDashing;
         #endregion
 
@@ -235,7 +212,6 @@ namespace Hourai.SmashBrew {
             JumpCount++;
 
             // Trigger animation
-            Animator.SetTrigger(_animJump);
 
             if (!IsGrounded && airJumpFX)
                 Instantiate(airJumpFX, transform.position, Quaternion.Euler(90f, 0f, 0f));
@@ -252,62 +228,7 @@ namespace Hourai.SmashBrew {
             return instance;
         }
 
-        public void Damage(IDamager source) {
-            if (source == null || Damageable == null)
-                return;
-
-            float damage = Mathf.Abs(source.BaseDamage);
-
-            if (DamageTaken.Count > 0)
-                damage = DamageTaken.Modifiy(source, damage);
-
-            _damageable.Damage(source, damage);
-
-            if (OnDamage != null)
-                OnDamage(source, damage);
-        }
-
         public void Knockback(IKnockbacker source) {
-            if (source == null)
-                return;
-
-            float angle = Mathf.Deg2Rad * source.Angle;
-            float damage = (Damageable != null) ? Damageable.CurrentDamage : 0f;
-
-            float knockback = source.BaseKnockback + source.Scaling * damage;
-
-            if (KnockbackTaken.Count > 0)
-                knockback = KnockbackTaken.Modifiy(source, knockback);
-
-            // Apply approriate hitstun for the knockback
-            // TODO: Make ratio editable from the Editor
-            _hitstun = 0.4f * knockback / 60f;
-
-            Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-
-            if (source.FlipDirection)
-                direction.x *= -1;
-
-            // Flip the character in the right direction accordingly
-            Facing = direction.x > 0;
-
-            // Apply the physics force to knock the character in that direction
-            Rigidbody.AddForce(direction * knockback);
-        }
-
-        public void Heal(IHealer source) {
-            if (source == null || Damageable == null)
-                return;
-
-            float healing = Mathf.Abs(source.BaseHealing);
-
-            if (Healing.Count > 0)
-                healing = Healing.Modifiy(source, healing);
-
-            _damageable.Heal(source, healing);
-
-            if (OnHeal != null)
-                OnHeal(source, healing);
         }
         
         public Transform GetBone(int boneIndex) {
@@ -343,10 +264,8 @@ namespace Hourai.SmashBrew {
 
             components = new HashSet<CharacterComponent>();
             ground = new HashSet<Collider>();
-
-            DamageTaken = new ModifierList<IDamager>();
+            
             KnockbackTaken = new ModifierList<IKnockbacker>();
-            Healing = new ModifierList<IHealer>();
 
             DamageDealt = new ModifierList();
             KnockbackDealt = new ModifierList();
@@ -364,7 +283,7 @@ namespace Hourai.SmashBrew {
 
             AttachRequiredComponents();
 
-            _bones = new HashSet<Transform>(GetComponentsInChildren<SkinnedMeshRenderer>().SelectMany(smr => smr.bones)).ToArray();
+            _bones = (_rootBone ?? gameObject).GetComponentsInChildren<Transform>();
 
             CharacterAnimationBehaviour[] animationBehaviors = Animator.GetBehaviours<CharacterAnimationBehaviour>();
             foreach (CharacterAnimationBehaviour stateBehaviour in animationBehaviors)
@@ -400,25 +319,6 @@ namespace Hourai.SmashBrew {
 
             if (IsHit)
                 _hitstun -= dt;
-
-            if (InputSource == null)
-                return;
-            
-            Vector2 movement = InputSource.Movement;
-            
-            Animator.SetFloat(_animHInput, Mathf.Abs(movement.x));
-            Animator.SetFloat(_animVInput, movement.y);
-
-            //Ensure that the character is walking in the right direction
-            if ((movement.x > 0 && Facing) ||
-                (movement.x < 0 && !Facing))
-                Facing = !Facing;
-
-            if (InputSource.Jump)
-                Jump();
-            else if (InputSource.Attack)
-                Animator.SetTrigger(_animAttack);
-            Animator.SetBool(_animSpecial, InputSource.Special);
         }
 
         protected virtual void OnAnimatorMove() {

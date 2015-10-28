@@ -7,28 +7,41 @@ namespace Hourai {
     
     public abstract class Game : Singleton<Game> {
 
-        private bool _paused;
-        private float _oldTimeScale;
+        [SerializeField, Range(0f, 5f)]
+        private float _timeScale = 1f;
 
-        public virtual bool Paused {
+        private static bool _paused;
+
+        public static bool Paused {
             get { return _paused; }
             set {
-                if (_paused == value)
-                    return;
-                if (value) {
-                    _oldTimeScale = Time.timeScale;
-                    Time.timeScale = 0f;
-                } else {
-                    Time.timeScale = _oldTimeScale;
-                }
+                bool oldVal = _paused;
                 _paused = value;
+                Time.timeScale = _paused ? 0f : Instance._timeScale;
+                if (oldVal != value && OnPause != null)
+                    OnPause();
+            }
+        }
+
+        public static float TimeScale {
+            get { return Instance ? Instance._timeScale : Time.timeScale; }
+            set {
+                float old = TimeScale;
+                if (Instance)
+                    Instance._timeScale = value;
+                else
+                    Time.timeScale = value;
+                if (old != TimeScale)
+                    OnTimeScaleChange();
             }
         }
 
         // All the things that require an actual instance
         #region Global Callbacks
-
+        
         public static event Action OnGameStart;
+        public static event Action OnPause;
+        public static event Action OnTimeScaleChange;
 
         public static event Action OnUpdate;
         public static event Action OnLateUpdate;
@@ -38,6 +51,11 @@ namespace Hourai {
         public static event Action OnApplicationUnfocused;
         public static event Action OnApplicationExit;
 
+        private void Awake() {
+            Time.timeScale = _timeScale;
+            base.Awake();
+        }
+
         private void Start() {
             if(OnGameStart != null)
                 OnGameStart();
@@ -46,6 +64,7 @@ namespace Hourai {
         private void Update() {
             if(OnUpdate != null)
                 OnUpdate();
+            Time.timeScale = Paused ? 0f : TimeScale;
         }
 
         private void LateUpdate() {

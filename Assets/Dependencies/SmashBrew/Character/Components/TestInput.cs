@@ -3,6 +3,7 @@
 namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
+    [RequireComponent(typeof(PlayerController))]
     public class TestInput : CharacterComponent, ICharacterInput {
 
         private const string HorizontalAxis = "horizontal";
@@ -42,7 +43,7 @@ namespace Hourai.SmashBrew {
 
         protected override void Start() {
             base.Start();
-            InputSource = this;
+            GetComponent<PlayerController>().InputSource = this;
         }
 
     }

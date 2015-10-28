@@ -1,20 +1,25 @@
-﻿namespace Hourai.SmashBrew {
+﻿using UnityEngine;
+
+namespace Hourai.SmashBrew {
     
     public class Invincibility : Status {
 
+        private Damage _damage;
+
         protected override void Start() {
             base.Start();
-            if (Character)
-                Character.DamageTaken.Add(InvincibilityModifier, int.MaxValue);
+            _damage = GetComponent<Damage>();
+            if(_damage)
+                _damage.DefensiveModifiers.Add(InvincibilityModifier, int.MaxValue);
         }
 
         protected override void OnDestroy() {
             base.OnDestroy();
-            if(Character)
-                Character.DamageTaken.Remove(InvincibilityModifier);
+            if(_damage)
+                _damage.DefensiveModifiers.Remove(InvincibilityModifier);
         }
 
-        float InvincibilityModifier(IDamager source, float damage) {
+        float InvincibilityModifier(object source, float damage) {
             return enabled ? damage : 0f;
         }
 

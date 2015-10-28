@@ -5,7 +5,7 @@ namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Collider))]
-    public sealed class Hitbox : MonoBehaviour, IDamager, IKnockbacker {
+    public sealed class Hitbox : MonoBehaviour, IKnockbacker {
 
         public static readonly string Tag = "Hitbox";
         public const int HitboxLayer = 10;
@@ -47,13 +47,8 @@ namespace Hourai.SmashBrew {
 
         private void Awake() {
             Source = GetComponentInParent<Character>();
-            if(Source) {
-                _damageable = Source;
-                _knockbackable = Source;
-            } else {
-               _damageable = GetComponentInParent<IDamageable>();
-                _knockbackable = GetComponentInParent<IKnockbackable>();
-            }
+            _damageable = GetComponentInParent<IDamageable>();
+            _knockbackable = GetComponentInParent<IKnockbackable>();
             _effect = GetComponent<ParticleSystem>();
             _soundEffect = GetComponent<AudioSource>();
 
@@ -93,7 +88,7 @@ namespace Hourai.SmashBrew {
                             break;
                         case Type.Offensive:
                             if(otherHitbox.Damageable != null)
-                                otherHitbox.Damageable.Damage(this);
+                                otherHitbox.Damageable.Damage(this, BaseDamage);
                             if (otherHitbox.Knockbackable != null)
                                 otherHitbox.Knockbackable.Knockback(this);
                             break;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace Hourai.SmashBrew.UI {
 
     [RequireComponent(typeof(NumberText))]
-    public class PlayerDamageDisplay : PlayerGuiComponent<CharacterDamage> {
+    public class PlayerDamageDisplay : PlayerGuiComponent<Damage> {
 
         private Text _text;
         private NumberText _numberText;
