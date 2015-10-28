@@ -1927,7 +1927,7 @@ GameObject:
   - 114: {fileID: 11400236}
   - 114: {fileID: 11401256}
   m_Layer: 0
-  m_Name: marisa
+  m_Name: Marisa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4499,7 +4499,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
+  m_TransformSyncMode: 3
   m_SendInterval: .100000001
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0

@@ -6,7 +6,7 @@ namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("")]
-    public class Damage : CharacterComponent, IDamageable, IHealable {
+    public class Damage : MonoBehaviour, IDamageable, IHealable {
 
         [SerializeField, SyncVar]
         private float _currentDamage = 0f;

@@ -72,11 +72,6 @@ namespace Hourai.SmashBrew {
             }
         }
 
-        public float Gravity {
-            get { return _gravity; }
-            set { _gravity = Mathf.Abs(value); }
-        }
-
         public bool IsHit {
             get { return _hitstun > 0; }
         }
@@ -89,17 +84,9 @@ namespace Hourai.SmashBrew {
                 if (IsGrounded == value)
                     return;
                 Animator.SetBool(CharacterAnimVars.Grounded, value);
-                if (value)
-                    JumpCount = 0;
                 if (OnGrounded != null)
                     OnGrounded();
             }
-        }
-
-        public int JumpCount { get; private set; }
-
-        public int MaxJumpCount {
-            get { return _jumpHeights == null ? 0 : _jumpHeights.Length; }
         }
 
         public bool IsDashing {
@@ -133,27 +120,15 @@ namespace Hourai.SmashBrew {
 
         #region Serialized Variables
         [SerializeField]
-        private float _gravity = 9.86f;
-
-        [SerializeField]
-        private float[] _jumpHeights = { 1.5f, 1.5f };
-
-        [SerializeField]
         private FacingMode _facingMode;
 
         [SerializeField]
         private GameObject _rootBone;
-
-        [SerializeField]
-        private GameObject airJumpFX;
         #endregion
 
         #region Public Events
         [SyncEvent]
         public event Action OnGrounded;
-
-        [SyncEvent]
-        public event Action OnSpecial;
 
         [SyncEvent]
         public event Action OnJump;
@@ -179,53 +154,11 @@ namespace Hourai.SmashBrew {
         private float _hitstun;
         private bool _isDashing;
         #endregion
-
-        #region Physics Properties
-        public Vector3 Velocity {
-            get { return Rigidbody.velocity; }
-            set { Rigidbody.velocity = value; }
-        }
-
-        public float Mass {
-            get { return Rigidbody.mass; }
-            set { Rigidbody.mass = value; }
-        }
-        #endregion
-
+        
         #region Public Action Methods
         public void Attack(Attack.Type type, Attack.Direction direction, int index) {
             if(OnAttack != null)
                 OnAttack(type, direction, index);
-        }
-        
-        public void Jump() {
-            if (JumpCount >= MaxJumpCount)//Restricted)
-                return;
-
-            float g = Gravity;
-
-            // Apply upward force to jump
-            Vector3 temp = Velocity;
-            temp.y = Mathf.Sqrt(2 * g * _jumpHeights[JumpCount]);
-            Velocity = temp;
-
-            JumpCount++;
-
-            // Trigger animation
-
-            if (!IsGrounded && airJumpFX)
-                Instantiate(airJumpFX, transform.position, Quaternion.Euler(90f, 0f, 0f));
-
-            if (OnJump != null)
-                OnJump();
-        }
-
-        public T ApplyStatus<T>(float duration = -1f) where T : Status {
-            T instance = GetComponent<T>();
-            if(instance == null)
-                instance = gameObject.AddComponent<T>();
-            instance.StartStatus(duration);
-            return instance;
         }
 
         public void Knockback(IKnockbacker source) {
@@ -244,25 +177,12 @@ namespace Hourai.SmashBrew {
                 return baseDamage;
             return DamageDealt.Modifiy(baseDamage);
         }
-
-        internal void AddCharacterComponent(CharacterComponent component) {
-            if (component == null)
-                return;
-            components.Add(component);
-        }
-
-        internal void RemoveCharacterComponent(CharacterComponent component) {
-            if (component == null)
-                return;
-            components.Remove(component);
-        }
         #endregion
 
         #region Unity Callbacks
         protected virtual void Awake() {
             gameObject.tag = SmashGame.Config.PlayerTag;
-
-            components = new HashSet<CharacterComponent>();
+            
             ground = new HashSet<Collider>();
             
             KnockbackTaken = new ModifierList<IKnockbacker>();
@@ -285,9 +205,8 @@ namespace Hourai.SmashBrew {
 
             _bones = (_rootBone ?? gameObject).GetComponentsInChildren<Transform>();
 
-            CharacterAnimationBehaviour[] animationBehaviors = Animator.GetBehaviours<CharacterAnimationBehaviour>();
-            foreach (CharacterAnimationBehaviour stateBehaviour in animationBehaviors)
-                stateBehaviour.Initialize(this);
+            // Initialize all animation behaviours
+            BaseAnimationBehaviour.InitializeAll(Animator);
         }
 
         protected virtual void OnEnable() {
@@ -313,7 +232,6 @@ namespace Hourai.SmashBrew {
         /// </summary>
         protected virtual void FixedUpdate() {
             float dt = Time.fixedDeltaTime;
-            Rigidbody.AddForce(-Vector3.up*_gravity);
 
             _oldVelocity = Rigidbody.velocity;
 

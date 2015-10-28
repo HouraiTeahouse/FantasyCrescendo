@@ -2,7 +2,7 @@
 
 namespace Hourai.SmashBrew.UI {
     
-    public abstract class PlayerGuiComponent<T> : MonoBehaviour, IPlayerGUIComponent where T : CharacterComponent {
+    public abstract class PlayerGuiComponent<T> : MonoBehaviour, IPlayerGUIComponent where T : Component {
         
         protected T Component { get; private set; }
         protected Character Character { get; private set; }

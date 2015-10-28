@@ -1,11 +1,28 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Timers;
+using System;
 
 namespace Hourai.SmashBrew {
     
-    public abstract class Status : CharacterComponent {
+    public abstract class Status : MonoBehaviour {
         
+        public static T Apply<T>(GameObject target, float duration = -1f) where T : Status
+        {
+            if (!target)
+                throw new ArgumentNullException("target");
+            T instance = target.GetComponent<T>();
+            if (instance == null)
+                instance = target.AddComponent<T>();
+            instance.StartStatus(duration);
+            return instance;
+        }
+
+        public static T Apply<T>(Component target, float duration = -1f) where T : Status
+        {
+            if (!target)
+                throw new ArgumentNullException("target");
+            return Apply<T>(target.gameObject, duration);
+        }
+
         private float _duration = Mathf.Infinity;
 
         public float EllapsedTime { get; private set; }
@@ -23,8 +40,9 @@ namespace Hourai.SmashBrew {
         }
 
         void FixedUpdate() {
-            EllapsedTime += FixedDeltaTime;
-            OnStatusUpdate(FixedDeltaTime);
+            float dt = Time.fixedDeltaTime;
+            EllapsedTime += dt;
+            OnStatusUpdate(dt);
             enabled = EllapsedTime < Duration;
         }
 

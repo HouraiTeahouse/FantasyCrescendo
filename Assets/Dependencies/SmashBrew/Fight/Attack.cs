@@ -3,7 +3,7 @@ using System;
 
 namespace Hourai.SmashBrew {
 
-    public sealed class Attack : CharacterAnimationBehaviour {
+    public sealed class Attack : BaseAnimationBehaviour<Character> {
 
         public enum Type {
             Normal,
@@ -71,23 +71,17 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private HitboxData[] _data;
 
-        private Character _character;
-
-        public override void Initialize(Character character) {
-            if (!character)
+        public override void Initialize(GameObject gameObject) {
+            base.Initialize(gameObject);
+            if (!Target)
                 return;
-            _character = character;
             for (var i = 0; i < _data.Length; i++)
-                _data[i].Initialize(character, this, i);
+                _data[i].Initialize(Target, this, i);
         }
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-            if (!_character) {
-                Destroy(this);
-                return;
-            }
-            // Set any events
-            _character.Attack(_type, _direction, index);
+            if (Target)
+               Target.Attack(_type, _direction, index);
 
             Transition();
         }
