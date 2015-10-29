@@ -38,7 +38,7 @@ namespace Hourai.SmashBrew {
             if (target == null)
                 throw new ArgumentNullException("target");
             RespawnPlatform platform = Instantiate(Config.RepsawnPlatformPrefab);
-            platform.transform.position = target.position;
+            platform.transform.position = target.transform.position;
             platform.Character = target;
         }
 

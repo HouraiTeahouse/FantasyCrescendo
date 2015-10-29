@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.Networking;
+using System;
 
 namespace Hourai.SmashBrew
 {
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(Grounding))]
     public sealed class Jumping : RestrictableCharacterComponent
     {
         [SerializeField]
@@ -14,7 +15,10 @@ namespace Hourai.SmashBrew
         [SerializeField]
         private GameObject airJumpFX;
 
+        public event Action OnJump;
+
         private Rigidbody _rigidbody;
+        private Grounding _ground;
 
         public int JumpCount { get; private set; }
 
@@ -26,24 +30,18 @@ namespace Hourai.SmashBrew
         void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-            if (Character)
-                Character.OnGrounded += OnGrounded;
+            _ground = GetComponent<Grounding>();
+            _ground.OnGrounded += OnGrounded;
         }
 
         void OnDestroy()
         {
-            if (Character)
-                Character.OnGrounded -= OnGrounded;
+            _ground.OnGrounded -= OnGrounded;
         }
 
         void OnGrounded()
         {
-            if (Character && Character.IsGrounded)
+            if(_ground.IsGrounded)
                 JumpCount = 0;
         }
 
@@ -59,7 +57,7 @@ namespace Hourai.SmashBrew
 
             // Trigger animation
 
-            if (!Character.IsGrounded && airJumpFX)
+            if (!_ground.IsGrounded && airJumpFX)
                 Instantiate(airJumpFX, transform.position, Quaternion.Euler(90f, 0f, 0f));
 
             if (OnJump != null)

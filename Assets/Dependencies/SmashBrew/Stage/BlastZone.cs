@@ -30,7 +30,8 @@ namespace Hourai.SmashBrew {
                 return;
             }
 
-            if (col.ClosestPointOnBounds(characterScript.position) == characterScript.position)
+            Vector3 position = characterScript.transform.position;
+            if (col.ClosestPointOnBounds(position) == position)
                 return;
 
             OnBlastZoneExit(characterScript);

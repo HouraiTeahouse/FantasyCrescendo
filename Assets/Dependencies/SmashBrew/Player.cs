@@ -66,8 +66,8 @@ namespace Hourai.SmashBrew {
             if (prefab == null)
                 return null;
             SpawnedCharacter = UnityEngine.Object.Instantiate(prefab);
-            SpawnedCharacter.position = pos;
-            SpawnedCharacter.rotation = rot;
+            SpawnedCharacter.transform.position = pos;
+            SpawnedCharacter.transform.rotation = rot;
             SpawnedCharacter.Player = this;
             return SpawnedCharacter;
         }

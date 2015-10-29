@@ -8,10 +8,10 @@ namespace Hourai.SmashBrew {
     [AddComponentMenu("")]
     public class Damage : MonoBehaviour, IDamageable, IHealable {
 
-        [SerializeField, SyncVar]
+        [SerializeField]
         private float _currentDamage = 0f;
 
-        [SerializeField, SyncVar]
+        [SerializeField]
         private float _defaultDamage = 0f;
 
         public float CurrentDamage {
@@ -38,11 +38,8 @@ namespace Hourai.SmashBrew {
         public ModifierList<object> HealingModifiers {
             get; private set;
         }
-
-        [SyncEvent]
+        
         public event Action<object, float> OnDamage;
-
-        [SyncEvent]
         public event Action<object, float> OnHeal;
 
         void Awake() {

@@ -23,8 +23,8 @@ namespace Hourai.SmashBrew {
 
         protected virtual void OnBlastZoneExit(Character player) {
             Transform respawnPos = Stage.RespawnPosition;
-            player.position = respawnPos.position;
-            player.rotation = respawnPos.rotation;
+            player.transform.position = respawnPos.position;
+            player.transform.rotation = respawnPos.rotation;
             SmashGame.CreateRespawnPlatform(player);
         }
 

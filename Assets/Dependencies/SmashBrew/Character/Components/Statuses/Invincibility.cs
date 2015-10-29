@@ -2,6 +2,8 @@
 
 namespace Hourai.SmashBrew {
     
+    [DisallowMultipleComponent]
+    [RequiredCharacterComponent]
     public class Invincibility : Status {
 
         private Damage _damage;

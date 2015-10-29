@@ -5,7 +5,8 @@ namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    public class CharacterFalling : CharacterComponent {
+    [RequireComponent(typeof(Rigidbody), typeof(Grounding))]
+    public class Falling : MonoBehaviour {
 
         [SerializeField]
         private float _fastFallSpeed = 9f;
@@ -13,31 +14,31 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private float _maxFallSpeed = 5f;
 
+        private Rigidbody _rigidbody;
+        private Grounding _grounded;
         private bool _fastFall;
 
         public bool IsFastFalling {
-            get { return Character && !Character.IsGrounded && _fastFall; }
+            get { return _grounded.IsGrounded && _fastFall; }
         }
 
         public float FallSpeed {
             get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
-        protected override void Start() {
-            base.Start();
-            Character.OnGrounded += OnGrounded;
+        void Awake() {
+            _rigidbody = GetComponent<Rigidbody>();
+            _grounded = GetComponent<Grounding>();
+            _grounded.OnGrounded += OnGrounded;
         }
 
-        private void OnGrounded() {
-            if(Character.IsGrounded)
+        void OnGrounded() {
+            if(_grounded.IsGrounded)
                _fastFall = false;
         }
 
-        private void FixedUpdate() {
-            if (Character == null)
-                return;
-
-            Vector3 velocity = Character.Velocity;
+        void FixedUpdate() {
+            Vector3 velocity = _rigidbody.velocity;
             
             //if (!IsFastFalling && InputSource != null && InputSource.Movement.y < 0)
             //    _fastFall = true;
@@ -45,7 +46,7 @@ namespace Hourai.SmashBrew {
             if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;
 
-            Character.Velocity = velocity;
+            _rigidbody.velocity = velocity;
         }
 
     }

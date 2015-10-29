@@ -24,7 +24,7 @@ namespace Hourai.SmashBrew {
                 if (!_character)
                     return;
 
-                _character.Velocity = Vector3.zero;
+                _character.Rigidbody.velocity = Vector3.zero;
                 _invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
             }
         }
@@ -37,7 +37,7 @@ namespace Hourai.SmashBrew {
             _timer += Util.dt;
 
             // TODO: Find better alternative to this hack
-            if (_timer > _platformTimer || (Character.Velocity.magnitude > 0.5f)) {
+            if (_timer > _platformTimer || (Character.Rigidbody.velocity.magnitude > 0.5f)) {
                 _invincibility.Duration -= _platformTimer;
                 Destroy(gameObject);
             }
