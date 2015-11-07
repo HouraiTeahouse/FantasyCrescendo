@@ -10,9 +10,8 @@ namespace Hourai.SmashBrew {
 
         private CharacterKnockback _knockback;
 
-        protected override void Awake() {
+        protected void Awake() {
             _knockback = GetComponent<CharacterKnockback>();
-            base.Awake();
         }
 
     }

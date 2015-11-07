@@ -35,7 +35,7 @@ namespace Hourai.SmashBrew {
             }
         }
 
-        void Awake() {
+        protected virtual void Awake() {
             enabled = false;
         }
 

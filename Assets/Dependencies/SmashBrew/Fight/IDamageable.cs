@@ -1,4 +1,6 @@
-﻿namespace Hourai.SmashBrew {
+﻿using UnityEngine;
+
+namespace Hourai.SmashBrew {
 
     public interface IDamageable {
 
@@ -14,16 +16,7 @@
 
     public interface IKnockbackable {
 
-        void Knockback(IKnockbacker source);
-
-    }
-
-    public interface IKnockbacker {
-
-        bool FlipDirection { get; }
-        float Angle { get; }
-        float BaseKnockback { get; }
-        float Scaling { get; }
+        void Knockback(Vector2 knockback);
 
     }
 

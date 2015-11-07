@@ -53,10 +53,6 @@ namespace Hourai.SmashBrew {
             get; private set;
         }
 
-        public ModifierList<IKnockbacker> KnockbackTaken {
-            get; private set;
-        }
-
         public int BoneCount {
             get { return _bones.Length; }
         }
@@ -82,9 +78,6 @@ namespace Hourai.SmashBrew {
         #endregion
         
         #region Public Action Methods
-        public void Knockback(IKnockbacker source) {
-        }
-        
         public Transform GetBone(int boneIndex) {
             if (boneIndex < 0 || boneIndex >= BoneCount)
                 return transform;
@@ -108,8 +101,6 @@ namespace Hourai.SmashBrew {
         #region Unity Callbacks
         protected virtual void Awake() {
             Reset();
-            
-            KnockbackTaken = new ModifierList<IKnockbacker>();
 
             DamageDealt = new ModifierList();
             KnockbackDealt = new ModifierList();

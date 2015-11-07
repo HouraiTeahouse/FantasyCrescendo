@@ -5,40 +5,27 @@ namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    [RequireComponent(typeof(Rigidbody), typeof(Grounding))]
+    [RequireComponent(typeof(Rigidbody), typeof(Grounding), typeof(Facing))]
     public class Movement : RestrictableCharacterComponent {
 
-        [SerializeField]
-        private float _airSpeed = 3f;
-
-        [SerializeField]
-        private float _dashSpeed = 5f;
-
-        [SerializeField]
-        private float _walkSpeed = 3f;
-
         private Rigidbody _rigidbody;
-        private Grounding _ground;
+        private Facing _facing;
 
         void Awake() {
             _rigidbody = GetComponent<Rigidbody>();
-            _ground = GetComponent<Grounding>();
+            _facing = GetComponent<Facing>();
         }
 
-        public void Move(Vector2 direction) {
-            if (Restricted || Mathf.Abs(direction.x) < float.Epsilon)
+        public void Move(float speed) {
+            if (Restricted)
                 return;
 
             Vector3 vel = _rigidbody.velocity;
 
-            if (_ground.IsGrounded) {
-               // if (Character.IsDashing)
-               //     vel.x = _dashSpeed;
-               // else
-                    vel.x = _walkSpeed;
-            } else
-                vel.x = _airSpeed;
-            vel.x = Util.MatchSign(vel.x, direction.x);
+            vel.x = speed;
+
+            if (_facing.Direction)
+                speed *= -1;
 
             _rigidbody.velocity = vel;
         }
