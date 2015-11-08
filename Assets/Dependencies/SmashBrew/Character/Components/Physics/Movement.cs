@@ -24,8 +24,8 @@ namespace Hourai.SmashBrew {
 
             vel.x = speed;
 
-            if (_facing.Direction)
-                speed *= -1;
+            if (_facing && _facing.Direction)
+                vel.x *= -1;
 
             _rigidbody.velocity = vel;
         }

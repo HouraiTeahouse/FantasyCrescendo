@@ -26,6 +26,9 @@ namespace Hourai.SmashBrew {
         public void Knockback(Vector2 knockback) {
             if (!enabled)
                 return;
+            //TODO: Reimplement
+            //if (_defensiveModifiers.Count > 0)
+            //    knockback = _defensiveModifiers.Modifiy(knockback);
             
 
         }

@@ -105,7 +105,12 @@ namespace Hourai.SmashBrew {
             DamageDealt = new ModifierList();
             KnockbackDealt = new ModifierList();
 
-            _bones = (_rootBone ?? gameObject).GetComponentsInChildren<Transform>();
+            GameObject root = gameObject;
+
+            if (_rootBone)
+                root = _rootBone;
+
+            _bones = root.GetComponentsInChildren<Transform>();
 
             // Initialize all animation behaviours
             BaseAnimationBehaviour.InitializeAll(Animator);
