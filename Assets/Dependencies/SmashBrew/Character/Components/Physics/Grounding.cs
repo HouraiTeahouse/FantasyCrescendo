@@ -29,6 +29,8 @@ namespace Hourai.SmashBrew {
 
         void Awake() {
             ground = new HashSet<Collider>();
+            _movementCollider = GetComponent<CapsuleCollider>();
+            _animator = GetComponent<Animator>();
         }
 
         void OnCollisionEnter(Collision col) {

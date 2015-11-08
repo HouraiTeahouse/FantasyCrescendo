@@ -23,11 +23,12 @@ namespace Hourai.SmashBrew {
             _defensiveModifiers = new ModifierList<Vector2>();
         }
 
-        public void Knockback(object source, Vector2 knockback) {
+        public void Knockback(Vector2 knockback) {
             if (!enabled)
                 return;
-            if (_defensiveModifiers.Count > 0)
-                knockback = _defensiveModifiers.Modifiy(knockback);
+            //TODO: Reimplement
+            //if (_defensiveModifiers.Count > 0)
+            //    knockback = _defensiveModifiers.Modifiy(knockback);
             
 
         }

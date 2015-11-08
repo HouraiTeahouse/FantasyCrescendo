@@ -5,7 +5,7 @@ namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Collider))]
-    public sealed class Hitbox : MonoBehaviour, IKnockbacker {
+    public sealed class Hitbox : MonoBehaviour {
 
         public static readonly string Tag = "Hitbox";
         public const int HitboxLayer = 10;
@@ -90,7 +90,8 @@ namespace Hourai.SmashBrew {
                             if(otherHitbox.Damageable != null)
                                 otherHitbox.Damageable.Damage(this, BaseDamage);
                             if (otherHitbox.Knockbackable != null)
-                                otherHitbox.Knockbackable.Knockback(this);
+                                //TODO: Fix
+                                otherHitbox.Knockbackable.Knockback(Vector2.zero);
                             break;
                         default:
                             break;
