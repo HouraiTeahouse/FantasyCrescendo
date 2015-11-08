@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using UnityConstants;
 using UnityEngine;
 
 namespace Hourai {
@@ -117,56 +118,33 @@ namespace Hourai {
         }
 
         #endregion
-    }
-
-    public abstract class ConfigurableGame<T> : Game where T : GameConfig {
-
-        [SerializeField]
-        private T _config;
-
-        public static T Config {
-            get { return Instance == null ? null : ((ConfigurableGame<T>)Instance)._config; }
-        }
-
-        protected override void Awake() {
-            base.Awake();
-            if (_config)
-                return;
-            T[] configs = Resources.FindObjectsOfTypeAll<T>();
-            if (configs.Length > 0)
-                _config = configs[0];
-            else {
-                Debug.LogError(
-                               "Game singledton does not have an assigned Config and no configs are found in resources");
-            }
-        }
 
         public static bool IsPlayer(Component obj) {
-            return obj.CompareTag(Config.PlayerTag);
+            return obj.CompareTag(Tags.Player);
         }
-        
+
         public static Transform[] GetRespawnPoints() {
-            return GameObject.FindGameObjectsWithTag(Config.RespawnTag).Select(go => go.transform).ToArray();
+            return GameObject.FindGameObjectsWithTag(Tags.Respawn).Select(go => go.transform).ToArray();
         }
-        
+
         public static GameObject FindPlayer() {
-            return GameObject.FindGameObjectWithTag(Config.PlayerTag);
+            return GameObject.FindGameObjectWithTag(Tags.Player);
         }
 
         public static GameObject[] FindPlayers() {
-            return GameObject.FindGameObjectsWithTag(Config.PlayerTag);
+            return GameObject.FindGameObjectsWithTag(Tags.Player);
         }
 
         public static GameObject FindRespawn() {
-            return GameObject.FindGameObjectWithTag(Config.RespawnTag);
+            return GameObject.FindGameObjectWithTag(Tags.Respawn);
         }
 
         public static GameObject[] FindRespawns() {
-            return GameObject.FindGameObjectsWithTag(Config.RespawnTag);
+            return GameObject.FindGameObjectsWithTag(Tags.Respawn);
         }
 
         public static GameObject FindGUI() {
-            return GameObject.FindGameObjectWithTag(Config.GUITag);
+            return GameObject.FindGameObjectWithTag(Tags.GUI);
         }
     }
 

@@ -2,7 +2,7 @@
 
 namespace Hourai.SmashBrew {
     
-    public class SmashConfig : GameConfig {
+    public class GameConfig : ScriptableObject {
 
         private Resource<GameObject> _Respawn;
 
@@ -10,8 +10,6 @@ namespace Hourai.SmashBrew {
         private string _respawnPlatformPrefab;
         
         public Color[] PlayerColors;
-        public LayerMask HurtboxLayers;
-        public string spawnTag;
 
         public RespawnPlatform RepsawnPlatformPrefab {
             get { return _Respawn.Load().GetComponent<RespawnPlatform>(); }

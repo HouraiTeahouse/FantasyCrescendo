@@ -8,24 +8,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45d63a0fef2e38a40b0aeb78a0688cc5, type: 3}
+  m_Script: {fileID: 0}
   m_Name: Config
-  m_EditorClassIdentifier: 
-  _playerTag: Player
-  _respawnTag: Respawn
-  _guiTag: GUI
+  m_EditorClassIdentifier: Assembly-CSharp:Hourai.SmashBrew:GameConfig
   _respawnPlatformPrefab: Prefabs/Respawn Platform
-  PlayerColors:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 1, g: 1, b: 0, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  HurtboxLayers:
-    serializedVersion: 2
-    m_Bits: 2048
-  spawnTag: Spawn
+  PlayerColors: []
   CPUColor: {r: .5, g: .5, b: .5, a: 1}
-  DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: .125490203}
-  IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: .125490203}
-  InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: .125490203}
-  OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: .125490203}
+  DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
+  IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}
+  InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
+  OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}
