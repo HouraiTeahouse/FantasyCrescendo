@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using UnityConstants;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -7,23 +8,30 @@ namespace Hourai.SmashBrew {
     public static class SmashExtensions {
 
         public static bool IsPlayer(this GameObject gameObj) {
-            return gameObj && gameObj.CompareTag(SmashGame.Config.PlayerTag);
+            return gameObj && gameObj.CompareTag(Tags.Player);
         }
 
         public static bool IsPlayer(this Component obj) {
-            return obj && obj.CompareTag(SmashGame.Config.PlayerTag);
+            return obj && obj.CompareTag(Tags.Player);
         }
 
         public static bool IsHurtbox(this Collider collider) {
-            return collider && ((1 << collider.gameObject.layer) & SmashGame.Config.HurtboxLayers) != 0;
+            return collider && collider.gameObject.layer == Layers.Hurtbox;
         }
 
     }
 
-    public class SmashGame : ConfigurableGame<SmashConfig> {
+    public class SmashGame : Game {
+
+        [SerializeField]
+        private GameConfig _config;
+
+        public static GameConfig Config {
+            get { return Instance ? (Instance as SmashGame)._config : null;  }
+        }
 
         public static Transform[] GetSpawnPoints() {
-            return GetPoints(Config.spawnTag);
+            return GetPoints(Tags.Spawn);
         }
 
         private static Transform[] GetPoints(string tag) {

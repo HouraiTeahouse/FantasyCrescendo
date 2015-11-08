@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Linq;
-using System.Collections.Generic;
+using UnityConstants;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -23,8 +23,6 @@ namespace Hourai.SmashBrew {
     public partial class Character : NetworkBehaviour {
 
         private static readonly Type[] RequiredComponents;
-
-        private const int PlayerLayer = 9;
 
         static Character() {
             var componentType = typeof(Component);
@@ -120,8 +118,8 @@ namespace Hourai.SmashBrew {
             MovementCollider = GetComponent<CapsuleCollider>();
             MovementCollider.isTrigger = false;
 
-            gameObject.tag = SmashGame.Config.PlayerTag;
-            gameObject.layer = PlayerLayer;
+            gameObject.tag = Tags.Player;
+            gameObject.layer = Layers.Character;
 
             Rigidbody = GetComponent<Rigidbody>();
             Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;

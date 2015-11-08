@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityConstants;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -6,10 +7,6 @@ namespace Hourai.SmashBrew {
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Collider))]
     public sealed class Hitbox : MonoBehaviour {
-
-        public static readonly string Tag = "Hitbox";
-        public const int HitboxLayer = 10;
-        public const int HurtboxLayer = 11;
 
         public enum Type {
             Offensive,
@@ -52,14 +49,14 @@ namespace Hourai.SmashBrew {
             _effect = GetComponent<ParticleSystem>();
             _soundEffect = GetComponent<AudioSource>();
 
-            gameObject.tag = Tag;
+            gameObject.tag = Tags.Hitbox;
             switch(type) {
                 case Type.Damageable:
                 case Type.Shield:
-                    gameObject.layer = HurtboxLayer;
+                    gameObject.layer = Layers.Hurtbox;
                     break;
                 default:
-                    gameObject.layer = HitboxLayer;
+                    gameObject.layer = Layers.Hitbox;
                     break;
             }
 
@@ -74,7 +71,7 @@ namespace Hourai.SmashBrew {
         }
         
         void OnTriggerEnter(Collider other) {
-            if (!other.CompareTag(Tag))
+            if (!other.CompareTag(Tags.Hitbox))
                 return;
             Hitbox otherHitbox = other.GetComponent<Hitbox>();
             if (otherHitbox == null)
