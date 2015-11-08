@@ -16,8 +16,6 @@ namespace Hourai {
             Power = pow;
         }
 
-        public void Update() {}
-
         public float GetValue() {
             return Mathf.Pow(BaseAxis.GetValue(), Power);
         }

@@ -35,8 +35,6 @@ namespace Hourai {
             JoyNum = joyNum;
         }
 
-        public void Update() {}
-
         public float GetValue() {
             return UnityEngine.Input.GetAxisRaw(_axisString);
         }
