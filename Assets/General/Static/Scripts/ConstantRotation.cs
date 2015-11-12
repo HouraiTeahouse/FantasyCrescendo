@@ -14,7 +14,7 @@ namespace Hourai {
 
         // Update is called once per frame
         private void Update() {
-            transform.Rotate(RotationPerSecond * Util.dt);
+            transform.Rotate(RotationPerSecond * Time.deltaTime);
         }
 
     }

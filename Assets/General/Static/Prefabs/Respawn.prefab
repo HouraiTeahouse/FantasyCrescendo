@@ -33,7 +33,7 @@ GameObject:
   - 114: {fileID: 11442910}
   - 114: {fileID: 11496782}
   m_Layer: 0
-  m_Name: Respawn Platform
+  m_Name: Respawn Platform 2
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ GameObject:
   - 114: {fileID: 11440012}
   - 114: {fileID: 11498638}
   m_Layer: 0
-  m_Name: Respawn Platform
+  m_Name: Respawn Platform 4
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +247,7 @@ GameObject:
   - 114: {fileID: 11466820}
   - 114: {fileID: 11467738}
   m_Layer: 0
-  m_Name: Respawn Platform
+  m_Name: Respawn Platform 3
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,7 +285,7 @@ GameObject:
   - 114: {fileID: 11487478}
   - 114: {fileID: 11437204}
   m_Layer: 0
-  m_Name: Respawn Platform
+  m_Name: Respawn Platform 1
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2042,8 +2042,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88851dc1741cb0a4692b05b5e10fd1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invicibilityTimer: 0
-  _platformTimer: 0
+  _invicibilityTimer: 5
+  _platformTimer: 3
 --- !u!114 &11412742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2112,8 +2112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88851dc1741cb0a4692b05b5e10fd1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invicibilityTimer: 0
-  _platformTimer: 0
+  _invicibilityTimer: 5
+  _platformTimer: 3
 --- !u!114 &11462700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2125,8 +2125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88851dc1741cb0a4692b05b5e10fd1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invicibilityTimer: 0
-  _platformTimer: 0
+  _invicibilityTimer: 5
+  _platformTimer: 3
 --- !u!114 &11464224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2138,8 +2138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88851dc1741cb0a4692b05b5e10fd1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invicibilityTimer: 0
-  _platformTimer: 0
+  _invicibilityTimer: 5
+  _platformTimer: 3
 --- !u!114 &11466820
 MonoBehaviour:
   m_ObjectHideFlags: 1

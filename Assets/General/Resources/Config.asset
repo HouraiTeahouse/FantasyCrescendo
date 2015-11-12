@@ -8,15 +8,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 8e06ba603e8092b4f8ff52df06fdcbf3, type: 3}
   m_Name: Config
-  m_EditorClassIdentifier: Assembly-CSharp:Hourai.SmashBrew:GameConfig
-  _respawnPlatformPrefab: 
+  m_EditorClassIdentifier: 
   PlayerColors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 1, g: .921568632, b: .0156862754, a: 1}
   CPUColor: {r: .5, g: .5, b: .5, a: 1}
   DamageableHitboxColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
   IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}

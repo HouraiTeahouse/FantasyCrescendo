@@ -5,9 +5,6 @@ namespace Hourai.SmashBrew {
     public class Config : ScriptableObject {
 
         #region Serialized Fields
-        
-        [SerializeField]
-        private string _respawnPlatformPrefab;
 
         [SerializeField]
         private Color[] PlayerColors = { Color.red, Color.blue, Color.green, Color.yellow };
@@ -67,16 +64,6 @@ namespace Hourai.SmashBrew {
                 default:
                     return Color.magenta;
             }
-        }
-
-        private Resource<GameObject> _Respawn;
-
-        public RespawnPlatform RepsawnPlatformPrefab {
-            get { return _Respawn.Load().GetComponent<RespawnPlatform>(); }
-        }
-
-        void OnEnable() {
-            _Respawn = new Resource<GameObject>(_respawnPlatformPrefab);
         }
         
     }

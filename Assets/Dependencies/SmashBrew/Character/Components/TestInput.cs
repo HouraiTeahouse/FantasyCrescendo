@@ -15,8 +15,10 @@ namespace Hourai.SmashBrew {
 
         public Vector2 Movement {
             get {
-                int x = Util.Sign((int) Input.GetAxisRaw(HorizontalAxis));
-                int y = Util.Sign((int) Input.GetAxisRaw(VerticalAxis));
+                float x = Input.GetAxisRaw(HorizontalAxis);
+                float y = Input.GetAxisRaw(VerticalAxis);
+                x = x/Mathf.Abs(x);
+                y = y/Mathf.Abs(y);
                 return new Vector2(x, y);
             }
         }

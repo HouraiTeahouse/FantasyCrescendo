@@ -42,6 +42,7 @@ namespace Hourai.SmashBrew {
 
         private void LateUpdate() {
             var count = 0;
+            float dt = Time.deltaTime;
 
             //Find the Bounds in which
             Vector3 sum = Vector3.zero;
@@ -76,8 +77,8 @@ namespace Hourai.SmashBrew {
             targetPosition.z = transform.position.z;
 
             // Lerp both the FOV and the position at the desired speeds
-            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, targetFOV, Util.dt*cameraSpeed);
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Util.dt*cameraSpeed);
+            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, targetFOV, dt * cameraSpeed);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, dt * cameraSpeed);
         }
 
         public static void AddTarget(Component target) {

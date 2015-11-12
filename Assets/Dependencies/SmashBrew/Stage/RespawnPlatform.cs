@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
@@ -14,28 +15,20 @@ namespace Hourai.SmashBrew {
         private Invincibility _invincibility;
         private float _timer;
 
-        public Character Character {
-            get { return _character; }
-            set {
-                if (value == null)
-                    return;
-
-                _character = value;
-                if (!_character)
-                    return;
-
-                _character.Rigidbody.velocity = Vector3.zero;
-                _invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
-            }
+        void Start() {
+            gameObject.SetActive(false);
         }
 
-        void Awake() {
-            var respawn = FindObjectOfType<Respawn>();
-            if (!respawn) {
-                Destroy(gameObject);
-                return;
-            }
-            respawn.AddRespawnPoint(this);
+        public void RespawnPlayer(Character player) {
+            if(!player)
+                throw new ArgumentNullException("player");
+            _character = player;
+            _character.Rigidbody.velocity = Vector3.zero;
+            _character.transform.position = transform.position;
+            _character.transform.rotation = Quaternion.identity;
+            _invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
+            _timer = 0f;
+            gameObject.SetActive(true);
         }
 
         // Update is called once per frame
@@ -43,10 +36,10 @@ namespace Hourai.SmashBrew {
             if (_character == null)
                 return;
 
-            _timer += Util.dt;
+            _timer += Time.deltaTime;
 
             // TODO: Find better alternative to this hack
-            if (_timer > _platformTimer || (Character.Rigidbody.velocity.magnitude > 0.5f)) {
+            if (_timer > _platformTimer || (_character.Rigidbody.velocity.magnitude > 0.5f)) {
                 _invincibility.Duration -= _platformTimer;
                 gameObject.SetActive(false);
             }

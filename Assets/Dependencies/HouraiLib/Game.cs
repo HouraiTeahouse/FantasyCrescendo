@@ -123,24 +123,12 @@ namespace Hourai {
             return obj.CompareTag(Tags.Player);
         }
 
-        public static Transform[] GetRespawnPoints() {
-            return GameObject.FindGameObjectsWithTag(Tags.Respawn).Select(go => go.transform).ToArray();
-        }
-
         public static GameObject FindPlayer() {
             return GameObject.FindGameObjectWithTag(Tags.Player);
         }
 
         public static GameObject[] FindPlayers() {
             return GameObject.FindGameObjectsWithTag(Tags.Player);
-        }
-
-        public static GameObject FindRespawn() {
-            return GameObject.FindGameObjectWithTag(Tags.Respawn);
-        }
-
-        public static GameObject[] FindRespawns() {
-            return GameObject.FindGameObjectsWithTag(Tags.Respawn);
         }
 
         public static GameObject FindGUI() {
