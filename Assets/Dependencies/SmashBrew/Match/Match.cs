@@ -9,15 +9,18 @@ namespace Hourai.SmashBrew {
 
     public static class Match {
 
+        private static Config config;
+
         static Match() {
+            config = Config.Instance;
             _matchRules = new List<IMatchRule>();
-            _selected = new Player[SmashGame.MaxPlayers];
-            for (var i = 0; i < SmashGame.MaxPlayers; i++)
+            _selected = new Player[config.MaxPlayers];
+            for (var i = 0; i < config.MaxPlayers; i++)
                 _selected[i] = new Player(i);
         }
 
         public static Player GetPlayerData(int playerNumber) {
-            if (playerNumber < 0 || playerNumber >= SmashGame.MaxPlayers)
+            if (playerNumber < 0 || playerNumber >= config.MaxPlayers)
                 throw new ArgumentException("playerNumber");
             return _selected[playerNumber];
         }

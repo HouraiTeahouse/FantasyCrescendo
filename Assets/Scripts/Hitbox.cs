@@ -67,7 +67,7 @@ namespace Hourai.SmashBrew {
 
         #region Unity Callbacks
          void OnDrawGizmos() {
-            GizmoUtil.DrawColliders3D(GetComponentsInChildren<Collider>(), SmashGame.GetHitboxColor(type), true);
+            GizmoUtil.DrawColliders3D(GetComponentsInChildren<Collider>(), Config.Instance.GetHitboxColor(type), true);
         }
         
         void OnTriggerEnter(Collider other) {

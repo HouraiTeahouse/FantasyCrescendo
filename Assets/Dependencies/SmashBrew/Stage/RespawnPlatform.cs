@@ -29,6 +29,15 @@ namespace Hourai.SmashBrew {
             }
         }
 
+        void Awake() {
+            var respawn = FindObjectOfType<Respawn>();
+            if (!respawn) {
+                Destroy(gameObject);
+                return;
+            }
+            respawn.AddRespawnPoint(this);
+        }
+
         // Update is called once per frame
         private void Update() {
             if (_character == null)
@@ -39,7 +48,7 @@ namespace Hourai.SmashBrew {
             // TODO: Find better alternative to this hack
             if (_timer > _platformTimer || (Character.Rigidbody.velocity.magnitude > 0.5f)) {
                 _invincibility.Duration -= _platformTimer;
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
 

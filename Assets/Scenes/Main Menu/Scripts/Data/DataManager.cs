@@ -11,10 +11,12 @@ namespace Hourai.SmashBrew {
         private CharacterData[] availableCharacters;
         private List<string> availableStages;
         public Mediator mediator;
+        private Config _config;
 
         // Use this for initialization
         protected override  void Awake() {
             base.Awake();
+            _config = Config.Instance;
             availableCharacters = Resources.LoadAll<CharacterData>("");
 
             availableStages = new List<string>();
@@ -66,7 +68,7 @@ namespace Hourai.SmashBrew {
         }
 
         public void onChangePlayerLevel(DataCommands.ChangePlayerLevelCommand cmd) {
-            if (cmd.playerNum >= 0 && cmd.playerNum < SmashGame.MaxPlayers)
+            if (cmd.playerNum >= 0 && cmd.playerNum < _config.MaxPlayers)
                 Match.GetPlayerData(cmd.playerNum).CpuLevel = cmd.newLevel;
             else
                 Debug.LogError("Invalid player number : " + cmd.newLevel);
@@ -82,7 +84,7 @@ namespace Hourai.SmashBrew {
         }
 
         public void onChangePlayerMode(DataCommands.ChangePlayerMode cmd) {
-            if (cmd.playerNum >= 0 && cmd.playerNum < SmashGame.MaxPlayers)
+            if (cmd.playerNum >= 0 && cmd.playerNum < _config.MaxPlayers)
                 Match.GetPlayerData(cmd.playerNum).CycleType();
             else
                 Debug.LogError("Invalid player number while updating player mode: " + cmd.playerNum);
