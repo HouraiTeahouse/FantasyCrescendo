@@ -10,7 +10,7 @@ namespace Hourai.SmashBrew {
         private Color[] PlayerColors = { Color.red, Color.blue, Color.green, Color.yellow };
 
         [SerializeField]
-        private Color CPUColor = Color.grey;
+        private Color _cpuColor = Color.grey;
 
         [SerializeField]
         private Color DamageableHitboxColor = Color.yellow;
@@ -23,6 +23,10 @@ namespace Hourai.SmashBrew {
         
         [SerializeField]
         private Color OffensiveHitboxColor = Color.red;
+
+        public Color CPUColor {
+            get { return _cpuColor; }
+        }
 
         #endregion
 
@@ -43,9 +47,7 @@ namespace Hourai.SmashBrew {
             get { return Instance.PlayerColors.Length; }
         }
         
-        public Color GetPlayerColor(int playerNumber, bool CPU = false) {
-            if (CPU)
-                return Instance.CPUColor;
+        public Color GetPlayerColor(int playerNumber) {
             return playerNumber < 0 || playerNumber >= MaxPlayers
                        ? Color.white
                        : Instance.PlayerColors[playerNumber];

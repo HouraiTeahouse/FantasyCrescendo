@@ -23,11 +23,6 @@ public class CursorController : MonoBehaviour {
         keyboardControls.enabled = false;
     }
 
-    // Use this for initialization
-    private void Start() {
-        InputSource = GetComponent<TestInput>();
-    }
-
     // Update is called once per frame
     private void Update() {
         //float inputX = Input.GetAxisRaw ("Horizontal");

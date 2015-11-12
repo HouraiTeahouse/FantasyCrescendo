@@ -106,14 +106,9 @@ namespace Hourai.SmashBrew {
         }
 
         public void OnSpawn(Character character) {
-            // TODO: Remove this hack
-            if (characterStocks.Count == 0)
-                character.gameObject.AddComponent<TestInput>();
-
             var characterStock = character.gameObject.AddComponent<Stock>();
             characterStock.Lives = stock;
             characterStocks.Add(characterStock);
-
             character.gameObject.AddComponent<Damage>();
         }
 

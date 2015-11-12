@@ -33,7 +33,7 @@ GameObject:
   - 114: {fileID: 11442910}
   - 114: {fileID: 11496782}
   m_Layer: 0
-  m_Name: Respawn Platform 2
+  m_Name: Respawn Platform 3
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ GameObject:
   - 114: {fileID: 11440012}
   - 114: {fileID: 11498638}
   m_Layer: 0
-  m_Name: Respawn Platform 4
+  m_Name: Respawn Platform 1
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +247,7 @@ GameObject:
   - 114: {fileID: 11466820}
   - 114: {fileID: 11467738}
   m_Layer: 0
-  m_Name: Respawn Platform 3
+  m_Name: Respawn Platform 2
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,7 +285,7 @@ GameObject:
   - 114: {fileID: 11487478}
   - 114: {fileID: 11437204}
   m_Layer: 0
-  m_Name: Respawn Platform 1
+  m_Name: Respawn Platform 4
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -603,7 +603,7 @@ Transform:
   m_Children:
   - {fileID: 446442}
   m_Father: {fileID: 482626}
-  m_RootOrder: 0
+  m_RootOrder: 3
 --- !u!4 &412786
 Transform:
   m_ObjectHideFlags: 1
@@ -616,7 +616,7 @@ Transform:
   m_Children:
   - {fileID: 422522}
   m_Father: {fileID: 482626}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &416994
 Transform:
   m_ObjectHideFlags: 1
@@ -815,7 +815,7 @@ Transform:
   m_Children:
   - {fileID: 464418}
   m_Father: {fileID: 482626}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &454384
 Transform:
   m_ObjectHideFlags: 1
@@ -906,7 +906,7 @@ Transform:
   m_Children:
   - {fileID: 444486}
   m_Father: {fileID: 482626}
-  m_RootOrder: 3
+  m_RootOrder: 0
 --- !u!4 &470558
 Transform:
   m_ObjectHideFlags: 1
@@ -977,10 +977,10 @@ Transform:
   m_LocalPosition: {x: -1.50455999, y: -2.55171824, z: 25.2435379}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 412758}
-  - {fileID: 450776}
-  - {fileID: 412786}
   - {fileID: 465876}
+  - {fileID: 412786}
+  - {fileID: 450776}
+  - {fileID: 412758}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &487424
@@ -2055,7 +2055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcbd0607b77f5479f97e8130009116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationPerSecond: {x: 0, y: 0, z: 0}
+  rotationPerSecond: {x: 0, y: 60, z: 0}
 --- !u!114 &11422924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2067,7 +2067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcbd0607b77f5479f97e8130009116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationPerSecond: {x: 0, y: 0, z: 0}
+  rotationPerSecond: {x: 0, y: 60, z: 0}
 --- !u!114 &11437204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2162,7 +2162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcbd0607b77f5479f97e8130009116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationPerSecond: {x: 0, y: 0, z: 0}
+  rotationPerSecond: {x: 0, y: 60, z: 0}
 --- !u!114 &11467738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2207,7 +2207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcbd0607b77f5479f97e8130009116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationPerSecond: {x: 0, y: 0, z: 0}
+  rotationPerSecond: {x: 0, y: 60, z: 0}
 --- !u!114 &11498638
 MonoBehaviour:
   m_ObjectHideFlags: 1

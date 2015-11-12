@@ -970,6 +970,7 @@ GameObject:
   - 65: {fileID: 6543638}
   - 114: {fileID: 11410694}
   - 114: {fileID: 11445952}
+  - 114: {fileID: 11419868}
   m_Layer: 31
   m_Name: Blast Zone
   m_TagString: Untagged
@@ -3382,6 +3383,17 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &11419868
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 166592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beea648209a9c9042a7920440560d6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11420250
 MonoBehaviour:
   m_ObjectHideFlags: 1

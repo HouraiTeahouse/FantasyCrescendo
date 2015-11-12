@@ -40,7 +40,10 @@ namespace Hourai.SmashBrew {
             get {
                 if (Type == PlayerType.Disabled)
                     return Color.clear;
-                return Config.Instance.GetPlayerColor(PlayerNumber, Type == PlayerType.CPU);
+                Config config = Config.Instance;
+                if (Type == PlayerType.CPU)
+                    return config.CPUColor;
+                return config.GetPlayerColor(PlayerNumber);
             }
         }
 

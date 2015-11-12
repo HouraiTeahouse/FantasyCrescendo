@@ -52,7 +52,7 @@ namespace Hourai {
         public static event Action OnApplicationUnfocused;
         public static event Action OnApplicationExit;
 
-        private void Awake() {
+        protected override void Awake() {
             Time.timeScale = _timeScale;
             base.Awake();
         }

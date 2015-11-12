@@ -21,6 +21,7 @@ namespace Hourai.SmashBrew {
 
             availableStages = new List<string>();
 
+            //TODO: Convert these into a StageData ScriptableObject
             availableStages.Add("Hakurei Shrine");
             availableStages.Add("Marisa's House");
             availableStages.Add("Clocktower");
