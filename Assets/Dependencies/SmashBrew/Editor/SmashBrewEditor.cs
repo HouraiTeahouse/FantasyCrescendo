@@ -23,7 +23,7 @@ namespace Hourai.SmashBrew.Editor {
 
         [MenuItem("Assets/Create/SmashBrew/Config")]
         static void CreateConfig() {
-            AssetUtil.CreateAssetInProjectWindow<GameConfig>();
+            AssetUtil.CreateAssetInProjectWindow<Config>();
         }
 
         #endregion

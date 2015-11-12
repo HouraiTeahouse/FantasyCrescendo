@@ -18,7 +18,6 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private Camera mainCamera;
 
-        private Transform[] repsawnPoints;
         private Transform[] spawnPoints;
 
         public static Transform Transform {
@@ -35,13 +34,6 @@ namespace Hourai.SmashBrew {
 
         public static Vector3 Forward {
             get { return Transform.forward; }
-        }
-
-        /// <summary>
-        /// Randomly selects one of the respawn positions to respawn to
-        /// </summary>
-        public static Transform RespawnPosition {
-            get { return Instance.repsawnPoints[Random.Range(0, Instance.repsawnPoints.Length)]; }
         }
 
         /// <summary>
@@ -67,7 +59,6 @@ namespace Hourai.SmashBrew {
             base.Awake();
 
             spawnPoints = SmashGame.GetSpawnPoints();
-            repsawnPoints = SmashGame.GetRespawnPoints();
 
             if (backgroundMusic)
                 backgroundMusic.PlayRandom();

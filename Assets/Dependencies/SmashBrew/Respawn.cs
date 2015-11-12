@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
-    public abstract class Respawn : MonoBehaviour {
+    public class Respawn : MonoBehaviour {
+
+        private List<RespawnPlatform> respawnPoints;
 
         private BlastZone blastZone;
 
@@ -21,11 +24,16 @@ namespace Hourai.SmashBrew {
                 blastZone.OnBlastZoneExit -= OnBlastZoneExit;
         }
 
+        internal void AddRespawnPoint(RespawnPlatform point) {
+            if(point)
+                respawnPoints.Add(point);
+        }
+
         protected virtual void OnBlastZoneExit(Character player) {
-            Transform respawnPos = Stage.RespawnPosition;
-            player.transform.position = respawnPos.position;
-            player.transform.rotation = respawnPos.rotation;
-            SmashGame.CreateRespawnPlatform(player);
+            RespawnPlatform respawnPoint = respawnPoints[player.Player.PlayerNumber];
+            
+            player.transform.position = respawnPoint.transform.position;
+            player.transform.rotation = respawnPoint.transform.rotation;
         }
 
     }
