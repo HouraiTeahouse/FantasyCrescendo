@@ -1,5 +1,4 @@
-﻿using System;
-using UnityConstants;
+﻿using UnityConstants;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {

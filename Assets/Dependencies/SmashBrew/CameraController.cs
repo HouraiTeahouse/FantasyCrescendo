@@ -42,7 +42,7 @@ namespace Hourai.SmashBrew {
 
         private void LateUpdate() {
             var count = 0;
-            float dt = Time.deltaTime;
+            float dt = DeltaTime;
 
             //Find the Bounds in which
             Vector3 sum = Vector3.zero;

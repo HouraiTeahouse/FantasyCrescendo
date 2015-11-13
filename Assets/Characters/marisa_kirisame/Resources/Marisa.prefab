@@ -2160,7 +2160,6 @@ GameObject:
   - 114: {fileID: 11446238}
   - 114: {fileID: 11493130}
   - 114: {fileID: 11400236}
-  - 114: {fileID: 11401256}
   - 114: {fileID: 11415180}
   - 114: {fileID: 11409830}
   - 114: {fileID: 11431784}
@@ -2168,6 +2167,8 @@ GameObject:
   - 114: {fileID: 11497270}
   - 114: {fileID: 11401224}
   - 114: {fileID: 11448332}
+  - 114: {fileID: 11422524}
+  - 114: {fileID: 11439974}
   m_Layer: 9
   m_Name: Marisa
   m_TagString: Player
@@ -4974,17 +4975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f531a7a0159cf5045b590f3067c53e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11401256
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe2b94a0636e46c4cb96bd39320a06df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11404532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5038,6 +5028,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32d1fe6825377541b528416c585f44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11422524
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2b94a0636e46c4cb96bd39320a06df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11431784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5053,6 +5054,18 @@ MonoBehaviour:
   - 1.5
   - 1.5
   airJumpFX: {fileID: 0}
+--- !u!114 &11439974
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd704a5b514bfa4ab22b0d85317ed3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localTimeScale: 1
 --- !u!114 &11446238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5112,7 +5125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rootBone: {fileID: 196292}
+  _rootBone: {fileID: 0}
 --- !u!114 &11464504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5799,6 +5812,10 @@ Prefab:
       propertyPath: m_Animator
       value: 
       objectReference: {fileID: 9524700}
+    - target: {fileID: 0}
+      propertyPath: _localTimeScale
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 181868}

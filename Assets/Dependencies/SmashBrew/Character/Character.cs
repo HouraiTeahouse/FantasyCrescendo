@@ -20,7 +20,7 @@ namespace Hourai.SmashBrew {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     [RequireComponent(typeof(NetworkAnimator), typeof(NetworkTransform))]
-    public partial class Character : NetworkBehaviour {
+    public class Character : HouraiBehaviour {
 
         private static readonly Type[] RequiredComponents;
 
@@ -71,8 +71,6 @@ namespace Hourai.SmashBrew {
 
         #region Required Components
         public CapsuleCollider MovementCollider { get; private set; }
-        public Rigidbody Rigidbody { get; private set; }
-        public Animator Animator { get; private set; }
         #endregion
         
         #region Public Action Methods
@@ -121,13 +119,13 @@ namespace Hourai.SmashBrew {
             gameObject.tag = Tags.Player;
             gameObject.layer = Layers.Character;
 
-            Rigidbody = GetComponent<Rigidbody>();
-            Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            Rigidbody.isKinematic = false;
-            Rigidbody.useGravity = false;
+            Rigidbody rb = Rigidbody;
+            Debug.Log(rb);
+            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            rb.isKinematic = false;
+            rb.useGravity = false;
 
-            Animator = GetComponent<Animator>();
             Animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
 
             // Attach Required Components

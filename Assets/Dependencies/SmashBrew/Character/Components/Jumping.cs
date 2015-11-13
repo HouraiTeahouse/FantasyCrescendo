@@ -17,7 +17,6 @@ namespace Hourai.SmashBrew
 
         public event Action OnJump;
 
-        private Rigidbody _rigidbody;
         private Grounding _ground;
 
         public int JumpCount { get; private set; }
@@ -29,7 +28,6 @@ namespace Hourai.SmashBrew
 
         void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
             _ground = GetComponent<Grounding>();
             _ground.OnGrounded += OnGrounded;
         }
@@ -51,7 +49,7 @@ namespace Hourai.SmashBrew
                 return;
 
             // Apply upward force to jump
-            _rigidbody.AddForce(Vector3.up * _jumpPower[JumpCount]);
+            Rigidbody.AddForce(Vector3.up * _jumpPower[JumpCount]);
 
             JumpCount++;
 
