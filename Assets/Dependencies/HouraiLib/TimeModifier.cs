@@ -37,7 +37,7 @@ namespace Hourai {
         }
 
         public float DeltaTime {
-            get { return Time.timeScale * _localTimeScale; }
+            get { return Time.deltaTime * _localTimeScale; }
         }
 
         public float FixedDeltaTime {
