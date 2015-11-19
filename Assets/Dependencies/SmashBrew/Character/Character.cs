@@ -120,7 +120,6 @@ namespace Hourai.SmashBrew {
             gameObject.layer = Layers.Character;
 
             Rigidbody rb = Rigidbody;
-            Debug.Log(rb);
             rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             rb.isKinematic = false;

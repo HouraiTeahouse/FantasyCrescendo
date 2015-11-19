@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class CursorController : MonoBehaviour {
 
-    private InputController _inputControllerSource;
     public CursorInputModule keyboardControls;
     public StandaloneInputModule mouseControls;
     public float movSpeed = 100.0f;
@@ -26,24 +25,24 @@ public class CursorController : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         //float inputX = Input.GetAxisRaw ("Horizontal");
-        float inputX = _inputControllerSource.Horizontal.GetAxisValue();
-        float targetSpeed = Mathf.Min(Mathf.Abs(inputX), 1.0f);
-        targetSpeed = movSpeed*targetSpeed;
-        if (inputX < 0.0f)
-            targetSpeed = -1.0f*targetSpeed;
-        vx = Mathf.Lerp(vx, targetSpeed, smooth*Time.deltaTime);
+        //float inputX = _inputControllerSource.Horizontal.GetAxisValue();
+        //float targetSpeed = Mathf.Min(Mathf.Abs(inputX), 1.0f);
+        //targetSpeed = movSpeed*targetSpeed;
+        //if (inputX < 0.0f)
+        //    targetSpeed = -1.0f*targetSpeed;
+        //vx = Mathf.Lerp(vx, targetSpeed, smooth*Time.deltaTime);
 
 
-        //float inputY = Input.GetAxisRaw ("Vertical");
-        float inputY = _inputControllerSource.Vertical.GetAxisValue();
-        targetSpeed = Mathf.Min(Mathf.Abs(inputY), 1.0f);
-        targetSpeed = movSpeed*targetSpeed;
-        if (inputY < 0.0f)
-            targetSpeed = -1.0f*targetSpeed;
-        vy = Mathf.Lerp(vy, targetSpeed, smooth*Time.deltaTime);
+        ////float inputY = Input.GetAxisRaw ("Vertical");
+        //float inputY = _inputControllerSource.Vertical.GetAxisValue();
+        //targetSpeed = Mathf.Min(Mathf.Abs(inputY), 1.0f);
+        //targetSpeed = movSpeed*targetSpeed;
+        //if (inputY < 0.0f)
+        //    targetSpeed = -1.0f*targetSpeed;
+        //vy = Mathf.Lerp(vy, targetSpeed, smooth*Time.deltaTime);
 
 
-        transform.Translate(vx*Time.deltaTime, vy*Time.deltaTime, 0.0f);
+        //transform.Translate(vx*Time.deltaTime, vy*Time.deltaTime, 0.0f);
     }
 
 }
