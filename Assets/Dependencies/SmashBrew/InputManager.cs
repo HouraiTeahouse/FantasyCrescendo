@@ -1,13 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-
-namespace Hourai {
+﻿namespace Hourai.SmashBrew {
 
     public static class InputManager {
 
         private static bool _attached;
 
-        public static ICharacterInput GetController(int playerNumber) {
+        public static InputController GetController(int playerNumber) {
             // TODO: Fix
             return null;
         }

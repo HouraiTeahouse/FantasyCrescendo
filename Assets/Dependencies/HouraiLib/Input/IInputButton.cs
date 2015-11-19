@@ -6,7 +6,7 @@ namespace Hourai {
 
     public interface IInputButton {
 
-        bool GetValue();
+        bool GetButtonValue();
 
     }
 

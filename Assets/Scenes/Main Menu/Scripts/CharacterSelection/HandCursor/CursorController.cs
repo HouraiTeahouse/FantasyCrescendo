@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class CursorController : MonoBehaviour {
 
-    private ICharacterInput InputSource;
+    private InputController _inputControllerSource;
     public CursorInputModule keyboardControls;
     public StandaloneInputModule mouseControls;
     public float movSpeed = 100.0f;
@@ -26,7 +26,7 @@ public class CursorController : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         //float inputX = Input.GetAxisRaw ("Horizontal");
-        float inputX = InputSource.Movement.x;
+        float inputX = _inputControllerSource.Horizontal.GetAxisValue();
         float targetSpeed = Mathf.Min(Mathf.Abs(inputX), 1.0f);
         targetSpeed = movSpeed*targetSpeed;
         if (inputX < 0.0f)
@@ -35,7 +35,7 @@ public class CursorController : MonoBehaviour {
 
 
         //float inputY = Input.GetAxisRaw ("Vertical");
-        float inputY = InputSource.Movement.y;
+        float inputY = _inputControllerSource.Vertical.GetAxisValue();
         targetSpeed = Mathf.Min(Mathf.Abs(inputY), 1.0f);
         targetSpeed = movSpeed*targetSpeed;
         if (inputY < 0.0f)

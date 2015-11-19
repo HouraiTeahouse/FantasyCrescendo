@@ -18,8 +18,8 @@ namespace Hourai {
             Map = map;
         }
 
-        public float GetValue() {
-            return Map.Evaluate(BaseAxis.GetValue());
+        public float GetAxisValue() {
+            return Map.Evaluate(BaseAxis.GetAxisValue());
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Hourai.SmashBrew;
+using UnityEngine;
 namespace Hourai {
 
     public abstract class Singleton<T> : HouraiBehaviour where T : Singleton<T> {

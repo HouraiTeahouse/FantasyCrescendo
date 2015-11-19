@@ -13,7 +13,7 @@ namespace Hourai {
             _negative = negative;
         }
 
-        public float GetValue() {
+        public float GetAxisValue() {
             float value = 0f;
             if (Input.GetKey(_positive))
                 value += 1f;

@@ -5,7 +5,7 @@ namespace Hourai {
 
     public interface IInputAxis {
         
-        float GetValue();
+        float GetAxisValue();
 
     }
 

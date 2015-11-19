@@ -2,12 +2,12 @@
 
 namespace Hourai {
 
-    public class ButtonAxis : IInputAxis {
+    public class ButtonAxis : IInputAxis, IInputButton {
 
         private readonly IInputAxis _baseAxis;
         private float _threshold;
 
-        public float Threashold {
+        public float Threshold {
             get { return _threshold; }
             set {
                 _threshold = Math.Abs(value);
@@ -20,13 +20,15 @@ namespace Hourai {
             if(baseAxis == null)
                 throw new ArgumentNullException("baseAxis");
             _baseAxis = baseAxis;
-            Threashold = threshold;
+            Threshold = threshold;
         }
 
-        public void Update() {}
+        public float GetAxisValue() {
+            return (Math.Abs(_baseAxis.GetAxisValue()) > Threshold) ? 1f : 0f;
+        }
 
-        public float GetValue() {
-            return (Math.Abs(_baseAxis.GetValue()) > Threashold) ? 1f : 0f;
+        public bool GetButtonValue() {
+            return Math.Abs(_baseAxis.GetAxisValue()) > Threshold;
         }
 
     }

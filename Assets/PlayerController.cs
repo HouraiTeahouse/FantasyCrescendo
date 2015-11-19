@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 
 namespace Hourai.SmashBrew {
 
-    public class PlayerController : NetworkBehaviour {
+    [DisallowMultipleComponent]
+    public class PlayerController : HouraiBehaviour {
 
         private Character _character;
         private Animator _animator;
+        private int _playerNumber;
+        private InputController _input;
 
-        public ICharacterInput InputSource {
-            get; set;
+        public int PlayerNumber {
+            get { return _playerNumber; }
+            set {
+                _playerNumber = value;
+                _input = InputManager.GetController(value);
+            }
         }
 
         void Awake() {
@@ -21,25 +27,23 @@ namespace Hourai.SmashBrew {
             _animator = _character.Animator;
         }
 
-        void FixedUpdate() {
-            if(!isLocalPlayer || InputSource == null) {
+        void Update() {
+            if (_input == null)
                 return;
-            }
 
-            Vector2 movement = InputSource.Movement;
 
-            _animator.SetFloat(CharacterAnimVars.HorizontalInput, movement.x);
-            _animator.SetFloat(CharacterAnimVars.VerticalInput, movement.y);
 
             //Ensure that the character is walking in the right direction
             //if ((movement.x > 0 && Facing) ||
             //    (movement.x < 0 && !Facing))
             //    Facing = !Facing;
-            
-            _animator.SetBool(CharacterAnimVars.JumpInput, InputSource.Jump);
-            _animator.SetBool(CharacterAnimVars.AttackInput, InputSource.Attack);
-            _animator.SetBool(CharacterAnimVars.SpecialInput, InputSource.Special);
-            _animator.SetBool(CharacterAnimVars.ShieldInput, InputSource.Shield);
+
+            _animator.SetFloat(CharacterAnimVars.HorizontalInput, _input.Horizontal.GetAxisValue());
+            _animator.SetFloat(CharacterAnimVars.VerticalInput, _input.Vertical.GetAxisValue());
+            _animator.SetBool(CharacterAnimVars.JumpInput, _input.Jump.GetButtonValue());
+            _animator.SetBool(CharacterAnimVars.AttackInput, _input.Attack.GetButtonValue());
+            _animator.SetBool(CharacterAnimVars.SpecialInput, _input.Special.GetButtonValue());
+            _animator.SetBool(CharacterAnimVars.ShieldInput, _input.Shield.GetButtonValue());
         }
 
     }
