@@ -4,19 +4,15 @@ using System.Collections;
 
 namespace Hourai {
 
-    public class SmoothedInput : IInputAxis {
+    public class SmoothedInput : MetaAxis {
 
-        public readonly IInputAxis BaseAxis;
         public float Power { get; set; }
 
-        public SmoothedInput(IInputAxis baseAxis, float pow = 2) {
-            if (baseAxis == null)
-                throw new ArgumentNullException("baseAxis");
-            BaseAxis = baseAxis;
+        public SmoothedInput(IInputAxis baseAxis, float pow = 2) : base(baseAxis) {
             Power = pow;
         }
 
-        public float GetAxisValue() {
+        public override float GetAxisValue() {
             return Mathf.Pow(BaseAxis.GetAxisValue(), Power);
         }
 

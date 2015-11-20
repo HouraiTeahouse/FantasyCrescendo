@@ -13,6 +13,10 @@ namespace Hourai {
             return new MappedAxis(axis, map);
         }
 
+        public static IInputAxis Invert(this IInputAxis axis) {
+            var inverted = axis as InvertedAxis;
+            return inverted != null ? inverted.BaseAxis : new InvertedAxis(axis);
+        }
     }
 
 }

@@ -2,18 +2,12 @@
 
 namespace Hourai {
 
-    public class InvertedAxis : IInputAxis {
+    public class InvertedAxis : MetaAxis {
 
-        private IInputAxis _baseAxis;
+        public InvertedAxis(IInputAxis baseAxis) : base(baseAxis) {}
 
-        public InvertedAxis(IInputAxis baseAxis) {
-            if(baseAxis == null)
-                throw new ArgumentNullException("baseAxis");
-            baseAxis = _baseAxis;
-        }
-
-        public float GetAxisValue() {
-            return -_baseAxis.GetAxisValue();
+        public override float GetAxisValue() {
+            return -BaseAxis.GetAxisValue();
         }
 
     }
