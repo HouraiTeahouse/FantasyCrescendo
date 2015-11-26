@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Audio;
-using System;
+using System.Collections;
+using Object = UnityEngine.Object;
 
 namespace Hourai {
     
@@ -31,9 +33,8 @@ namespace Hourai {
         #region Unity Callbacks
         protected override void Awake() {
             base.Awake();
-            var tba = gameObject.AddComponent<TimeBasedAudio>();
-            tba.DestroyObject = false;
-            bgmSource = tba.Audio;
+            var bgmEffect = gameObject.AddComponent<SoundEffect>();
+            bgmSource = bgmEffect.Audio;
             bgmSource.outputAudioMixerGroup = musicMixerGroup;
             bgmSource.hideFlags = HideFlags.HideInInspector;
             bgmSource.volume = 1f;
@@ -41,40 +42,48 @@ namespace Hourai {
             bgmSource.spatialBlend = 0f;
         }
 
+        private static IEnumerator DestroyOnFinish(AudioSource audio, params Object[] targets) {
+            while (audio.isPlaying)
+                yield return null;
+            foreach(var obj in targets)
+                Destroy(obj);
+        }
+
         private void OnDestroy() {
             Destroy(bgmSource);
         }
         #endregion
         
-        public static AudioSource PlaySFX(AudioClip clip, Vector3 point, float volume = 1f, float pitch = 1f) {
+        public static SoundEffect PlaySFX(AudioClip clip, Vector3 point, float volume = 1f, float pitch = 1f) {
             //Create an empty GameObject
-            GameObject go = new GameObject();
+            var go = new GameObject();
             go.transform.position = point;
 
-            TimeBasedAudio tba = go.AddComponent<TimeBasedAudio>();
-            AudioSource source = tba.Audio;
-            tba.Pitch = pitch;
+            var soundEffect = go.AddComponent<SoundEffect>();
+            AudioSource source = soundEffect.Audio;
+            soundEffect.Pitch = pitch;
             source.clip = clip;
             source.volume = volume;
             source.outputAudioMixerGroup = Instance ? Instance.sfxMixerGroup : null;
             source.Play();
-            return source;
+            soundEffect.StartCoroutine(DestroyOnFinish(source, go));
+            return soundEffect;
         }
         
-        public static AudioSource PlaySFX(AudioClip clip, GameObject go, float volume = 1f, float pitch = 1f) {
+        public static SoundEffect PlaySFX(AudioClip clip, GameObject go, float volume = 1f, float pitch = 1f) {
             if (!go)
                 throw new ArgumentNullException();
 
             //Create the source
-            TimeBasedAudio tba = go.AddComponent<TimeBasedAudio>();
-            AudioSource source = tba.Audio;
-            tba.Pitch = pitch;
-            tba.DestroyGameObject = true;
+            var soundEffect = go.AddComponent<SoundEffect>();
+            AudioSource source = soundEffect.Audio;
+            soundEffect.Pitch = pitch;
             source.clip = clip;
             source.volume = volume;
             source.outputAudioMixerGroup = Instance ? Instance.sfxMixerGroup : null;
             source.Play();
-            return source;
+            soundEffect.StartCoroutine(DestroyOnFinish(source, source, soundEffect));
+            return soundEffect;
         }
     }
 }

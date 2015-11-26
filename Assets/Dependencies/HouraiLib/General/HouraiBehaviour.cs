@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Hourai.SmashBrew {
+namespace Hourai {
 
     /// <summary>
     /// A utility base behaviour for Hourai Teahouse game elements.
