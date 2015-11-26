@@ -18,8 +18,6 @@ namespace Hourai {
         protected override void Awake() {
             base.Awake();
             _audio = GetComponent<AudioSource>();
-            _audio.hideFlags = HideFlags.HideInInspector;
-            hideFlags = HideFlags.HideInInspector;
             Pitch = _audio.pitch;
         }
 

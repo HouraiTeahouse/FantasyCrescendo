@@ -15,9 +15,6 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private BGMGroup backgroundMusic;
 
-        [SerializeField]
-        private Camera mainCamera;
-
         private Transform[] spawnPoints;
 
         public static Transform Transform {
@@ -43,10 +40,6 @@ namespace Hourai.SmashBrew {
             get { return Instance.spawnPoints.Length; }
         }
 
-        public static Camera Camera {
-            get { return Instance.mainCamera; }
-        }
-
         public static Transform GetSpawnPoint(int playerNumber) {
             if (Instance == null)
                 throw new InvalidOperationException("Cannot get the spawn points of a stage that does not exist");
@@ -60,19 +53,8 @@ namespace Hourai.SmashBrew {
 
             spawnPoints = SmashGame.GetSpawnPoints();
 
-            if (backgroundMusic)
-                backgroundMusic.PlayRandom();
-
             // Sort the Spawn Points by name instead of by random spatial orientation
             Array.Sort(spawnPoints, (s1, s2) => s1.name.CompareTo(s2.name));
-
-            if (mainCamera)
-                return;
-
-            mainCamera = Camera.main ?? FindObjectOfType<Camera>();
-
-            if (mainCamera)
-                Debug.LogError("Stage has no Camera!");
         }
 
     }

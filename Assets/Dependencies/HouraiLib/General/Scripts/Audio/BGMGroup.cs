@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using System.Linq;
@@ -30,9 +31,12 @@ namespace Hourai {
             }
         }
 
-        public void PlayRandom() {
-            AudioManager.PlayBGM(selection.Select().Load());
-            Resources.UnloadUnusedAssets();
+        public void PlayRandom(AudioSource audio) {
+            if(!audio)
+                throw new ArgumentNullException();
+            audio.Stop();
+            audio.clip = selection.Select().Load();
+            audio.Play();
         }
 
 #if UNITY_EDITOR
