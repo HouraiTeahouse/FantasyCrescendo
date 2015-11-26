@@ -17,6 +17,7 @@ namespace Hourai.SmashBrew {
         public event Action<Vector2> OnKnockback;
 
         protected override void Awake() {
+            base.Awake();
             _defensiveModifiers = new ModifierList<Vector2>();
         }
 

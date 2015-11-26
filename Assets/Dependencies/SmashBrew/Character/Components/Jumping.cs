@@ -27,6 +27,7 @@ namespace Hourai.SmashBrew
         }
 
         protected override void Awake() {
+            base.Awake();
             _ground = GetComponent<Grounding>();
             _ground.OnGrounded += OnGrounded;
         }

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -8,14 +7,15 @@ namespace Hourai {
 
     public class PostBuildCopy : MonoBehaviour {
 
-        private static readonly string buildRoot = Regex.Replace(Application.dataPath, "Assets", "") + "/Build/";
-        private static readonly string copyRoot = Application.dataPath + "/Post Build/";
+        private static string BuildDirectory {
+            get { return Directory.GetCurrentDirectory() + "/Build"; }
+        }
 
         [PostProcessBuild]
         private static void AddPostBuildFiles(BuildTarget target, string path) {
+            string copyPath= Directory.GetCurrentDirectory() + "/Post Build";
             path = Path.GetDirectoryName(path) + "/";
-            string copyPath = copyRoot;
-
+            
             switch (target) {
                 case BuildTarget.StandaloneWindows:
                 case BuildTarget.StandaloneWindows64:
@@ -53,7 +53,7 @@ namespace Hourai {
             }
         }
 
-        [MenuItem("Hourai/Clear HumanPlayer Prefs %#c")]
+        [MenuItem("Hourai/Clear Player Prefs %#c")]
         static void ClearPlayerPrefs() {
             PlayerPrefs.DeleteAll();
             Debug.Log("HumanPlayer Prefs Cleared.");
@@ -61,21 +61,21 @@ namespace Hourai {
 
         [MenuItem("Hourai/Build Windows", false, 51)]
         static void BuildWindows() {
-            string buildFolder = buildRoot + "Windows/";
+            string buildFolder = BuildDirectory + "/Windows/";
             Build(buildFolder, BuildTarget.StandaloneWindows);
-            buildFolder = buildRoot + "Windows_64/";
+            buildFolder = BuildDirectory + "/Windows_64/";
             Build(buildFolder, BuildTarget.StandaloneWindows64);
         }
 
         [MenuItem("Hourai/Build Mac", false, 51)]
         static void BuildMac() {
-            string buildFolder = buildRoot + "Mac/";
+            string buildFolder = BuildDirectory + "/Mac/";
             Build(buildFolder, BuildTarget.StandaloneOSXUniversal);
         }
 
         [MenuItem("Hourai/Build Linux", false, 51)]
         static void BuildLinux() {
-            string buildFolder = buildRoot + "Linux/";
+            string buildFolder = BuildDirectory + "/Linux/";
             Build(buildFolder, BuildTarget.StandaloneLinuxUniversal);
         }
 

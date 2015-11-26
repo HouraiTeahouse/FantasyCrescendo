@@ -31,7 +31,7 @@ namespace Hourai {
         #region Unity Callbacks
         protected override void Awake() {
             base.Awake();
-            TimeBasedAudio tba = gameObject.AddComponent<TimeBasedAudio>();
+            var tba = gameObject.AddComponent<TimeBasedAudio>();
             tba.DestroyObject = false;
             bgmSource = tba.Audio;
             bgmSource.outputAudioMixerGroup = musicMixerGroup;
