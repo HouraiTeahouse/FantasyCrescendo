@@ -905,7 +905,7 @@ GameObject:
   - 114: {fileID: 251545304}
   - 114: {fileID: 251545303}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Menu UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -956,7 +956,7 @@ Canvas:
   m_GameObject: {fileID: 251545302}
   m_Enabled: 1
   serializedVersion: 2
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 203963824}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
