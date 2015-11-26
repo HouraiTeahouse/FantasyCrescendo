@@ -10,7 +10,8 @@ namespace Hourai.SmashBrew {
         
         private Facing _facing;
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             _facing = GetComponent<Facing>();
         }
 

@@ -26,8 +26,7 @@ namespace Hourai.SmashBrew
             get { return _jumpPower == null ? 0 : _jumpPower.Length; }
         }
 
-        void Awake()
-        {
+        protected override void Awake() {
             _ground = GetComponent<Grounding>();
             _ground.OnGrounded += OnGrounded;
         }

@@ -1,5 +1,4 @@
-﻿using Hourai;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
@@ -25,7 +24,8 @@ namespace Hourai.SmashBrew {
             get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             _grounded = GetComponent<Grounding>();
             _grounded.OnGrounded += OnGrounded;
         }

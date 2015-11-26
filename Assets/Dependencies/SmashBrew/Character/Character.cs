@@ -95,7 +95,8 @@ namespace Hourai.SmashBrew {
         #endregion
 
         #region Unity Callbacks
-        protected virtual void Awake() {
+        protected override void Awake() {
+            base.Awake();
             Reset();
 
             DamageDealt = new ModifierList();

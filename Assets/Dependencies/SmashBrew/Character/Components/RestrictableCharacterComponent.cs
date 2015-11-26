@@ -31,7 +31,7 @@ namespace Hourai.SmashBrew {
             remove { _restrictions.Remove(value); }
         }
 
-        void Awake() {
+        protected override void Awake() {
             _restrictions = new List<Func<bool>>();
         }
 
