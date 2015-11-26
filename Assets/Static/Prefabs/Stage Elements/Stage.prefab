@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 427500}
   - 114: {fileID: 11432082}
   - 114: {fileID: 11478726}
-  - 114: {fileID: 11471446}
   m_Layer: 0
   m_Name: Stage
   m_TagString: Untagged
@@ -43,27 +42,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   backgroundMusic: {fileID: 11400000, guid: f475b8acebdb575478b840cc0e5a020f, type: 2}
---- !u!114 &11471446
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 190902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d5a00fc0b20eb240980c9f4f1bfbba8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testCharacters:
-  - data: {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
-    pallete: 0
-  - data: {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
-    pallete: 0
-  - data: {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
-    pallete: 0
-  - data: {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
-    pallete: 0
-  stockCount: 5
 --- !u!114 &11478726
 MonoBehaviour:
   m_ObjectHideFlags: 1
