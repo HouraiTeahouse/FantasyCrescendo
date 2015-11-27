@@ -23,7 +23,7 @@ namespace Hourai.SmashBrew.UI {
         void OnMatchStart() {
             // TODO: Create displays from prefabs instead of depending on a prebuilt one
             _displays = _displays.Where(display => display != null).ToList();
-            IEnumerator<Player> players = Match.ActivePlayers.GetEnumerator();
+            IEnumerator<Player> players = SmashGame.ActivePlayers.GetEnumerator();
             foreach (var display in _displays) {
                 if (!players.MoveNext()) {
                     display.SetActive(false);

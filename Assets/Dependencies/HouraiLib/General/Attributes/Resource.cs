@@ -7,7 +7,8 @@ namespace Hourai {
     [Serializable]
     public class Resource<T> where T : Object {
 
-        private readonly string _path;
+        [SerializeField]
+        private string _path;
 
         public Resource(string path) {
             if (path == null)
@@ -28,19 +29,11 @@ namespace Hourai {
         public T Load() {
             if (IsLoaded)
                 return Asset;
-            Object loadedObject = Resources.Load(_path);
-            if (loadedObject != null) {
-                var asT = loadedObject as T;
-                if (asT != null)
-                    Asset = asT;
-                else {
-                    Debug.LogError("Tried to load asset of type" + typeof (T) + " at " + _path +
-                                   " and found an Object of type " + loadedObject.GetType() + " instead");
-                }
-                return Asset;
-            }
-            Debug.LogError("Tried to load asset of type" + typeof (T) + " at " + _path + " and found nothing.");
-            return null;
+            T loadedObject = Resources.Load<T>(_path);
+            if (loadedObject == null)
+                Debug.LogError("Tried to load asset of type" + typeof (T) + " at " + _path + " and found nothing.");
+            Asset = loadedObject;
+            return Asset;
         }
 
         public virtual void Unload() {

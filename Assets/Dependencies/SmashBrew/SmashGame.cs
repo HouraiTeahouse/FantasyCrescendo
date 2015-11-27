@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityConstants;
 using UnityEngine;
@@ -23,12 +24,48 @@ namespace Hourai.SmashBrew {
 
     public class SmashGame : Game {
 
+        private static Player[] _players;
+
+        public static Player GetPlayerData(int playerNumber) {
+            if (playerNumber < 0 || playerNumber >= _players.Length)
+                throw new ArgumentException("playerNumber");
+            return _players[playerNumber];
+        }
+
+        public static IEnumerable<Player> Players {
+            get {
+                foreach (var player in _players)
+                    yield return player;
+            }
+        }
+
+        public static IEnumerable<Player> ActivePlayers {
+            get { return _players.Where(player => player.Type != Player.PlayerType.Disabled); }
+        }
+
+        public static int MaxPlayers {
+            get { return _players.Length; }
+        }
+
+        public static int ActivePlayerCount {
+            get { return ActivePlayers.Count(); }
+        }
+
         public static Transform[] GetSpawnPoints() {
             return GetPoints(Tags.Spawn);
         }
 
         private static Transform[] GetPoints(string tag) {
             return GameObject.FindGameObjectsWithTag(tag).Select(go => go.transform).ToArray();
+        }
+
+        protected override void Awake() {
+            base.Awake();
+            Config config = Config.Instance;
+            _players = new Player[config.MaxPlayers];
+            for (var i = 0; i < _players.Length; i++) {
+                _players[i] = new Player(i);
+            }
         }
 
     }

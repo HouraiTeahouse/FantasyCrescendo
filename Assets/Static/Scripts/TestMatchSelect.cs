@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 
 namespace Hourai.SmashBrew {
     
@@ -24,7 +23,7 @@ namespace Hourai.SmashBrew {
             Match.AddMatchRule(new StockMatch(stockCount));
 
             var index = 0;
-            foreach (var player in Match.Players)
+            foreach (var player in SmashGame.Players)
             {
                 if (index >= testCharacters.Length)
                     break;

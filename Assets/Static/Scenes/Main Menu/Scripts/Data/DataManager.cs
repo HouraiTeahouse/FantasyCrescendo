@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Hourai;
-using Hourai.SmashBrew;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -24,20 +21,6 @@ namespace Hourai.SmashBrew {
             //TODO: Convert these into a StageData ScriptableObject
             availableStages.Add("Hakurei Shrine");
             availableStages.Add("Marisa's House");
-            availableStages.Add("Clocktower");
-            availableStages.Add("Misty Lake");
-            availableStages.Add("Bamboo Forest");
-            availableStages.Add("Hisoutensoku");
-            availableStages.Add("Youkai Mountain");
-            availableStages.Add("Genbu Ravine");
-            availableStages.Add("Makai");
-            availableStages.Add("Blazing Hell Reactor");
-            availableStages.Add("Netherworld");
-            availableStages.Add("Bhava-Agra");
-            availableStages.Add("Netherworld");
-            availableStages.Add("Old Hakurei Shrine");
-            availableStages.Add("New Super Marisa Land");
-            availableStages.Add("Twilight City");
             initializeMediator();
         }
 
@@ -47,7 +30,7 @@ namespace Hourai.SmashBrew {
         /// </summary>
         /// <returns><c>true</c>, if the battle can start, <c>false</c> otherwise.</returns>
         public bool isReadyToStartGame() {
-            int counter = Match.PlayerCount;
+            int counter = SmashGame.ActivePlayerCount;
             mediator.Publish(new DataCommands.ReadyToFight { isReady = (counter > 1) });
             return (counter > 1);
         }
@@ -70,7 +53,7 @@ namespace Hourai.SmashBrew {
 
         public void onChangePlayerLevel(DataCommands.ChangePlayerLevelCommand cmd) {
             if (cmd.playerNum >= 0 && cmd.playerNum < _config.MaxPlayers)
-                Match.GetPlayerData(cmd.playerNum).CpuLevel = cmd.newLevel;
+                SmashGame.GetPlayerData(cmd.playerNum).CpuLevel = cmd.newLevel;
             else
                 Debug.LogError("Invalid player number : " + cmd.newLevel);
         }
@@ -86,7 +69,7 @@ namespace Hourai.SmashBrew {
 
         public void onChangePlayerMode(DataCommands.ChangePlayerMode cmd) {
             if (cmd.playerNum >= 0 && cmd.playerNum < _config.MaxPlayers)
-                Match.GetPlayerData(cmd.playerNum).CycleType();
+                SmashGame.GetPlayerData(cmd.playerNum).CycleType();
             else
                 Debug.LogError("Invalid player number while updating player mode: " + cmd.playerNum);
 

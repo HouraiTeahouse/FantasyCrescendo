@@ -8,8 +8,8 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private Alternative[] alternatives;
 
-        [SerializeField]
-        private Sprite icon;
+        [SerializeField, Resource(typeof(Sprite))]
+        private string _icon;
 
         [SerializeField]
         private string announcerKey;
@@ -19,6 +19,8 @@ namespace Hourai.SmashBrew {
 
         [SerializeField]
         private string _lastNameKey;
+
+        private Resource<Sprite> _iconResource; 
 
         public string FirstName {
             get { return _firstNameKey; }
@@ -36,14 +38,14 @@ namespace Hourai.SmashBrew {
             get { return alternatives == null ? 0 : alternatives.Length; }
         }
 
-        public Sprite Icon {
-            get { return icon; }
+        public Resource<Sprite> Icon {
+            get { return _iconResource; }
         }
 
         public Sprite LoadPortrait(int alternativeChoice) {
             if (alternativeChoice < 0 || alternativeChoice >= AlternativeCount)
                 throw new ArgumentException();
-            return alternatives[alternativeChoice].Portrait;
+            return alternatives[alternativeChoice].Portrait.Load();
         }
 
         public Character LoadPrefab(int alternativeChoice) {
@@ -55,6 +57,7 @@ namespace Hourai.SmashBrew {
         private void OnEnable() {
             if (alternatives == null)
                 return;
+            _iconResource = new Resource<Sprite>(_icon);
             foreach (Alternative alternative in alternatives)
                 alternative.Initialize();
         }
@@ -66,11 +69,12 @@ namespace Hourai.SmashBrew {
             private string _prefab;
             private Resource<GameObject> _prefabResource;
 
-            [SerializeField]
-            private Sprite _portrait;
+            [SerializeField, Resource(typeof(Sprite))]
+            private string _portrait;
+            private Resource<Sprite> _portraitResource; 
 
-            public Sprite Portrait {
-                get { return _portrait;  }
+            public Resource<Sprite> Portrait {
+                get { return _portraitResource;  }
             }
 
             public Character Prefab {
@@ -79,6 +83,7 @@ namespace Hourai.SmashBrew {
 
             public void Initialize() {
                 _prefabResource = new Resource<GameObject>(_prefab);
+                _portraitResource = new Resource<Sprite>(_portrait);
             }
 
         }

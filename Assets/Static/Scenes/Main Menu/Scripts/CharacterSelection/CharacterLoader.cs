@@ -55,7 +55,7 @@ namespace Hourai.SmashBrew.UI {
         }
 
         public void fillPlayerSlots() {
-            foreach(Player player in Match.Players) {
+            foreach(Player player in SmashGame.Players) {
                 GameObject go = Instantiate(playerSlotPrefab);
                 var psu = go.GetComponent<PlayerSlotUI>();
                 if (psu == null) {
