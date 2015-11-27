@@ -56,7 +56,7 @@ namespace Hourai {
             [SerializeField, Range(0f, 1f)]
             private float _baseWeight = 1f;
 
-            [SerializeField]
+            [SerializeField, Resource(typeof(AudioClip))]
             private string _bgm;
 
             private Resource<AudioClip> _bgmResource;

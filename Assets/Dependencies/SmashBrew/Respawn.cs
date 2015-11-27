@@ -46,7 +46,6 @@ namespace Hourai.SmashBrew {
         }
 
         protected virtual void OnBlastZoneExit(Character player) {
-            Debug.Log(player);
             if (shouldRespawn.Count > 0 && shouldRespawn.Any(check => !check(player))) {
                 player.gameObject.SetActive(false);
                 return;

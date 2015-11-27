@@ -28,10 +28,13 @@ namespace Hourai.SmashBrew.UI {
         }
 
         private void Awake() {
+            GameObject gui = Game.FindGUI();
+            if(!gui)
+                Destroy(this);
             _text = GetComponent<Text>();
             _cUIColor = GetComponent<PlayerUiColor>();
             _rTransform = GetComponent<RectTransform>();
-            _rTransform.SetParent(SmashGame.FindGUI().transform);
+            _rTransform.SetParent(gui.transform);
             _rTransform.localScale = Vector3.one;
         }
 
@@ -42,7 +45,7 @@ namespace Hourai.SmashBrew.UI {
             }
 
             _text.text = (Target.Player.PlayerNumber + 1).ToString(_format);
-            _cUIColor.SetPlayerData(Match.GetPlayerData(Target.Player.PlayerNumber));
+            _cUIColor.SetPlayerData(Target.Player);
 
             Bounds bounds = _collider.bounds;
             Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + positionBias;

@@ -62,8 +62,7 @@ namespace Hourai.SmashBrew {
         [Serializable]
         public class Alternative {
       
-
-            [SerializeField]
+            [SerializeField, Resource(typeof(GameObject))]
             private string _prefab;
             private Resource<GameObject> _prefabResource;
 
