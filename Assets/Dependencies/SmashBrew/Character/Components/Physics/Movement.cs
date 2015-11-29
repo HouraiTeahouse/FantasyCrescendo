@@ -5,16 +5,13 @@ namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    [RequireComponent(typeof(Rigidbody), typeof(Grounding))]
+    [RequireComponent(typeof(Rigidbody), typeof(Grounding), typeof(Facing))]
     public class Movement : RestrictableCharacterComponent {
-
-        private Rigidbody _rigidbody;
-        private Grounding _ground;
+        
         private Facing _facing;
 
-        void Awake() {
-            _rigidbody = GetComponent<Rigidbody>();
-            _ground = GetComponent<Grounding>();
+        protected override void Awake() {
+            base.Awake();
             _facing = GetComponent<Facing>();
         }
 
@@ -22,14 +19,14 @@ namespace Hourai.SmashBrew {
             if (Restricted)
                 return;
 
-            Vector3 vel = _rigidbody.velocity;
+            Vector3 vel = Rigidbody.velocity;
 
             vel.x = speed;
 
             if (_facing && _facing.Direction)
                 vel.x *= -1;
 
-            _rigidbody.velocity = vel;
+            Rigidbody.velocity = vel;
         }
 
     }

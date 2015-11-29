@@ -24,21 +24,33 @@ namespace Hourai.SmashBrew {
             }
         }
     }
+    
+    public class StockRespawn : MonoBehaviour {
 
-    public class StockRespawn : Respawn {
+        private Respawn _respawn;
 
-        protected override void OnBlastZoneExit(Character player) {
-            Stock stock = player.GetComponent<Stock>();
-            Damage damage = player.GetComponent<Damage>();
+        void Awake() {
+            _respawn = GetComponent<Respawn>();
+            if (!_respawn)
+                Destroy(this);
+            else
+                _respawn.ShouldRespwan += RespawnCheck;
+        }
+
+        void OnDestroy() {
+            if (_respawn)
+                _respawn.ShouldRespwan -= RespawnCheck;
+        }
+
+        bool RespawnCheck(Character player) {
+            var stock = player.GetComponent<Stock>();
+            var damage = player.GetComponent<Damage>();
             if (damage)
                 damage.Reset();
-            if (stock) {
-                stock.Lives--;
-                if(stock.Alive)
-                    base.OnBlastZoneExit(player);
-            } else {
-                base.OnBlastZoneExit(player);
-            }
+            if (!stock)
+                return true;
+            stock.Lives--;
+            return stock.Alive;
         }
 
     }
@@ -94,14 +106,9 @@ namespace Hourai.SmashBrew {
         }
 
         public void OnSpawn(Character character) {
-            // TODO: Remove this hack
-            if (characterStocks.Count == 0)
-                character.gameObject.AddComponent<TestInput>();
-
             var characterStock = character.gameObject.AddComponent<Stock>();
             characterStock.Lives = stock;
             characterStocks.Add(characterStock);
-
             character.gameObject.AddComponent<Damage>();
         }
 

@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Hourai.SmashBrew;
+using UnityEngine;
 namespace Hourai {
 
-    public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T> {
+    public abstract class Singleton<T> : HouraiBehaviour where T : Singleton<T> {
 
         private static T _instance;
 
@@ -21,7 +22,8 @@ namespace Hourai {
             }
         }
 
-        protected virtual void Awake() {
+        protected override void Awake() {
+            base.Awake();
             if (_instance == null) {
                 _instance = this as T;
                 if (_dontDestroyOnLoad)

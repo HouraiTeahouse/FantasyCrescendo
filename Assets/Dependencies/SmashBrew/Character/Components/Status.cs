@@ -34,7 +34,7 @@ namespace Hourai.SmashBrew {
                 enabled = EllapsedTime < Duration;
             }
         }
-
+        
         protected virtual void Start() {
             enabled = false;
         }

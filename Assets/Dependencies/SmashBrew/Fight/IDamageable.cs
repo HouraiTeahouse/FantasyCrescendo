@@ -16,7 +16,7 @@ namespace Hourai.SmashBrew {
 
     public interface IKnockbackable {
 
-        void Knockback(Vector2 source);
+        void Knockback(Vector2 knockback);
 
     }
 

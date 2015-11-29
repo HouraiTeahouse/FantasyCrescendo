@@ -3,173 +3,85 @@
 namespace Hourai {
 
     /// <summary>
-    /// A utility behaviour with a large number of more succinct code shortcuts to make for shorter
+    /// A utility base behaviour for Hourai Teahouse game elements.
     /// </summary>
-    public abstract class HouraiBehaviour : MonoBehaviour {
+    public abstract class HouraiBehaviour : MonoBehaviour, ITimeObject {
+        
+        private TimeModifier _timeMod;
 
-        #region Time Properties
+        private Rigidbody _rigidbody;
+        private Animator _animator;
 
-        private float _localTimeScale = 1f;
-
-        public virtual float LocalTimeScale {
-            get { return _localTimeScale; }
-            set {
-                float oldValue = _localTimeScale;
-                _localTimeScale = value;
-                if(oldValue == 0f)
-                   OnPause(false);
-                else if(_localTimeScale == 0f)
-                   OnPause(true);
+        protected virtual void Awake() {
+            _timeMod = GetComponentInParent<TimeModifier>();
+            if (!_timeMod) {
+                _timeMod = gameObject.AddComponent<TimeModifier>();
+                _timeMod.hideFlags = HideFlags.HideInInspector;
             }
         }
 
+        #region Time Properties
+
+        public float LocalTimeScale {
+            get { return _timeMod.LocalTimeScale; }
+            set { _timeMod.LocalTimeScale = value; }
+        }
+
         public float EffectiveTimeScale {
-            get { return LocalTimeScale*Time.timeScale; }
+            get { return _timeMod.EffectiveTimeScale; }
         }
 
-        public bool Paused {
-            get { return EffectiveTimeScale == 0f; }
+        public float DeltaTime {
+            get { return _timeMod.DeltaTime; }
         }
 
-        protected float DeltaTime {
-            get { return Time.deltaTime * LocalTimeScale; }
-        }
-
-        protected float FixedDeltaTime {
-            get { return Time.fixedDeltaTime * LocalTimeScale; }
-        }
-
-        protected virtual void OnPause(bool paused) {
+        public float FixedDeltaTime {
+            get { return _timeMod.FixedDeltaTime; }
         }
 
         #endregion
 
-        #region GameObject Functions
-
-        public bool CompareLayer(int layerMask) {
-            return (layerMask & (1 << layer)) != 0;
-        }
-
-        #endregion
-
-        #region Transform Properties
+        #region Common Components
 
         /// <summary>
-        /// Shorthand for <c>transform.position</c>.
-        /// Gets or sets the position of the transform in world space.
+        /// The Rigidbody that controls the GameObject the HouraiBehaviour is attached to.
         /// </summary>
-        public Vector3 position {
-            get { return transform.position; }
-            set { transform.position = value; }
+        public Rigidbody Rigidbody {
+            get {
+                if (!_rigidbody) {
+#if UNITY_EDITOR
+                    if (Application.isPlaying)
+                        _rigidbody = GetComponentInParent<Rigidbody>();
+                    else
+                        _rigidbody = GetComponent<Rigidbody>();
+#else
+                    _rigidbody = GetComponentInParent<Rigidbody>();
+#endif
+                }
+                return _rigidbody;
+            }
         }
 
         /// <summary>
-        /// Shorthand for <c>transform.localPosition</c>.
-        /// Gets or sets the position of the transform relative to the parent transform.
+        /// The Animator that controls the GameObject the HouraiBehaviour is attached to.
         /// </summary>
-        public Vector3 localPosition {
-            get { return transform.localPosition; }
-            set { transform.localPosition = value; }
+        public Animator Animator {
+            get {
+                if (!_animator)
+#if UNITY_EDITOR
+                    if (Application.isPlaying)
+                        _animator = GetComponentInParent<Animator>();
+                    else
+                        _animator = GetComponent<Animator>();
+#else
+                    _animator = GetComponentInParent<Animator>();
+#endif
+                return _animator;
+            }
         }
 
-        /// <summary>
-        /// Shorthand for <c>transform.rotation</c>.
-        /// Gets or sets the rotation of the transform in world space stored as a Quaternion.
-        /// </summary>
-        public Quaternion rotation {
-            get { return transform.rotation; }
-            set { transform.rotation = value; }
-        }
+#endregion
 
-        /// <summary>
-        /// Shorthand for <c>transform.localRotation</c>.
-        /// </summary>
-        public Quaternion localRotation {
-            get { return transform.localRotation; }
-            set { transform.localRotation = value; }
-        }
-
-        public Vector3 localScale {
-            get { return transform.localScale; }
-            set { transform.localScale = value; }
-        }
-
-        public Vector3 lossyScale {
-            get { return transform.lossyScale; }
-        }
-
-        public Vector3 eulerAngles {
-            get { return transform.eulerAngles; }
-            set { transform.eulerAngles = value; }
-        }
-
-        public Vector3 localEulerAngles {
-            get { return transform.localEulerAngles; }
-            set { transform.localEulerAngles = value; }
-        }
-
-        public Vector3 up {
-            get { return transform.up; }
-            set { transform.up = value; }
-        }
-
-        public Vector3 forward {
-            get { return transform.forward; }
-            set { transform.forward = value; }
-        }
-
-        public Vector3 right {
-            get { return transform.right; }
-            set { transform.right = value; }
-        }
-
-        public Vector3 down {
-            get { return -transform.up; }
-            set { transform.up = -value; }
-        }
-
-        public Vector3 back {
-            get { return -transform.forward; }
-            set { transform.forward = -value; }
-        }
-
-        public Vector3 left {
-            get { return -transform.right; }
-            set { transform.right = -value; }
-        }
-
-        public Transform parentTransform {
-            get { return transform.parent; }
-            set { transform.parent = value; }
-        }
-
-        #endregion
-
-        #region Transform Functions
-
-        public void Rotate(float x, float y, float z) {
-            transform.Rotate(x, y, z);
-        }
-
-        public void Rotate(Vector3 eulerRotation) {
-            transform.Rotate(eulerRotation);
-        }
-
-        #endregion
-
-        #region GameObject Properties
-
-        public int layer {
-            get { return gameObject.layer; }
-            set { gameObject.layer = value; }
-        }
-
-        public GameObject parentObject {
-            get { return transform.parent ? transform.parent.gameObject : null; }
-            set { transform.parent = value ? null : value.transform; }
-        }
-
-        #endregion
     }
 
 }

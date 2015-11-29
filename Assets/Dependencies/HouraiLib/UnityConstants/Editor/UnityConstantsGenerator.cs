@@ -17,7 +17,6 @@ namespace UnityToolbag
         [MenuItem("Edit/Generate UnityConstants.cs")]
         public static void Generate()
         {
-            Debug.Log("Generate");
             // Try to find an existing file in the project called "UnityConstants.cs"
             string filePath = string.Empty;
             foreach (var file in Directory.GetFiles(Application.dataPath, "*.cs", SearchOption.AllDirectories)) {

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
@@ -20,7 +19,7 @@ namespace Hourai.SmashBrew.UI {
                 Image.enabled = false;
             } else {
                 Image.enabled = true;
-                Image.sprite = data.Character.Icon;
+                Image.sprite = data.Character.Icon.Load();
             }
         }
 

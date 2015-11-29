@@ -178,33 +178,101 @@ namespace UnityConstants
     public static class Axes
     {
         /// <summary>
-        /// Input axis 'horizontal'.
+        /// Input axis 'Player 1 Horizontal'.
         /// </summary>
-        public const string horizontal = "horizontal";
+        public const string Player_1_Horizontal = "Player 1 Horizontal";
         /// <summary>
-        /// Input axis 'jump'.
+        /// Input axis 'Player 1 Vertical'.
         /// </summary>
-        public const string jump = "jump";
+        public const string Player_1_Vertical = "Player 1 Vertical";
         /// <summary>
-        /// Input axis 'vertical'.
+        /// Input axis 'Player 1 Jump'.
         /// </summary>
-        public const string vertical = "vertical";
+        public const string Player_1_Jump = "Player 1 Jump";
         /// <summary>
-        /// Input axis 'crouch'.
+        /// Input axis 'Player 1 Attack'.
         /// </summary>
-        public const string crouch = "crouch";
+        public const string Player_1_Attack = "Player 1 Attack";
         /// <summary>
-        /// Input axis 'attack'.
+        /// Input axis 'Player 1 Special'.
         /// </summary>
-        public const string attack = "attack";
+        public const string Player_1_Special = "Player 1 Special";
         /// <summary>
-        /// Input axis 'special'.
+        /// Input axis 'Player 1 Shield'.
         /// </summary>
-        public const string special = "special";
+        public const string Player_1_Shield = "Player 1 Shield";
         /// <summary>
-        /// Input axis 'shield'.
+        /// Input axis 'Player 2 Horizontal'.
         /// </summary>
-        public const string shield = "shield";
+        public const string Player_2_Horizontal = "Player 2 Horizontal";
+        /// <summary>
+        /// Input axis 'Player 2 Vertical'.
+        /// </summary>
+        public const string Player_2_Vertical = "Player 2 Vertical";
+        /// <summary>
+        /// Input axis 'Player 2 Jump'.
+        /// </summary>
+        public const string Player_2_Jump = "Player 2 Jump";
+        /// <summary>
+        /// Input axis 'Player 2 Attack'.
+        /// </summary>
+        public const string Player_2_Attack = "Player 2 Attack";
+        /// <summary>
+        /// Input axis 'Player 2 Special'.
+        /// </summary>
+        public const string Player_2_Special = "Player 2 Special";
+        /// <summary>
+        /// Input axis 'Player 2 Shield'.
+        /// </summary>
+        public const string Player_2_Shield = "Player 2 Shield";
+        /// <summary>
+        /// Input axis 'Player 3 Horizontal'.
+        /// </summary>
+        public const string Player_3_Horizontal = "Player 3 Horizontal";
+        /// <summary>
+        /// Input axis 'Player 3 Vertical'.
+        /// </summary>
+        public const string Player_3_Vertical = "Player 3 Vertical";
+        /// <summary>
+        /// Input axis 'Player 3 Jump'.
+        /// </summary>
+        public const string Player_3_Jump = "Player 3 Jump";
+        /// <summary>
+        /// Input axis 'Player 3 Attack'.
+        /// </summary>
+        public const string Player_3_Attack = "Player 3 Attack";
+        /// <summary>
+        /// Input axis 'Player 3 Special'.
+        /// </summary>
+        public const string Player_3_Special = "Player 3 Special";
+        /// <summary>
+        /// Input axis 'Player 3 Shield'.
+        /// </summary>
+        public const string Player_3_Shield = "Player 3 Shield";
+        /// <summary>
+        /// Input axis 'Player 4 Horizontal'.
+        /// </summary>
+        public const string Player_4_Horizontal = "Player 4 Horizontal";
+        /// <summary>
+        /// Input axis 'Player 4 Vertical'.
+        /// </summary>
+        public const string Player_4_Vertical = "Player 4 Vertical";
+        /// <summary>
+        /// Input axis 'Player 4 Jump'.
+        /// </summary>
+        public const string Player_4_Jump = "Player 4 Jump";
+        /// <summary>
+        /// Input axis 'Player 4 Attack'.
+        /// </summary>
+        public const string Player_4_Attack = "Player 4 Attack";
+        /// <summary>
+        /// Input axis 'Player 4 Special'.
+        /// </summary>
+        public const string Player_4_Special = "Player 4 Special";
+        /// <summary>
+        /// Input axis 'Player 4 Shield'.
+        /// </summary>
+        public const string Player_4_Shield = "Player 4 Shield";
     }
 }
 

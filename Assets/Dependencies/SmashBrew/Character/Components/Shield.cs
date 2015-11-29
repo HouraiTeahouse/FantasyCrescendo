@@ -30,6 +30,7 @@ namespace Hourai.SmashBrew {
 
         private GameObject _shieldObj;
         private Transform _shieldTransform;
+        private PlayerController _playerController;
 
         public event Action OnShieldBreak;
 
@@ -59,10 +60,12 @@ namespace Hourai.SmashBrew {
             render.useLightProbes = false;
 
             // Make sure the Color of the shield matches the HumanPlayer
-            Color shieldColor = Character.Player.Color;
-            shieldColor.a = _shieldMaterial.color.a;
-            render.material.color = shieldColor;
-
+            var player = GetComponentInParent<PlayerController>();
+            if (player != null && player.PlayerData != null) {
+                Color shieldColor = player.PlayerData.Color;
+                shieldColor.a = _shieldMaterial.color.a;
+                render.material.color = shieldColor;
+            }
             _shieldObj.SetActive(false);
 
             _currentHP = _maxHP;

@@ -1,12 +1,11 @@
-﻿using Hourai;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     [RequireComponent(typeof(Rigidbody), typeof(Grounding))]
-    public class Falling : MonoBehaviour {
+    public class Falling : HouraiBehaviour {
 
         [SerializeField]
         private float _fastFallSpeed = 9f;
@@ -14,7 +13,6 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private float _maxFallSpeed = 5f;
 
-        private Rigidbody _rigidbody;
         private Grounding _grounded;
         private bool _fastFall;
 
@@ -26,8 +24,8 @@ namespace Hourai.SmashBrew {
             get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
-        void Awake() {
-            _rigidbody = GetComponent<Rigidbody>();
+        protected override void Awake() {
+            base.Awake();
             _grounded = GetComponent<Grounding>();
             _grounded.OnGrounded += OnGrounded;
         }
@@ -38,7 +36,7 @@ namespace Hourai.SmashBrew {
         }
 
         void FixedUpdate() {
-            Vector3 velocity = _rigidbody.velocity;
+            Vector3 velocity = Rigidbody.velocity;
             
             //if (!IsFastFalling && InputSource != null && InputSource.Movement.y < 0)
             //    _fastFall = true;
@@ -46,7 +44,7 @@ namespace Hourai.SmashBrew {
             if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;
 
-            _rigidbody.velocity = velocity;
+            Rigidbody.velocity = velocity;
         }
 
     }

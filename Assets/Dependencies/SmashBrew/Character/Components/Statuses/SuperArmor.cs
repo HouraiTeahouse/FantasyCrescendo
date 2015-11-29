@@ -9,7 +9,7 @@ namespace Hourai.SmashBrew {
     public sealed class SuperArmor : Status {
 
         private CharacterKnockback _knockback;
-
+        
         void Awake() {
             _knockback = GetComponent<CharacterKnockback>();
         }

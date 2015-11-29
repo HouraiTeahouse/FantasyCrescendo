@@ -8,7 +8,7 @@ namespace Hourai.SmashBrew {
 
         private Damage _damage;
 
-        void Start() {
+        protected override void Start() {
             _damage = GetComponent<Damage>();
             if(_damage)
                 _damage.DefensiveModifiers.Add(InvincibilityModifier, int.MaxValue);

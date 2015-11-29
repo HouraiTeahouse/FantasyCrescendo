@@ -6,7 +6,7 @@ namespace Hourai.SmashBrew {
 
     [RequiredCharacterComponent]
     [RequireComponent(typeof(Rigidbody))]
-    public class CharacterKnockback : MonoBehaviour, IKnockbackable {
+    public class CharacterKnockback : HouraiBehaviour, IKnockbackable {
         
         private ModifierList<Vector2> _defensiveModifiers;
 
@@ -16,10 +16,8 @@ namespace Hourai.SmashBrew {
 
         public event Action<Vector2> OnKnockback;
 
-        private Rigidbody _rigidbody;
-
-        void Start() {
-            _rigidbody = GetComponent<Rigidbody>();
+        protected override void Awake() {
+            base.Awake();
             _defensiveModifiers = new ModifierList<Vector2>();
         }
 

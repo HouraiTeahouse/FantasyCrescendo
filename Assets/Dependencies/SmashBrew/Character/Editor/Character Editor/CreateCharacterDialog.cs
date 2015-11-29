@@ -62,7 +62,7 @@ namespace Hourai.SmashBrew.Editor {
             else
                 prefabSource = _sourceObject.gameObject;
 
-            Character c = prefabSource.GetComponent<Character>();
+            var c = prefabSource.GetComponent<Character>();
 
             if (c == null)
                 c = prefabSource.AddComponent<Character>();

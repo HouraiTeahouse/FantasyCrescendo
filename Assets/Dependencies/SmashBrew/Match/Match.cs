@@ -9,45 +9,14 @@ namespace Hourai.SmashBrew {
 
     public static class Match {
 
-        private static Config config;
-
         static Match() {
-            config = Config.Instance;
             _matchRules = new List<IMatchRule>();
-            _selected = new Player[config.MaxPlayers];
-            for (var i = 0; i < config.MaxPlayers; i++)
-                _selected[i] = new Player(i);
-        }
-
-        public static Player GetPlayerData(int playerNumber) {
-            if (playerNumber < 0 || playerNumber >= config.MaxPlayers)
-                throw new ArgumentException("playerNumber");
-            return _selected[playerNumber];
-        }
-
-        public static IEnumerable<Player> Players {
-            get {
-                foreach (var player in _selected)
-                    yield return player;
-            }
-        }
-
-        public static IEnumerable<Player> ActivePlayers {
-            get { return _selected.Where(player => player.Type != Player.PlayerType.Disabled); }
         }
 
         public static event Action OnMatchStart;
         public static event Action<Player> OnSpawnCharacter;
         
-        private static List<IMatchRule> _matchRules;
-        private static Player[] _selected;
-
-        /// <summary>
-        /// The current number of Players selected.
-        /// </summary>
-        public static int PlayerCount {
-            get { return ActivePlayers.Count(); }
-        }
+        private static readonly List<IMatchRule> _matchRules;
 
         /// <summary>
         /// Whether or not there is currently a match being executed.
@@ -84,7 +53,7 @@ namespace Hourai.SmashBrew {
             if (InMatch)
                 return;
 
-            if (Stage.Instance == null || PlayerCount > Stage.SupportedPlayerCount ) {
+            if (Stage.Instance == null || SmashGame.ActivePlayerCount > Stage.SupportedPlayerCount ) {
                 throw new InvalidOperationException(
                     "Cannot start a match when there are more players participating than supported by the selected stage");
             }
@@ -95,7 +64,7 @@ namespace Hourai.SmashBrew {
             // Spawn players
             var currentPlayer = 0;
 
-            foreach(Player player in ActivePlayers) {
+            foreach(Player player in SmashGame.ActivePlayers) {
                 Transform spawnPoint = Stage.GetSpawnPoint(currentPlayer);
                 Character runtimeCharacter = player.Spawn(spawnPoint);
                 if (runtimeCharacter == null)

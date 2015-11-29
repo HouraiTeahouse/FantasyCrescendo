@@ -5,13 +5,11 @@ namespace Hourai.SmashBrew {
     [RequiredCharacterComponent]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
-    public sealed class Gravity : MonoBehaviour
+    public sealed class Gravity : HouraiBehaviour
     {
 
         [SerializeField]
         private float _gravity = 9.86f;
-
-        private Rigidbody _rigidbody;
 
         public float GravityForce
         {
@@ -19,12 +17,8 @@ namespace Hourai.SmashBrew {
             set { _gravity = Mathf.Abs(value); }
         }
 
-        void Awake() {
-            _rigidbody = GetComponent<Rigidbody>();
-        }
-
         void FixedUpdate() {
-            _rigidbody.AddForce(-Vector3.up * _gravity);
+            Rigidbody.AddForce(-Vector3.up * _gravity);
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -49,6 +50,12 @@ namespace Hourai.Editor {
             if(asset == null)
                 asset = ScriptableObject.CreateInstance<T>();
             ProjectWindowUtil.CreateAsset(asset, "New " + typeof(T).Name + ".asset");
+        }
+
+        public static string GetAssetFolderPath(Object asset) {
+            if(!asset)
+                throw new ArgumentNullException("asset");
+            return Regex.Replace(AssetDatabase.GetAssetPath(asset), "(Assets)+/(.*)/.*?\\..*", "$2");
         }
         
         public static bool IsAsset(this Object obj) {
