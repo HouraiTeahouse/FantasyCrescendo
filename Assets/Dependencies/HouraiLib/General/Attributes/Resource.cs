@@ -8,11 +8,15 @@ namespace Hourai {
     public class Resource<T> where T : Object {
 
         [SerializeField]
-        private string _path;
+        private readonly string _path;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
         public Resource(string path) {
             if (path == null)
-                throw new ArgumentNullException("path");
+                path = string.Empty;
             _path = path;
         }
 

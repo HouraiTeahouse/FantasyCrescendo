@@ -11,10 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
   m_Name: marisa_kirisame_data
   m_EditorClassIdentifier: 
-  alternatives:
-  - _prefab: Characters/1_Marisa/Marisa
-    _portrait: {fileID: 21300000, guid: 7b3dd8f611f122241a938e13b042c22f, type: 3}
-  icon: {fileID: 21300000, guid: 090eefacb1c6e26439e75fb05c8ea4d1, type: 3}
-  announcerKey: 
   _firstNameKey: Marisa
   _lastNameKey: Kirisame
+  alternatives:
+  - _prefab: Characters/1_Marisa/Marisa
+    _portrait: Characters/1_Marisa/UI/cropped
+  _icon: Characters/1_Marisa/UI/marisa_white

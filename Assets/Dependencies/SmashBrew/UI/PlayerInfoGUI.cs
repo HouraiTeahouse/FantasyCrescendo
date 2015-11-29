@@ -33,7 +33,7 @@ namespace Hourai.SmashBrew.UI {
                 if (playerIndicatorPrefab)
                 {
                     PlayerIndicator indicator = Instantiate(playerIndicatorPrefab);
-                    indicator.Target = players.Current.SpawnedCharacter;
+                    indicator.Target = players.Current;
                 }
 
                 display.SetActive(true);

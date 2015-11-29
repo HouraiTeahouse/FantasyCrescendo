@@ -54,7 +54,6 @@ namespace Hourai.Editor {
                     }
                 }
             }
-            //EditorGUI.LabelField(position, GUI.tooltip);
             property.stringValue = path;
 
             EditorGUI.EndProperty();

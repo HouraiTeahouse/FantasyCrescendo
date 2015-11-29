@@ -7,7 +7,7 @@ namespace Hourai.SmashBrew.UI {
     public sealed class PlayerIndicator : MonoBehaviour {
 
         [SerializeField]
-        private Vector3 positionBias = new Vector3(0f, 1f, 0f);
+        private Vector3 _positionBias = new Vector3(0f, 1f, 0f);
 
         [SerializeField]
         private string _format;
@@ -16,14 +16,14 @@ namespace Hourai.SmashBrew.UI {
         private PlayerUiColor _cUIColor;
         private Text _text;
 
-        private Character _target;
+        private Player _target;
         private CapsuleCollider _collider;
 
-        public Character Target {
+        public Player Target {
             get { return _target; }
             set {
                 _target = value;
-                _collider = _target ? _target.MovementCollider : null;
+                _collider = (_target != null)? _target.SpawnedCharacter.MovementCollider : null;
             }
         }
 
@@ -44,11 +44,11 @@ namespace Hourai.SmashBrew.UI {
                 return;
             }
 
-            _text.text = (Target.Player.PlayerNumber + 1).ToString(_format);
-            _cUIColor.SetPlayerData(Target.Player);
+            _text.text = (Target.PlayerNumber + 1).ToString(_format);
+            _cUIColor.SetPlayerData(Target);
 
             Bounds bounds = _collider.bounds;
-            Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + positionBias;
+            Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + _positionBias;
             _rTransform.position = CameraController.Camera.WorldToScreenPoint(worldPosition);
             
         }

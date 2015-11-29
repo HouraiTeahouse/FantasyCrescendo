@@ -6,19 +6,16 @@ namespace Hourai.SmashBrew {
     public class CharacterData : ScriptableObject {
 
         [SerializeField]
-        private Alternative[] alternatives;
-
-        [SerializeField, Resource(typeof(Sprite))]
-        private string _icon;
-
-        [SerializeField]
-        private string announcerKey;
-
-        [SerializeField]
         private string _firstNameKey;
 
         [SerializeField]
         private string _lastNameKey;
+
+        [SerializeField]
+        private Alternative[] alternatives;
+
+        [SerializeField, Resource(typeof(Sprite))]
+        private string _icon;
 
         private Resource<Sprite> _iconResource; 
 

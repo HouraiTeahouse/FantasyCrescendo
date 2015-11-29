@@ -40,7 +40,7 @@ namespace Hourai.SmashBrew {
         }
 
         public static IEnumerable<Player> ActivePlayers {
-            get { return _players.Where(player => player.Type != Player.PlayerType.Disabled); }
+            get { return _players.Where(player => player.Type != Player.PlayerType.None); }
         }
 
         public static int MaxPlayers {

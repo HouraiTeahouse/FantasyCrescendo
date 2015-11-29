@@ -178,405 +178,101 @@ namespace UnityConstants
     public static class Axes
     {
         /// <summary>
-        /// Input axis '0_1'.
+        /// Input axis 'Player 1 Horizontal'.
         /// </summary>
-        public const string _0_1 = "0_1";
+        public const string Player_1_Horizontal = "Player 1 Horizontal";
         /// <summary>
-        /// Input axis '0_2'.
+        /// Input axis 'Player 1 Vertical'.
         /// </summary>
-        public const string _0_2 = "0_2";
+        public const string Player_1_Vertical = "Player 1 Vertical";
         /// <summary>
-        /// Input axis '0_3'.
+        /// Input axis 'Player 1 Jump'.
         /// </summary>
-        public const string _0_3 = "0_3";
+        public const string Player_1_Jump = "Player 1 Jump";
         /// <summary>
-        /// Input axis '0_4'.
+        /// Input axis 'Player 1 Attack'.
         /// </summary>
-        public const string _0_4 = "0_4";
+        public const string Player_1_Attack = "Player 1 Attack";
         /// <summary>
-        /// Input axis '0_5'.
+        /// Input axis 'Player 1 Special'.
         /// </summary>
-        public const string _0_5 = "0_5";
+        public const string Player_1_Special = "Player 1 Special";
         /// <summary>
-        /// Input axis '0_6'.
+        /// Input axis 'Player 1 Shield'.
         /// </summary>
-        public const string _0_6 = "0_6";
+        public const string Player_1_Shield = "Player 1 Shield";
         /// <summary>
-        /// Input axis '0_7'.
+        /// Input axis 'Player 2 Horizontal'.
         /// </summary>
-        public const string _0_7 = "0_7";
+        public const string Player_2_Horizontal = "Player 2 Horizontal";
         /// <summary>
-        /// Input axis '0_8'.
+        /// Input axis 'Player 2 Vertical'.
         /// </summary>
-        public const string _0_8 = "0_8";
+        public const string Player_2_Vertical = "Player 2 Vertical";
         /// <summary>
-        /// Input axis '0_9'.
+        /// Input axis 'Player 2 Jump'.
         /// </summary>
-        public const string _0_9 = "0_9";
+        public const string Player_2_Jump = "Player 2 Jump";
         /// <summary>
-        /// Input axis '0_10'.
+        /// Input axis 'Player 2 Attack'.
         /// </summary>
-        public const string _0_10 = "0_10";
+        public const string Player_2_Attack = "Player 2 Attack";
         /// <summary>
-        /// Input axis '0_11'.
+        /// Input axis 'Player 2 Special'.
         /// </summary>
-        public const string _0_11 = "0_11";
+        public const string Player_2_Special = "Player 2 Special";
         /// <summary>
-        /// Input axis '0_12'.
+        /// Input axis 'Player 2 Shield'.
         /// </summary>
-        public const string _0_12 = "0_12";
+        public const string Player_2_Shield = "Player 2 Shield";
         /// <summary>
-        /// Input axis '0_13'.
+        /// Input axis 'Player 3 Horizontal'.
         /// </summary>
-        public const string _0_13 = "0_13";
+        public const string Player_3_Horizontal = "Player 3 Horizontal";
         /// <summary>
-        /// Input axis '0_14'.
+        /// Input axis 'Player 3 Vertical'.
         /// </summary>
-        public const string _0_14 = "0_14";
+        public const string Player_3_Vertical = "Player 3 Vertical";
         /// <summary>
-        /// Input axis '0_15'.
+        /// Input axis 'Player 3 Jump'.
         /// </summary>
-        public const string _0_15 = "0_15";
+        public const string Player_3_Jump = "Player 3 Jump";
         /// <summary>
-        /// Input axis '0_16'.
+        /// Input axis 'Player 3 Attack'.
         /// </summary>
-        public const string _0_16 = "0_16";
+        public const string Player_3_Attack = "Player 3 Attack";
         /// <summary>
-        /// Input axis '0_17'.
+        /// Input axis 'Player 3 Special'.
         /// </summary>
-        public const string _0_17 = "0_17";
+        public const string Player_3_Special = "Player 3 Special";
         /// <summary>
-        /// Input axis '0_18'.
+        /// Input axis 'Player 3 Shield'.
         /// </summary>
-        public const string _0_18 = "0_18";
+        public const string Player_3_Shield = "Player 3 Shield";
         /// <summary>
-        /// Input axis '0_19'.
+        /// Input axis 'Player 4 Horizontal'.
         /// </summary>
-        public const string _0_19 = "0_19";
+        public const string Player_4_Horizontal = "Player 4 Horizontal";
         /// <summary>
-        /// Input axis '0_20'.
+        /// Input axis 'Player 4 Vertical'.
         /// </summary>
-        public const string _0_20 = "0_20";
+        public const string Player_4_Vertical = "Player 4 Vertical";
         /// <summary>
-        /// Input axis '1_1'.
+        /// Input axis 'Player 4 Jump'.
         /// </summary>
-        public const string _1_1 = "1_1";
+        public const string Player_4_Jump = "Player 4 Jump";
         /// <summary>
-        /// Input axis '1_2'.
+        /// Input axis 'Player 4 Attack'.
         /// </summary>
-        public const string _1_2 = "1_2";
+        public const string Player_4_Attack = "Player 4 Attack";
         /// <summary>
-        /// Input axis '1_3'.
+        /// Input axis 'Player 4 Special'.
         /// </summary>
-        public const string _1_3 = "1_3";
+        public const string Player_4_Special = "Player 4 Special";
         /// <summary>
-        /// Input axis '1_4'.
+        /// Input axis 'Player 4 Shield'.
         /// </summary>
-        public const string _1_4 = "1_4";
-        /// <summary>
-        /// Input axis '1_5'.
-        /// </summary>
-        public const string _1_5 = "1_5";
-        /// <summary>
-        /// Input axis '1_6'.
-        /// </summary>
-        public const string _1_6 = "1_6";
-        /// <summary>
-        /// Input axis '1_7'.
-        /// </summary>
-        public const string _1_7 = "1_7";
-        /// <summary>
-        /// Input axis '1_8'.
-        /// </summary>
-        public const string _1_8 = "1_8";
-        /// <summary>
-        /// Input axis '1_9'.
-        /// </summary>
-        public const string _1_9 = "1_9";
-        /// <summary>
-        /// Input axis '1_10'.
-        /// </summary>
-        public const string _1_10 = "1_10";
-        /// <summary>
-        /// Input axis '1_11'.
-        /// </summary>
-        public const string _1_11 = "1_11";
-        /// <summary>
-        /// Input axis '1_12'.
-        /// </summary>
-        public const string _1_12 = "1_12";
-        /// <summary>
-        /// Input axis '1_13'.
-        /// </summary>
-        public const string _1_13 = "1_13";
-        /// <summary>
-        /// Input axis '1_14'.
-        /// </summary>
-        public const string _1_14 = "1_14";
-        /// <summary>
-        /// Input axis '1_15'.
-        /// </summary>
-        public const string _1_15 = "1_15";
-        /// <summary>
-        /// Input axis '1_16'.
-        /// </summary>
-        public const string _1_16 = "1_16";
-        /// <summary>
-        /// Input axis '1_17'.
-        /// </summary>
-        public const string _1_17 = "1_17";
-        /// <summary>
-        /// Input axis '1_18'.
-        /// </summary>
-        public const string _1_18 = "1_18";
-        /// <summary>
-        /// Input axis '1_19'.
-        /// </summary>
-        public const string _1_19 = "1_19";
-        /// <summary>
-        /// Input axis '1_20'.
-        /// </summary>
-        public const string _1_20 = "1_20";
-        /// <summary>
-        /// Input axis '2_1'.
-        /// </summary>
-        public const string _2_1 = "2_1";
-        /// <summary>
-        /// Input axis '2_2'.
-        /// </summary>
-        public const string _2_2 = "2_2";
-        /// <summary>
-        /// Input axis '2_3'.
-        /// </summary>
-        public const string _2_3 = "2_3";
-        /// <summary>
-        /// Input axis '2_4'.
-        /// </summary>
-        public const string _2_4 = "2_4";
-        /// <summary>
-        /// Input axis '2_5'.
-        /// </summary>
-        public const string _2_5 = "2_5";
-        /// <summary>
-        /// Input axis '2_6'.
-        /// </summary>
-        public const string _2_6 = "2_6";
-        /// <summary>
-        /// Input axis '2_7'.
-        /// </summary>
-        public const string _2_7 = "2_7";
-        /// <summary>
-        /// Input axis '2_8'.
-        /// </summary>
-        public const string _2_8 = "2_8";
-        /// <summary>
-        /// Input axis '2_9'.
-        /// </summary>
-        public const string _2_9 = "2_9";
-        /// <summary>
-        /// Input axis '2_10'.
-        /// </summary>
-        public const string _2_10 = "2_10";
-        /// <summary>
-        /// Input axis '2_11'.
-        /// </summary>
-        public const string _2_11 = "2_11";
-        /// <summary>
-        /// Input axis '2_12'.
-        /// </summary>
-        public const string _2_12 = "2_12";
-        /// <summary>
-        /// Input axis '2_13'.
-        /// </summary>
-        public const string _2_13 = "2_13";
-        /// <summary>
-        /// Input axis '2_14'.
-        /// </summary>
-        public const string _2_14 = "2_14";
-        /// <summary>
-        /// Input axis '2_15'.
-        /// </summary>
-        public const string _2_15 = "2_15";
-        /// <summary>
-        /// Input axis '2_16'.
-        /// </summary>
-        public const string _2_16 = "2_16";
-        /// <summary>
-        /// Input axis '2_17'.
-        /// </summary>
-        public const string _2_17 = "2_17";
-        /// <summary>
-        /// Input axis '2_18'.
-        /// </summary>
-        public const string _2_18 = "2_18";
-        /// <summary>
-        /// Input axis '2_19'.
-        /// </summary>
-        public const string _2_19 = "2_19";
-        /// <summary>
-        /// Input axis '2_20'.
-        /// </summary>
-        public const string _2_20 = "2_20";
-        /// <summary>
-        /// Input axis '3_1'.
-        /// </summary>
-        public const string _3_1 = "3_1";
-        /// <summary>
-        /// Input axis '3_2'.
-        /// </summary>
-        public const string _3_2 = "3_2";
-        /// <summary>
-        /// Input axis '3_3'.
-        /// </summary>
-        public const string _3_3 = "3_3";
-        /// <summary>
-        /// Input axis '3_4'.
-        /// </summary>
-        public const string _3_4 = "3_4";
-        /// <summary>
-        /// Input axis '3_5'.
-        /// </summary>
-        public const string _3_5 = "3_5";
-        /// <summary>
-        /// Input axis '3_6'.
-        /// </summary>
-        public const string _3_6 = "3_6";
-        /// <summary>
-        /// Input axis '3_7'.
-        /// </summary>
-        public const string _3_7 = "3_7";
-        /// <summary>
-        /// Input axis '3_8'.
-        /// </summary>
-        public const string _3_8 = "3_8";
-        /// <summary>
-        /// Input axis '3_9'.
-        /// </summary>
-        public const string _3_9 = "3_9";
-        /// <summary>
-        /// Input axis '3_10'.
-        /// </summary>
-        public const string _3_10 = "3_10";
-        /// <summary>
-        /// Input axis '3_11'.
-        /// </summary>
-        public const string _3_11 = "3_11";
-        /// <summary>
-        /// Input axis '3_12'.
-        /// </summary>
-        public const string _3_12 = "3_12";
-        /// <summary>
-        /// Input axis '3_13'.
-        /// </summary>
-        public const string _3_13 = "3_13";
-        /// <summary>
-        /// Input axis '3_14'.
-        /// </summary>
-        public const string _3_14 = "3_14";
-        /// <summary>
-        /// Input axis '3_15'.
-        /// </summary>
-        public const string _3_15 = "3_15";
-        /// <summary>
-        /// Input axis '3_16'.
-        /// </summary>
-        public const string _3_16 = "3_16";
-        /// <summary>
-        /// Input axis '3_17'.
-        /// </summary>
-        public const string _3_17 = "3_17";
-        /// <summary>
-        /// Input axis '3_18'.
-        /// </summary>
-        public const string _3_18 = "3_18";
-        /// <summary>
-        /// Input axis '3_19'.
-        /// </summary>
-        public const string _3_19 = "3_19";
-        /// <summary>
-        /// Input axis '3_20'.
-        /// </summary>
-        public const string _3_20 = "3_20";
-        /// <summary>
-        /// Input axis '4_1'.
-        /// </summary>
-        public const string _4_1 = "4_1";
-        /// <summary>
-        /// Input axis '4_2'.
-        /// </summary>
-        public const string _4_2 = "4_2";
-        /// <summary>
-        /// Input axis '4_3'.
-        /// </summary>
-        public const string _4_3 = "4_3";
-        /// <summary>
-        /// Input axis '4_4'.
-        /// </summary>
-        public const string _4_4 = "4_4";
-        /// <summary>
-        /// Input axis '4_5'.
-        /// </summary>
-        public const string _4_5 = "4_5";
-        /// <summary>
-        /// Input axis '4_6'.
-        /// </summary>
-        public const string _4_6 = "4_6";
-        /// <summary>
-        /// Input axis '4_7'.
-        /// </summary>
-        public const string _4_7 = "4_7";
-        /// <summary>
-        /// Input axis '4_8'.
-        /// </summary>
-        public const string _4_8 = "4_8";
-        /// <summary>
-        /// Input axis '4_9'.
-        /// </summary>
-        public const string _4_9 = "4_9";
-        /// <summary>
-        /// Input axis '4_10'.
-        /// </summary>
-        public const string _4_10 = "4_10";
-        /// <summary>
-        /// Input axis '4_11'.
-        /// </summary>
-        public const string _4_11 = "4_11";
-        /// <summary>
-        /// Input axis '4_12'.
-        /// </summary>
-        public const string _4_12 = "4_12";
-        /// <summary>
-        /// Input axis '4_13'.
-        /// </summary>
-        public const string _4_13 = "4_13";
-        /// <summary>
-        /// Input axis '4_14'.
-        /// </summary>
-        public const string _4_14 = "4_14";
-        /// <summary>
-        /// Input axis '4_15'.
-        /// </summary>
-        public const string _4_15 = "4_15";
-        /// <summary>
-        /// Input axis '4_16'.
-        /// </summary>
-        public const string _4_16 = "4_16";
-        /// <summary>
-        /// Input axis '4_17'.
-        /// </summary>
-        public const string _4_17 = "4_17";
-        /// <summary>
-        /// Input axis '4_18'.
-        /// </summary>
-        public const string _4_18 = "4_18";
-        /// <summary>
-        /// Input axis '4_19'.
-        /// </summary>
-        public const string _4_19 = "4_19";
-        /// <summary>
-        /// Input axis '4_20'.
-        /// </summary>
-        public const string _4_20 = "4_20";
+        public const string Player_4_Shield = "Player 4 Shield";
     }
 }
 

@@ -40,9 +40,6 @@ namespace Hourai.SmashBrew {
         }
 
         #region Public Properties
-
-        public Player Player { get; internal set; }
-
         public ModifierList DamageDealt {
             get; private set;
         }

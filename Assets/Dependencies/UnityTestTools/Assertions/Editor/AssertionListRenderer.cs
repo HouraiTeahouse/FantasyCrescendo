@@ -205,7 +205,7 @@ namespace UnityTest
 
             EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Disabled",
+            EditorGUILayout.LabelField("None",
                                        GUILayout.Width(55));
             assertionComponent.enabled = !EditorGUILayout.Toggle(!assertionComponent.enabled,
                                                                  GUILayout.Width(15));

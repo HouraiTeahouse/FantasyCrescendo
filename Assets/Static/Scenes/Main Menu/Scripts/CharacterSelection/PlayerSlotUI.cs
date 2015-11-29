@@ -49,21 +49,11 @@ namespace Hourai.SmashBrew.UI {
             }
 
             type = pt;
-            levelTextParent.SetActive(type != Player.PlayerType.Disabled);
-            switch (type) {
-                case Player.PlayerType.CPU:
-                    buttonText.text = "CPU";
-                    break;
-                case Player.PlayerType.Disabled:
-                    buttonText.text = "NONE";
-                    break;
-                case Player.PlayerType.HumanPlayer:
-                    buttonText.text = "PLAYER " + (playerNumber + 1);
-                    break;
-                default:
-                    Debug.LogError("Invalid player type in player slot.");
-                    break;
-            }
+            levelTextParent.SetActive(type != Player.PlayerType.None);
+            string text = type.ToString().ToUpper();
+            if (type == Player.PlayerType.HumanPlayer)
+                text += " " + playerNumber;
+            buttonText.text = text;
         }
 
         public void changePlayerMode() {
