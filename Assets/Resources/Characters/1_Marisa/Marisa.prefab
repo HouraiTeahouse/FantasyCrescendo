@@ -219,6 +219,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 401602}
   - 137: {fileID: 13740974}
+  - 114: {fileID: 11435024}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Skirt
   m_TagString: Untagged
@@ -280,6 +281,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 456654}
   - 137: {fileID: 13770328}
+  - 114: {fileID: 11411634}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Bag
   m_TagString: Untagged
@@ -431,6 +433,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 417904}
   - 137: {fileID: 13703040}
+  - 114: {fileID: 11402490}
   m_Layer: 0
   m_Name: UpdateMesh_Broom
   m_TagString: Untagged
@@ -597,6 +600,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 441072}
   - 137: {fileID: 13735382}
+  - 114: {fileID: 11475874}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Hair
   m_TagString: Untagged
@@ -613,6 +617,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 484580}
   - 137: {fileID: 13728888}
+  - 114: {fileID: 11431302}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Body
   m_TagString: Untagged
@@ -1019,6 +1024,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 466246}
   - 137: {fileID: 13773418}
+  - 114: {fileID: 11471962}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Eye_Right
   m_TagString: Untagged
@@ -1125,6 +1131,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 404574}
   - 137: {fileID: 13772934}
+  - 114: {fileID: 11490056}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Teeth
   m_TagString: Untagged
@@ -1262,6 +1269,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 455254}
   - 137: {fileID: 13718314}
+  - 114: {fileID: 11410748}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Hat
   m_TagString: Untagged
@@ -1653,6 +1661,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 448168}
   - 137: {fileID: 13764104}
+  - 114: {fileID: 11487600}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Bow
   m_TagString: Untagged
@@ -1669,6 +1678,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 434846}
   - 137: {fileID: 13727162}
+  - 114: {fileID: 11445006}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_BraidBow
   m_TagString: Untagged
@@ -1835,6 +1845,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 413978}
   - 137: {fileID: 13791274}
+  - 114: {fileID: 11430138}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Head
   m_TagString: Untagged
@@ -2290,6 +2301,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 422932}
   - 137: {fileID: 13770366}
+  - 114: {fileID: 11498032}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Eye_Left
   m_TagString: Untagged
@@ -2456,6 +2468,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 483814}
   - 137: {fileID: 13784158}
+  - 114: {fileID: 11495114}
   m_Layer: 0
   m_Name: UpdateMesh_Marisa_Clothes
   m_TagString: Untagged
@@ -3959,7 +3972,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196198}
-  m_LocalRotation: {x: .704296947, y: .0168106798, z: .709426343, w: -.0199410021}
+  m_LocalRotation: {x: .704296887, y: .0168106779, z: .709426284, w: -.0199410003}
   m_LocalPosition: {x: .436120659, y: .0266445521, z: .571552992}
   m_LocalScale: {x: .611564934, y: .611565053, z: .611564994}
   m_Children:
@@ -4898,7 +4911,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.72409439, y: -.00733442605, z: .240519464}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 412412}
@@ -4975,6 +4988,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f531a7a0159cf5045b590f3067c53e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11402490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/broom_colors
+  - Characters/1_Marisa/Materials/broom_colors
+  - Characters/1_Marisa/Materials/broom_colors
+  - Characters/1_Marisa/Materials/broom_colors
 --- !u!114 &11404532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4998,6 +5027,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 578e91aade7ebbc40bda6f313f7c8f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11410748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 154196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/clothes_color
+  - 
+  - 
+  - 
+--- !u!114 &11411634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/clothes_color
+  - 
+  - 
+  - 
 --- !u!114 &11414030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5039,6 +5100,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2b94a0636e46c4cb96bd39320a06df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11430138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/skin_colorseam
+  - 
+  - 
+  - 
+--- !u!114 &11431302
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/skin_colorseam
+  - 
+  - 
+  - 
 --- !u!114 &11431784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5054,6 +5147,22 @@ MonoBehaviour:
   - 1.5
   - 1.5
   airJumpFX: {fileID: 0}
+--- !u!114 &11435024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/clothes_color
+  - 
+  - 
+  - 
 --- !u!114 &11439974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5066,6 +5175,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _localTimeScale: 1
+--- !u!114 &11445006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/clothes_color
+  - 
+  - 
+  - 
 --- !u!114 &11446238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5158,6 +5283,70 @@ MonoBehaviour:
     i15: 204
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &11471962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/eye color new
+  - 
+  - 
+  - 
+--- !u!114 &11475874
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/skin_colorseam
+  - 
+  - 
+  - 
+--- !u!114 &11487600
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/clothes_color
+  - 
+  - 
+  - 
+--- !u!114 &11490056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/lambert1
+  - 
+  - 
+  - 
 --- !u!114 &11493130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5171,6 +5360,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fastFallSpeed: 9
   _maxFallSpeed: 5
+--- !u!114 &11495114
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/clothes_color
+  - 
+  - 
+  - 
 --- !u!114 &11497270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5182,6 +5387,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe1aba9e43809c4c803427345e5f18a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11498032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 186162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alternativeMaterials:
+  - Characters/1_Marisa/Materials/eye color new
+  - 
+  - 
+  - 
 --- !u!136 &13668620
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -5205,7 +5426,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 049adafc8335d9e48ae0348187b70203, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5243,7 +5464,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 79b1ffb056e97f544a786b7ee3494886, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5279,7 +5500,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 79b1ffb056e97f544a786b7ee3494886, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5315,7 +5536,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: a8ee7c7147b36284a87fd7b6937d7d35, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5388,7 +5609,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: a8ee7c7147b36284a87fd7b6937d7d35, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5433,7 +5654,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 79b1ffb056e97f544a786b7ee3494886, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5487,7 +5708,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 79b1ffb056e97f544a786b7ee3494886, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5531,7 +5752,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 79b1ffb056e97f544a786b7ee3494886, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5568,7 +5789,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7579e08917eaba84198a75f20baee621, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5604,7 +5825,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 04b3e2ec54db4f449b2a82fe44dcb8ee, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5640,7 +5861,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7579e08917eaba84198a75f20baee621, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5676,7 +5897,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 79b1ffb056e97f544a786b7ee3494886, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5748,7 +5969,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: a8ee7c7147b36284a87fd7b6937d7d35, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
