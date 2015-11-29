@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _firstNameKey: Marisa
   _lastNameKey: Kirisame
-  alternatives:
-  - _prefab: Characters/1_Marisa/Marisa
-    _portrait: Characters/1_Marisa/UI/cropped
+  _alternativePortraits:
+  - Characters/1_Marisa/UI/cropped
+  _prefab: Characters/1_Marisa/Marisa
   _icon: Characters/1_Marisa/UI/marisa_white
