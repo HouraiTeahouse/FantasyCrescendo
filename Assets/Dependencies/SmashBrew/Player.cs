@@ -69,7 +69,7 @@ namespace Hourai.SmashBrew {
         }
 
         internal Character Spawn(Vector3 pos, Quaternion rot) {
-            Character prefab = Character.LoadPrefab(Pallete);
+            Character prefab = Character.LoadPrefab();
             if (prefab == null)
                 return null;
             SpawnedCharacter = prefab.Duplicate(pos, rot);

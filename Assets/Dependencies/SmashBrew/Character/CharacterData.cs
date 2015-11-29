@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -11,13 +12,18 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private string _lastNameKey;
 
-        [SerializeField]
-        private Alternative[] alternatives;
+        [SerializeField, Resource(typeof(Sprite))]
+        private string[] _alternativePortraits;
+
+        [SerializeField, Resource(typeof(GameObject))]
+        private string _prefab;
 
         [SerializeField, Resource(typeof(Sprite))]
         private string _icon;
 
-        private Resource<Sprite> _iconResource; 
+        private Resource<Sprite> _iconResource;
+        private Resource<GameObject> _prefabResource;
+        private Resource<Sprite>[] _portraitResources; 
 
         public string FirstName {
             get { return _firstNameKey; }
@@ -32,7 +38,7 @@ namespace Hourai.SmashBrew {
         }
 
         public int AlternativeCount {
-            get { return alternatives == null ? 0 : alternatives.Length; }
+            get { return _alternativePortraits == null ? 0 : _alternativePortraits.Length; }
         }
 
         public Resource<Sprite> Icon {
@@ -42,47 +48,21 @@ namespace Hourai.SmashBrew {
         public Sprite LoadPortrait(int alternativeChoice) {
             if (alternativeChoice < 0 || alternativeChoice >= AlternativeCount)
                 throw new ArgumentException();
-            return alternatives[alternativeChoice].Portrait.Load();
+            return _portraitResources[alternativeChoice].Load();
         }
 
-        public Character LoadPrefab(int alternativeChoice) {
-            if (alternativeChoice < 0 || alternativeChoice >= AlternativeCount)
-                throw new ArgumentException();
-            return alternatives[alternativeChoice].Prefab;
+        public Character LoadPrefab() {
+            return _prefabResource.Load().GetComponent<Character>();
         }
 
         private void OnEnable() {
-            if (alternatives == null)
+            if (_alternativePortraits == null)
                 return;
             _iconResource = new Resource<Sprite>(_icon);
-            foreach (Alternative alternative in alternatives)
-                alternative.Initialize();
-        }
-
-        [Serializable]
-        public class Alternative {
-      
-            [SerializeField, Resource(typeof(GameObject))]
-            private string _prefab;
-            private Resource<GameObject> _prefabResource;
-
-            [SerializeField, Resource(typeof(Sprite))]
-            private string _portrait;
-            private Resource<Sprite> _portraitResource; 
-
-            public Resource<Sprite> Portrait {
-                get { return _portraitResource;  }
-            }
-
-            public Character Prefab {
-                get { return _prefabResource.Load().GetComponent<Character>(); }
-            }
-
-            public void Initialize() {
-                _prefabResource = new Resource<GameObject>(_prefab);
-                _portraitResource = new Resource<Sprite>(_portrait);
-            }
-
+            _prefabResource = new Resource<GameObject>(_prefab);
+            _portraitResources = new Resource<Sprite>[_alternativePortraits.Length];
+            for(var i = 0; i < _alternativePortraits.Length; i++)
+                _portraitResources[i] = new Resource<Sprite>(_alternativePortraits[i]);
         }
 
     }
