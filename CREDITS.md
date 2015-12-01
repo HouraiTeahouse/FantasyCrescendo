@@ -38,3 +38,9 @@ This file is largely to keep track of and give credit to the creators of the man
 **Programmers**  
 * Abyll
 * james7132 (James Liu)
+
+**Translators**
+xicmiah - Russian
+Gabo7 - Spanish
+Rupert Wu - Chinese/Japanese
+Spotty Ren - French
