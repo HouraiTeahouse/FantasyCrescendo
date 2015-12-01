@@ -98,13 +98,46 @@ namespace Hourai {
 			Log(message);
 		}
 
-		public static void Log(string message) {
+		public static void RegisterCommand(string command, CommandCommand callback) {
+			if(!_commands.HasKey(command))
+				_commands[command] = callback;
+			else
+				_commands[command] += callback;
+		}
 
+		public static bool UnregisterCommand(string command, ConsoleCommand callback) {
+			if(!_commands.HasKey(command))
+				return false;
+			ConsoleCommand allCallbacks = _commands[command];
+			allCallbacks -= callback;
+			if(allCallbacks == null)
+				_commands.Remove(command)
+			else
+				_commands[command] = allCallbacks;
+			return true;
+		}
+
+		public static void Log(string message, params object[] objs) {
+			if(message == null)
+				message = string.Empty;
+			_history.Enqueue(string.Format(message, objs));
 		}
 
 		public static void Execute(string command) {
-			
+			string[] args = command.Split(null);
+			if(args.Length <= 0)
+				return;
+			if(!_commands.HasKey(args[0])) {
+				Log("Command {0} does not exist.", args[0]);
+				return;
+			}
+			ConsoleCommand command = _commands[args[0]];
+			Log(command);
+			try {
+				command(args.Skip(1).ToArray());
+			} catch { 
+				Log("An error has occured.");
+			}
 		}
 	}
-
 }
