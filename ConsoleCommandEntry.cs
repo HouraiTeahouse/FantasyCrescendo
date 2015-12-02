@@ -6,6 +6,9 @@ namespace Hourai.Console {
 	[RequireComponent(typeof(InputField))]
 	public class ConsoleCommandEntry : MonoBehaviour {
 
+		[SerializeField]
+		private KeyCode _key = KeyCode.Return;
+
 		private InputField _input;
 
 		void Awake() {
@@ -13,7 +16,7 @@ namespace Hourai.Console {
 		}
 
 		void Update() {
-			if(!isActiveAndEnabled || !Input.GetKeyDown(KeyCode.Return))
+			if(!isActiveAndEnabled || !Input.GetKeyDown(_key))
 				return;
 			string command = _input.TextComponent.text;
 			_input.TextComponent.text = string.Empty;
