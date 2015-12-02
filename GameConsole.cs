@@ -1,78 +1,9 @@
-using System;
 using System.Reflection;
-using System.Collecitons.Generic;
 using UnityEngine;
 
-namespace Hourai {
-
-	[AttributeUsage(AttributeTargets.Method)]
-	public class ConsoleCommandAttribute : Attribute {
-		
-		public string InvocationKey { get; private set; }
-
-		public ConsoleCommandAttribute(string invocation) {
-			if(string.IsNullOrEmpty(invocation))
-				invocation = string.empty;
-			InvocationKey = invocation.ToLower();
-		}
-
-	}
+namespace Hourai.Console {
 
 	public delegate void ConsoleCommand(string[] args);
-
-	public class FixedSizeQueue<T> : IEnumerable<T> {
-
-		private readonly Queue<T> _queue;
-		private int _limit;
-
-		public int Limit {
-		       	get { return _limit; }
-		       	set {
-				_limit = value;
-				Check();
-			}
-		}
-
-		public void GetEnumerator() {
-			return _queue.GetEnumerator();
-		}
-
-		IEnumerable.GetEnumerator() {
-			return GetEnumerator();
-		}
-
-		public FixedSizeQueue(int size, IEnumerable<T> collection = null) {
-			_limit = size;
-			_queue = new Queue<T>();
-			var count = 0;
-			if(collection == null)
-				return;
-			foreach(var obj in collection)
-			       Enqueue(obj);	
-		}
-
-		public void Enqueue(T obj) {
-			_queue.Enqueue(obj);
-			Check();
-		}
-
-		public T Dequeue() {
-			return _queue.Pop();
-		}
-
-		public void Clear() {
-			_queue.Clear();
-		}
-
-		void Check() {
-			if(count <= Limit)
-				return;
-			lock(this) {
-				T overflow;
-				while(_queue.Count > _limit && _queue.TryDequeue(out overflow));
-			}
-		}
-	}
 
 	public static class GameConsole {
 

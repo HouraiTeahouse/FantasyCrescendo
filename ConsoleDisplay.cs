@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 
-namespace Hourai.GameConsole {
+namespace Hourai.Console {
 
 	[RequireComponent(typeof(Text))]
 	public class ConsoleDisplay : MonoBehaviour {
