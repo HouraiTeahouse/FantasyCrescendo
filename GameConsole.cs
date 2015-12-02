@@ -78,9 +78,15 @@ namespace Hourai {
 
 		public static class Commands {
 
-			[ConsoleCommand]
+			[ConsoleCommand("clear")]
 			public static void Clear(string[] args) {
 				GameConsole.Clear();
+			}
+
+			[ConsoleCommand("echo")]
+			public static void Echo(string[] args) {
+				foreach(string arg in args)
+					GameConsole.Log(arg);
 			}
 
 		}
