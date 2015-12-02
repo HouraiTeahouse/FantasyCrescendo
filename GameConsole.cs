@@ -60,6 +60,10 @@ namespace Hourai {
 			return _queue.Pop();
 		}
 
+		public void Clear() {
+			_queue.Clear();
+		}
+
 		void Check() {
 			if(count <= Limit)
 				return;
@@ -73,12 +77,17 @@ namespace Hourai {
 	public static class GameConsole {
 
 		private static Dictionary<string, ConsoleCommand> _commands;
-		
 		private static FixedQueue<string> _history;
+
+		public static event Action OnConsoleUpdate;
 
 		public static int HistorySize {
 			get { return _history.Limit; }
 			set { history.Limit = value; }
+		}
+
+		public static IEnumerable History {
+			get { return _history; }
 		}
 
 		static GameConsole() {
@@ -117,10 +126,18 @@ namespace Hourai {
 			return true;
 		}
 
+		public void Clear() {
+			_history.Clear();
+			if(OnConsoleUpdate != null)
+				OnConsoleUpdate();
+		}
+
 		public static void Log(string message, params object[] objs) {
 			if(message == null)
 				message = string.Empty;
 			_history.Enqueue(string.Format(message, objs));
+			if(OnConsoleUpdate != null)
+				OnConsoleUpdate();
 		}
 
 		public static void Execute(string command) {
