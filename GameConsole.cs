@@ -76,6 +76,15 @@ namespace Hourai {
 
 	public static class GameConsole {
 
+		public static class Commands {
+
+			[ConsoleCommand]
+			public static void Clear(string[] args) {
+				GameConsole.Clear();
+			}
+
+		}
+
 		private static Dictionary<string, ConsoleCommand> _commands;
 		private static FixedQueue<string> _history;
 
@@ -93,6 +102,7 @@ namespace Hourai {
 		static GameConsole() {
 			_commands = new Dictionary<string, ConsoleCommand>();
 			_history = new FixedQueue<string>(100
+			
 			// Divert Debug Log messages to the GameConsole as well.
 			Application.logMessageRecieved += (log, stackTrace, type) => Log(log);
 		}
