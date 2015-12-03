@@ -8,8 +8,8 @@ namespace Hourai.Console {
 		public string Command{ get; private set; }
 
 		public ConsoleCommandAttribute(string command) {
-			if(string.IsNullOrEmpty(invocation))
-				invocation = string.empty;
+			if(string.IsNullOrEmpty(command))
+				command = string.Empty;
 			Command = command.ToLower();
 		}
 

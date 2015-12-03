@@ -9,7 +9,7 @@ namespace Hourai.Console {
 
 		private Text _displayText;
 		private bool _updated;
-		private StrinBuilder _textBuilder;
+		private StringBuilder _textBuilder;
 
 		void Awake() {
 			_textBuilder = new StringBuilder();
@@ -33,8 +33,9 @@ namespace Hourai.Console {
 				_updated = true;
 				return;
 			}
-			_textBuilder.Clear();
-			foreach(string log in GameConsole.History) 
+            // Clears the current string
+		    _textBuilder.Length = 0;
+            foreach (string log in GameConsole.History) 
 				_textBuilder.AppendLine(log);
 			_displayText.text = _textBuilder.ToString();	
 		}

@@ -18,8 +18,8 @@ namespace Hourai.Console {
 		void Update() {
 			if(!isActiveAndEnabled || !Input.GetKeyDown(_key))
 				return;
-			string command = _input.TextComponent.text;
-			_input.TextComponent.text = string.Empty;
+			string command = _input.textComponent.text;
+			_input.textComponent.text = string.Empty;
 			GameConsole.Execute(command);
 		}
 

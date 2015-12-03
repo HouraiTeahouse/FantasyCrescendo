@@ -16,11 +16,11 @@ namespace Hourai.Console {
 			}
 		}
 
-		public void GetEnumerator() {
+		public IEnumerator<T> GetEnumerator() {
 			return _queue.GetEnumerator();
 		}
 
-		IEnumerable.GetEnumerator() {
+		IEnumerator IEnumerable.GetEnumerator() {
 			return GetEnumerator();
 		}
 
@@ -40,7 +40,7 @@ namespace Hourai.Console {
 		}
 
 		public T Dequeue() {
-			return _queue.Pop();
+			return _queue.Dequeue();
 		}
 
 		public void Clear() {
@@ -48,11 +48,10 @@ namespace Hourai.Console {
 		}
 
 		void Check() {
-			if(count <= Limit)
+			if(_queue.Count <= Limit)
 				return;
 			lock(this) {
-				T overflow;
-				while(_queue.Count > _limit && _queue.TryDequeue(out overflow));
+				while(_queue.Count > _limit) _queue.Dequeue();
 			}
 		}
 	}

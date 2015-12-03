@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namesace Hourai.Console {
+namespace Hourai.Console {
 
 	public class ToggleOnKeypress : MonoBehaviour {
 
