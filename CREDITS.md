@@ -44,3 +44,4 @@ xicmiah - Russian
 Gabo7 - Spanish
 Rupert Wu - Chinese/Japanese
 Spotty Ren - French
+Anseriform - Dutch/German
