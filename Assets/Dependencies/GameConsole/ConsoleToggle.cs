@@ -1,14 +1,18 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Hourai.Console {
 
-	public class ToggleOnKeypress : MonoBehaviour {
+	public class ConsoleToggle : MonoBehaviour {
 
 		[SerializeField]
 		private KeyCode _key = KeyCode.F5;
 
 		[SerializeField]
 		private GameObject[] _toggle;
+
+	    [SerializeField]
+	    private GameObject select; 
 
 		void Update() {
 			if(!Input.GetKeyDown(_key))
@@ -18,6 +22,7 @@ namespace Hourai.Console {
 					continue;
 				go.SetActive(!go.activeSelf);
 			}
+            EventSystem.current.SetSelectedGameObject(select);
 		}
 		
 	}

@@ -3,24 +3,34 @@ using UnityEngine.UI;
 
 namespace Hourai.Console {
 
-	[RequireComponent(typeof(InputField))]
+	[RequireComponent(typeof(Text))]
 	public class ConsoleCommandEntry : MonoBehaviour {
 
 		[SerializeField]
 		private KeyCode _key = KeyCode.Return;
 
-		private InputField _input;
+		private Text _text;
 
 		void Awake() {
-			_input = GetComponent<InputField>();
+			_text = GetComponent<Text>();
 		}
 
 		void Update() {
-			if(!isActiveAndEnabled || !Input.GetKeyDown(_key))
+			if(!isActiveAndEnabled)
 				return;
-			string command = _input.textComponent.text;
-			_input.textComponent.text = string.Empty;
-			GameConsole.Execute(command);
+		    string input = Input.inputString;
+		    if (input.Contains("\n") || input.Contains("\r")) {
+                GameConsole.Execute(_text.text);
+                _text.text = string.Empty;
+            }
+		    else if (input.Contains("\b")) {
+                    string currentInput = _text.text;
+                    if (string.IsNullOrEmpty(currentInput))
+                        return;
+                    _text.text = currentInput.Remove(currentInput.Length - 1);
+		    } else {
+                    _text.text += input; 
+		    }
 		}
 
 	}

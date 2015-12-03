@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 namespace Hourai.Console {
@@ -13,15 +12,13 @@ namespace Hourai.Console {
 
 		public static class Commands {
 
-			[ConsoleCommand("clear")]
 			public static void Clear(string[] args) {
 				GameConsole.Clear();
 			}
 
-			[ConsoleCommand("echo")]
 			public static void Echo(string[] args) {
 				foreach(string arg in args)
-					GameConsole.Log(arg);
+					Log(arg);
 			}
 
 		}
@@ -44,39 +41,12 @@ namespace Hourai.Console {
 			_commands = new Dictionary<string, ConsoleCommand>();
 		    _history = new FixedSizeQueue<string>(100);
 
-            AppDomain currentDomain = AppDomain.CurrentDomain;
-
-            foreach (var assembly in currentDomain.GetAssemblies())
-                AddConsoleCommands(assembly);
-
-            // Add event to register all new loaded assemblies as well
-            AppDomain.CurrentDomain.AssemblyLoad += (sender, args) => AddConsoleCommands(args.LoadedAssembly);
-            
             // Divert Debug Log messages to the GameConsole as well.
             Application.logMessageReceived += (log, stackTrace, type) => Log(log);
-		}
 
-		static void AddConsoleCommands(Assembly assembly) {
-			if(assembly == null)
-				throw new ArgumentNullException("assembly");
-            Type ccaType = typeof(ConsoleCommandAttribute);
-            IEnumerable<MethodInfo> methods = from type in assembly.GetTypes()
-                                              from method in type.GetMethods()
-                                              where method.IsDefined(ccaType, false)
-                                              select method;
-            foreach (var method in methods) {
-                if (!method.IsStatic) {
-                    Debug.Log(string.Format("Tried to create a console command from {0}, however it is not static", method.Name));
-                }
-                var cca = Attribute.GetCustomAttribute(method, ccaType) as ConsoleCommandAttribute;
-                try {
-                    var cc = Delegate.CreateDelegate(typeof(ConsoleCommand), method) as ConsoleCommand;
-                    RegisterCommand(cca.Command, cc);
-                } catch {
-                    Debug.Log(string.Format("Tried to create a console command from {0}, however it's method signature doesn't match", method.Name));
-                }
-            }
-        }
+            RegisterCommand("echo", Commands.Echo);
+            RegisterCommand("clear", Commands.Clear);
+		}
 
 	    static void UnityLog(string log, string stackTrace, LogType type) {
 			Log(log);
