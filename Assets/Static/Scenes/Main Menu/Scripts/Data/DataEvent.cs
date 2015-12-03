@@ -1,16 +1,18 @@
-﻿/// <summary>
+﻿using Hourai.Events;
+
+/// <summary>
 /// Data commands.
 /// </summary>
-public class DataCommands {
+public class DataEvent : IEvent {
 
-    public class ChangePlayerLevelCommand : Command {
+    public class ChangePlayerLevelCommand : DataEvent {
 
         public int newLevel;
         public int playerNum;
 
     }
 
-    public class ChangePlayerMode : Command {
+    public class ChangePlayerMode : DataEvent {
 
         public int playerNum;
 
@@ -19,7 +21,7 @@ public class DataCommands {
     /// <summary>
     /// This command says that the users is modifying some options in the menu screen.
     /// </summary>
-    public class UserChangingOptions : Command {
+    public class UserChangingOptions : DataEvent {
 
         public bool isUserChangingOptions;
 
@@ -28,7 +30,7 @@ public class DataCommands {
     /// <summary>
     /// This command says that the fight is ready to start.
     /// </summary>
-    public class ReadyToFight : Command {
+    public class ReadyToFight : DataEvent {
 
         public bool isReady;
 

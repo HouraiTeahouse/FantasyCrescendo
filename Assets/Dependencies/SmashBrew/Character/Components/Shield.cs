@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Hourai.Events;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace Hourai.SmashBrew {
+
+    public class ShieldBreak : IEvent {
+    }
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
@@ -31,8 +34,6 @@ namespace Hourai.SmashBrew {
         private GameObject _shieldObj;
         private Transform _shieldTransform;
         private PlayerController _playerController;
-
-        public event Action OnShieldBreak;
 
         protected override void Start() {
             base.Start();
@@ -87,8 +88,7 @@ namespace Hourai.SmashBrew {
         //}
 
         void ShieldBreak() {
-            if(OnShieldBreak != null)
-                OnShieldBreak();
+            CharacterEvents.Publish(new ShieldBreak());
             _currentHP = _resetHP;
         }
 

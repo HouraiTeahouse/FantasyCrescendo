@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Hourai.Events;
 
 namespace Hourai.SmashBrew.UI {
 
@@ -12,15 +13,18 @@ namespace Hourai.SmashBrew.UI {
         [SerializeField]
         private List<GameObject> _displays;
 
+        private GlobalEventManager eventManager;
+
         void Awake() {
-            Match.OnMatchStart += OnMatchStart;
+            eventManager = GlobalEventManager.Instance;
+            eventManager.Subscribe<Match.MatchEvent>(OnMatchStart);
         }
 
         void OnDestroy() {
-            Match.OnMatchStart -= OnMatchStart;
+            eventManager.Unsubscribe<Match.MatchEvent>(OnMatchStart);
         }
 
-        void OnMatchStart() {
+        void OnMatchStart(Match.MatchEvent args) {
             // TODO: Create displays from prefabs instead of depending on a prebuilt one
             _displays = _displays.Where(display => display != null).ToList();
             IEnumerator<Player> players = SmashGame.ActivePlayers.GetEnumerator();

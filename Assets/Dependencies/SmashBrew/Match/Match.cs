@@ -2,19 +2,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Hourai.Events;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace Hourai.SmashBrew {
 
     public static class Match {
 
+        private static Mediator eventManager; 
+
         static Match() {
+            eventManager = GlobalEventManager.Instance;
             _matchRules = new List<IMatchRule>();
         }
 
-        public static event Action OnMatchStart;
-        public static event Action<Player> OnSpawnCharacter;
+        public class MatchEvent : IEvent {
+
+            public bool start;
+
+        }
+
+        public class SpawnPlayer : IEvent {
+
+            public Player Player;
+            public GameObject PlayerObject;
+
+        }
         
         private static readonly List<IMatchRule> _matchRules;
 
@@ -34,15 +47,12 @@ namespace Hourai.SmashBrew {
 
             // Wait for the match to end
             while (!_matchRules.Any(rule => rule.IsFinished)) {
-                foreach(var rule in _matchRules)
-                    rule.OnMatchUpdate();
-                yield return new WaitForFixedUpdate();
+                yield return null;
             }
 
             Character winner = _matchRules.Select(rule => rule.Winner).FirstOrDefault(character => character != null);
 
-            foreach (var rule in _matchRules)
-                rule.OnMatchEnd();
+            eventManager.Publish(new MatchEvent { start = false });
 
             InMatch = false;
         }
@@ -58,28 +68,23 @@ namespace Hourai.SmashBrew {
                     "Cannot start a match when there are more players participating than supported by the selected stage");
             }
 
-            foreach (var rule in _matchRules)
-                rule.OnMatchStart();
-
             // Spawn players
             var currentPlayer = 0;
+
+            var eventManager = GlobalEventManager.Instance;
 
             foreach(Player player in SmashGame.ActivePlayers) {
                 Transform spawnPoint = Stage.GetSpawnPoint(currentPlayer);
                 Character runtimeCharacter = player.Spawn(spawnPoint);
                 if (runtimeCharacter == null)
                     continue;
-                foreach (IMatchRule rule in _matchRules)
-                    rule.OnSpawn(runtimeCharacter);
 
-                if(OnSpawnCharacter != null)
-                    OnSpawnCharacter(player);
+                eventManager.Publish(new SpawnPlayer{ Player = player, PlayerObject = runtimeCharacter.gameObject });
 
                 currentPlayer++;
             }
 
-            if(OnMatchStart != null)
-                OnMatchStart();
+            eventManager.Publish(new MatchEvent { start = true });
 
             Game.StaticCoroutine(MatchLoop());
         }

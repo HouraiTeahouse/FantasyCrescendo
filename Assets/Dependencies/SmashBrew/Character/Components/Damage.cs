@@ -1,12 +1,27 @@
 ﻿using System;
+using Hourai.Events;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Hourai.SmashBrew {
 
+    public class DamageEvent : IEvent {
+
+        public float damage;
+        public float currentDamage;
+
+    }
+
+    public class HealEvent : IEvent {
+
+        public float healing;
+        public float currentDamage;
+
+    }
+
     [DisallowMultipleComponent]
     [AddComponentMenu("")]
-    public class Damage : MonoBehaviour, IDamageable, IHealable {
+    public class Damage : CharacterComponent, IDamageable, IHealable {
 
         [SerializeField]
         private float _currentDamage = 0f;
@@ -38,9 +53,6 @@ namespace Hourai.SmashBrew {
         public ModifierList<object> HealingModifiers {
             get; private set;
         }
-        
-        public event Action<object, float> OnDamage;
-        public event Action<object, float> OnHeal;
 
         void Awake() {
             MinDamage = 0f;
@@ -62,8 +74,8 @@ namespace Hourai.SmashBrew {
 
             Mathf.Clamp(CurrentDamage, MinDamage, MaxDamage);
 
-            if (OnDamage != null)
-                OnDamage(source, damage);
+            CharacterEvents.Publish(new DamageEvent {damage = damage, currentDamage = CurrentDamage});
+
         }
 
         protected virtual void HurtImpl(float damage) {
@@ -83,8 +95,8 @@ namespace Hourai.SmashBrew {
 
             HealImpl(healing);
 
-            if (OnHeal != null)
-                OnHeal(source, healing);
+            CharacterEvents.Publish(new HealEvent { healing = healing, currentDamage = CurrentDamage });
+
         }
 
         protected virtual void HealImpl(float damage) {

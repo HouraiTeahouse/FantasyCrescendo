@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Hourai.Events;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -11,18 +11,26 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private float _platformTimer;
 
+        public bool Occupied {
+            get { return _character; }
+        }
+
         private Character _character;
         private Invincibility _invincibility;
         private float _timer;
+        private Mediator eventManager;
 
         void Start() {
             gameObject.SetActive(false);
+            eventManager = GlobalEventManager.Instance;
+            eventManager.Subscribe<RespawnEvent>(RespawnPlayer);
         }
 
-        public void RespawnPlayer(Character player) {
-            if(!player)
-                throw new ArgumentNullException("player");
-            _character = player;
+        void RespawnPlayer(RespawnEvent eventArgs) {
+            if (Occupied || eventArgs.consumed)
+                return;
+            eventArgs.consumed = true;
+            _character = eventArgs.player;
             _character.Rigidbody.velocity = Vector3.zero;
             _character.transform.position = transform.position;
             _character.transform.rotation = Quaternion.identity;

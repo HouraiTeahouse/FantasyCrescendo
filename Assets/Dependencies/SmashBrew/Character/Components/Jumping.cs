@@ -1,9 +1,15 @@
-﻿using UnityEngine;
-using UnityEngine.Networking;
-using System;
+﻿using Hourai.Events;
+using UnityEngine;
 
 namespace Hourai.SmashBrew
 {
+    public class JumpEvent : IEvent {
+
+        public bool ground;
+        public int remainingJumps;
+
+    }
+
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     [RequireComponent(typeof(Rigidbody), typeof(Grounding))]
@@ -14,8 +20,6 @@ namespace Hourai.SmashBrew
         
         [SerializeField]
         private GameObject airJumpFX;
-
-        public event Action OnJump;
 
         private Grounding _ground;
 
@@ -29,17 +33,17 @@ namespace Hourai.SmashBrew
         protected override void Awake() {
             base.Awake();
             _ground = GetComponent<Grounding>();
-            _ground.OnGrounded += OnGrounded;
+            CharacterEvents.Subscribe<GroundEvent>(OnGrounded);
         }
 
         void OnDestroy()
         {
-            _ground.OnGrounded -= OnGrounded;
+            CharacterEvents.Unsubscribe<GroundEvent>(OnGrounded);
         }
 
-        void OnGrounded()
+        void OnGrounded(GroundEvent eventArgs)
         {
-            if(_ground.IsGrounded)
+            if(eventArgs.grounded)
                 JumpCount = 0;
         }
 
@@ -58,8 +62,7 @@ namespace Hourai.SmashBrew
             if (!_ground.IsGrounded && airJumpFX)
                 Instantiate(airJumpFX, transform.position, Quaternion.Euler(90f, 0f, 0f));
 
-            if (OnJump != null)
-                OnJump();
+            CharacterEvents.Publish(new JumpEvent { ground = _ground.IsGrounded, remainingJumps = MaxJumpCount - JumpCount });
         }
     }
 

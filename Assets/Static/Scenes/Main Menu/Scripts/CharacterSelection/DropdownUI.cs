@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Hourai.Events;
+using UnityEngine;
 
 namespace Hourai.SmashBrew.UI {
     
@@ -24,7 +25,7 @@ namespace Hourai.SmashBrew.UI {
         public void setDropdownActive(bool b) {
             dropdownMenu.SetActive(b);
             mediator.Publish(
-                             new DataCommands.UserChangingOptions { isUserChangingOptions = b });
+                             new DataEvent.UserChangingOptions { isUserChangingOptions = b });
         }
 
     }

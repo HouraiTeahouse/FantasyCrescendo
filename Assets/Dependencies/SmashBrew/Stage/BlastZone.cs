@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
 using System;
+using Hourai.Events;
 
 namespace Hourai.SmashBrew {
+
+    public class BlastZoneExit : IEvent {
+
+        public Character player;
+
+    }
 
     [RequireComponent(typeof (Collider))]
     public sealed class BlastZone : Singleton<BlastZone> {
 
         private Collider col;
-        public event Action<Character> OnBlastZoneExit;
+        private Mediator eventManager;
 
         protected override void Awake() {
             base.Awake();
+            eventManager = GlobalEventManager.Instance;
 
             col = GetComponent<Collider>();
             
@@ -20,10 +28,10 @@ namespace Hourai.SmashBrew {
 
         private void OnTriggerExit(Collider other) {
             // Filter only for player characters
-            if (OnBlastZoneExit == null || !SmashGame.IsPlayer(other))
+            if(!Game.IsPlayer(other))
                 return;
 
-            Character characterScript = other.transform.root.GetComponentInChildren<Character>();
+            var characterScript = other.transform.root.GetComponentInChildren<Character>();
 
             if (characterScript == null) {
                 Debug.Log("Was expecting" + other.name + " to be a HumanPlayer, but no Character script was found.");
@@ -34,7 +42,7 @@ namespace Hourai.SmashBrew {
             if (col.ClosestPointOnBounds(position) == position)
                 return;
 
-            OnBlastZoneExit(characterScript);
+            eventManager.Publish(new BlastZoneExit { player = characterScript });
         }
 
     }

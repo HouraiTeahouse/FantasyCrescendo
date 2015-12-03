@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Hourai.Events;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
@@ -36,8 +37,8 @@ namespace Hourai.SmashBrew.UI {
                 Destroy(gameObject);
             }
 
-            mediator.Subscribe<DataCommands.ChangePlayerLevelCommand>(onChangePlayerLevel);
-            mediator.Subscribe<DataCommands.ChangePlayerMode>(onChangePlayerMode);
+            mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(onChangePlayerLevel);
+            mediator.Subscribe<DataEvent.ChangePlayerMode>(onChangePlayerMode);
         }
 
         public void updateUIMode(Player.PlayerType pt) {
@@ -58,21 +59,21 @@ namespace Hourai.SmashBrew.UI {
 
         public void changePlayerMode() {
             mediator.Publish(
-                             new DataCommands.ChangePlayerMode { playerNum = playerNumber });
+                             new DataEvent.ChangePlayerMode { playerNum = playerNumber });
         }
 
         public void changeLevel(int level) {
             mediator.Publish(
-                             new DataCommands.ChangePlayerLevelCommand { newLevel = level, playerNum = playerNumber });
+                             new DataEvent.ChangePlayerLevelCommand { newLevel = level, playerNum = playerNumber });
         }
 
-        public void onChangePlayerLevel(DataCommands.ChangePlayerLevelCommand cmd) {
+        public void onChangePlayerLevel(DataEvent.ChangePlayerLevelCommand cmd) {
             if (cmd.playerNum != playerNumber)
                 return;
             levelText.text = "lv " + cmd.newLevel;
         }
 
-        public void onChangePlayerMode(DataCommands.ChangePlayerMode cmd) {
+        public void onChangePlayerMode(DataEvent.ChangePlayerMode cmd) {
             if (cmd.playerNum != playerNumber)
                 return;
             updateUIMode(Player.GetNextType(type));

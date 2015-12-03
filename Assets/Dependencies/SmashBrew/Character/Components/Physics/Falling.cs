@@ -5,7 +5,7 @@ namespace Hourai.SmashBrew {
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     [RequireComponent(typeof(Rigidbody), typeof(Grounding))]
-    public class Falling : HouraiBehaviour {
+    public class Falling : CharacterComponent {
 
         [SerializeField]
         private float _fastFallSpeed = 9f;
@@ -13,12 +13,7 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private float _maxFallSpeed = 5f;
 
-        private Grounding _grounded;
-        private bool _fastFall;
-
-        public bool IsFastFalling {
-            get { return _grounded.IsGrounded && _fastFall; }
-        }
+        public bool IsFastFalling { get; set; }
 
         public float FallSpeed {
             get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
@@ -26,13 +21,12 @@ namespace Hourai.SmashBrew {
 
         protected override void Awake() {
             base.Awake();
-            _grounded = GetComponent<Grounding>();
-            _grounded.OnGrounded += OnGrounded;
+            CharacterEvents.Subscribe<GroundEvent>(OnGrounded);
         }
 
-        void OnGrounded() {
-            if(_grounded.IsGrounded)
-               _fastFall = false;
+        void OnGrounded(GroundEvent eventArgs) {
+            if(eventArgs.grounded)
+                IsFastFalling = false;
         }
 
         void FixedUpdate() {

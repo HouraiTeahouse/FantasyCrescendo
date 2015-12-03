@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Linq;
+using Hourai.Events;
 using UnityConstants;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -40,6 +41,11 @@ namespace Hourai.SmashBrew {
         }
 
         #region Public Properties
+
+        public Mediator CharacterEvents {
+            get; private set;
+        }
+        
         public ModifierList DamageDealt {
             get; private set;
         }
@@ -51,6 +57,7 @@ namespace Hourai.SmashBrew {
         public int BoneCount {
             get { return _bones.Length; }
         }
+
         #endregion
 
         #region Runtime Variables
@@ -94,6 +101,7 @@ namespace Hourai.SmashBrew {
         #region Unity Callbacks
         protected override void Awake() {
             base.Awake();
+            CharacterEvents = new Mediator();
             Reset();
 
             DamageDealt = new ModifierList();

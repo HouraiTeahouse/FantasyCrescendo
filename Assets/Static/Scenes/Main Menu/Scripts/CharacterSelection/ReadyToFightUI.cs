@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Hourai.Events;
+using UnityEngine;
 
 namespace Hourai.SmashBrew.UI {
     
@@ -17,10 +18,10 @@ namespace Hourai.SmashBrew.UI {
                 Debug.Log("The ReadyToFightUI component couldn't find the data manager");
 
             mediator = dataManager.mediator;
-            mediator.Subscribe<DataCommands.ReadyToFight>(onReadyToFight);
+            mediator.Subscribe<DataEvent.ReadyToFight>(onReadyToFight);
         }
 
-        public void onReadyToFight(DataCommands.ReadyToFight cmd) {
+        public void onReadyToFight(DataEvent.ReadyToFight cmd) {
             readyToFightButton.SetActive(cmd.isReady);
         }
 

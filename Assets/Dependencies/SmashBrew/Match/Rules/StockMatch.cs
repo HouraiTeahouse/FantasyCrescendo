@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Hourai.Events;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -55,7 +56,6 @@ namespace Hourai.SmashBrew {
 
     }
 
-
     public class StockMatch : IMatchRule {
 
         //TODO: Remove UI Code from this class
@@ -66,16 +66,22 @@ namespace Hourai.SmashBrew {
         private int stock = 5;
 
         private List<Stock> characterStocks;
+        private Mediator eventManager;
 
         public StockMatch() {
+            eventManager = GlobalEventManager.Instance;
+            eventManager.Subscribe<Match.MatchEvent>(OnMatchStart);
+            eventManager.Subscribe<Match.SpawnPlayer>(OnSpawn);
             characterStocks = new List<Stock>();
+        }
+
+        ~StockMatch() {
+           eventManager.Unsubscribe<Match.MatchEvent>(OnMatchStart);
+           eventManager.Unsubscribe<Match.SpawnPlayer>(OnSpawn);
         }
 
         public StockMatch(int stockCount) : this() {
             stock = stockCount;
-        }
-
-        public void OnMatchUpdate() {
         }
 
         public bool IsFinished {
@@ -97,19 +103,18 @@ namespace Hourai.SmashBrew {
             }
         }
 
-        public void OnMatchStart() {
+        void OnMatchStart(Match.MatchEvent eventArgs) {
+            if (!eventArgs.start)
+                return;
             characterStocks.Clear();
             BlastZone.Instance.gameObject.AddComponent<StockRespawn>();
         }
 
-        public void OnMatchEnd() {
-        }
-
-        public void OnSpawn(Character character) {
-            var characterStock = character.gameObject.AddComponent<Stock>();
+        void OnSpawn(Match.SpawnPlayer eventArgs) {
+            var characterStock = eventArgs.PlayerObject.AddComponent<Stock>();
             characterStock.Lives = stock;
             characterStocks.Add(characterStock);
-            character.gameObject.AddComponent<Damage>();
+            eventArgs.PlayerObject.AddComponent<Damage>();
         }
 
     }

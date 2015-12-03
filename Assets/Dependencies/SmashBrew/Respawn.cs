@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hourai.Events;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
+    public class RespawnEvent : IEvent {
+
+        public bool consumed;
+        public Character player;
+
+    }
+
     [DisallowMultipleComponent]
     public class Respawn : MonoBehaviour {
 
-        private List<RespawnPlatform> respawnPoints;
-        private BlastZone blastZone;
         private List<Func<Character, bool>> shouldRespawn;
+        private Mediator eventManager;
         
         public event Func<Character, bool> ShouldRespwan {
             add {
@@ -24,39 +31,21 @@ namespace Hourai.SmashBrew {
         }  
 
         void Awake() {
-            blastZone = GetComponent<BlastZone>();
-            if(!blastZone) {
-                Destroy(this);
-                return;
-            }
-            blastZone.OnBlastZoneExit += OnBlastZoneExit;
+            eventManager = GlobalEventManager.Instance;
+            eventManager.Subscribe<BlastZoneExit>(OnBlastZoneExit);
             shouldRespawn = new List<Func<Character, bool>>();
-            respawnPoints = new List<RespawnPlatform>(Resources.FindObjectsOfTypeAll<RespawnPlatform>());
-            respawnPoints.Sort((t1, t2) => t1.name.CompareTo(t2.name));
         }
 
-        void OnDestroy() {
-            if (blastZone)
-                blastZone.OnBlastZoneExit -= OnBlastZoneExit;
-        }
-
-        internal void AddRespawnPoint(RespawnPlatform point) {
-            if(point)
-                respawnPoints.Add(point);
-        }
-
-        protected virtual void OnBlastZoneExit(Character player) {
+        protected virtual void OnBlastZoneExit(BlastZoneExit eventArgs) {
+            Character player = eventArgs.player;
             if (shouldRespawn.Count > 0 && shouldRespawn.Any(check => !check(player))) {
                 player.gameObject.SetActive(false);
                 return;
             }
-            foreach (var respawnPoint in respawnPoints) {
-                if (respawnPoint && !respawnPoint.isActiveAndEnabled) {
-                    respawnPoint.RespawnPlayer(player);
-                    return;
-                }
-            }
-            throw new InvalidOperationException("Cannot respawn another player! No available respawn platforms.");
+            var respawn = new RespawnEvent { consumed = false, player = player };
+            eventManager.Publish(respawn);
+            if(!respawn.consumed)
+                throw new InvalidOperationException("Cannot respawn " + player.name + ".");
         }
 
     }
