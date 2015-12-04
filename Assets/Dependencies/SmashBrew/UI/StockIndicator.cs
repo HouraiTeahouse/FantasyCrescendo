@@ -1,27 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai.SmashBrew {
+namespace Hourai.SmashBrew.UI {
 
     [RequireComponent(typeof (Text))]
-    public class StockIndicator : MonoBehaviour {
+    public class StockIndicator : MonoBehaviour, IPlayerGUIComponent {
 
-        private Stock criteria;
         private Text display;
+        private Player _player;
+        private StockMatch _stockMatch;
 
         [SerializeField]
         private int index;
 
-        // Use this for initialization
         private void Start() {
-/*            var match = FindObjectOfType<StockMatch>();
-            criteria = match.GetPlayerData(index);
-            display = GetComponent<Text>();*/
+            _stockMatch = FindObjectOfType<StockMatch>();
+            if (!_stockMatch) {
+                enabled = false;
+                return;
+            }
+            display = GetComponent<Text>();
         }
 
-        // Update is called once per frame
         private void Update() {
-/*            display.text = criteria.Lives.ToString();*/
+            display.text = _stockMatch[_player].ToString();
+        }
+
+        public void SetPlayerData(Player data) {
+            _player = data;
         }
 
     }

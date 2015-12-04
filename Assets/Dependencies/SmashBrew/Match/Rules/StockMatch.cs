@@ -5,58 +5,7 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
-    [DisallowMultipleComponent]
-    public class Stock : CharacterComponent {
-
-        private StockRespawn _respawn;
-        private int _lives;
-        public bool Alive {
-            get { return Lives > 0; }
-        }
-
-        public int Lives {
-            get { return _lives; }
-            internal set {
-                _lives = value;
-                if(_respawn)
-                    _respawn.enabled = Alive;
-                if(Character)
-                    Character.gameObject.SetActive(Alive);
-            }
-        }
-    }
-    
-    public class StockRespawn : MonoBehaviour {
-
-        private Respawn _respawn;
-
-        void Awake() {
-            _respawn = GetComponent<Respawn>();
-            if (!_respawn)
-                Destroy(this);
-            else
-                _respawn.ShouldRespwan += RespawnCheck;
-        }
-
-        void OnDestroy() {
-            if (_respawn)
-                _respawn.ShouldRespwan -= RespawnCheck;
-        }
-
-        bool RespawnCheck(Character player) {
-            var stock = player.GetComponent<Stock>();
-            var damage = player.GetComponent<Damage>();
-            if (damage)
-                damage.Reset();
-            if (!stock)
-                return true;
-            stock.Lives--;
-            return stock.Alive;
-        }
-
-    }
-
-    public class StockMatch : IMatchRule {
+    public class StockMatch : MatchRule {
 
         //TODO: Remove UI Code from this class
 
@@ -65,56 +14,64 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private int stock = 5;
 
-        private List<Stock> characterStocks;
         private Mediator eventManager;
+        private Respawn _respawn;
+        private Dictionary<Character, int> _stocks;
 
-        public StockMatch() {
+        protected override void Awake() {
+            base.Awake();
             eventManager = GlobalEventManager.Instance;
-            eventManager.Subscribe<Match.MatchEvent>(OnMatchStart);
-            eventManager.Subscribe<Match.SpawnPlayer>(OnSpawn);
-            characterStocks = new List<Stock>();
+            eventManager.Subscribe<SpawnPlayerEvent>(OnSpawn);
+            eventManager.Subscribe<RespawnEvent>(OnRespawn);
+            _respawn = FindObjectOfType<Respawn>();
+            _respawn.ShouldRespwan += RespawnCheck;
+            _stocks = new Dictionary<Character, int>();
         }
 
-        ~StockMatch() {
-           eventManager.Unsubscribe<Match.MatchEvent>(OnMatchStart);
-           eventManager.Unsubscribe<Match.SpawnPlayer>(OnSpawn);
+        void OnDestroy() {
+           eventManager.Unsubscribe<SpawnPlayerEvent>(OnSpawn);
         }
 
-        public StockMatch(int stockCount) : this() {
-            stock = stockCount;
-        }
-
-        public bool IsFinished {
+        protected override bool IsFinished {
             get {
-                return characterStocks.Sum(s => s.Alive ? 1 : 0) > 1;
+                return _stocks.Values.Sum(s => (s > 0) ? 1 : 0) > 1;
             }
         }
 
-        public Character Winner {
+        public int this[Player player] {
+            get { return _stocks[player.SpawnedCharacter]; }
+        }
+
+        public override Character Winner {
             get {
-                Stock winner = null;
-                foreach (var characterStock in characterStocks.Where(s => s.Alive)) {
+                Character winner = null;
+                foreach (KeyValuePair<Character, int> characterStock in _stocks.Where(characterStock => characterStock.Value > 0)) {
                     if (winner == null)
-                        winner = characterStock;
+                        winner = characterStock.Key;
                     else
-                        winner = characterStock.Lives > winner.Lives ? characterStock : winner;
+                        winner = (characterStock.Value > _stocks[winner]) ? characterStock.Key : winner;
                 }
-                return winner == null ? null : winner.Character;
+                return winner;
             }
         }
 
-        void OnMatchStart(Match.MatchEvent eventArgs) {
-            if (!eventArgs.start)
-                return;
-            characterStocks.Clear();
-            BlastZone.Instance.gameObject.AddComponent<StockRespawn>();
+        bool RespawnCheck(Character character) {
+            if (!isActiveAndEnabled || !_stocks.ContainsKey(character))
+                return false;
+
+            return _stocks[character] > 1;
         }
 
-        void OnSpawn(Match.SpawnPlayer eventArgs) {
-            var characterStock = eventArgs.PlayerObject.AddComponent<Stock>();
-            characterStock.Lives = stock;
-            characterStocks.Add(characterStock);
-            eventArgs.PlayerObject.AddComponent<Damage>();
+        void OnRespawn(RespawnEvent eventArgs) {
+            if (!isActiveAndEnabled || !_stocks.ContainsKey(eventArgs.player))
+                return;
+            _stocks[eventArgs.player]--;
+        }
+
+        void OnSpawn(SpawnPlayerEvent eventArgs) {
+            if (!isActiveAndEnabled)
+                return;
+            _stocks[eventArgs.Player.SpawnedCharacter] = stock;
         }
 
     }

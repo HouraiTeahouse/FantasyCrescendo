@@ -7,6 +7,10 @@ namespace Hourai.SmashBrew {
         
         public Character Character { get; private set; }
 
+        /// <summary>
+        /// The events mediator for the subscribed character.
+        /// Do not access before Start is called.
+        /// </summary>
         protected Mediator CharacterEvents { get; private set; }
 
         protected virtual void Start() {

@@ -12,16 +12,13 @@ namespace Hourai.SmashBrew
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    [RequireComponent(typeof(Rigidbody), typeof(Grounding))]
+    [RequireComponent(typeof(Rigidbody))]
     public sealed class Jumping : RestrictableCharacterComponent
     {
         [SerializeField]
         private float[] _jumpPower = { 1.5f, 1.5f };
         
-        [SerializeField]
-        private GameObject airJumpFX;
-
-        private Grounding _ground;
+        private bool _grounded;
 
         public int JumpCount { get; private set; }
 
@@ -30,9 +27,8 @@ namespace Hourai.SmashBrew
             get { return _jumpPower == null ? 0 : _jumpPower.Length; }
         }
 
-        protected override void Awake() {
-            base.Awake();
-            _ground = GetComponent<Grounding>();
+        protected override void Start() {
+            base.Start();
             CharacterEvents.Subscribe<GroundEvent>(OnGrounded);
         }
 
@@ -41,9 +37,9 @@ namespace Hourai.SmashBrew
             CharacterEvents.Unsubscribe<GroundEvent>(OnGrounded);
         }
 
-        void OnGrounded(GroundEvent eventArgs)
-        {
-            if(eventArgs.grounded)
+        void OnGrounded(GroundEvent eventArgs) {
+            _grounded = eventArgs.grounded;
+            if(_grounded)
                 JumpCount = 0;
         }
 
@@ -57,12 +53,7 @@ namespace Hourai.SmashBrew
 
             JumpCount++;
 
-            // Trigger animation
-
-            if (!_ground.IsGrounded && airJumpFX)
-                Instantiate(airJumpFX, transform.position, Quaternion.Euler(90f, 0f, 0f));
-
-            CharacterEvents.Publish(new JumpEvent { ground = _ground.IsGrounded, remainingJumps = MaxJumpCount - JumpCount });
+            CharacterEvents.Publish(new JumpEvent { ground = _grounded, remainingJumps = MaxJumpCount - JumpCount });
         }
     }
 

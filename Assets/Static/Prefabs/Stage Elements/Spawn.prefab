@@ -68,6 +68,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 402004}
+  - 114: {fileID: 11466414}
   m_Layer: 0
   m_Name: Spawn
   m_TagString: Untagged
@@ -82,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163276}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.99428129, y: -7.28034258, z: 11.4539394}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 409142}
@@ -139,6 +140,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 402004}
   m_RootOrder: 3
+--- !u!114 &11466414
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76aac6d42933b784296f3d574f913c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoints:
+  - {fileID: 409142}
+  - {fileID: 415426}
+  - {fileID: 457948}
+  - {fileID: 460120}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

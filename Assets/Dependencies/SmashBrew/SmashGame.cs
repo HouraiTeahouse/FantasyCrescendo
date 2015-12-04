@@ -51,14 +51,6 @@ namespace Hourai.SmashBrew {
             get { return ActivePlayers.Count(); }
         }
 
-        public static Transform[] GetSpawnPoints() {
-            return GetPoints(Tags.Spawn);
-        }
-
-        private static Transform[] GetPoints(string tag) {
-            return GameObject.FindGameObjectsWithTag(tag).Select(go => go.transform).ToArray();
-        }
-
         protected override void Awake() {
             base.Awake();
             Config config = Config.Instance;

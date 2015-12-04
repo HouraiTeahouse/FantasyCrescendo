@@ -470,6 +470,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 482626}
+  - 114: {fileID: 11426812}
   m_Layer: 0
   m_Name: Respawn
   m_TagString: Untagged
@@ -974,7 +975,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.50455999, y: -2.55171824, z: 25.2435379}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 465876}
@@ -2042,8 +2043,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88851dc1741cb0a4692b05b5e10fd1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invicibilityTimer: 5
-  _platformTimer: 3
+  _invicibilityTimer: 0
+  _platformTimer: 0
 --- !u!114 &11412742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2055,7 +2056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcbd0607b77f5479f97e8130009116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationPerSecond: {x: 0, y: 60, z: 0}
+  rotationPerSecond: {x: 0, y: 0, z: 0}
 --- !u!114 &11422924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2067,7 +2068,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcbd0607b77f5479f97e8130009116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationPerSecond: {x: 0, y: 60, z: 0}
+  rotationPerSecond: {x: 0, y: 0, z: 0}
+--- !u!114 &11426812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beea648209a9c9042a7920440560d6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11437204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2112,8 +2124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88851dc1741cb0a4692b05b5e10fd1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invicibilityTimer: 5
-  _platformTimer: 3
+  _invicibilityTimer: 0
+  _platformTimer: 0
 --- !u!114 &11462700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2125,8 +2137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88851dc1741cb0a4692b05b5e10fd1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invicibilityTimer: 5
-  _platformTimer: 3
+  _invicibilityTimer: 0
+  _platformTimer: 0
 --- !u!114 &11464224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2138,8 +2150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88851dc1741cb0a4692b05b5e10fd1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invicibilityTimer: 5
-  _platformTimer: 3
+  _invicibilityTimer: 0
+  _platformTimer: 0
 --- !u!114 &11466820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2162,7 +2174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcbd0607b77f5479f97e8130009116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationPerSecond: {x: 0, y: 60, z: 0}
+  rotationPerSecond: {x: 0, y: 0, z: 0}
 --- !u!114 &11467738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2207,7 +2219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedcbd0607b77f5479f97e8130009116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationPerSecond: {x: 0, y: 60, z: 0}
+  rotationPerSecond: {x: 0, y: 0, z: 0}
 --- !u!114 &11498638
 MonoBehaviour:
   m_ObjectHideFlags: 1

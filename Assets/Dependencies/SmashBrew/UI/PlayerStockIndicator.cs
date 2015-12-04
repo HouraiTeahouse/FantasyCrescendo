@@ -2,7 +2,7 @@
 
 namespace Hourai.SmashBrew.UI {
 
-    public class PlayerStockIndicator : PlayerGuiComponent<Stock> {
+    public class PlayerStockIndicator : MonoBehaviour, IPlayerGUIComponent {
 
         [SerializeField]
         private NumberText ExcessDisplay;
@@ -10,17 +10,29 @@ namespace Hourai.SmashBrew.UI {
         [SerializeField]
         private GameObject[] standardIndicators;
 
-        void Update() {
-            if (Component == null) {
-                if (ExcessDisplay)
-                    ExcessDisplay.gameObject.SetActive(false);
-                for (var i = 0; i < standardIndicators.Length; i++)
-                    if (standardIndicators[i])
-                        standardIndicators[i].SetActive(false);
-                return;
-            }
+        private StockMatch _stockMatch;
+        private Player _player;
 
-            int stock = Component.Lives;
+        void Start() {
+            _stockMatch = FindObjectOfType<StockMatch>();
+            DisableCheck();
+        }
+
+        void DisableCheck() {
+            if (_stockMatch != null && _stockMatch.enabled || _player == null)
+                return;
+            if (ExcessDisplay)
+                ExcessDisplay.gameObject.SetActive(false);
+            foreach (var indicator in standardIndicators)
+                if (indicator)
+                    indicator.SetActive(false);
+            enabled = false;
+        }
+
+        void Update() {
+            DisableCheck();
+
+            int stock = _stockMatch[_player];
             bool excess = stock > standardIndicators.Length;
             if(ExcessDisplay)
                 ExcessDisplay.gameObject.SetActive(excess);
@@ -35,6 +47,10 @@ namespace Hourai.SmashBrew.UI {
                     if (standardIndicators[i])
                         standardIndicators[i].SetActive(i < stock);
             }
+        }
+
+        public void SetPlayerData(Player data) {
+            _player = data;
         }
 
     }

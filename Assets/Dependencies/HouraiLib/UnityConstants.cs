@@ -37,10 +37,6 @@ namespace UnityConstants
         /// </summary>
         public const string Platform = "Platform";
         /// <summary>
-        /// Name of tag 'Spawn'.
-        /// </summary>
-        public const string Spawn = "Spawn";
-        /// <summary>
         /// Name of tag 'GUI'.
         /// </summary>
         public const string GUI = "GUI";
@@ -49,13 +45,9 @@ namespace UnityConstants
         /// </summary>
         public const string Hitbox = "Hitbox";
         /// <summary>
-        /// Name of tag 'New Tag'.
+        /// Name of tag 'Spawn'.
         /// </summary>
-        public const string New_Tag = "New Tag";
-        /// <summary>
-        /// Name of tag 'New Tag 2'.
-        /// </summary>
-        public const string New_Tag_2 = "New Tag 2";
+        public const string Spawn = "Spawn";
     }
 
     public static class SortingLayers

@@ -20,7 +20,6 @@ namespace Hourai.SmashBrew {
 #endif
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
-    [RequireComponent(typeof(NetworkAnimator), typeof(NetworkTransform))]
     public class Character : HouraiBehaviour {
 
         private static readonly Type[] RequiredComponents;

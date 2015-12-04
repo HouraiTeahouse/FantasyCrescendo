@@ -19,8 +19,8 @@ namespace Hourai.SmashBrew {
             get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
-        protected override void Awake() {
-            base.Awake();
+        protected override void Start() {
+            base.Start();
             CharacterEvents.Subscribe<GroundEvent>(OnGrounded);
         }
 

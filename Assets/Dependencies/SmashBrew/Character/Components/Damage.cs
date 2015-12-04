@@ -1,7 +1,5 @@
-﻿using System;
-using Hourai.Events;
+﻿using Hourai.Events;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace Hourai.SmashBrew {
 
@@ -20,7 +18,6 @@ namespace Hourai.SmashBrew {
     }
 
     [DisallowMultipleComponent]
-    [AddComponentMenu("")]
     public class Damage : CharacterComponent, IDamageable, IHealable {
 
         [SerializeField]
@@ -75,7 +72,6 @@ namespace Hourai.SmashBrew {
             Mathf.Clamp(CurrentDamage, MinDamage, MaxDamage);
 
             CharacterEvents.Publish(new DamageEvent {damage = damage, currentDamage = CurrentDamage});
-
         }
 
         protected virtual void HurtImpl(float damage) {

@@ -16,12 +16,7 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private Selection[] testCharacters;
 
-        [SerializeField]
-        private int stockCount = 5;
-        
         void Awake() {
-            Match.AddMatchRule(new StockMatch(stockCount));
-
             var index = 0;
             foreach (var player in SmashGame.Players)
             {
@@ -35,7 +30,6 @@ namespace Hourai.SmashBrew {
                 index++;
             }
         }
-
     }
 }
 
