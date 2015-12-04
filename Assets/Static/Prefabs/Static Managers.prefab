@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11488736}
   - 114: {fileID: 11493208}
   - 114: {fileID: 11486768}
+  - 114: {fileID: 11422042}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: EditorOnly
@@ -30,6 +31,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11422042
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -618230154, guid: d44bb1b6cb636410f818555d454aa81d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializedKeys: []
+  serializedValues: []
+  defaultLanguage: en
+  currentlyLoadedCulture:
+    languageCode: 
+    englishName: 
+    nativeName: 
+    isRightToLeft: 0
+  availableLanguages:
+    version: 0
+    cultureInfos: []
 --- !u!114 &11486768
 MonoBehaviour:
   m_ObjectHideFlags: 1
