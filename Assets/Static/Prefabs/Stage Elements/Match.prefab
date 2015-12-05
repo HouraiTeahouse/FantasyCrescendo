@@ -9,8 +9,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 415764}
   - 114: {fileID: 11470118}
-  - 114: {fileID: 11460312}
   - 114: {fileID: 11436252}
+  - 114: {fileID: 11460312}
+  - 114: {fileID: 11448908}
   m_Layer: 0
   m_Name: Match
   m_TagString: Untagged
@@ -41,7 +42,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1194d8692070c9a47b6b974eb40c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: 27
+  _pauseButton: Pause
+--- !u!114 &11448908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24ebf89ba29d5b44ae95de9defa4f3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPrefCheck: time
+  _time: 5
 --- !u!114 &11460312
 MonoBehaviour:
   m_ObjectHideFlags: 1
