@@ -194,6 +194,10 @@ namespace UnityConstants
         /// </summary>
         public const string Player_1_Shield = "Player 1 Shield";
         /// <summary>
+        /// Input axis 'Player 1 Pause'.
+        /// </summary>
+        public const string Player_1_Pause = "Player 1 Pause";
+        /// <summary>
         /// Input axis 'Player 2 Horizontal'.
         /// </summary>
         public const string Player_2_Horizontal = "Player 2 Horizontal";
@@ -217,6 +221,10 @@ namespace UnityConstants
         /// Input axis 'Player 2 Shield'.
         /// </summary>
         public const string Player_2_Shield = "Player 2 Shield";
+        /// <summary>
+        /// Input axis 'Player 2 Pause'.
+        /// </summary>
+        public const string Player_2_Pause = "Player 2 Pause";
         /// <summary>
         /// Input axis 'Player 3 Horizontal'.
         /// </summary>
@@ -242,6 +250,10 @@ namespace UnityConstants
         /// </summary>
         public const string Player_3_Shield = "Player 3 Shield";
         /// <summary>
+        /// Input axis 'Player 3 Pause'.
+        /// </summary>
+        public const string Player_3_Pause = "Player 3 Pause";
+        /// <summary>
         /// Input axis 'Player 4 Horizontal'.
         /// </summary>
         public const string Player_4_Horizontal = "Player 4 Horizontal";
@@ -265,6 +277,10 @@ namespace UnityConstants
         /// Input axis 'Player 4 Shield'.
         /// </summary>
         public const string Player_4_Shield = "Player 4 Shield";
+        /// <summary>
+        /// Input axis 'Player 4 Pause'.
+        /// </summary>
+        public const string Player_4_Pause = "Player 4 Pause";
     }
 }
 
