@@ -16,7 +16,7 @@ namespace Hourai.SmashBrew {
 
         private Mediator eventManager;
         private Respawn _respawn;
-        private Dictionary<Character, int> _stocks;
+        private Dictionary<Player, int> _stocks;
 
         protected override void Awake() {
             base.Awake();
@@ -25,7 +25,7 @@ namespace Hourai.SmashBrew {
             eventManager.Subscribe<RespawnEvent>(OnRespawn);
             _respawn = FindObjectOfType<Respawn>();
             _respawn.ShouldRespwan += RespawnCheck;
-            _stocks = new Dictionary<Character, int>();
+            _stocks = new Dictionary<Player, int>();
         }
 
         void OnDestroy() {
@@ -39,13 +39,13 @@ namespace Hourai.SmashBrew {
         }
 
         public int this[Player player] {
-            get { return _stocks[player.SpawnedCharacter]; }
+            get { return _stocks[player]; }
         }
 
-        public override Character Winner {
+        public override Player Winner {
             get {
-                Character winner = null;
-                foreach (KeyValuePair<Character, int> characterStock in _stocks.Where(characterStock => characterStock.Value > 0)) {
+                Player winner = null;
+                foreach (KeyValuePair<Player, int> characterStock in _stocks.Where(characterStock => characterStock.Value > 0)) {
                     if (winner == null)
                         winner = characterStock.Key;
                     else
@@ -55,7 +55,7 @@ namespace Hourai.SmashBrew {
             }
         }
 
-        bool RespawnCheck(Character character) {
+        bool RespawnCheck(Player character) {
             if (!isActiveAndEnabled || !_stocks.ContainsKey(character))
                 return false;
 
@@ -63,15 +63,15 @@ namespace Hourai.SmashBrew {
         }
 
         void OnRespawn(RespawnEvent eventArgs) {
-            if (!isActiveAndEnabled || !_stocks.ContainsKey(eventArgs.player))
+            if (!isActiveAndEnabled || !_stocks.ContainsKey(eventArgs.Player))
                 return;
-            _stocks[eventArgs.player]--;
+            _stocks[eventArgs.Player]--;
         }
 
         void OnSpawn(SpawnPlayerEvent eventArgs) {
             if (!isActiveAndEnabled)
                 return;
-            _stocks[eventArgs.Player.SpawnedCharacter] = stock;
+            _stocks[eventArgs.Player] = stock;
         }
 
     }

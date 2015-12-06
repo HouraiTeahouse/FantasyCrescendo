@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Hourai.Events;
 
 namespace Hourai.SmashBrew {
@@ -15,7 +14,7 @@ namespace Hourai.SmashBrew {
             get { return isActiveAndEnabled && CurrentTime <= 0; }
         }
 
-        public override Character Winner {
+        public override Player Winner {
             get { return null; }
         }
 
@@ -24,11 +23,11 @@ namespace Hourai.SmashBrew {
         protected override void Awake() {
             base.Awake();
             _eventManager = GlobalEventManager.Instance;
-            _eventManager.Subscribe<Match.MatchEvent>(OnMatchStart);
+            _eventManager.Subscribe<MatchEvent>(OnMatchStart);
         }
 
-        void OnMatchStart(Match.MatchEvent eventArgs) {
-            if (!eventArgs.start)
+        void OnMatchStart(MatchEvent eventArgs) {
+            if (!eventArgs.Start)
                 return;
             CurrentTime = _time;
         }

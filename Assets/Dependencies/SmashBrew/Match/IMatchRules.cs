@@ -6,7 +6,7 @@ namespace Hourai.SmashBrew {
     public abstract class MatchRule : MonoBehaviour{
 
         protected abstract bool IsFinished { get; }
-        public abstract Character Winner { get; }
+        public abstract Player Winner { get; }
 
         protected Match Match { get; private set; }
 
@@ -25,7 +25,7 @@ namespace Hourai.SmashBrew {
 
         protected virtual void Update() {
             if(IsFinished)
-                Match.FinishMatch(Winner);
+                Match.FinishMatch();
         }
 
     }

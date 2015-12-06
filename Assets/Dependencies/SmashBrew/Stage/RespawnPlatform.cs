@@ -27,10 +27,10 @@ namespace Hourai.SmashBrew {
         }
 
         void RespawnPlayer(RespawnEvent eventArgs) {
-            if (Occupied || eventArgs.consumed)
+            if (Occupied || eventArgs.Consumed)
                 return;
-            eventArgs.consumed = true;
-            _character = eventArgs.player;
+            eventArgs.Consumed = true;
+            _character = eventArgs.Player.SpawnedCharacter;
             _character.Rigidbody.velocity = Vector3.zero;
             _character.transform.position = transform.position;
             _character.transform.rotation = Quaternion.identity;

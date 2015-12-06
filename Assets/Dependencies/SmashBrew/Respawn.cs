@@ -8,44 +8,44 @@ namespace Hourai.SmashBrew {
 
     public class RespawnEvent : IEvent {
 
-        public bool consumed;
-        public Character player;
+        public bool Consumed;
+        public Player Player;
 
     }
 
     [DisallowMultipleComponent]
     public class Respawn : MonoBehaviour {
 
-        private List<Func<Character, bool>> shouldRespawn;
-        private Mediator eventManager;
+        private List<Func<Player, bool>> _shouldRespawn;
+        private Mediator _eventManager;
         
-        public event Func<Character, bool> ShouldRespwan {
+        public event Func<Player, bool> ShouldRespwan {
             add {
                 if(value != null)
-                    shouldRespawn.Add(value);
+                    _shouldRespawn.Add(value);
             }
             remove {
                 if (value != null)
-                    shouldRespawn.Remove(value);
+                    _shouldRespawn.Remove(value);
             }
         }  
 
         void Awake() {
-            eventManager = GlobalEventManager.Instance;
-            eventManager.Subscribe<BlastZoneExit>(OnBlastZoneExit);
-            shouldRespawn = new List<Func<Character, bool>>();
+            _eventManager = GlobalEventManager.Instance;
+            _eventManager.Subscribe<PlayerDieEvent>(PlayerDieEvent);
+            _shouldRespawn = new List<Func<Player, bool>>();
         }
 
-        protected virtual void OnBlastZoneExit(BlastZoneExit eventArgs) {
-            Character player = eventArgs.player;
-            if (shouldRespawn.Count > 0 && shouldRespawn.Any(check => !check(player))) {
-                player.gameObject.SetActive(false);
+        protected virtual void PlayerDieEvent(PlayerDieEvent eventArgs) {
+            Player player = eventArgs.Player;
+            if (_shouldRespawn.Count > 0 && _shouldRespawn.Any(check => !check(player))) {
+                player.SpawnedCharacter.gameObject.SetActive(false);
                 return;
             }
-            var respawn = new RespawnEvent { consumed = false, player = player };
-            eventManager.Publish(respawn);
-            if(!respawn.consumed)
-                throw new InvalidOperationException("Cannot respawn " + player.name + ".");
+            var respawn = new RespawnEvent { Consumed = false, Player = player };
+            _eventManager.Publish(respawn);
+            if(!respawn.Consumed)
+                throw new InvalidOperationException("Cannot respawn " + player.SpawnedCharacter.name + ".");
         }
 
     }

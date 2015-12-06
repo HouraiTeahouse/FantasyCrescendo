@@ -1,48 +1,46 @@
 ﻿using UnityEngine;
-using System;
 using Hourai.Events;
 
 namespace Hourai.SmashBrew {
 
-    public class BlastZoneExit : IEvent {
+    public class PlayerDieEvent : IEvent {
 
-        public Character player;
+        public Player Player;
 
     }
 
     [RequireComponent(typeof (Collider))]
     public sealed class BlastZone : Singleton<BlastZone> {
 
-        private Collider col;
-        private Mediator eventManager;
+        private Collider _col;
+        private Mediator _eventManager;
+        private PlayerDieEvent _event;
 
         protected override void Awake() {
             base.Awake();
-            eventManager = GlobalEventManager.Instance;
+            _eventManager = GlobalEventManager.Instance;
 
-            col = GetComponent<Collider>();
+            _col = GetComponent<Collider>();
             
+            _event = new PlayerDieEvent();
+
             // Make sure that the collider isn't a trigger
-            col.isTrigger = true;
+            _col.isTrigger = true;
         }
 
         private void OnTriggerExit(Collider other) {
             // Filter only for player characters
-            if(!Game.IsPlayer(other))
+            Player player = Player.GetPlayer(other);
+            if(player == null)
                 return;
 
-            var characterScript = other.transform.root.GetComponentInChildren<Character>();
-
-            if (characterScript == null) {
-                Debug.Log("Was expecting" + other.name + " to be a HumanPlayer, but no Character script was found.");
-                return;
-            }
-
-            Vector3 position = characterScript.transform.position;
-            if (col.ClosestPointOnBounds(position) == position)
+            Vector3 position = other.transform.position;
+            if (_col.ClosestPointOnBounds(position) == position)
                 return;
 
-            eventManager.Publish(new BlastZoneExit { player = characterScript });
+            _event.Player = player;
+
+            _eventManager.Publish(_event);
         }
 
     }

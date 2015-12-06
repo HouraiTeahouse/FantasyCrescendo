@@ -36,6 +36,25 @@ namespace Hourai.SmashBrew {
 
         public Character SpawnedCharacter { get; private set; }
 
+        public static Player GetPlayer(GameObject go) {
+            if (!go)
+                return null;
+            var controller = go.GetComponentInParent<PlayerController>();
+            return !controller ? null : controller.PlayerData;
+        }
+
+        public static Player GetPlayer(Component comp) {
+            return !comp ? null : GetPlayer(comp.gameObject);
+        }
+
+        public static bool IsPlayer(GameObject go) {
+            return GetPlayer(go) != null;
+        }
+
+        public static bool IsPlayer(Component comp) {
+            return GetPlayer(comp) != null;
+        }
+
         public static PlayerType GetNextType(PlayerType pt) {
             return pt + 1 > PlayerType.HumanPlayer ? PlayerType.None : pt + 1;
         }
