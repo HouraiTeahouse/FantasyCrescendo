@@ -49,8 +49,7 @@ namespace Hourai.SmashBrew.UI {
 
             Bounds bounds = _collider.bounds;
             Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + _positionBias;
-            _rTransform.position = CameraController.Camera.WorldToScreenPoint(worldPosition);
-            
+            _rTransform.position = Camera.main.WorldToScreenPoint(worldPosition);
         }
 
     }

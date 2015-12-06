@@ -21,7 +21,7 @@ namespace Hourai.SmashBrew {
         protected override void Awake() {
             base.Awake();
             eventManager = GlobalEventManager.Instance;
-            eventManager.Subscribe<SpawnPlayerEvent>(OnSpawn);
+            eventManager.Subscribe<PlayerSpawnEvent>(OnSpawn);
             eventManager.Subscribe<RespawnEvent>(OnRespawn);
             _respawn = FindObjectOfType<Respawn>();
             _respawn.ShouldRespwan += RespawnCheck;
@@ -29,7 +29,7 @@ namespace Hourai.SmashBrew {
         }
 
         void OnDestroy() {
-           eventManager.Unsubscribe<SpawnPlayerEvent>(OnSpawn);
+           eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawn);
         }
 
         protected override bool IsFinished {
@@ -68,7 +68,7 @@ namespace Hourai.SmashBrew {
             _stocks[eventArgs.Player]--;
         }
 
-        void OnSpawn(SpawnPlayerEvent eventArgs) {
+        void OnSpawn(PlayerSpawnEvent eventArgs) {
             if (!isActiveAndEnabled)
                 return;
             _stocks[eventArgs.Player] = stock;

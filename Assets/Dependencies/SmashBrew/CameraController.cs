@@ -1,43 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hourai.Events;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
     [RequireComponent(typeof (Camera))]
-    public sealed class CameraController : Singleton<CameraController> {
-
-        static CameraController() {
-            targets = new HashSet<Transform>();
-            Game.OnLoad += delegate(int level) {
-                               targets.RemoveWhere(target => target == null);
-                           };
-        }
+    public sealed class CameraController : HouraiBehaviour {
 
         private Camera _camera;
 
-        public static Camera Camera {
-            get { return Instance ? Instance._camera : null; }
-        }
+        [SerializeField]
+        private float _cameraSpeed = 1f;
 
         [SerializeField]
-        private float cameraSpeed = 1f;
+        private Vector2 _fovRange;
 
         [SerializeField]
-        private Vector2 FovRange;
+        private Vector2 _padding;
 
         [SerializeField]
-        private Vector2 padding;
+        private Vector3 _targetPositionBias;
 
-        [SerializeField]
-        private Vector3 targetPositionBias;
-
-        private static HashSet<Transform> targets;
+        private HashSet<Transform> _targets;
+        private Mediator _eventManager;
 
         protected override void Awake() {
             base.Awake();
             _camera = GetComponent<Camera>();
-            targets = new HashSet<Transform>();
+            _targets = new HashSet<Transform>();
+            _eventManager = GlobalEventManager.Instance;
+            _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawnPlayer);
+        }
+
+        void OnDestroy() {
+            _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawnPlayer);
+        }
+
+        void OnSpawnPlayer(PlayerSpawnEvent eventArgs) {
+            if (eventArgs == null || !eventArgs.PlayerObject)
+                return;
+            _targets.Add(eventArgs.PlayerObject.transform);
         }
 
         private void LateUpdate() {
@@ -48,8 +51,8 @@ namespace Hourai.SmashBrew {
             Vector3 sum = Vector3.zero;
             Vector3 min = Vector3.one*float.PositiveInfinity;
             Vector3 max = Vector3.one*float.NegativeInfinity;
-            foreach (Transform target in targets) {
-                if (target == null)
+            foreach (Transform target in _targets) {
+                if (target == null || !target.gameObject.activeInHierarchy)
                     continue;
                 count++;
                 sum += target.position;
@@ -57,11 +60,11 @@ namespace Hourai.SmashBrew {
                 max = Vector3.Max(max, target.position);
             }
 
-            Vector3 targetPosition = targetPositionBias + ((count <= 0) ? Vector3.zero : sum/count);
+            Vector3 targetPosition = _targetPositionBias + ((count <= 0) ? Vector3.zero : sum/count);
             Vector2 size = (Vector2) max - (Vector2) min;
 
             // Calculate the actual padding to use
-            var actualPadding = new Vector2(1 + 2*padding.x, 1 + 2*padding.y);
+            var actualPadding = new Vector2(1 + 2*_padding.x, 1 + 2*_padding.y);
 
             // Compute Hadamard product between size and inverse padding to add the padding desired.
             size = new Vector2(size.x*actualPadding.x, size.y*actualPadding.y);
@@ -71,42 +74,14 @@ namespace Hourai.SmashBrew {
                               Mathf.Rad2Deg;
 
             // Clamp the FOV so it isn't too small or too big.
-            targetFOV = Mathf.Clamp(targetFOV, FovRange.x, FovRange.y);
+            targetFOV = Mathf.Clamp(targetFOV, _fovRange.x, _fovRange.y);
 
             // Keep the camera in the same Z plane.
             targetPosition.z = transform.position.z;
 
             // Lerp both the FOV and the position at the desired speeds
-            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, targetFOV, dt * cameraSpeed);
-            transform.position = Vector3.Lerp(transform.position, targetPosition, dt * cameraSpeed);
-        }
-
-        public static void AddTarget(Component target) {
-            if (target == null)
-                throw new ArgumentNullException("target");
-            if (Instance == null)
-                throw new InvalidOperationException("There is no CameraController instance in this scene.");
-            Transform targetTransform = target.transform;
-            targets.Add(targetTransform);
-        }
-
-        public static void RemoveTarget(Component target) {
-            if (target == null || Instance == null)
-                return;
-
-            targets.Remove(target.transform);
-        }
-
-        public static void AddTarget(GameObject target) {
-            if (target == null)
-                throw new ArgumentNullException("target");
-            AddTarget(target.transform);
-        }
-
-        public static void RemoveTarget(GameObject target) {
-            if (target == null)
-                return;
-            RemoveTarget(target.transform);
+            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, targetFOV, dt * _cameraSpeed);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, dt * _cameraSpeed);
         }
 
     }

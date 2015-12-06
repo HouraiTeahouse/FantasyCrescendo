@@ -21,10 +21,14 @@ namespace Hourai.SmashBrew {
         
         public event Func<Player, bool> ShouldRespwan {
             add {
+                if(_shouldRespawn == null)
+                    _shouldRespawn = new List<Func<Player, bool>>();
                 if(value != null)
                     _shouldRespawn.Add(value);
             }
             remove {
+                if (_shouldRespawn == null)
+                    _shouldRespawn = new List<Func<Player, bool>>();
                 if (value != null)
                     _shouldRespawn.Remove(value);
             }
@@ -33,7 +37,8 @@ namespace Hourai.SmashBrew {
         void Awake() {
             _eventManager = GlobalEventManager.Instance;
             _eventManager.Subscribe<PlayerDieEvent>(PlayerDieEvent);
-            _shouldRespawn = new List<Func<Player, bool>>();
+            if(_shouldRespawn == null)
+                _shouldRespawn = new List<Func<Player, bool>>();
         }
 
         protected virtual void PlayerDieEvent(PlayerDieEvent eventArgs) {

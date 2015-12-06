@@ -8,9 +8,6 @@ namespace Hourai.SmashBrew.UI {
     public class PlayerInfoGUI : MonoBehaviour {
 
         [SerializeField]
-        private PlayerIndicator playerIndicatorPrefab;
-
-        [SerializeField]
         private List<GameObject> _displays;
 
         private Queue<GameObject> _inactiveDisplays; 
@@ -18,17 +15,17 @@ namespace Hourai.SmashBrew.UI {
 
         void Awake() {
             _eventManager = GlobalEventManager.Instance;
-            _eventManager.Subscribe<SpawnPlayerEvent>(OnSpawnPlayer);
+            _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawnPlayer);
             _inactiveDisplays = new Queue<GameObject>(_displays.Where(go => go != null));
             foreach (GameObject go in _inactiveDisplays.Where(go => go.activeInHierarchy))
                 go.SetActive(false);
         }
 
         void OnDestroy() {
-            _eventManager.Unsubscribe<SpawnPlayerEvent>(OnSpawnPlayer);
+            _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawnPlayer);
         }
 
-        private void OnSpawnPlayer(SpawnPlayerEvent eventArgs) {
+        private void OnSpawnPlayer(PlayerSpawnEvent eventArgs) {
             Player player = eventArgs.Player;
             if (_inactiveDisplays.Count < 0 || player == null)
                 return;
