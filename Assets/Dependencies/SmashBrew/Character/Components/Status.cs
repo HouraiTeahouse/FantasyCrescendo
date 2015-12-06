@@ -3,7 +3,7 @@ using System;
 
 namespace Hourai.SmashBrew {
     
-    public abstract class Status : MonoBehaviour {
+    public abstract class Status : HouraiBehaviour {
         
         public static T Apply<T>(GameObject target, float duration = -1f) where T : Status
         {
@@ -39,8 +39,12 @@ namespace Hourai.SmashBrew {
             enabled = false;
         }
 
-        void FixedUpdate() {
-            float dt = Time.fixedDeltaTime;
+        protected virtual float GetDeltaTime() {
+            return DeltaTime;
+        }
+
+        void Update() {
+            float dt = GetDeltaTime();
             EllapsedTime += dt;
             OnStatusUpdate(dt);
             enabled = EllapsedTime < Duration;

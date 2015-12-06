@@ -98,6 +98,16 @@ namespace Hourai.SmashBrew {
             return SpawnedCharacter;
         }
 
+        public static bool operator ==(Player p1, Player p2) {
+            bool nullCheck1 = ReferenceEquals(p1, null);
+            bool nullCheck2 = ReferenceEquals(p2, null);
+            return !(nullCheck1 ^ nullCheck2) && (!nullCheck1 || p1.PlayerNumber == p2.PlayerNumber);
+        }
+
+        public static bool operator !=(Player p1, Player p2) {
+            return !(p1 == p2);
+        }
+
     }
 
 }
