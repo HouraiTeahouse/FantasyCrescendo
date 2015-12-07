@@ -11,25 +11,27 @@ namespace Hourai.SmashBrew {
     [RequiredCharacterComponent]
     public sealed class Shield : RestrictableCharacterComponent, IDamageable {
 
+        //TODO: properly implement
+
         [SerializeField]
         private Material _shieldMaterial;
 
-        [SerializeField]
-        private float _maxHP = 100f;
+        //[SerializeField]
+        //private float _maxHP = 100f;
 
-        [SerializeField]
-        private float _regenerationRate = 10f;
+        //[SerializeField]
+        //private float _regenerationRate = 10f;
 
-        [SerializeField]
-        private float _depletionRate = 25f;
+        //[SerializeField]
+        //private float _depletionRate = 25f;
 
-        [SerializeField]
-        private float _resetHP = 30f;
+        //[SerializeField]
+        //private float _resetHP = 30f;
 
-        [SerializeField]
-        private float _shieldSize = 1.5f;
+        //[SerializeField]
+        //private float _shieldSize = 1.5f;
 
-        private float _currentHP;
+        //private float _currentHP;
 
         private GameObject _shieldObj;
         private Transform _shieldTransform;
@@ -69,7 +71,7 @@ namespace Hourai.SmashBrew {
             }
             _shieldObj.SetActive(false);
 
-            _currentHP = _maxHP;
+            //_currentHP = _maxHP;
         }
 
         //void FixedUpdate() {
@@ -89,7 +91,7 @@ namespace Hourai.SmashBrew {
 
         void ShieldBreak() {
             CharacterEvents.Publish(new ShieldBreak());
-            _currentHP = _resetHP;
+            //_currentHP = _resetHP;
         }
 
         public void Damage(object source, float damage) {

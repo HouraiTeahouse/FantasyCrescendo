@@ -25,7 +25,7 @@ namespace Hourai.SmashBrew {
         }
 
         void OnGrounded(GroundEvent eventArgs) {
-            if(eventArgs.grounded)
+            if(eventArgs.Grounded)
                 IsFastFalling = false;
         }
 

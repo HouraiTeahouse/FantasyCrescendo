@@ -6,9 +6,6 @@ namespace Hourai.Console {
 	[RequireComponent(typeof(Text))]
 	public class ConsoleCommandEntry : MonoBehaviour {
 
-		[SerializeField]
-		private KeyCode _key = KeyCode.Return;
-
 		private Text _text;
 
 		void Awake() {

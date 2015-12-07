@@ -17,9 +17,10 @@ namespace Hourai.SmashBrew {
             Reflective
         }
 
-        private ParticleSystem _effect;
-        private AudioSource _soundEffect;
-        private Collider[] colliders;
+        //TODO: Add triggers for on hit effects and SFX
+        //private ParticleSystem _effect;
+        //private AudioSource _soundEffect;
+        private Collider[] _colliders;
 
         // Represents the source Character that owns this Hitbox
         // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
@@ -45,8 +46,8 @@ namespace Hourai.SmashBrew {
             Source = GetComponentInParent<Character>();
             _damageable = GetComponentInParent<IDamageable>();
             _knockbackable = GetComponentInParent<IKnockbackable>();
-            _effect = GetComponent<ParticleSystem>();
-            _soundEffect = GetComponent<AudioSource>();
+            //_effect = GetComponent<ParticleSystem>();
+            //_soundEffect = GetComponent<AudioSource>();
 
             gameObject.tag = Tags.Hitbox;
             switch(type) {
@@ -59,9 +60,9 @@ namespace Hourai.SmashBrew {
                     break;
             }
 
-            colliders = GetComponents<Collider>();
-            for (var i = 0; i < colliders.Length; i++)
-                colliders[i].isTrigger = true;
+            _colliders = GetComponents<Collider>();
+            foreach (Collider col in _colliders)
+                col.isTrigger = true;
         }
 
         #region Unity Callbacks
@@ -89,11 +90,7 @@ namespace Hourai.SmashBrew {
                                 //TODO : FIX
                                 otherHitbox.Knockbackable.Knockback(Vector2.one);
                             break;
-                        default:
-                            break;
                     }
-                    break;
-                default:
                     break;
             }
         }

@@ -8,8 +8,10 @@ namespace Hourai.SmashBrew {
         [Serializable]
         private class Selection {
 
-            public CharacterData data;
-            public int pallete;
+#pragma warning disable 0649
+            public CharacterData Data;
+            public int Pallete;
+#pragma warning restore 0649
 
         }
 
@@ -24,8 +26,8 @@ namespace Hourai.SmashBrew {
                     break;
                 if (player == null || testCharacters[index] == null)
                     continue;
-                player.Character = testCharacters[index].data;
-                player.Pallete = testCharacters[index].pallete;
+                player.Character = testCharacters[index].Data;
+                player.Pallete = testCharacters[index].Pallete;
                 player.Type = Player.PlayerType.HumanPlayer;
                 index++;
             }

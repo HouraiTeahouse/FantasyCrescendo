@@ -38,7 +38,7 @@ namespace Hourai.SmashBrew
         }
 
         void OnGrounded(GroundEvent eventArgs) {
-            _grounded = eventArgs.grounded;
+            _grounded = eventArgs.Grounded;
             if(_grounded)
                 JumpCount = 0;
         }

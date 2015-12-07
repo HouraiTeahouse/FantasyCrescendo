@@ -51,7 +51,8 @@ namespace Hourai.SmashBrew {
             get; private set;
         }
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             MinDamage = 0f;
             MaxDamage = 999.9999f;
             DefensiveModifiers = new ModifierList<object>();

@@ -13,7 +13,11 @@ namespace Hourai.SmashBrew {
 
         };
 
-        public int PlayerNumber { get; private set; }
+        private readonly int _playerNumber;
+
+        public int PlayerNumber {
+            get { return _playerNumber; }
+        }
 
         public CharacterData Character;
 
@@ -77,7 +81,7 @@ namespace Hourai.SmashBrew {
         }
 
         internal Player(int number) {
-            PlayerNumber = number;
+            _playerNumber = number;
             CpuLevel = 3;
         }
 
@@ -96,6 +100,16 @@ namespace Hourai.SmashBrew {
             if (controller)
                 controller.PlayerData = this;
             return SpawnedCharacter;
+        }
+
+        public override bool Equals(object obj) {
+            if (obj is Player)
+                return this == ((Player) obj);
+            return false;
+        }
+
+        public override int GetHashCode() {
+            return _playerNumber;
         }
 
         public static bool operator ==(Player p1, Player p2) {

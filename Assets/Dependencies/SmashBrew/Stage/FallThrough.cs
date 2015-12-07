@@ -4,11 +4,13 @@ namespace Hourai.SmashBrew {
 
     public class FallThrough : TriggerStageElement {
 
-        private void Check(Collider col) {
-            if (!SmashGame.IsPlayer(col))
+        static void Check(Component col) {
+            if (!Game.IsPlayer(col))
                 return;
 
-            var character = col.gameObject.GetComponentInParent<Character>();
+            // TODO: Reimplement
+
+            //var character = col.gameObject.GetComponentInParent<Character>();
             //if (character == null || character.InputSource == null)
             //    return;
 
@@ -16,15 +18,15 @@ namespace Hourai.SmashBrew {
             //    ChangeIgnore(col, true);
         }
 
-        private void OnCollisionStay(Collision col) {
+        void OnCollisionStay(Collision col) {
             Check(col.collider);
         }
 
-        private void OnCollisionEnter(Collision col) {
+        void OnCollisionEnter(Collision col) {
             Check(col.collider);
         }
 
-        private void OnTriggerExit(Collider other) {
+        void OnTriggerExit(Collider other) {
             ChangeIgnore(other, false);
         }
 

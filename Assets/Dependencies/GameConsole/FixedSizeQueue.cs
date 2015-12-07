@@ -27,10 +27,9 @@ namespace Hourai.Console {
 		public FixedSizeQueue(int size, IEnumerable<T> collection = null) {
 			_limit = size;
 			_queue = new Queue<T>();
-			var count = 0;
 			if(collection == null)
 				return;
-			foreach(var obj in collection)
+			foreach(T obj in collection)
 			       Enqueue(obj);	
 		}
 

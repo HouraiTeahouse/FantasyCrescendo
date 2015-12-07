@@ -22,9 +22,11 @@ namespace Hourai.SmashBrew {
 
         public void FinishMatch() {
             MatchRule[] rules = FindObjectsOfType<MatchRule>();
-            Player winner = (from rule in rules
-                             where rule.isActiveAndEnabled
-                             select rule.Winner).FirstOrDefault(player => player != null);
+            
+            //TODO: Store winner data somewhere
+            //Player winner = (from rule in rules
+            //                 where rule.isActiveAndEnabled
+            //                 select rule.Winner).FirstOrDefault(player => player != null);
             foreach (MatchRule rule in rules.Where(rule => rule != null))
                 rule.enabled = false;
             _event.Start = false;

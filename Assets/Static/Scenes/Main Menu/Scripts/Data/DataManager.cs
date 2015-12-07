@@ -6,23 +6,19 @@ namespace Hourai.SmashBrew {
 
     public class DataManager : Singleton<DataManager> {
 
-        private CharacterData[] availableCharacters;
-        private List<string> availableStages;
-        public Mediator mediator;
-        private Config _config;
+        private CharacterData[] _availableCharacters;
+        private List<string> _availableStages;
+        public Mediator Mediator;
 
         // Use this for initialization
         protected override  void Awake() {
             base.Awake();
-            _config = Config.Instance;
-            availableCharacters = Resources.LoadAll<CharacterData>("");
+            _availableCharacters = Resources.LoadAll<CharacterData>("");
 
-            availableStages = new List<string>();
+            _availableStages = new List<string> {"Hakurei Shrine", "Marisa's House"};
 
             //TODO: Convert these into a StageData ScriptableObject
-            availableStages.Add("Hakurei Shrine");
-            availableStages.Add("Marisa's House");
-            initializeMediator();
+            InitializeMediator();
         }
 
         /// <summary>
@@ -30,51 +26,45 @@ namespace Hourai.SmashBrew {
         /// two players or CPUs ready to battle.
         /// </summary>
         /// <returns><c>true</c>, if the battle can start, <c>false</c> otherwise.</returns>
-        public bool isReadyToStartGame() {
+        public bool IsReadyToStartGame() {
             int counter = SmashGame.ActivePlayerCount;
-            mediator.Publish(new DataEvent.ReadyToFight { isReady = (counter > 1) });
+            Mediator.Publish(new DataEvent.ReadyToFight { IsReady = (counter > 1) });
             return (counter > 1);
         }
 
-        public void initializeMediator() {
-            mediator = new Mediator();
-            mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(onChangePlayerLevel);
-            mediator.Subscribe<DataEvent.ChangePlayerMode>(onChangePlayerMode);
-            mediator.Subscribe<DataEvent.UserChangingOptions>(onUserChangingOptions);
+        public void InitializeMediator() {
+            Mediator = new Mediator();
+            Mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(OnChangePlayerLevel);
+            Mediator.Subscribe<DataEvent.ChangePlayerMode>(OnChangePlayerMode);
+            Mediator.Subscribe<DataEvent.UserChangingOptions>(OnUserChangingOptions);
         }
 
-        public List<string> getAvailableStages() {
-            return availableStages;
+        public List<string> GetAvailableStages() {
+            return _availableStages;
         }
 
-        public IEnumerable<CharacterData> getAvailableCharacters() {
-            foreach (var data in availableCharacters)
+        public IEnumerable<CharacterData> GetAvailableCharacters() {
+            foreach (CharacterData data in _availableCharacters)
                 yield return data;
         }
 
-        public void onChangePlayerLevel(DataEvent.ChangePlayerLevelCommand cmd) {
-            if (cmd.playerNum >= 0 && cmd.playerNum < _config.MaxPlayers)
-                SmashGame.GetPlayerData(cmd.playerNum).CpuLevel = cmd.newLevel;
-            else
-                Debug.LogError("Invalid player number : " + cmd.newLevel);
+        public void OnChangePlayerLevel(DataEvent.ChangePlayerLevelCommand cmd) {
+            cmd.Player.CpuLevel = cmd.NewLevel;
         }
 
-        public void onUserChangingOptions(DataEvent.UserChangingOptions cmd) {
+        public void OnUserChangingOptions(DataEvent.UserChangingOptions cmd) {
             //Debug.Log ("Ai mano " + cmd.isUserChangingOptions  + "  -  " + Time.time );
-            if (cmd.isUserChangingOptions) {
-                mediator.Publish(
-                                 new DataEvent.ReadyToFight { isReady = false });
+            if (cmd.IsUserChangingOptions) {
+                Mediator.Publish(
+                                 new DataEvent.ReadyToFight { IsReady = false });
             } else
-                isReadyToStartGame();
+                IsReadyToStartGame();
         }
 
-        public void onChangePlayerMode(DataEvent.ChangePlayerMode cmd) {
-            if (cmd.playerNum >= 0 && cmd.playerNum < _config.MaxPlayers)
-                SmashGame.GetPlayerData(cmd.playerNum).CycleType();
-            else
-                Debug.LogError("Invalid player number while updating player mode: " + cmd.playerNum);
+        public void OnChangePlayerMode(DataEvent.ChangePlayerMode cmd) {
+            cmd.Player.CycleType();
 
-            isReadyToStartGame();
+            IsReadyToStartGame();
         }
 
     }

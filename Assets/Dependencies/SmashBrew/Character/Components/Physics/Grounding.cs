@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections.Generic;
 using Hourai.Events;
 
@@ -7,7 +6,7 @@ namespace Hourai.SmashBrew {
 
     public class GroundEvent : IEvent {
 
-        public bool grounded;
+        public bool Grounded;
 
     }
 
@@ -18,7 +17,7 @@ namespace Hourai.SmashBrew {
         
         private CapsuleCollider _movementCollider;
 
-        private HashSet<Collider> ground;
+        private HashSet<Collider> _ground;
 
         public bool IsGrounded {
             get { return Animator.GetBool(CharacterAnimVars.Grounded); }
@@ -26,12 +25,13 @@ namespace Hourai.SmashBrew {
                 if (IsGrounded == value)
                     return;
                 Animator.SetBool(CharacterAnimVars.Grounded, value);
-                CharacterEvents.Publish(new GroundEvent { grounded = value });
+                CharacterEvents.Publish(new GroundEvent { Grounded = value });
             }
         }
 
-        void Awake() {
-            ground = new HashSet<Collider>();
+        protected override void Awake() {
+            base.Awake();
+            _ground = new HashSet<Collider>();
             _movementCollider = GetComponent<CapsuleCollider>();
         }
 
@@ -42,15 +42,15 @@ namespace Hourai.SmashBrew {
 
             float r2 = _movementCollider.radius * _movementCollider.radius;
             Vector3 bottom = transform.TransformPoint(_movementCollider.center - Vector3.up * _movementCollider.height / 2);
-            for (var i = 0; i < points.Length; i++)
-                if ((points[i].point - bottom).sqrMagnitude < r2)
-                    ground.Add(points[i].otherCollider);
-            IsGrounded = ground.Count > 0;
+            foreach (ContactPoint contact in points)
+                if ((contact.point - bottom).sqrMagnitude < r2)
+                    _ground.Add(contact.otherCollider);
+            IsGrounded = _ground.Count > 0;
         }
 
         protected virtual void OnCollisionExit(Collision col) {
-            if (ground.Remove(col.collider))
-                IsGrounded = ground.Count > 0;
+            if (_ground.Remove(col.collider))
+                IsGrounded = _ground.Count > 0;
         }
     }
 

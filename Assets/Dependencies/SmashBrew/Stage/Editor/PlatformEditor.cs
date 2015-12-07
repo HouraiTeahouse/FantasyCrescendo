@@ -20,7 +20,8 @@ namespace Hourai.SmashBrew.Editor {
         private Bounds GetBounds(Collider collider) {
             var boxCol = collider as BoxCollider;
             var sphereCol = collider as SphereCollider;
-            var capsuleCollider = collider as CapsuleCollider;
+            //TODO: Draw Capsule Colliders
+            //var capsuleCollider = collider as CapsuleCollider;
 
             if (boxCol != null)
                 return new Bounds(boxCol.center, boxCol.size);

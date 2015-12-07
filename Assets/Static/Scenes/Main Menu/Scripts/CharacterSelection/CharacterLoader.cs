@@ -1,71 +1,70 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
     public class CharacterLoader : MonoBehaviour {
 
-        private DataManager dataManager;
+        private DataManager _dataManager;
 
         [SerializeField]
-        private GameObject characterSlotPrefab;
+        private GameObject _characterSlotPrefab;
 
         [SerializeField]
-        private GameObject characterPanel;
+        private GameObject _characterPanel;
 
         [SerializeField]
-        private GameObject playerSlotPrefab;
+        private GameObject _playerSlotPrefab;
 
         [SerializeField]
-        private GameObject playerSlotPanel;
+        private GameObject _playerSlotPanel;
 
         // Use this for initialization
         private void Start() {
-            if (characterSlotPrefab == null || characterPanel == null || playerSlotPanel == null || playerSlotPrefab == null) {
+            if (_characterSlotPrefab == null || _characterPanel == null || _playerSlotPanel == null || _playerSlotPrefab == null) {
                 Debug.LogError("Please fill all gameobjects needed by this component.");
                 return;
             }
 
-            dataManager = DataManager.Instance;
-            if (dataManager == null) {
+            _dataManager = DataManager.Instance;
+            if (_dataManager == null) {
                 Debug.LogError("Couldn't find the data manager component in the data manager object.");
                 return;
             }
 
-            fillPanel();
-            fillPlayerSlots();
+            FillPanel();
+            FillPlayerSlots();
         }
 
-        public void selectCharacter(int playerNum, string characterName) {
+        public void SelectCharacter(int playerNum, string characterName) {
             Debug.Log(playerNum + "  " + characterName);
         }
 
-        public void fillPanel() {
-            foreach (var character in dataManager.getAvailableCharacters()) {
-                GameObject go = Instantiate(characterSlotPrefab);
+        public void FillPanel() {
+            foreach (var character in _dataManager.GetAvailableCharacters()) {
+                GameObject go = Instantiate(_characterSlotPrefab);
                 var text = go.GetComponentInChildren<Text>();
                 if (text == null) {
                     Debug.LogError("Couldn't find the text component in the character slot.");
                     return;
                 }
                 text.text = character.FirstName;
-                go.transform.SetParent(characterPanel.transform, false);
+                go.transform.SetParent(_characterPanel.transform, false);
             }
         }
 
-        public void fillPlayerSlots() {
+        public void FillPlayerSlots() {
             foreach(Player player in SmashGame.Players) {
-                GameObject go = Instantiate(playerSlotPrefab);
+                GameObject go = Instantiate(_playerSlotPrefab);
                 var psu = go.GetComponent<PlayerSlotUI>();
                 if (psu == null) {
                     Debug.LogError("The player slot object should have a PlayerSlotUI component.");
                     return;
                 }
-                psu.updateUIMode(player.Type);
+                psu.UpdateUiMode(player.Type);
                 psu.SetPlayerData(player);
 
-                go.transform.SetParent(playerSlotPanel.transform, false);
+                go.transform.SetParent(_playerSlotPanel.transform, false);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using Hourai.Events;
+using Hourai.SmashBrew;
 
 /// <summary>
 /// Data commands.
@@ -7,14 +8,14 @@ public class DataEvent : IEvent {
 
     public class ChangePlayerLevelCommand : DataEvent {
 
-        public int newLevel;
-        public int playerNum;
+        public int NewLevel;
+        public Player Player;
 
     }
 
     public class ChangePlayerMode : DataEvent {
 
-        public int playerNum;
+        public Player Player;
 
     }
 
@@ -23,7 +24,7 @@ public class DataEvent : IEvent {
     /// </summary>
     public class UserChangingOptions : DataEvent {
 
-        public bool isUserChangingOptions;
+        public bool IsUserChangingOptions;
 
     }
 
@@ -32,7 +33,7 @@ public class DataEvent : IEvent {
     /// </summary>
     public class ReadyToFight : DataEvent {
 
-        public bool isReady;
+        public bool IsReady;
 
     }
 

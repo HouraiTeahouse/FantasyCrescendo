@@ -27,35 +27,34 @@ namespace Hourai.SmashBrew {
             public float Radius = 1f;
             public float[] TogglePoints;
 
-            private Hitbox hitbox;
-            private GameObject gameObject;
-            private int index;
+            private GameObject _gameObject;
+            private int _index;
 
             public void Initialize(Character character, Attack parent, int hitboxIndex) {
-                gameObject = new GameObject("hb_" + hitboxIndex + "_" + parent._direction + "_" + parent._type + "_" + parent.index);
-                Transform hitboxTransform = gameObject.transform;
+                _gameObject = new GameObject("hb_" + hitboxIndex + "_" + parent._direction + "_" + parent._type + "_" + parent.index);
+                Transform hitboxTransform = _gameObject.transform;
                 hitboxTransform.parent = character.GetBone(Bone);
                 hitboxTransform.localPosition = Offset;
                 hitboxTransform.localRotation = Quaternion.identity;
                 hitboxTransform.localScale = Vector3.one;
-                gameObject.AddComponent<SphereCollider>().radius = Radius;
-                hitbox = gameObject.AddComponent<Hitbox>();
-                gameObject.SetActive(false);
+                _gameObject.AddComponent<SphereCollider>().radius = Radius;
+                _gameObject.AddComponent<Hitbox>();
+                _gameObject.SetActive(false);
                 Array.Sort(TogglePoints);
             }
 
             public void OnTransition() {
-                gameObject.SetActive(false);
-                index = -1;
+                _gameObject.SetActive(false);
+                _index = -1;
             }
 
             public void Update(float normalizedTime, Animator animator) {
-                if (index >= TogglePoints.Length - 1)
+                if (_index >= TogglePoints.Length - 1)
                     return;
-                if(normalizedTime > TogglePoints[index + 1]) {
-                    index++;
-                    gameObject.SetActive(!gameObject.activeSelf);
-                }
+                if (!(normalizedTime > TogglePoints[_index + 1]))
+                    return;
+                _index++;
+                _gameObject.SetActive(!_gameObject.activeSelf);
             }
         }
 
@@ -88,8 +87,8 @@ namespace Hourai.SmashBrew {
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
             float t = stateInfo.normalizedTime;
-            for (var i = 0; i < _data.Length; i++)
-                _data[i].Update(t, animator);
+            foreach (HitboxData hitboxData in _data)
+                hitboxData.Update(t, animator);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

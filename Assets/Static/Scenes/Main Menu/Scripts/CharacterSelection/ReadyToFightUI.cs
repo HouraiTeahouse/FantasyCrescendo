@@ -5,24 +5,26 @@ namespace Hourai.SmashBrew.UI {
     
     public class ReadyToFightUI : MonoBehaviour {
 
-        private Mediator mediator;
-        public GameObject readyToFightButton = null;
+        private Mediator _mediator;
+        public GameObject ReadyToFightButton = null;
 
-        private void Start() {
-            if (readyToFightButton == null) {
+        void Start() {
+            if (ReadyToFightButton == null) {
                 Debug.Log("Please set all game objects needed by the ReadyToFightUI component");
                 return;
             }
             DataManager dataManager = DataManager.Instance;
-            if (dataManager == null)
+            if (dataManager == null) {
                 Debug.Log("The ReadyToFightUI component couldn't find the data manager");
+                return;
+            }
 
-            mediator = dataManager.mediator;
-            mediator.Subscribe<DataEvent.ReadyToFight>(onReadyToFight);
+            _mediator = dataManager.Mediator;
+            _mediator.Subscribe<DataEvent.ReadyToFight>(OnReadyToFight);
         }
 
-        public void onReadyToFight(DataEvent.ReadyToFight cmd) {
-            readyToFightButton.SetActive(cmd.isReady);
+        public void OnReadyToFight(DataEvent.ReadyToFight cmd) {
+            ReadyToFightButton.SetActive(cmd.IsReady);
         }
 
     }

@@ -15,13 +15,10 @@ namespace Hourai.SmashBrew {
     public class Spawn : MonoBehaviour {
 
         private Mediator _eventManager;
-        private GameObject _player;
 
         [SerializeField]
         private Transform[] _spawnPoints;
         
-        public bool Occupied { get { return _player != null; } } 
-
         void Awake() {
             _eventManager = GlobalEventManager.Instance;
             var i = 0;

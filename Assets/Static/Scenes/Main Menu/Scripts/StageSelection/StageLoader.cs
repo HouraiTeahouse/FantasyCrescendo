@@ -25,7 +25,7 @@ namespace Hourai.SmashBrew.UI {
                 return;
             }
 
-            List<string> stageNames = dataManager.getAvailableStages();
+            List<string> stageNames = dataManager.GetAvailableStages();
             var i = 0;
             for (i = 0; i < stageNames.Count; i++) {
                 GameObject go = Instantiate(stageSlotButton);
