@@ -27,7 +27,7 @@ namespace Hourai.SmashBrew.UI {
 
         private void OnSpawnPlayer(PlayerSpawnEvent eventArgs) {
             Player player = eventArgs.Player;
-            if (_inactiveDisplays.Count < 0 || player == null)
+            if (_inactiveDisplays.Count <= 0 || player == null)
                 return;
             GameObject display = _inactiveDisplays.Dequeue();
             display.SetActive(true);
