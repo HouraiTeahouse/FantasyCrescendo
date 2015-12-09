@@ -5,11 +5,7 @@ namespace Hourai {
     [RequireComponent(typeof(AudioSource))]
     public sealed class SoundEffect : HouraiBehaviour {
 
-        private AudioSource _audio;
-        
-        public AudioSource Audio {
-            get { return _audio; }
-        }
+        public AudioSource Audio { get; private set; }
 
         private bool destroyOnFinish;
 
@@ -17,13 +13,13 @@ namespace Hourai {
 
         protected override void Awake() {
             base.Awake();
-            _audio = GetComponent<AudioSource>();
-            Pitch = _audio.pitch;
+            Audio = GetComponent<AudioSource>();
+            Pitch = Audio.pitch;
         }
 
         void Update() {
-            _audio.pitch = EffectiveTimeScale * Pitch;
-            if(destroyOnFinish && !_audio.isPlaying)
+            Audio.pitch = EffectiveTimeScale * Pitch;
+            if(destroyOnFinish && !Audio.isPlaying)
                 Destroy(gameObject); 
         }
 

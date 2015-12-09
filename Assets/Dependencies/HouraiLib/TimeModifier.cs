@@ -32,17 +32,11 @@ namespace Hourai {
             }
         }
 
-        public float EffectiveTimeScale {
-            get { return Time.timeScale * _localTimeScale; }
-        }
+        public float EffectiveTimeScale => Time.timeScale * _localTimeScale;
 
-        public float DeltaTime {
-            get { return Time.deltaTime * _localTimeScale; }
-        }
+        public float DeltaTime => Time.deltaTime * _localTimeScale;
 
-        public float FixedDeltaTime {
-            get { return Time.fixedDeltaTime * _localTimeScale; }
-        }
+        public float FixedDeltaTime => Time.fixedDeltaTime * _localTimeScale;
 
         void Awake() {
             _animators = GetComponentsInChildren<Animator>();

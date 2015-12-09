@@ -1,14 +1,14 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 namespace Hourai {
 
     public class EnumMap<TEnum, TValue> : IEnumerable<TValue>
         where TEnum : struct, IComparable, IFormattable, IConvertible {
 
-        private Dictionary<TEnum, TValue> map;
+        private readonly Dictionary<TEnum, TValue> map;
 
         public EnumMap() {
             Type enumType = typeof(TEnum);
@@ -25,13 +25,10 @@ namespace Hourai {
             set { map[enumVal] = value; }
         }
 
-        public int Count {
-            get { return map.Count; }
-        }
+        public int Count => map.Count;
 
         public IEnumerator<TValue> GetEnumerator() {
-            foreach (KeyValuePair<TEnum, TValue> kvp in map)
-                yield return kvp.Value;
+            return map.Select(kvp => kvp.Value).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {

@@ -8,9 +8,9 @@ namespace Hourai {
     public abstract class Game : Singleton<Game> {
 
         [SerializeField, Range(0f, 5f)]
-        private float _timeScale = 1f;
+         float _timeScale = 1f;
 
-        private static bool _paused;
+         static bool _paused;
 
         public static bool Paused {
             get { return _paused; }
@@ -18,8 +18,8 @@ namespace Hourai {
                 bool oldVal = _paused;
                 _paused = value;
                 Time.timeScale = _paused ? 0f : Instance._timeScale;
-                if (oldVal != value && OnPause != null)
-                    OnPause();
+                if (oldVal != value)
+                    OnPause?.Invoke();
             }
         }
 
@@ -32,7 +32,7 @@ namespace Hourai {
                 else
                     Time.timeScale = value;
                 if (old != TimeScale)
-                    OnTimeScaleChange();
+                    OnTimeScaleChange?.Invoke();
             }
         }
 
@@ -56,44 +56,36 @@ namespace Hourai {
             base.Awake();
         }
 
-        private void Start() {
-            if(OnGameStart != null)
-                OnGameStart();
+         void Start() {
+            OnGameStart?.Invoke();
         }
 
-        private void Update() {
-            if(OnUpdate != null)
-                OnUpdate();
+         void Update() {
+            OnUpdate?.Invoke();
             Time.timeScale = Paused ? 0f : TimeScale;
         }
 
-        private void LateUpdate() {
-            if(OnLateUpdate != null)
-                OnLateUpdate();
+         void LateUpdate() {
+            OnLateUpdate?.Invoke();
         }
 
-        private void FixedUpdate() {
-            if(OnFixedUpdate != null)
-                OnFixedUpdate();
+         void FixedUpdate() {
+            OnFixedUpdate?.Invoke();
         }
 
-        private void OnApplicationFocus(bool focus) {
+         void OnApplicationFocus(bool focus) {
             if (focus)
-                if(OnApplicationFocused != null)
-                    OnApplicationFocused();
+                OnApplicationFocused?.Invoke();
             else
-                if(OnApplicationUnfocused != null)
-                    OnApplicationUnfocused();
+                OnApplicationUnfocused?.Invoke();
         }
 
-        private void OnApplicationQuit() {
-            if(OnApplicationExit != null)
-                OnApplicationExit();
-        }
+         void OnApplicationQuit() {
+             OnApplicationExit?.Invoke();
+         }
 
-        private void OnLevelWasLoaded(int level) {
-            if(OnLoad != null)
-                OnLoad(level);
+        void OnLevelWasLoaded(int level) {
+            OnLoad?.Invoke(level);
         }
 
         #endregion
@@ -104,7 +96,7 @@ namespace Hourai {
             if(Instance == null)
                 throw new InvalidOperationException("Cannot start a static coroutine without a Game instance.");
             if(coroutine == null)
-                throw new ArgumentNullException("coroutine");
+                throw new ArgumentNullException(nameof(coroutine));
             return Instance.StartCoroutine(coroutine);
         }
 
@@ -112,7 +104,7 @@ namespace Hourai {
             if(Instance == null)
                 throw new InvalidOperationException("Cannot start a static coroutine without a Game instance.");
             if (coroutine == null)
-                throw new ArgumentNullException("coroutine");
+                throw new ArgumentNullException(nameof(coroutine));
             return StaticCoroutine(coroutine.GetEnumerator());
         }
 

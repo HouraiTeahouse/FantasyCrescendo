@@ -23,8 +23,8 @@ namespace Hourai.Console {
 
 		}
 
-		private static Dictionary<string, ConsoleCommand> _commands;
-		private static FixedSizeQueue<string> _history;
+		private static readonly Dictionary<string, ConsoleCommand> _commands;
+		private static readonly FixedSizeQueue<string> _history;
 
 		public static event Action OnConsoleUpdate;
 
@@ -33,11 +33,9 @@ namespace Hourai.Console {
 			set { _history.Limit = value; }
 		}
 
-		public static IEnumerable History {
-			get { return _history; }
-		}
+		public static IEnumerable History => _history;
 
-		static GameConsole() {
+	    static GameConsole() {
 			_commands = new Dictionary<string, ConsoleCommand>();
 		    _history = new FixedSizeQueue<string>(100);
 
@@ -73,16 +71,14 @@ namespace Hourai.Console {
 
 		public static void Clear() {
 			_history.Clear();
-			if(OnConsoleUpdate != null)
-				OnConsoleUpdate();
+		    OnConsoleUpdate?.Invoke();
 		}
 
 		public static void Log(string message, params object[] objs) {
 			if(message == null)
 				message = string.Empty;
 			_history.Enqueue(string.Format(message, objs));
-			if(OnConsoleUpdate != null)
-				OnConsoleUpdate();
+		    OnConsoleUpdate?.Invoke();
 		}
 
 		public static void Execute(string command) {

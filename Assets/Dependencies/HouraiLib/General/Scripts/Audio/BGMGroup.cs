@@ -17,9 +17,7 @@ namespace Hourai {
 
         private WeightedRNG<Resource<AudioClip>> selection;
 
-        public string Name {
-            get { return _name; }
-        }
+        public string Name => _name;
 
         private void OnEnable() {
             selection = new WeightedRNG<Resource<AudioClip>>();
@@ -50,8 +48,8 @@ namespace Hourai {
         [System.Serializable]
         private class BGMData {
 
-            private const string delimiter = "/";
-            private const string suffix = "weight";
+            private const string Delimiter = "/";
+            private const string Suffix = "weight";
 
             [SerializeField, Range(0f, 1f)]
             private float _baseWeight = 1f;
@@ -61,7 +59,7 @@ namespace Hourai {
 
             private Resource<AudioClip> _bgmResource;
             private float _weight;
-            private string playerPrefsKey;
+            private string _playerPrefsKey;
 
             public Resource<AudioClip> BGM {
                 get { return _bgmResource; }
@@ -78,12 +76,12 @@ namespace Hourai {
 
             public void Initialize(string stageName) {
                 _bgmResource = new Resource<AudioClip>(_bgm);
-                playerPrefsKey = stageName + delimiter + _bgm + "_" + suffix;
+                _playerPrefsKey = stageName + Delimiter + _bgm + "_" + Suffix;
 
-                if (PlayerPrefs.HasKey(playerPrefsKey))
-                    _weight = PlayerPrefs.GetFloat(playerPrefsKey);
+                if (PlayerPrefs.HasKey(_playerPrefsKey))
+                    _weight = PlayerPrefs.GetFloat(_playerPrefsKey);
                 else {
-                    PlayerPrefs.SetFloat(playerPrefsKey, _baseWeight);
+                    PlayerPrefs.SetFloat(_playerPrefsKey, _baseWeight);
                     _weight = _baseWeight;
                 }
             }

@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-namespace Hourai {
-
+﻿namespace Hourai {
 
     public interface IInputButton {
 

@@ -9,11 +9,11 @@ namespace Hourai.Events {
     public class Mediator {
 
         //make sure you're using the System.Collections.Generic namespace
-        private Dictionary<Type, Delegate> _subscribers = new Dictionary<Type, Delegate>();
+        private readonly Dictionary<Type, Delegate> _subscribers = new Dictionary<Type, Delegate>();
 
         public void Subscribe<T>(Action<T> callback) where T : IEvent {
             if (callback == null)
-                throw new ArgumentNullException("callback");
+                throw new ArgumentNullException(nameof(callback));
             Type tp = typeof (T);
             if (_subscribers.ContainsKey(tp))
                 _subscribers[tp] = Delegate.Combine(_subscribers[tp], callback);
@@ -23,7 +23,7 @@ namespace Hourai.Events {
 
         public void Unsubscribe<T>(Action<T> callback) where T : IEvent {
             if (callback == null)
-                throw new ArgumentNullException("callback");
+                throw new ArgumentNullException(nameof(callback));
             Type eventType = typeof (T);
             if (!_subscribers.ContainsKey(eventType))
                 return;

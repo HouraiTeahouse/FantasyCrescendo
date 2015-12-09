@@ -15,13 +15,9 @@ namespace Hourai.SmashBrew {
 
         private readonly int _playerNumber;
 
-        public int PlayerNumber {
-            get { return _playerNumber; }
-        }
+        public int PlayerNumber => _playerNumber;
 
         public CharacterData Character;
-
-        private Character _spawnedInstance;
 
         public int CpuLevel { get; set; }
 
@@ -87,7 +83,7 @@ namespace Hourai.SmashBrew {
 
         internal Character Spawn(Transform transform = null) {
             if(transform == null)
-                throw new ArgumentNullException("transform");
+                throw new ArgumentNullException(nameof(transform));
             return Spawn(transform.position, transform.rotation);
         }
 

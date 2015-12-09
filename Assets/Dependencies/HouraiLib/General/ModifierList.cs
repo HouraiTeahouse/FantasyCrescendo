@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
+﻿using System;
+using System.Linq;
 
 namespace Hourai {
     
@@ -11,10 +10,7 @@ namespace Hourai {
         public float Modifiy(float baseValue) {
             if (Count <= 0)
                 return baseValue;
-            float value = baseValue;
-            foreach (Func<float, float> mod in this)
-                value = mod(value);
-            return value;
+            return this.Aggregate(baseValue, (current, mod) => mod(current));
         }
 
     }
@@ -25,10 +21,7 @@ namespace Hourai {
         public float Modifiy(T source, float baseValue) {
             if (Count <= 0)
                 return baseValue;
-            float value = baseValue;
-            foreach (Modifier<T> mod in this)
-                value = mod(source, value);
-            return value;
+            return this.Aggregate(baseValue, (current, mod) => mod(source, current));
         }
 
     }

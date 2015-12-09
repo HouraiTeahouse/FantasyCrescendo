@@ -12,17 +12,17 @@ namespace Hourai.Console {
 		private GameObject[] _toggle;
 
 	    [SerializeField]
-	    private GameObject select; 
+	    private GameObject _select; 
 
 		void Update() {
 			if(!Input.GetKeyDown(_key))
 				return;
-			foreach(var go in _toggle) {
+			foreach(GameObject go in _toggle) {
 				if(!go)
 					continue;
 				go.SetActive(!go.activeSelf);
 			}
-            EventSystem.current.SetSelectedGameObject(select);
+            EventSystem.current.SetSelectedGameObject(_select);
 		}
 		
 	}

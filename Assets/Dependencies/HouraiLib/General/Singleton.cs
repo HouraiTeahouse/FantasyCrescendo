@@ -1,5 +1,5 @@
-﻿using Hourai.SmashBrew;
-using UnityEngine;
+﻿using UnityEngine;
+
 namespace Hourai {
 
     public abstract class Singleton<T> : HouraiBehaviour where T : Singleton<T> {
@@ -11,12 +11,12 @@ namespace Hourai {
 
         public static T Instance {
             get {
+                if (_instance != null)
+                    return _instance;
+                _instance = FindObjectOfType<T>();
                 if (_instance == null) {
-                    _instance = FindObjectOfType<T>();
-                    if (_instance == null) {
-                        Debug.LogError("Something is trying to access the " + typeof(T) +
-                                       " Singleton instance, but none exists.");
-                    }
+                    Debug.LogError("Something is trying to access the " + typeof(T) +
+                                   " Singleton instance, but none exists.");
                 }
                 return _instance;
             }

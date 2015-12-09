@@ -7,9 +7,7 @@ namespace Hourai {
 
     public class PostBuildCopy : MonoBehaviour {
 
-        private static string BuildDirectory {
-            get { return Directory.GetCurrentDirectory() + "/Build"; }
-        }
+        private static string BuildDirectory => Directory.GetCurrentDirectory() + "/Build";
 
         [PostProcessBuild]
         private static void AddPostBuildFiles(BuildTarget target, string path) {

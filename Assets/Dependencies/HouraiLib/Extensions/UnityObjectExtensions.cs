@@ -34,9 +34,7 @@ namespace Hourai {
         /// <param name="obj">the original object</param>
         /// <returns>the copied object</returns>
         public static T Duplicate<T>(this T obj) where T : Object {
-            if (!obj)
-                return null;
-            return Object.Instantiate(obj);
+            return !obj ? null : Object.Instantiate(obj);
         }
 
         public static T Duplicate<T>(this T obj, Vector3 position) where T : Object {
