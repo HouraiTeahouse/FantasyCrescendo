@@ -1,30 +1,48 @@
+using System;
 using UnityEditor;
+using UnityEditor.AnimatedValues;
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects {
+namespace UnityStandardAssets.ImageEffects
+{
+    [CustomEditor(typeof(DepthOfField))]
+    class DepthOfFieldEditor : Editor
+    {
+        SerializedObject serObj;
 
-    [CustomEditor(typeof (DepthOfField))]
-    internal class DepthOfFieldEditor : Editor {
+        SerializedProperty visualizeFocus;
+        SerializedProperty focalLength;
+        SerializedProperty focalSize;
+        SerializedProperty aperture;
+        SerializedProperty focalTransform;
+        SerializedProperty maxBlurSize;
+        SerializedProperty highResolution;
 
-        private SerializedProperty aperture;
-        private SerializedProperty blurSampleCount;
-        private SerializedProperty blurType;
-        private SerializedProperty dx11BokehIntensity;
-        private SerializedProperty dx11BokehScale;
-        private SerializedProperty dx11BokehTexture;
-        private SerializedProperty dx11BokehThreshold;
-        private SerializedProperty dx11SpawnHeuristic;
-        private SerializedProperty focalLength;
-        private SerializedProperty focalSize;
-        private SerializedProperty focalTransform;
-        private SerializedProperty foregroundOverlap;
-        private SerializedProperty highResolution;
-        private SerializedProperty maxBlurSize;
-        private SerializedProperty nearBlur;
-        private SerializedObject serObj;
-        private SerializedProperty visualizeFocus;
+        SerializedProperty blurType;
+        SerializedProperty blurSampleCount;
 
-        private void OnEnable() {
+        SerializedProperty nearBlur;
+        SerializedProperty foregroundOverlap;
+
+        SerializedProperty dx11BokehThreshold;
+        SerializedProperty dx11SpawnHeuristic;
+        SerializedProperty dx11BokehTexture;
+        SerializedProperty dx11BokehScale;
+        SerializedProperty dx11BokehIntensity;
+
+        AnimBool showFocalDistance = new AnimBool();
+        AnimBool showDiscBlurSettings = new AnimBool();
+        AnimBool showDX11BlurSettings = new AnimBool();
+        AnimBool showNearBlurOverlapSize = new AnimBool();
+
+        bool useFocalDistance { get { return focalTransform.objectReferenceValue == null; } }
+        bool useDiscBlur { get { return blurType.enumValueIndex < 1; } }
+        bool useDX11Blur { get { return blurType.enumValueIndex > 0; } }
+        bool useNearBlur { get { return nearBlur.boolValue; } }
+
+
+        void OnEnable()
+        {
             serObj = new SerializedObject(target);
 
             visualizeFocus = serObj.FindProperty("visualizeFocus");
@@ -47,52 +65,97 @@ namespace UnityStandardAssets.ImageEffects {
             dx11BokehTexture = serObj.FindProperty("dx11BokehTexture");
             dx11BokehScale = serObj.FindProperty("dx11BokehScale");
             dx11BokehIntensity = serObj.FindProperty("dx11BokehIntensity");
+
+            InitializedAnimBools();
         }
 
-        public override void OnInspectorGUI() {
+        void InitializedAnimBools()
+        {
+            showFocalDistance.valueChanged.AddListener(Repaint);
+            showFocalDistance.value = useFocalDistance;
+
+            showDiscBlurSettings.valueChanged.AddListener(Repaint);
+            showDiscBlurSettings.value = useDiscBlur;
+
+            showDX11BlurSettings.valueChanged.AddListener(Repaint);
+            showDX11BlurSettings.value = useDX11Blur;
+
+            showNearBlurOverlapSize.valueChanged.AddListener(Repaint);
+            showNearBlurOverlapSize.value = useNearBlur;
+        }
+
+
+        void UpdateAnimBoolTargets()
+        {
+            showFocalDistance.target = useFocalDistance;
+            showDiscBlurSettings.target = useDiscBlur;
+            showDX11BlurSettings.target = useDX11Blur;
+            showNearBlurOverlapSize.target = useNearBlur;
+        }
+
+
+        public override void OnInspectorGUI()
+        {
             serObj.Update();
+
+            UpdateAnimBoolTargets();
 
             EditorGUILayout.LabelField("Simulates camera lens defocus", EditorStyles.miniLabel);
 
             GUILayout.Label("Focal Settings");
             EditorGUILayout.PropertyField(visualizeFocus, new GUIContent(" Visualize"));
-            EditorGUILayout.PropertyField(focalLength, new GUIContent(" Focal Distance"));
-            EditorGUILayout.PropertyField(focalSize, new GUIContent(" Focal Size"));
             EditorGUILayout.PropertyField(focalTransform, new GUIContent(" Focus on Transform"));
-            EditorGUILayout.PropertyField(aperture, new GUIContent(" Aperture"));
+
+            if (EditorGUILayout.BeginFadeGroup(showFocalDistance.faded))
+            {
+                EditorGUILayout.PropertyField(focalLength, new GUIContent(" Focal Distance"));
+            }
+            EditorGUILayout.EndFadeGroup();
+
+            EditorGUILayout.Slider(focalSize, 0.0f, 2.0f, new GUIContent(" Focal Size"));
+            EditorGUILayout.Slider(aperture, 0.0f, 1.0f, new GUIContent(" Aperture"));
 
             EditorGUILayout.Separator();
 
             EditorGUILayout.PropertyField(blurType, new GUIContent("Defocus Type"));
 
             if (!(target as DepthOfField).Dx11Support() && blurType.enumValueIndex > 0)
+            {
                 EditorGUILayout.HelpBox("DX11 mode not supported (need shader model 5)", MessageType.Info);
+            }
 
-            if (blurType.enumValueIndex < 1)
+            if (EditorGUILayout.BeginFadeGroup(showDiscBlurSettings.faded))
+            {
                 EditorGUILayout.PropertyField(blurSampleCount, new GUIContent(" Sample Count"));
+            }
+            EditorGUILayout.EndFadeGroup();
 
-            EditorGUILayout.PropertyField(maxBlurSize, new GUIContent(" Max Blur Distance"));
+            EditorGUILayout.Slider(maxBlurSize, 0.1f, 2.0f, new GUIContent(" Max Blur Distance"));
             EditorGUILayout.PropertyField(highResolution, new GUIContent(" High Resolution"));
 
             EditorGUILayout.Separator();
 
             EditorGUILayout.PropertyField(nearBlur, new GUIContent("Near Blur"));
-            EditorGUILayout.PropertyField(foregroundOverlap, new GUIContent("  Overlap Size"));
+            if (EditorGUILayout.BeginFadeGroup(showNearBlurOverlapSize.faded))
+            {
+                EditorGUILayout.Slider(foregroundOverlap, 0.1f, 2.0f, new GUIContent("  Overlap Size"));
+            }
+            EditorGUILayout.EndFadeGroup();
 
             EditorGUILayout.Separator();
 
-            if (blurType.enumValueIndex > 0) {
+            if (EditorGUILayout.BeginFadeGroup(showDX11BlurSettings.faded))
+            {
                 GUILayout.Label("DX11 Bokeh Settings");
                 EditorGUILayout.PropertyField(dx11BokehTexture, new GUIContent(" Bokeh Texture"));
-                EditorGUILayout.PropertyField(dx11BokehScale, new GUIContent(" Bokeh Scale"));
-                EditorGUILayout.PropertyField(dx11BokehIntensity, new GUIContent(" Bokeh Intensity"));
-                EditorGUILayout.PropertyField(dx11BokehThreshold, new GUIContent(" Min Luminance"));
-                EditorGUILayout.PropertyField(dx11SpawnHeuristic, new GUIContent(" Spawn Heuristic"));
+                EditorGUILayout.Slider(dx11BokehScale, 0.0f, 50.0f, new GUIContent(" Bokeh Scale"));
+                EditorGUILayout.Slider(dx11BokehIntensity, 0.0f, 100.0f, new GUIContent(" Bokeh Intensity"));
+                EditorGUILayout.Slider(dx11BokehThreshold, 0.0f, 1.0f, new GUIContent(" Min Luminance"));
+                EditorGUILayout.Slider(dx11SpawnHeuristic, 0.01f, 1.0f, new GUIContent(" Spawn Heuristic"));
             }
+            EditorGUILayout.EndFadeGroup();
 
             serObj.ApplyModifiedProperties();
         }
-
     }
-
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SplashScreen : MonoBehaviour {
@@ -45,7 +46,7 @@ public class SplashScreen : MonoBehaviour {
             graphic.enabled = false;
             graphic.color = targetColor;
         }
-        AsyncOperation operation = Application.LoadLevelAsync(targetSceneName);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(targetSceneName);
         if (operation != null && !operation.isDone) {
             foreach (GameObject target in disableWhileLoading)
                 target.SetActive(true);

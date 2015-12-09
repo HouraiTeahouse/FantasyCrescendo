@@ -1,29 +1,34 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-namespace UnityStandardAssets.ImageEffects {
-
-    internal class Triangles {
-
+namespace UnityStandardAssets.ImageEffects
+{
+    class Triangles
+    {
         private static Mesh[] meshes;
-        private static int currentTris;
+        private static int currentTris = 0;
 
-        private static bool HasMeshes() {
+        static bool HasMeshes()
+        {
             if (meshes == null)
                 return false;
-            for (var i = 0; i < meshes.Length; i++) {
+            for (int i = 0; i < meshes.Length; i++)
                 if (null == meshes[i])
                     return false;
-            }
 
             return true;
         }
 
-        private static void Cleanup() {
+        static void Cleanup()
+        {
             if (meshes == null)
                 return;
 
-            for (var i = 0; i < meshes.Length; i++) {
-                if (null != meshes[i]) {
+            for (int i = 0; i < meshes.Length; i++)
+            {
+                if (null != meshes[i])
+                {
                     Object.DestroyImmediate(meshes[i]);
                     meshes[i] = null;
                 }
@@ -31,21 +36,25 @@ namespace UnityStandardAssets.ImageEffects {
             meshes = null;
         }
 
-        private static Mesh[] GetMeshes(int totalWidth, int totalHeight) {
-            if (HasMeshes() && (currentTris == (totalWidth*totalHeight)))
+        static Mesh[] GetMeshes(int totalWidth, int totalHeight)
+        {
+            if (HasMeshes() && (currentTris == (totalWidth * totalHeight)))
+            {
                 return meshes;
+            }
 
-            int maxTris = 65000/3;
-            int totalTris = totalWidth*totalHeight;
+            int maxTris = 65000 / 3;
+            int totalTris = totalWidth * totalHeight;
             currentTris = totalTris;
 
-            int meshCount = Mathf.CeilToInt((1.0f*totalTris)/(1.0f*maxTris));
+            int meshCount = Mathf.CeilToInt((1.0f * totalTris) / (1.0f * maxTris));
 
             meshes = new Mesh[meshCount];
 
-            var i = 0;
-            var index = 0;
-            for (i = 0; i < totalTris; i += maxTris) {
+            int i = 0;
+            int index = 0;
+            for (i = 0; i < totalTris; i += maxTris)
+            {
                 int tris = Mathf.FloorToInt(Mathf.Clamp((totalTris - i), 0, maxTris));
 
                 meshes[index] = GetMesh(tris, i, totalWidth, totalHeight);
@@ -55,23 +64,25 @@ namespace UnityStandardAssets.ImageEffects {
             return meshes;
         }
 
-        private static Mesh GetMesh(int triCount, int triOffset, int totalWidth, int totalHeight) {
+        static Mesh GetMesh(int triCount, int triOffset, int totalWidth, int totalHeight)
+        {
             var mesh = new Mesh();
             mesh.hideFlags = HideFlags.DontSave;
 
-            Vector3[] verts = new Vector3[triCount*3];
-            Vector2[] uvs = new Vector2[triCount*3];
-            Vector2[] uvs2 = new Vector2[triCount*3];
-            int[] tris = new int[triCount*3];
+            var verts = new Vector3[triCount * 3];
+            var uvs = new Vector2[triCount * 3];
+            var uvs2 = new Vector2[triCount * 3];
+            var tris = new int[triCount * 3];
 
-            for (var i = 0; i < triCount; i++) {
-                int i3 = i*3;
+            for (int i = 0; i < triCount; i++)
+            {
+                int i3 = i * 3;
                 int vertexWithOffset = triOffset + i;
 
-                float x = Mathf.Floor(vertexWithOffset%totalWidth)/totalWidth;
-                float y = Mathf.Floor(vertexWithOffset/totalWidth)/totalHeight;
+                float x = Mathf.Floor(vertexWithOffset % totalWidth) / totalWidth;
+                float y = Mathf.Floor(vertexWithOffset / totalWidth) / totalHeight;
 
-                var position = new Vector3(x*2 - 1, y*2 - 1, 1.0f);
+                Vector3 position = new Vector3(x * 2 - 1, y * 2 - 1, 1.0f);
 
                 verts[i3 + 0] = position;
                 verts[i3 + 1] = position;
@@ -97,7 +108,5 @@ namespace UnityStandardAssets.ImageEffects {
 
             return mesh;
         }
-
     }
-
 }

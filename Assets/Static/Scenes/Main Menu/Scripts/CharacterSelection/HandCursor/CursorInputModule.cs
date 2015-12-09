@@ -14,16 +14,15 @@ public class CursorInputModule : PointerInputModule {
     public List<GameObject> cursorObjects;
 
     // The same event system used on the Canvas
-    public EventSystem eventSystem = null;
     private PointerEventData pointer;
 
     // Use this for initialization
     protected override void Start() {
         base.Start();
-        if (cursorObjects == null || eventSystem == null) {
-            Debug.LogError("Set the game objects in the cursor module.");
-            Destroy(gameObject);
-        }
+        if (cursorObjects != null && eventSystem != null)
+            return;
+        Debug.LogError("Set the game objects in the cursor module.");
+        Destroy(gameObject);
     }
 
     // Process is called once per tick

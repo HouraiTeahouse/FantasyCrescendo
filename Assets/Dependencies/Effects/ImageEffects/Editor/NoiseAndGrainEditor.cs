@@ -1,28 +1,33 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects {
+namespace UnityStandardAssets.ImageEffects
+{
+    [CustomEditor (typeof( NoiseAndGrain))]
+    class NoiseAndGrainEditor : Editor
+    {
+        SerializedObject serObj;
 
-    [CustomEditor(typeof (NoiseAndGrain))]
-    internal class NoiseAndGrainEditor : Editor {
+        SerializedProperty intensityMultiplier;
+        SerializedProperty generalIntensity;
+        SerializedProperty blackIntensity;
+        SerializedProperty whiteIntensity;
+        SerializedProperty midGrey;
 
-        private SerializedProperty blackIntensity;
-        private SerializedProperty dx11Grain;
-        private SerializedProperty filterMode;
-        private SerializedProperty generalIntensity;
-        private SerializedProperty intensities;
-        private SerializedProperty intensityMultiplier;
-        private SerializedProperty midGrey;
-        private SerializedProperty monochrome;
-        private SerializedProperty monochromeTiling;
-        private SerializedProperty noiseTexture;
-        private SerializedObject serObj;
-        private SerializedProperty softness;
-        private SerializedProperty tiling;
-        private SerializedProperty whiteIntensity;
+        SerializedProperty dx11Grain;
+        SerializedProperty softness;
+        SerializedProperty monochrome;
 
-        private void OnEnable() {
-            serObj = new SerializedObject(target);
+        SerializedProperty intensities;
+        SerializedProperty tiling;
+        SerializedProperty monochromeTiling;
+
+        SerializedProperty noiseTexture;
+        SerializedProperty filterMode;
+
+        void OnEnable () {
+            serObj = new SerializedObject (target);
 
             intensityMultiplier = serObj.FindProperty("intensityMultiplier");
             generalIntensity = serObj.FindProperty("generalIntensity");
@@ -42,7 +47,8 @@ namespace UnityStandardAssets.ImageEffects {
             filterMode = serObj.FindProperty("filterMode");
         }
 
-        public override void OnInspectorGUI() {
+
+        public override void OnInspectorGUI () {
             serObj.Update();
 
             EditorGUILayout.LabelField("Overlays animated noise patterns", EditorStyles.miniLabel);
@@ -50,27 +56,20 @@ namespace UnityStandardAssets.ImageEffects {
             EditorGUILayout.PropertyField(dx11Grain, new GUIContent("DirectX 11 Grain"));
 
             if (dx11Grain.boolValue && !(target as NoiseAndGrain).Dx11Support()) {
-                EditorGUILayout.HelpBox("DX11 mode not supported (need DX11 GPU and enable DX11 in PlayerSettings)",
-                                        MessageType.Info);
+                EditorGUILayout.HelpBox("DX11 mode not supported (need DX11 GPU and enable DX11 in PlayerSettings)", MessageType.Info);
             }
 
             EditorGUILayout.PropertyField(monochrome, new GUIContent("Monochrome"));
 
             EditorGUILayout.Separator();
 
-            EditorGUILayout.PropertyField(intensityMultiplier, new GUIContent("Intensity Multiplier"));
-            EditorGUILayout.PropertyField(generalIntensity, new GUIContent(" General"));
-            EditorGUILayout.PropertyField(blackIntensity, new GUIContent(" Black Boost"));
-            EditorGUILayout.PropertyField(whiteIntensity, new GUIContent(" White Boost"));
-            midGrey.floatValue = EditorGUILayout.Slider(new GUIContent(" Mid Grey (for Boost)"),
-                                                        midGrey.floatValue,
-                                                        0.0f,
-                                                        1.0f);
+            EditorGUILayout.Slider(intensityMultiplier, 0.0f, 10.0f, new GUIContent("Intensity Multiplier"));
+            EditorGUILayout.Slider(generalIntensity, 0.0f, 1.0f, new GUIContent(" General"));
+            EditorGUILayout.Slider(blackIntensity, 0.0f, 1.0f, new GUIContent(" Black Boost"));
+            EditorGUILayout.Slider(whiteIntensity, 0.0f, 1.0f, new GUIContent(" White Boost"));
+            midGrey.floatValue = EditorGUILayout.Slider( new GUIContent(" Mid Grey (for Boost)"), midGrey.floatValue, 0.0f, 1.0f);
             if (monochrome.boolValue == false) {
-                var c = new Color(intensities.vector3Value.x,
-                                  intensities.vector3Value.y,
-                                  intensities.vector3Value.z,
-                                  1.0f);
+                Color c = new Color(intensities.vector3Value.x,intensities.vector3Value.y,intensities.vector3Value.z,1.0f);
                 c = EditorGUILayout.ColorField(new GUIContent(" Color Weights"), c);
                 intensities.vector3Value = new Vector3(c.r, c.g, c.b);
             }
@@ -81,30 +80,32 @@ namespace UnityStandardAssets.ImageEffects {
                 EditorGUILayout.LabelField("Noise Shape");
                 EditorGUILayout.PropertyField(noiseTexture, new GUIContent(" Texture"));
                 EditorGUILayout.PropertyField(filterMode, new GUIContent(" Filter"));
-            } else {
+            }
+            else {
                 EditorGUILayout.Separator();
                 EditorGUILayout.LabelField("Noise Shape");
             }
 
-            softness.floatValue = EditorGUILayout.Slider(new GUIContent(" Softness"), softness.floatValue, 0.0f, 0.99f);
+            softness.floatValue = EditorGUILayout.Slider( new GUIContent(" Softness"),softness.floatValue, 0.0f, 0.99f);
 
             if (!dx11Grain.boolValue) {
                 EditorGUILayout.Separator();
                 EditorGUILayout.LabelField("Advanced");
 
-                if (monochrome.boolValue == false) {
+                if (monochrome.boolValue == false)
+                {
                     Vector3 temp = tiling.vector3Value;
                     temp.x = EditorGUILayout.FloatField(new GUIContent(" Tiling (Red)"), tiling.vector3Value.x);
                     temp.y = EditorGUILayout.FloatField(new GUIContent(" Tiling (Green)"), tiling.vector3Value.y);
                     temp.z = EditorGUILayout.FloatField(new GUIContent(" Tiling (Blue)"), tiling.vector3Value.z);
                     tiling.vector3Value = temp;
-                } else
+                }
+                else {
                     EditorGUILayout.PropertyField(monochromeTiling, new GUIContent(" Tiling"));
+                }
             }
 
             serObj.ApplyModifiedProperties();
         }
-
     }
-
 }
