@@ -5,7 +5,7 @@ namespace Hourai {
 
     public class WeightedRNG<T> {
 
-        private readonly Dictionary<T, float> weights;
+        private Dictionary<T, float> weights;
         private float weightSum;
 
         public WeightedRNG() {

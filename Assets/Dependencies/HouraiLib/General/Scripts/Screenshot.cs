@@ -2,19 +2,15 @@
 using System.IO;
 using UnityEngine;
 
-namespace Hourai {
+/// <summary>
+/// Takes screenshots upon pressing F12
+/// </summary>
+/// Author: James Liu
+/// Authored on: 07/01/2015
+public class Screenshot : MonoBehaviour {
 
-    /// <summary>
-    /// Takes screenshots upon pressing a specified button
-    /// </summary>
-    public class Screenshot : MonoBehaviour {
-
-        [SerializeField]
-        private KeyCode _key = KeyCode.F12;
-
-        private void Update() {
-            if (!Input.GetKeyDown(_key))
-                return;
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.F12)) {
             string filename = "screenshot-" + DateTime.UtcNow.ToString("MM-dd-yyyy-HHmmss") + ".png";
             string path = Path.Combine(Application.persistentDataPath, filename);
 
@@ -26,7 +22,6 @@ namespace Hourai {
             else
                 Application.CaptureScreenshot(path);
         }
-
     }
 
 }

@@ -57,13 +57,13 @@ namespace Hourai {
 
         public static IDisposable With(Transform transform) {
             if (transform == null)
-                throw new ArgumentNullException(nameof(transform));
+                throw new ArgumentNullException("transform");
             return new GizmoDisposable(transform.localToWorldMatrix);
         }
 
         public static IDisposable With(Color color, Transform transform) {
             if (transform == null)
-                throw new ArgumentNullException(nameof(transform));
+                throw new ArgumentNullException("transform");
             return new GizmoDisposable(color, transform.localToWorldMatrix);
         }
 

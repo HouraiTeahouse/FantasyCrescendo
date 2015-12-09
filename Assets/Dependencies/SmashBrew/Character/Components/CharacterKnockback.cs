@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System;
 
 namespace Hourai.SmashBrew {
@@ -9,7 +10,9 @@ namespace Hourai.SmashBrew {
         
         private ModifierList<Vector2> _defensiveModifiers;
 
-        public ModifierList<Vector2> DefensiveModifiers => _defensiveModifiers;
+        public ModifierList<Vector2> DefensiveModifiers {
+            get { return _defensiveModifiers; }
+        }
 
         public event Action<Vector2> OnKnockback;
 

@@ -14,10 +14,10 @@ namespace Hourai {
 
         protected virtual void Awake() {
             _timeMod = GetComponentInParent<TimeModifier>();
-            if (_timeMod)
-                return;
-            _timeMod = gameObject.AddComponent<TimeModifier>();
-            _timeMod.hideFlags = HideFlags.HideInInspector;
+            if (!_timeMod) {
+                _timeMod = gameObject.AddComponent<TimeModifier>();
+                _timeMod.hideFlags = HideFlags.HideInInspector;
+            }
         }
 
         #region Time Properties
@@ -27,11 +27,17 @@ namespace Hourai {
             set { _timeMod.LocalTimeScale = value; }
         }
 
-        public float EffectiveTimeScale => _timeMod.EffectiveTimeScale;
+        public float EffectiveTimeScale {
+            get { return _timeMod.EffectiveTimeScale; }
+        }
 
-        public float DeltaTime => _timeMod.DeltaTime;
+        public float DeltaTime {
+            get { return _timeMod.DeltaTime; }
+        }
 
-        public float FixedDeltaTime => _timeMod.FixedDeltaTime;
+        public float FixedDeltaTime {
+            get { return _timeMod.FixedDeltaTime; }
+        }
 
         #endregion
 
@@ -42,13 +48,16 @@ namespace Hourai {
         /// </summary>
         public Rigidbody Rigidbody {
             get {
-                if (_rigidbody)
-                    return _rigidbody;
+                if (!_rigidbody) {
 #if UNITY_EDITOR
-                _rigidbody = Application.isPlaying ? GetComponentInParent<Rigidbody>() : GetComponent<Rigidbody>();
+                    if (Application.isPlaying)
+                        _rigidbody = GetComponentInParent<Rigidbody>();
+                    else
+                        _rigidbody = GetComponent<Rigidbody>();
 #else
-                 _rigidbody = GetComponentInParent<Rigidbody>();
+                    _rigidbody = GetComponentInParent<Rigidbody>();
 #endif
+                }
                 return _rigidbody;
             }
         }
@@ -58,12 +67,14 @@ namespace Hourai {
         /// </summary>
         public Animator Animator {
             get {
-                if (_animator)
-                    return _animator;
+                if (!_animator)
 #if UNITY_EDITOR
-                _animator = Application.isPlaying ? GetComponentInParent<Animator>() : GetComponent<Animator>();
+                    if (Application.isPlaying)
+                        _animator = GetComponentInParent<Animator>();
+                    else
+                        _animator = GetComponent<Animator>();
 #else
-                _animator = GetComponentInParent<Animator>();
+                    _animator = GetComponentInParent<Animator>();
 #endif
                 return _animator;
             }

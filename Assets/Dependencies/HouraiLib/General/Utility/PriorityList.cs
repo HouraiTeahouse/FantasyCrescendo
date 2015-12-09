@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Hourai {
 
@@ -36,7 +35,7 @@ namespace Hourai {
         /// <exception cref="ArgumentNullException">thrown if collection is null</exception>
         public PriorityList(IEnumerable<T> collection) : this() {
             if (collection == null)
-                throw new ArgumentNullException(nameof(collection));
+                throw new ArgumentNullException("collection");
             _items.Add(0, new List<T>(collection));
             foreach (var element in collection)
                 _priorities[element] = 0;
@@ -49,7 +48,7 @@ namespace Hourai {
         /// <param name="priorities"></param>
         public PriorityList(IDictionary<T, int> priorities) {
             if(priorities == null)
-                throw new ArgumentNullException(nameof(priorities));
+                throw new ArgumentNullException("priorities");
             _priorities = new Dictionary<T, int>(priorities);
             foreach (var priority in priorities)
                 GetOrCreateBucket(priority.Value).Add(priority.Key);
@@ -57,7 +56,11 @@ namespace Hourai {
 
         #region ICollection Implementation
         public IEnumerator<T> GetEnumerator() {
-            return _items.Select(pair => pair.Value).SelectMany(bucket => bucket).GetEnumerator();
+            foreach(KeyValuePair<int, List<T>> pair in _items) {
+                List<T> bucket = pair.Value;
+                for (var j = 0; j < bucket.Count; j++)
+                    yield return bucket[j];
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
@@ -100,10 +103,11 @@ namespace Hourai {
             return true;
         }
 
-        public int Count => _priorities.Count;
+        public int Count {
+            get { return _priorities.Count; }
+        }
 
-        public bool IsReadOnly => false;
-
+        public bool IsReadOnly { get { return false; } }
         #endregion
 
         /// <summary>
@@ -158,8 +162,8 @@ namespace Hourai {
             _items.Remove(priority);
 
             // Remove all elements in the bucket from the priority cache
-            foreach (T val in bucket)
-                _priorities.Remove(val);
+            for (var i = 0; i < bucket.Count; i++)
+                _priorities.Remove(bucket[i]);
         }
 
         List<T> GetOrCreateBucket(int priority) {

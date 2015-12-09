@@ -96,9 +96,8 @@ namespace Hourai.SmashBrew {
         }
 
         void Transition() {
-            foreach (HitboxData hbd in _data)
-                hbd.OnTransition();
+            for (var i = 0; i < _data.Length; i++)
+                _data[i].OnTransition();
         }
-
     }
 }

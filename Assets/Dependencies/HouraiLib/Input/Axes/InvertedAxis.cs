@@ -1,4 +1,6 @@
-﻿namespace Hourai {
+﻿using System;
+
+namespace Hourai {
 
     public class InvertedAxis : MetaAxis {
 

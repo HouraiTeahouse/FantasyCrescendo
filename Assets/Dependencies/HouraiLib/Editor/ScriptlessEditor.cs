@@ -12,7 +12,8 @@ namespace Hourai.Editor {
         private List<string> toIgnore = new List<string>();
 
         protected virtual void OnEnable() {
-            toIgnore = new List<string> {"m_Script"};
+            toIgnore = new List<string>();
+            toIgnore.Add("m_Script");
         }
 
         public void AddException(string propertyName) {

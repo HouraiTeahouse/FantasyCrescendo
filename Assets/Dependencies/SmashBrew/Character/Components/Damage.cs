@@ -36,7 +36,9 @@ namespace Hourai.SmashBrew {
             set { _defaultDamage = value; }
         }
 
-        public string Suffix => "%";
+        public string Suffix {
+            get { return "%"; }
+        }
 
         public float MinDamage { get; protected set; }
         public float MaxDamage { get; protected set; }
