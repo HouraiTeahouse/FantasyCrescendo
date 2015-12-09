@@ -29,7 +29,7 @@ namespace Hourai.SmashBrew {
             base.Awake();
             _camera = GetComponent<Camera>();
             _targets = new HashSet<Transform>();
-            _eventManager = GlobalEventManager.Instance;
+            _eventManager = GlobalMediator.Instance;
             _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawnPlayer);
         }
 

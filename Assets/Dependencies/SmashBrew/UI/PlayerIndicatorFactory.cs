@@ -15,7 +15,7 @@ namespace Hourai.SmashBrew.UI {
                 Destroy(this);
                 return;
             }
-            _eventManager = GlobalEventManager.Instance;
+            _eventManager = GlobalMediator.Instance;
             _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawnPlayer);
         }
 

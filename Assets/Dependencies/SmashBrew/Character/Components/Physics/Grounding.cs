@@ -4,7 +4,7 @@ using Hourai.Events;
 
 namespace Hourai.SmashBrew {
 
-    public class GroundEvent : IEvent {
+    public class GroundEvent {
 
         public bool Grounded;
 

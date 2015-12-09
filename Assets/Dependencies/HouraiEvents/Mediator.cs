@@ -3,15 +3,25 @@ using System.Collections.Generic;
 
 namespace Hourai.Events {
 
-    public interface IEvent {
-    }
-
+    /// <summary>
+    /// A generalized object that encapsulates the interactions between multiple objects.
+    /// Meant to be used as either local or global event managers.
+    /// </summary>
     public class Mediator {
 
-        //make sure you're using the System.Collections.Generic namespace
-        private Dictionary<Type, Delegate> _subscribers = new Dictionary<Type, Delegate>();
+        // Maps types of events to a set of handlers
+        private readonly Dictionary<Type, Delegate> _subscribers = new Dictionary<Type, Delegate>();
 
-        public void Subscribe<T>(Action<T> callback) where T : IEvent {
+        /// <summary>
+        /// Adds a listener/handler for a specific event type.
+        /// </summary>
+        /// <remarks>
+        /// The event dispatch system does <b>not</b> work with polymorphism and inhertance. If A is a subclass of B, it cannot recieve
+        /// events of type B, only events of type A.
+        /// </remarks>
+        /// <typeparam name="T">the type of event to listen for</typeparam>
+        /// <param name="callback">the handler to call when an event of type <typeparamref name="T"/> is published.</param>
+        public void Subscribe<T>(Action<T> callback) {
             if (callback == null)
                 throw new ArgumentNullException("callback");
             Type tp = typeof (T);
@@ -21,7 +31,12 @@ namespace Hourai.Events {
                 _subscribers.Add(tp, callback);
         }
 
-        public void Unsubscribe<T>(Action<T> callback) where T : IEvent {
+        /// <summary>
+        /// Removes a listener from a specfic event type.
+        /// </summary>
+        /// <typeparam name="T">the type of event to remove the handler from</typeparam>
+        /// <param name="callback">the handler to remove</param>
+        public void Unsubscribe<T>(Action<T> callback) {
             if (callback == null)
                 throw new ArgumentNullException("callback");
             Type eventType = typeof (T);
@@ -35,7 +50,15 @@ namespace Hourai.Events {
                 _subscribers[eventType] = d;
         }
 
-        public void Publish(IEvent e) { 
+        /// <summary>
+        /// Publishes a new event.
+        /// </summary>
+        /// <remarks>
+        /// Execution is immediate. All handler code will be executed before returning from this method.
+        /// There is no specification saying that the event object may not be mutated. The object may be altered after execution.
+        /// </remarks>
+        /// <param name="e">the event object</param>
+        public void Publish(object e) { 
             Type tp = e.GetType();
             if (_subscribers.ContainsKey(tp))
                 _subscribers[tp].DynamicInvoke(e);

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
-    public class RespawnEvent : IEvent {
+    public class RespawnEvent {
 
         public bool Consumed;
         public Player Player;
@@ -35,7 +35,7 @@ namespace Hourai.SmashBrew {
         }  
 
         void Awake() {
-            _eventManager = GlobalEventManager.Instance;
+            _eventManager = GlobalMediator.Instance;
             _eventManager.Subscribe<PlayerDieEvent>(PlayerDieEvent);
             if(_shouldRespawn == null)
                 _shouldRespawn = new List<Func<Player, bool>>();

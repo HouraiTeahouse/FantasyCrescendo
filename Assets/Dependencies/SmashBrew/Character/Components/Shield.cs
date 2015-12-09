@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 
 namespace Hourai.SmashBrew {
 
-    public class ShieldBreak : IEvent {
+    public class ShieldBreak {
     }
 
     [DisallowMultipleComponent]

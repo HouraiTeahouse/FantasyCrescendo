@@ -11,18 +11,18 @@ namespace Hourai.SmashBrew.UI {
         private List<GameObject> _displays;
 
         private Queue<GameObject> _inactiveDisplays; 
-        private GlobalEventManager _eventManager;
+        private GlobalMediator _mediator;
 
         void Awake() {
-            _eventManager = GlobalEventManager.Instance;
-            _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawnPlayer);
+            _mediator = GlobalMediator.Instance;
+            _mediator.Subscribe<PlayerSpawnEvent>(OnSpawnPlayer);
             _inactiveDisplays = new Queue<GameObject>(_displays.Where(go => go != null));
             foreach (GameObject go in _inactiveDisplays.Where(go => go.activeInHierarchy))
                 go.SetActive(false);
         }
 
         void OnDestroy() {
-            _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawnPlayer);
+            _mediator.Unsubscribe<PlayerSpawnEvent>(OnSpawnPlayer);
         }
 
         private void OnSpawnPlayer(PlayerSpawnEvent eventArgs) {

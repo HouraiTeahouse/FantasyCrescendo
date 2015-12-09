@@ -20,7 +20,7 @@ namespace Hourai.SmashBrew {
 
         protected override void Awake() {
             base.Awake();
-            eventManager = GlobalEventManager.Instance;
+            eventManager = GlobalMediator.Instance;
             eventManager.Subscribe<PlayerSpawnEvent>(OnSpawn);
             eventManager.Subscribe<RespawnEvent>(OnRespawn);
             _respawn = FindObjectOfType<Respawn>();

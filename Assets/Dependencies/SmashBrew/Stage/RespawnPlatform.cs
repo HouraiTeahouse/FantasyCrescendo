@@ -22,7 +22,7 @@ namespace Hourai.SmashBrew {
 
         void Start() {
             gameObject.SetActive(false);
-            eventManager = GlobalEventManager.Instance;
+            eventManager = GlobalMediator.Instance;
             eventManager.Subscribe<RespawnEvent>(RespawnPlayer);
         }
 

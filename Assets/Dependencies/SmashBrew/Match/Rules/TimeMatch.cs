@@ -22,7 +22,7 @@ namespace Hourai.SmashBrew {
 
         protected override void Awake() {
             base.Awake();
-            _eventManager = GlobalEventManager.Instance;
+            _eventManager = GlobalMediator.Instance;
             _eventManager.Subscribe<MatchEvent>(OnMatchStart);
         }
 

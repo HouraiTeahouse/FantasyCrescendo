@@ -4,7 +4,7 @@ using Hourai.SmashBrew;
 /// <summary>
 /// Data commands.
 /// </summary>
-public class DataEvent : IEvent {
+public class DataEvent {
 
     public class ChangePlayerLevelCommand : DataEvent {
 

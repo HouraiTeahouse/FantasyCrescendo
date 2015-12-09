@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
-    public class DamageEvent : IEvent {
+    public class DamageEvent {
 
         public float damage;
         public float currentDamage;
 
     }
 
-    public class HealEvent : IEvent {
+    public class HealEvent {
 
         public float healing;
         public float currentDamage;

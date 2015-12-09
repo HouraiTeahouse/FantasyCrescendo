@@ -3,7 +3,7 @@ using Hourai.Events;
 
 namespace Hourai.SmashBrew {
 
-    public class PlayerDieEvent : IEvent {
+    public class PlayerDieEvent {
 
         public Player Player;
 
@@ -18,7 +18,7 @@ namespace Hourai.SmashBrew {
 
         protected override void Awake() {
             base.Awake();
-            _eventManager = GlobalEventManager.Instance;
+            _eventManager = GlobalMediator.Instance;
 
             _col = GetComponent<Collider>();
             

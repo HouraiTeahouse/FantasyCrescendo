@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew
 {
-    public class JumpEvent : IEvent {
+    public class JumpEvent {
 
         public bool ground;
         public int remainingJumps;

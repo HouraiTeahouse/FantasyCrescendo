@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
-    public class MatchEvent : IEvent {
+    public class MatchEvent {
 
         public bool Start;
 
@@ -16,7 +16,7 @@ namespace Hourai.SmashBrew {
         private MatchEvent _event;
 
         void Awake() {
-            _eventManager = GlobalEventManager.Instance;
+            _eventManager = GlobalMediator.Instance;
             _event = new MatchEvent();
         }
 

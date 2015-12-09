@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 namespace Hourai.SmashBrew {
 
-    public class PlayerSpawnEvent : IEvent {
+    public class PlayerSpawnEvent {
 
         public Player Player; 
         public GameObject PlayerObject;
@@ -20,7 +20,7 @@ namespace Hourai.SmashBrew {
         private Transform[] _spawnPoints;
         
         void Awake() {
-            _eventManager = GlobalEventManager.Instance;
+            _eventManager = GlobalMediator.Instance;
             var i = 0;
             IEnumerator<Player> activePlayers = SmashGame.ActivePlayers.GetEnumerator();
             while (i < _spawnPoints.Length && activePlayers.MoveNext()) {
