@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hourai {
 
     /// <summary>
     /// An generic iterable priority queue.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">the type of elements contained by the PriorityList</typeparam>
     public class PriorityList<T> : ICollection<T> {
 
         // The actual collection. Maps a priority to a bucket of items at that priority.
@@ -36,8 +37,9 @@ namespace Hourai {
         public PriorityList(IEnumerable<T> collection) : this() {
             if (collection == null)
                 throw new ArgumentNullException("collection");
-            _items.Add(0, new List<T>(collection));
-            foreach (var element in collection)
+            List<T> colList = collection.ToList();
+            _items.Add(0, colList);
+            foreach (T element in colList)
                 _priorities[element] = 0;
         }
 
@@ -50,27 +52,32 @@ namespace Hourai {
             if(priorities == null)
                 throw new ArgumentNullException("priorities");
             _priorities = new Dictionary<T, int>(priorities);
-            foreach (var priority in priorities)
+            foreach (KeyValuePair<T, int> priority in priorities)
                 GetOrCreateBucket(priority.Value).Add(priority.Key);
         }
 
         #region ICollection Implementation
         public IEnumerator<T> GetEnumerator() {
-            foreach(KeyValuePair<int, List<T>> pair in _items) {
-                List<T> bucket = pair.Value;
-                for (var j = 0; j < bucket.Count; j++)
-                    yield return bucket[j];
-            }
+            return _items.SelectMany(pair => pair.Value).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// Adds a new element to the PriorityList with priority 0.
+        /// </summary>
+        /// <param name="item">the element to add</param>
         public void Add(T item) {
             Add(item, 0);
         }
 
+        /// <summary>
+        /// Adds a new element to the PriorityList with specified priority.
+        /// </summary>
+        /// <param name="item">the element to add</param>
+        /// <param name="priority"></param>
         public void Add(T item, int priority) {
             List<T> bucket = GetOrCreateBucket(priority);
             bucket.Add(item);
@@ -111,7 +118,7 @@ namespace Hourai {
         #endregion
 
         /// <summary>
-        /// Gets the priority of an item stored within an instance of PriorityList.
+        /// Gets the priority of an item stored within the PriorityList.
         /// </summary>
         /// <param name="item">the item to get the priority of</param>
         /// <exception cref="ArgumentException">thrown if the PriorityList does not contain this item</exception>
@@ -123,14 +130,17 @@ namespace Hourai {
         }
 
         /// <summary>
-        /// Gets the priority of an item stored within an instance of PriorityList.
-        /// Note this is for items already in
+        /// Gets the priority of an item stored within the PriorityList.
         /// </summary>
+        /// <remarks>
+        /// This is for elements already in the PriorityList. To add an element instead, use Add instead.
+        /// </remarks>
+        /// <exception cref="ArgumentException">thrown if the PriorityList does not contain <paramref name="item"/></exception>
         /// <param name="item">the item to edit the</param>
-        /// <param name="priority"></param>
+        /// <param name="priority">the new priority </param>
         public void SetPriority(T item, int priority) {
             if (!Contains(item))
-                return;
+                throw new ArgumentException();
 
             int current = _priorities[item];
 
@@ -153,17 +163,43 @@ namespace Hourai {
             _priorities[item] = priority;
         }
 
-        public void RemoveAllByPriority(int priority) {
+        /// <summary>
+        /// Removes all elements from the PriorityList with a certain priority
+        /// </summary>
+        /// <param name="priority">the priority of which to remove all elements of</param>
+        /// <returns>whether elements have been removed or not</returns>
+        public bool RemoveAllByPriority(int priority) {
             if (!_items.ContainsKey(priority))
-                return;
+                return false;
             List<T> bucket = _items[priority];
             
             // Remove the bucket
             _items.Remove(priority);
 
             // Remove all elements in the bucket from the priority cache
-            for (var i = 0; i < bucket.Count; i++)
-                _priorities.Remove(bucket[i]);
+            return bucket.Any(element => _priorities.Remove(element));
+        }
+
+        /// <summary>
+        /// Removes all elements from the PriorityList between two priorities.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="minPriority"/> is greater than <paramref name="maxPriority"/>, the two are swapped.
+        /// If <paramref name="minPriority"/> is equal to <paramref name="maxPriority"/>, then this function acts the same way RemoveAllByPriority(priority) does.
+        /// </remarks>
+        /// <param name="minPriority">the minimum priority that should be removed</param>
+        /// <param name="maxPriority">the maximum priority that should be removed</param
+        /// <returns>whether elements have been removed or not</returns>>
+        public bool RemoveAllByPriority(int minPriority, int maxPriority) {
+            if (minPriority > maxPriority) {
+                int temp = minPriority;
+                minPriority = maxPriority;
+                maxPriority = temp;
+            }
+            if (minPriority == maxPriority) 
+                return RemoveAllByPriority(minPriority);
+            int[] toRemove = _items.Keys.Where(p => p >= minPriority && p <= maxPriority).ToArray();
+            return toRemove.Any(RemoveAllByPriority);
         }
 
         List<T> GetOrCreateBucket(int priority) {

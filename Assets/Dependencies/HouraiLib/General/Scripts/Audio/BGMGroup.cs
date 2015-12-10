@@ -80,10 +80,10 @@ namespace Hourai {
                 _bgmResource = new Resource<AudioClip>(_bgm);
                 playerPrefsKey = stageName + delimiter + _bgm + "_" + suffix;
 
-                if (PlayerPrefs.HasKey(playerPrefsKey))
-                    _weight = PlayerPrefs.GetFloat(playerPrefsKey);
+                if (Prefs.HasKey(playerPrefsKey))
+                    _weight = Prefs.GetFloat(playerPrefsKey);
                 else {
-                    PlayerPrefs.SetFloat(playerPrefsKey, _baseWeight);
+                    Prefs.SetFloat(playerPrefsKey, _baseWeight);
                     _weight = _baseWeight;
                 }
             }
