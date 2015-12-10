@@ -3,25 +3,35 @@ using UnityEngine.UI;
 
 namespace Hourai {
 
+    /// <summary>
+    /// Matches the color between multiple Graphics.
+    /// </summary>
     [ExecuteInEditMode]
-    [DisallowMultipleComponent]
-    [RequireComponent(typeof(Graphic))]
     public class MatchColor : MonoBehaviour {
 
         [SerializeField]
-        private Graphic target;
+        private Graphic _source;
 
-        private Graphic _self;
+        [SerializeField]
+        private Graphic[] _targets;
 
-        // Update is called once per frame
+        /// <summary>
+        /// Unity Callback. Called on object instantiation.
+        /// </summary>
+        void Awake() {
+            if (_source == null)
+                _source = GetComponent<Graphic>();
+        }
+
+        /// <summary>
+        /// Unity Callback. Called once per frame.
+        /// </summary>
         void Update() {
-            if (target == null)
+            if (_source == null || _targets == null)
                 return;
 
-            if (_self == null)
-                _self = GetComponent<Graphic>();
-
-            _self.color = target.color;
+            foreach (Graphic graphic in _targets)
+                graphic.color = _source.color;
         }
     }
 
