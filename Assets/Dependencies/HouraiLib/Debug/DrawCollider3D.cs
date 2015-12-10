@@ -1,5 +1,4 @@
-﻿using Hourai;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Hourai {
 
@@ -10,18 +9,20 @@ namespace Hourai {
     /// </summary>
     public class DrawCollider3D : MonoBehaviour
     {
-
-        [SerializeField]
+        [SerializeField, Tooltip("The color used to draw the colliders with.")]
         private Color color;
 
-        [SerializeField]
+        [SerializeField, Tooltip("Whether or not to include the Colliders in the children of the GameObject or not.")]
         private bool includeChildren;
 
-        //If set to true, it will draw it solid, visible to all
-        [SerializeField]
+        [SerializeField, Tooltip("If set to true, colliders are drawn as solids, otherwise drawn as wireframes.")]
         private bool solid;
 
-        private void OnDrawGizmos()
+#if UNITY_EDITOR
+        /// <summary>
+        /// Unity Callback. Called in the Editor to draw Gizmos on each GUI update.
+        /// </summary>
+        void OnDrawGizmos()
         {
             Collider[] colliders = includeChildren ? GetComponentsInChildren<Collider>() : GetComponents<Collider>();
 
@@ -30,7 +31,7 @@ namespace Hourai {
 
             GizmoUtil.DrawColliders3D(colliders, color, solid);
         }
-
+#endif
     }
 
 }
