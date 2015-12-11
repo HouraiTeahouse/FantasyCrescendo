@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Hourai {
 
     public static class Prefs {
 
-        static Prefs() {
-            Game.OnLoad += (value) => Save();
-        }
-
         public static void Save() {
             PlayerPrefs.Save();
+        }
+
+        public static bool HasKey(string key) {
+            return PlayerPrefs.HasKey(key);
         }
 
         #region Bool Values
@@ -27,7 +26,7 @@ namespace Hourai {
 
         #region Int Values
 
-        public static int SetInt(string key) {
+        public static int GetInt(string key) {
             return PlayerPrefs.GetInt(key);
         }
 
@@ -40,7 +39,7 @@ namespace Hourai {
 
         #region Float Values
 
-        public static float SetFloat(string key) {
+        public static float GetFloat(string key) {
             return PlayerPrefs.GetFloat(key);
         }
 

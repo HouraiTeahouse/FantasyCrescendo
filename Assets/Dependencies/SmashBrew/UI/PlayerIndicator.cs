@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityConstants;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
@@ -28,7 +29,7 @@ namespace Hourai.SmashBrew.UI {
         }
 
         private void Awake() {
-            GameObject gui = Game.FindGUI();
+            GameObject gui = GameObject.FindGameObjectWithTag(Tags.GUI); 
             if(!gui)
                 Destroy(this);
             _text = GetComponent<Text>();

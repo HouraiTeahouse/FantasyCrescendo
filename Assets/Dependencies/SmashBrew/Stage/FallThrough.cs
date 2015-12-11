@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using UnityConstants;
+using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
     public class FallThrough : TriggerStageElement {
 
         static void Check(Component col) {
-            if (!Game.IsPlayer(col))
+            if (!col.CompareTag(Tags.Player))
                 return;
 
             // TODO: Reimplement

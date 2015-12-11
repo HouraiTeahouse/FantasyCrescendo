@@ -3,15 +3,21 @@ using UnityEngine.UI;
 
 namespace Hourai {
 
+    /// <summary>
+    /// Displays a number to a UnityEngine.UI.Text UI object.
+    /// </summary>
     [ExecuteInEditMode]
     public class NumberText : MonoBehaviour {
 
-        [SerializeField]
+        [SerializeField, Tooltip("The Text UI object driven by this script")]
         private Text _text;
 
-        [SerializeField]
+        [SerializeField, Tooltip("The number to display using this script")]
         private float _number;
 
+        /// <summary>
+        /// The number to be displayed by the Text UI object.
+        /// </summary>
         public float Number {
             get { return _number; }
             set { _number = value; }
@@ -21,7 +27,15 @@ namespace Hourai {
         private string _format;
 
         /// <summary>
-        /// The Text UI object that is driven by this 
+        /// The string format used to display the number.
+        /// </summary>
+        public string Format {
+            get { return _format; }
+            set { _format = value; }
+        }
+
+        /// <summary>
+        /// The Text UI object that is driven by this script.
         /// </summary>
         protected Text Text {
             get { return _text; }

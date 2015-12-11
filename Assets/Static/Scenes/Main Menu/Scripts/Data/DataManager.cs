@@ -4,15 +4,23 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
-    public class DataManager : Singleton<DataManager> {
+    public class DataManager : MonoBehaviour {
 
         private CharacterData[] _availableCharacters;
         private List<string> _availableStages;
         public Mediator Mediator;
 
-        // Use this for initialization
-        protected override  void Awake() {
-            base.Awake();
+        private static DataManager _instance;
+
+        public static DataManager Instance {
+            get { return _instance; }
+        }
+
+        /// <summary>
+        /// Unity Callback. Called on object instantion.
+        /// </summary>
+        void Awake() {
+            _instance = this;
             _availableCharacters = Resources.LoadAll<CharacterData>("");
 
             _availableStages = new List<string> {"Hakurei Shrine", "Marisa's House"};

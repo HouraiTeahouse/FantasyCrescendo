@@ -4,6 +4,9 @@ namespace Hourai {
     
     public delegate float Modifier<T>(T source, float damage);
 
+    /// <summary>
+    /// A 
+    /// </summary>
     public class ModifierList : PriorityList<Func<float, float>> {
 
         public float Modifiy(float baseValue) {

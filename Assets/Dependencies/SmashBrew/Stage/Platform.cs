@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityConstants;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -17,7 +18,7 @@ namespace Hourai.SmashBrew {
         }
 
         protected void ChangeIgnore(Collider target, bool state) {
-            if (target == null || !SmashGame.IsPlayer(target))
+            if (target == null || !target.CompareTag(Tags.Player))
                 return;
 
             foreach (Collider col in _toIgnore)

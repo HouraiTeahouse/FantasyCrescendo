@@ -1,11 +1,19 @@
 ﻿using System;
-using System.Collections;
-using UnityConstants;
 using UnityEngine;
 
 namespace Hourai {
     
-    public abstract class Game : Singleton<Game> {
+    public abstract class Game<T> : MonoBehaviour where T : Game<T> {
+
+        private static T _instance;
+
+        public static T Instance {
+            get {
+                if (_instance == null)
+                    _instance = FindObjectOfType<T>();
+                return _instance;
+            }
+        }
 
         [SerializeField, Range(0f, 5f)]
         private float _timeScale = 1f;
@@ -31,108 +39,23 @@ namespace Hourai {
                     Instance._timeScale = value;
                 else
                     Time.timeScale = value;
-                if (old != TimeScale)
+                if (old != TimeScale && OnTimeScaleChange != null)
                     OnTimeScaleChange();
             }
         }
 
-        // All the things that require an actual instance
-        #region Global Callbacks
-        
-        public static event Action OnGameStart;
         public static event Action OnPause;
         public static event Action OnTimeScaleChange;
 
-        public static event Action OnUpdate;
-        public static event Action OnLateUpdate;
-        public static event Action OnFixedUpdate;
-        public static event Action<int> OnLoad;
-        public static event Action OnApplicationFocused;
-        public static event Action OnApplicationUnfocused;
-        public static event Action OnApplicationExit;
-
-        protected override void Awake() {
+        protected virtual void Awake() {
+            _instance = this as T;
             Time.timeScale = _timeScale;
-            base.Awake();
         }
 
-        private void Start() {
-            if(OnGameStart != null)
-                OnGameStart();
-        }
-
-        private void Update() {
-            if(OnUpdate != null)
-                OnUpdate();
+        protected virtual void Update() {
             Time.timeScale = Paused ? 0f : TimeScale;
         }
 
-        private void LateUpdate() {
-            if(OnLateUpdate != null)
-                OnLateUpdate();
-        }
-
-        private void FixedUpdate() {
-            if(OnFixedUpdate != null)
-                OnFixedUpdate();
-        }
-
-        private void OnApplicationFocus(bool focus) {
-            if (focus)
-                if(OnApplicationFocused != null)
-                    OnApplicationFocused();
-            else
-                if(OnApplicationUnfocused != null)
-                    OnApplicationUnfocused();
-        }
-
-        private void OnApplicationQuit() {
-            if(OnApplicationExit != null)
-                OnApplicationExit();
-        }
-
-        private void OnLevelWasLoaded(int level) {
-            if(OnLoad != null)
-                OnLoad(level);
-        }
-
-        #endregion
-        
-        #region Global Coroutines
-
-        public static Coroutine StaticCoroutine(IEnumerator coroutine) {
-            if(Instance == null)
-                throw new InvalidOperationException("Cannot start a static coroutine without a Game instance.");
-            if(coroutine == null)
-                throw new ArgumentNullException("coroutine");
-            return Instance.StartCoroutine(coroutine);
-        }
-
-        public static Coroutine StaticCoroutine(IEnumerable coroutine) {
-            if(Instance == null)
-                throw new InvalidOperationException("Cannot start a static coroutine without a Game instance.");
-            if (coroutine == null)
-                throw new ArgumentNullException("coroutine");
-            return StaticCoroutine(coroutine.GetEnumerator());
-        }
-
-        #endregion
-
-        public static bool IsPlayer(Component obj) {
-            return obj.CompareTag(Tags.Player);
-        }
-
-        public static GameObject FindPlayer() {
-            return GameObject.FindGameObjectWithTag(Tags.Player);
-        }
-
-        public static GameObject[] FindPlayers() {
-            return GameObject.FindGameObjectsWithTag(Tags.Player);
-        }
-
-        public static GameObject FindGUI() {
-            return GameObject.FindGameObjectWithTag(Tags.GUI);
-        }
     }
 
 }

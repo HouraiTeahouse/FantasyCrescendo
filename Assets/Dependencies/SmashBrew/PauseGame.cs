@@ -10,17 +10,17 @@ namespace Hourai.SmashBrew {
         private Player _pausedPlayer;
 
         void Update() {
-            if (Game.Paused) {
+            if (SmashGame.Paused) {
                 if (_pausedPlayer != null && !_pausedPlayer.Controller.GetButton(_pauseButton).GetButtonValue())
                     return;
                 _pausedPlayer = null;
-                Game.Paused = false;
+                SmashGame.Paused = false;
             } else {
                 foreach (Player player in SmashGame.ActivePlayers) {
                     if (!player.Controller.GetButton(_pauseButton).GetButtonValue())
                         continue;
                     _pausedPlayer = player;
-                    Game.Paused = true;
+                    SmashGame.Paused = true;
                     break;
                 }
             }

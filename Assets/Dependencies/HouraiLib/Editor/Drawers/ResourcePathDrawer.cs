@@ -6,6 +6,9 @@ using Object = UnityEngine.Object;
 
 namespace Hourai.Editor {
 
+    /// <summary>
+    /// Custom PropertyDrawer for ResourcePathAttribute.
+    /// </summary>
     [CustomPropertyDrawer(typeof(ResourceAttribute))]
     public class ResourcePathEditor : PropertyDrawer {
 
@@ -13,8 +16,9 @@ namespace Hourai.Editor {
         private Type type;
         private Object obj;
         private string message;
-        private bool success = false;
+        private bool success;
 
+        
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             if (property.propertyType != SerializedPropertyType.String) {
                 EditorGUI.PropertyField(position, property, label);

@@ -16,10 +16,10 @@ namespace Hourai.SmashBrew {
         protected virtual void Awake() {
             Match = GetComponent<Match>();
 #if !UNITY_EDITOR
-            if (!PlayerPrefs.HasKey(_playerPrefCheck))
+            if (!Prefs.HasKey(_playerPrefCheck))
                 enabled = false;
             else
-                enabled = PlayerPrefs.GetInt(_playerPrefCheck) != 0;
+                enabled = Prefs.GetBool(_playerPrefCheck) != 0;
 #endif
         }
 

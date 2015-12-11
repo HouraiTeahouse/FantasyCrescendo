@@ -11,8 +11,14 @@ namespace Hourai {
             get { return Directory.GetCurrentDirectory() + "/Build"; }
         }
 
+        /// <summary>
+        /// Moves all extra files in the "Post Build" folder under the project's root directory into
+        /// builds.
+        /// </summary>
+        /// <param name="target">the target platform Unity is building the game for.</param>
+        /// <param name="path">the path at which the new build is being saved</param>
         [PostProcessBuild]
-        private static void AddPostBuildFiles(BuildTarget target, string path) {
+        static void AddPostBuildFiles(BuildTarget target, string path) {
             string copyPath= Directory.GetCurrentDirectory() + "/Post Build";
             path = Path.GetDirectoryName(path) + "/";
             
@@ -53,12 +59,19 @@ namespace Hourai {
             }
         }
 
+        /// <summary>
+        /// Menu command to clear all PlayerPrefs
+        /// </summary>
         [MenuItem("Hourai/Clear Player Prefs %#c")]
         static void ClearPlayerPrefs() {
             PlayerPrefs.DeleteAll();
             Debug.Log("HumanPlayer Prefs Cleared.");
         }
 
+        /// <summary>
+        /// Builds the current project for the Windows platform.
+        /// Does both the 32 and 64 bit versions.
+        /// </summary>
         [MenuItem("Hourai/Build Windows", false, 51)]
         static void BuildWindows() {
             string buildFolder = BuildDirectory + "/Windows/";
@@ -67,18 +80,27 @@ namespace Hourai {
             Build(buildFolder, BuildTarget.StandaloneWindows64);
         }
 
+        /// <summary>
+        /// Builds the current project for the Mac platform.
+        /// </summary>
         [MenuItem("Hourai/Build Mac", false, 51)]
         static void BuildMac() {
             string buildFolder = BuildDirectory + "/Mac/";
             Build(buildFolder, BuildTarget.StandaloneOSXUniversal);
         }
 
+        /// <summary>
+        /// Builds the current project for the Linux platform.
+        /// </summary>
         [MenuItem("Hourai/Build Linux", false, 51)]
         static void BuildLinux() {
             string buildFolder = BuildDirectory + "/Linux/";
             Build(buildFolder, BuildTarget.StandaloneLinuxUniversal);
         }
 
+        /// <summary>
+        /// Buidls the current project for Windows, Mac, and Linux.
+        /// </summary>
         [MenuItem("Hourai/Build All", false, 101)]
         static void BuildAll() {
             BuildWindows();
@@ -86,6 +108,11 @@ namespace Hourai {
             BuildLinux();
         }
 
+        /// <summary>
+        /// Builds the current project for a specific target platform.
+        /// </summary>
+        /// <param name="path">the target path for where to store the new build</param>
+        /// <param name="target">the target platform to build the project for</param>
         public static void Build(string path, BuildTarget target) {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);

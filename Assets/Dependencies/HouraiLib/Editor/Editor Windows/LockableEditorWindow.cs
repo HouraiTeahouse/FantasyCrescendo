@@ -27,7 +27,7 @@ namespace Hourai.Editor {
             menu.AddItem(new GUIContent("Lock"), locked, () => { locked = !locked; });
         }
 
-        private void ShowButton(Rect position) {
+        void ShowButton(Rect position) {
             if (lockButtonStyle == null)
                 lockButtonStyle = "IN LockButton";
             locked = GUI.Toggle(position, locked, GUIContent.none, lockButtonStyle);

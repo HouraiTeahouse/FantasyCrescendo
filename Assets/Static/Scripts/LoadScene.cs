@@ -12,7 +12,7 @@ namespace Hourai {
         private LoadSceneMode _mode = LoadSceneMode.Single;
         
         void Start() {
-            SceneManager.LoadScene(_scene, LoadSceneMode.Single);
+            SceneManager.LoadScene(_scene, _mode);
         }
 
     }

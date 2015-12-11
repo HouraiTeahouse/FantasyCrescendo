@@ -1,28 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityConstants;
-using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
-    public static class SmashExtensions {
-
-        public static bool IsPlayer(this GameObject gameObj) {
-            return gameObj && gameObj.CompareTag(Tags.Player);
-        }
-
-        public static bool IsPlayer(this Component obj) {
-            return obj && obj.CompareTag(Tags.Player);
-        }
-
-        public static bool IsHurtbox(this Collider collider) {
-            return collider && collider.gameObject.layer == Layers.Hurtbox;
-        }
-
-    }
-
-    public class SmashGame : Game {
+    public class SmashGame : Game<SmashGame> {
 
         private static Player[] _players;
 

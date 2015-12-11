@@ -9,6 +9,9 @@ using Object = UnityEngine.Object;
 
 namespace Hourai.Editor {
 
+    /// <summary>
+    /// Utility class for handling Assets in the Unity Editor.
+    /// </summary>
     [InitializeOnLoad]
     public static class AssetUtil {
 
@@ -19,11 +22,9 @@ namespace Hourai.Editor {
             EditorApplication.update += Update;
         }
         
-        private static void Update() {
+        static void Update() {
             if (delayedMoves.Count <= 0)
                 return;
-
-            Debug.Log(delayedMoves.Count);
 
             List<string> toRemove = new List<string>();
 
