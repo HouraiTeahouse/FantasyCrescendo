@@ -21,7 +21,7 @@ namespace Hourai {
             get { return _name; }
         }
 
-        private void OnEnable() {
+        protected virtual void OnEnable() {
             selection = new WeightedRNG<Resource<AudioClip>>();
             if (backgroundMusicData == null)
                 return;

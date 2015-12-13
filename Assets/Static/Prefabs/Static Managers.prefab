@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 404724}
   - 114: {fileID: 11488736}
   - 114: {fileID: 11493208}
+  - 114: {fileID: 11424790}
   - 114: {fileID: 11486768}
   m_Layer: 0
   m_Name: Static Managers
@@ -30,6 +31,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11424790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11486768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48,8 +60,7 @@ MonoBehaviour:
   m_DontDestroyOnLoad: 0
   m_RunInBackground: 1
   m_ScriptCRCCheck: 1
-  m_SendPeerInfo: 0
-  m_MaxDelay: .00999999978
+  m_MaxDelay: 0.01
   m_LogLevel: 2
   m_PlayerPrefab: {fileID: 0}
   m_AutoCreatePlayer: 1
@@ -77,8 +88,16 @@ MonoBehaviour:
     m_MaxCombinedReliableMessageCount: 10
     m_MaxSentMessageQueueSize: 128
     m_IsAcksLong: 0
+    m_UsePlatformSpecificProtocols: 0
     m_Channels: []
+  m_GlobalConfig:
+    m_ThreadAwakeTimeout: 1
+    m_ReactorModel: 0
+    m_ReactorMaximumReceivedMessages: 1024
+    m_ReactorMaximumSentMessages: 1024
+    m_MaxPacketSize: 2000
   m_Channels: 
+  m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1
   m_PacketLossPercentage: 0
@@ -99,7 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8bd5a18adbce4446bd1214b4491aa71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
   _timeScale: 1
 --- !u!114 &11493208
 MonoBehaviour:

@@ -25,7 +25,7 @@ namespace Hourai.SmashBrew {
 
             _availableStages = new List<string> {"Hakurei Shrine", "Marisa's House"};
 
-            //TODO: Convert these into a StageData ScriptableObject
+            //TODO: Convert these into a SceneData ScriptableObject
             InitializeMediator();
         }
 
@@ -41,7 +41,7 @@ namespace Hourai.SmashBrew {
         }
 
         public void InitializeMediator() {
-            Mediator = new Mediator();
+            Mediator = GlobalMediator.Instance;
             Mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(OnChangePlayerLevel);
             Mediator.Subscribe<DataEvent.ChangePlayerMode>(OnChangePlayerMode);
             Mediator.Subscribe<DataEvent.UserChangingOptions>(OnUserChangingOptions);

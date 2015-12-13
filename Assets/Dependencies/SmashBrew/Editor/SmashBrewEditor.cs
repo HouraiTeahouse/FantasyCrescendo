@@ -17,6 +17,11 @@ namespace Hourai.SmashBrew.Editor {
             AssetUtil.CreateAssetInProjectWindow<Config>();
         }
 
+        [MenuItem("Assets/Create/SmashBrew/Stage Data")]
+        static void CreateStageData() {
+            AssetUtil.CreateAssetInProjectWindow<SceneData>();
+        }
+
         #endregion
       
     }
