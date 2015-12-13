@@ -4,29 +4,54 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
-    public class DataManager : MonoBehaviour {
+    public sealed class DataManager : MonoBehaviour {
 
-        private CharacterData[] _availableCharacters;
-        private List<string> _availableStages;
-        public Mediator Mediator;
+        public Mediator Mediator { get; private set; }
 
-        private static DataManager _instance;
+        /// <summary>
+        /// The Singleton instance of DataManager.
+        /// </summary>
+        public static DataManager Instance { get; private set; }
 
-        public static DataManager Instance {
-            get { return _instance; }
-        }
+        /// <summary>
+        /// All Characters that are included with the Game's build.
+        /// The Data Manager will automatically load all CharacterData instances from Resources.
+        /// </summary>
+        public IEnumerable<CharacterData> Characters { get; private set; }   
+
+        /// <summary>
+        /// All Scenes and their metadata included with the game's build.
+        /// The DataManager will automatically load all SceneData instances from Resources.
+        /// </summary>
+        public IEnumerable<SceneData> Scenes { get; private set; }  
 
         /// <summary>
         /// Unity Callback. Called on object instantion.
         /// </summary>
         void Awake() {
-            _instance = this;
-            _availableCharacters = Resources.LoadAll<CharacterData>("");
+            Instance = this;
+            
+            //Load all Character Data from Resources
+            Characters = Resources.LoadAll<CharacterData>(string.Empty);
 
-            _availableStages = new List<string> {"Hakurei Shrine", "Marisa's House"};
+            //Load all Scene Data from Resources
+            Scenes = Resources.LoadAll<SceneData>(string.Empty);
 
-            //TODO: Convert these into a SceneData ScriptableObject
-            InitializeMediator();
+            Mediator = GlobalMediator.Instance;
+            Mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(OnChangePlayerLevel);
+            Mediator.Subscribe<DataEvent.ChangePlayerMode>(OnChangePlayerMode);
+            Mediator.Subscribe<DataEvent.UserChangingOptions>(OnUserChangingOptions);
+        }
+
+        /// <summary>
+        /// Unity Callback. Called on object destruction.
+        /// </summary>
+        void OnDestroy() {
+            if (Mediator == null)
+                return;
+            Mediator.Unsubscribe<DataEvent.ChangePlayerLevelCommand>(OnChangePlayerLevel);
+            Mediator.Unsubscribe<DataEvent.ChangePlayerMode>(OnChangePlayerMode);
+            Mediator.Unsubscribe<DataEvent.UserChangingOptions>(OnUserChangingOptions);
         }
 
         /// <summary>
@@ -40,27 +65,11 @@ namespace Hourai.SmashBrew {
             return (counter > 1);
         }
 
-        public void InitializeMediator() {
-            Mediator = GlobalMediator.Instance;
-            Mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(OnChangePlayerLevel);
-            Mediator.Subscribe<DataEvent.ChangePlayerMode>(OnChangePlayerMode);
-            Mediator.Subscribe<DataEvent.UserChangingOptions>(OnUserChangingOptions);
-        }
-
-        public List<string> GetAvailableStages() {
-            return _availableStages;
-        }
-
-        public IEnumerable<CharacterData> GetAvailableCharacters() {
-            foreach (CharacterData data in _availableCharacters)
-                yield return data;
-        }
-
-        public void OnChangePlayerLevel(DataEvent.ChangePlayerLevelCommand cmd) {
+        void OnChangePlayerLevel(DataEvent.ChangePlayerLevelCommand cmd) {
             cmd.Player.CpuLevel = cmd.NewLevel;
         }
 
-        public void OnUserChangingOptions(DataEvent.UserChangingOptions cmd) {
+        void OnUserChangingOptions(DataEvent.UserChangingOptions cmd) {
             //Debug.Log ("Ai mano " + cmd.isUserChangingOptions  + "  -  " + Time.time );
             if (cmd.IsUserChangingOptions) {
                 Mediator.Publish(
@@ -69,7 +78,7 @@ namespace Hourai.SmashBrew {
                 IsReadyToStartGame();
         }
 
-        public void OnChangePlayerMode(DataEvent.ChangePlayerMode cmd) {
+        void OnChangePlayerMode(DataEvent.ChangePlayerMode cmd) {
             cmd.Player.CycleType();
 
             IsReadyToStartGame();

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,16 +25,14 @@ namespace Hourai.SmashBrew.UI {
                 return;
             }
 
-            List<string> stageNames = dataManager.GetAvailableStages();
-            var i = 0;
-            for (i = 0; i < stageNames.Count; i++) {
+            foreach (SceneData stage in dataManager.Scenes.Where(scene => scene.IsStage)) {
                 GameObject go = Instantiate(stageSlotButton);
                 var stu = go.GetComponent<StageSlotUI>();
                 if (stu == null) {
                     Debug.LogError("The Stage Loader can't find the data manager object in the scene.");
                     return;
                 }
-                stu.setStageName(stageNames[i]);
+                stu.setStageName(stage.Name);
                 stu.setStageLogoElement(stageLogo);
                 stu.setStageTextElement(stageNameText);
                 go.transform.SetParent(sectionToFill.transform, false);

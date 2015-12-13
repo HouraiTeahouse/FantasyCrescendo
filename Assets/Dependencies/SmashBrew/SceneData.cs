@@ -8,6 +8,9 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private string _sceneName;
 
+        [SerializeField]
+        private bool _isStage = true;
+
         [SerializeField, Resource(typeof (Sprite))]
         private string _previewImage;
 
@@ -17,6 +20,10 @@ namespace Hourai.SmashBrew {
         public Resource<Sprite> PreviewImage { get; private set; }
 
         public Resource<Sprite> Icon { get; private set; }
+
+        public bool IsStage {
+            get { return _isStage; }
+        }
 
         /// <summary>
         /// Unity Callback. Called when ScriptableObject is loaded.

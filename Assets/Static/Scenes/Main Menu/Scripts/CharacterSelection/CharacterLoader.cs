@@ -19,8 +19,10 @@ namespace Hourai.SmashBrew.UI {
         [SerializeField]
         private GameObject _playerSlotPanel;
 
-        // Use this for initialization
-        private void Start() {
+        /// <summary>
+        /// Unity Callback. Called once on first frame before Update.
+        /// </summary>
+        void Start() {
             if (_characterSlotPrefab == null || _characterPanel == null || _playerSlotPanel == null || _playerSlotPrefab == null) {
                 Debug.LogError("Please fill all gameobjects needed by this component.");
                 return;
@@ -41,7 +43,7 @@ namespace Hourai.SmashBrew.UI {
         }
 
         public void FillPanel() {
-            foreach (var character in _dataManager.GetAvailableCharacters()) {
+            foreach (CharacterData character in _dataManager.Characters){
                 GameObject go = Instantiate(_characterSlotPrefab);
                 var text = go.GetComponentInChildren<Text>();
                 if (text == null) {
