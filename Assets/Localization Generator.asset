@@ -9,7 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42406b7e9ea6084448abd0693328f6b0, type: 3}
-  m_Name: Test
+  m_Name: Localization Generator
   m_EditorClassIdentifier: 
   GoogleLink: 10FN34rosfGUNap72iH8PPLmM2yZ8_Wv_cFdtXx2IsTk
-  _ignoreColumns: 
+  _ignoreColumns:
+  - key
+  - notes
+  _saveFolder: {fileID: 102900000, guid: 4adc1a7d69c227d4383d61796a38f5c3, type: 3}

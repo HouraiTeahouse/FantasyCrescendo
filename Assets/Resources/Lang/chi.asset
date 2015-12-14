@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
+  m_Name: chi
+  m_EditorClassIdentifier: 
+  data:
+  - Key: name
+    Value: 
+  - Key: derivateDisclaimer
+    Value: 
+  - Key: marisa.firstName
+    Value: "\u9B54\u7406\u6C99"
+  - Key: marisa.surname
+    Value: "\u96FE\u96E8"
+  - Key: reimu.firstName
+    Value: "\u7075\u68A6"
+  - Key: reimu.surname
+    Value: "\u535A\u4E3D"
+  - Key: wriggle.firstName
+    Value: "\u8389\u683C\u9732"
+  - Key: wriggle.surname
+    Value: "\u5948\u7279\u5DF4\u683C"
+  - Key: youmu.firstName
+    Value: "\u5996\u68A6"
+  - Key: youmu.surname
+    Value: "\u9B42\u9B44"
+  - Key: sakuya.firstName
+    Value: "\u54B2\u591C"
+  - Key: sakuya.surname
+    Value: "\u5341\u516D\u591C"
+  - Key: hakureiShrine.name
+    Value: "\u535A\u4E3D\u795E\u793E"
+  - Key: magicForest.name
+    Value: "\u9B54\u6CD5\u68EE\u6797"

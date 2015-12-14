@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using Hourai.Editor;
 using UnityEditor;
@@ -27,21 +28,29 @@ namespace Hourai.Localization.Editor {
         private string GoogleLink;
 
         [SerializeField]
-        private int keyCol = 1;
+        private string[] _ignoreColumns;
 
         [SerializeField]
-        private int[] _ignoreColumns;
+        private Object _saveFolder;
 
         public void Generate() {
             ListFeed test = GDocService.GetSpreadsheet(GoogleLink);
             var languageMap = new Dictionary<string, Dictionary<string, string>>();
+            HashSet<string> ignore = new HashSet<string>(_ignoreColumns);
             foreach (ListEntry row in test.Entries) {
-                foreach (var lang in languageMap) {
-                    
-                }
                 foreach (ListEntry.Custom element in row.Elements) {
-                    Debug.Log(element.LocalName);
+                    string lang = element.LocalName;
+                    if (ignore.Contains(lang))
+                        continue;
+                    if(!languageMap.ContainsKey(lang))
+                        languageMap[lang] = new Dictionary<string, string>();
+                    languageMap[lang][row.Title.Text] = element.Value;
                 }
+            }
+            string folderPath = _saveFolder ? AssetDatabase.GetAssetPath(_saveFolder) : "Assets/Resources/Lang";
+            foreach (var lang in languageMap) {
+                Language language = Language.FromDictionary(lang.Value);
+                AssetDatabase.CreateAsset(language, string.Format("{0}/{1}.asset", folderPath, lang.Key));
             }
         }
 
