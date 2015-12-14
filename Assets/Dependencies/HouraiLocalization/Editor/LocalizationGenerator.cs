@@ -51,8 +51,12 @@ namespace Hourai.Localization.Editor {
             string folderPath = _saveFolder ? AssetDatabase.GetAssetPath(_saveFolder) : "Assets/Resources/Lang";
             foreach (var lang in languageMap) {
                 Debug.Log(string.Format("Generating language files for: {0}",CultureInfo.GetCultureInfo(lang.Key).EnglishName));
-                Language language = Language.FromDictionary(lang.Value);
-                AssetDatabase.CreateAsset(language, string.Format("{0}/{1}.asset", folderPath, lang.Key));
+                string path = string.Format("{0}/{1}.asset", folderPath, lang.Key);
+                var language = AssetDatabase.LoadAssetAtPath<Language>(path);
+                if(language)
+                    language.ReadFromDictionary(lang.Value);
+                else
+                    AssetDatabase.CreateAsset(Language.FromDictionary(lang.Value), path);
             }
         }
 
