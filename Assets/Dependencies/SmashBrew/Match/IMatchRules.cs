@@ -19,7 +19,7 @@ namespace Hourai.SmashBrew {
             if (!Prefs.HasKey(_playerPrefCheck))
                 enabled = false;
             else
-                enabled = Prefs.GetBool(_playerPrefCheck) != 0;
+                enabled = Prefs.GetBool(_playerPrefCheck);
 #endif
         }
 
