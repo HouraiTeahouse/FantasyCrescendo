@@ -19,6 +19,10 @@ namespace Hourai.Localization {
         [SerializeField]
         private StrStrTuple[] data;
 
+        public IEnumerable<string> Keys {
+            get { return _map.Keys; }
+        } 
+
         private Dictionary<string, string> _map;
 
         public string this[string key] {
