@@ -14,19 +14,24 @@ namespace Hourai.Localization {
 
         private LanguageManager _languageManager;
 
+        public Text Text {
+            get { return _text; }
+            set { _text = value; }
+        }
+
         public string Key {
             get { return _key; }
             set {
                 _key = value;
                 if (_text && _languageManager && _languageManager.HasKey(_key))
-                    _text.text = _languageManager[_key];
+                    _text.text = Process(_languageManager[_key]);
             }
         }
 
         /// <summary>
         /// Unity Callback. Called once upon object instantiation.
         /// </summary>
-        void Awake() {
+        protected virtual void Awake() {
             _languageManager = LanguageManager.Instance;
             if (!_text)
                 _text = GetComponent<Text>();
@@ -36,12 +41,12 @@ namespace Hourai.Localization {
         /// <summary>
         /// Unity Callback. Called on the first frame before Update is called.
         /// </summary>
-        void Start() {
+        protected virtual void Start() {
             if (!_languageManager.HasKey(_key)) {
                 Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key", _key));
             }
             _languageManager.OnChangeLanguage += OnChangeLanguage;
-            _text.text = _languageManager[_key];
+            _text.text = Process(_languageManager[_key]);
         }
 
         /// <summary>
@@ -55,7 +60,11 @@ namespace Hourai.Localization {
                 Debug.LogWarning(string.Format("Tried to localize key {0}, but langauge {1} has no such key", _key, language));
                 return;
             }
-            _text.text = _languageManager[_key];
+            _text.text = Process(_languageManager[_key]);
+        }
+
+        protected virtual string Process(string val) {
+            return val;
         }
 
     }

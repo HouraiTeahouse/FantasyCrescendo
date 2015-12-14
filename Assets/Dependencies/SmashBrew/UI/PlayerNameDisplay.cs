@@ -1,34 +1,30 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Hourai.Localization;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
-    [RequireComponent(typeof(Text))]
-    public class PlayerNameDisplay : MonoBehaviour, IPlayerGUIComponent {
+    [DisallowMultipleComponent]
+    public class PlayerNameDisplay : LocalizedText, IPlayerGUIComponent {
 
         [SerializeField]
         private bool toUpperCase = true;
 
-        private Text _text;
 
         public void SetPlayerData(Player data) {
-            if (_text == null)
+            if (Text == null)
                 return;
+
             if (data == null || data.Character == null)
-                _text.text = "";
+                Text.text = "";
             else
-                _text.text = ProcessName(data.Character.FirstName);
+                Key = data.Character.FirstName;
         }
 
-        string ProcessName(string raw) {
+        protected override string Process(string raw) {
             if (toUpperCase)
                 raw = raw.ToUpper();
             return raw;
-        }
-
-        void Awake() {
-            _text = GetComponent<Text>();
         }
 
     }

@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
   m_Name: marisa_kirisame_data
   m_EditorClassIdentifier: 
-  _firstNameKey: Marisa
-  _lastNameKey: Kirisame
+  _firstNameKey: marisa.firstName
+  _lastNameKey: marisa.surname
   _alternativePortraits:
   - Characters/1_Marisa/cropped
   _prefab: Characters/1_Marisa/Marisa

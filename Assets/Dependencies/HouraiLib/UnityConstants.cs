@@ -44,6 +44,10 @@ namespace UnityConstants
         /// Name of tag 'Hitbox'.
         /// </summary>
         public const string Hitbox = "Hitbox";
+        /// <summary>
+        /// Name of tag 'Spawn'.
+        /// </summary>
+        public const string Spawn = "Spawn";
     }
 
     public static class SortingLayers

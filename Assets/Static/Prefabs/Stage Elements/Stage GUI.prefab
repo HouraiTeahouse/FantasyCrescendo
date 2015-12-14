@@ -1759,8 +1759,8 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
-  m_EffectDistance: {x: 4.42000008, y: -4.36000013}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 4.42, y: -4.36}
   m_UseGraphicAlpha: 1
 --- !u!114 &11400600
 MonoBehaviour:
@@ -1789,6 +1789,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 3
+    m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -1822,6 +1823,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -1837,6 +1839,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -1852,6 +1855,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11401518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1899,6 +1903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4504924d2112aa14bbbb8437bb809413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: {fileID: 11494362}
   _number: 99
   _format: '#x'
 --- !u!114 &11402366
@@ -1933,7 +1938,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 81.0599976
+  m_PreferredWidth: 81.06
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -1965,6 +1970,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -1980,6 +1986,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -1995,6 +2002,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11402884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2023,6 +2031,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -2038,6 +2047,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -2053,6 +2063,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11403026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2064,7 +2075,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11403506
@@ -2078,7 +2089,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .947000027}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.947}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11403922
@@ -2119,7 +2130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d713cb92da7a53a42802a83f86f080ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 11454440}
+  _source: {fileID: 11472606}
+  _targets: []
 --- !u!114 &11405124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2131,8 +2143,8 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .833999991}
-  m_EffectDistance: {x: 26.6599998, y: -2.98000002}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.834}
+  m_EffectDistance: {x: 26.66, y: -2.98}
   m_UseGraphicAlpha: 1
 --- !u!114 &11405418
 MonoBehaviour:
@@ -2163,7 +2175,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11405496
@@ -2180,7 +2192,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 81.0599976
+  m_PreferredWidth: 81.06
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -2206,10 +2218,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11406116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2238,6 +2250,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -2253,6 +2266,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -2268,6 +2282,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11406396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2304,6 +2319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4504924d2112aa14bbbb8437bb809413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: {fileID: 11477062}
   _number: 99
   _format: '#x'
 --- !u!114 &11407372
@@ -2387,7 +2403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23614199db9943a4a94347030b626a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: 13
 --- !u!114 &11409086
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2402,9 +2417,9 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: 80
   m_MinHeight: -1
-  m_PreferredWidth: 160.063904
+  m_PreferredWidth: 160.0639
   m_PreferredHeight: -1
-  m_FlexibleWidth: .25
+  m_FlexibleWidth: 0.25
   m_FlexibleHeight: -1
 --- !u!114 &11409108
 MonoBehaviour:
@@ -2421,7 +2436,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 22.8999996
+  m_PreferredHeight: 22.9
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
 --- !u!114 &11409672
@@ -2446,10 +2461,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11409922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2482,7 +2497,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 66.0999985
+  m_PreferredWidth: 66.1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -2497,7 +2512,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &11411252
@@ -2528,6 +2543,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -2543,6 +2559,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -2558,6 +2575,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11411664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2569,7 +2587,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &11411672
@@ -2583,7 +2601,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .947000027}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.947}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11412596
@@ -2608,10 +2626,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11412910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2626,7 +2644,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 66.0999985
+  m_PreferredWidth: 66.1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -2655,12 +2673,13 @@ MonoBehaviour:
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 80
     m_Alignment: 8
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: .899999976
+    m_LineSpacing: 0.9
   m_Text: 0
 --- !u!114 &11414142
 MonoBehaviour:
@@ -2673,8 +2692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f069a71a8df4fb347957acdd58d68d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndicatorPrefab: {fileID: 11401674, guid: fc2fde1c8cd1f5c4098b2c2b27928433,
-    type: 2}
   _displays:
   - {fileID: 146974}
   - {fileID: 189246}
@@ -2739,12 +2756,13 @@ MonoBehaviour:
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 80
     m_Alignment: 8
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: .899999976
+    m_LineSpacing: 0.9
   m_Text: 0
 --- !u!114 &11415466
 MonoBehaviour:
@@ -2760,10 +2778,10 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 300.112488
-  m_PreferredHeight: 63.8289452
+  m_PreferredWidth: 300.1125
+  m_PreferredHeight: 63.828945
   m_FlexibleWidth: -1
-  m_FlexibleHeight: 1.79999995
+  m_FlexibleHeight: 1.8
 --- !u!114 &11415924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2820,6 +2838,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -2835,6 +2854,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -2850,6 +2870,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11416200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2872,10 +2893,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11416642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2901,8 +2922,8 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .833999991}
-  m_EffectDistance: {x: 26.6599998, y: -2.98000002}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.834}
+  m_EffectDistance: {x: 26.66, y: -2.98}
   m_UseGraphicAlpha: 1
 --- !u!114 &11417726
 MonoBehaviour:
@@ -2926,10 +2947,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11417798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2978,6 +2999,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -2993,6 +3015,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -3008,6 +3031,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11418622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3019,6 +3043,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02dc4c5d8e1ef6d4fb60e08c277c8f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _key: 
+  _text: {fileID: 0}
   toUpperCase: 1
 --- !u!114 &11420434
 MonoBehaviour:
@@ -3051,7 +3077,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11421002
@@ -3076,10 +3102,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11421088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3097,7 +3123,7 @@ MonoBehaviour:
     m_Top: 1
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 16.3999996
+  m_Spacing: 16.4
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
 --- !u!114 &11421324
@@ -3154,10 +3180,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11423874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3180,10 +3206,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11424608
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3212,6 +3238,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -3227,6 +3254,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -3242,6 +3270,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11425258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3264,10 +3293,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11425476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3359,6 +3388,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -3374,6 +3404,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -3389,6 +3420,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11425632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3417,6 +3449,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -3432,6 +3465,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -3447,6 +3481,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11425634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3502,6 +3537,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -3517,6 +3553,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -3532,6 +3569,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11425868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3560,6 +3598,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -3575,6 +3614,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -3590,6 +3630,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11427436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3612,10 +3653,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11427474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3638,10 +3679,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11427962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3704,10 +3745,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11429082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3735,6 +3776,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 7
+    m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -3826,6 +3868,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 3
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -3871,10 +3914,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11431540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3933,7 +3976,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11432834
@@ -3947,7 +3990,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d713cb92da7a53a42802a83f86f080ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 11460004}
+  _source: {fileID: 11429082}
+  _targets: []
 --- !u!114 &11432918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3959,7 +4003,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11432920
@@ -4024,7 +4068,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11434558
@@ -4089,7 +4133,7 @@ MonoBehaviour:
     m_Top: 1
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 16.3999996
+  m_Spacing: 16.4
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
 --- !u!114 &11435004
@@ -4120,6 +4164,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -4135,6 +4180,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -4150,6 +4196,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11435494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4196,10 +4243,10 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 300.112488
-  m_PreferredHeight: 63.8289452
+  m_PreferredWidth: 300.1125
+  m_PreferredHeight: 63.828945
   m_FlexibleWidth: -1
-  m_FlexibleHeight: 1.79999995
+  m_FlexibleHeight: 1.8
 --- !u!114 &11436052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4227,6 +4274,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 3
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -4254,10 +4302,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11436520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4286,6 +4334,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -4301,6 +4350,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -4316,6 +4366,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11436542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4336,11 +4387,11 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
-    m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-    m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: .100000001
+    m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -4355,7 +4406,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 22454384}
   m_Direction: 2
   m_Value: 0
-  m_Size: .74907434
+  m_Size: 0.74907434
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4390,6 +4441,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -4405,6 +4457,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -4420,6 +4473,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11436822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4435,7 +4489,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 22.8999996
+  m_PreferredHeight: 22.9
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
 --- !u!114 &11437394
@@ -4466,6 +4520,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -4481,6 +4536,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -4496,6 +4552,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11437438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4548,7 +4605,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11439000
@@ -4565,7 +4622,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 66.0999985
+  m_PreferredWidth: 66.1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -4580,6 +4637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd15a6bf7c7f97469f06972fbc0f024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: {fileID: 11415222}
   _number: 0
   _format: N0
   _gradient:
@@ -4649,10 +4707,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11440234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4675,10 +4733,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11440606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4696,7 +4754,7 @@ MonoBehaviour:
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
-  m_FlexibleHeight: 85.8499985
+  m_FlexibleHeight: 85.85
 --- !u!114 &11441250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4708,7 +4766,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11441538
@@ -4767,6 +4825,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 3
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -4800,6 +4859,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -4815,6 +4875,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -4830,6 +4891,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11442952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4844,10 +4906,10 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 300.112488
-  m_PreferredHeight: 63.8289452
+  m_PreferredWidth: 300.1125
+  m_PreferredHeight: 63.828945
   m_FlexibleWidth: -1
-  m_FlexibleHeight: 1.79999995
+  m_FlexibleHeight: 1.8
 --- !u!114 &11443854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4859,6 +4921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd15a6bf7c7f97469f06972fbc0f024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: {fileID: 11413940}
   _number: 0
   _format: N0
   _gradient:
@@ -4935,7 +4998,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .947000027}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.947}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11445608
@@ -4950,7 +5013,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 3
-  m_AspectRatio: 1.50999999
+  m_AspectRatio: 1.51
 --- !u!114 &11445864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4962,7 +5025,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &11446666
@@ -5009,7 +5072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 3
-  m_AspectRatio: 1.50999999
+  m_AspectRatio: 1.51
 --- !u!114 &11447942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5039,7 +5102,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &11448348
@@ -5053,7 +5116,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11448702
@@ -5118,7 +5181,7 @@ MonoBehaviour:
     m_Top: 1
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 16.3999996
+  m_Spacing: 16.4
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
 --- !u!114 &11449266
@@ -5149,6 +5212,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -5164,6 +5228,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -5179,6 +5244,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11449368
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5247,6 +5313,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 7
+    m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -5280,7 +5347,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 5.40999985
+  m_Spacing: 5.41
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
 --- !u!114 &11451238
@@ -5311,6 +5378,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -5326,6 +5394,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -5341,6 +5410,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11452052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5380,6 +5450,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -5395,6 +5466,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -5410,6 +5482,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11452986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5443,10 +5516,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11454440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5472,12 +5545,13 @@ MonoBehaviour:
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 80
     m_Alignment: 8
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: .899999976
+    m_LineSpacing: 0.9
   m_Text: 0
 --- !u!114 &11454498
 MonoBehaviour:
@@ -5511,9 +5585,9 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: 80
   m_MinHeight: -1
-  m_PreferredWidth: 160.063904
+  m_PreferredWidth: 160.0639
   m_PreferredHeight: -1
-  m_FlexibleWidth: .25
+  m_FlexibleWidth: 0.25
   m_FlexibleHeight: -1
 --- !u!114 &11456384
 MonoBehaviour:
@@ -5543,6 +5617,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -5558,6 +5633,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -5573,6 +5649,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11456420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5584,6 +5661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4504924d2112aa14bbbb8437bb809413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: {fileID: 11499864}
   _number: 99
   _format: '#x'
 --- !u!114 &11456642
@@ -5618,9 +5696,9 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: 80
   m_MinHeight: -1
-  m_PreferredWidth: 160.063904
+  m_PreferredWidth: 160.0639
   m_PreferredHeight: -1
-  m_FlexibleWidth: .25
+  m_FlexibleWidth: 0.25
   m_FlexibleHeight: -1
 --- !u!114 &11456992
 MonoBehaviour:
@@ -5673,6 +5751,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -5688,6 +5767,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -5703,6 +5783,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11457880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5732,7 +5813,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d713cb92da7a53a42802a83f86f080ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 11413940}
+  _source: {fileID: 11495968}
+  _targets: []
 --- !u!114 &11458322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5744,8 +5826,8 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
-  m_EffectDistance: {x: 4.42000008, y: -4.36000013}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 4.42, y: -4.36}
   m_UseGraphicAlpha: 1
 --- !u!114 &11458686
 MonoBehaviour:
@@ -5772,7 +5854,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11459196
@@ -5789,9 +5871,9 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: 80
   m_MinHeight: -1
-  m_PreferredWidth: 160.063904
+  m_PreferredWidth: 160.0639
   m_PreferredHeight: -1
-  m_FlexibleWidth: .25
+  m_FlexibleWidth: 0.25
   m_FlexibleHeight: -1
 --- !u!114 &11459834
 MonoBehaviour:
@@ -5818,8 +5900,9 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 57
     m_Alignment: 1
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -5850,12 +5933,13 @@ MonoBehaviour:
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 80
     m_Alignment: 8
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: .899999976
+    m_LineSpacing: 0.9
   m_Text: 0
 --- !u!114 &11460246
 MonoBehaviour:
@@ -5912,6 +5996,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -5927,6 +6012,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -5942,6 +6028,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11461330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5953,8 +6040,8 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
-  m_EffectDistance: {x: 4.42000008, y: -4.36000013}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 4.42, y: -4.36}
   m_UseGraphicAlpha: 1
 --- !u!114 &11461428
 MonoBehaviour:
@@ -5967,7 +6054,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11461526
@@ -6008,7 +6095,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d713cb92da7a53a42802a83f86f080ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 11415222}
+  _source: {fileID: 11450046}
+  _targets: []
 --- !u!114 &11461938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6034,7 +6122,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11462352
@@ -6048,6 +6136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd15a6bf7c7f97469f06972fbc0f024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: {fileID: 11454440}
   _number: 0
   _format: N0
   _gradient:
@@ -6162,7 +6251,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11464640
@@ -6179,10 +6268,10 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 300.112488
-  m_PreferredHeight: 63.8289452
+  m_PreferredWidth: 300.1125
+  m_PreferredHeight: 63.828945
   m_FlexibleWidth: -1
-  m_FlexibleHeight: 1.79999995
+  m_FlexibleHeight: 1.8
 --- !u!114 &11465382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6222,7 +6311,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 1
 --- !u!114 &11466098
@@ -6236,7 +6325,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11466980
@@ -6261,10 +6350,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11467402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6287,10 +6376,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11467748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6316,7 +6405,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11468372
@@ -6336,7 +6425,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 5.40999985
+  m_Spacing: 5.41
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
 --- !u!114 &11468576
@@ -6364,7 +6453,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11469530
@@ -6384,7 +6473,7 @@ MonoBehaviour:
     m_Top: 1
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 16.3999996
+  m_Spacing: 16.4
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
 --- !u!114 &11469696
@@ -6416,6 +6505,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02dc4c5d8e1ef6d4fb60e08c277c8f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _key: 
+  _text: {fileID: 0}
   toUpperCase: 1
 --- !u!114 &11470198
 MonoBehaviour:
@@ -6444,10 +6535,11 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 8
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: .769999981
+    m_LineSpacing: 0.77
   m_Text: 99x
 --- !u!114 &11471356
 MonoBehaviour:
@@ -6463,7 +6555,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 81.0599976
+  m_PreferredWidth: 81.06
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -6495,6 +6587,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -6510,6 +6603,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -6525,6 +6619,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11472270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6552,6 +6647,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 6
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -6622,6 +6718,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02dc4c5d8e1ef6d4fb60e08c277c8f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _key: 
+  _text: {fileID: 0}
   toUpperCase: 1
 --- !u!114 &11472606
 MonoBehaviour:
@@ -6650,6 +6748,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 7
+    m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -6670,7 +6769,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 22.8999996
+  m_PreferredHeight: 22.9
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
 --- !u!114 &11473702
@@ -6684,7 +6783,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11473890
@@ -6717,7 +6816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 3
-  m_AspectRatio: 1.50999999
+  m_AspectRatio: 1.51
 --- !u!114 &11474434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6765,8 +6864,8 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .833999991}
-  m_EffectDistance: {x: 26.6599998, y: -2.98000002}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.834}
+  m_EffectDistance: {x: 26.66, y: -2.98}
   m_UseGraphicAlpha: 1
 --- !u!114 &11476274
 MonoBehaviour:
@@ -6796,6 +6895,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -6811,6 +6911,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -6826,6 +6927,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11477062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6853,10 +6955,11 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 8
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: .769999981
+    m_LineSpacing: 0.77
   m_Text: 99x
 --- !u!114 &11477432
 MonoBehaviour:
@@ -6886,6 +6989,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -6901,6 +7005,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -6916,6 +7021,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11478660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6960,9 +7066,9 @@ MonoBehaviour:
   m_Horizontal: 1
   m_Vertical: 1
   m_MovementType: 1
-  m_Elasticity: .100000001
+  m_Elasticity: 0.1
   m_Inertia: 1
-  m_DecelerationRate: .135000005
+  m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 22401468}
   m_HorizontalScrollbar: {fileID: 0}
@@ -7004,6 +7110,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -7019,6 +7126,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -7034,6 +7142,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11482266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7049,7 +7158,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 22.8999996
+  m_PreferredHeight: 22.9
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
 --- !u!114 &11482466
@@ -7090,7 +7199,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11483116
@@ -7121,6 +7230,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -7136,6 +7246,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -7151,6 +7262,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11483404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7162,7 +7274,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .947000027}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.947}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11483698
@@ -7209,10 +7321,10 @@ MonoBehaviour:
   m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
-    x: .150000006
-    y: .150000006
-    width: .75
-    height: .699999988
+    x: 0.15
+    y: 0.15
+    width: 0.75
+    height: 0.7
 --- !u!114 &11485830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7251,6 +7363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd15a6bf7c7f97469f06972fbc0f024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: {fileID: 11460004}
   _number: 0
   _format: N0
   _gradient:
@@ -7337,6 +7450,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -7352,6 +7466,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -7367,6 +7482,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11486970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7381,7 +7497,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 81.0599976
+  m_PreferredWidth: 81.06
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -7449,6 +7565,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -7464,6 +7581,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -7479,6 +7597,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11487928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7506,6 +7625,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 2
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -7523,7 +7643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: .147058845, g: .147058845, b: .147058845, a: .784313738}
+  m_Color: {r: 0.14705884, g: 0.14705884, b: 0.14705884, a: 0.78431374}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -7549,7 +7669,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11488466
@@ -7569,7 +7689,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 5.40999985
+  m_Spacing: 5.41
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
 --- !u!114 &11488690
@@ -7584,7 +7704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 3
-  m_AspectRatio: 1.50999999
+  m_AspectRatio: 1.51
 --- !u!114 &11488718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7596,7 +7716,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: .5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11488782
@@ -7628,8 +7748,8 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
-  m_EffectDistance: {x: 4.42000008, y: -4.36000013}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 4.42, y: -4.36}
   m_UseGraphicAlpha: 1
 --- !u!114 &11489074
 MonoBehaviour:
@@ -7739,6 +7859,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -7754,6 +7875,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -7769,6 +7891,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11492196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7784,7 +7907,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 322.799988
+  m_PreferredHeight: 322.8
   m_FlexibleWidth: -1
   m_FlexibleHeight: 1
 --- !u!114 &11492336
@@ -7833,6 +7956,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
@@ -7848,6 +7972,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   _green:
     serializedVersion: 2
     m_Curve:
@@ -7863,6 +7988,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &11493102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7890,6 +8016,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 3
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -7906,6 +8033,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02dc4c5d8e1ef6d4fb60e08c277c8f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _key: 
+  _text: {fileID: 0}
   toUpperCase: 1
 --- !u!114 &11493644
 MonoBehaviour:
@@ -7961,10 +8090,11 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 8
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: .769999981
+    m_LineSpacing: 0.77
   m_Text: 99x
 --- !u!114 &11495166
 MonoBehaviour:
@@ -7980,7 +8110,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 66.0999985
+  m_PreferredWidth: 66.1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -8025,6 +8155,7 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 7
+    m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -8047,7 +8178,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 5.40999985
+  m_Spacing: 5.41
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
 --- !u!114 &11497884
@@ -8061,8 +8192,8 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: .833999991}
-  m_EffectDistance: {x: 26.6599998, y: -2.98000002}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.834}
+  m_EffectDistance: {x: 26.66, y: -2.98}
   m_UseGraphicAlpha: 1
 --- !u!114 &11498476
 MonoBehaviour:
@@ -8075,6 +8206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4504924d2112aa14bbbb8437bb809413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: {fileID: 11470198}
   _number: 99
   _format: '#x'
 --- !u!114 &11499514
@@ -8122,10 +8254,11 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 8
+    m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: .769999981
+    m_LineSpacing: 0.77
   m_Text: 99x
 --- !u!222 &22201070
 CanvasRenderer:
@@ -8510,6 +8643,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!224 &22400140
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8531,9 +8665,9 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 65.6999969, y: 9.04999924}
-  m_SizeDelta: {x: -131.100006, y: 18.1000004}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 65.7, y: 9.049999}
+  m_SizeDelta: {x: -131.1, y: 18.1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22401210
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8550,7 +8684,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22401468
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8587,7 +8721,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22401898
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8600,11 +8734,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22454314}
   m_RootOrder: 0
-  m_AnchorMin: {x: .172000006, y: 0}
+  m_AnchorMin: {x: 0.172, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -.250019073, y: -3.09944153e-06}
-  m_SizeDelta: {x: .5, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -0.25001907, y: -0.0000030994415}
+  m_SizeDelta: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22405740
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8621,7 +8755,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22406274
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8638,7 +8772,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22409338
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8656,7 +8790,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22412312
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8675,7 +8809,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22413186
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8692,7 +8826,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22413262
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8714,9 +8848,9 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 65.6999969, y: 9.04999924}
-  m_SizeDelta: {x: -131.100006, y: 18.1000004}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 65.7, y: 9.049999}
+  m_SizeDelta: {x: -131.1, y: 18.1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22413890
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8735,7 +8869,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22414496
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8752,7 +8886,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22415000
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8769,7 +8903,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22415904
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8789,7 +8923,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22417172
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8806,7 +8940,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22417796
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8825,7 +8959,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22418904
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8843,7 +8977,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22420778
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8860,7 +8994,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22421504
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8879,7 +9013,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22422620
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8896,7 +9030,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22422906
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8913,7 +9047,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22423082
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8930,7 +9064,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22424038
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8947,7 +9081,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22424928
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8969,9 +9103,9 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 65.6999969, y: 9.04999924}
-  m_SizeDelta: {x: -131.100006, y: 18.1000004}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 65.7, y: 9.049999}
+  m_SizeDelta: {x: -131.1, y: 18.1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22428968
 RectTransform:
   m_ObjectHideFlags: 1
@@ -8988,7 +9122,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22429088
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9003,9 +9137,9 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 176.199997}
-  m_SizeDelta: {x: 0, y: 352.399994}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 176.2}
+  m_SizeDelta: {x: 0, y: 352.4}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22429306
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9024,7 +9158,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22430484
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9043,7 +9177,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22430648
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9056,11 +9190,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22450098}
   m_RootOrder: 0
-  m_AnchorMin: {x: .172000006, y: 0}
+  m_AnchorMin: {x: 0.172, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -.250019073, y: -3.09944153e-06}
-  m_SizeDelta: {x: .5, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -0.25001907, y: -0.0000030994415}
+  m_SizeDelta: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22431438
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9077,7 +9211,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22432572
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9094,7 +9228,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22433166
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9111,7 +9245,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22437938
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9130,11 +9264,11 @@ RectTransform:
   - {fileID: 22470142}
   m_Father: {fileID: 22445832}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: .0500000007}
-  m_AnchorMax: {x: 1, y: .200000003}
+  m_AnchorMin: {x: 0, y: 0.05}
+  m_AnchorMax: {x: 1, y: 0.2}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22440380
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9151,7 +9285,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22442572
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9166,9 +9300,9 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 95.5539551, y: 2.75000477}
-  m_SizeDelta: {x: -191.110001, y: -5.5}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 95.553955, y: 2.7500048}
+  m_SizeDelta: {x: -191.11, y: -5.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22443414
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9185,7 +9319,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22444708
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9200,9 +9334,9 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 95.5539551, y: 2.75000477}
-  m_SizeDelta: {x: -191.110001, y: -5.5}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 95.553955, y: 2.7500048}
+  m_SizeDelta: {x: -191.11, y: -5.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22445832
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9242,7 +9376,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22446670
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9260,7 +9394,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22449428
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9278,7 +9412,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22449462
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9295,7 +9429,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22450098
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9313,7 +9447,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22450566
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9333,7 +9467,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22454314
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9351,7 +9485,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22454332
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9383,10 +9517,10 @@ RectTransform:
   m_Father: {fileID: 22446670}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: .74907434}
+  m_AnchorMax: {x: 1, y: 0.74907434}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22454710
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9408,9 +9542,9 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 65.6999969, y: 9.04999924}
-  m_SizeDelta: {x: -131.100006, y: 18.1000004}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 65.7, y: 9.049999}
+  m_SizeDelta: {x: -131.1, y: 18.1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22454966
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9427,7 +9561,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22456934
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9446,7 +9580,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22457358
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9463,7 +9597,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22460066
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9481,7 +9615,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22461616
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9498,7 +9632,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22461720
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9513,9 +9647,9 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 95.5539551, y: 2.75000477}
-  m_SizeDelta: {x: -191.110001, y: -5.5}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 95.553955, y: 2.7500048}
+  m_SizeDelta: {x: -191.11, y: -5.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22463116
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9533,7 +9667,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22466060
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9553,7 +9687,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22466800
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9566,11 +9700,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22463116}
   m_RootOrder: 0
-  m_AnchorMin: {x: .172000006, y: 0}
+  m_AnchorMin: {x: 0.172, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -.250019073, y: -3.09944153e-06}
-  m_SizeDelta: {x: .5, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -0.25001907, y: -0.0000030994415}
+  m_SizeDelta: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22467000
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9588,7 +9722,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22467316
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9601,11 +9735,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22449428}
   m_RootOrder: 0
-  m_AnchorMin: {x: .172000006, y: 0}
+  m_AnchorMin: {x: 0.172, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -.250019073, y: -3.09944153e-06}
-  m_SizeDelta: {x: .5, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -0.25001907, y: -0.0000030994415}
+  m_SizeDelta: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22467728
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9623,7 +9757,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22468286
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9642,7 +9776,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22468558
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9660,7 +9794,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22468788
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9679,7 +9813,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22469362
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9696,7 +9830,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22470142
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9713,7 +9847,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22471162
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9730,7 +9864,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 26}
   m_SizeDelta: {x: -40, y: 52}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22472092
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9747,7 +9881,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22472144
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9765,7 +9899,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22472510
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9780,9 +9914,9 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -26.7310009, y: -1.54972076e-06}
-  m_SizeDelta: {x: -53.5620003, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -26.731, y: -0.0000015497208}
+  m_SizeDelta: {x: -53.562, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22476120
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9799,7 +9933,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22477118
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9812,11 +9946,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22445832}
   m_RootOrder: 0
-  m_AnchorMin: {x: .551643908, y: .903000057}
+  m_AnchorMin: {x: 0.5516439, y: 0.90300006}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -.125, y: -7.375}
-  m_SizeDelta: {x: .400001526, y: 14.8000002}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -0.125, y: -7.375}
+  m_SizeDelta: {x: 0.40000153, y: 14.8}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22483252
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9833,7 +9967,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22483326
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9848,9 +9982,9 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -26.7310009, y: -1.54972076e-06}
-  m_SizeDelta: {x: -53.5620003, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -26.731, y: -0.0000015497208}
+  m_SizeDelta: {x: -53.562, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22483588
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9870,7 +10004,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22484592
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9887,7 +10021,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22486878
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9904,7 +10038,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22487076
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9921,7 +10055,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22487134
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9938,7 +10072,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22487390
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9955,7 +10089,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22487712
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9972,7 +10106,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22488440
 RectTransform:
   m_ObjectHideFlags: 1
@@ -9989,7 +10123,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22489414
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10009,7 +10143,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22489470
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10027,7 +10161,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22489508
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10044,7 +10178,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22489896
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10063,7 +10197,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22491004
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10080,7 +10214,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22491074
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10095,9 +10229,9 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.05175781e-05, y: -162.369995}
+  m_AnchoredPosition: {x: -0.000030517578, y: -162.37}
   m_SizeDelta: {x: 0, y: 300}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22492342
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10112,9 +10246,9 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 95.5539551, y: 2.75000477}
-  m_SizeDelta: {x: -191.110001, y: -5.5}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 95.553955, y: 2.7500048}
+  m_SizeDelta: {x: -191.11, y: -5.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22493812
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10131,7 +10265,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22494690
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10148,9 +10282,9 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10, y: 14.0000038}
-  m_SizeDelta: {x: -20, y: -27.9999924}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 10, y: 14.000004}
+  m_SizeDelta: {x: -20, y: -27.999992}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22495662
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10167,7 +10301,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22495678
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10182,9 +10316,9 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -26.7310009, y: -1.54972076e-06}
-  m_SizeDelta: {x: -53.5620003, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -26.731, y: -0.0000015497208}
+  m_SizeDelta: {x: -53.562, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22498066
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10199,9 +10333,9 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -26.7310009, y: -1.54972076e-06}
-  m_SizeDelta: {x: -53.5620003, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -26.731, y: -0.0000015497208}
+  m_SizeDelta: {x: -53.562, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22499552
 RectTransform:
   m_ObjectHideFlags: 1
@@ -10218,7 +10352,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
