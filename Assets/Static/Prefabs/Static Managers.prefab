@@ -10,8 +10,9 @@ GameObject:
   - 4: {fileID: 404724}
   - 114: {fileID: 11488736}
   - 114: {fileID: 11493208}
-  - 114: {fileID: 11424790}
   - 114: {fileID: 11486768}
+  - 114: {fileID: 11479720}
+  - 114: {fileID: 11489478}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: EditorOnly
@@ -31,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11424790
+--- !u!114 &11479720
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -39,9 +40,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 189600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 36bde28572b02ea4db7c258aa7c2e9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 0
 --- !u!114 &11486768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -119,6 +121,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeScale: 1
+--- !u!114 &11489478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11493208
 MonoBehaviour:
   m_ObjectHideFlags: 1

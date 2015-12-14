@@ -47,10 +47,11 @@ namespace Hourai.Editor {
         /// escape key when asset is initially being named.
         /// </summary>
         /// <typeparam name="T">Type of scriptable object.</typeparam>
-        public static void CreateAssetInProjectWindow<T>(T asset = null) where T : ScriptableObject {
+        public static T CreateAssetInProjectWindow<T>(T asset = null) where T : ScriptableObject {
             if(asset == null)
                 asset = ScriptableObject.CreateInstance<T>();
             ProjectWindowUtil.CreateAsset(asset, "New " + typeof(T).Name + ".asset");
+            return asset;
         }
 
         public static string GetAssetFolderPath(Object asset) {

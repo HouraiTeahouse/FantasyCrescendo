@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
+  m_Name: ko
+  m_EditorClassIdentifier: 
+  data:
+  - Key: name
+    Value: Fantasy Crescendo
+  - Key: derivativeDisclaimer
+    Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
+      may contain story, character personalities, and settings different from  the
+      original works.\nIf you feel unconfortable with this, please proceed with caution."
+  - Key: marisa.firstName
+    Value: Marisa
+  - Key: marisa.surname
+    Value: Kirisame
+  - Key: reimu.firstName
+    Value: Reimu
+  - Key: reimu.surname
+    Value: Hakurei
+  - Key: wriggle.firstName
+    Value: Wriggle
+  - Key: wriggle.surname
+    Value: Nightbug
+  - Key: youmu.firstName
+    Value: Youmu
+  - Key: youmu.surname
+    Value: Konpaku
+  - Key: sakuya.firstName
+    Value: Sakuya
+  - Key: sakuya.surname
+    Value: Izayoi
+  - Key: hakureiShrine.name
+    Value: Hakurei Shrine
+  - Key: magicForest.name
+    Value: Forest of Magic
