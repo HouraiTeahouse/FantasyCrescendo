@@ -21,7 +21,11 @@ namespace Hourai.Localization {
 
         public IEnumerable<string> Keys {
             get { return _map.Keys; }
-        } 
+        }
+
+        public bool ContainsKey(string key) {
+            return _map.ContainsKey(key);
+        }
 
         private Dictionary<string, string> _map;
 
