@@ -42,8 +42,8 @@ namespace Hourai {
             set { _end = value; }
         }
 
-        protected override void Update() {
-            base.Update();
+        protected override void UpdateText() {
+            base.UpdateText();
 
             if (_start > _end) {
                 float temp = _start;
