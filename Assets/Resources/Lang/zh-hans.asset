@@ -9,36 +9,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
-  m_Name: eng
+  m_Name: zh-hans
   m_EditorClassIdentifier: 
   data:
   - Key: name
-    Value: Test
+    Value: 
   - Key: derivateDisclaimer
-    Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
-      may contain story, character personalities, and settings different from  the
-      original works.\nIf you feel unconfortable with this, please proceed with caution."
+    Value: 
   - Key: marisa.firstName
-    Value: Marisa
+    Value: "\u9B54\u7406\u6C99"
   - Key: marisa.surname
-    Value: Kirisame
+    Value: "\u96FE\u96E8"
   - Key: reimu.firstName
-    Value: Reimu
+    Value: "\u7075\u68A6"
   - Key: reimu.surname
-    Value: Hakurei
+    Value: "\u535A\u4E3D"
   - Key: wriggle.firstName
-    Value: Wriggle
+    Value: "\u8389\u683C\u9732"
   - Key: wriggle.surname
-    Value: Nightbug
+    Value: "\u5948\u7279\u5DF4\u683C"
   - Key: youmu.firstName
-    Value: Youmu
+    Value: "\u5996\u68A6"
   - Key: youmu.surname
-    Value: Konpaku
+    Value: "\u9B42\u9B44"
   - Key: sakuya.firstName
-    Value: Sakuya
+    Value: "\u54B2\u591C"
   - Key: sakuya.surname
-    Value: Izayoi
+    Value: "\u5341\u516D\u591C"
   - Key: hakureiShrine.name
-    Value: Hakurei Shrine
+    Value: "\u535A\u4E3D\u795E\u793E"
   - Key: magicForest.name
-    Value: Forest of Magic
+    Value: "\u9B54\u6CD5\u68EE\u6797"

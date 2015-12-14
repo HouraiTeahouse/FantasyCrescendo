@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
-  m_Name: jpn
+  m_Name: de
   m_EditorClassIdentifier: 
   data:
   - Key: name
@@ -17,26 +17,26 @@ MonoBehaviour:
   - Key: derivateDisclaimer
     Value: 
   - Key: marisa.firstName
-    Value: "\u9B54\u7406\u6C99"
+    Value: Marisa
   - Key: marisa.surname
-    Value: "\u9727\u96E8"
+    Value: Kirisame
   - Key: reimu.firstName
-    Value: "\u970A\u5922"
+    Value: Reimu
   - Key: reimu.surname
-    Value: "\u535A\u9E97"
+    Value: Hakurei
   - Key: wriggle.firstName
-    Value: "\u30EA\u30B0\u30EB"
+    Value: Wriggle
   - Key: wriggle.surname
-    Value: "\u30CA\u30A4\u30C8\u30D0\u30B0"
+    Value: Nightbug
   - Key: youmu.firstName
-    Value: "\u5996\u5922"
+    Value: Youmu
   - Key: youmu.surname
-    Value: "\u9B42\u9B44"
+    Value: Konpaku
   - Key: sakuya.firstName
-    Value: "\u54B2\u591C"
+    Value: Sakuya
   - Key: sakuya.surname
-    Value: "\u5341\u516D\u591C"
+    Value: Izayoi
   - Key: hakureiShrine.name
-    Value: "\u535A\u9E97\u795E\u793E"
+    Value: Hakurei-Schrein
   - Key: magicForest.name
-    Value: "\u9B54\u6CD5\u306E\u68EE"
+    Value: Wald der Magie

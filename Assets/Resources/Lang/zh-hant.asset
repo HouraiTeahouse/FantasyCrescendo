@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
-  m_Name: spa
+  m_Name: zh-hant
   m_EditorClassIdentifier: 
   data:
   - Key: name
@@ -37,6 +37,6 @@ MonoBehaviour:
   - Key: sakuya.surname
     Value: Izayoi
   - Key: hakureiShrine.name
-    Value: Santuario Hakurei
+    Value: Hakurei Shrine
   - Key: magicForest.name
-    Value: "Bosque M\xE1gico"
+    Value: Forest of Magic

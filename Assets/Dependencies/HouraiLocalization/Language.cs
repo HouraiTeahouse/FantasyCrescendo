@@ -10,6 +10,8 @@ namespace Hourai.Localization {
         private struct StrStrTuple {
 
             public string Key;
+
+            [Multiline]
             public string Value;
 
         }
