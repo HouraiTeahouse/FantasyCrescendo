@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Hourai.Localization;
-using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 

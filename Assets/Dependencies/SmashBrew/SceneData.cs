@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Hourai.SmashBrew {
 
@@ -50,8 +49,6 @@ namespace Hourai.SmashBrew {
             base.OnEnable();
             PreviewImage = new Resource<Sprite>(_previewImage);
             Icon = new Resource<Sprite>(_icon);
-            Scene test = SceneManager.GetSceneByName(_sceneName);
-            Debug.Log(test.name == _sceneName + " " + _sceneName + " " + test.name);
         }
 
     }
