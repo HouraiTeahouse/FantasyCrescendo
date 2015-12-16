@@ -8,6 +8,9 @@ namespace Hourai.Localization {
 
     public sealed  class LanguageManager : MonoBehaviour {
 
+        [SerializeField]
+        private string localizaitonResourceDirectory = "Lang/";
+
         private Language _currentLanguage;
 
         /// <summary>
@@ -36,14 +39,14 @@ namespace Hourai.Localization {
         [SerializeField]
         private bool _dontDestroyOnLoad = false;
 
-        private Dictionary<CultureInfo, Language> _languages;
+        private List<CultureInfo> _languages;
         private HashSet<string> _keys; 
 
         /// <summary>
         /// All available languages currently supported by the system.
         /// </summary>
         public IEnumerable<CultureInfo> AvailableLanguages {
-            get { return _languages.Keys; }
+            get { return _languages; }
         }
 
         /// <summary>
@@ -64,17 +67,18 @@ namespace Hourai.Localization {
                 return;
             }
             Instance = this;
-            _languages = new Dictionary<CultureInfo, Language>();
+            _languages = new List<CultureInfo>();
             string currentLang = CultureInfo.CurrentCulture.Name.ToLower();
-            Language[] languages = Resources.LoadAll<Language>(string.Empty);
-            _keys = new HashSet<string>(languages.SelectMany(lang => lang.Keys)); 
-            foreach (Language lang in Resources.LoadAll<Language>(string.Empty)) {
-                _languages[CultureInfo.GetCultureInfo(lang.name)] = lang;
+            Language[] languages = Resources.LoadAll<Language>(localizaitonResourceDirectory);
+            _keys = new HashSet<string>(languages.SelectMany(lang => lang.Keys));
+            _languages = languages.Select(lang => CultureInfo.GetCultureInfo(lang.name)).ToList();
+            foreach (Language lang in languages) {
                 if (lang.name == currentLang) 
                     CurrentLangauge = lang;
                 else
                     Resources.UnloadAsset(lang);
             }
+            
             if(_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
         }
@@ -119,9 +123,9 @@ namespace Hourai.Localization {
         public Language LoadLanguage(CultureInfo language) {
             if(language == null)
                 throw  new ArgumentNullException("language");
-            if(!_languages.ContainsKey(language))
+            if(!_languages.Contains(language))
                 throw new InvalidOperationException(string.Format("Language {0} is not supported at this time.", language.EnglishName));
-            CurrentLangauge = _languages[language];
+            CurrentLangauge = Resources.Load<Language>(localizaitonResourceDirectory + language);
             return CurrentLangauge;
         }
 

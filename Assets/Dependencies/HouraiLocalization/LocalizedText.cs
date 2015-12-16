@@ -60,7 +60,7 @@ namespace Hourai.Localization {
                 Debug.LogWarning(string.Format("Tried to localize key {0}, but langauge {1} has no such key", _key, language));
                 return;
             }
-            _text.text = Process(_languageManager[_key]);
+            _text.text = Process(language[_key]);
         }
 
         protected virtual string Process(string val) {
