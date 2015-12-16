@@ -41,6 +41,7 @@ This file is largely to keep track of and give credit to the creators of the man
 **Translators** 
 * xicmiah - Russian  
 * Gabo7 - Spanish  
+* Fluffy8x - Japanese
 * Rupert Wu - Chinese/Japanese  
 * Benson Lai (abenson) - Chinese (Simplified/Traditional)
 * Spotty Ren - French  

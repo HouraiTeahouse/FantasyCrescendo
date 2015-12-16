@@ -12,40 +12,158 @@ MonoBehaviour:
   m_Name: zh-hant
   m_EditorClassIdentifier: 
   data:
-  - Key: name
+  - Key: name.game
     Value: Fantasy Crescendo
   - Key: derivativeDisclaimer
     Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
       may contain story, character personalities, and settings different from  the
       original works.\nIf you feel unconfortable with this, please proceed with caution."
-  - Key: marisa.firstName
-    Value: "\u9B54\u7406\u6C99"
-  - Key: marisa.surname
-    Value: "\u9727\u96E8"
-  - Key: reimu.firstName
-    Value: "\u970A\u5922"
-  - Key: reimu.surname
+  - Key: name.reimu
+    Value: "\u9748\u5922"
+  - Key: fullname.reimu
     Value: "\u535A\u9E97"
-  - Key: wriggle.firstName
+  - Key: name.marisa
+    Value: "\u9B54\u7406\u6C99"
+  - Key: fullname.marisa
+    Value: "\u9727\u96E8"
+  - Key: name.wriggle
     Value: "\u8389\u683C\u9732"
-  - Key: wriggle.surname
+  - Key: fullname.wriggle
     Value: "\u5948\u7279\u5DF4\u683C"
-  - Key: youmu.firstName
-    Value: "\u5996\u5922"
-  - Key: youmu.surname
-    Value: "\u9B42\u9B44"
-  - Key: sakuya.firstName
+  - Key: name.cirno
+    Value: Cirno
+  - Key: fullname.cirno
+    Value: Cirno
+  - Key: name.meiling
+    Value: Meiling
+  - Key: fullname.meiling
+    Value: Hong Meiling
+  - Key: name.patchouli
+    Value: Patchouli
+  - Key: fullname.patchouli
+    Value: Patchouli Knolwedge
+  - Key: name.sakuya
     Value: "\u54B2\u591C"
-  - Key: sakuya.surname
+  - Key: fullname.sakuya
     Value: "\u5341\u516D\u591C"
-  - Key: hakureiShrine.name
+  - Key: name.remilia
+    Value: Remilia
+  - Key: fullname.remilia
+    Value: Remilia Scarlet
+  - Key: name.flandre
+    Value: Flandre
+  - Key: fullname.flandre
+    Value: Flandre Scarlet
+  - Key: name.alice
+    Value: Alice
+  - Key: fullname.alice
+    Value: Alice Margatroid
+  - Key: name.youmu
+    Value: "\u5996\u5922"
+  - Key: fullname.youmu
+    Value: "\u9B42\u9B44"
+  - Key: name.yuyuko
+    Value: Yuyuko
+  - Key: fullname.yuyuko
+    Value: Yuyuko Saigyouji
+  - Key: name.yukari
+    Value: Yukari
+  - Key: fullname.yukari
+    Value: Yukari Yakumo
+  - Key: name.suika
+    Value: Suika
+  - Key: fullname.suika
+    Value: Suika Ibuki
+  - Key: name.aya
+    Value: Aya
+  - Key: fullname.aya
+    Value: Aya Shameimaru
+  - Key: name.mokou
+    Value: Mokou
+  - Key: fullname.mokou
+    Value: Fujiwara no Mokou
+  - Key: name.komachi
+    Value: Komachi
+  - Key: fullname.komachi
+    Value: Komachi Onozuka
+  - Key: name.nitori
+    Value: Nitori
+  - Key: fullname.nitori
+    Value: Nitori Kawashiro
+  - Key: name.sanae
+    Value: Sanae
+  - Key: fullname.sanae
+    Value: Sanae Kochiya
+  - Key: name.suwako
+    Value: Suwako
+  - Key: fullname.suwako
+    Value: Suwako Moriya
+  - Key: name.kanako
+    Value: Kanako
+  - Key: fullname.kanako
+    Value: Kanako Yasaka
+  - Key: name.iku
+    Value: Iku
+  - Key: fullname.iku
+    Value: Iku Nagae
+  - Key: name.tenshi
+    Value: Tenshi
+  - Key: fullname.tenshi
+    Value: Tenshi Hinanawi
+  - Key: name.utsuho
+    Value: Utsuho
+  - Key: fullname.utsuho
+    Value: Utsuho Reiuji
+  - Key: name.koishi
+    Value: Koishi
+  - Key: fullname.koishi
+    Value: Koishi Komeiji
+  - Key: name.ichirin
+    Value: Ichirin
+  - Key: fullname.ichirin
+    Value: Ichirin Kumoi
+  - Key: name.unzan
+    Value: Unzan
+  - Key: name.byakuren
+    Value: Byakuren
+  - Key: fullname.byakuren
+    Value: Byakuren Hijiri
+  - Key: name.futo
+    Value: Futo
+  - Key: fullname.futo
+    Value: Mononobe no Futo
+  - Key: name.miko
+    Value: Miko
+  - Key: fullname.miko
+    Value: Toyosatomimi no Miko
+  - Key: name.mamizou
+    Value: ' Mamizou'
+  - Key: fullname.mamizou
+    Value: ' Mamizou Futatsuiwa'
+  - Key: name.kokoro
+    Value: Kokoro
+  - Key: fullname.kokoro
+    Value: Hata no Kokoro
+  - Key: name.sukuna
+    Value: Sukuna
+  - Key: fullname.sukuna
+    Value: Shinmyoumaru Sukuna
+  - Key: name.sumireko
+    Value: Sumireko
+  - Key: fullname.sumireko
+    Value: Usami Sumireko
+  - Key: name.hakureiShrine
     Value: "\u535A\u9E97\u795E\u793E"
-  - Key: magicForest.name
+  - Key: name.magicForest
     Value: "\u9B54\u6CD5\u68EE\u6797"
-  - Key: makai.name
+  - Key: name.makai
     Value: "\u9B54\u754C"
-  - Key: sdm.name
-    Value: "\u8679\u9B54\u9928"
+  - Key: name.sdm
+    Value: "\u7D05\u9B54\u9928"
+  - Key: name.humanVilliage
+    Value: Human Villiage
+  - Key: name.genbuRavine
+    Value: Genbu Ravine
   - Key: random
     Value: "\u96A8\u6A5F"
   - Key: menu.fight
