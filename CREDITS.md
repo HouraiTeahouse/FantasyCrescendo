@@ -38,9 +38,9 @@ This file is largely to keep track of and give credit to the creators of the man
 * Abyll
 * james7132 (James Liu)
 
-**Translators**
-xicmiah - Russian
-Gabo7 - Spanish
-Rupert Wu - Chinese/Japanese
-Spotty Ren - French
-Anseriform - Dutch/German
+**Translators** 
+* xicmiah - Russian  
+* Gabo7 - Spanish  
+* Rupert Wu - Chinese/Japanese  
+* Spotty Ren - French  
+* Anseriform - Dutch/German  
