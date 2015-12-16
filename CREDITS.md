@@ -42,5 +42,6 @@ This file is largely to keep track of and give credit to the creators of the man
 xicmiah - Russian
 Gabo7 - Spanish
 Rupert Wu - Chinese/Japanese
+Benson Lai (abenson) - Chinese (Simplified/Traditional)
 Spotty Ren - French
 Anseriform - Dutch/German

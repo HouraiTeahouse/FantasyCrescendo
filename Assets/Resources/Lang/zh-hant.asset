@@ -19,26 +19,56 @@ MonoBehaviour:
       may contain story, character personalities, and settings different from  the
       original works.\nIf you feel unconfortable with this, please proceed with caution."
   - Key: marisa.firstName
-    Value: Marisa
+    Value: "\u9B54\u7406\u6C99"
   - Key: marisa.surname
-    Value: Kirisame
+    Value: "\u9727\u96E8"
   - Key: reimu.firstName
-    Value: Reimu
+    Value: "\u970A\u5922"
   - Key: reimu.surname
-    Value: Hakurei
+    Value: "\u535A\u9E97"
   - Key: wriggle.firstName
-    Value: Wriggle
+    Value: "\u8389\u683C\u9732"
   - Key: wriggle.surname
-    Value: Nightbug
+    Value: "\u5948\u7279\u5DF4\u683C"
   - Key: youmu.firstName
-    Value: Youmu
+    Value: "\u5996\u5922"
   - Key: youmu.surname
-    Value: Konpaku
+    Value: "\u9B42\u9B44"
   - Key: sakuya.firstName
-    Value: Sakuya
+    Value: "\u54B2\u591C"
   - Key: sakuya.surname
-    Value: Izayoi
+    Value: "\u5341\u516D\u591C"
   - Key: hakureiShrine.name
-    Value: Hakurei Shrine
+    Value: "\u535A\u9E97\u795E\u793E"
   - Key: magicForest.name
-    Value: Forest of Magic
+    Value: "\u9B54\u6CD5\u68EE\u6797"
+  - Key: makai.name
+    Value: "\u9B54\u754C"
+  - Key: sdm.name
+    Value: "\u8679\u9B54\u9928"
+  - Key: random
+    Value: "\u96A8\u6A5F"
+  - Key: menu.fight
+    Value: "\u5927\u4E82\u9B25"
+  - Key: menu.solo
+    Value: "\u55AE\u6A5F\u6A21\u5F0F"
+  - Key: menu.classic
+    Value: "\u7D93\u5178\u6A21\u5F0F"
+  - Key: menu.allStar
+    Value: "\u5168\u660E\u661F\u4E82\u9B25"
+  - Key: menu.story
+    Value: "\u6545\u4E8B\u6A21\u5F0F"
+  - Key: menu.options
+    Value: "\u9078\u9805"
+  - Key: menu.back
+    Value: "\u9000\u51FA"
+  - Key: menu.exit
+    Value: "\u96E2\u958B\u904A\u6232"
+  - Key: menu.training
+    Value: "\u7DF4\u7FD2\u6A21\u5F0F"
+  - Key: menu.music
+    Value: "\u97F3\u6A02\u9078\u9805"
+  - Key: menu.sfxVolume
+    Value: "\u6548\u679C\u97F3\u91CF"
+  - Key: menu.bgmVolume
+    Value: "\u97F3\u6A02\u97F3\u91CF"
