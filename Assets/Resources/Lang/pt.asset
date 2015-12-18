@@ -9,27 +9,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
-  m_Name: zh-hans
+  m_Name: pt
   m_EditorClassIdentifier: 
   data:
   - Key: name.game
     Value: Fantasy Crescendo
   - Key: derivativeDisclaimer
     Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
-      may contain story, character personalities, and settings different from  the
+      may contain story, character personalities, and settings different from the
       original works.\nIf you feel unconfortable with this, please proceed with caution."
   - Key: name.reimu
-    Value: "\u7075\u68A6"
+    Value: Reimu
   - Key: fullname.reimu
-    Value: "\u535A\u4E3D"
+    Value: Reimu Hakurei
   - Key: name.marisa
-    Value: "\u9B54\u7406\u6C99"
+    Value: Marisa
   - Key: fullname.marisa
-    Value: "\u96FE\u96E8"
+    Value: Marisa Kirisame
   - Key: name.wriggle
-    Value: "\u8389\u683C\u9732"
+    Value: Wriggle
   - Key: fullname.wriggle
-    Value: "\u5948\u7279\u5DF4\u683C"
+    Value: Wriggle Nightbug
   - Key: name.cirno
     Value: Cirno
   - Key: fullname.cirno
@@ -43,9 +43,9 @@ MonoBehaviour:
   - Key: fullname.patchouli
     Value: Patchouli Knolwedge
   - Key: name.sakuya
-    Value: "\u54B2\u591C"
+    Value: Sakuya
   - Key: fullname.sakuya
-    Value: "\u5341\u516D\u591C"
+    Value: Sakuya Izayoi
   - Key: name.remilia
     Value: Remilia
   - Key: fullname.remilia
@@ -59,9 +59,9 @@ MonoBehaviour:
   - Key: fullname.alice
     Value: Alice Margatroid
   - Key: name.youmu
-    Value: "\u5996\u68A6"
+    Value: Youmu
   - Key: fullname.youmu
-    Value: "\u9B42\u9B44"
+    Value: Youmu Konpaku
   - Key: name.yuyuko
     Value: Yuyuko
   - Key: fullname.yuyuko
@@ -151,46 +151,46 @@ MonoBehaviour:
   - Key: name.sumireko
     Value: Sumireko
   - Key: fullname.sumireko
-    Value: Usami Sumireko
+    Value: 'Sumireko Usami '
   - Key: name.hakureiShrine
-    Value: "\u535A\u4E3D\u795E\u793E"
+    Value: "Santu\xE1rio Hakurei"
   - Key: name.magicForest
-    Value: "\u9B54\u6CD5\u68EE\u6797"
+    Value: Floresta da Magia
   - Key: name.makai
-    Value: "\u9B54\u754C"
+    Value: Makai
   - Key: name.sdm
-    Value: "\u7EA2\u9B54\u9986"
+    Value: "Mans\xE3o do Dem\xF4nio Escarlate"
   - Key: name.humanVilliage
-    Value: Human Villiage
+    Value: Vila Humana
   - Key: name.genbuRavine
-    Value: Genbu Ravine
+    Value: Ravina Genbu
   - Key: random
-    Value: "\u968F\u673A"
+    Value: "Aleat\xF3rio"
   - Key: menu.multiplayer
-    Value: "\u5927\u4E71\u6597"
+    Value: Multijogador
   - Key: menu.singleplayer
-    Value: "\u5355\u673A\u6A21\u5F0F"
+    Value: Um Jogador
   - Key: menu.standard
     Value: Standard
   - Key: menu.special
     Value: Special
   - Key: menu.classic
-    Value: "\u7ECF\u5178\u6A21\u5F0F"
+    Value: "Modo Cl\xE1ssico"
   - Key: menu.allStar
-    Value: "\u5168\u660E\u661F\u4E71\u6597"
+    Value: Modo All-Star
   - Key: menu.story
-    Value: "\u6545\u4E8B\u6A21\u5F0F"
+    Value: "Modo Hist\xF3ria"
   - Key: menu.options
-    Value: "\u9009\u9879"
+    Value: "Op\xE7\xF5es"
   - Key: menu.back
-    Value: "\u9000\u51FA"
+    Value: Voltar
   - Key: menu.exit
-    Value: "\u79BB\u5F00\u6E38\u620F"
+    Value: Sair do Jogo
   - Key: menu.training
-    Value: "\u7EC3\u4E60\u6A21\u5F0F"
+    Value: Treinamento
   - Key: menu.music
-    Value: "\u97F3\u4E50\u9009\u9879"
+    Value: "M\xFAsica"
   - Key: menu.sfxVolume
-    Value: "\u6548\u679C\u97F3\u91CF"
+    Value: Volume dos Efeitos Sonoros
   - Key: menu.bgmVolume
-    Value: "\u97F3\u4E50\u97F3\u91CF"
+    Value: "Volume das M\xFAsicas"

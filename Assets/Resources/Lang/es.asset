@@ -145,7 +145,7 @@ MonoBehaviour:
   - Key: fullname.kokoro
     Value: Hata no Kokoro
   - Key: name.sukuna
-    Value: Sukuna
+    Value: Shinmyoumaru
   - Key: fullname.sukuna
     Value: Shinmyoumaru Sukuna
   - Key: name.sumireko
@@ -163,17 +163,21 @@ MonoBehaviour:
   - Key: name.humanVilliage
     Value: Aldea Humana
   - Key: name.genbuRavine
-    Value: Genbu Ravine
+    Value: Quebrada Genbu
   - Key: random
     Value: Aleatorio
-  - Key: menu.fight
-    Value: Fight
-  - Key: menu.solo
-    Value: Solo
+  - Key: menu.multiplayer
+    Value: Multijugador
+  - Key: menu.singleplayer
+    Value: Un solo jugador
+  - Key: menu.standard
+    Value: Standard
+  - Key: menu.special
+    Value: Special
   - Key: menu.classic
     Value: Modo Clasico
   - Key: menu.allStar
-    Value: Mode All-Star
+    Value: Modo All-Star
   - Key: menu.story
     Value: Modo Historia
   - Key: menu.options

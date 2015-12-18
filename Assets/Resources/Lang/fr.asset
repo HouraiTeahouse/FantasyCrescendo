@@ -145,13 +145,13 @@ MonoBehaviour:
   - Key: fullname.kokoro
     Value: Hata no Kokoro
   - Key: name.sukuna
-    Value: Sukuna
+    Value: Shinmyoumaru
   - Key: fullname.sukuna
     Value: Shinmyoumaru Sukuna
   - Key: name.sumireko
     Value: Sumireko
   - Key: fullname.sumireko
-    Value: Usami Sumireko
+    Value: 'Sumireko Usami '
   - Key: name.hakureiShrine
     Value: Sanctuaire Hakurei
   - Key: name.magicForest
@@ -166,10 +166,14 @@ MonoBehaviour:
     Value: Genbu Ravine
   - Key: random
     Value: Random
-  - Key: menu.fight
-    Value: Fight
-  - Key: menu.solo
-    Value: Solo
+  - Key: menu.multiplayer
+    Value: Multiplayer
+  - Key: menu.singleplayer
+    Value: Single Player
+  - Key: menu.standard
+    Value: Standard
+  - Key: menu.special
+    Value: Special
   - Key: menu.classic
     Value: Classic Mode
   - Key: menu.allStar

@@ -16,8 +16,8 @@ MonoBehaviour:
     Value: Fantasy Crescendo
   - Key: derivativeDisclaimer
     Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
-      may contain story, character personalities, and settings different from  the
-      original works.\nIf you feel unconfortable with this, please proceed with caution."
+      may contain story, character personalities, and settings different from the
+      original works.\nIf you feel uncomfortable with this, please proceed with caution."
   - Key: name.reimu
     Value: Reimu
   - Key: fullname.reimu
@@ -145,13 +145,13 @@ MonoBehaviour:
   - Key: fullname.kokoro
     Value: Hata no Kokoro
   - Key: name.sukuna
-    Value: Sukuna
+    Value: Shinmyoumaru
   - Key: fullname.sukuna
     Value: Shinmyoumaru Sukuna
   - Key: name.sumireko
     Value: Sumireko
   - Key: fullname.sumireko
-    Value: Usami Sumireko
+    Value: 'Sumireko Usami '
   - Key: name.hakureiShrine
     Value: Hakurei Shrine
   - Key: name.magicForest
@@ -161,15 +161,19 @@ MonoBehaviour:
   - Key: name.sdm
     Value: Scarlet Devil Mansion
   - Key: name.humanVilliage
-    Value: Human Villiage
+    Value: Human Village
   - Key: name.genbuRavine
     Value: Genbu Ravine
   - Key: random
     Value: Random
-  - Key: menu.fight
-    Value: Fight
-  - Key: menu.solo
-    Value: Solo
+  - Key: menu.multiplayer
+    Value: Multiplayer
+  - Key: menu.singleplayer
+    Value: Single Player
+  - Key: menu.standard
+    Value: Standard
+  - Key: menu.special
+    Value: Special
   - Key: menu.classic
     Value: Classic Mode
   - Key: menu.allStar

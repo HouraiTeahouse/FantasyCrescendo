@@ -145,7 +145,7 @@ MonoBehaviour:
   - Key: fullname.kokoro
     Value: Hata no Kokoro
   - Key: name.sukuna
-    Value: Sukuna
+    Value: Shinmyoumaru
   - Key: fullname.sukuna
     Value: Shinmyoumaru Sukuna
   - Key: name.sumireko
@@ -166,10 +166,14 @@ MonoBehaviour:
     Value: Genbu Ravine
   - Key: random
     Value: "\u96A8\u6A5F"
-  - Key: menu.fight
+  - Key: menu.multiplayer
     Value: "\u5927\u4E82\u9B25"
-  - Key: menu.solo
+  - Key: menu.singleplayer
     Value: "\u55AE\u6A5F\u6A21\u5F0F"
+  - Key: menu.standard
+    Value: Standard
+  - Key: menu.special
+    Value: Special
   - Key: menu.classic
     Value: "\u7D93\u5178\u6A21\u5F0F"
   - Key: menu.allStar

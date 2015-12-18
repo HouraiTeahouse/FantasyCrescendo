@@ -145,13 +145,13 @@ MonoBehaviour:
   - Key: fullname.kokoro
     Value: Hata no Kokoro
   - Key: name.sukuna
-    Value: Sukuna
+    Value: Shinmyoumaru
   - Key: fullname.sukuna
     Value: Shinmyoumaru Sukuna
   - Key: name.sumireko
     Value: Sumireko
   - Key: fullname.sumireko
-    Value: Usami Sumireko
+    Value: 'Sumireko Usami '
   - Key: name.hakureiShrine
     Value: Hakurei-Schrein
   - Key: name.magicForest
@@ -159,17 +159,21 @@ MonoBehaviour:
   - Key: name.makai
     Value: Makai
   - Key: name.sdm
-    Value: Scarlet Devil Mansion
+    Value: Villa des Scharlachroten Teufels
   - Key: name.humanVilliage
-    Value: Human Villiage
+    Value: Menschendorf
   - Key: name.genbuRavine
-    Value: Genbu Ravine
+    Value: Genbu-Schlucht
   - Key: random
     Value: "Zuf\xE4llig"
-  - Key: menu.fight
+  - Key: menu.multiplayer
     Value: Kampf
-  - Key: menu.solo
+  - Key: menu.singleplayer
     Value: Solo
+  - Key: menu.standard
+    Value: Standard
+  - Key: menu.special
+    Value: Special
   - Key: menu.classic
     Value: Classic
   - Key: menu.allStar

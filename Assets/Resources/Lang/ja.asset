@@ -39,9 +39,9 @@ MonoBehaviour:
   - Key: fullname.meiling
     Value: "\u7D05\u3000\u7F8E\u9234"
   - Key: name.patchouli
-    Value: Patchouli
+    Value: "\u30D1\u30C1\u30E5\u30EA\u30FC"
   - Key: fullname.patchouli
-    Value: Patchouli Knolwedge
+    Value: "\u30D1\u30C1\u30E5\u30EA\u30FC\u30FB\u30CE\u30FC\u30EC\u30C3\u30B8"
   - Key: name.sakuya
     Value: "\u54B2\u591C"
   - Key: fullname.sakuya
@@ -55,9 +55,9 @@ MonoBehaviour:
   - Key: fullname.flandre
     Value: "\u30D5\u30E9\u30F3\u30C9\u30FC\u30EB\u30FB\u30B9\u30AB\u30FC\u30EC\u30C3\u30C8"
   - Key: name.alice
-    Value: Alice
+    Value: "\u30A2\u30EA\u30B9"
   - Key: fullname.alice
-    Value: Alice Margatroid
+    Value: "\u30A2\u30EA\u30B9\u30FB\u30DE\u30FC\u30AC\u30C8\u30ED\u30A4\u30C9"
   - Key: name.youmu
     Value: "\u5996\u5922"
   - Key: fullname.youmu
@@ -71,87 +71,87 @@ MonoBehaviour:
   - Key: fullname.yukari
     Value: "\u516B\u96F2\u3000\u7D2B"
   - Key: name.suika
-    Value: Suika
+    Value: "\u8403\u9999"
   - Key: fullname.suika
-    Value: Suika Ibuki
+    Value: "\u4F0A\u5439\u3000\u8403\u9999"
   - Key: name.aya
-    Value: Aya
+    Value: "\u6587"
   - Key: fullname.aya
-    Value: Aya Shameimaru
+    Value: "\u5C04\u547D\u4E38\u3000\u6587"
   - Key: name.mokou
     Value: "\u59B9\u7D05"
   - Key: fullname.mokou
     Value: "\u85E4\u539F\u3000\u59B9\u7D05"
   - Key: name.komachi
-    Value: Komachi
+    Value: "\u5C0F\u753A"
   - Key: fullname.komachi
-    Value: Komachi Onozuka
+    Value: "\u5C0F\u91CE\u585A\u3000\u5C0F\u753A"
   - Key: name.nitori
-    Value: Nitori
+    Value: "\u306B\u3068\u308A"
   - Key: fullname.nitori
-    Value: Nitori Kawashiro
+    Value: "\u5DDD\u57CE\u3000\u306B\u3068\u308A"
   - Key: name.sanae
-    Value: Sanae
+    Value: "\u65E9\u82D7"
   - Key: fullname.sanae
-    Value: Sanae Kochiya
+    Value: "\u6771\u98A8\u8C37\u3000\u65E9\u82D7"
   - Key: name.suwako
-    Value: Suwako
+    Value: "\u8ACF\u8A2A\u5B50"
   - Key: fullname.suwako
-    Value: Suwako Moriya
+    Value: "\u6D29\u77E2\u3000\u8ACF\u8A2A\u5B50"
   - Key: name.kanako
-    Value: Kanako
+    Value: "\u795E\u5948\u5B50"
   - Key: fullname.kanako
-    Value: Kanako Yasaka
+    Value: "\u516B\u5742\u3000\u795E\u5948\u5B50"
   - Key: name.iku
-    Value: Iku
+    Value: "\u8863\u7396"
   - Key: fullname.iku
-    Value: Iku Nagae
+    Value: "\u6C38\u6C5F\u3000\u8863\u7396"
   - Key: name.tenshi
-    Value: Tenshi
+    Value: "\u5929\u5B50"
   - Key: fullname.tenshi
-    Value: Tenshi Hinanawi
+    Value: "\u6BD4\u90A3\u540D\u5C45\u3000\u5929\u5B50"
   - Key: name.utsuho
-    Value: Utsuho
+    Value: "\u7A7A"
   - Key: fullname.utsuho
-    Value: Utsuho Reiuji
+    Value: "\u970A\u70CF\u8DEF\u3000\u7A7A"
   - Key: name.koishi
-    Value: Koishi
+    Value: "\u3053\u3044\u3057"
   - Key: fullname.koishi
-    Value: Koishi Komeiji
+    Value: "\u53E4\u660E\u5730\u3000\u3053\u3044\u3057"
   - Key: name.ichirin
-    Value: Ichirin
+    Value: "\u4E00\u8F2A"
   - Key: fullname.ichirin
-    Value: Ichirin Kumoi
+    Value: "\u96F2\u5C45\u3000\u4E00\u8F2A"
   - Key: name.unzan
-    Value: Unzan
+    Value: "\u96F2\u5C71"
   - Key: name.byakuren
     Value: "\u767D\u84EE"
   - Key: fullname.byakuren
     Value: "\u8056\u3000\u767D\u84EE"
   - Key: name.futo
-    Value: Futo
+    Value: "\u5E03\u90FD"
   - Key: fullname.futo
-    Value: Mononobe no Futo
+    Value: "\u7269\u90E8\u3000\u5E03\u90FD"
   - Key: name.miko
     Value: "\u795E\u5B50"
   - Key: fullname.miko
     Value: "\u8C4A\u8061\u8033\u3000\u795E\u5B50"
   - Key: name.mamizou
-    Value: ' Mamizou'
+    Value: "\u30DE\u30DF\u30BE\u30A6"
   - Key: fullname.mamizou
-    Value: ' Mamizou Futatsuiwa'
+    Value: "\u4E8C\u30C3\u5CA9\u3000\u30DE\u30DF\u30BE\u30A6"
   - Key: name.kokoro
-    Value: Kokoro
+    Value: "\u3053\u3053\u308D"
   - Key: fullname.kokoro
-    Value: Hata no Kokoro
+    Value: "\u79E6\u3000\u3053\u3053\u308D"
   - Key: name.sukuna
-    Value: Sukuna
+    Value: "\u91DD\u5999\u4E38"
   - Key: fullname.sukuna
-    Value: Shinmyoumaru Sukuna
+    Value: "\u5C11\u540D\u3000\u91DD\u5999\u4E38"
   - Key: name.sumireko
-    Value: Sumireko
+    Value: "\u83EB\u5B50"
   - Key: fullname.sumireko
-    Value: Usami Sumireko
+    Value: "\u5B87\u4F50\u898B\u3000\u83EB\u5B50"
   - Key: name.hakureiShrine
     Value: "\u535A\u9E97\u795E\u793E"
   - Key: name.magicForest
@@ -161,15 +161,19 @@ MonoBehaviour:
   - Key: name.sdm
     Value: "\u7D05\u9B54\u9928"
   - Key: name.humanVilliage
-    Value: Human Villiage
+    Value: "\u4EBA\u9593\u306E\u91CC"
   - Key: name.genbuRavine
-    Value: Genbu Ravine
+    Value: "\u7384\u6B66\u306E\u6CA2"
   - Key: random
     Value: Random
-  - Key: menu.fight
-    Value: Fight
-  - Key: menu.solo
-    Value: Solo
+  - Key: menu.multiplayer
+    Value: Multiplayer
+  - Key: menu.singleplayer
+    Value: Single Player
+  - Key: menu.standard
+    Value: Standard
+  - Key: menu.special
+    Value: Special
   - Key: menu.classic
     Value: Classic Mode
   - Key: menu.allStar
@@ -179,9 +183,9 @@ MonoBehaviour:
   - Key: menu.options
     Value: Options
   - Key: menu.back
-    Value: Back
+    Value: "\u623B\u308B"
   - Key: menu.exit
-    Value: Exit Game
+    Value: "\u30B2\u30FC\u30E0\u7D42\u4E86"
   - Key: menu.training
     Value: Training
   - Key: menu.music
