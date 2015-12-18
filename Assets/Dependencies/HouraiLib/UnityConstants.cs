@@ -44,10 +44,6 @@ namespace UnityConstants
         /// Name of tag 'Hitbox'.
         /// </summary>
         public const string Hitbox = "Hitbox";
-        /// <summary>
-        /// Name of tag 'Spawn'.
-        /// </summary>
-        public const string Spawn = "Spawn";
     }
 
     public static class SortingLayers
@@ -158,13 +154,17 @@ namespace UnityConstants
         /// </summary>
         public const int Splash_Screen = 1;
         /// <summary>
+        /// ID of scene 'Main Menu'.
+        /// </summary>
+        public const int Main_Menu = 2;
+        /// <summary>
         /// ID of scene 'Forest of Magic Stage'.
         /// </summary>
-        public const int Forest_of_Magic_Stage = 2;
+        public const int Forest_of_Magic_Stage = 3;
         /// <summary>
         /// ID of scene 'Physics Test Scene'.
         /// </summary>
-        public const int Physics_Test_Scene = 3;
+        public const int Physics_Test_Scene = 4;
     }
 
     public static class Axes

@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using UnityEngine;
 using Hourai.Editor;
 using UnityEditor;
-
-using Google.GData.Client;
 using Google.GData.Spreadsheets;
 
 namespace Hourai.Localization.Editor {
