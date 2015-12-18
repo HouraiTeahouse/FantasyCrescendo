@@ -6,6 +6,14 @@ namespace Hourai.SmashBrew {
 
     public class SmashGame : Game<SmashGame> {
 
+        static SmashGame() {
+            Config config = Config.Instance;
+            _players = new Player[config.MaxPlayers];
+            for (var i = 0; i < _players.Length; i++) {
+                _players[i] = new Player(i);
+            }
+        }
+
         private static Player[] _players;
 
         public static Player GetPlayerData(int playerNumber) {
@@ -31,15 +39,6 @@ namespace Hourai.SmashBrew {
 
         public static int ActivePlayerCount {
             get { return ActivePlayers.Count(); }
-        }
-
-        protected override void Awake() {
-            base.Awake();
-            Config config = Config.Instance;
-            _players = new Player[config.MaxPlayers];
-            for (var i = 0; i < _players.Length; i++) {
-                _players[i] = new Player(i);
-            }
         }
 
     }
