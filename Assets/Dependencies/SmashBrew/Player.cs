@@ -1,4 +1,5 @@
 ﻿using System;
+using InControl;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -29,13 +30,8 @@ namespace Hourai.SmashBrew {
 
         public PlayerType Type { get; set; }
 
-        public IInputController Controller {
-            get {
-                InputManager manager = InputManager.Instance;
-                if (!manager)
-                    return null;
-                return manager.GetController(PlayerNumber);
-            }
+        public InputDevice Controller {
+            get { return InputManager.Devices[PlayerNumber]; }
         }
 
         public Character SpawnedCharacter { get; private set; }

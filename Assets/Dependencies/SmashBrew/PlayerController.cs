@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using InControl;
+using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
@@ -11,17 +12,17 @@ namespace Hourai.SmashBrew {
             if (PlayerData == null || PlayerData.Controller == null)
                 return;
 
-            IInputController input = PlayerData.Controller;
+            InputDevice input = PlayerData.Controller;
 
             //Ensure that the character is walking in the right direction
             //if ((movement.x > 0 && Facing) ||
             //    (movement.x < 0 && !Facing))
-            Animator.SetFloat(CharacterAnimVars.HorizontalInput, input.GetAxis("Horizontal").GetAxisValue());
-            Animator.SetFloat(CharacterAnimVars.VerticalInput, input.GetAxis("Vertical").GetAxisValue());
-            Animator.SetBool(CharacterAnimVars.JumpInput, input.GetButton("Jump").GetButtonValue());
-            Animator.SetBool(CharacterAnimVars.AttackInput, input.GetButton("Attack").GetButtonValue());
-            Animator.SetBool(CharacterAnimVars.SpecialInput, input.GetButton("Special").GetButtonValue());
-            Animator.SetBool(CharacterAnimVars.ShieldInput, Mathf.Approximately(input.GetAxis("Shield").GetAxisValue(), 0f));
+            Animator.SetFloat(CharacterAnimVars.HorizontalInput, input.LeftStickX.Value);
+            Animator.SetFloat(CharacterAnimVars.VerticalInput, input.LeftStickY.Value);
+            Animator.SetBool(CharacterAnimVars.AttackInput, input.Action2.WasPressed);
+            Animator.SetBool(CharacterAnimVars.SpecialInput, input.Action2.WasPressed);
+            Animator.SetBool(CharacterAnimVars.JumpInput, input.Action3.WasPressed || input.Action4.WasPressed);
+            Animator.SetBool(CharacterAnimVars.ShieldInput, input.LeftTrigger || input.RightTrigger);
         }
 
     }
