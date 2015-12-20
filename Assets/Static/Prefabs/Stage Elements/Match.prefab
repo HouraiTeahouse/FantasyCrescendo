@@ -42,7 +42,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1194d8692070c9a47b6b974eb40c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pauseButton: Pause
+  _pauseButton: 20
 --- !u!114 &11448908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefCheck: time
-  _time: 5
+  _time: 180
 --- !u!114 &11460312
 MonoBehaviour:
   m_ObjectHideFlags: 1

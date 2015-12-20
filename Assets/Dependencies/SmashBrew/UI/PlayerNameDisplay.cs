@@ -17,7 +17,7 @@ namespace Hourai.SmashBrew.UI {
             if (data == null || data.Character == null)
                 Text.text = "";
             else
-                Key = data.Character.FirstName;
+                Key = data.Character.ShortName;
         }
 
         protected override string Process(string raw) {

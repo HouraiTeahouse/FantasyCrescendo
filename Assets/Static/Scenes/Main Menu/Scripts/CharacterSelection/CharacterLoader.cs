@@ -50,7 +50,7 @@ namespace Hourai.SmashBrew.UI {
                     Debug.LogError("Couldn't find the text component in the character slot.");
                     return;
                 }
-                text.text = character.FirstName;
+                text.text = character.ShortName;
                 go.transform.SetParent(_characterPanel.transform, false);
             }
         }

@@ -36,12 +36,17 @@ namespace Hourai.SmashBrew {
 
         void Awake() {
             _eventManager = GlobalMediator.Instance;
-            _eventManager.Subscribe<PlayerDieEvent>(PlayerDieEvent);
+            _eventManager.Subscribe<PlayerDieEvent>(OnPlayerDie);
             if(_shouldRespawn == null)
                 _shouldRespawn = new List<Func<Player, bool>>();
         }
 
-        protected virtual void PlayerDieEvent(PlayerDieEvent eventArgs) {
+        void OnDestroy() {
+            if(_eventManager != null)
+                _eventManager.Unsubscribe<PlayerDieEvent>(OnPlayerDie);
+        }
+
+        protected virtual void OnPlayerDie(PlayerDieEvent eventArgs) {
             Player player = eventArgs.Player;
             if (_shouldRespawn.Count > 0 && _shouldRespawn.Any(check => !check(player))) {
                 player.SpawnedCharacter.gameObject.SetActive(false);

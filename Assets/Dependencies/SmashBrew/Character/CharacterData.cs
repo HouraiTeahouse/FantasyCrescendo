@@ -6,10 +6,10 @@ namespace Hourai.SmashBrew {
     public class CharacterData : ScriptableObject {
 
         [SerializeField]
-        private string _firstNameKey;
+        private string _shortNameKey;
 
         [SerializeField]
-        private string _lastNameKey;
+        private string _fullNameKey;
 
         [SerializeField, Resource(typeof(Sprite))]
         private string[] _alternativePortraits;
@@ -24,16 +24,16 @@ namespace Hourai.SmashBrew {
         private Resource<GameObject> _prefabResource;
         private Resource<Sprite>[] _portraitResources; 
 
-        public string FirstName {
-            get { return _firstNameKey; }
+        public string ShortName {
+            get { return _shortNameKey; }
         }
 
-        public string LastName {
-            get { return _lastNameKey; }
+        public string FullName {
+            get { return _fullNameKey; }
         }
 
         public string Name {
-            get { return FirstName + " " + LastName; }
+            get { return ShortName + " " + FullName; }
         }
 
         public int AlternativeCount {
