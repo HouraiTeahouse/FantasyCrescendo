@@ -22,8 +22,6 @@ namespace Hourai.SmashBrew {
 
         public CharacterData Character;
 
-        private Character _spawnedInstance;
-
         public int CpuLevel { get; set; }
 
         public int Pallete { get; set; }
@@ -31,7 +29,11 @@ namespace Hourai.SmashBrew {
         public PlayerType Type { get; set; }
 
         public InputDevice Controller {
-            get { return InputManager.Devices[PlayerNumber]; }
+            get {
+                if (PlayerNumber < 0 || PlayerNumber >= InputManager.Devices.Count)
+                    return null;
+                return InputManager.Devices[PlayerNumber];
+            }
         }
 
         public Character SpawnedCharacter { get; private set; }

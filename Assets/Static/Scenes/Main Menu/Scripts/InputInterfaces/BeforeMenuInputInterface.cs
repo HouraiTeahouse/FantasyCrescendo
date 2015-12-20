@@ -7,8 +7,8 @@ public class BeforeMenuInputInterface : InputInterface {
 
     // Use this for initialization
     public override void processInputs() {
-        if (Input.GetButton("Jump"))
-            screenManager.OpenPanel(nextScreenAnimator);
+        //if (Input.GetButton("Jump"))
+        //    screenManager.OpenPanel(nextScreenAnimator);
     }
 
 }

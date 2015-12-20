@@ -48,7 +48,6 @@ public class ScreenManager : MonoBehaviour {
         anim.gameObject.SetActive(true);
 
         //Save the currently selected button that was used to open this Screen. (CloseCurrent will modify it)
-        Debug.Log(EventSystem.current);
         GameObject newPreviouslySelected = EventSystem.current.currentSelectedGameObject;
 
         //Move the Screen to front.
