@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using UnityEngine;
 using Hourai.Editor;
 using UnityEditor;
@@ -47,14 +48,20 @@ namespace Hourai.Localization.Editor {
             }
             string folderPath = _saveFolder ? AssetDatabase.GetAssetPath(_saveFolder) : "Assets/Resources/Lang";
             foreach (var lang in languageMap) {
-                Debug.Log(string.Format("Generating language files for: {0}",CultureInfo.GetCultureInfo(lang.Key).EnglishName));
+                var method = "Generating";
                 string path = string.Format("{0}/{1}.asset", folderPath, lang.Key);
                 var language = AssetDatabase.LoadAssetAtPath<Language>(path);
-                if(language)
+                if (language) {
+                    method = "Updating";
                     language.ReadFromDictionary(lang.Value);
+                    EditorUtility.SetDirty(language);
+               }
                 else
                     AssetDatabase.CreateAsset(Language.FromDictionary(lang.Value), path);
+                Debug.Log(string.Format("{0} language files for: {1}", method, CultureInfo.GetCultureInfo(lang.Key).EnglishName));
             }
+            EditorApplication.SaveAssets();
+            AssetDatabase.SaveAssets();
         }
 
     }

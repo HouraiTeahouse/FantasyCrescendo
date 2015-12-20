@@ -48,6 +48,7 @@ namespace Hourai.Localization {
             if(src == null)
                 throw new ArgumentNullException("src");
             data = new StrStrTuple[src.Count];
+            _map = new Dictionary<string, string>(src);
             var i = 0;
             foreach (KeyValuePair<string, string> kvp in src) {
                 data[i].Key = kvp.Key;

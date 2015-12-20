@@ -19,21 +19,21 @@ MonoBehaviour:
       may contain story, character personalities, and settings different from the
       original works.\nIf you feel uncomfortable with this, please proceed with caution."
   - Key: name.reimu
-    Value: Reimu
+    Value: "\u0E40\u0E23\u0E22\u0E4C\u0E21\u0E38"
   - Key: fullname.reimu
-    Value: Reimu Hakurei
+    Value: "\u0E2E\u0E30\u0E04\u0E38\u0E40\u0E23\u0E22\u0E4C \u0E40\u0E23\u0E22\u0E4C\u0E21\u0E38"
   - Key: name.marisa
-    Value: Marisa
+    Value: "\u0E21\u0E32\u0E23\u0E34\u0E2A\u0E30"
   - Key: fullname.marisa
-    Value: Marisa Kirisame
+    Value: "\u0E04\u0E34\u0E23\u0E34\u0E0B\u0E32\u0E40\u0E21\u0E30 \u0E21\u0E32\u0E23\u0E34\u0E2A\u0E30"
   - Key: name.wriggle
-    Value: Wriggle
+    Value: "\u0E23\u0E34\u0E01\u0E40\u0E01\u0E34\u0E49\u0E25"
   - Key: fullname.wriggle
-    Value: Wriggle Nightbug
+    Value: "\u0E23\u0E34\u0E01\u0E40\u0E01\u0E34\u0E49\u0E25 \u0E44\u0E19\u0E17\u0E4C\u0E1A\u0E31\u0E4A\u0E01"
   - Key: name.cirno
-    Value: Cirno
+    Value: "\u0E0A\u0E34\u0E23\u0E38\u0E42\u0E19\u0E48"
   - Key: fullname.cirno
-    Value: Cirno
+    Value: "\u0E0A\u0E34\u0E23\u0E38\u0E42\u0E19\u0E48"
   - Key: name.meiling
     Value: Meiling
   - Key: fullname.meiling
@@ -41,7 +41,7 @@ MonoBehaviour:
   - Key: name.patchouli
     Value: Patchouli
   - Key: fullname.patchouli
-    Value: Patchouli Knolwedge
+    Value: Patchouli Knowledge
   - Key: name.sakuya
     Value: Sakuya
   - Key: fullname.sakuya
@@ -165,7 +165,7 @@ MonoBehaviour:
   - Key: name.genbuRavine
     Value: Genbu Ravine
   - Key: random
-    Value: Random
+    Value: "\u0E2A\u0E38\u0E48\u0E21"
   - Key: menu.multiplayer
     Value: Multiplayer
   - Key: menu.singleplayer
@@ -181,16 +181,16 @@ MonoBehaviour:
   - Key: menu.story
     Value: Story Mode
   - Key: menu.options
-    Value: Options
+    Value: "\u0E15\u0E31\u0E27\u0E40\u0E25\u0E37\u0E2D\u0E01"
   - Key: menu.back
-    Value: Back
+    Value: "\u0E22\u0E49\u0E2D\u0E19\u0E01\u0E25\u0E31\u0E1A"
   - Key: menu.exit
-    Value: Exit Game
+    Value: "\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E40\u0E01\u0E21"
   - Key: menu.training
     Value: Training
   - Key: menu.music
-    Value: Music
+    Value: "\u0E14\u0E19\u0E15\u0E23\u0E35"
   - Key: menu.sfxVolume
-    Value: Sound Effect Volume
+    Value: "\u0E23\u0E30\u0E14\u0E31\u0E1A\u0E40\u0E2A\u0E35\u0E22\u0E07\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A"
   - Key: menu.bgmVolume
-    Value: Music Volume
+    Value: "\u0E23\u0E30\u0E14\u0E31\u0E1A\u0E40\u0E2A\u0E35\u0E22\u0E07\u0E14\u0E19\u0E15\u0E23\u0E35"
