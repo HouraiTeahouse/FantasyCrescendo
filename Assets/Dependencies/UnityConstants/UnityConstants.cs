@@ -162,13 +162,17 @@ namespace UnityConstants
         /// </summary>
         public const int Main_Menu = 2;
         /// <summary>
+        /// ID of scene 'Stage Bootstrap'.
+        /// </summary>
+        public const int Stage_Bootstrap = 3;
+        /// <summary>
         /// ID of scene 'Forest of Magic Stage'.
         /// </summary>
-        public const int Forest_of_Magic_Stage = 3;
+        public const int Forest_of_Magic_Stage = 4;
         /// <summary>
         /// ID of scene 'Physics Test Scene'.
         /// </summary>
-        public const int Physics_Test_Scene = 4;
+        public const int Physics_Test_Scene = 5;
     }
 
     public static class Axes

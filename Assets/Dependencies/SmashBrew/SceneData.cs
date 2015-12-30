@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Hourai.SmashBrew {
 
@@ -24,6 +25,13 @@ namespace Hourai.SmashBrew {
         [Resource(typeof (Sprite))]
         [Tooltip("The icon used shown on menus to represent the scene.")]
         private string _icon;
+
+        /// <summary>
+        /// Loads the scene described by the SceneData
+        /// </summary>
+        public void Load() {
+            SceneManager.LoadScene(_sceneName);
+        }
 
         /// <summary>
         /// The image shown on menus to represent the scene.
