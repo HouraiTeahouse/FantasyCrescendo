@@ -19,7 +19,7 @@ namespace Hourai.SmashBrew {
                 SmashGame.Paused = false;
             } else {
                 foreach (Player player in SmashGame.ActivePlayers) {
-                    if (!player.Controller.GetControl(_pauseButton).WasPressed)
+                    if (player.Controller == null || !player.Controller.GetControl(_pauseButton).WasPressed)
                         continue;
                     _pausedPlayer = player;
                     SmashGame.Paused = true;
