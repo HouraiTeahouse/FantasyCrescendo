@@ -24,8 +24,8 @@ namespace Hourai.SmashBrew.UI {
             foreach (InputDevice device in InputManager.Devices) {
                 if (device == null)
                     continue;
-                float x = device.GetControl(_horizontalAxis);
-                float y = device.GetControl(_verticalAxis);
+                float x = device.GetControl(_verticalAxis);
+                float y = device.GetControl(_horizontalAxis);
                 if (Mathf.Abs(distortion.x) < Mathf.Abs(x))
                     distortion.x = x;
                 if (Mathf.Abs(distortion.y) < Mathf.Abs(y))
