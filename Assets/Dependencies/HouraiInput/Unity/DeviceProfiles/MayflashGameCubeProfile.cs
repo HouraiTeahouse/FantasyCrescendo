@@ -94,12 +94,12 @@ namespace InControl {
                 new InputControlMapping {
                     Handle = "C Stick X",
                     Target = InputControlTarget.RightStickX,
-                    Source = Analog5
+                    Source = Analog2
                 },
                 new InputControlMapping {
                     Handle = "C Stick Y",
                     Target = InputControlTarget.RightStickY,
-                    Source = Analog2
+                    Source = Analog5
                 }
             };
         }
