@@ -1,27 +1,49 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using InControl;
+﻿using InControl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Hourai.SmashBrew.UI {
 
-    public class SmashBrewInputModule : BaseInputModule {
+    public class SmashBrewInputModule : PointerInputModule {
 
         [SerializeField]
-        private InputControlTarget _horizontal = InputControlTarget.LeftStickX;
+        private string _horizontalKeyboard = "horizontal";
 
         [SerializeField]
-        private InputControlTarget _vertical = InputControlTarget.LeftStickY;
+        private string _verticalKeyboard = "vertical";
 
         [SerializeField]
-        private InputControlTarget _submit = InputControlTarget.Action1;
+        private string _submitKeyboard = "submit";
 
         [SerializeField]
-        private InputControlTarget _cancel = InputControlTarget.Action2;
+        private string _cancelKeyboard = "cancel";
+
+        [SerializeField]
+        private InputControlTarget _horizontalGamepad = InputControlTarget.LeftStickX;
+
+        [SerializeField]
+        private InputControlTarget _verticalGamepad = InputControlTarget.LeftStickY;
+
+        [SerializeField]
+        private InputControlTarget _submitGamepad = InputControlTarget.Action1;
+
+        [SerializeField]
+        private InputControlTarget _cancelGamepad = InputControlTarget.Action2;
 
         [SerializeField]
         private float _deadZone = 0.1f;
+
+        [SerializeField]
+        private float _navigationDelay = 0.25f;
+
+        private float currentDelay;
+
+        public override void ActivateModule() {
+            base.ActivateModule();
+
+            if(!eventSystem.currentSelectedGameObject)
+                eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject, GetBaseEventData());
+        }
 
         /// <summary>
         /// Called once every frame while InputModule is active.
@@ -29,18 +51,39 @@ namespace Hourai.SmashBrew.UI {
         public override void Process() {
             if (!eventSystem)
                 return;
-
             GameObject target = eventSystem.currentSelectedGameObject;
 
-            if (InputManager.Devices.Any(controller => controller.GetControl(_submit).WasPressed))
-                ExecuteEvents.Execute(target, null, ExecuteEvents.submitHandler);
-            if (InputManager.Devices.Any(controller => controller.GetControl(_cancel).WasPressed))
-                ExecuteEvents.Execute(target, null, ExecuteEvents.cancelHandler);
-            AxisEventData moveData = GetAxisEventData(InputManager.Devices.Average(c => c.GetControl(_horizontal).Value),
-                                                      InputManager.Devices.Average(c => c.GetControl(_vertical).Value),
-                                                      _deadZone);
-            if (moveData.moveDir == MoveDirection.None)
-                ExecuteEvents.Execute(target, moveData, ExecuteEvents.moveHandler);
+            bool submit = Input.GetButtonDown(_submitKeyboard);
+            bool cancel = Input.GetButtonDown(_cancelKeyboard);
+
+            float x = Input.GetAxisRaw(_horizontalKeyboard);
+            float y = Input.GetAxisRaw(_verticalKeyboard);
+            var count = 1;
+            foreach (InputDevice device in InputManager.Devices) {
+                if (device == null)
+                    continue;
+                x += device.GetControl(_horizontalGamepad);
+                y += device.GetControl(_verticalGamepad);
+                submit |= device.GetControl(_submitGamepad).WasPressed;
+                cancel |= device.GetControl(_cancelGamepad).WasPressed;
+                count++;
+            }
+
+            if(submit)
+                ExecuteEvents.Execute(target, GetBaseEventData(), ExecuteEvents.submitHandler);
+            if(cancel)
+                ExecuteEvents.Execute(target, GetBaseEventData(), ExecuteEvents.cancelHandler);
+
+            currentDelay -= Time.deltaTime;
+            if (!eventSystem.sendNavigationEvents || currentDelay >= 0)
+                return;
+
+            x /= count;
+            y /= count;
+            AxisEventData moveData = GetAxisEventData(x, y, _deadZone);
+            ExecuteEvents.Execute(target, moveData, ExecuteEvents.moveHandler);
+            if (moveData.moveDir != MoveDirection.None)
+                currentDelay = _navigationDelay;
         }
 
     }
