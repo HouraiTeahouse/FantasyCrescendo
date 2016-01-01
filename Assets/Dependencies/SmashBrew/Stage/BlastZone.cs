@@ -5,6 +5,7 @@ namespace Hourai.SmashBrew {
 
     public class PlayerDieEvent {
 
+        public bool Revived;
         public Player Player;
 
     }

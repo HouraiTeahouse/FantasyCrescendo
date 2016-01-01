@@ -14,30 +14,41 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private int stock = 5;
 
-        private Mediator eventManager;
-        private Respawn _respawn;
+        private Mediator _eventManager;
         private Dictionary<Player, int> _stocks;
 
+        /// <summary>
+        /// Unity Callback. Called on object instantiation.
+        /// </summary>
         protected override void Awake() {
             base.Awake();
-            eventManager = GlobalMediator.Instance;
-            eventManager.Subscribe<PlayerSpawnEvent>(OnSpawn);
-            eventManager.Subscribe<RespawnEvent>(OnRespawn);
-            _respawn = FindObjectOfType<Respawn>();
-            _respawn.ShouldRespwan += RespawnCheck;
+            _eventManager = GlobalMediator.Instance;
+            _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawn);
+            _eventManager.Subscribe<PlayerDieEvent>(OnPlayerDie);
             _stocks = new Dictionary<Player, int>();
         }
 
+        /// <summary>
+        /// Unity Callback. Called on object destruction.
+        /// </summary>
         void OnDestroy() {
-           eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawn);
+           _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawn);
         }
 
+        /// <summary>
+        /// Is the Match finished?
+        /// </summary>
         protected override bool IsFinished {
             get {
                 return _stocks.Values.Sum(s => (s > 0) ? 1 : 0) > 1;
             }
         }
 
+        /// <summary>
+        /// Readonly indexer for how many stocks each player has remaining.
+        /// </summary>
+        /// <param name="player">the Player in question</param>
+        /// <returns>the number of remaining stocks they have</returns>
         public int this[Player player] {
             get { return _stocks[player]; }
         }
@@ -62,10 +73,12 @@ namespace Hourai.SmashBrew {
             return _stocks[character] > 1;
         }
 
-        void OnRespawn(RespawnEvent eventArgs) {
-            if (!isActiveAndEnabled || !_stocks.ContainsKey(eventArgs.Player))
+        void OnPlayerDie(PlayerDieEvent eventArgs) {
+            if (eventArgs.Revived || _stocks[eventArgs.Player] <= 0)
                 return;
             _stocks[eventArgs.Player]--;
+            _eventManager.Publish(new RespawnEvent { Player = eventArgs.Player });
+            eventArgs.Revived = true;
         }
 
         void OnSpawn(PlayerSpawnEvent eventArgs) {
