@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using InControl;
 
 namespace Hourai.SmashBrew.UI {
@@ -19,7 +18,6 @@ namespace Hourai.SmashBrew.UI {
         /// Unity Callback. Called once every frame.
         /// </summary>
         void Update() {
-            Debug.Log(_scale);
             Vector2 distortion = Vector2.zero;
             foreach (InputDevice device in InputManager.Devices) {
                 if (device == null)

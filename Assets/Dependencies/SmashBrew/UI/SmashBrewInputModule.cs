@@ -38,11 +38,22 @@ namespace Hourai.SmashBrew.UI {
 
         private float currentDelay;
 
+        /// <summary>
+        /// Called when the InputModule is activated.
+        /// </summary>
         public override void ActivateModule() {
             base.ActivateModule();
 
             if(!eventSystem.currentSelectedGameObject)
                 eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject, GetBaseEventData());
+        }
+
+        /// <summary>
+        /// Called when the InputModule is deactivated.
+        /// </summary>
+        public override void DeactivateModule() {
+            base.DeactivateModule();
+            ClearSelection();
         }
 
         /// <summary>
