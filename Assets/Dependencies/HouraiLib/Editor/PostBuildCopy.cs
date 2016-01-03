@@ -19,7 +19,7 @@ namespace Hourai {
         /// <param name="path">the path at which the new build is being saved</param>
         [PostProcessBuild]
         static void AddPostBuildFiles(BuildTarget target, string path) {
-            string copyPath= Directory.GetCurrentDirectory() + "/Post Build";
+            string copyPath= Directory.GetCurrentDirectory() + "/Post Build/";
             path = Path.GetDirectoryName(path) + "/";
             
             switch (target) {
