@@ -11,7 +11,7 @@ namespace Hourai.SmashBrew.UI {
 
         // ISubmitHandler implementation
         public void OnSubmit(BaseEventData eventData) {
-            Debug.Log("Hello");
+            Debug.Log("Game Exited.");
             Application.Quit();
         }
 
