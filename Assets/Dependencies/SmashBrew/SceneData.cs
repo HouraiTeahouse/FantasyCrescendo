@@ -1,7 +1,15 @@
-﻿using UnityEngine;
+﻿using Hourai.Events;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Hourai.SmashBrew {
+
+    public class LoadSceneEvent {
+
+        public AsyncOperation LoadOperation;
+        public SceneData Scene;
+
+    }
 
     public class SceneData : BGMGroup {
 
@@ -30,7 +38,7 @@ namespace Hourai.SmashBrew {
         /// Loads the scene described by the SceneData
         /// </summary>
         public void Load() {
-            SceneManager.LoadScene(_sceneName);
+            GlobalMediator.Instance.Publish(new LoadSceneEvent { LoadOperation = SceneManager.LoadSceneAsync(_sceneName), Scene =  this });
         }
 
         /// <summary>
