@@ -27,15 +27,15 @@ This file is largely to keep track of and give credit to the creators of the man
 * Thefsoundman  
 * Lewisisminted
 
-**Concept Artists**  
+**2D/Concept Artists**  
 * Profit Shame
+* Emily Monaco
 
 **3D Artists**  
 * David Rice - Characters
 * Gabo7 - Stages
 
 **Programmers**  
-* Abyll
 * james7132 (James Liu)
 
 **Translators** 

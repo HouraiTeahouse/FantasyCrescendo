@@ -21,7 +21,7 @@ namespace Hourai.SmashBrew.UI {
                 Image.enabled = false;
             } else {
                 Image.enabled = true;
-                Image.sprite = data.Character.LoadPortrait(data.Pallete);
+                Image.sprite = data.Character.GetPortrait(data.Pallete).Load();
             }
         }
 
