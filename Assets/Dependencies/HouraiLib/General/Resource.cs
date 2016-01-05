@@ -9,6 +9,7 @@ namespace Hourai {
     /// </summary>
     /// <typeparam name="T">the type of the asset encapsulated by the Resouce</typeparam>
     [Serializable]
+    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Resources#ResourcePathAttribute_and_Resource_Wrapper")]
     public sealed class Resource<T> where T : Object {
 
         [SerializeField]

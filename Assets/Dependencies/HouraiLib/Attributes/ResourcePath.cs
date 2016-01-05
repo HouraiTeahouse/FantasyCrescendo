@@ -10,6 +10,7 @@ namespace Hourai {
     /// The Unity Editor UI shows a object field instead of a string field.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field)]
+    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Resources#ResourcePathAttribute_and_Resource_Wrapper")]
     public class ResourceAttribute : PropertyAttribute {
 
         /// <summary>

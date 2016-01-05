@@ -3,10 +3,12 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
+    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
     public class CharacterData : ScriptableObject {
 
         [SerializeField]
         [Tooltip("The localization key used for the character's shortened name")]
+        [Header("Test")]
         private string _shortNameKey;
 
         [SerializeField]
