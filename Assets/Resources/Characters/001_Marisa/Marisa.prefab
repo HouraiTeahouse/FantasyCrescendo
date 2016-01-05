@@ -2426,7 +2426,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186586}
-  m_LocalRotation: {x: 0.70429695, y: 0.016810637, z: 0.70942634, w: -0.019940963}
+  m_LocalRotation: {x: 0.7042969, y: 0.016810635, z: 0.7094263, w: -0.019940961}
   m_LocalPosition: {x: 0.43612066, y: 0.026644552, z: 0.571553}
   m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 1}
   m_Children:
@@ -4467,18 +4467,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _swaps:
   - AlternativeMaterials:
-    - Characters/1_Marisa/Materials/skin_colorseam
+    - Characters/001_Marisa/Materials/skin_colorseam
     TargetRenderers:
     - {fileID: 13755152}
     - {fileID: 13783016}
     - {fileID: 13788198}
   - AlternativeMaterials:
-    - Characters/1_Marisa/Materials/eye color new
+    - Characters/001_Marisa/Materials/eye color new
     TargetRenderers:
     - {fileID: 13727484}
     - {fileID: 13790652}
   - AlternativeMaterials:
-    - Characters/1_Marisa/Materials/clothes_color
+    - Characters/001_Marisa/Materials/clothes_color
     TargetRenderers:
     - {fileID: 13737080}
     - {fileID: 13798062}
@@ -4487,7 +4487,7 @@ MonoBehaviour:
     - {fileID: 13751722}
     - {fileID: 13723096}
   - AlternativeMaterials:
-    - Characters/1_Marisa/Materials/broom_colors
+    - Characters/001_Marisa/Materials/broom_colors
     TargetRenderers:
     - {fileID: 13767290}
 --- !u!114 &11422524
@@ -5284,7 +5284,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _swaps.Array.data[0].AlternativeMaterials.Array.data[0]
-      value: Characters/1_Marisa/Materials/skin_colorseam
+      value: Characters/001_Marisa/Materials/skin_colorseam
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _swaps.Array.data[1].AlternativeMaterials.Array.data[0]
+      value: Characters/001_Marisa/Materials/eye color new
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _swaps.Array.data[2].AlternativeMaterials.Array.data[0]
+      value: Characters/001_Marisa/Materials/clothes_color
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _swaps.Array.data[3].AlternativeMaterials.Array.data[0]
+      value: Characters/001_Marisa/Materials/broom_colors
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
