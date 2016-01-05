@@ -1,12 +1,11 @@
-# Fantasy Crescendo ~ Rumble Dream Ensemble
-A open source Touhou x Smash Bros game created in Unity3D.
+![logo](./Assets/Static/Sprites/logo.png)
 
 ## About
 The Touhou Project (東方Project) is a Japanese doujin game series focused on bullet hell shooters made by the one-man developer Team Shanghai Alice. Its colorful cast of characters and largely self-defined setting of Gensokyo has attracted a large following on both sides of the Pacific.
 
-*Fantasy Crescendo ~ Rumble Dream Ensemble* is a collaborative community project created by various Touhou fans to create a fan-game akin to that of Super Smash Bros with the same cast and setting seen in the canon Touhou games.
+*Fantasy Crescendo ~ Rumble Dream Ensemble* is a collaborative community project to create a fan-game akin to that of Super Smash Bros with the same cast and setting seen in the canon Touhou games.
 
-This project does not only consist of code contributions, and many of the assets included are custom art, music, sound effects, and 3D designs created by fan submissions. For a full list of credits, see the [credits](./CREDITS.md) file in the repository.
+This project does not only consist of code contributions, and many of the assets included are custom art, music, sound effects, and 3D designs created by community submissions. For a full list of credits, see the [credits](./CREDITS.md) file in the repository.
 
 ## Source Setup
 This part is about to setting up a development enviroment for contributing to the project. For installing a built release, please see below.
@@ -34,13 +33,3 @@ First and foremost, *Fantasy Crescendo ~ Rumble Dream Ensemble* is a derivative 
 Furthermore, *Fantasy Crescendo ~ Rumble Dream Ensemble* is licensed under two seperate liscenses depending what content is in question:  
 - The software (all text files) are under the MIT license. See [here](./LICENSE) for more information.
 - The content, virtually everything else, is evaluated on a per item basis. Please contact the original creator before reproducing or editing any of the game assets.
-
-#Current Characters in development:
-Reimu Hakurei
-![reimu1](http://i.imgur.com/4xOI9Sp.jpg)
-![reimu2](http://i.imgur.com/CrgMNDe.jpg)
-Marisa Kirisame
-![marisa1](http://i.imgur.com/rdCGeXu.jpg)
-![marisa2](http://i.imgur.com/7VYVhkr.jpg)
-Wriggle Nightbug
-![wriggle1](http://i.imgur.com/qBR9XVg.jpg)
