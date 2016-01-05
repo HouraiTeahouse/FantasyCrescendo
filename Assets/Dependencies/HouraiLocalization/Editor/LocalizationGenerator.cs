@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using UnityEngine;
 using Hourai.Editor;
 using UnityEditor;
@@ -8,6 +7,7 @@ using Google.GData.Spreadsheets;
 
 namespace Hourai.Localization.Editor {
 
+    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localization_Generator")]
     public class LocalizationGenerator : ScriptableObject {
 
         [MenuItem("Hourai/Localization/Generate")]

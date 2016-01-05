@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Hourai.Localization {
 
-    [DisallowMultipleComponent]
+    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localized_Text")]
     public class LocalizedText : MonoBehaviour {
 
         [SerializeField]

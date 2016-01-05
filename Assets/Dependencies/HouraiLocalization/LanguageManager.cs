@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Hourai.Localization {
 
+    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Manager")]
     public sealed  class LanguageManager : MonoBehaviour {
 
         [SerializeField]
