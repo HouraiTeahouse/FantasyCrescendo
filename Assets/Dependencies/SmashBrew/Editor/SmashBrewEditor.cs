@@ -1,9 +1,5 @@
-﻿using System.IO;
-using System.Text.RegularExpressions;
-using Hourai.Editor;
+﻿using Hourai.Editor;
 using UnityEditor;
-using UnityEditor.Callbacks;
-using UnityEngine;
 
 namespace Hourai.SmashBrew.Editor {
 
@@ -17,7 +13,12 @@ namespace Hourai.SmashBrew.Editor {
             AssetUtil.CreateAssetInProjectWindow<Config>();
         }
 
-        [MenuItem("Assets/Create/SmashBrew/Stage Data")]
+        [MenuItem("Assets/Create/SmashBrew/Character Data")]
+        static void CreateCharacterData() {
+            AssetUtil.CreateAssetInProjectWindow<CharacterData>();
+        }
+
+        [MenuItem("Assets/Create/SmashBrew/Scene Data")]
         static void CreateStageData() {
             AssetUtil.CreateAssetInProjectWindow<SceneData>();
         }
