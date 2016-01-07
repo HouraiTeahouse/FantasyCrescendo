@@ -1,9 +1,9 @@
 ![logo](./Assets/Static/Sprites/logo.png)
 
 ## About
-The Touhou Project (東方Project) is a Japanese doujin game series focused on bullet hell shooters made by the one-man developer Team Shanghai Alice. Its colorful cast of characters and largely self-defined setting of Gensokyo has attracted a large following on both sides of the Pacific.
+The Touhou Project (東方Project) is a Japanese doujin game series focused on bullet hell shooters made by Team Shanghai Alice. Its colorful cast of characters and largely self-defined setting of Gensokyo has attracted a large following on both sides of the Pacific.
 
-*Fantasy Crescendo ~ Rumble Dream Ensemble* is a collaborative community project to create a fan-game akin to that of Super Smash Bros with the same cast and setting seen in the canon Touhou games.
+*Fantasy Crescendo ~ Rumble Dream Ensemble* is a collaborative community project to create a fangame akin to that of Super Smash Bros with the same cast and setting seen in the canon Touhou games.
 
 This project does not only consist of code contributions, and many of the assets included are custom art, music, sound effects, and 3D designs created by community submissions. For a full list of credits, see the [credits](./CREDITS.md) file in the repository.
 
@@ -25,7 +25,7 @@ This part is about setting up and running released precompiled binaries.
 0. Run the main executable in the root directory of the extracted folder.
 
 ## Documentation
-Game documenation, both design and technical, can be found on [the Hourai Teahouse wiki](https://wiki.houraiteahouse.net).
+Game documenation, both design and technical, can be found on [the Hourai Teahouse wiki](http://wiki.houraiteahouse.net).
 
 ## Contributing
 This is an open project, intended to be a community driven project. Contributions are very welcome. Code/software based contributions can be received and reviewed publicly on this repository. Non-code assets like BGM or 3D models are best sent to the project's open mailbox: simply mail teahouse.hourai@gmail.com. For more information, please read [this](./CONTRIBUTING.md).
