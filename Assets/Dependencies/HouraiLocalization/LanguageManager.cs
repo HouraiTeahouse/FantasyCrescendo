@@ -74,7 +74,12 @@ namespace Hourai.Localization {
             _languages = new List<CultureInfo>();
             string currentLang;
             if (!Prefs.HasKey(_langPlayerPrefKey)) {
-                currentLang = CultureInfo.CurrentCulture.Name.ToLower();
+                CultureInfo culture = CultureInfo.CurrentCulture;
+                while (!culture.IsNeutralCulture) {
+                    culture = culture.Parent;
+                }
+                Debug.Log(culture.EnglishName);
+                currentLang = culture.Name.ToLower();
                 Prefs.SetString(_langPlayerPrefKey, currentLang);
             } else {
                 currentLang = Prefs.GetString(_langPlayerPrefKey);
