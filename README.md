@@ -24,6 +24,9 @@ This part is about setting up and running released precompiled binaries.
 0. Download and unzip the ZIPs.
 0. Run the main executable in the root directory of the extracted folder.
 
+## Documentation
+Game documenation, both design and technical, can be found on [the Hourai Teahouse wiki](https://wiki.houraiteahouse.net).
+
 ## Contributing
 This is an open project, intended to be a community driven project. Contributions are very welcome. Code/software based contributions can be received and reviewed publicly on this repository. Non-code assets like BGM or 3D models are best sent to the project's open mailbox: simply mail teahouse.hourai@gmail.com. For more information, please read [this](./CONTRIBUTING.md).
 
