@@ -14,15 +14,20 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_ExposedParameters:
+  - guid: 17bfa495dd6a9ba48a658fe8d837c479
+    name: Main Volume
   - guid: 9b0c1434395791448829c7f64039f434
     name: Music Volume
   - guid: 394b67d273edc7d4281406bd6bcfa198
     name: SFX Volume
+  - guid: 4d05c458668c6ac459935bfffe0add48
+    name: Voice Acting Volume
   m_AudioMixerGroupViews:
   - guids:
     - 4cc93dd0f5692a64398ae6b6e55aa757
     - 6f70334932c9f964d8d3e0b9b1bacdf2
     - e4c4dc2982b57124fbb9d97a66cb4eb1
+    - 132bb61b79d9e704e844d31eda82568c
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500003}
@@ -37,10 +42,28 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: 24392500}
   - {fileID: 24373952}
+  - {fileID: 24353330}
   m_Volume: 17bfa495dd6a9ba48a658fe8d837c479
   m_Pitch: e00115ad609f8b14d8013c805ada7c3f
   m_Effects:
   - {fileID: 24400002}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &24353330
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Voice Acting
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 132bb61b79d9e704e844d31eda82568c
+  m_Children: []
+  m_Volume: 4d05c458668c6ac459935bfffe0add48
+  m_Pitch: 1094c54b0f78f4a4e8b95036f3b87078
+  m_Effects:
+  - {fileID: 24441516}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -120,6 +143,19 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &24441516
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: 24c08c41a16186f4c8bcd0274a1d8239
+  m_EffectName: Attenuation
+  m_MixLevel: 7bc453d9a4f3f674480ce86ac9db561a
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &24454132
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -171,13 +207,13 @@ AudioMixerSnapshotController:
   m_FloatValues:
     a3d6dd10fdfadaf4f805f2e87e4dd26c: -1.5
     3f85374010b579942b4e8e9e839cb564: 0
-    001700114fab1294e881dbe620ae7aef: -34.4000015
-    392a2fa1e02718a469c4a24b820c82f5: .100000001
+    001700114fab1294e881dbe620ae7aef: -34.4
+    392a2fa1e02718a469c4a24b820c82f5: 0.1
     394b67d273edc7d4281406bd6bcfa198: 0
     9b0c1434395791448829c7f64039f434: 0
     17bfa495dd6a9ba48a658fe8d837c479: 0
-    c574f9b557056cf45b0f7dce90c782ad: .500999987
+    c574f9b557056cf45b0f7dce90c782ad: 0.501
     03a830d62c02f494aa5f90d70f2c0152: 0
-    b9ff9b479bf970b48bc4c69bc4526ee9: 2.88000011
-    4a902d1914d44444d95d2e07c48d06c3: .100000001
+    b9ff9b479bf970b48bc4c69bc4526ee9: 2.88
+    4a902d1914d44444d95d2e07c48d06c3: 0.1
   m_TransitionOverrides: {}
