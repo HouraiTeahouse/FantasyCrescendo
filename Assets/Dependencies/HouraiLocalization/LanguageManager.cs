@@ -12,6 +12,12 @@ namespace Hourai.Localization {
         [SerializeField]
         private string localizaitonResourceDirectory = "Lang/";
 
+        [SerializeField]
+        private string _langPlayerPrefKey = "lang";
+
+        [SerializeField]
+        private bool _dontDestroyOnLoad = false;
+
         private Language _currentLanguage;
 
         /// <summary>
@@ -36,9 +42,6 @@ namespace Hourai.Localization {
         /// An event that is called every time the language is changed.
         /// </summary>
         public event Action<Language> OnChangeLanguage;
-
-        [SerializeField]
-        private bool _dontDestroyOnLoad = false;
 
         private List<CultureInfo> _languages;
         private HashSet<string> _keys; 
@@ -69,7 +72,13 @@ namespace Hourai.Localization {
             }
             Instance = this;
             _languages = new List<CultureInfo>();
-            string currentLang = CultureInfo.CurrentCulture.Name.ToLower();
+            string currentLang;
+            if (!Prefs.HasKey(_langPlayerPrefKey)) {
+                currentLang = CultureInfo.CurrentCulture.Name.ToLower();
+                Prefs.SetString(_langPlayerPrefKey, currentLang);
+            } else {
+                currentLang = Prefs.GetString(_langPlayerPrefKey);
+            }
             Language[] languages = Resources.LoadAll<Language>(localizaitonResourceDirectory);
             _keys = new HashSet<string>(languages.SelectMany(lang => lang.Keys));
             _languages = languages.Select(lang => CultureInfo.GetCultureInfo(lang.name)).ToList();
@@ -82,6 +91,27 @@ namespace Hourai.Localization {
             
             if(_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
+        }
+
+        /// <summary>
+        /// Unity Callback. Called on object destruction.
+        /// </summary>
+        void OnDestroy() {
+            Save();
+        }
+
+        /// <summary>
+        /// Unity Callback. Called when entire application exits.
+        /// </summary>
+        void OnApplicationQuit() {
+            Save();
+        }
+
+        /// <summary>
+        /// Saves the current language preferences to PlayerPrefs to keep it persistent.
+        /// </summary>
+        void Save() {
+            Prefs.SetString(_langPlayerPrefKey, CurrentLangauge.name);
         }
 
         /// <summary>
