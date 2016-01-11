@@ -6,6 +6,12 @@ namespace Hourai.SmashBrew {
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
     public class CharacterData : ScriptableObject {
 
+        [SerializeField, Tooltip(" Is the Character selectable from the character select screen?")]
+        private bool _isSelectable;
+
+        [SerializeField, Tooltip("Is the Character viewable in the character select screen?")]
+        private bool _isVisible;
+
         [SerializeField]
         [Tooltip("The localization key used for the character's shortened name")]
         [Header("Test")]
@@ -30,16 +36,15 @@ namespace Hourai.SmashBrew {
         [Tooltip("The Character's associated stage.")]
         private string _homeStage;
 
-        [SerializeField, Tooltip(" Is the Character selectable from the character select screen?")]
-        private bool _isSelectable;
-
-        [SerializeField, Tooltip("Is the Character viewable in the character select screen?")]
-        private bool _isVisible;
+        [SerializeField, Resource(typeof (AudioClip))]
+        [Tooltip("The theme played on the match results screen when the character wins")]
+        private string _victoryTheme;
 
         private Resource<Sprite> _iconResource;
         private Resource<GameObject> _prefabResource;
         private Resource<Sprite>[] _portraitResources;
-        private Resource<SceneData> _homeStageResource; 
+        private Resource<SceneData> _homeStageResource;
+        private Resource<AudioClip> _victoryThemeResource;
 
         /// <summary>
         /// The short name of the character. Usually just their first name.
@@ -83,7 +88,11 @@ namespace Hourai.SmashBrew {
 
         public Resource<GameObject> Prefab {
             get { return _prefabResource; }
-        } 
+        }
+
+        public Resource<AudioClip> VictoryTheme {
+            get { return _victoryThemeResource; }
+        }
 
         public Resource<Sprite> GetPortrait(int alternativeChoice) {
             if (alternativeChoice < 0 || alternativeChoice >= AlternativeCount)
