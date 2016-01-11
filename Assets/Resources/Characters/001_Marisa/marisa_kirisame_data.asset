@@ -11,12 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
   m_Name: marisa_kirisame_data
   m_EditorClassIdentifier: 
+  _isSelectable: 1
+  _isVisible: 1
   _shortNameKey: name.marisa
   _fullNameKey: fullname.mrarisa
   _alternativePortraits:
   - Characters/001_Marisa/marisa_portrait_cropped
+  - Characters/001_Marisa/marisa_portrait_cropped
+  - Characters/001_Marisa/marisa_portrait_cropped
+  - Characters/001_Marisa/marisa_portrait_cropped
   _prefab: Characters/001_Marisa/Marisa
   _icon: Icons/youmu_icon
   _homeStage: Stages/Forest of Magic
-  _isSelectable: 1
-  _isVisible: 1
+  _victoryTheme: 
