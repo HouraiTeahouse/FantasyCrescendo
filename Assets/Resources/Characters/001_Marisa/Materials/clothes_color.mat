@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: clothes_color
-  m_Shader: {fileID: 4800000, guid: 82b106a640ad4f542a544fc130e555bf, type: 3}
+  m_Shader: {fileID: 4800000, guid: 48dca5b99d113b8d11006bab44295342, type: 3}
   m_ShaderKeywords: _EMISSION _NORMALMAP _SPECGLOSSMAP
   m_LightmapFlags: 1
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -143,7 +143,7 @@ Material:
       data:
         first:
           name: _Shininess
-        second: .202999994
+        second: 0.203
       data:
         first:
           name: _WindQuality
@@ -155,7 +155,7 @@ Material:
       data:
         first:
           name: _Parallax
-        second: .0199999996
+        second: 0.02
       data:
         first:
           name: _ZWrite
@@ -163,7 +163,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .5
+        second: 0.5
       data:
         first:
           name: _BumpScale
@@ -195,20 +195,20 @@ Material:
       data:
         first:
           name: _Outline
-        second: .00499999989
+        second: 0.005
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: .279411793, g: .279411793, b: .279411793, a: 1}
+        second: {r: 0.2794118, g: 0.2794118, b: 0.2794118, a: 1}
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: 0.60294116, g: 0.60294116, b: 0.60294116, a: 1}
       data:
         first:
           name: _SpecColor
-        second: {r: .132352948, g: .132352948, b: .132352948, a: 1}
+        second: {r: 0.13235295, g: 0.13235295, b: 0.13235295, a: 1}
       data:
         first:
           name: _Emission
@@ -216,7 +216,7 @@ Material:
       data:
         first:
           name: _HueVariation
-        second: {r: 1, g: .5, b: 0, a: .100000001}
+        second: {r: 1, g: 0.5, b: 0, a: 0.1}
       data:
         first:
           name: _OutlineColor
