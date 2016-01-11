@@ -11,7 +11,6 @@ GameObject:
   - 65: {fileID: 6548812}
   - 114: {fileID: 11469218}
   - 114: {fileID: 11455926}
-  - 114: {fileID: 11498662}
   m_Layer: 31
   m_Name: Blast Zone
   m_TagString: Untagged
@@ -26,7 +25,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.99428129, y: -7.28034258, z: 11.4539394}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -41,7 +40,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 29.7900009, y: 25, z: 3}
+  m_Size: {x: 29.79, y: 25, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &11455926
 MonoBehaviour:
@@ -54,7 +53,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ba789e41df88a4eadce1a50853ab00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
 --- !u!114 &11469218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,17 +67,6 @@ MonoBehaviour:
   color: {r: 0, g: 1, b: 1, a: 1}
   includeChildren: 0
   solid: 0
---- !u!114 &11498662
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beea648209a9c9042a7920440560d6f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
