@@ -6,6 +6,15 @@ namespace Hourai.SmashBrew {
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
     public class CharacterData : ScriptableObject {
 
+        [Header("General Data")]
+        [SerializeField, Resource(typeof(GameObject))]
+        [Tooltip("The prefab of the Character to spawn.")]
+        private string _prefab;
+
+        [SerializeField, Resource(typeof (SceneData))]
+        [Tooltip("The Character's associated stage.")]
+        private string _homeStage;
+
         [SerializeField, Tooltip(" Is the Character selectable from the character select screen?")]
         private bool _isSelectable;
 
@@ -14,28 +23,26 @@ namespace Hourai.SmashBrew {
 
         [SerializeField]
         [Tooltip("The localization key used for the character's shortened name")]
-        [Header("Test")]
+        [Header("Localization Data")]
         private string _shortNameKey;
 
         [SerializeField]
         [Tooltip("The localization key used for the character's full name.")]
         private string _fullNameKey;
 
+        [Header("2D Art Data")]
         [SerializeField, Resource(typeof(Sprite))]
         private string[] _alternativePortraits;
 
-        [SerializeField, Resource(typeof(GameObject))]
-        [Tooltip("The prefab of the Character to spawn.")]
-        private string _prefab;
+        [SerializeField]
+        [Tooltip("")]
+        private Rect _cropRect;
 
         [SerializeField, Resource(typeof(Sprite))]
         [Tooltip("The icon used to represent the character.")]
         private string _icon;
 
-        [SerializeField, Resource(typeof (SceneData))]
-        [Tooltip("The Character's associated stage.")]
-        private string _homeStage;
-
+        [Header("Audio Data")]
         [SerializeField, Resource(typeof (AudioClip))]
         [Tooltip("The theme played on the match results screen when the character wins")]
         private string _victoryTheme;
@@ -76,6 +83,10 @@ namespace Hourai.SmashBrew {
 
         public int AlternativeCount {
             get { return _alternativePortraits == null ? 0 : _alternativePortraits.Length; }
+        }
+
+        public Rect CropRect {
+            get { return _cropRect; }
         }
 
         public Resource<Sprite> Icon {

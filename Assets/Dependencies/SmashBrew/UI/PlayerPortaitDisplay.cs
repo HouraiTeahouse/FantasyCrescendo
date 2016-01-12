@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
-    [RequireComponent(typeof(Image))]
+    [RequireComponent(typeof(RawImage))]
     public class PlayerPortaitDisplay : MonoBehaviour, IPlayerGUIComponent {
 
-        private Image Image;
+        private RawImage Image;
 
         void Awake() {
-            Image = GetComponent<Image>();
+            Image = GetComponent<RawImage>();
         }
 
         public void SetPlayerData(Player data)
@@ -21,7 +20,8 @@ namespace Hourai.SmashBrew.UI {
                 Image.enabled = false;
             } else {
                 Image.enabled = true;
-                Image.sprite = data.Character.GetPortrait(data.Pallete).Load();
+                Image.texture = data.Character.GetPortrait(data.Pallete).Load().texture;
+                Image.uvRect = data.Character.CropRect;
             }
         }
 
