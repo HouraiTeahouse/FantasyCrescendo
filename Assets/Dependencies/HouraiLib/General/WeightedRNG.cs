@@ -64,11 +64,10 @@ namespace Hourai {
         public float this[T index] {
             get { return _weights.ContainsKey(index) ? _weights[index] : 0f; }
             set {
-                if (Contains(index)) {
+                if (Contains(index))
                     _weightSum -= _weights[index];
-                    _weightSum += value;
-                }
                 _weights[index] = value;
+                _weightSum += value;
             }
         }
 
@@ -85,10 +84,12 @@ namespace Hourai {
         public T Select() {
             if (Count <= 0)
                 throw new InvalidOperationException();
-                
-            float randomValue = Random.value*_weightSum;
+            UnityEngine.Debug.Log(_weightSum);
+            float randomValue = Random.value * _weightSum;
+            UnityEngine.Debug.Log(randomValue);
             foreach (KeyValuePair<T, float> element in _weights) {
                 randomValue -= element.Value;
+                UnityEngine.Debug.Log(randomValue);
                 if (randomValue <= 0)
                     return element.Key;
             }

@@ -53,11 +53,20 @@ namespace Hourai {
             private const string delimiter = "/";
             private const string suffix = "weight";
 
-            [SerializeField, Range(0f, 1f)]
-            private float _baseWeight = 1f;
+            [SerializeField]
+            [Tooltip("The name of the BGM.")]
+            private string _name;
+
+            [SerializeField]
+            [Tooltip("The artist who created this piece of music")]
+            private string _artist;
 
             [SerializeField, Resource(typeof(AudioClip))]
             private string _bgm;
+
+            [SerializeField, Range(0f, 1f)]
+            private float _baseWeight = 1f;
+
 
             private Resource<AudioClip> _bgmResource;
             private float _weight;
