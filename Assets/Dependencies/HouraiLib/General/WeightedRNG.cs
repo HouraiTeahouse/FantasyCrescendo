@@ -84,12 +84,9 @@ namespace Hourai {
         public T Select() {
             if (Count <= 0)
                 throw new InvalidOperationException();
-            UnityEngine.Debug.Log(_weightSum);
             float randomValue = Random.value * _weightSum;
-            UnityEngine.Debug.Log(randomValue);
             foreach (KeyValuePair<T, float> element in _weights) {
                 randomValue -= element.Value;
-                UnityEngine.Debug.Log(randomValue);
                 if (randomValue <= 0)
                     return element.Key;
             }
