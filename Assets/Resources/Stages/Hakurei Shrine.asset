@@ -13,8 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Hakurei Shrine
   backgroundMusicData:
-  - _baseWeight: 0
+  - _name: Battle Concerto
+    _artist: Crescentia
     _bgm: Audio/BGM/Hakurei Shrine/Battle Concerto
+    _baseWeight: 0
   _sceneName: 
   _isStage: 1
   _previewImage: 
