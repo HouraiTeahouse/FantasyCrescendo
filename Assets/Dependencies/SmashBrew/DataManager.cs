@@ -24,7 +24,7 @@ namespace Hourai.SmashBrew {
         /// All Characters that are included with the Game's build.
         /// The Data Manager will automatically load all CharacterData instances from Resources.
         /// </summary>
-        public IEnumerable<CharacterData> Characters {
+        public ICollection<CharacterData> Characters {
             get {
                 if (_characters == null)
                     _characters = new ReadOnlyCollection<CharacterData>(Resources.LoadAll<CharacterData>(string.Empty));
@@ -36,13 +36,13 @@ namespace Hourai.SmashBrew {
         /// All Scenes and their metadata included with the game's build.
         /// The DataManager will automatically load all SceneData instances from Resources.
         /// </summary>
-        public IEnumerable<SceneData> Scenes {
+        public ICollection<SceneData> Scenes {
             get {
                 if(_scenes == null)
                    _scenes = new ReadOnlyCollection<SceneData>(Resources.LoadAll<SceneData>(string.Empty));
                 return _scenes;
             }
-        }  
+        }
 
         /// <summary>
         /// Unity Callback. Called on object instantion.
@@ -57,6 +57,9 @@ namespace Hourai.SmashBrew {
             Mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(OnChangePlayerLevel);
             Mediator.Subscribe<DataEvent.ChangePlayerMode>(OnChangePlayerMode);
             Mediator.Subscribe<DataEvent.UserChangingOptions>(OnUserChangingOptions);
+
+            foreach(var character in Characters)
+                Debug.Log(character.FullName);
         }
 
         /// <summary>
