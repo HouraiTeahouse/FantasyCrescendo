@@ -149,6 +149,19 @@ namespace Hourai.Editor {
             return paths.ToArray();
         }
 
+        public static bool IsResource(Object asset) {
+            string assetPath = AssetDatabase.GetAssetPath(asset);
+            return !string.IsNullOrEmpty(assetPath) && assetPath.Contains("Resources/");
+        }
+
+        public static string GetResourcePath(Object asset) {
+            string assetPath = AssetDatabase.GetAssetPath(asset);
+            if (string.IsNullOrEmpty(assetPath) || !assetPath.Contains("Resources/"))
+                return string.Empty;
+            else
+                return Regex.Replace(assetPath, ".*/Resources/(.*?)\\..*", "$1");
+        }
+
         public static void CreateFolder(string path) {
             if (path == null)
                 throw new ArgumentNullException("path");

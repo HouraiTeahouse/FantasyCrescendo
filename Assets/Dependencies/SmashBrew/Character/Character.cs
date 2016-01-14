@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Networking;
 using System.Linq;
 using Hourai.Events;
 using UnityConstants;
@@ -21,23 +20,6 @@ namespace Hourai.SmashBrew {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     public class Character : HouraiBehaviour {
-
-        private static readonly Type[] RequiredComponents;
-
-        static Character() {
-            var componentType = typeof(Component);
-            var requiredComponentType = typeof(RequiredCharacterComponentAttribute);
-            // Use reflection to find required Components for Characters and statuses
-            // Enumerate all concrete Component types
-            RequiredComponents = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                                  from assemblyType in domainAssembly.GetTypes()
-                                  where
-                                      assemblyType != null &&
-                                      !assemblyType.IsAbstract &&
-                                      componentType.IsAssignableFrom(assemblyType) &&
-                                      assemblyType.IsDefined(requiredComponentType, true)
-                                  select assemblyType).ToArray();
-        }
 
         #region Public Properties
 
@@ -131,12 +113,37 @@ namespace Hourai.SmashBrew {
             rb.useGravity = false;
 
             Animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
+#if UNITY_EDITOR
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+                return;
 
-            // Attach Required Components
-            foreach (Type requriedType in RequiredComponents)
-                if (gameObject.GetComponent(requriedType) == null)
-                    gameObject.AddComponent(requriedType);
+            foreach(Type component in GetRequiredComponents())
+                if (gameObject.GetComponent(component))
+                    gameObject.AddComponent(component);
+#endif
         }
+
+#if UNITY_EDITOR
+
+        /// <summary>
+        /// Editor only function that gets all of the required component types a Character needs.
+        /// </summary>
+        /// <returns>an array of all of the concrete component types marked with RequiredCharacterComponent</returns>
+        public static Type[] GetRequiredComponents() {
+            var componentType = typeof(Component);
+            var requiredComponentType = typeof(RequiredCharacterComponentAttribute);
+            // Use reflection to find required Components for Characters and statuses
+            // Enumerate all concrete Component types
+            return (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                                  from assemblyType in domainAssembly.GetTypes()
+                                  where
+                                      assemblyType != null &&
+                                      !assemblyType.IsAbstract &&
+                                      componentType.IsAssignableFrom(assemblyType) &&
+                                      assemblyType.IsDefined(requiredComponentType, true)
+                                  select assemblyType).ToArray();
+        }
+#endif
 
         protected virtual void OnAnimatorMove() {
             //TODO: Merge Physics and Animation Movements here

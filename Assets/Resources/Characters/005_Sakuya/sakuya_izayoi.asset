@@ -11,12 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
   m_Name: sakuya_izayoi
   m_EditorClassIdentifier: 
-  _shortNameKey: name.marisa
-  _fullNameKey: fullname.mrarisa
-  _alternativePortraits:
-  - 
   _prefab: 
-  _icon: Icons/wriggle_icon
-  _homeStage: Stages/Forest of Magic
+  _homeStage: 
   _isSelectable: 0
   _isVisible: 1
+  _shortNameKey: name.sakuya
+  _fullNameKey: fullname.sakuya
+  _alternativePortraits:
+  - 
+  _cropRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  _icon: Icons/wriggle_icon
+  _victoryTheme: 

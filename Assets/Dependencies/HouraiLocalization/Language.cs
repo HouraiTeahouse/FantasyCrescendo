@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Hourai.Localization {
 
+    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Asset")]
     public class Language : ScriptableObject, ISerializationCallbackReceiver {
 
         [System.Serializable]

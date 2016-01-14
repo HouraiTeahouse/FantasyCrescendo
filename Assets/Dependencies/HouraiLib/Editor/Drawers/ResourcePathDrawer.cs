@@ -48,8 +48,8 @@ namespace Hourai.Editor {
                     path = string.Empty;
                     message = "No Object Specified";
                 } else {
-                    string resourcePath = Regex.Replace(AssetDatabase.GetAssetPath(obj), ".*/Resources/(.*?)\\..*", "$1");
-                    if (path.Contains("/Resources/")) {
+                    string resourcePath = AssetUtil.GetResourcePath(obj);
+                    if (string.IsNullOrEmpty(resourcePath)) {
                         message = "Not in a Resources folder. Will not be saved.";
                     } else {
                         message = "Path: " + resourcePath;

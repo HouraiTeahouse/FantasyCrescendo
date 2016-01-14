@@ -4360,7 +4360,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5163374, y: 0.030237079, z: 0.60474765}
+  m_LocalPosition: {x: -3.7634668, y: -0.002665311, z: 0.378776}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 434474}
@@ -4467,18 +4467,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _swaps:
   - AlternativeMaterials:
-    - Characters/001_Marisa/Materials/skin_colorseam
+    - Characters/001_Marisa/Materials/1/marisa_body_1
+    - Characters/001_Marisa/Materials/2/marisa_body_2
+    - Characters/001_Marisa/Materials/3/marisa_body_3
+    - Characters/001_Marisa/Materials/1/marisa_body_1
     TargetRenderers:
     - {fileID: 13755152}
     - {fileID: 13783016}
     - {fileID: 13788198}
+    - {fileID: 13753696}
   - AlternativeMaterials:
-    - Characters/001_Marisa/Materials/eye color new
+    - Characters/001_Marisa/Materials/1/marisa_eye_1
+    - Characters/001_Marisa/Materials/2/marisa_eye_2
+    - Characters/001_Marisa/Materials/3/marisa_eye_3
+    - Characters/001_Marisa/Materials/1/marisa_eye_1
     TargetRenderers:
     - {fileID: 13727484}
     - {fileID: 13790652}
   - AlternativeMaterials:
-    - Characters/001_Marisa/Materials/clothes_color
+    - Characters/001_Marisa/Materials/1/marisa_clothes_1
+    - Characters/001_Marisa/Materials/2/marisa_clothes_2
+    - Characters/001_Marisa/Materials/3/marisa_clothes_3
+    - Characters/001_Marisa/Materials/4/marisa_clothes_4
     TargetRenderers:
     - {fileID: 13737080}
     - {fileID: 13798062}
@@ -4487,7 +4497,10 @@ MonoBehaviour:
     - {fileID: 13751722}
     - {fileID: 13723096}
   - AlternativeMaterials:
-    - Characters/001_Marisa/Materials/broom_colors
+    - Characters/001_Marisa/Materials/marisa_broom
+    - Characters/001_Marisa/Materials/marisa_broom
+    - Characters/001_Marisa/Materials/marisa_broom
+    - Characters/001_Marisa/Materials/marisa_broom
     TargetRenderers:
     - {fileID: 13767290}
 --- !u!114 &11422524
@@ -4630,10 +4643,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 128658}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: d7bf705e2f701734c9a337022c28ef98, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4686,10 +4699,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196004}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: eab6141dd494e6547b192e3e7a5f4e60, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4724,10 +4737,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183552}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: d7bf705e2f701734c9a337022c28ef98, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4763,10 +4776,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181840}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: d7bf705e2f701734c9a337022c28ef98, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4801,10 +4814,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 180562}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 61ec1a9950453a8449c6c605daf5f6e1, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4839,10 +4852,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197542}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3efeab122a38c864fb166b6bacf9b790, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4914,10 +4927,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 145992}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: d7bf705e2f701734c9a337022c28ef98, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4988,10 +5001,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147226}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: d0f67941b132277479dc106dbd173d69, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5028,10 +5041,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126546}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: d7bf705e2f701734c9a337022c28ef98, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5066,10 +5079,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188130}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3efeab122a38c864fb166b6bacf9b790, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5113,10 +5126,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119190}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3efeab122a38c864fb166b6bacf9b790, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5154,10 +5167,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141772}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: eab6141dd494e6547b192e3e7a5f4e60, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -5192,10 +5205,10 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148152}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: d7bf705e2f701734c9a337022c28ef98, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1

@@ -1,10 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Hourai.Events;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
     public sealed class DataManager : MonoBehaviour {
+
+        [SerializeField]
+        private bool _dontDestroyOnLoad;
+
+        private ReadOnlyCollection<CharacterData> _characters;
+        private ReadOnlyCollection<SceneData> _scenes;  
 
         public Mediator Mediator { get; private set; }
 
@@ -17,30 +24,42 @@ namespace Hourai.SmashBrew {
         /// All Characters that are included with the Game's build.
         /// The Data Manager will automatically load all CharacterData instances from Resources.
         /// </summary>
-        public IEnumerable<CharacterData> Characters { get; private set; }   
+        public ICollection<CharacterData> Characters {
+            get {
+                if (_characters == null)
+                    _characters = new ReadOnlyCollection<CharacterData>(Resources.LoadAll<CharacterData>(string.Empty));
+                return _characters;
+            }
+        }
 
         /// <summary>
         /// All Scenes and their metadata included with the game's build.
         /// The DataManager will automatically load all SceneData instances from Resources.
         /// </summary>
-        public IEnumerable<SceneData> Scenes { get; private set; }  
+        public ICollection<SceneData> Scenes {
+            get {
+                if(_scenes == null)
+                   _scenes = new ReadOnlyCollection<SceneData>(Resources.LoadAll<SceneData>(string.Empty));
+                return _scenes;
+            }
+        }
 
         /// <summary>
         /// Unity Callback. Called on object instantion.
         /// </summary>
         void Awake() {
             Instance = this;
+
+            if(_dontDestroyOnLoad)
+                DontDestroyOnLoad(this);
             
-            //Load all Character Data from Resources
-            Characters = Resources.LoadAll<CharacterData>(string.Empty);
-
-            //Load all Scene Data from Resources
-            Scenes = Resources.LoadAll<SceneData>(string.Empty);
-
             Mediator = GlobalMediator.Instance;
             Mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(OnChangePlayerLevel);
             Mediator.Subscribe<DataEvent.ChangePlayerMode>(OnChangePlayerMode);
             Mediator.Subscribe<DataEvent.UserChangingOptions>(OnUserChangingOptions);
+
+            foreach(var character in Characters)
+                Debug.Log(character.FullName);
         }
 
         /// <summary>

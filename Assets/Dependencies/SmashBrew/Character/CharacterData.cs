@@ -6,25 +6,10 @@ namespace Hourai.SmashBrew {
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
     public class CharacterData : ScriptableObject {
 
-        [SerializeField]
-        [Tooltip("The localization key used for the character's shortened name")]
-        [Header("Test")]
-        private string _shortNameKey;
-
-        [SerializeField]
-        [Tooltip("The localization key used for the character's full name.")]
-        private string _fullNameKey;
-
-        [SerializeField, Resource(typeof(Sprite))]
-        private string[] _alternativePortraits;
-
+        [Header("General Data")]
         [SerializeField, Resource(typeof(GameObject))]
         [Tooltip("The prefab of the Character to spawn.")]
         private string _prefab;
-
-        [SerializeField, Resource(typeof(Sprite))]
-        [Tooltip("The icon used to represent the character.")]
-        private string _icon;
 
         [SerializeField, Resource(typeof (SceneData))]
         [Tooltip("The Character's associated stage.")]
@@ -36,10 +21,37 @@ namespace Hourai.SmashBrew {
         [SerializeField, Tooltip("Is the Character viewable in the character select screen?")]
         private bool _isVisible;
 
+        [SerializeField]
+        [Tooltip("The localization key used for the character's shortened name")]
+        [Header("Localization Data")]
+        private string _shortNameKey;
+
+        [SerializeField]
+        [Tooltip("The localization key used for the character's full name.")]
+        private string _fullNameKey;
+
+        [Header("2D Art Data")]
+        [SerializeField, Resource(typeof(Sprite))]
+        private string[] _alternativePortraits;
+
+        [SerializeField]
+        [Tooltip("")]
+        private Rect _cropRect;
+
+        [SerializeField, Resource(typeof(Sprite))]
+        [Tooltip("The icon used to represent the character.")]
+        private string _icon;
+
+        [Header("Audio Data")]
+        [SerializeField, Resource(typeof (AudioClip))]
+        [Tooltip("The theme played on the match results screen when the character wins")]
+        private string _victoryTheme;
+
         private Resource<Sprite> _iconResource;
         private Resource<GameObject> _prefabResource;
         private Resource<Sprite>[] _portraitResources;
-        private Resource<SceneData> _homeStageResource; 
+        private Resource<SceneData> _homeStageResource;
+        private Resource<AudioClip> _victoryThemeResource;
 
         /// <summary>
         /// The short name of the character. Usually just their first name.
@@ -73,6 +85,10 @@ namespace Hourai.SmashBrew {
             get { return _alternativePortraits == null ? 0 : _alternativePortraits.Length; }
         }
 
+        public Rect CropRect {
+            get { return _cropRect; }
+        }
+
         public Resource<Sprite> Icon {
             get { return _iconResource; }
         }
@@ -83,7 +99,11 @@ namespace Hourai.SmashBrew {
 
         public Resource<GameObject> Prefab {
             get { return _prefabResource; }
-        } 
+        }
+
+        public Resource<AudioClip> VictoryTheme {
+            get { return _victoryThemeResource; }
+        }
 
         public Resource<Sprite> GetPortrait(int alternativeChoice) {
             if (alternativeChoice < 0 || alternativeChoice >= AlternativeCount)
@@ -101,6 +121,7 @@ namespace Hourai.SmashBrew {
             _prefabResource = new Resource<GameObject>(_prefab);
             _portraitResources = new Resource<Sprite>[_alternativePortraits.Length];
             _homeStageResource = new Resource<SceneData>(_homeStage);
+            _victoryThemeResource = new Resource<AudioClip>(_victoryTheme);
             for(var i = 0; i < _alternativePortraits.Length; i++)
                 _portraitResources[i] = new Resource<Sprite>(_alternativePortraits[i]);
         }

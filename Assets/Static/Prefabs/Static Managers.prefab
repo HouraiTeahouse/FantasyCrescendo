@@ -11,8 +11,8 @@ GameObject:
   - 114: {fileID: 11488736}
   - 114: {fileID: 11486768}
   - 114: {fileID: 11479720}
-  - 114: {fileID: 11489478}
   - 114: {fileID: 11439252}
+  - 114: {fileID: 11460476}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: EditorOnly
@@ -49,6 +49,39 @@ MonoBehaviour:
   useFixedUpdate: 1
   dontDestroyOnLoad: 0
   customProfiles: []
+--- !u!114 &11460476
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aeccad45bf1ee04ba984b518bbb903c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mixer: {fileID: 24100000, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
+  _channels:
+  - _name: Volume
+    _baseVolume: 1
+    _playerPrefsKey: mainVol
+    _associatedParams:
+    - Main Volume
+  - _name: Music Volume
+    _baseVolume: 1
+    _playerPrefsKey: musicVol
+    _associatedParams:
+    - Music Volume
+  - _name: Sound Effects Volume
+    _baseVolume: 1
+    _playerPrefsKey: sfxVol
+    _associatedParams:
+    - SFX Volume
+  - _name: Voice Volume
+    _baseVolume: 1
+    _playerPrefsKey: vaVol
+    _associatedParams:
+    - Voice Acting Volume
 --- !u!114 &11479720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -61,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localizaitonResourceDirectory: Lang/
+  _langPlayerPrefKey: lang
   _dontDestroyOnLoad: 0
 --- !u!114 &11486768
 MonoBehaviour:
@@ -116,7 +150,7 @@ MonoBehaviour:
     m_ReactorMaximumReceivedMessages: 1024
     m_ReactorMaximumSentMessages: 1024
     m_MaxPacketSize: 2000
-  m_Channels: 
+  m_Channels: 0500000000000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1
@@ -139,17 +173,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeScale: 1
---- !u!114 &11489478
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
