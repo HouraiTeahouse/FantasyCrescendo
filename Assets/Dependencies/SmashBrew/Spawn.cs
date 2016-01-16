@@ -18,9 +18,29 @@ namespace Hourai.SmashBrew {
 
         [SerializeField]
         private Transform[] _spawnPoints;
-        
+
+        /// <summary>
+        /// Unity Callback. Called on object instantation.
+        /// </summary>
         void Awake() {
             _eventManager = GlobalMediator.Instance;
+            _eventManager.Subscribe<MatchEvent>(OnMatchStart);
+        }
+
+        /// <summary>
+        /// Unity Callback. Called on object destruction.
+        /// </summary>
+        void OnDestroy() {
+            _eventManager.Unsubscribe<MatchEvent>(OnMatchStart);
+        }
+
+        /// <summary>
+        /// Spawns players when the match begins.
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        void OnMatchStart(MatchEvent eventArgs) {
+            if (!eventArgs.Start)
+                return;
             var i = 0;
             IEnumerator<Player> activePlayers = SmashGame.ActivePlayers.GetEnumerator();
             while (i < _spawnPoints.Length && activePlayers.MoveNext()) {

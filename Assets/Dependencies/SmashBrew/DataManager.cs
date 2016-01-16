@@ -57,9 +57,6 @@ namespace Hourai.SmashBrew {
             Mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(OnChangePlayerLevel);
             Mediator.Subscribe<DataEvent.ChangePlayerMode>(OnChangePlayerMode);
             Mediator.Subscribe<DataEvent.UserChangingOptions>(OnUserChangingOptions);
-
-            foreach(var character in Characters)
-                Debug.Log(character.FullName);
         }
 
         /// <summary>

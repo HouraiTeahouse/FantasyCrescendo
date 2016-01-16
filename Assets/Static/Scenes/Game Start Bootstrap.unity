@@ -113,8 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8ba33510a1f9d43843948d0806798b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: Splash Screen
   _mode: 0
+  _trigger: 1
+  _scenes:
+  - Static/Scenes/Splash Screen
 --- !u!4 &358177910
 Transform:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ namespace Hourai.SmashBrew {
         private Selection[] testCharacters;
 
         void Awake() {
+            Debug.Log("Test");
             var index = 0;
             foreach (var player in SmashGame.Players)
             {

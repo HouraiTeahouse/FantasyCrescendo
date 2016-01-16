@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Hourai.Editor;
 using UnityEditor;
 
@@ -38,7 +37,7 @@ namespace Hourai.SmashBrew.Editor {
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("\u25c4", EditorStyles.miniButton))
                 _previewSelect++;
-            if (GUILayout.Button(_crop ? "Crop" : "Full", EditorStyles.miniButton, GUILayout.ExpandWidth(true)))
+            if (GUILayout.Button(_crop ? "Crop" : "Full", EditorStyles.miniButton))
                 _crop = !_crop;
             if (GUILayout.Button("\u25ba", EditorStyles.miniButton))
                 _previewSelect++;
