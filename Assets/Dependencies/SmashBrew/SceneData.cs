@@ -16,7 +16,7 @@ namespace Hourai.SmashBrew {
         /// <summary>
         /// The internal name of the scene. Must be in build settings. 
         /// </summary>
-        [SerializeField]
+        [SerializeField, Scene]
         [Tooltip("The internal name of the scene. Must be in build settings.")]
         private string _sceneName;
 
@@ -38,7 +38,7 @@ namespace Hourai.SmashBrew {
         /// Loads the scene described by the SceneData
         /// </summary>
         public void Load() {
-            GlobalMediator.Instance.Publish(new LoadSceneEvent { LoadOperation = SceneManager.LoadSceneAsync(_sceneName), Scene =  this });
+            GlobalMediator.Instance.Publish(new LoadSceneEvent { LoadOperation = SceneManager.LoadSceneAsync(_sceneName), Scene = this });
         }
 
         /// <summary>
