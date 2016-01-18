@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
-  m_Name: marisa_kirisame_data
+  m_Name: marisa_kirisame
   m_EditorClassIdentifier: 
   _prefab: Characters/001_Marisa/Marisa
   _homeStage: Stages/Forest of Magic
@@ -24,9 +24,9 @@ MonoBehaviour:
   - Characters/001_Marisa/Portraits/marisa_portrait_4
   _cropRect:
     serializedVersion: 2
-    x: 0.3
-    y: 0.7
-    width: 0.25
-    height: 0.2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
   _icon: Icons/marisa_icon
   _victoryTheme: 
