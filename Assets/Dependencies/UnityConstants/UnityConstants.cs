@@ -154,17 +154,17 @@ namespace UnityConstants
         /// </summary>
         public const int Game_Start_Bootstrap = 0;
         /// <summary>
+        /// ID of scene 'Stage Bootstrap'.
+        /// </summary>
+        public const int Stage_Bootstrap = 1;
+        /// <summary>
         /// ID of scene 'Splash Screen'.
         /// </summary>
-        public const int Splash_Screen = 1;
+        public const int Splash_Screen = 2;
         /// <summary>
         /// ID of scene 'Main Menu'.
         /// </summary>
-        public const int Main_Menu = 2;
-        /// <summary>
-        /// ID of scene 'Stage Bootstrap'.
-        /// </summary>
-        public const int Stage_Bootstrap = 3;
+        public const int Main_Menu = 3;
         /// <summary>
         /// ID of scene 'Forest of Magic Stage'.
         /// </summary>

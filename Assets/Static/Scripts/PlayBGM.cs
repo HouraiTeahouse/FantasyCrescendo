@@ -18,6 +18,10 @@ namespace Hourai {
             group.PlayRandom(GetComponent<AudioSource>());            
         }
 
+        void FixedUpdate() {
+            group.HandleLooping(GetComponent<AudioSource>());
+        }
+
     }
 
 }

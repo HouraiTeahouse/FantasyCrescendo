@@ -15,19 +15,21 @@ namespace Hourai {
         [SerializeField]
         private BGMData[] backgroundMusicData;
 
-        private WeightedRNG<Resource<AudioClip>> selection;
+        private BGMData curbgm;
+
+        private WeightedRNG<BGMData> selection;
 
         public string Name {
             get { return _name; }
         }
 
         protected virtual void OnEnable() {
-            selection = new WeightedRNG<Resource<AudioClip>>();
+            selection = new WeightedRNG<BGMData>();
             if (backgroundMusicData == null)
                 return;
             foreach (BGMData bgmData in backgroundMusicData) {
                 bgmData.Initialize(Name);
-                selection[bgmData.BGM] = bgmData.Weight;
+                selection[bgmData] = bgmData.Weight;
             }
         }
 
@@ -35,8 +37,17 @@ namespace Hourai {
             if(!audio)
                 throw new ArgumentNullException();
             audio.Stop();
-            audio.clip = selection.Select().Load();
+            curbgm = selection.Select();
+            audio.clip = curbgm.BGM.Load();
             audio.Play();
+        }
+
+        public void HandleLooping(AudioSource audio)
+        {
+            if (!audio.isPlaying) return;
+            if (audio.timeSamples >= curbgm.LoopEnd) {
+                audio.timeSamples = audio.timeSamples + curbgm.LoopStart - curbgm.LoopEnd;
+            }
         }
 
 #if UNITY_EDITOR
@@ -67,6 +78,13 @@ namespace Hourai {
             [SerializeField, Range(0f, 1f)]
             private float _baseWeight = 1f;
 
+            [SerializeField]
+            [Tooltip("The sample number of the start point the loop.")]
+            private int _loopStart;
+
+            [SerializeField]
+            [Tooltip("The sample number of the end point the loop.")]
+            private int _loopEnd;
 
             private Resource<AudioClip> _bgmResource;
             private float _weight;
@@ -83,6 +101,14 @@ namespace Hourai {
 
             public float Weight {
                 get { return _weight; }
+            }
+
+            public int LoopStart {
+                get { return _loopStart; }
+            }
+
+            public int LoopEnd {
+                get { return _loopEnd; }
             }
 
             public void Initialize(string stageName) {
