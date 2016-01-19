@@ -11,19 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
   m_Name: youmu_konpaku
   m_EditorClassIdentifier: 
-  _prefab: 
-  _homeStage: 
+  _prefab: Characters/001_Marisa/Marisa
+  _homeStage: Stages/Forest of Magic
   _isSelectable: 0
   _isVisible: 1
   _shortNameKey: name.youmu
   _fullNameKey: fullname.youmu
   _alternativePortraits:
-  - 
+  - Characters/001_Marisa/Portraits/marisa_portrait_1
+  - Characters/001_Marisa/Portraits/marisa_portrait_2
+  - Characters/001_Marisa/Portraits/marisa_portrait_3
+  - Characters/001_Marisa/Portraits/marisa_portrait_4
   _cropRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  _icon: 
+    x: 0.3
+    y: 0.7
+    width: 0.25
+    height: 0.2
+  _icon: Icons/marisa_icon
   _victoryTheme: 

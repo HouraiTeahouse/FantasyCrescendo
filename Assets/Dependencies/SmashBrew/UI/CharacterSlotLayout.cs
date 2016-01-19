@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace UnityEngine.UI
 {
-    [AddComponentMenu("Layout/Grid Layout Group", 152)]
     public class CharacterSlotLayout : LayoutGroup
     {
         public enum Origin { UpperLeft = 0, UpperRight = 1, LowerLeft = 2, LowerRight = 3 }
