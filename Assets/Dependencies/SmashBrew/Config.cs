@@ -2,6 +2,7 @@
 
 namespace Hourai.SmashBrew {
     
+    [CreateAssetMenu(fileName = "New Config", menuName = "SmashBrew/Config")]
     public class Config : ScriptableObject {
 
         #region Serialized Fields

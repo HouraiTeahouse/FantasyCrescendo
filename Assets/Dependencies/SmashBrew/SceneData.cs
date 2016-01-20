@@ -11,6 +11,7 @@ namespace Hourai.SmashBrew {
 
     }
 
+    [CreateAssetMenu(fileName = "New Stage", menuName = "SmashBrew/Scene Data")]
     public class SceneData : BGMGroup {
 
         /// <summary>

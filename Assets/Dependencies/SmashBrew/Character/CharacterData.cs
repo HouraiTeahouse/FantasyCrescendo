@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
+    [CreateAssetMenu(fileName = "New Character", menuName = "SmashBrew/Character Data")]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
     public class CharacterData : ScriptableObject {
 
@@ -44,6 +45,10 @@ namespace Hourai.SmashBrew {
 
         [Header("Audio Data")]
         [SerializeField, Resource(typeof (AudioClip))]
+        [Tooltip("The audio clip played for the Character's announer")]
+        private string _announcerClip;
+
+        [SerializeField, Resource(typeof (AudioClip))]
         [Tooltip("The theme played on the match results screen when the character wins")]
         private string _victoryTheme;
 
@@ -51,6 +56,7 @@ namespace Hourai.SmashBrew {
         private Resource<GameObject> _prefabResource;
         private Resource<Sprite>[] _portraitResources;
         private Resource<SceneData> _homeStageResource;
+        private Resource<AudioClip> _announcerResource; 
         private Resource<AudioClip> _victoryThemeResource;
 
         /// <summary>
@@ -100,6 +106,10 @@ namespace Hourai.SmashBrew {
         public Resource<GameObject> Prefab {
             get { return _prefabResource; }
         }
+
+        public Resource<AudioClip> Announcer {
+            get { return _announcerResource; }
+        } 
 
         public Resource<AudioClip> VictoryTheme {
             get { return _victoryThemeResource; }
