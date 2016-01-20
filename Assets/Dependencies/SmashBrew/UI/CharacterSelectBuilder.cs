@@ -6,11 +6,19 @@ namespace Hourai.SmashBrew.UI {
     /// <summary>
     /// Constructs the player section of the 
     /// </summary>
-    public class PlayerSelectDisplay : MonoBehaviour {
+    public class CharacterSelectBuilder : MonoBehaviour {
+
+        [Header("Character Select")]
+        [SerializeField]
+        private RectTransform _characterContainer;
 
         [SerializeField]
+        private RectTransform _character;
+
+        [Header("Player Display")]
+        [SerializeField]
         [Tooltip("The parent container object to add the created  displays to")]
-        private RectTransform _container;
+        private RectTransform _playerContainer;
 
         [SerializeField]
         [Tooltip("Space prefab to buffer the UI on the sides")]
@@ -21,19 +29,43 @@ namespace Hourai.SmashBrew.UI {
         private RectTransform _playerDisplay;
 
         /// <summary>
-        /// Unity Callback. Called before the object's first frame.
+        /// Unity Callback. Called before object's first frame.
         /// </summary>
         void Start() {
-            if (!_container || !_playerDisplay)
+            CreateCharacterSelect();
+            CreatePlayerDisplay();
+        }
+
+        static void Attach(RectTransform child, Transform parent) {
+            child.SetParent(parent, false);
+            LayoutRebuilder.MarkLayoutForRebuild(child);
+        }
+
+        void CreateCharacterSelect() {
+            DataManager dataManager = DataManager.Instance;
+            if (dataManager == null || !_characterContainer || !_character)
+                return;
+
+            foreach (CharacterData data in dataManager.Characters) {
+                if (data == null || !data.IsVisible)
+                    return;
+                RectTransform character = Instantiate(_character);
+                Attach(character, _characterContainer);
+                character.name = data.name;
+                foreach (ICharacterGUIComponent guiComponent in character.GetComponentsInChildren<ICharacterGUIComponent>())
+                    guiComponent.SetCharacter(data);
+            }
+
+        } 
+
+        void CreatePlayerDisplay() {
+            if (!_playerContainer || !_playerDisplay)
                 return;
 
             //Create a player display for as many players as the game can support
             foreach (Player player in SmashGame.Players) {
                 RectTransform display = Instantiate(_playerDisplay);
-
-                // Child the new player display and order the UI system to rebuild the layout for it
-                display.SetParent(_container, false);
-                LayoutRebuilder.MarkLayoutForRebuild(display);
+                Attach(display, _playerContainer);
 
                 display.name = string.Format("Player {0}", player.PlayerNumber);
 
@@ -48,12 +80,10 @@ namespace Hourai.SmashBrew.UI {
             //Create additional spaces to the left and right of the player displays to focus the attention on the center of the screen.
             RectTransform firstSpace = Instantiate(_space);
             RectTransform lastSpace = Instantiate(_space);
-            firstSpace.SetParent(_container.transform, false);
-            lastSpace.SetParent(_container.transform, false);
+            Attach(firstSpace, _playerContainer);
+            Attach(lastSpace, _playerContainer);
             firstSpace.SetAsFirstSibling();
             lastSpace.SetAsLastSibling();
-            LayoutRebuilder.MarkLayoutForRebuild(firstSpace);
-            LayoutRebuilder.MarkLayoutForRebuild(lastSpace);
         }
 
     }
