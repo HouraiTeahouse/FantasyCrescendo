@@ -66,7 +66,6 @@ GameObject:
   - 224: {fileID: 22427486}
   - 222: {fileID: 22200610}
   - 114: {fileID: 11400266}
-  - 114: {fileID: 11464942}
   - 114: {fileID: 11439146}
   m_Layer: 5
   m_Name: Text
@@ -260,20 +259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdee41062191214cb1ecd679a92b6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shortName: 1
---- !u!114 &11464942
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 172020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb29fde83477c4e48ad98a39f3a3df93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _key: 
   _text: {fileID: 11400266}
+  shortName: 1
 --- !u!114 &11475524
 MonoBehaviour:
   m_ObjectHideFlags: 1

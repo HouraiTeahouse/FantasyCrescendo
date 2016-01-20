@@ -3,28 +3,30 @@ using UnityEngine.UI;
 
 namespace Hourai.Localization {
 
-    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localized_Text")]
-    public class LocalizedText : MonoBehaviour {
-
-        [SerializeField]
-        private string _key;
+    public abstract class AbstractLocalizedText : MonoBehaviour {
 
         [SerializeField]
         private Text _text;
 
         private LanguageManager _languageManager;
+        private string _localizationKey;
 
         public Text Text {
             get { return _text; }
             set { _text = value; }
         }
 
-        public string Key {
-            get { return _key; }
+        protected string LocalizationKey {
+            get { return _localizationKey; }
             set {
-                _key = value;
-                if (_text && _languageManager && _languageManager.HasKey(_key))
-                    _text.text = Process(_languageManager[_key]);
+                bool changed = _localizationKey == value;
+                _localizationKey = value;
+                if (!changed || _localizationKey == null)
+                    return;
+                if (_languageManager.HasKey(_localizationKey))
+                    _text.text = Process(_languageManager[_localizationKey]);
+                else
+                    Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key", _localizationKey));
             }
         }
 
@@ -42,11 +44,13 @@ namespace Hourai.Localization {
         /// Unity Callback. Called on the first frame before Update is called.
         /// </summary>
         protected virtual void Start() {
-            if (!_languageManager.HasKey(_key)) {
-                Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key", _key));
-            }
             _languageManager.OnChangeLanguage += OnChangeLanguage;
-            _text.text = Process(_languageManager[_key]);
+            if (_localizationKey == null)
+                return;
+            if (_languageManager.HasKey(_localizationKey))
+                _text.text = Process(_languageManager[_localizationKey]);
+            else
+                Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key", _localizationKey));
         }
 
         /// <summary>
@@ -56,15 +60,37 @@ namespace Hourai.Localization {
         void OnChangeLanguage(Language language) {
             if (!language)
                 return;
-            if (!language.ContainsKey(_key)) {
-                Debug.LogWarning(string.Format("Tried to localize key {0}, but langauge {1} has no such key", _key, language));
+            if (_localizationKey == null)
                 return;
-            }
-            _text.text = Process(language[_key]);
+            if (language.ContainsKey(_localizationKey))
+                _text.text = Process(language[_localizationKey]);
+            else
+                Debug.LogWarning(string.Format("Tried to localize key {0}, but langauge {1} has no such key", _localizationKey, language));
         }
 
         protected virtual string Process(string val) {
             return val;
+        }
+
+    }
+
+    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localized_Text")]
+    public sealed class LocalizedText : AbstractLocalizedText {
+
+        [SerializeField]
+        private string _key;
+
+        protected override void Start() {
+            base.Start();
+            Key = _key;
+
+            //Release the memory held by the key
+            _key = null;
+        }
+
+        public string Key {
+            get { return LocalizationKey; }
+            set { LocalizationKey = value; }
         }
 
     }

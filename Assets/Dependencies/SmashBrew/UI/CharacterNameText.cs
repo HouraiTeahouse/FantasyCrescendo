@@ -3,25 +3,19 @@ using Hourai.Localization;
 
 namespace Hourai.SmashBrew.UI {
 
-    [RequireComponent(typeof(LocalizedText))]
-    public class CharacterNameText : MonoBehaviour, ICharacterGUIComponent {
+    public class CharacterNameText : AbstractLocalizedText, ICharacterGUIComponent {
 
-        private LocalizedText _localizedText;
+        private AbstractLocalizedText _abstractLocalizedText;
 
         [SerializeField]
         private bool shortName;
 
-        void Awake() {
-            _localizedText = GetComponent<LocalizedText>();
-        }
+        private Character character;
 
         public void SetCharacter(CharacterData character) {
-            if (!_localizedText || !character)
+            if (!character)
                 return;
-            if (shortName)
-                _localizedText.Key = character.ShortName;
-            else
-                _localizedText.Key = character.FullName;
+            LocalizationKey = shortName ? character.ShortName : character.FullName;
         }
 
     }

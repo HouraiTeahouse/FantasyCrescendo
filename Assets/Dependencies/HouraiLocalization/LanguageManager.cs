@@ -43,13 +43,13 @@ namespace Hourai.Localization {
         /// </summary>
         public event Action<Language> OnChangeLanguage;
 
-        private List<CultureInfo> _languages;
+        private HashSet<string> _languages;
         private HashSet<string> _keys; 
 
         /// <summary>
         /// All available languages currently supported by the system.
         /// </summary>
-        public IEnumerable<CultureInfo> AvailableLanguages {
+        public IEnumerable<string> AvailableLanguages {
             get { return _languages; }
         }
 
@@ -71,22 +71,19 @@ namespace Hourai.Localization {
                 return;
             }
             Instance = this;
-            _languages = new List<CultureInfo>();
             string currentLang;
             if (!Prefs.HasKey(_langPlayerPrefKey)) {
                 CultureInfo culture = CultureInfo.CurrentCulture;
-                while (!culture.IsNeutralCulture) {
+                while (!culture.IsNeutralCulture)
                     culture = culture.Parent;
-                }
-                Debug.Log(culture.EnglishName);
                 currentLang = culture.Name.ToLower();
                 Prefs.SetString(_langPlayerPrefKey, currentLang);
             } else {
                 currentLang = Prefs.GetString(_langPlayerPrefKey);
             }
             Language[] languages = Resources.LoadAll<Language>(localizaitonResourceDirectory);
+            _languages = new HashSet<string>(languages.Select(lang => lang.name));
             _keys = new HashSet<string>(languages.SelectMany(lang => lang.Keys));
-            _languages = languages.Select(lang => CultureInfo.GetCultureInfo(lang.name)).ToList();
             foreach (Language lang in languages) {
                 if (lang.name == currentLang) 
                     CurrentLangauge = lang;
@@ -133,23 +130,6 @@ namespace Hourai.Localization {
         }
 
         /// <summary>
-        /// Loads a new language given the Microsoft language identifier.
-        /// </summary>
-        /// <param name="identifier">the Microsoft identifier for a lanuguage</param>
-        /// <exception cref="ArgumentNullException">throw if <paramref name="identifier"/> is null.</exception>
-        /// <exception cref="ArgumentException">thrown if <paramref name="identifier"/> does not correspond to any known language</exception>
-        /// <exception cref="InvalidOperationException">thrown if the language specified by <paramref name="identifier"/> is not currently supported.</exception>
-        /// <returns>the localization language</returns>
-        public Language LoadLanguage(string identifier) {
-            if(identifier == null)
-                throw new ArgumentNullException("identifier");
-            CultureInfo culture = CultureInfo.GetCultureInfo(identifier);
-            if(culture == null)
-                throw new ArgumentException(string.Format("No matching language was found with the identifier \"{0}\"", identifier));
-            return LoadLanguage(culture);
-        }
-
-        /// <summary>
         /// Loads a new language given a CultureInfo instance.
         /// </summary>
         /// <param name="language">the culture information for a language.</param>
@@ -159,9 +139,27 @@ namespace Hourai.Localization {
         public Language LoadLanguage(CultureInfo language) {
             if(language == null)
                 throw  new ArgumentNullException("language");
-            if(!_languages.Contains(language))
+            while (!language.IsNeutralCulture)
+                language = language.Parent;
+            if(!_languages.Contains(language.ToString()))
                 throw new InvalidOperationException(string.Format("Language {0} is not supported at this time.", language.EnglishName));
-            CurrentLangauge = Resources.Load<Language>(localizaitonResourceDirectory + language);
+            return LoadLanguage(language.ToString());
+        }
+
+        /// <summary>
+        /// Loads a new language given the Microsoft language identifier.
+        /// </summary>
+        /// <param name="identifier">the Microsoft identifier for a lanuguage</param>
+        /// <exception cref="ArgumentNullException">throw if <paramref name="identifier"/> is null.</exception>
+        /// <exception cref="ArgumentException">thrown if <paramref name="identifier"/> does not correspond to any known language</exception>
+        /// <exception cref="InvalidOperationException">thrown if the language specified by <paramref name="identifier"/> is not currently supported.</exception>
+        /// <returns>the localization language</returns>
+        public Language LoadLanguage(string identifier) {
+            if (identifier == null)
+                throw new ArgumentNullException("identifier");
+            if (!_languages.Contains(identifier))
+                throw new InvalidOperationException(string.Format("Language with identifier of {0} is not supported.", identifier));
+            CurrentLangauge = Resources.Load<Language>(localizaitonResourceDirectory + identifier);
             return CurrentLangauge;
         }
 

@@ -27,7 +27,7 @@ namespace Hourai.Localization.Editor {
             int oldIndex = _index;
             _index = EditorGUILayout.Popup("Current Language", _index, availableLanguages);
             if (_index != oldIndex) {
-                langManager.LoadLanguage(CultureInfo.GetCultureInfo(availableLanguages[_index]));
+                langManager.LoadLanguage(availableLanguages[_index]);
             }
         }
 
