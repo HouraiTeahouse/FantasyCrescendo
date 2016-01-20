@@ -3,25 +3,48 @@ using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
-    [RequireComponent(typeof(RawImage))]
     public class PlayerPortaitDisplay : MonoBehaviour, IPlayerGUIComponent {
 
+        [SerializeField]
         private RawImage Image;
 
+        private Player _player;
+
+        /// <summary>
+        /// Unity Callback. Called on object instantiation.
+        /// </summary>
         void Awake() {
-            Image = GetComponent<RawImage>();
+            if(!Image)
+                Image = GetComponent<RawImage>();
         }
 
-        public void SetPlayerData(Player data)
-        {
+        /// <summary>
+        /// Unity Callback. Called on object destruction.
+        /// </summary>
+        void OnDestroy() {
+            if (_player != null)
+                _player.OnChanged -= UpdateImage;
+        }
+
+        public void SetPlayerData(Player data) {
+            if (data == null)
+                return;
+            if (_player != null)
+                _player.OnChanged -= UpdateImage;
+            _player = data;
+            _player.OnChanged += UpdateImage;
+            UpdateImage();
+        }
+
+        void UpdateImage() {
             if (Image == null)
                 return;
-            if (data == null || data.Character == null) {
+            if (_player == null || _player.Character == null) {
                 Image.enabled = false;
             } else {
                 Image.enabled = true;
-                Image.texture = data.Character.GetPortrait(data.Pallete).Load().texture;
-                Image.uvRect = data.Character.CropRect;
+                Image.texture = _player.Character.GetPortrait(_player.Pallete).Load().texture;
+                Image.uvRect = _player.Character.CropRect;
             }
         }
 

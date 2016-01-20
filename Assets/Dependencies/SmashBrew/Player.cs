@@ -20,11 +20,41 @@ namespace Hourai.SmashBrew {
             get { return _playerNumber; }
         }
 
-        public CharacterData Character;
+        public event Action OnChanged;
 
-        public int CpuLevel { get; set; }
+        private CharacterData _character;
+        private int _level;
+        private int _pallete;
 
-        public int Pallete { get; set; }
+        public CharacterData Character {
+            get { return _character; }
+            set {
+                bool changed = _character == value;
+                _character = value;
+                if (changed && OnChanged != null)
+                    OnChanged();
+            }
+        }
+
+        public int CPULevel {
+            get { return _level; }
+            set {
+                bool changed = _level == value;
+                _level = value;
+                if (changed && OnChanged != null)
+                    OnChanged();
+            }
+        }
+
+        public int Pallete {
+            get { return _pallete; }
+            set {
+                bool changed = _pallete == value;
+                _pallete = value;
+                if (changed && OnChanged != null)
+                    OnChanged();
+            }
+        }
 
         public PlayerType Type { get; set; }
 
@@ -69,8 +99,8 @@ namespace Hourai.SmashBrew {
 
         public Color Color {
             get {
-                if (Type == PlayerType.None)
-                    return Color.clear;
+                //if (Type == PlayerType.None)
+                //    return Color.clear;
                 Config config = Config.Instance;
                 if (Type == PlayerType.CPU)
                     return config.CPUColor;
@@ -80,7 +110,7 @@ namespace Hourai.SmashBrew {
 
         internal Player(int number) {
             _playerNumber = number;
-            CpuLevel = 3;
+            CPULevel = 3;
         }
 
         internal Character Spawn(Transform transform = null) {

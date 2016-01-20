@@ -71,7 +71,7 @@ namespace Hourai.SmashBrew.UI {
         public void OnChangePlayerLevel(DataEvent.ChangePlayerLevelCommand cmd) {
             if (cmd.Player != _player)
                 return;
-            _levelText.text = "lv " + cmd.Player.CpuLevel;
+            _levelText.text = "lv " + cmd.Player.CPULevel;
         }
 
         public void OnChangePlayerMode(DataEvent.ChangePlayerMode cmd) {

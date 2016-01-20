@@ -82,7 +82,7 @@ namespace Hourai.SmashBrew {
         }
 
         void OnChangePlayerLevel(DataEvent.ChangePlayerLevelCommand cmd) {
-            cmd.Player.CpuLevel = cmd.NewLevel;
+            cmd.Player.CPULevel = cmd.NewLevel;
         }
 
         void OnUserChangingOptions(DataEvent.UserChangingOptions cmd) {

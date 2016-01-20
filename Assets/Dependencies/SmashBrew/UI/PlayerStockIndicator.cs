@@ -13,9 +13,35 @@ namespace Hourai.SmashBrew.UI {
         private StockMatch _stockMatch;
         private Player _player;
 
+        /// <summary>
+        /// Unity Callback. Called before the object's first frame.
+        /// </summary>
         void Start() {
             _stockMatch = FindObjectOfType<StockMatch>();
             DisableCheck();
+        }
+
+        /// <summary>
+        /// Unity Callback. Called once per frame.
+        /// </summary>
+        void Update() {
+            DisableCheck();
+
+            int stock = _stockMatch[_player];
+            bool excess = stock > standardIndicators.Length;
+            if (ExcessDisplay)
+                ExcessDisplay.gameObject.SetActive(excess);
+            if (excess) {
+                if (ExcessDisplay)
+                    ExcessDisplay.Number = stock;
+                for (var i = 0; i < standardIndicators.Length; i++)
+                    if (standardIndicators[i])
+                        standardIndicators[i].SetActive(i == 0);
+            } else {
+                for (var i = 0; i < standardIndicators.Length; i++)
+                    if (standardIndicators[i])
+                        standardIndicators[i].SetActive(i < stock);
+            }
         }
 
         void DisableCheck() {
@@ -27,26 +53,6 @@ namespace Hourai.SmashBrew.UI {
                 if (indicator)
                     indicator.SetActive(false);
             enabled = false;
-        }
-
-        void Update() {
-            DisableCheck();
-
-            int stock = _stockMatch[_player];
-            bool excess = stock > standardIndicators.Length;
-            if(ExcessDisplay)
-                ExcessDisplay.gameObject.SetActive(excess);
-            if (excess) {
-                if (ExcessDisplay)
-                    ExcessDisplay.Number = stock;
-                for (var i = 0; i < standardIndicators.Length; i++)
-                    if(standardIndicators[i])
-                        standardIndicators[i].SetActive(i == 0);
-            } else {
-                for (var i = 0; i < standardIndicators.Length; i++)
-                    if (standardIndicators[i])
-                        standardIndicators[i].SetActive(i < stock);
-            }
         }
 
         public void SetPlayerData(Player data) {
