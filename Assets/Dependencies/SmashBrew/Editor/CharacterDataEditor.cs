@@ -26,7 +26,15 @@ namespace Hourai.SmashBrew.Editor {
         }
 
         public override bool HasPreviewGUI() {
-            return targets.Length == 1;
+            if (targets.Length != 1)
+                return false;
+            var data = target as CharacterData;
+            if (data == null || data.AlternativeCount <= 0)
+                return false;
+            if (_previewSelect < 0 || _previewSelect >= data.AlternativeCount)
+                _previewSelect = 0;
+            Debug.Log(data.GetPortrait(_previewSelect).Load());
+            return data.GetPortrait(_previewSelect).Load() != null;
         }
 
         public override void DrawPreview(Rect previewArea) {

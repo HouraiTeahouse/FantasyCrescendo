@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
@@ -10,9 +11,36 @@ namespace Hourai.SmashBrew {
         [System.Serializable]
         private class Swap {
 
-            [Resource(typeof(Material))]
-            public string[] AlternativeMaterials;
-            public Renderer[] TargetRenderers;
+            [System.Serializable]
+            public class MaterialSet {
+
+                [SerializeField, Resource(typeof (Material))]
+                private string[] _materials;
+
+                public void Set(IEnumerable<Renderer> targets) {
+                    if (targets == null)
+                        return;
+                    Material[] loadedMaterials = new Material[_materials.Length];
+                    for (var i = 0; i < loadedMaterials.Length; i++)
+                        loadedMaterials[i] = Resources.Load<Material>(_materials[i]);
+                    foreach(Renderer renderer in targets)
+                        if(renderer)
+                            renderer.sharedMaterials = loadedMaterials;
+                }
+
+            }
+
+            [SerializeField]
+            private MaterialSet[] MaterialSets;
+
+            [SerializeField]
+            private Renderer[] TargetRenderers;
+
+            public void Set(int palleteSwap) {
+                if (palleteSwap < 0 || palleteSwap >= MaterialSets.Length)
+                    return;
+                MaterialSets[palleteSwap].Set(TargetRenderers);
+            }
 
         }
 
@@ -25,16 +53,8 @@ namespace Hourai.SmashBrew {
                 Debug.LogError("PlayerController does not have a Player", playerController);
             else { 
                 int palletSwap = playerController.PlayerData.Pallete;
-                foreach (var swap in _swaps) {
-                    if (palletSwap < 0 || palletSwap >= swap.AlternativeMaterials.Length)
-                        continue;
-                    var material = Resources.Load<Material>(swap.AlternativeMaterials[palletSwap]);
-                    if (material == null)
-                        continue;
-                    foreach(Renderer rend in swap.TargetRenderers)
-                        if (rend)
-                            rend.sharedMaterial = material;
-                }
+                foreach (Swap swap in _swaps) 
+                    swap.Set(palletSwap);
             }
         }
 
