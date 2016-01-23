@@ -44,7 +44,7 @@ namespace Hourai.SmashBrew.UI {
             } else {
                 Image.enabled = true;
                 Image.texture = _player.Character.GetPortrait(_player.Pallete).Load().texture;
-                Image.uvRect = _player.Character.CropRect;
+                Image.uvRect = _player.Character.CropRect(Image.texture);
             }
         }
 

@@ -29,7 +29,7 @@ namespace Hourai.SmashBrew.UI {
             if (!character || character.AlternativeCount <= 0 || character.GetPortrait(0).Load() == null)
                 return;
             _image.texture = character.GetPortrait(0).Asset.texture;
-            Rect cropRect = _cropped ? character.CropRect : new Rect(0,0,1,1);
+            Rect cropRect = _cropped ? character.CropRect(_image.texture) : new Rect(0,0,1,1);
 
             cropRect.x += _rectBias.x;
             cropRect.y += _rectBias.y;

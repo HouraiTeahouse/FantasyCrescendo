@@ -37,7 +37,11 @@ namespace Hourai.SmashBrew {
 
         [SerializeField]
         [Tooltip("")]
-        private Rect _cropRect;
+        private Vector2 _cropPositon;
+
+        [SerializeField]
+        [Tooltip("")]
+        private float _cropSize;
 
         [SerializeField, Resource(typeof(Sprite))]
         [Tooltip("The icon used to represent the character.")]
@@ -91,10 +95,6 @@ namespace Hourai.SmashBrew {
             get { return _alternativePortraits == null ? 0 : _alternativePortraits.Length; }
         }
 
-        public Rect CropRect {
-            get { return _cropRect; }
-        }
-
         public Resource<Sprite> Icon {
             get { return _iconResource; }
         }
@@ -113,6 +113,10 @@ namespace Hourai.SmashBrew {
 
         public Resource<AudioClip> VictoryTheme {
             get { return _victoryThemeResource; }
+        }
+
+        public Rect CropRect(Texture texture) {
+            return new Rect(_cropPositon.x, _cropPositon.y, _cropSize, _cropSize * (float) texture.width / (float) texture.height);
         }
 
         public Resource<Sprite> GetPortrait(int alternativeChoice) {

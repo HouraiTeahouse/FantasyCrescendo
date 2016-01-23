@@ -58,7 +58,7 @@ namespace Hourai.SmashBrew.Editor {
             Texture texture = data.GetPortrait(_previewSelect).Load().texture;
             if (_crop) {
                 Rect drawRect = previewArea;
-                Rect crop = data.CropRect;
+                Rect crop = data.CropRect(texture);
                 var midPoint = new Vector2(drawRect.x + drawRect.width/2, drawRect.y + drawRect.height/2);
                 float drawAspect = drawRect.width/drawRect.height;
                 float cropAspect = crop.width/crop.height;
