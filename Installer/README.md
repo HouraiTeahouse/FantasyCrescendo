@@ -2,7 +2,7 @@
 
 This folder contains configuration files and scripts for creating installer executables for the game.
 
-To build the installer files, the program Inno Setup is needed. Downloadable at http://www.jrsoftware.org/isinfo.php.
+To build the installer files, the program Inno Setup is needed. Downloadable at http://www.jrsoftware.org/isinfo.php. Be sure to install the included Inno Setup Preprocessor, it is required to compile the installers.
 
 To buildt the installers, build the game first in Unity into the respective Build folders. Then open the \*.iss files in Inno Setup and Build/Run.
 
