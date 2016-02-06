@@ -8,7 +8,7 @@
 AppId={{C9903768-2797-4CEB-B635-2381570C6BE9}
 AppName=Fantasy Crescendo
 AppVersion=1.0.0
-;AppVerName=Fantasy Crescendo 1.0.0
+AppVerName=Fantasy Crescendo
 AppPublisher=Hourai Teahouse
 AppPublisherURL=http://houraiteahouse.net
 AppSupportURL=http://houraiteahouse.net
@@ -16,10 +16,13 @@ AppUpdatesURL=http://houraiteahouse.net
 DefaultDirName={pf}\Fantasy Crescendo
 DefaultGroupName=Fantasy Crescendo
 AllowNoIcons=yes
-LicenseFile=D:\Users\james\Documents\Github\FantasyCrescendo\LICENSE
-OutputBaseFilename=setup
+LicenseFile=..\LICENSE
+OutputBaseFilename=FC_x86_Setup
 Compression=lzma/ultra64
 SolidCompression=yes
+OutputDir=..\Build\Win32
+ArchitecturesAllowed=x86
+ArchitecturesInstallIn64BitMode=x64
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -36,8 +39,15 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\Program Files (x86)\Inno Setup 5\Examples\fc.exe"; DestDir: "{app}"; Flags: ignoreversion
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+; Universal Items
+Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion;
+Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion;
+Source: "..\CREDITS.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\CONTRIBUTING.md"; DestDir: "{app}"; Flags: ignoreversion
+
+; 32-bit install
+Source: "..\Build\Win32\fc.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\Win32\fc_Data\*.*"; DestDir: "{app}\fc_Data"; Flags: recursesubdirs ignoreversion
 
 [Icons]
 Name: "{group}\Fantasy Crescendo"; Filename: "{app}\fc.exe"
