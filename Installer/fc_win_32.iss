@@ -1,4 +1,5 @@
 ; Setup Config file for Windows Installer
+; Note this is only for 32-bit installers
 ; Uses the Inno Setup program to compile a *.exe file to install the program
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
