@@ -37,13 +37,17 @@ namespace Hourai.SmashBrew {
             get {
                 if(_instance)
                     return _instance;
-                Config[] configs = Resources.LoadAll<Config>(string.Empty);
+                var configs = Resources.LoadAll<Config>(string.Empty);
                 if (configs.Length > 0)
                     return _instance = configs[0];
                 return _instance = CreateInstance<Config>();
             }
         }
 
+        /// <summary>
+        /// The maximum number of players supported in one match
+        /// 
+        /// </summary>
         public int MaxPlayers {
             get { return Instance.PlayerColors.Length; }
         }

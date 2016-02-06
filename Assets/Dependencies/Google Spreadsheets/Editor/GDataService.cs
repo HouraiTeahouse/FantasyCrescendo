@@ -27,21 +27,6 @@ public class GDocService {
 
         var listQuery = new ListQuery("https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/default/public/values");
 
-        const bool debugTest = false; // change to TRUE to enable debug output
-        if (debugTest) {
-            ListFeed listFeed = service.Query(listQuery);
-            Debug.Log("loaded Google Doc Spreadsheet: " + listFeed.Title.Text);
-            // Iterate through each row, printing its cell values.
-            foreach (ListEntry row in listFeed.Entries) {
-                // Print the first column's cell value
-                Debug.Log(row.Title.Text);
-                // Iterate over the remaining columns, and print each cell value
-                foreach (ListEntry.Custom element in row.Elements) {
-                    Debug.Log(element.Value);
-                }
-            }
-        }
-
         return service.Query(listQuery);
     }
 }

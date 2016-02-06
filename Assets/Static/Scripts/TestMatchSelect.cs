@@ -18,8 +18,10 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private Selection[] testCharacters;
 
+        /// <summary>
+        /// Unity callback. Called on object instantiation.
+        /// </summary>
         void Awake() {
-            Debug.Log("Test");
             var index = 0;
             foreach (var player in SmashGame.Players)
             {

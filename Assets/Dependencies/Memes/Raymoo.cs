@@ -8,7 +8,7 @@ public class Raymoo : MonoBehaviour {
         get { return true; }
     }
 
-    public string ToString()
+    public override string ToString()
     {
         return "Waki Miko Re-i-mu~";
     }
