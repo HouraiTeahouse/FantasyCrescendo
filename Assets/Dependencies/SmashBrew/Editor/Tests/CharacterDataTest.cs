@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using NUnit.Framework;
 
-namespace Hourai.SmashBrew.Editor.Tests {
+namespace Hourai.SmashBrew.Tests {
 
     public class CharacterDataTest {
 

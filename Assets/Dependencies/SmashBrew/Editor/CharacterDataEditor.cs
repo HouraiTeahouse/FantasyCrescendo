@@ -33,7 +33,7 @@ namespace Hourai.SmashBrew.Editor {
                 return false;
             if (_previewSelect < 0 || _previewSelect >= data.AlternativeCount)
                 _previewSelect = 0;
-            Debug.Log(data.GetPortrait(_previewSelect).Load());
+            //Debug.Log(data.GetPortrait(_previewSelect).Load());
             return data.GetPortrait(_previewSelect).Load() != null;
         }
 
