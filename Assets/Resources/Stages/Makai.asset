@@ -16,9 +16,21 @@ MonoBehaviour:
   - _name: Alice in Wonderland
     _artist: Pigu
     _bgm: Audio/BGM/Makai/Alice in Wonderland
-    _baseWeight: 0
+    _baseWeight: 1
     _loopStart: 2343050
     _loopEnd: 10218305
+  - _name: Legend of KAGE
+    _artist: AlteredModes
+    _bgm: Audio/BGM/Makai/Legend of KAGE
+    _baseWeight: 1
+    _loopStart: 594000
+    _loopEnd: 4122484
+  - _name: Legendary Illusion
+    _artist: AlteredModes
+    _bgm: Audio/BGM/Makai/Legendary Illusion
+    _baseWeight: 1
+    _loopStart: 1141755
+    _loopEnd: 8465752
   _sceneName: 
   _isStage: 1
   _previewImage: 
