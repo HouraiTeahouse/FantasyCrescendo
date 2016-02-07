@@ -1,20 +1,18 @@
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using System.IO;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace UnityToolbag
 {
-    [InitializeOnLoad]
     public static class UnityConstantsGenerator
     {
 
-        static UnityConstantsGenerator() {
-            Generate();
-        }
 
         [MenuItem("Edit/Generate UnityConstants.cs")]
+        [DidReloadScripts]
         public static void Generate()
         {
             // Try to find an existing file in the project called "UnityConstants.cs"
@@ -31,9 +29,8 @@ namespace UnityToolbag
                 string directory = EditorUtility.OpenFolderPanel("Choose location for UnityConstants.cs", Application.dataPath, "");
 
                 // Canceled choose? Do nothing.
-                if (string.IsNullOrEmpty(directory)) {
+                if (string.IsNullOrEmpty(directory))
                     return;
-                }
 
                 filePath = Path.Combine(directory, "UnityConstants.cs");
             }
@@ -79,22 +76,22 @@ namespace UnityToolbag
                 writer.WriteLine("    {");
                 for (int i = 0; i < 32; i++) {
                     string layer = UnityEditorInternal.InternalEditorUtility.GetLayerName(i);
-                    if (!string.IsNullOrEmpty(layer)) {
-                        writer.WriteLine("        /// <summary>");
-                        writer.WriteLine("        /// Index of layer '{0}'.", layer);
-                        writer.WriteLine("        /// </summary>");
-                        writer.WriteLine("        public const int {0} = {1};", MakeSafeForCode(layer), i);
-                    }
+                    if (string.IsNullOrEmpty(layer))
+                        continue;
+                    writer.WriteLine("        /// <summary>");
+                    writer.WriteLine("        /// Index of layer '{0}'.", layer);
+                    writer.WriteLine("        /// </summary>");
+                    writer.WriteLine("        public const int {0} = {1};", MakeSafeForCode(layer), i);
                 }
                 writer.WriteLine();
                 for (int i = 0; i < 32; i++) {
                     string layer = UnityEditorInternal.InternalEditorUtility.GetLayerName(i);
-                    if (!string.IsNullOrEmpty(layer)) {
-                        writer.WriteLine("        /// <summary>");
-                        writer.WriteLine("        /// Bitmask of layer '{0}'.", layer);
-                        writer.WriteLine("        /// </summary>");
-                        writer.WriteLine("        public const int {0}Mask = 1 << {1};", MakeSafeForCode(layer), i);
-                    }
+                    if (string.IsNullOrEmpty(layer))
+                        continue;
+                    writer.WriteLine("        /// <summary>");
+                    writer.WriteLine("        /// Bitmask of layer '{0}'.", layer);
+                    writer.WriteLine("        /// </summary>");
+                    writer.WriteLine("        public const int {0}Mask = 1 << {1};", MakeSafeForCode(layer), i);
                 }
                 writer.WriteLine("    }");
                 writer.WriteLine();
@@ -120,13 +117,13 @@ namespace UnityToolbag
                 foreach (SerializedProperty axe in inputManagerProp.FindProperty("m_Axes")) {
                     var name = axe.FindPropertyRelative("m_Name").stringValue;
                     var variableName = MakeSafeForCode(name);
-                    if (!axes.Contains(variableName)) {
-                        writer.WriteLine("        /// <summary>");
-                        writer.WriteLine("        /// Input axis '{0}'.", name);
-                        writer.WriteLine("        /// </summary>");
-                        writer.WriteLine("        public const string {0} = \"{1}\";", variableName, name);
-                        axes.Add(variableName);
-                    }
+                    if (axes.Contains(variableName))
+                        continue;
+                    writer.WriteLine("        /// <summary>");
+                    writer.WriteLine("        /// Input axis '{0}'.", name);
+                    writer.WriteLine("        /// </summary>");
+                    writer.WriteLine("        public const string {0} = \"{1}\";", variableName, name);
+                    axes.Add(variableName);
                 }
                 writer.WriteLine("    }");
 
