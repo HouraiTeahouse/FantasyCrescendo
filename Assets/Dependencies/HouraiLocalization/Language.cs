@@ -4,6 +4,16 @@ using System.Collections.Generic;
 
 namespace Hourai.Localization {
 
+    /// <summary>
+    /// A class of ScriptableObjects that simply stores a set of String-String 
+    /// key-value pairs corresponding to the localization keys and the respective
+    /// localized strings for that one particular language.
+    /// 
+    /// Specially created to be saved as an asset file that can be loaded dynamically
+    /// via Resources.
+    /// 
+    /// Cannot be created through the editor, must be generated with LocalizationGenerator.
+    /// </summary>
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Asset")]
     public class Language : ScriptableObject, ISerializationCallbackReceiver {
 
