@@ -1,20 +1,30 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Hourai.Events;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
 
+    /// <summary>
+    /// A Match Rule defining a Stock-based Match.
+    /// 
+    /// Players will have a fixed number of lives to lose, via exiting the blast zone.
+    /// After which they will no longer respawn, and cannot further participate.
+    /// The winner is the last player standing.
+    /// </summary>
     public class StockMatch : MatchRule {
 
-        //TODO: Remove UI Code from this class
-
-        //TODO: cleanup
-
+        /// <summary>
+        /// The number of stock the players start with.
+        /// </summary>
         [SerializeField]
         private int stock = 5;
 
         private Mediator _eventManager;
+
+        /// <summary>
+        /// The store of how many lives each player currently has.
+        /// </summary>
         private Dictionary<Player, int> _stocks;
 
         /// <summary>
@@ -36,12 +46,11 @@ namespace Hourai.SmashBrew {
         }
 
         /// <summary>
-        /// Is the Match finished?
+        /// Unity Callback. Called once every frame.
         /// </summary>
-        protected override bool IsFinished {
-            get {
-                return _stocks.Values.Sum(s => (s > 0) ? 1 : 0) > 1;
-            }
+        void Update() {
+            if(_stocks.Values.Count(lives => lives > 0) <= 1)
+                Match.FinishMatch();
         }
 
         /// <summary>
@@ -53,17 +62,33 @@ namespace Hourai.SmashBrew {
             get { return _stocks[player]; }
         }
 
-        public override Player Winner {
-            get {
-                Player winner = null;
-                foreach (KeyValuePair<Player, int> characterStock in _stocks.Where(characterStock => characterStock.Value > 0)) {
-                    if (winner == null)
-                        winner = characterStock.Key;
-                    else
-                        winner = (characterStock.Value > _stocks[winner]) ? characterStock.Key : winner;
+        /// <summary>
+        /// Gets the winner of the match.
+        /// </summary>
+        /// <remarks>
+        /// Note this will return the player with the greatest number of remaining lives left.
+        /// If there are more than player with the maximum number of stocks, no winner will be
+        /// declared, and this method will return null.
+        /// </remarks>
+        /// <returns>the winning Player, null if it is a tie</returns>
+        public override Player GetWinner() {
+            Player winner = null;
+            var maxStocks = int.MinValue;
+            foreach (KeyValuePair<Player, int> playerStock in _stocks) {
+                if (playerStock.Value < maxStocks)
+                    continue;
+                else if (playerStock.Value == maxStocks) {
+                    // More than one player has the maximum number of lives
+                    // it is a tie, don't declare a winner
+                    winner = null;
+                } else {
+                    // a new maximum number of lives has been found
+                    // declare them the winner
+                    winner = playerStock.Key;
+                    maxStocks = playerStock.Value;
                 }
-                return winner;
             }
+            return winner;
         }
 
         bool RespawnCheck(Player character) {
@@ -73,6 +98,10 @@ namespace Hourai.SmashBrew {
             return _stocks[character] > 1;
         }
 
+        /// <summary>
+        /// Event callback. Called every time a Player dies.
+        /// </summary>
+        /// <param name="eventArgs">the death event arguments</param>
         void OnPlayerDie(PlayerDieEvent eventArgs) {
             if (eventArgs.Revived || _stocks[eventArgs.Player] <= 0)
                 return;
@@ -81,6 +110,11 @@ namespace Hourai.SmashBrew {
             eventArgs.Revived = true;
         }
 
+        /// <summary>
+        /// Event callback. Called every time a Player spawns for the first time.
+        /// Note this is not called when the player respawns.
+        /// </summary>
+        /// <param name="eventArgs">the spawn event arguments</param>
         void OnSpawn(PlayerSpawnEvent eventArgs) {
             if (!isActiveAndEnabled)
                 return;

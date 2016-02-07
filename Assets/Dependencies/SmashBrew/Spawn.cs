@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using Hourai.Events;
-using UnityEngine.Networking;
 
 namespace Hourai.SmashBrew {
 
@@ -24,23 +23,21 @@ namespace Hourai.SmashBrew {
         /// </summary>
         void Awake() {
             _eventManager = GlobalMediator.Instance;
-            _eventManager.Subscribe<MatchEvent>(OnMatchStart);
+            _eventManager.Subscribe<MatchStartEvent>(OnMatchStart);
         }
 
         /// <summary>
         /// Unity Callback. Called on object destruction.
         /// </summary>
         void OnDestroy() {
-            _eventManager.Unsubscribe<MatchEvent>(OnMatchStart);
+            _eventManager.Unsubscribe<MatchStartEvent>(OnMatchStart);
         }
 
         /// <summary>
         /// Spawns players when the match begins.
         /// </summary>
-        /// <param name="eventArgs"></param>
-        void OnMatchStart(MatchEvent eventArgs) {
-            if (!eventArgs.Start)
-                return;
+        /// <param name="startEventArgs"></param>
+        void OnMatchStart(MatchStartEvent startEventArgs) {
             var i = 0;
             IEnumerator<Player> activePlayers = SmashGame.ActivePlayers.GetEnumerator();
             while (i < _spawnPoints.Length && activePlayers.MoveNext()) {
