@@ -134,7 +134,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &139964
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -222,6 +222,21 @@ GameObject:
   - 114: {fileID: 11410960}
   m_Layer: 5
   m_Name: Portrait
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &167360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22419078}
+  m_Layer: 5
+  m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -422,7 +437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02dc4c5d8e1ef6d4fb60e08c277c8f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: 
   _text: {fileID: 0}
   toUpperCase: 1
 --- !u!114 &11405868
@@ -1211,6 +1225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6822198d786d7764ea50b38de258cdb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Image: {fileID: 0}
 --- !u!114 &11451670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1863,10 +1878,28 @@ RectTransform:
   m_Children:
   - {fileID: 22484144}
   - {fileID: 22419632}
-  m_Father: {fileID: 22445206}
+  m_Father: {fileID: 22419078}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &22419078
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167360}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 22417094}
+  m_Father: {fileID: 22445206}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1985,7 +2018,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 22417094}
+  - {fileID: 22419078}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}

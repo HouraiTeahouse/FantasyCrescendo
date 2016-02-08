@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using InControl;
 using UnityEngine;
@@ -8,14 +9,62 @@ namespace Hourai.SmashBrew {
     
     public sealed class Player {
 
-        private static Player[] _players;
+        public class PlayerType {
+            public string Name { get; private set; }
+            public bool IsActive { get; private set; }
+            public bool IsCPU { get; private set; }
+            public Color? Color { get; private set; }
+            public PlayerType Next { get; private set; }
+
+            public static readonly PlayerType[] Types;
+
+            public static readonly PlayerType None =
+                new PlayerType {
+                    Name = "None",
+                    IsActive = false,
+                    IsCPU = false,
+                    Color = UnityEngine.Color.clear
+                };
+
+            public static readonly PlayerType HumanPlayer =
+                new PlayerType {
+                    Name = "Player {0}",
+                    IsActive = true,
+                    IsCPU = false,
+                    Color = null
+                };
+
+            public static readonly PlayerType CPU =
+                new PlayerType {
+                    Name = "CPU",
+                    IsActive = true,
+                    IsCPU = true,
+                    Color = UnityEngine.Color.gray
+                };
+
+
+            static PlayerType() {
+                Types = new [] {
+                    None, HumanPlayer, CPU
+                };
+                for (var i = 0; i < Types.Length - 1; i++)
+                    Types[i].Next = Types[i + 1];
+                Types[Types.Length - 1].Next = Types[0];
+            }
+
+            PlayerType() {                
+            }
+        }
+
+        private static readonly Player[] _players;
+        private static readonly ReadOnlyCollection<Player> _playerCollection; 
 
         static Player() {
             var config = Config.Instance;
             _players = new Player[config.MaxPlayers];
-            for (var i = 0; i < _players.Length; i++) {
+            for (var i = 0; i < _players.Length; i++)
                 _players[i] = new Player(i);
-            }
+            _playerCollection = new ReadOnlyCollection<Player>(_players);
         }
 
         /// <summary>
@@ -36,11 +85,8 @@ namespace Hourai.SmashBrew {
         /// Gets an enumeration of all Player.
         /// Note this includes all inactive players as well.
         /// </summary>
-        public static IEnumerable<Player> AllPlayers {
-            get {
-                foreach (var player in _players)
-                    yield return player;
-            }
+        public static ReadOnlyCollection<Player> AllPlayers {
+            get { return _playerCollection; }
         }
 
         /// <summary>
@@ -48,7 +94,7 @@ namespace Hourai.SmashBrew {
         /// To get an enumeration of all AllPlayers, active or not, see <see cref="AllPlayers"/>
         /// </summary>
         public static IEnumerable<Player> ActivePlayers {
-            get { return _players.Where(player => player.Type != Player.PlayerType.None); }
+            get { return _players.Where(player => player.IsActive); }
         }
 
         /// <summary>
@@ -59,25 +105,13 @@ namespace Hourai.SmashBrew {
         }
 
         /// <summary>
-        /// Gets the count of currently active AllPlayers.
+        /// Gets the count of currently active Players.
         /// </summary>
         public static int ActivePlayerCount {
             get { return ActivePlayers.Count(); }
         }
 
-        public enum PlayerType {
-
-            None = 0,
-            CPU = 1,
-            HumanPlayer = 2
-
-        };
-
-        private readonly int _playerNumber;
-
-        public int PlayerNumber {
-            get { return _playerNumber; }
-        }
+        public int PlayerNumber { get; private set; }
 
         public event Action OnChanged;
 
@@ -85,12 +119,21 @@ namespace Hourai.SmashBrew {
         private int _level;
         private int _pallete;
 
+        public bool IsActive {
+            get { return Type.IsActive; }
+        }
+
+        public bool IsCPU {
+            get { return Type.IsCPU; }
+        }
+
         public CharacterData Character {
             get { return _character; }
             set {
-                bool changed = _character == value;
+                if (_character == value)
+                    return;
                 _character = value;
-                if (changed && OnChanged != null)
+                if (OnChanged != null)
                     OnChanged();
             }
         }
@@ -98,9 +141,10 @@ namespace Hourai.SmashBrew {
         public int CPULevel {
             get { return _level; }
             set {
-                bool changed = _level == value;
+                if (_level == value)
+                    return;
                 _level = value;
-                if (changed && OnChanged != null)
+                if (OnChanged != null)
                     OnChanged();
             }
         }
@@ -108,14 +152,24 @@ namespace Hourai.SmashBrew {
         public int Pallete {
             get { return _pallete; }
             set {
-                bool changed = _pallete == value;
+                if (_pallete == value)
+                    return;
                 _pallete = value;
-                if (changed && OnChanged != null)
+                if (OnChanged != null)
                     OnChanged();
             }
         }
 
-        public PlayerType Type { get; set; }
+        private PlayerType _type;
+
+        public PlayerType Type {
+            get { return _type; }
+            set {
+                if(value == null)
+                    throw new ArgumentNullException();
+                _type = value;
+            }
+        }
 
         public InputDevice Controller {
             get {
@@ -126,6 +180,19 @@ namespace Hourai.SmashBrew {
         }
 
         public Character SpawnedCharacter { get; private set; }
+
+        /// <summary>
+        /// Gets a Player object given the Player's number.
+        /// 
+        /// Note: player numbers are zero indexed. Player 1 is player 0 i nternally.
+        /// </summary>
+        /// <param name="playerNumber">the Player Number of the player to retrieve</param>
+        /// <returns>the Player object</returns>
+        public static Player GetPlayer(int playerNumber) {
+            if(playerNumber < 0 || playerNumber > _players.Length)
+                throw new ArgumentException("playerNumber");
+            return _players[playerNumber];
+        }
 
         public static Player GetPlayer(GameObject go) {
             if (!go)
@@ -146,33 +213,25 @@ namespace Hourai.SmashBrew {
             return GetPlayer(comp) != null;
         }
 
-        public static PlayerType GetNextType(PlayerType pt) {
-            return pt + 1 > PlayerType.HumanPlayer ? PlayerType.None : pt + 1;
-        }
-
         public void CycleType() {
-            Type = GetNextType(Type);
-            if (Type == PlayerType.None)
-                Character = null;
+            Type = Type.Next;
         }
 
         public Color Color {
             get {
-                //if (Type == PlayerType.None)
-                //    return Color.clear;
-                Config config = Config.Instance;
-                if (Type == PlayerType.CPU)
-                    return config.CPUColor;
-                return config.GetPlayerColor(PlayerNumber);
+                if (Type.Color != null)
+                    return Type.Color.Value;
+                return Config.Instance.GetPlayerColor(PlayerNumber);
             }
         }
 
         internal Player(int number) {
-            _playerNumber = number;
+            PlayerNumber = number;
+            Type = PlayerType.Types[0];
             CPULevel = 3;
         }
 
-        internal Character Spawn(Transform transform = null) {
+        internal Character Spawn(Transform transform) {
             if(transform == null)
                 throw new ArgumentNullException("transform");
             return Spawn(transform.position, transform.rotation);
@@ -189,6 +248,10 @@ namespace Hourai.SmashBrew {
             return SpawnedCharacter;
         }
 
+        public override string ToString() {
+            return string.Format(Type.Name, PlayerNumber);
+        }
+
         public override bool Equals(object obj) {
             if (obj is Player)
                 return this == ((Player) obj);
@@ -196,7 +259,7 @@ namespace Hourai.SmashBrew {
         }
 
         public override int GetHashCode() {
-            return _playerNumber;
+            return PlayerNumber;
         }
 
         public static bool operator ==(Player p1, Player p2) {

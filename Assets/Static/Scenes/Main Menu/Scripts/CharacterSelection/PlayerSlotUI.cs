@@ -1,4 +1,4 @@
-﻿using Hourai.Events;
+using Hourai.Events;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +17,6 @@ namespace Hourai.SmashBrew.UI {
 
         [SerializeField]
         private Button _playerModeBtn = null;
-
-        public Player.PlayerType Type = Player.PlayerType.HumanPlayer;
 
         void Start() {
             DataManager dm = DataManager.Instance;
@@ -50,12 +48,7 @@ namespace Hourai.SmashBrew.UI {
                 return;
             }
 
-            Type = pt;
-            levelTextParent.SetActive(Type != Player.PlayerType.None);
-            string text = Type.ToString().ToUpper();
-            if (Type == Player.PlayerType.HumanPlayer)
-                text += " " + _player.PlayerNumber;
-            buttonText.text = text;
+            buttonText.text = pt.Name.ToUpper();
         }
 
         public void ChangePlayerMode() {
@@ -77,7 +70,8 @@ namespace Hourai.SmashBrew.UI {
         public void OnChangePlayerMode(DataEvent.ChangePlayerMode cmd) {
             if (cmd.Player != _player)
                 return;
-            UpdateUiMode(Player.GetNextType(Type));
+            cmd.Player.CycleType();
+            UpdateUiMode(cmd.Player.Type);
         }
 
         public void SetPlayerData(Player data) {
