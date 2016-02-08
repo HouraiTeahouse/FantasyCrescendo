@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Hourai.Events;
 using UnityEngine;
@@ -76,7 +76,7 @@ namespace Hourai.SmashBrew {
         /// </summary>
         /// <returns><c>true</c>, if the battle can start, <c>false</c> otherwise.</returns>
         public bool IsReadyToStartGame() {
-            int counter = SmashGame.ActivePlayerCount;
+            int counter = Player.ActivePlayerCount;
             Mediator.Publish(new DataEvent.ReadyToFight { IsReady = (counter > 1) });
             return (counter > 1);
         }

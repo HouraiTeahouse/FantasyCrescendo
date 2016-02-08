@@ -25,7 +25,6 @@ namespace InControl
 		public static bool MenuWasPressed { get; private set; }
 		public static bool InvertYAxis;
 
-		static bool enableXInput;
 		static bool isSetup;
 
 		static float initialTime;
@@ -67,10 +66,8 @@ namespace InControl
 			isSetup = true;
 
 			#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-			if (enableXInput)
-			{
+			if (EnableXInput)
 				XInputDeviceManager.Enable();
-			}
 			#endif
 
 			if (OnSetup != null)

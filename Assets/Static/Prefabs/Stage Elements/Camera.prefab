@@ -27,8 +27,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 499316}
   - 20: {fileID: 2062228}
-  - 92: {fileID: 9238990}
-  - 124: {fileID: 12431790}
   - 81: {fileID: 8130966}
   - 114: {fileID: 11451362}
   - 114: {fileID: 11459490}
@@ -99,7 +97,7 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
+  m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -133,13 +131,6 @@ BoxCollider:
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!81 &8130966
 AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186044}
-  m_Enabled: 1
---- !u!92 &9238990
-Behaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -232,7 +223,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186044}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 646b5bc27a658f447b1d929fd5ffbd70, type: 3}
   m_Name: 
@@ -417,13 +408,6 @@ MonoBehaviour:
     type: 3}
   colorCorrectionSelectiveShader: {fileID: 4800000, guid: e515e0f94cefc4c0db54b45cba621544,
     type: 3}
---- !u!124 &12431790
-Behaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186044}
-  m_Enabled: 1
 --- !u!135 &13589996
 SphereCollider:
   m_ObjectHideFlags: 1

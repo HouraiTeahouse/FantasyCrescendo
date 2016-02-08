@@ -39,7 +39,7 @@ namespace Hourai.SmashBrew {
         /// <param name="startEventArgs"></param>
         void OnMatchStart(MatchStartEvent startEventArgs) {
             var i = 0;
-            IEnumerator<Player> activePlayers = SmashGame.ActivePlayers.GetEnumerator();
+            IEnumerator<Player> activePlayers = Player.ActivePlayers.GetEnumerator();
             while (i < _spawnPoints.Length && activePlayers.MoveNext()) {
                 Player player = activePlayers.Current;
                 Character runtimeCharacter = player.Spawn(_spawnPoints[i]);

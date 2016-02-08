@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
     /// <summary>
-    /// Constructs the player section of the 
+    /// Constructs the player section of the in-match UI 
     /// </summary>
     public class CharacterSelectBuilder : MonoBehaviour {
 
@@ -41,6 +41,7 @@ namespace Hourai.SmashBrew.UI {
             LayoutRebuilder.MarkLayoutForRebuild(child);
         }
 
+        //TODO: Change this to create a player display each time a player is spawned
         void CreateCharacterSelect() {
             DataManager dataManager = DataManager.Instance;
             if (dataManager == null || !_characterContainer || !_character)
@@ -63,7 +64,7 @@ namespace Hourai.SmashBrew.UI {
                 return;
 
             //Create a player display for as many players as the game can support
-            foreach (Player player in SmashGame.Players) {
+            foreach (Player player in Player.ActivePlayers) {
                 RectTransform display = Instantiate(_playerDisplay);
                 Attach(display, _playerContainer);
 

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
@@ -56,7 +56,7 @@ namespace Hourai.SmashBrew.UI {
         }
 
         public void FillPlayerSlots() {
-            foreach(Player player in SmashGame.Players) {
+            foreach(Player player in Player.ActivePlayers) {
                 GameObject go = Instantiate(_playerSlotPrefab);
                 var psu = go.GetComponent<PlayerSlotUI>();
                 if (psu == null) {

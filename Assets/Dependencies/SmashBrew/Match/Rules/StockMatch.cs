@@ -8,7 +8,7 @@ namespace Hourai.SmashBrew {
     /// <summary>
     /// A Match Rule defining a Stock-based Match.
     /// 
-    /// Players will have a fixed number of lives to lose, via exiting the blast zone.
+    /// AllPlayers will have a fixed number of lives to lose, via exiting the blast zone.
     /// After which they will no longer respawn, and cannot further participate.
     /// The winner is the last player standing.
     /// </summary>

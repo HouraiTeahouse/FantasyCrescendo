@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -135,6 +135,7 @@ namespace Hourai.SmashBrew {
             _prefabResource = new Resource<GameObject>(_prefab);
             _portraitResources = new Resource<Sprite>[_alternativePortraits.Length];
             _homeStageResource = new Resource<SceneData>(_homeStage);
+            _announcerResource = new Resource<AudioClip>(_announcerClip);
             _victoryThemeResource = new Resource<AudioClip>(_victoryTheme);
             for(var i = 0; i < _alternativePortraits.Length; i++)
                 _portraitResources[i] = new Resource<Sprite>(_alternativePortraits[i]);
