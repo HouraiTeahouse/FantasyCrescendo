@@ -41,7 +41,6 @@ namespace Hourai.SmashBrew.UI {
             LayoutRebuilder.MarkLayoutForRebuild(child);
         }
 
-        //TODO: Change this to create a player display each time a player is spawned
         void CreateCharacterSelect() {
             DataManager dataManager = DataManager.Instance;
             if (dataManager == null || !_characterContainer || !_character)
@@ -64,7 +63,7 @@ namespace Hourai.SmashBrew.UI {
                 return;
 
             //Create a player display for as many players as the game can support
-            foreach (Player player in Player.ActivePlayers) {
+            foreach (Player player in Player.AllPlayers) {
                 RectTransform display = Instantiate(_playerDisplay);
                 Attach(display, _playerContainer);
 
