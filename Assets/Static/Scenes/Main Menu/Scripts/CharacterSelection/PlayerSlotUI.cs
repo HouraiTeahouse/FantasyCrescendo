@@ -41,7 +41,6 @@ namespace Hourai.SmashBrew.UI {
         }
 
         public void UpdateUiMode(Player.PlayerType pt) {
-            GameObject levelTextParent = _levelText.transform.parent.gameObject;
             var buttonText = _playerModeBtn.GetComponentInChildren<Text>();
             if (buttonText == null) {
                 Debug.LogError("Unable to get player slot button text.");

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Hourai.Events;
@@ -10,8 +11,11 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private bool _dontDestroyOnLoad;
 
-        private ReadOnlyCollection<CharacterData> _characters;
-        private ReadOnlyCollection<SceneData> _scenes;  
+        private List<CharacterData> _characters;
+        private List<SceneData> _scenes;
+
+        private ReadOnlyCollection<CharacterData> _characterCollection;
+        private ReadOnlyCollection<SceneData> _sceneCollection;  
 
         public Mediator Mediator { get; private set; }
 
@@ -24,11 +28,9 @@ namespace Hourai.SmashBrew {
         /// All Characters that are included with the Game's build.
         /// The Data Manager will automatically load all CharacterData instances from Resources.
         /// </summary>
-        public ICollection<CharacterData> Characters {
+        public ReadOnlyCollection<CharacterData> Characters {
             get {
-                if (_characters == null)
-                    _characters = new ReadOnlyCollection<CharacterData>(Resources.LoadAll<CharacterData>(string.Empty));
-                return _characters;
+                return _characterCollection;
             }
         }
 
@@ -36,11 +38,9 @@ namespace Hourai.SmashBrew {
         /// All Scenes and their metadata included with the game's build.
         /// The DataManager will automatically load all SceneData instances from Resources.
         /// </summary>
-        public ICollection<SceneData> Scenes {
+        public ReadOnlyCollection<SceneData> Scenes {
             get {
-                if(_scenes == null)
-                   _scenes = new ReadOnlyCollection<SceneData>(Resources.LoadAll<SceneData>(string.Empty));
-                return _scenes;
+                return _sceneCollection;
             }
         }
 
@@ -52,7 +52,13 @@ namespace Hourai.SmashBrew {
 
             if(_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
-            
+
+            _characters = new List<CharacterData>(Resources.LoadAll<CharacterData>(string.Empty));
+            _scenes = new List<SceneData>(Resources.LoadAll<SceneData>(string.Empty)); 
+           
+            _characterCollection = new ReadOnlyCollection<CharacterData>(_characters);
+            _sceneCollection = new ReadOnlyCollection<SceneData>(_scenes);
+
             Mediator = GlobalMediator.Instance;
             Mediator.Subscribe<DataEvent.ChangePlayerLevelCommand>(OnChangePlayerLevel);
             Mediator.Subscribe<DataEvent.ChangePlayerMode>(OnChangePlayerMode);
