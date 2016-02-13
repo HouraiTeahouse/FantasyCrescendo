@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd91028166066874c8c74854b537bb77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _announcer: {fileID: 8240548}
 --- !u!114 &11479160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -325,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cropped: 1
   _disabledTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  _rectBias: {x: 0, y: -0.035}
+  _rectBias: {x: 0, y: -0.015}
 --- !u!114 &11497276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -467,6 +468,10 @@ Prefab:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _announcer
+      value: 
+      objectReference: {fileID: 8240548}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 134594}
