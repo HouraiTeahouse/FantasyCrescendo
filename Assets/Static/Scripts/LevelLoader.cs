@@ -1,6 +1,11 @@
-﻿using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 
 namespace Hourai {
 
@@ -21,6 +26,9 @@ namespace Hourai {
 
         [SerializeField, Scene]
         private string[] _scenes;
+
+        [SerializeField, Tooltip("Ignore if scenes are already loaded?")]
+        private bool _ignoreLoadedScenes;
 
         public string[] Scenes {
             get { return _scenes; }
@@ -48,9 +56,16 @@ namespace Hourai {
         }
 
         public void Load() {
+#if UNITY_EDITOR
+            var scenes = new HashSet<string>(EditorSceneManager.GetSceneManagerSetup().Select(scene => scene.path));
+#endif
             foreach (string scenePath in _scenes) {
+#if UNITY_EDITOR
+                if (scenes.Contains(scenePath) && !_ignoreLoadedScenes)
+                    continue;
+#endif
                 Scene scene = SceneManager.GetSceneByPath(scenePath);
-                if (scene.isLoaded)
+                if (scene.isLoaded && !_ignoreLoadedScenes)
                     continue;
                 SceneManager.LoadScene(scenePath, _mode);
             }
