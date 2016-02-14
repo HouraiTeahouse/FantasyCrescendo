@@ -25,7 +25,7 @@ namespace Hourai.SmashBrew.UI {
             get { return _target; }
             set {
                 _target = value;
-                _collider = (_target != null)? _target.SpawnedCharacter.MovementCollider : null;
+                _collider = (_target != null)? _target.PlayerObject.MovementCollider : null;
                 if (_target != null)
                     _text.text = (_target.PlayerNumber + 1).ToString(_format);
                 _cUIColor.SetPlayerData(_target);

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Hourai.SmashBrew.UI {
     
@@ -8,12 +8,12 @@ namespace Hourai.SmashBrew.UI {
         protected Character Character { get; private set; }
 
         public void SetPlayerData(Player data) {
-            if (data == null || data.SpawnedCharacter == null) {
+            if (data == null || data.PlayerObject == null) {
                 Component = null;
                 Character = null;
                 return;
             }
-            Character = data.SpawnedCharacter;
+            Character = data.PlayerObject;
             Component = Character.GetComponentInChildren<T>();
         }
 

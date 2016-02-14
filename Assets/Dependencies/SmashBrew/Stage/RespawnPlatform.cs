@@ -1,4 +1,4 @@
-﻿using Hourai.Events;
+using Hourai.Events;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -30,7 +30,7 @@ namespace Hourai.SmashBrew {
             if (Occupied || eventArgs.Consumed)
                 return;
             eventArgs.Consumed = true;
-            _character = eventArgs.Player.SpawnedCharacter;
+            _character = eventArgs.Player.PlayerObject;
             _character.Rigidbody.velocity = Vector3.zero;
             _character.transform.position = transform.position;
             _character.transform.rotation = Quaternion.identity;

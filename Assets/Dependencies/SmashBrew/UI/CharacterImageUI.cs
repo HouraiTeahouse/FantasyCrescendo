@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -25,9 +24,10 @@ namespace Hourai.SmashBrew.UI {
         private float _aspectRatio;
 
         /// <summary>
-        /// 
+        /// Unity Callback. Called on object instantiation.
         /// </summary>
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             _image = GetComponent<RawImage>();
             _defaultColor = _image.color;
             _rectTransform = transform as RectTransform;

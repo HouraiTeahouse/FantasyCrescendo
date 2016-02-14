@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
@@ -39,12 +39,12 @@ namespace Hourai.SmashBrew.UI {
         void UpdateImage() {
             if (Image == null)
                 return;
-            if (_player == null || _player.Character == null) {
+            if (_player == null || _player.SelectedCharacter == null) {
                 Image.enabled = false;
             } else {
                 Image.enabled = true;
-                Image.texture = _player.Character.GetPortrait(_player.Pallete).Load().texture;
-                Image.uvRect = _player.Character.CropRect(Image.texture);
+                Image.texture = _player.SelectedCharacter.GetPortrait(_player.Pallete).Load().texture;
+                Image.uvRect = _player.SelectedCharacter.CropRect(Image.texture);
             }
         }
 

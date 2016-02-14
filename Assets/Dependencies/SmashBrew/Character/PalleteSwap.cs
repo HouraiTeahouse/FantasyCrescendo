@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Hourai.SmashBrew {
@@ -47,14 +47,14 @@ namespace Hourai.SmashBrew {
         [SerializeField]
         private Swap[] _swaps;
 
-        void Start() {
-            var playerController = GetComponentInParent<PlayerController>();
-            if (playerController.PlayerData == null)
-                Debug.LogError("PlayerController does not have a Player", playerController);
-            else { 
-                int palletSwap = playerController.PlayerData.Pallete;
-                foreach (Swap swap in _swaps) 
-                    swap.Set(palletSwap);
+        private int _color;
+
+        public int Pallete {
+            get { return _color; }
+            set {
+                _color = value;
+                foreach (Swap swap in _swaps)
+                    swap.Set(value);
             }
         }
 

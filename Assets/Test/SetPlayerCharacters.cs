@@ -9,7 +9,7 @@ public class SetPlayerCharacters : MonoBehaviour, ISubmitHandler {
 
     public void OnSubmit(BaseEventData eventData) {
         foreach (var player in Player.ActivePlayers) {
-            player.Character = character;
+            player.SelectedCharacter = character;
             player.Pallete = 0;
             if(player.PlayerNumber < 2)
                 player.Type = Player.PlayerType.HumanPlayer;

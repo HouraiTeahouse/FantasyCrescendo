@@ -28,7 +28,7 @@ namespace Hourai.SmashBrew {
                     break;
                 if (player == null || testCharacters[index] == null)
                     continue;
-                player.Character = testCharacters[index].Data;
+                player.SelectedCharacter = testCharacters[index].Data;
                 player.Pallete = testCharacters[index].Pallete;
                 player.Type = Player.PlayerType.HumanPlayer;
                 index++;

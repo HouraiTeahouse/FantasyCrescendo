@@ -47,7 +47,7 @@ namespace Hourai.SmashBrew {
                 if (runtimeCharacter == null)
                     continue;
 
-                _eventManager.Publish(new PlayerSpawnEvent { Player = player, PlayerObject = runtimeCharacter.gameObject });
+                _eventManager.Publish(new PlayerSpawnEvent {Player = player, PlayerObject = runtimeCharacter.gameObject});
 
                 //TODO: Fix this hack, get netplay working
                 runtimeCharacter.gameObject.SetActive(true);

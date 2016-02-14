@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using InControl;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Hourai.SmashBrew {
     
@@ -115,7 +116,7 @@ namespace Hourai.SmashBrew {
 
         public event Action OnChanged;
 
-        private CharacterData _character;
+        private CharacterData _selectedCharacter;
         private int _level;
         private int _pallete;
 
@@ -123,21 +124,41 @@ namespace Hourai.SmashBrew {
             get { return Type.IsActive; }
         }
 
+        /// <summary>
+        /// Gets whether the Player is a CPU or not.
+        /// True if the player is AI controlled, false if human controlled.
+        /// </summary>
         public bool IsCPU {
             get { return Type.IsCPU; }
         }
 
-        public CharacterData Character {
-            get { return _character; }
+        /// <summary>
+        /// The Player's selected Character.
+        /// If null, a random Character will be spawned when the match starts.
+        /// </summary>
+        public CharacterData SelectedCharacter {
+            get { return _selectedCharacter; }
             set {
-                if (_character == value)
+                if (_selectedCharacter == value)
                     return;
-                _character = value;
+                _selectedCharacter = value;
                 if (OnChanged != null)
                     OnChanged();
             }
         }
 
+        /// <summary>
+        /// Gets the CharacterData specifying the actual character spawned
+        /// for the Player.
+        /// 
+        /// May be different from <see cref="SelectedCharacter"/>, particularly
+        /// if the Character was randomly selected.
+        /// </summary>
+        public CharacterData SpawnedCharacter { get; private set; }
+
+        /// <summary>
+        /// The AI level 
+        /// </summary>
         public int CPULevel {
             get { return _level; }
             set {
@@ -179,7 +200,10 @@ namespace Hourai.SmashBrew {
             }
         }
 
-        public Character SpawnedCharacter { get; private set; }
+        /// <summary>
+        /// The actual spawned GameObject of the Player.
+        /// </summary>
+        public Character PlayerObject { get; private set; }
 
         /// <summary>
         /// Gets a Player object given the Player's number.
@@ -238,14 +262,25 @@ namespace Hourai.SmashBrew {
         }
 
         internal Character Spawn(Vector3 pos, Quaternion rot) {
-            GameObject prefab = Character.Prefab.Load();
+            SpawnedCharacter = SelectedCharacter;
+
+            // If the character is null, randomly select a character and pallete
+            if(SpawnedCharacter == null) {
+                SpawnedCharacter = DataManager.Instance.Characters.Random();
+                Pallete = Random.Range(0, SpawnedCharacter.AlternativeCount);
+            }
+
+            GameObject prefab = SpawnedCharacter.Prefab.Load();
             if (prefab == null)
                 return null;
-            SpawnedCharacter = prefab.Duplicate(pos, rot).GetComponent<Character>();
-            var controller = SpawnedCharacter.GetComponentInChildren<PlayerController>();
+            PlayerObject = prefab.Duplicate(pos, rot).GetComponent<Character>();
+            var controller = PlayerObject.GetComponentInChildren<PlayerController>();
+            var palletSwap = PlayerObject.GetComponentInChildren<PalleteSwap>();
             if (controller)
                 controller.PlayerData = this;
-            return SpawnedCharacter;
+            if (palletSwap)
+                palletSwap.Pallete = Pallete;
+            return PlayerObject;
         }
 
         public override string ToString() {

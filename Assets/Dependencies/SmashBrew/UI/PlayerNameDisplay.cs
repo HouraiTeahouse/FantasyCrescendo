@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Hourai.Localization;
 
 namespace Hourai.SmashBrew.UI {
@@ -13,10 +13,10 @@ namespace Hourai.SmashBrew.UI {
             if (Text == null)
                 return;
 
-            if (data == null || data.Character == null)
+            if (data == null || data.SelectedCharacter == null)
                 Text.text = "";
             else
-                LocalizationKey = data.Character.ShortName;
+                LocalizationKey = data.SelectedCharacter.ShortName;
         }
 
         protected override string Process(string raw) {
