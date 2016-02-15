@@ -92,11 +92,21 @@ namespace Hourai.SmashBrew.UI {
             Vector2 extents = 0.5f * new Vector2(bestCols * itemWidth, bestRows * itemHeight);
             Vector2 start = center - extents;
 
-            for(var i = 0; i < count; i++) {
-                int x = i % bestCols;
-                int y = i / bestCols;
-                SetChildAlongAxis(rectChildren[i], 0, start.x + x * itemWidth, itemWidth);
-                SetChildAlongAxis(rectChildren[i], 1, start.y + y * itemHeight, itemHeight);
+            int remainder = count % bestCols;
+            for(var i = 0; i < bestRows; i++) {
+                float x = start.x;
+                float y = start.y + i * itemHeight;
+                if(count - i * bestCols < bestCols)
+                    x = center.x - 0.5f * (count % bestCols * itemWidth);
+
+                for (var j = 0; j < bestCols; j++) {
+                    int index = bestCols * i + j;
+                    if (index >= count)
+                        break;
+
+                    SetChildAlongAxis(rectChildren[index], 0, x + j * itemWidth, itemWidth);
+                    SetChildAlongAxis(rectChildren[index], 1, y, itemHeight);
+                }
             }
         }
     }

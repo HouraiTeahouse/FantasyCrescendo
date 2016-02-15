@@ -67,7 +67,7 @@ namespace Hourai.SmashBrew.UI {
                 RectTransform display = Instantiate(_playerDisplay);
                 Attach(display, _playerContainer);
 
-                display.name = string.Format("Player {0}", player.PlayerNumber);
+                display.name = string.Format("Player {0}", player.PlayerNumber + 1);
 
                 // Use the IPlayerGUIComponent interface to set the player data on all of the components that use it
                 foreach (IPlayerGUIComponent guiComponent in display.GetComponentsInChildren<IPlayerGUIComponent>())
