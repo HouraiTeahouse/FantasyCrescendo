@@ -41,34 +41,31 @@ namespace Hourai.SmashBrew.UI {
             // Calculated
             int bestRows = 1;
             int bestCols = 1;
-            float maxArea = float.MaxValue;
             float itemWidth = 0;
             float itemHeight = 0;
-            for (var rows = 1; rows <= count; rows++) {
-                int cols = count / rows;
-                int effectiveRows = rows;
-                if (count % rows != 0) {
-                    effectiveRows++;
-                }
-                var width = availableSpace.x / cols;
-                var height = availableSpace.y / effectiveRows;
-                if (width*cols > availableSpace.x) {
-                    Debug.Log("Horizontal Problem");
-                    continue;
-                }
-                if (height*effectiveRows > availableSpace.y) {
-                    Debug.Log("Vertical Problem " + (height * effectiveRows - availableSpace.y));
-                    continue;
-                }
-                float area = Mathf.Abs(width - height);
-                if (area < maxArea) {
+            bool isPrime = count <= 3;
+            int effectiveCount = count;
+            float maxArea = float.MaxValue;
+            do {
+                for (var rows = 1; rows <= effectiveCount; rows++) {
+                    if (effectiveCount % rows != 0)
+                        continue;
+                    Debug.Log(effectiveCount + " " + rows + " " + effectiveCount / rows);
+                    isPrime |= rows != 1 && rows != effectiveCount;
+                    int cols = effectiveCount / rows;
+                    var width = availableSpace.x / cols;
+                    var height = availableSpace.y / rows;
+                    float area = Mathf.Abs(rows * width - cols * height * _childAspectRatio);
+                    if (area >= maxArea)
+                        continue;
                     maxArea = area;
-                    bestRows = effectiveRows;
+                    bestRows = rows;
                     bestCols = cols;
                     itemWidth = width;
                     itemHeight = height;
                 }
-            }
+                effectiveCount++;
+            } while (!isPrime);
 
             // Only set the sizes when invoked for horizontal axis, not the positions.
 
