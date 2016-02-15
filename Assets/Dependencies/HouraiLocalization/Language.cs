@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -48,7 +48,9 @@ namespace Hourai.Localization {
         /// <param name="key">the localizaiton key to check for</param>
         /// <returns>True if the Langauge can localize the key, false otherwise.</returns>
         public bool ContainsKey(string key) {
-            return _map != null && _map.ContainsKey(key);
+            if (_map == null)
+                _map = ToDictionary();
+            return _map.ContainsKey(key);
         }
 
         private Dictionary<string, string> _map;
