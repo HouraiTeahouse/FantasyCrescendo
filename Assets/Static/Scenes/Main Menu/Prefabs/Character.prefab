@@ -31,7 +31,7 @@ GameObject:
   - 224: {fileID: 22405760}
   - 222: {fileID: 22241728}
   - 114: {fileID: 11424162}
-  - 114: {fileID: 11495778}
+  - 114: {fileID: 11438782}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -180,6 +180,22 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &11438782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6822198d786d7764ea50b38de258cdb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _character: {fileID: 0}
+  _component: {fileID: 11424162}
+  _cropped: 1
+  _disabledTint: {r: 0.3455882, g: 0.3455882, b: 0.3455882, a: 1}
+  _rectBias: {x: 0, y: -0.015}
 --- !u!114 &11475524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -192,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
-  _announcer: {fileID: 8240548}
+  _component: {fileID: 0}
 --- !u!114 &11479160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -233,22 +249,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &11495778
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68799f62275555a4aa5ed6a58e54a757, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _image: {fileID: 11424162}
-  _character: {fileID: 0}
-  _cropped: 1
-  _disabledTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  _rectBias: {x: 0, y: -0.015}
 --- !u!222 &22241728
 CanvasRenderer:
   m_ObjectHideFlags: 1

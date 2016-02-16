@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
     public interface ICharacterGUIComponent {
 
-        void SetCharacter(CharacterData character);
+        void SetCharacter(CharacterData data);
 
     }
 

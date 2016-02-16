@@ -686,6 +686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059a84d88a1c4124a972afef82c99af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _character: {fileID: 0}
+  _component: {fileID: 11464662}
 --- !u!114 &11423338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1037,7 +1039,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 139216}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -1063,7 +1065,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.9
-  m_Text: 0<size=25>%</size>
+  m_Text: 0<size=35>%</size>
 --- !u!114 &11446558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1230,7 +1232,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6822198d786d7764ea50b38de258cdb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Image: {fileID: 0}
+  _character: {fileID: 0}
+  _component: {fileID: 11449716}
+  _cropped: 1
+  _disabledTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _rectBias: {x: 0, y: 0}
 --- !u!114 &11451670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1333,7 +1339,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 139216}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e11c2495fbcfae41aac2016b8699c48, type: 3}
   m_Name: 

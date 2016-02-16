@@ -3,15 +3,9 @@ using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
-    [RequireComponent(typeof(RawImage))]
-    public class CharacterImageUI : PlayerCharacterUIComponent {
+    public class PortraitDisplay : CharacterUIComponent<RawImage> {
 
-        [SerializeField]
-        private RawImage _image;
         private RectTransform _rectTransform;
-
-        [SerializeField]
-        private CharacterData _character;
 
         [SerializeField]
         private bool _cropped;
@@ -31,14 +25,13 @@ namespace Hourai.SmashBrew.UI {
         /// </summary>
         protected override void Awake() {
             base.Awake();
-            if(_image == null)
-                _image = GetComponent<RawImage>();
-            _rectTransform = _image.GetComponent<RectTransform>();
-            _defaultColor = _image.color;
-            SetCharacter(_character);
+            _rectTransform = Component.GetComponent<RectTransform>();
+            _defaultColor = Component.color;
         }
 
         protected override void OnRectTransformDimensionsChange() {
+            if (_rectTransform == null)
+                return;
             Vector2 size = _rectTransform.rect.size;
             float aspect = size.x / size.y;
             Rect imageRect = _cropRect;
@@ -48,7 +41,8 @@ namespace Hourai.SmashBrew.UI {
                 dim = aspect * imageRect.height;
                 diff = imageRect.width - dim;
                 imageRect.width = dim;
-                imageRect.x += 0.5f * diff;;
+                imageRect.x += 0.5f * diff;
+                ;
             } else {
                 // Image is wider than cropRect, extend it vertically 
                 dim = imageRect.width / aspect;
@@ -56,21 +50,26 @@ namespace Hourai.SmashBrew.UI {
                 imageRect.height = dim;
                 imageRect.y += 0.5f * diff;
             }
-            _image.uvRect = imageRect;
+            Component.uvRect = imageRect;
         }
 
-        public override void SetCharacter(CharacterData character) {
-            if (!character || character.AlternativeCount <= 0 || character.GetPortrait(0).Load() == null)
+        public override void SetCharacter(CharacterData data) {
+            base.SetCharacter(data);
+            if (Component == null || data == null || data.AlternativeCount <= 0)
                 return;
-            _image.texture = character.GetPortrait(0).Asset.texture;
-            _cropRect = _cropped ? character.CropRect(_image.texture) : new Rect(0,0,1,1);
+            int portrait = Player != null ? Player.Pallete : 0;
+            if (data.GetPortrait(portrait).Load() == null)
+                return;
+            Texture2D texture = data.GetPortrait(portrait).Asset.texture;
+            _cropRect = _cropped ? data.CropRect(texture) : new Rect(0, 0, 1, 1);
             _aspectRatio = _cropRect.width / _cropRect.height;
             _cropRect.x += _rectBias.x;
             _cropRect.y += _rectBias.y;
-            _image.uvRect = _cropRect;
-            _image.color = character.IsSelectable ? _defaultColor : _disabledTint;
+            Component.texture = texture;
+            Component.uvRect = _cropRect;
+            Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
         }
 
     }
-
 }
+

@@ -284,7 +284,7 @@ namespace Hourai.SmashBrew {
         }
 
         public override string ToString() {
-            return string.Format(Type.Name, PlayerNumber);
+            return string.Format(Type.Name, PlayerNumber + 1);
         }
 
         public override bool Equals(object obj) {

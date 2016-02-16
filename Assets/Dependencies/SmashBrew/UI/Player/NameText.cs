@@ -3,7 +3,7 @@ using Hourai.Localization;
 
 namespace Hourai.SmashBrew.UI {
 
-    public class CharacterNameText : AbstractLocalizedText, IPlayerGUIComponent, ICharacterGUIComponent {
+    public class NameText : AbstractLocalizedText, IPlayerGUIComponent, ICharacterGUIComponent{
 
         [SerializeField]
         private CharacterData _character;
@@ -17,10 +17,11 @@ namespace Hourai.SmashBrew.UI {
         private Player _player;
         private Character character;
 
-        public void SetCharacter(CharacterData character) {
-            if (!character)
-                return;
-            LocalizationKey = shortName ? character.ShortName : character.FullName;
+        public void SetCharacter(CharacterData data) {
+            if (data == null)
+                Text.text = string.Empty;
+            else
+                LocalizationKey = shortName ? data.ShortName : data.FullName;
         }
 
         public void SetPlayer(Player data) {

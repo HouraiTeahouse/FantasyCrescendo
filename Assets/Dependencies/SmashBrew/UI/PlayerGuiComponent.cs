@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Hourai.SmashBrew.UI {
     
-    public abstract class PlayerGuiComponent<T> : MonoBehaviour, IPlayerGUIComponent where T : Component {
+    public abstract class PlayerGUIComponent<T> : UIBehaviour, IPlayerGUIComponent where T : Component {
         
         protected T Component { get; private set; }
         protected Character Character { get; private set; }
