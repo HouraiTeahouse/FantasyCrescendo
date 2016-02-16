@@ -73,7 +73,7 @@ namespace Hourai.SmashBrew.UI {
             UpdateUiMode(cmd.Player.Type);
         }
 
-        public void SetPlayerData(Player data) {
+        public void SetPlayer(Player data) {
             _player = data;
         }
     }

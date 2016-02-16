@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Hourai.SmashBrew.UI {
 
@@ -55,7 +55,7 @@ namespace Hourai.SmashBrew.UI {
             enabled = false;
         }
 
-        public void SetPlayerData(Player data) {
+        public void SetPlayer(Player data) {
             _player = data;
         }
 

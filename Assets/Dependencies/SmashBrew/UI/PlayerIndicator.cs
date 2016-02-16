@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
-    [RequireComponent(typeof(Text), typeof(PlayerUiColor))]
+    [RequireComponent(typeof(Text), typeof(PlayerUIColor))]
     public sealed class PlayerIndicator : MonoBehaviour {
 
         [SerializeField]
@@ -15,7 +15,7 @@ namespace Hourai.SmashBrew.UI {
 
         private RectTransform _rTransform;
         private RectTransform _cTransform;
-        private PlayerUiColor _cUIColor;
+        private PlayerUIColor _cUIColor;
         private Text _text;
 
         private Player _target;
@@ -28,7 +28,7 @@ namespace Hourai.SmashBrew.UI {
                 _collider = (_target != null)? _target.PlayerObject.MovementCollider : null;
                 if (_target != null)
                     _text.text = (_target.PlayerNumber + 1).ToString(_format);
-                _cUIColor.SetPlayerData(_target);
+                _cUIColor.SetPlayer(_target);
             }
         }
 
@@ -37,7 +37,7 @@ namespace Hourai.SmashBrew.UI {
             if(!gui)
                 Destroy(this);
             _text = GetComponent<Text>();
-            _cUIColor = GetComponent<PlayerUiColor>();
+            _cUIColor = GetComponent<PlayerUIColor>();
             _rTransform = GetComponent<RectTransform>();
             _rTransform.SetParent(gui.transform);
             _rTransform.localScale = Vector3.one;

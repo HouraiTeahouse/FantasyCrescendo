@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
@@ -26,7 +26,7 @@ namespace Hourai.SmashBrew.UI {
             display.text = _stockMatch[_player].ToString();
         }
 
-        public void SetPlayerData(Player data) {
+        public void SetPlayer(Player data) {
             _player = data;
         }
 

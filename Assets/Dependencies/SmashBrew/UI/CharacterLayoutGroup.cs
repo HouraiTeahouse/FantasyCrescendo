@@ -46,11 +46,15 @@ namespace Hourai.SmashBrew.UI {
             bool isPrime = count <= 3;
             int effectiveCount = count;
             float maxArea = float.MaxValue;
+
+            // Prime numbers tend to generate very poorly made layouts.
+            // Repeat until the the layout is generated with a non-prime count
+            // Shouldn't need to run more than twice. 
             do {
                 for (var rows = 1; rows <= effectiveCount; rows++) {
+                    // Reject any "non-rectangle" layouts.
                     if (effectiveCount % rows != 0)
                         continue;
-                    Debug.Log(effectiveCount + " " + rows + " " + effectiveCount / rows);
                     isPrime |= rows != 1 && rows != effectiveCount;
                     int cols = effectiveCount / rows;
                     var width = availableSpace.x / cols;

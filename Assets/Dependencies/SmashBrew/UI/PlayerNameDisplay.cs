@@ -9,7 +9,7 @@ namespace Hourai.SmashBrew.UI {
         [SerializeField]
         private bool toUpperCase = true;
 
-        public void SetPlayerData(Player data) {
+        public void SetPlayer(Player data) {
             if (Text == null)
                 return;
 

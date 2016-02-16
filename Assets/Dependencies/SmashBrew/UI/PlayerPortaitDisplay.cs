@@ -26,7 +26,7 @@ namespace Hourai.SmashBrew.UI {
                 _player.OnChanged -= UpdateImage;
         }
 
-        public void SetPlayerData(Player data) {
+        public void SetPlayer(Player data) {
             if (data == null)
                 return;
             if (_player != null)

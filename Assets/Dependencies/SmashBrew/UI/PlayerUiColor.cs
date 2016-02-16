@@ -1,20 +1,33 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
     [ExecuteInEditMode]
     [RequireComponent(typeof (Graphic))]
-    public sealed class PlayerUiColor : MonoBehaviour, IPlayerGUIComponent {
+    public sealed class PlayerUIColor : MonoBehaviour, IPlayerGUIComponent {
 
+        private enum AlphaBlend {
+            Multiplicative,
+            Additive
+        }
+
+        [SerializeField]
         private Graphic _graphic;
+
         private Player _player;
         
         [SerializeField, Range(0f, 1f)]
         private float _saturation = 1f;
-        
+
+        [SerializeField, Range(0f, 1f)]
+        private float _value;
+
         [SerializeField, Range(0f, 1f)]
         private float _alpha = 1f;
+
+        [SerializeField]
+        private AlphaBlend _alphaBlend;
 
         [SerializeField]
         private AnimationCurve _red = AnimationCurve.Linear(0, 0, 1f, 1f);
@@ -25,6 +38,7 @@ namespace Hourai.SmashBrew.UI {
         [SerializeField]
         private AnimationCurve _green = AnimationCurve.Linear(0, 0, 1f, 1f);
 
+
         public Color AdjustedColor {
             get {
                 Color rawColor = _player != null ? _player.Color : Color.clear;
@@ -32,19 +46,28 @@ namespace Hourai.SmashBrew.UI {
                 rawColor.r = _red.Evaluate(rawColor.r);
                 rawColor.g = _green.Evaluate(rawColor.g);
                 rawColor.b = _blue.Evaluate(rawColor.b);
-                rawColor.a = _alpha;
 
-                const float Pr = .299f;
-                const float Pg = .587f;
-                const float Pb = .114f;
+                if (_alphaBlend == AlphaBlend.Multiplicative)
+                    rawColor.a = _alpha*rawColor.a;
+                else
+                    rawColor.a = rawColor.a - (1 - _alpha);
 
-                float P = Mathf.Sqrt(rawColor.r * rawColor.r * Pr + rawColor.g * rawColor.g * Pg + rawColor.b * rawColor.b * Pb);
+                HSV hsv = new HSV(rawColor);
 
-                rawColor.r = P + (rawColor.r - P) * _saturation;
-                rawColor.g = P + (rawColor.g - P) * _saturation;
-                rawColor.b = P + (rawColor.b - P) * _saturation;
+                hsv.s *= _saturation;
+                hsv.v *= _value;
 
-                return rawColor;
+                //const float Pr = .299f;
+                //const float Pg = .587f;
+                //const float Pb = .114f;
+
+                //float P = Mathf.Sqrt(rawColor.r * rawColor.r * Pr + rawColor.g * rawColor.g * Pg + rawColor.b * rawColor.b * Pb);
+
+                //rawColor.r = P + (rawColor.r - P) * _saturation;
+                //rawColor.g = P + (rawColor.g - P) * _saturation;
+                //rawColor.b = P + (rawColor.b - P) * _saturation;
+
+                return hsv.ToColor();
             }
         }
 
@@ -52,7 +75,8 @@ namespace Hourai.SmashBrew.UI {
         /// Unity Callback. Called on object instantiation.
         /// </summary>
         void Awake() {
-            _graphic = GetComponent<Graphic>();
+            if(_graphic == null)
+                _graphic = GetComponent<Graphic>();
         }
 
         /// <summary>
@@ -75,7 +99,7 @@ namespace Hourai.SmashBrew.UI {
         }
 #endif
 
-        public void SetPlayerData(Player data) {
+        public void SetPlayer(Player data) {
             if (data == null)
                 return;
             if (_player != null)
@@ -88,9 +112,9 @@ namespace Hourai.SmashBrew.UI {
         void UpdateColor() {
             if (_graphic == null)
                 _graphic = GetComponent<Graphic>();
-            if (_graphic)
+            if (_graphic) {
                 _graphic.color = AdjustedColor;
+            }
         }
     }
-
 }

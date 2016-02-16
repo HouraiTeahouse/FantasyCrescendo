@@ -1,14 +1,17 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Hourai.SmashBrew.UI {
 
     [RequireComponent(typeof(RawImage))]
-    public class CharacterImageUI : UIBehaviour, ICharacterGUIComponent {
+    public class CharacterImageUI : PlayerCharacterUIComponent {
 
+        [SerializeField]
         private RawImage _image;
         private RectTransform _rectTransform;
+
+        [SerializeField]
+        private CharacterData _character;
 
         [SerializeField]
         private bool _cropped;
@@ -28,9 +31,11 @@ namespace Hourai.SmashBrew.UI {
         /// </summary>
         protected override void Awake() {
             base.Awake();
-            _image = GetComponent<RawImage>();
+            if(_image == null)
+                _image = GetComponent<RawImage>();
+            _rectTransform = _image.GetComponent<RectTransform>();
             _defaultColor = _image.color;
-            _rectTransform = transform as RectTransform;
+            SetCharacter(_character);
         }
 
         protected override void OnRectTransformDimensionsChange() {
@@ -39,24 +44,22 @@ namespace Hourai.SmashBrew.UI {
             Rect imageRect = _cropRect;
             float diff, dim;
             if (aspect > _aspectRatio) {
-                Debug.Log("Big");
-                // Image is wider than cropRect, extend it vertically 
-                dim = aspect * imageRect.width;
-                diff = imageRect.height - dim;
-                imageRect.height = dim;
-                imageRect.y -= 0.5f * diff;
-            } else {
-                Debug.Log("Small");
                 // Image is wider than cropRect, extend it sideways
                 dim = aspect * imageRect.height;
                 diff = imageRect.width - dim;
                 imageRect.width = dim;
-                imageRect.x += 0.5f * diff;
+                imageRect.x += 0.5f * diff;;
+            } else {
+                // Image is wider than cropRect, extend it vertically 
+                dim = imageRect.width / aspect;
+                diff = imageRect.height - dim;
+                imageRect.height = dim;
+                imageRect.y += 0.5f * diff;
             }
             _image.uvRect = imageRect;
         }
 
-        public void SetCharacter(CharacterData character) {
+        public override void SetCharacter(CharacterData character) {
             if (!character || character.AlternativeCount <= 0 || character.GetPortrait(0).Load() == null)
                 return;
             _image.texture = character.GetPortrait(0).Asset.texture;

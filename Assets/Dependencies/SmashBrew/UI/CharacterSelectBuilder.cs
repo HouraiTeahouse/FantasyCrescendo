@@ -71,7 +71,7 @@ namespace Hourai.SmashBrew.UI {
 
                 // Use the IPlayerGUIComponent interface to set the player data on all of the components that use it
                 foreach (IPlayerGUIComponent guiComponent in display.GetComponentsInChildren<IPlayerGUIComponent>())
-                    guiComponent.SetPlayerData(player);
+                    guiComponent.SetPlayer(player);
             }
 
             if (!_space)

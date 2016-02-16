@@ -243,8 +243,8 @@ namespace Hourai.SmashBrew {
 
         public Color Color {
             get {
-                if (Type.Color != null)
-                    return Type.Color.Value;
+                //if (Type.Color != null)
+                //    return Type.Color.Value;
                 return Config.Instance.GetPlayerColor(PlayerNumber);
             }
         }

@@ -7,7 +7,7 @@ namespace Hourai.SmashBrew.UI {
         protected T Component { get; private set; }
         protected Character Character { get; private set; }
 
-        public void SetPlayerData(Player data) {
+        public void SetPlayer(Player data) {
             if (data == null || data.PlayerObject == null) {
                 Component = null;
                 Character = null;

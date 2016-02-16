@@ -28,7 +28,7 @@ namespace Hourai.SmashBrew.UI {
             return string.Format("{0}<size={1}>{2}</size>", number, suffixSize, suffix);
         }
 
-        public void SetPlayerData(Player data) {
+        public void SetPlayer(Player data) {
             if (data == null || data.PlayerObject == null) {
                 _damage = null;
                 return;

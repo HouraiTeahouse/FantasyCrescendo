@@ -12,7 +12,7 @@ namespace Hourai.SmashBrew.UI {
             Image = GetComponent<Image>();
         }
 
-        public void SetPlayerData(Player data) {
+        public void SetPlayer(Player data) {
             if (Image == null)
                 return;
             if (data == null || data.SelectedCharacter == null) {

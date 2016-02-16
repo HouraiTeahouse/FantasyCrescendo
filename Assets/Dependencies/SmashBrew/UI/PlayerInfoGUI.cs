@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Hourai.Events;
@@ -55,7 +55,7 @@ namespace Hourai.SmashBrew.UI {
             display.name = string.Format("Player Display {0}", player.PlayerNumber + 1);
             LayoutRebuilder.MarkLayoutForRebuild(display.transform as RectTransform);
             foreach (IPlayerGUIComponent component in display.GetComponentsInChildren<IPlayerGUIComponent>())
-                component.SetPlayerData(player);
+                component.SetPlayer(player);
             _finalSpace.transform.SetAsLastSibling();
         }
 

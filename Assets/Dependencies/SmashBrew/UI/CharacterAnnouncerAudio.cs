@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using Hourai.SmashBrew.UI;
 using UnityEngine.EventSystems;
 
@@ -8,7 +7,17 @@ namespace Hourai.SmashBrew {
     public class CharacterAnnouncerAudio : MonoBehaviour, ISubmitHandler, ICharacterGUIComponent {
 
         [SerializeField]
+        private CharacterData _character;
+
+        [SerializeField]
         private AudioSource _announcer;
+
+        /// <summary>
+        /// Unity Callback. Called on object instantiation.
+        /// </summary>
+        void Awake() {
+            SetCharacter(_character);
+        }
 
         void Reset() {
             if (!_announcer)
