@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hourai.Localization {
@@ -82,10 +82,7 @@ namespace Hourai.Localization {
 
         protected override void Start() {
             base.Start();
-            Key = _key;
-
-            //Release the memory held by the key
-            _key = null;
+            LocalizationKey = _key;
         }
 
         public string Key {
