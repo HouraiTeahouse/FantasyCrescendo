@@ -93,7 +93,6 @@ namespace Hourai.SmashBrew.UI {
             Vector2 extents = 0.5f * new Vector2(bestCols * itemWidth, bestRows * itemHeight);
             Vector2 start = center - extents;
 
-            int remainder = count % bestCols;
             for(var i = 0; i < bestRows; i++) {
                 float x = start.x;
                 float y = start.y + i * itemHeight;

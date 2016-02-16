@@ -4,7 +4,7 @@ using Hourai.Localization;
 namespace Hourai.SmashBrew.UI {
 
     [DisallowMultipleComponent]
-    public class PlayerNameDisplay : AbstractLocalizedText, IPlayerGUIComponent {
+    public class CharacterNameDisplay : AbstractLocalizedText, IPlayerGUIComponent {
 
         [SerializeField]
         private bool toUpperCase = true;

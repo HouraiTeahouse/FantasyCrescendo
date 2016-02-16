@@ -43,13 +43,22 @@ MonoBehaviour:
   _trigger: 0
   _scenes:
   - Static/Scenes/Stage Bootstrap
+  _ignoreLoadedScenes: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _scenes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _scenes.Array.data[0]
+      value: Static/Scenes/Game Start Bootstrap
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 191150}

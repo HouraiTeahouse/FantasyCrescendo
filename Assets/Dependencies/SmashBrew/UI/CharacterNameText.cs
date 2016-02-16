@@ -11,6 +11,9 @@ namespace Hourai.SmashBrew.UI {
         [SerializeField]
         private bool shortName;
 
+        [SerializeField]
+        private bool _capitalize;
+
         private Player _player;
         private Character character;
 
@@ -27,6 +30,10 @@ namespace Hourai.SmashBrew.UI {
             if (_player != null)
                 _player.OnChanged += OnPlayerChange;
             OnPlayerChange();
+        }
+
+        protected override string Process(string val) {
+            return !_capitalize ? val : val.ToUpperInvariant();
         }
 
         void OnPlayerChange() {

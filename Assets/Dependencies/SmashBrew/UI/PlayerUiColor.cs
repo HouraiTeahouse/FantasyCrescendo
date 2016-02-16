@@ -21,7 +21,7 @@ namespace Hourai.SmashBrew.UI {
         private float _saturation = 1f;
 
         [SerializeField, Range(0f, 1f)]
-        private float _value;
+        private float _value = 1f;
 
         [SerializeField, Range(0f, 1f)]
         private float _alpha = 1f;

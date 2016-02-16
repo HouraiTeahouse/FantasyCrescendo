@@ -312,7 +312,7 @@ GameObject:
   - 222: {fileID: 22296538}
   - 114: {fileID: 11430216}
   - 114: {fileID: 11436952}
-  - 114: {fileID: 11405832}
+  - 114: {fileID: 11494130}
   m_Layer: 5
   m_Name: Name Display
   m_TagString: Untagged
@@ -376,8 +376,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _graphic: {fileID: 11464662}
   _saturation: 1
+  _value: 1
   _alpha: 1
+  _alphaBlend: 0
   _red:
     serializedVersion: 2
     m_Curve:
@@ -426,19 +429,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &11405832
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 194612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02dc4c5d8e1ef6d4fb60e08c277c8f88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _text: {fileID: 0}
-  toUpperCase: 1
 --- !u!114 &11405868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -451,7 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -490,8 +480,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _graphic: {fileID: 11462774}
   _saturation: 1
+  _value: 1
   _alpha: 1
+  _alphaBlend: 0
   _red:
     serializedVersion: 2
     m_Curve:
@@ -551,8 +544,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _graphic: {fileID: 11446558}
   _saturation: 1
+  _value: 1
   _alpha: 1
+  _alphaBlend: 0
   _red:
     serializedVersion: 2
     m_Curve:
@@ -702,7 +698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -755,8 +751,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _graphic: {fileID: 11423338}
   _saturation: 1
+  _value: 1
   _alpha: 1
+  _alphaBlend: 0
   _red:
     serializedVersion: 2
     m_Curve:
@@ -849,8 +848,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _graphic: {fileID: 11469694}
   _saturation: 1
+  _value: 1
   _alpha: 1
+  _alphaBlend: 0
   _red:
     serializedVersion: 2
     m_Curve:
@@ -958,8 +960,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _graphic: {fileID: 11451670}
   _saturation: 1
+  _value: 1
   _alpha: 1
+  _alphaBlend: 0
   _red:
     serializedVersion: 2
     m_Curve:
@@ -1071,7 +1076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1238,7 +1243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1282,7 +1287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1308,7 +1313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1394,7 +1399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1459,7 +1464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1502,8 +1507,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _graphic: {fileID: 11405868}
   _saturation: 1
+  _value: 1
   _alpha: 1
+  _alphaBlend: 0
   _red:
     serializedVersion: 2
     m_Curve:
@@ -1563,8 +1571,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _graphic: {fileID: 11455190}
   _saturation: 1
+  _value: 1
   _alpha: 1
+  _alphaBlend: 0
   _red:
     serializedVersion: 2
     m_Curve:
@@ -1724,6 +1735,21 @@ MonoBehaviour:
   - {fileID: 169490}
   - {fileID: 150422}
   - {fileID: 172728}
+--- !u!114 &11494130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cdee41062191214cb1ecd679a92b6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 11430216}
+  _character: {fileID: 0}
+  shortName: 1
+  _capitalize: 1
 --- !u!114 &11495666
 MonoBehaviour:
   m_ObjectHideFlags: 1
