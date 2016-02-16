@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     public abstract class RestrictableCharacterComponent : CharacterComponent {
 

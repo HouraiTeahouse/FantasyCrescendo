@@ -1,8 +1,8 @@
-﻿using Hourai.Events;
+using HouraiTeahouse.Events;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     public class ShieldBreak {
     }

@@ -1,7 +1,7 @@
-﻿using InControl;
+using InControl;
 using UnityEngine;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     [DisallowMultipleComponent]
     public class PlayerController : HouraiBehaviour {

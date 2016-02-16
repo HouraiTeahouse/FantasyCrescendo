@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     /// <summary>
     /// Constructs the player section of the in-match UI 

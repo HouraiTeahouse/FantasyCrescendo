@@ -1,8 +1,8 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
-namespace Hourai.Editor {
+namespace HouraiTeahouse.Editor {
 
     public static class PrefabUtil {
 

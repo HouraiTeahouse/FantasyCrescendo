@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 
-namespace Hourai.Console {
+namespace HouraiTeahouse.Console {
 
     /// <summary>
     /// Displays the most recent logs in the GameConsole on a Text object.

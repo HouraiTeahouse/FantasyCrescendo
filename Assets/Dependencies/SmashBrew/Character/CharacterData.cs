@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     [CreateAssetMenu(fileName = "New Character", menuName = "SmashBrew/Character Data")]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]

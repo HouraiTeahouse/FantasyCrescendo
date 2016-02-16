@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Hourai.Console {
+namespace HouraiTeahouse.Console {
 
     /// <summary>
     /// UI Element to toggle the appearance of the GameConsole UI.

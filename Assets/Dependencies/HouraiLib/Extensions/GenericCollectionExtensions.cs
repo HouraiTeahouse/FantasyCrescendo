@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     public static class GenericCollectionExtensions {
 

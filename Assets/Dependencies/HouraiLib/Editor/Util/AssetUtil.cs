@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Hourai.Editor {
+namespace HouraiTeahouse.Editor {
 
     /// <summary>
     /// Utility class for handling Assets in the Unity Editor.

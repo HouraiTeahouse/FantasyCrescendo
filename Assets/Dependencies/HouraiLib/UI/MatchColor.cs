@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// Matches the color between multiple Graphics.

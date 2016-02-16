@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     public sealed class Attack : BaseAnimationBehaviour<Character> {
 

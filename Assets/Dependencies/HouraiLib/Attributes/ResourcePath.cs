@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// A PropertyAttribute for the Unity Editor. Marks a string field to store a path to an asset stored in a Resources folder.

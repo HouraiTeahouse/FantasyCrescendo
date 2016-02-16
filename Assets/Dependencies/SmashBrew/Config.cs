@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
     
     [CreateAssetMenu(fileName = "New Config", menuName = "SmashBrew/Config")]
     public class Config : ScriptableObject {

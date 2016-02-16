@@ -1,7 +1,7 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 
-namespace Hourai.SmashBrew.Editor {
+namespace HouraiTeahouse.SmashBrew.Editor {
 
     [CustomEditor(typeof(SceneData))]
     public class SceneDataEditor : UnityEditor.Editor {

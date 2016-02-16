@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// Draws Colliders as Gizmos, permanentally seen in the Scene view.

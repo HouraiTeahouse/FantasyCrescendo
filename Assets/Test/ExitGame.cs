@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     /// <summary>
     /// An ISubmitHandler for exiting the game.

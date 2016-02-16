@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     public class AudioManager : MonoBehaviour {
 

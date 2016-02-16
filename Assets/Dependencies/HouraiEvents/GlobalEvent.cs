@@ -1,4 +1,4 @@
-﻿namespace Hourai.Events {
+namespace HouraiTeahouse.Events {
 
     /// <summary>
     /// Singleton version of the Mediator class.

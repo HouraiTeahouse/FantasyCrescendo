@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     [RequireComponent(typeof(Text))]
     public class MatchTimerGUI : MonoBehaviour {

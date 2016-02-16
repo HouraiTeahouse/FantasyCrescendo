@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-namespace Hourai {
+namespace HouraiTeahouse {
     
     public static class GameObjectExtensions {
 

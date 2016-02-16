@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Hourai.Console {
+namespace HouraiTeahouse.Console {
 
     /// <summary>
     /// A fixed size FIFO (First In First Out) Queue.

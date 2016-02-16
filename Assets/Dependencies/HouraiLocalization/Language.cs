@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Hourai.Localization {
+namespace HouraiTeahouse.Localization {
 
     /// <summary>
     /// A class of ScriptableObjects that simply stores a set of String-String 

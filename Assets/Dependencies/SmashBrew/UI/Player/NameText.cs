@@ -1,7 +1,7 @@
 using UnityEngine;
-using Hourai.Localization;
+using HouraiTeahouse.Localization;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     public class NameText : AbstractLocalizedText, IPlayerGUIComponent, ICharacterGUIComponent{
 

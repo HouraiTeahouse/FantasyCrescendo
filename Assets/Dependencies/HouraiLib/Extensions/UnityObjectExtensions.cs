@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// A set of extenion methods for all Unity Objects.

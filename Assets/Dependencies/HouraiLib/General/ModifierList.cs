@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Hourai {
+namespace HouraiTeahouse {
     
     public delegate float Modifier<T>(T source, float damage);
 

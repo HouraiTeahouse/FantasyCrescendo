@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// PropertyAttribute with a drawer that exposes a SceneAsset object field.

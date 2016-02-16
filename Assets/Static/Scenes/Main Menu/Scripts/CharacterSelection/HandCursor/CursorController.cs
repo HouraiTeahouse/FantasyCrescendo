@@ -1,5 +1,5 @@
-﻿using Hourai;
-using Hourai.SmashBrew;
+using HouraiTeahouse;
+using HouraiTeahouse.SmashBrew;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

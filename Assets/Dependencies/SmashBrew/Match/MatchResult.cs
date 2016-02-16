@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     /// <summary>
     /// Enum containing the possible end results of a Match

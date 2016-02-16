@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// Static class for editing the global time properties of the game.

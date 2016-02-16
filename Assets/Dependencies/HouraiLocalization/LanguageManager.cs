@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Globalization;
 using System.Linq;
 
-namespace Hourai.Localization {
+namespace HouraiTeahouse.Localization {
 
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Manager")]
     public sealed  class LanguageManager : MonoBehaviour {

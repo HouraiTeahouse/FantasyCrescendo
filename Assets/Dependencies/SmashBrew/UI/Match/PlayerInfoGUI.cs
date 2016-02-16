@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Hourai.Events;
+using HouraiTeahouse.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     public class PlayerInfoGUI : MonoBehaviour {
 

@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     [RequireComponent(typeof (Text))]
     public sealed class FPSCounter : MonoBehaviour {

@@ -1,7 +1,7 @@
-﻿using Hourai.Events;
+using HouraiTeahouse.Events;
 using UnityEngine;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
     
     public class ReadyToFightUI : MonoBehaviour {
 

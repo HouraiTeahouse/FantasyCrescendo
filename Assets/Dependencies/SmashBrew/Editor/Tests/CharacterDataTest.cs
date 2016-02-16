@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using UnityEngine;
 using NUnit.Framework;
 
-namespace Hourai.SmashBrew.Tests {
+namespace HouraiTeahouse.SmashBrew.Tests {
 
     public class CharacterDataTest {
 

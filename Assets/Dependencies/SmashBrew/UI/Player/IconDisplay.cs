@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     [RequireComponent(typeof(Image))]
     public class IconDisplay : CharacterUIComponent<Image> {

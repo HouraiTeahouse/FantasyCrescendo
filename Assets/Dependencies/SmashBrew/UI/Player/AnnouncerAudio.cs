@@ -1,8 +1,8 @@
 using UnityEngine;
-using Hourai.SmashBrew.UI;
+using HouraiTeahouse.SmashBrew.UI;
 using UnityEngine.EventSystems;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     public class AnnouncerAudio : CharacterUIComponent<AudioSource>, ISubmitHandler {
 

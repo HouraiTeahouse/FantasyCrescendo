@@ -1,7 +1,7 @@
-﻿using UnityConstants;
+using UnityConstants;
 using UnityEngine;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     public class FallThrough : TriggerStageElement {
 

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hourai.Editor {
+namespace HouraiTeahouse.Editor {
 
     /// <summary>
     /// Removes the extra "Script" field on any editor derived from this.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Hourai.Console {
+namespace HouraiTeahouse.Console {
 
     /// <summary>
     /// Delegate type for commands executable by GameConsole

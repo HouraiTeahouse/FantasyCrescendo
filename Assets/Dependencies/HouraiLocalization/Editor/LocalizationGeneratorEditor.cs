@@ -1,7 +1,7 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 
-namespace Hourai.Localization.Editor {
+namespace HouraiTeahouse.Localization.Editor {
 
     [CustomEditor(typeof (LocalizationGenerator))]
     public class LocalizationGeneratorEditor : UnityEditor.Editor {

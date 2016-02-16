@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
 using Object = UnityEngine.Object;
 
-namespace Hourai.Editor {
+namespace HouraiTeahouse.Editor {
 
     /// <summary>
     /// Custom PropertyDrawer for ResourcePathAttribute.

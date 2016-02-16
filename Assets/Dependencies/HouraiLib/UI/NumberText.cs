@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// Displays a number to a UnityEngine.UI.Text UI object.

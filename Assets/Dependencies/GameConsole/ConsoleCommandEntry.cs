@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai.Console {
+namespace HouraiTeahouse.Console {
 
     /// <summary>
     /// Turns a Text UI object into a entry line for GameConsole.

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using Hourai.Events;
+using HouraiTeahouse.Events;
 using UnityEngine;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     /// <summary>
     /// A Match Rule defining a Stock-based Match.

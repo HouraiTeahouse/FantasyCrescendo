@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Linq;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     public interface ITimeObject {
 

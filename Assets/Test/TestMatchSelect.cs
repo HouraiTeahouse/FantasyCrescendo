@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
     
     public class TestMatchSelect : MonoBehaviour {
 

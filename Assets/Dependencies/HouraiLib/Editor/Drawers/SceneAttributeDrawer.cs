@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hourai.Editor {
+namespace HouraiTeahouse.Editor {
 
     [CustomPropertyDrawer(typeof (SceneAttribute))]
     public class SceneAttributeDrawer : PropertyDrawer {

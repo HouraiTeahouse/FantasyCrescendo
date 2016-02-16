@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// A NumberText element that changes the color the Text based on a the current number value and a defined Gradient.

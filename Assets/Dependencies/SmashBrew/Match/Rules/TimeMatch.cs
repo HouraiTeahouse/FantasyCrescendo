@@ -1,7 +1,7 @@
 using UnityEngine;
-using Hourai.Events;
+using HouraiTeahouse.Events;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     /// <summary>
     /// A MatchRule that adds a time limit.

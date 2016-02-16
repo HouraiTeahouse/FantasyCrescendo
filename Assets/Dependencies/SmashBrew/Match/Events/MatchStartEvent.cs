@@ -1,4 +1,4 @@
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     /// <summary>
     /// Event declaring the start of an event

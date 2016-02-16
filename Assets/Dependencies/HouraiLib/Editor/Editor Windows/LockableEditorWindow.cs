@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace Hourai.Editor {
+namespace HouraiTeahouse.Editor {
 
     /// <summary>
     /// Creates a EditorWindow that has the small padlock button at the top

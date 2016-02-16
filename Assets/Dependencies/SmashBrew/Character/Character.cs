@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using UnityEngine;
 using System.Linq;
-using Hourai.Events;
+using HouraiTeahouse.Events;
 using UnityConstants;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     /// <summary>
     /// General character class for handling the physics and animations of individual characters

@@ -6,7 +6,7 @@ using InControl;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
     
     public sealed class Player {
 

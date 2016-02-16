@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// A simple object that encapsulates the operations on a dynamically loaded asset using UnityEngine.Resources.

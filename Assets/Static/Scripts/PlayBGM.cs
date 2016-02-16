@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     [RequireComponent(typeof(AudioSource))]
     public class PlayBGM : MonoBehaviour {

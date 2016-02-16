@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using Hourai.Events;
+using UnityEngine;
+using HouraiTeahouse.Events;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     public class PlayerDieEvent {
 

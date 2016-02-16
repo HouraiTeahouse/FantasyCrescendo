@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace Hourai.Editor {
+namespace HouraiTeahouse.Editor {
 
     /// <summary>
     /// Custom Inspector for TimeManager.

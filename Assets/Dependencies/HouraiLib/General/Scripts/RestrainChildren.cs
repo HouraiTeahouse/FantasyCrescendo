@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     [RequireComponent(typeof (BoxCollider))]
     public class RestrainChildren : MonoBehaviour {

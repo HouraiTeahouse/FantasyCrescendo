@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     [AttributeUsage(AttributeTargets.Class)]
     public class RequiredCharacterComponentAttribute : Attribute {

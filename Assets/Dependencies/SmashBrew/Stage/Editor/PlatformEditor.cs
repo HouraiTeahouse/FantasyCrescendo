@@ -1,7 +1,7 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 
-namespace Hourai.SmashBrew.Editor {
+namespace HouraiTeahouse.SmashBrew.Editor {
 
     [CustomEditor(typeof (TriggerStageElement), true, isFallback = true)]
     public class StageBasedEditor : UnityEditor.Editor {

@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// Hides the cursor

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     public abstract class PlayerUIComponent<T> : UIBehaviour, IPlayerGUIComponent where T : Component {
 

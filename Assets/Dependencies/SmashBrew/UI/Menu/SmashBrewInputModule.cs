@@ -1,8 +1,8 @@
-﻿using InControl;
+using InControl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     public class SmashBrewInputModule : PointerInputModule {
 

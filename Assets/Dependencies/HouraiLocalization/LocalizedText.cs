@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hourai.Localization {
+namespace HouraiTeahouse.Localization {
 
     public abstract class AbstractLocalizedText : MonoBehaviour {
 

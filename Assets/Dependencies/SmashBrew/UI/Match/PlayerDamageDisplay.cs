@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     public class PlayerDamageDisplay : GradientNumberText, IPlayerGUIComponent {
 

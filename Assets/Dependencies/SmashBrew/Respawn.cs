@@ -1,4 +1,4 @@
-﻿namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     public class RespawnEvent {
 

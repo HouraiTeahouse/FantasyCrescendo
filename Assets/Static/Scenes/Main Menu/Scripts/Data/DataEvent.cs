@@ -1,5 +1,5 @@
-﻿using Hourai.Events;
-using Hourai.SmashBrew;
+using HouraiTeahouse.Events;
+using HouraiTeahouse.SmashBrew;
 
 /// <summary>
 /// Data commands.

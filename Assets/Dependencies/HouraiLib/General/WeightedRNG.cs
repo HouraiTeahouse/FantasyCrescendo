@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// A collection of objects/values

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using System.Linq;
 #endif
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     public class BGMGroup : ScriptableObject {
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using InControl;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     /// <summary>
     /// Handler MonoBehaviour that listens for button presses and pauses the game as needed.

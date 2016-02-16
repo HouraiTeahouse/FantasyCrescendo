@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
 using UnityObject = UnityEngine.Object;
 
-namespace Hourai.Editor {
+namespace HouraiTeahouse.Editor {
 
     public static class EditorUtil {
 

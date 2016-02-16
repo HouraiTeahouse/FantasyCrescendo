@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
 using UnityEditor;
 
-namespace Hourai.Localization.Editor {
+namespace HouraiTeahouse.Localization.Editor {
 
     using Editor = UnityEditor.Editor;
 

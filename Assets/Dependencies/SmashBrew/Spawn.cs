@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Hourai.Events;
+using HouraiTeahouse.Events;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
 
     public class PlayerSpawnEvent {
 

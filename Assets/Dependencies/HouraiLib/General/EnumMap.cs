@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// Map between the values of a Enum and the values of another type.

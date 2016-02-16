@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using InControl;
 
-namespace Hourai.SmashBrew.UI {
+namespace HouraiTeahouse.SmashBrew.UI {
 
     public class MenuWiggle : MonoBehaviour {
 

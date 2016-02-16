@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
 using Object = UnityEngine.Object;
 
-namespace Hourai.Editor {
+namespace HouraiTeahouse.Editor {
 
     public class HouraiEditor : MonoBehaviour {
 

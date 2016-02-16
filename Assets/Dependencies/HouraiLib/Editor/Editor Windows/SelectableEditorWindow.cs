@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hourai.Editor;
+using HouraiTeahouse.Editor;
 using UnityEditor;
 using Object = UnityEngine.Object;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     /// <summary>
     /// An EditorWindow that is based on the current selection.

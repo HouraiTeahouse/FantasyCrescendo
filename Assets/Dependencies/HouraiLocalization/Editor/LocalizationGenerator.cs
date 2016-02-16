@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
-using Hourai.Editor;
 using UnityEditor;
 using Google.GData.Spreadsheets;
+using HouraiTeahouse.Editor;
 
-namespace Hourai.Localization.Editor {
+namespace HouraiTeahouse.Localization.Editor {
 
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localization_Generator")]
     public class LocalizationGenerator : ScriptableObject {

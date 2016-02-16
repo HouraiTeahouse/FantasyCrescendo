@@ -1,9 +1,9 @@
-﻿using System.IO;
+using System.IO;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     public class PostBuildCopy : MonoBehaviour {
 

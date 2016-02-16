@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
     
     /// <summary>
     /// An abstract class  to define a Match Rule.

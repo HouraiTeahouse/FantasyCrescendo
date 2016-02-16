@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 #endif
 
-namespace Hourai {
+namespace HouraiTeahouse {
 
     public class LevelLoader : MonoBehaviour, ISubmitHandler {
 

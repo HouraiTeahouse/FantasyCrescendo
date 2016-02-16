@@ -1,7 +1,7 @@
-using Hourai.Events;
+using HouraiTeahouse.Events;
 using UnityEngine;
 
-namespace Hourai.SmashBrew {
+namespace HouraiTeahouse.SmashBrew {
     
     /// <summary>
     /// The Match Singleton.

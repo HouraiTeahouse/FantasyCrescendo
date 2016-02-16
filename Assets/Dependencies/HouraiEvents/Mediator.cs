@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace Hourai.Events {
+namespace HouraiTeahouse.Events {
 
     /// <summary>
     /// A generalized object that encapsulates the interactions between multiple objects.
