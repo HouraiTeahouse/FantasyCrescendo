@@ -18,6 +18,9 @@ namespace HouraiTeahouse.Localization {
         [SerializeField]
         private bool _dontDestroyOnLoad = false;
 
+        [SerializeField, Resource(typeof(Language))]
+        private string _defaultLanguage;
+
         private Language _currentLanguage;
 
         /// <summary>
@@ -71,21 +74,23 @@ namespace HouraiTeahouse.Localization {
                 return;
             }
             Instance = this;
+
+            Language[] languages = Resources.LoadAll<Language>(localizaitonResourceDirectory);
+            _languages = new HashSet<string>(languages.Select(lang => lang.name));
+            _keys = new HashSet<string>(languages.SelectMany(lang => lang.Keys));
+
             string currentLang;
             if (!Prefs.HasKey(_langPlayerPrefKey)) {
-                CultureInfo culture = CultureInfo.CurrentCulture;
-                while (!culture.IsNeutralCulture)
-                    culture = culture.Parent;
-                currentLang = culture.Name.ToLower();
+                currentLang = Application.systemLanguage.ToString();
+                if (!_languages.Contains(currentLang))
+                    currentLang = Resources.Load<Language>(_defaultLanguage).name;
                 Prefs.SetString(_langPlayerPrefKey, currentLang);
             } else {
                 currentLang = Prefs.GetString(_langPlayerPrefKey);
             }
-            Language[] languages = Resources.LoadAll<Language>(localizaitonResourceDirectory);
-            _languages = new HashSet<string>(languages.Select(lang => lang.name));
-            _keys = new HashSet<string>(languages.SelectMany(lang => lang.Keys));
+
             foreach (Language lang in languages) {
-                if (lang.name == currentLang) 
+                if (lang.name == currentLang)
                     CurrentLangauge = lang;
                 else
                     Resources.UnloadAsset(lang);

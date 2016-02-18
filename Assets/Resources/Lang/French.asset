@@ -9,19 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
-  m_Name: en
+  m_Name: French
   m_EditorClassIdentifier: 
   data:
   - Key: name.game
     Value: Fantasy Crescendo
   - Key: controllerNotice
-    Value: 'This game is best experienced with one or more gamepad controllers.
-
-      Got a controller? Plug it in!'
+    Value: "Une ou plusieurs manettes sont recommand\xE9es pour une meilleure exp\xE9rience
+      de jeu.\nVous avez une manette ? Branchez-le !"
   - Key: derivativeDisclaimer
-    Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
-      may contain story, character personalities, and settings different from the
-      original works.\nIf you feel uncomfortable with this, please proceed with caution."
+    Value: "Attention!\n\nCe jeu est un d\xE9riv\xE9 de Touhou Project (\u6771\u65B9Project).\nIl
+      se pourrait qu'il contienne une histoire, des personalit\xE9s de personnages,
+      et un cadre diff\xE9rent des oeuvres d'origine.\nSi cela vous g\xEAne, veillez
+      poursuivre avec pr\xE9caution."
   - Key: name.reimu
     Value: Reimu
   - Key: fullname.reimu
@@ -141,9 +141,9 @@ MonoBehaviour:
   - Key: fullname.miko
     Value: Toyosatomimi no Miko
   - Key: name.mamizou
-    Value: ' Mamizou'
+    Value: Mamizou
   - Key: fullname.mamizou
-    Value: ' Mamizou Futatsuiwa'
+    Value: Mamizou Futatsuiwa
   - Key: name.kokoro
     Value: Kokoro
   - Key: fullname.kokoro
@@ -157,48 +157,48 @@ MonoBehaviour:
   - Key: fullname.sumireko
     Value: 'Sumireko Usami '
   - Key: name.hakureiShrine
-    Value: Hakurei Shrine
+    Value: Sanctuaire Hakurei
   - Key: name.magicForest
-    Value: Forest of Magic
+    Value: "For\xEAt de la magie"
   - Key: name.makai
     Value: Makai
   - Key: name.sdm
-    Value: Scarlet Devil Mansion
+    Value: "Manoire du D\xE9mon \xC9carlate"
   - Key: name.humanVilliage
-    Value: Human Village
+    Value: Village Humain
   - Key: name.genbuRavine
-    Value: Genbu Ravine
+    Value: Ravin Genbu
   - Key: random
-    Value: Random
+    Value: "Al\xE9atoire"
   - Key: menu.multiplayer
-    Value: Multiplayer
+    Value: Multijoueur
   - Key: menu.singleplayer
-    Value: Single Player
+    Value: Solo
   - Key: menu.standard
     Value: Standard
   - Key: menu.special
-    Value: Special
+    Value: "Sp\xE9cial"
   - Key: menu.classic
-    Value: Classic Mode
+    Value: Mode Classique
   - Key: menu.allStar
-    Value: All-Star Mode
+    Value: Mode All-Star
   - Key: menu.story
-    Value: Story Mode
+    Value: Mode Histoire
   - Key: menu.options
     Value: Options
   - Key: menu.back
-    Value: Back
+    Value: Retour
   - Key: menu.exit
-    Value: Exit Game
+    Value: Quitter
   - Key: menu.training
-    Value: Training
+    Value: Entrainement
   - Key: menu.music
-    Value: Music
+    Value: Musique
   - Key: menu.sfxVolume
-    Value: Sound Effect Volume
+    Value: Volume des Effets Sonores
   - Key: menu.bgmVolume
-    Value: Music Volume
+    Value: Volume de la Musique
   - Key: menu.vaVolume
-    Value: Voice Volume
+    Value: Volume des Voix
   - Key: menu.language
-    Value: Language
+    Value: Langue

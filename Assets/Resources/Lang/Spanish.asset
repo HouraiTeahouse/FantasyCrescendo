@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
-  m_Name: de
+  m_Name: Spanish
   m_EditorClassIdentifier: 
   data:
   - Key: name.game
@@ -141,9 +141,9 @@ MonoBehaviour:
   - Key: fullname.miko
     Value: Toyosatomimi no Miko
   - Key: name.mamizou
-    Value: ' Mamizou'
+    Value: Mamizou
   - Key: fullname.mamizou
-    Value: ' Mamizou Futatsuiwa'
+    Value: Mamizou Futatsuiwa
   - Key: name.kokoro
     Value: Kokoro
   - Key: fullname.kokoro
@@ -157,48 +157,48 @@ MonoBehaviour:
   - Key: fullname.sumireko
     Value: 'Sumireko Usami '
   - Key: name.hakureiShrine
-    Value: Hakurei-Schrein
+    Value: Santuario Hakurei
   - Key: name.magicForest
-    Value: Wald der Magie
+    Value: "Bosque M\xE1gico"
   - Key: name.makai
     Value: Makai
   - Key: name.sdm
-    Value: Villa des Scharlachroten Teufels
+    Value: "Mansi\xF3n del Demonio Escarlata"
   - Key: name.humanVilliage
-    Value: Menschendorf
+    Value: Aldea Humana
   - Key: name.genbuRavine
-    Value: Genbu-Schlucht
+    Value: Quebrada Genbu
   - Key: random
-    Value: "Zuf\xE4llig"
+    Value: Aleatorio
   - Key: menu.multiplayer
-    Value: Mehrspieler
+    Value: Multijugador
   - Key: menu.singleplayer
-    Value: Einzelspieler
+    Value: Un solo jugador
   - Key: menu.standard
-    Value: Standard
+    Value: "Est\xE1ndard"
   - Key: menu.special
-    Value: Spezial
+    Value: Especial
   - Key: menu.classic
-    Value: Klassisch
+    Value: Modo Clasico
   - Key: menu.allStar
-    Value: All-Stars
+    Value: Modo All-Star
   - Key: menu.story
-    Value: Story
+    Value: Modo Historia
   - Key: menu.options
-    Value: Optionen
+    Value: Opciones
   - Key: menu.back
-    Value: "Zur\xFCck"
+    Value: "Atr\xE1s"
   - Key: menu.exit
-    Value: Verlassen
+    Value: Salir del Juego
   - Key: menu.training
-    Value: Training
+    Value: Entrenamiento
   - Key: menu.music
-    Value: Musik
+    Value: "M\xFAsica"
   - Key: menu.sfxVolume
-    Value: "Effektlautst\xE4rke"
+    Value: Volumen Efectos de Sonido
   - Key: menu.bgmVolume
-    Value: "Musiklautst\xE4rke"
+    Value: "Volumen M\xFAsica"
   - Key: menu.vaVolume
-    Value: "Stimmenlautst\xE4rke"
+    Value: Voice Volume
   - Key: menu.language
-    Value: Sprache
+    Value: Language

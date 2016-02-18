@@ -19,10 +19,9 @@ namespace HouraiTeahouse.Localization {
         protected string LocalizationKey {
             get { return _localizationKey; }
             set {
-                bool changed = _localizationKey == value;
-                _localizationKey = value;
-                if (!changed || _localizationKey == null)
+                if (_localizationKey == value || value == null)
                     return;
+                _localizationKey = value;
                 if (_languageManager.HasKey(_localizationKey))
                     _text.text = Process(_languageManager[_localizationKey]);
                 else
@@ -80,6 +79,9 @@ namespace HouraiTeahouse.Localization {
         [SerializeField]
         private string _key;
 
+        [SerializeField]
+        private string _format;
+
         protected override void Start() {
             base.Start();
             LocalizationKey = _key;
@@ -90,6 +92,9 @@ namespace HouraiTeahouse.Localization {
             set { LocalizationKey = value; }
         }
 
+        protected override string Process(string val) {
+            return string.Format(_format, val);
+        }
     }
 
 }

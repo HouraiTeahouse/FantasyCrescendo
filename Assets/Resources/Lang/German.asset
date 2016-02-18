@@ -9,19 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
-  m_Name: fr
+  m_Name: German
   m_EditorClassIdentifier: 
   data:
   - Key: name.game
     Value: Fantasy Crescendo
   - Key: controllerNotice
-    Value: "Une ou plusieurs manettes sont recommand\xE9es pour une meilleure exp\xE9rience
-      de jeu.\nVous avez une manette ? Branchez-le !"
+    Value: 'This game is best expirenced with one or more gamepad controllers.
+
+      Got a controller? Plug it in!'
   - Key: derivativeDisclaimer
-    Value: "Attention!\n\nCe jeu est un d\xE9riv\xE9 de Touhou Project (\u6771\u65B9Project).\nIl
-      se pourrait qu'il contienne une histoire, des personalit\xE9s de personnages,
-      et un cadre diff\xE9rent des oeuvres d'origine.\nSi cela vous g\xEAne, veillez
-      poursuivre avec pr\xE9caution."
+    Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
+      may contain story, character personalities, and settings different from  the
+      original works.\nIf you feel unconfortable with this, please proceed with caution."
   - Key: name.reimu
     Value: Reimu
   - Key: fullname.reimu
@@ -141,9 +141,9 @@ MonoBehaviour:
   - Key: fullname.miko
     Value: Toyosatomimi no Miko
   - Key: name.mamizou
-    Value: Mamizou
+    Value: ' Mamizou'
   - Key: fullname.mamizou
-    Value: Mamizou Futatsuiwa
+    Value: ' Mamizou Futatsuiwa'
   - Key: name.kokoro
     Value: Kokoro
   - Key: fullname.kokoro
@@ -157,48 +157,48 @@ MonoBehaviour:
   - Key: fullname.sumireko
     Value: 'Sumireko Usami '
   - Key: name.hakureiShrine
-    Value: Sanctuaire Hakurei
+    Value: Hakurei-Schrein
   - Key: name.magicForest
-    Value: "For\xEAt de la magie"
+    Value: Wald der Magie
   - Key: name.makai
     Value: Makai
   - Key: name.sdm
-    Value: "Manoire du D\xE9mon \xC9carlate"
+    Value: Villa des Scharlachroten Teufels
   - Key: name.humanVilliage
-    Value: Village Humain
+    Value: Menschendorf
   - Key: name.genbuRavine
-    Value: Ravin Genbu
+    Value: Genbu-Schlucht
   - Key: random
-    Value: "Al\xE9atoire"
+    Value: "Zuf\xE4llig"
   - Key: menu.multiplayer
-    Value: Multijoueur
+    Value: Mehrspieler
   - Key: menu.singleplayer
-    Value: Solo
+    Value: Einzelspieler
   - Key: menu.standard
     Value: Standard
   - Key: menu.special
-    Value: "Sp\xE9cial"
+    Value: Spezial
   - Key: menu.classic
-    Value: Mode Classique
+    Value: Klassisch
   - Key: menu.allStar
-    Value: Mode All-Star
+    Value: All-Stars
   - Key: menu.story
-    Value: Mode Histoire
+    Value: Story
   - Key: menu.options
-    Value: Options
+    Value: Optionen
   - Key: menu.back
-    Value: Retour
+    Value: "Zur\xFCck"
   - Key: menu.exit
-    Value: Quitter
+    Value: Verlassen
   - Key: menu.training
-    Value: Entrainement
+    Value: Training
   - Key: menu.music
-    Value: Musique
+    Value: Musik
   - Key: menu.sfxVolume
-    Value: Volume des Effets Sonores
+    Value: "Effektlautst\xE4rke"
   - Key: menu.bgmVolume
-    Value: Volume de la Musique
+    Value: "Musiklautst\xE4rke"
   - Key: menu.vaVolume
-    Value: Volume des Voix
+    Value: "Stimmenlautst\xE4rke"
   - Key: menu.language
-    Value: Langue
+    Value: Sprache

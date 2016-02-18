@@ -58,7 +58,7 @@ namespace HouraiTeahouse.Localization.Editor {
                }
                 else
                     AssetDatabase.CreateAsset(Language.FromDictionary(lang.Value), path);
-                Debug.Log(string.Format("{0} language files for: {1}", method, CultureInfo.GetCultureInfo(lang.Key).EnglishName));
+                Debug.Log(string.Format("{0} language files for: {1}", method, lang.Key));
             }
             EditorApplication.SaveAssets();
             AssetDatabase.SaveAssets();

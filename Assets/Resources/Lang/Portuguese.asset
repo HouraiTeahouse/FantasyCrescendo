@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
-  m_Name: nl
+  m_Name: Portuguese
   m_EditorClassIdentifier: 
   data:
   - Key: name.game
@@ -20,7 +20,7 @@ MonoBehaviour:
       Got a controller? Plug it in!'
   - Key: derivativeDisclaimer
     Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
-      may contain story, character personalities, and settings different from  the
+      may contain story, character personalities, and settings different from the
       original works.\nIf you feel unconfortable with this, please proceed with caution."
   - Key: name.reimu
     Value: Reimu
@@ -141,9 +141,9 @@ MonoBehaviour:
   - Key: fullname.miko
     Value: Toyosatomimi no Miko
   - Key: name.mamizou
-    Value: ' Mamizou'
+    Value: Mamizou
   - Key: fullname.mamizou
-    Value: ' Mamizou Futatsuiwa'
+    Value: Mamizou Futatsuiwa
   - Key: name.kokoro
     Value: Kokoro
   - Key: fullname.kokoro
@@ -157,48 +157,48 @@ MonoBehaviour:
   - Key: fullname.sumireko
     Value: 'Sumireko Usami '
   - Key: name.hakureiShrine
-    Value: Hakurei-schrijn
+    Value: "Santu\xE1rio Hakurei"
   - Key: name.magicForest
-    Value: Magisch Bos
+    Value: Floresta da Magia
   - Key: name.makai
     Value: Makai
   - Key: name.sdm
-    Value: Scharlaken Duivelsteen
+    Value: "Mans\xE3o do Dem\xF4nio Escarlate"
   - Key: name.humanVilliage
-    Value: Mensendorp
+    Value: Vila dos Humanos
   - Key: name.genbuRavine
-    Value: Genbu-ravijn
+    Value: Ravina Genbu
   - Key: random
-    Value: Willekeurig
+    Value: "Aleat\xF3rio"
   - Key: menu.multiplayer
-    Value: Meerdere spelers
+    Value: Multijogador
   - Key: menu.singleplayer
-    Value: Alleen spelen
+    Value: Um Jogador
   - Key: menu.standard
-    Value: Standaard
+    Value: "Padr\xE3o"
   - Key: menu.special
-    Value: Speciaal
+    Value: Especial
   - Key: menu.classic
-    Value: Klassieke modus
+    Value: "Modo Cl\xE1ssico"
   - Key: menu.allStar
-    Value: All-stars modus
+    Value: Modo All-Star
   - Key: menu.story
-    Value: Verhaalmodus
+    Value: "Modo Hist\xF3ria"
   - Key: menu.options
-    Value: Opties
+    Value: "Op\xE7\xF5es"
   - Key: menu.back
-    Value: Terug
+    Value: Voltar
   - Key: menu.exit
-    Value: Spel afsluiten
+    Value: Sair do Jogo
   - Key: menu.training
-    Value: Oefenmodus
+    Value: Treinamento
   - Key: menu.music
-    Value: Muziek
+    Value: "M\xFAsica"
   - Key: menu.sfxVolume
-    Value: Geluidseffectenvolume
+    Value: Volume dos Efeitos Sonoros
   - Key: menu.bgmVolume
-    Value: Muziekvolume
+    Value: "Volume das M\xFAsicas"
   - Key: menu.vaVolume
-    Value: Stemvolume
+    Value: Volume das Vozes
   - Key: menu.language
-    Value: Taal
+    Value: Idioma

@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 
 namespace HouraiTeahouse.Localization.Editor {
@@ -13,6 +14,12 @@ namespace HouraiTeahouse.Localization.Editor {
         private string[] availableLanguages;
         private int _index;
 
+        private Regex _splitCamelCase;
+
+        void OnEnable() {
+            _splitCamelCase = new Regex("([A-Z])");
+        }
+
         public override void OnInspectorGUI() {
             DrawDefaultInspector();
             if (!EditorApplication.isPlayingOrWillChangePlaymode) 
@@ -20,8 +27,8 @@ namespace HouraiTeahouse.Localization.Editor {
             var langManager = target as LanguageManager;
 
             if (availableLanguages == null) {
-                availableLanguages = langManager.AvailableLanguages.Select(lang => lang.ToString()).ToArray();
-                _index = Array.LastIndexOf(availableLanguages, CultureInfo.GetCultureInfo(langManager.CurrentLangauge.name).ToString());
+                availableLanguages = langManager.AvailableLanguages.Select(lang => _splitCamelCase.Replace(lang, " $1")).ToArray();
+                _index = Array.LastIndexOf(availableLanguages, _splitCamelCase.Replace(langManager.CurrentLangauge.name, " $1"));
             }
 
             int oldIndex = _index;
