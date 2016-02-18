@@ -65,6 +65,97 @@ namespace HouraiTeahouse.Localization {
             return _keys.Contains(key);
         }
 
+        public static CultureInfo GetCultureInfo(SystemLanguage language) {
+            switch (language) {
+                case SystemLanguage.Afrikaans:
+                    return new CultureInfo("af");
+                case SystemLanguage.Arabic:
+                    return new CultureInfo("ar");
+                case SystemLanguage.Basque:
+                    return new CultureInfo("eu");
+                case SystemLanguage.Belarusian:
+                    return new CultureInfo("be");
+                case SystemLanguage.Bulgarian:
+                    return new CultureInfo("bg");
+                case SystemLanguage.Catalan:
+                    return new CultureInfo("ca");
+                case SystemLanguage.Chinese:
+                    return new CultureInfo("zh-cn");
+                case SystemLanguage.Czech:
+                    return new CultureInfo("cs");
+                case SystemLanguage.Danish:
+                    return new CultureInfo("da");
+                case SystemLanguage.Dutch:
+                    return new CultureInfo("nl");
+                case SystemLanguage.English:
+                    return new CultureInfo("en");
+                case SystemLanguage.Estonian:
+                    return new CultureInfo("et");
+                case SystemLanguage.Faroese:
+                    return new CultureInfo("fo");
+                case SystemLanguage.Finnish:
+                    return new CultureInfo("fi");
+                case SystemLanguage.French:
+                    return new CultureInfo("fr");
+                case SystemLanguage.German:
+                    return new CultureInfo("de");
+                case SystemLanguage.Greek:
+                    return new CultureInfo("el");
+                case SystemLanguage.Hebrew:
+                    return new CultureInfo("he");
+                case SystemLanguage.Icelandic:
+                    return new CultureInfo("is");
+                case SystemLanguage.Indonesian:
+                    return new CultureInfo("id");
+                case SystemLanguage.Italian:
+                    return new CultureInfo("it");
+                case SystemLanguage.Japanese:
+                    return new CultureInfo("ja");
+                case SystemLanguage.Korean:
+                    return new CultureInfo("ko");
+                case SystemLanguage.Latvian:
+                    return new CultureInfo("lv");
+                case SystemLanguage.Lithuanian:
+                    return new CultureInfo("lt");
+                case SystemLanguage.Norwegian:
+                    return new CultureInfo("no");
+                case SystemLanguage.Polish:
+                    return new CultureInfo("pl");
+                case SystemLanguage.Portuguese:
+                    return new CultureInfo("pt");
+                case SystemLanguage.Romanian:
+                    return new CultureInfo("ro");
+                case SystemLanguage.Russian:
+                    return new CultureInfo("ru");
+                case SystemLanguage.SerboCroatian:
+                    return new CultureInfo("hr");
+                case SystemLanguage.Slovak:
+                    return new CultureInfo("sk");
+                case SystemLanguage.Slovenian:
+                    return new CultureInfo("sl");
+                case SystemLanguage.Spanish:
+                    return new CultureInfo("es");
+                case SystemLanguage.Swedish:
+                    return new CultureInfo("sv");
+                case SystemLanguage.Thai:
+                    return new CultureInfo("th");
+                case SystemLanguage.Turkish:
+                    return new CultureInfo("tr");
+                case SystemLanguage.Ukrainian:
+                    return new CultureInfo("uk");
+                case SystemLanguage.Vietnamese:
+                    return new CultureInfo("vi");
+                case SystemLanguage.ChineseSimplified:
+                    return new CultureInfo("zh-chs");
+                case SystemLanguage.ChineseTraditional:
+                    return new CultureInfo("zh-cht");
+                case SystemLanguage.Hungarian:
+                    return new CultureInfo("hu");
+                default:
+                    return CultureInfo.InvariantCulture;
+            }
+        }
+
         /// <summary>
         /// Unity Callback. Called once on object instantation.
         /// </summary>
@@ -82,7 +173,7 @@ namespace HouraiTeahouse.Localization {
             string currentLang;
             if (!Prefs.HasKey(_langPlayerPrefKey)) {
                 currentLang = Application.systemLanguage.ToString();
-                if (!_languages.Contains(currentLang))
+                if (!_languages.Contains(currentLang) || Application.systemLanguage == SystemLanguage.Unknown)
                     currentLang = Resources.Load<Language>(_defaultLanguage).name;
                 Prefs.SetString(_langPlayerPrefKey, currentLang);
             } else {
@@ -95,7 +186,7 @@ namespace HouraiTeahouse.Localization {
                 else
                     Resources.UnloadAsset(lang);
             }
-            
+
             if(_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
         }
