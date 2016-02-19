@@ -1,13 +1,9 @@
-using System;
-using System.Linq;
 using HouraiTeahouse.Editor;
-using HouraiTeahouse.SmashBrew;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
-
 
     [CustomEditor(typeof(DataManager))]
     public class DataManagerEditor : ScriptlessEditor {
@@ -17,7 +13,8 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         private ReorderableList characterList;
         private ReorderableList sceneList;
 
-        void OnEnable() {
+        protected override void OnEnable() {
+            base.OnEnable();
             characters = serializedObject.FindProperty("_characters");
             scenes = serializedObject.FindProperty("_scenes");
             characterList = new ReorderableList(serializedObject, characters, true, false, true, true);

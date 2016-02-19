@@ -14,7 +14,7 @@ namespace HouraiTeahouse {
 
         private static Dictionary<string, UniqueObject> _allIds;
 
-        [SerializeField]
+        [SerializeField, ReadOnly]
         private string _id;
 
         /// <summary>
