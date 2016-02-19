@@ -209,7 +209,10 @@ namespace HouraiTeahouse.Localization {
         /// Saves the current language preferences to PlayerPrefs to keep it persistent.
         /// </summary>
         void Save() {
-            Prefs.SetString(_langPlayerPrefKey, CurrentLangauge.name);
+            if (CurrentLangauge == null)
+                PlayerPrefs.DeleteKey(_langPlayerPrefKey);
+            else
+                Prefs.SetString(_langPlayerPrefKey, CurrentLangauge.name);
         }
 
         /// <summary>

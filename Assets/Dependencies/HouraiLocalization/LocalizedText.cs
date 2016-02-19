@@ -93,6 +93,8 @@ namespace HouraiTeahouse.Localization {
         }
 
         protected override string Process(string val) {
+            if (string.IsNullOrEmpty(_format))
+                return val;
             return string.Format(_format, val);
         }
     }
