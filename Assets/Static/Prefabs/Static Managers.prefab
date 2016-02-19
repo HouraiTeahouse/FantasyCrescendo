@@ -8,14 +8,16 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 404724}
+  - 114: {fileID: 11442866}
   - 114: {fileID: 11486768}
   - 114: {fileID: 11479720}
   - 114: {fileID: 11439252}
   - 114: {fileID: 11445222}
   - 114: {fileID: 11460476}
+  - 114: {fileID: 11478998}
   m_Layer: 0
   m_Name: Static Managers
-  m_TagString: EditorOnly
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,6 +51,18 @@ MonoBehaviour:
   useFixedUpdate: 1
   dontDestroyOnLoad: 0
   customProfiles: []
+--- !u!114 &11442866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c39e94dc1cf4341b93934af4ce3d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: a6945f00-1bb3-4c9b-8e5e-1b49badd0348
 --- !u!114 &11445222
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,6 +107,31 @@ MonoBehaviour:
     _playerPrefsKey: vaVol
     _associatedParams:
     - Voice Acting Volume
+--- !u!114 &11478998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 1
+  _characters:
+  - {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
+  - {fileID: 11400000, guid: 909122be91dfc3f488344cb130b405b3, type: 2}
+  - {fileID: 11400000, guid: 32bc70f9f255d3c4aaffc13450ffe9e1, type: 2}
+  - {fileID: 11400000, guid: 08f598346f8cc9a47a9c4b6862537c30, type: 2}
+  - {fileID: 11400000, guid: bbb5dd3a7c08b724db73c8fd56edcd99, type: 2}
+  _scenes:
+  - {fileID: 11400000, guid: 4fdd220a86869f347a639eb8a61773fa, type: 2}
+  - {fileID: 11400000, guid: 8d79fa23890a7e34bb353807cea6c06e, type: 2}
+  - {fileID: 11400000, guid: ed7ac9f98c46eb9468257ba6a2ddbcec, type: 2}
+  - {fileID: 11400000, guid: c0df81ebcb47e1d40b29030a22aa5e73, type: 2}
+  - {fileID: 11400000, guid: a7696fdd62c329547b38f68afc672deb, type: 2}
+  - {fileID: 11400000, guid: 06c2c4ed85cb68a42bf0111a3172f45e, type: 2}
 --- !u!114 &11479720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -107,6 +146,7 @@ MonoBehaviour:
   localizaitonResourceDirectory: Lang/
   _langPlayerPrefKey: lang
   _dontDestroyOnLoad: 0
+  _defaultLanguage: Lang/English
 --- !u!114 &11486768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,7 +162,7 @@ MonoBehaviour:
   m_ServerBindToIP: 0
   m_ServerBindAddress: 
   m_NetworkAddress: localhost
-  m_DontDestroyOnLoad: 0
+  m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01

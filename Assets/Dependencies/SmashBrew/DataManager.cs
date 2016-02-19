@@ -11,7 +11,10 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         private bool _dontDestroyOnLoad;
 
+        [SerializeField]
         private List<CharacterData> _characters;
+
+        [SerializeField]
         private List<SceneData> _scenes;
 
         private ReadOnlyCollection<CharacterData> _characterCollection;
@@ -52,9 +55,6 @@ namespace HouraiTeahouse.SmashBrew {
 
             if(_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
-
-            _characters = new List<CharacterData>(Resources.LoadAll<CharacterData>(string.Empty));
-            _scenes = new List<SceneData>(Resources.LoadAll<SceneData>(string.Empty)); 
            
             _characterCollection = new ReadOnlyCollection<CharacterData>(_characters);
             _sceneCollection = new ReadOnlyCollection<SceneData>(_scenes);
