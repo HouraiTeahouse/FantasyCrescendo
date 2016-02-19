@@ -65,7 +65,7 @@ namespace HouraiTeahouse {
         [MenuItem("Hourai/Clear Player Prefs %#c")]
         static void ClearPlayerPrefs() {
             PlayerPrefs.DeleteAll();
-            Debug.Log("HumanPlayer Prefs Cleared.");
+            Debug.Log("Player Prefs Cleared.");
         }
 
         /// <summary>
