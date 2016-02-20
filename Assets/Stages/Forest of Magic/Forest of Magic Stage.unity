@@ -36588,7 +36588,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 409142, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -8.18
+      value: -3.48
       objectReference: {fileID: 0}
     - target: {fileID: 163276, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
       propertyPath: m_Icon
@@ -36596,15 +36596,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 415426, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.07
+      value: 1.26
       objectReference: {fileID: 0}
     - target: {fileID: 460120, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 6.58
+      value: 6.84
       objectReference: {fileID: 0}
     - target: {fileID: 460120, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
       propertyPath: m_LocalPosition.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457948, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -9.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 415426, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11466414, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
@@ -36655,7 +36663,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 456675943}
-  - 114: {fileID: 456675944}
   m_Layer: 0
   m_Name: Stage Elements
   m_TagString: Untagged
@@ -36682,20 +36689,6 @@ Transform:
   - {fileID: 1074123756}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &456675944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 456675942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
-  _characters: []
-  _scenes: []
 --- !u!1 &481612348 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100032, guid: 5231163c74c7d4245b1a4d8e92f5e296, type: 3}
@@ -36844,17 +36837,6 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
---- !u!1 &710462029 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 186044, guid: f30c91640b7a7dd47b212e1c7633d2e0, type: 2}
-  m_PrefabInternal: {fileID: 937093646}
---- !u!92 &710462030
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 710462029}
-  m_Enabled: 1
 --- !u!1 &840172550 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100016, guid: 5231163c74c7d4245b1a4d8e92f5e296, type: 3}

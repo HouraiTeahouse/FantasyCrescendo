@@ -46,9 +46,6 @@ namespace UnityToolbag
                 writer.WriteLine("    public static class Tags");
                 writer.WriteLine("    {");
                 foreach (var tag in UnityEditorInternal.InternalEditorUtility.tags) {
-                    writer.WriteLine("        /// <summary>");
-                    writer.WriteLine("        /// Name of tag '{0}'.", tag);
-                    writer.WriteLine("        /// </summary>");
                     writer.WriteLine("        public const string {0} = \"{1}\";", MakeSafeForCode(tag), tag);
                 }
                 writer.WriteLine("    }");
@@ -62,9 +59,6 @@ namespace UnityToolbag
                     for (int i = 0; i < sortingLayerNames.Length; i++) {
                         var name = sortingLayerNames[i];
                         int id = SortingLayerHelper.GetSortingLayerIDForName(name);
-                        writer.WriteLine("        /// <summary>");
-                        writer.WriteLine("        /// ID of sorting layer '{0}'.", name);
-                        writer.WriteLine("        /// </summary>");
                         writer.WriteLine("        public const int {0} = {1};", MakeSafeForCode(name), id);
                     }
                     writer.WriteLine("    }");
@@ -78,9 +72,6 @@ namespace UnityToolbag
                     string layer = UnityEditorInternal.InternalEditorUtility.GetLayerName(i);
                     if (string.IsNullOrEmpty(layer))
                         continue;
-                    writer.WriteLine("        /// <summary>");
-                    writer.WriteLine("        /// Index of layer '{0}'.", layer);
-                    writer.WriteLine("        /// </summary>");
                     writer.WriteLine("        public const int {0} = {1};", MakeSafeForCode(layer), i);
                 }
                 writer.WriteLine();
@@ -88,9 +79,6 @@ namespace UnityToolbag
                     string layer = UnityEditorInternal.InternalEditorUtility.GetLayerName(i);
                     if (string.IsNullOrEmpty(layer))
                         continue;
-                    writer.WriteLine("        /// <summary>");
-                    writer.WriteLine("        /// Bitmask of layer '{0}'.", layer);
-                    writer.WriteLine("        /// </summary>");
                     writer.WriteLine("        public const int {0}Mask = 1 << {1};", MakeSafeForCode(layer), i);
                 }
                 writer.WriteLine("    }");
@@ -101,9 +89,6 @@ namespace UnityToolbag
                 writer.WriteLine("    {");
                 for (int i = 0; i < EditorBuildSettings.scenes.Length; i++) {
                     string scene = Path.GetFileNameWithoutExtension(EditorBuildSettings.scenes[i].path);
-                    writer.WriteLine("        /// <summary>");
-                    writer.WriteLine("        /// ID of scene '{0}'.", scene);
-                    writer.WriteLine("        /// </summary>");
                     writer.WriteLine("        public const int {0} = {1};", MakeSafeForCode(scene), i);
                 }
                 writer.WriteLine("    }");
@@ -119,9 +104,6 @@ namespace UnityToolbag
                     var variableName = MakeSafeForCode(name);
                     if (axes.Contains(variableName))
                         continue;
-                    writer.WriteLine("        /// <summary>");
-                    writer.WriteLine("        /// Input axis '{0}'.", name);
-                    writer.WriteLine("        /// </summary>");
                     writer.WriteLine("        public const string {0} = \"{1}\";", variableName, name);
                     axes.Add(variableName);
                 }
