@@ -36588,7 +36588,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 409142, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.11
+      value: -8.18
       objectReference: {fileID: 0}
     - target: {fileID: 163276, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
       propertyPath: m_Icon
@@ -36600,7 +36600,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 460120, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.47
+      value: 6.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 460120, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11466414, guid: 4c58b61c8b1cd5d49bd8395cdeebb861, type: 2}
@@ -36690,6 +36694,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
+  _characters: []
+  _scenes: []
 --- !u!1 &481612348 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100032, guid: 5231163c74c7d4245b1a4d8e92f5e296, type: 3}

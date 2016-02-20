@@ -1,11 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-#if UNITY_EDITOR
-using UnityEditor.SceneManagement;
-#endif
 
 namespace HouraiTeahouse {
 
@@ -56,16 +52,11 @@ namespace HouraiTeahouse {
         }
 
         public void Load() {
-#if UNITY_EDITOR
-            var scenes = new HashSet<string>(EditorSceneManager.GetSceneManagerSetup().Select(scene => scene.path));
-#endif
+            HashSet<string> paths = new HashSet<string>();
+            for (var i = 0; i < SceneManager.sceneCount; i++)
+                paths.Add(SceneManager.GetSceneAt(i).path);
             foreach (string scenePath in _scenes) {
-#if UNITY_EDITOR
-                if (scenes.Contains(scenePath) && !_ignoreLoadedScenes)
-                    continue;
-#endif
-                Scene scene = SceneManager.GetSceneByPath(scenePath);
-                if (scene.isLoaded && !_ignoreLoadedScenes)
+                if (!_ignoreLoadedScenes && paths.Contains(string.Format("Assets/{0}.unity", scenePath)))
                     continue;
                 SceneManager.LoadScene(scenePath, _mode);
             }
