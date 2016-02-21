@@ -6,10 +6,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
     public class CharacterLayoutGroup : LayoutGroup, ILayoutSelfController {
 
         [SerializeField]
+        private Vector2 _spacing;
+
+        [SerializeField]
         private float _selfAspectRatio;
 
         [SerializeField]
         private float _childAspectRatio;
+
 
         public override void CalculateLayoutInputHorizontal() {
             base.CalculateLayoutInputHorizontal();
@@ -41,8 +45,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             // Calculated
             int bestRows = 1;
             int bestCols = 1;
-            float itemWidth = 0;
-            float itemHeight = 0;
+            Vector2 itemSize = Vector2.zero;
             bool isPrime = count <= 3;
             int effectiveCount = count;
             float maxArea = float.MaxValue;
@@ -57,19 +60,22 @@ namespace HouraiTeahouse.SmashBrew.UI {
                         continue;
                     isPrime |= rows != 1 && rows != effectiveCount;
                     int cols = effectiveCount / rows;
-                    var width = availableSpace.x / cols;
-                    var height = availableSpace.y / rows;
-                    float area = Mathf.Abs(rows * width - cols * height * _childAspectRatio);
+                    Vector2 effectiveSpace = availableSpace -
+                                             new Vector2(Mathf.Max(0, cols - 1) * _spacing.x,
+                                                 Mathf.Max(0, rows - 1) * _spacing.y);
+                    Vector2 size = new Vector2(effectiveSpace.x / cols, effectiveSpace.y / rows);
+                    float area = Mathf.Abs(rows * size.x - cols * size.y * _childAspectRatio);
                     if (area >= maxArea)
                         continue;
                     maxArea = area;
                     bestRows = rows;
                     bestCols = cols;
-                    itemWidth = width;
-                    itemHeight = height;
+                    itemSize = size;
                 }
                 effectiveCount++;
             } while (!isPrime);
+
+            Vector2 delta = itemSize + _spacing;
 
             // Only set the sizes when invoked for horizontal axis, not the positions.
 
@@ -84,28 +90,29 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
                     rect.anchorMin = Vector2.up;
                     rect.anchorMax = Vector2.up;
-                    rect.sizeDelta = new Vector2(itemWidth, itemHeight);
+                    rect.sizeDelta = itemSize;
                 }
                 return;
             }
 
             Vector2 center = rectTransform.rect.size / 2;
-            Vector2 extents = 0.5f * new Vector2(bestCols * itemWidth, bestRows * itemHeight);
+            Vector2 extents = 0.5f * new Vector2(bestCols * itemSize.x + Mathf.Max(0, bestCols - 1) * _spacing.x, 
+                bestRows * itemSize.y + Mathf.Max(0, bestRows - 1) * _spacing.y);
             Vector2 start = center - extents;
 
             for(var i = 0; i < bestRows; i++) {
                 float x = start.x;
-                float y = start.y + i * itemHeight;
+                float y = start.y + i * delta.y; 
                 if(count - i * bestCols < bestCols)
-                    x = center.x - 0.5f * (count % bestCols * itemWidth);
+                    x = center.x - 0.5f * (count % bestCols * itemSize.x);
 
                 for (var j = 0; j < bestCols; j++) {
                     int index = bestCols * i + j;
                     if (index >= count)
                         break;
 
-                    SetChildAlongAxis(rectChildren[index], 0, x + j * itemWidth, itemWidth);
-                    SetChildAlongAxis(rectChildren[index], 1, y, itemHeight);
+                    SetChildAlongAxis(rectChildren[index], 0, x + j * delta.x, itemSize.x);
+                    SetChildAlongAxis(rectChildren[index], 1, y, itemSize.y);
                 }
             }
         }
