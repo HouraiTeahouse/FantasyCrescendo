@@ -46,9 +46,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (_col.ClosestPointOnBounds(position) == position)
                 return;
 
-            _event.Player = player;
-
-            _eventManager.Publish(_event);
+            _eventManager.Publish(new PlayerDieEvent { Player = player, Revived = false});
         }
 
     }

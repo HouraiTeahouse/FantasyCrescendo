@@ -49,7 +49,7 @@ MonoBehaviour:
   invertYAxis: 0
   enableXInput: 0
   useFixedUpdate: 1
-  dontDestroyOnLoad: 0
+  dontDestroyOnLoad: 1
   customProfiles: []
 --- !u!114 &11442866
 MonoBehaviour:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localizaitonResourceDirectory: Lang/
   _langPlayerPrefKey: lang
-  _dontDestroyOnLoad: 0
+  _dontDestroyOnLoad: 1
   _defaultLanguage: Lang/English
 --- !u!114 &11486768
 MonoBehaviour:
