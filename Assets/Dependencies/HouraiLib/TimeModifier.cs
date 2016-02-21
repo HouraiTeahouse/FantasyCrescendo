@@ -13,7 +13,6 @@ namespace HouraiTeahouse {
     [RequiredCharacterComponent]
     public sealed class TimeModifier : MonoBehaviour, ITimeObject {
 
-        [SerializeField]
         private float _localTimeScale = 1f;
 
         private Animator[] _animators;

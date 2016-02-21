@@ -1,9 +1,9 @@
 using UnityEngine;
-using System.Collections;
 using System;
 
 namespace HouraiTeahouse.SmashBrew {
 
+    [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     [RequireComponent(typeof(Rigidbody))]
     public class CharacterKnockback : HouraiBehaviour, IKnockbackable {

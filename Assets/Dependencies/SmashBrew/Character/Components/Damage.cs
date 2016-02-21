@@ -1,4 +1,3 @@
-using HouraiTeahouse.Events;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -20,23 +19,11 @@ namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
     public class Damage : CharacterComponent, IDamageable, IHealable {
 
-        [SerializeField]
-        private float _currentDamage = 0f;
+        public float CurrentDamage { get; set; }
 
-        [SerializeField]
-        private float _defaultDamage = 0f;
+        public float DefaultDamage { get; set; }
 
-        public float CurrentDamage {
-            get { return _currentDamage; }
-            set { _currentDamage = value; }
-        }
-
-        public float DefaultDamage {
-            get { return _defaultDamage; }
-            set { _defaultDamage = value; }
-        }
-
-        public string Suffix {
+        public virtual string Suffix {
             get { return "%"; }
         }
 

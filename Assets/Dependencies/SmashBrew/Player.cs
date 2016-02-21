@@ -275,11 +275,11 @@ namespace HouraiTeahouse.SmashBrew {
                 return null;
             PlayerObject = prefab.Duplicate(pos, rot).GetComponent<Character>();
             var controller = PlayerObject.GetComponentInChildren<PlayerController>();
-            var palletSwap = PlayerObject.GetComponentInChildren<PalleteSwap>();
+            var materialSwap = PlayerObject.GetComponentInChildren<MaterialSwap>();
             if (controller)
                 controller.PlayerData = this;
-            if (palletSwap)
-                palletSwap.Pallete = Pallete;
+            if (materialSwap)
+                materialSwap.Pallete = Pallete;
             return PlayerObject;
         }
 

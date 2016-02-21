@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew {
     [RequiredCharacterComponent]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(PlayerController))]
-    public class PalleteSwap : MonoBehaviour {
+    public class MaterialSwap : MonoBehaviour {
 
         [System.Serializable]
         private class Swap {

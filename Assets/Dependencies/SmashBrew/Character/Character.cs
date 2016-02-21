@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using HouraiTeahouse.Events;
@@ -21,6 +22,11 @@ namespace HouraiTeahouse.SmashBrew {
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     public class Character : HouraiBehaviour {
 
+        private enum FacingMode {
+            Rotation,
+            Scale
+        }
+
         #region Public Properties
 
         public Mediator CharacterEvents {
@@ -39,15 +45,88 @@ namespace HouraiTeahouse.SmashBrew {
             get { return _bones.Length; }
         }
 
+        public bool IsGrounded {
+            get { return Animator.GetBool(CharacterAnimVars.Grounded); }
+            private set {
+                if (IsGrounded == value)
+                    return;
+                if (value) {
+                    IsFastFalling = false;
+                    JumpCount = 0;
+                }
+                Animator.SetBool(CharacterAnimVars.Grounded, value);
+                CharacterEvents.Publish(new GroundEvent { Grounded = value });
+            }
+        }
+
+        public bool IsFastFalling { get; set; }
+
+        public float FallSpeed {
+            get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
+        }
+
+        /// <summary>
+        /// The direction the character is currently facing.
+        /// If set to true, the character faces the right.
+        /// If set to false, the character faces the left.
+        /// 
+        /// The method in which the character is flipped depends on what the Facing Mode parameter is set to.
+        /// </summary>
+        public bool Direction {
+            get {
+                if (_facingMode == FacingMode.Rotation)
+                    return transform.eulerAngles.y > 179f;
+                return transform.localScale.x > 0;
+            }
+            set {
+                if (_facing == value)
+                    return;
+
+                _facing = value;
+                if (_facingMode == FacingMode.Rotation)
+                    transform.Rotate(0f, 180f, 0f);
+                else
+                    transform.localScale *= -1;
+            }
+        }
+
+        public float GravityForce {
+            get { return _gravity; }
+            set { _gravity = Mathf.Abs(value); }
+        }
+
+        public int JumpCount { get; private set; }
+
+        public int MaxJumpCount {
+            get { return _jumpPower == null ? 0 : _jumpPower.Length; }
+        }
         #endregion
 
         #region Runtime Variables
         private Transform[] _bones;
+        private HashSet<Collider> _ground;
+        private bool _facing;
         #endregion
 
         #region Serialized Variables
         [SerializeField]
         private GameObject _rootBone;
+
+        [SerializeField]
+        private FacingMode _facingMode;
+
+        [Header("Physics")]
+        [SerializeField]
+        private float _gravity = 9.86f;
+
+        [SerializeField]
+        private float _fastFallSpeed = 9f;
+
+        [SerializeField]
+        private float _maxFallSpeed = 5f;
+
+        [SerializeField]
+        private float[] _jumpPower = {1.5f, 1.5f};
         #endregion
 
         #region Public Events
@@ -57,12 +136,34 @@ namespace HouraiTeahouse.SmashBrew {
         #region Required Components
         public CapsuleCollider MovementCollider { get; private set; }
         #endregion
-        
+
         #region Public Action Methods
         public Transform GetBone(int boneIndex) {
             if (boneIndex < 0 || boneIndex >= BoneCount)
                 return transform;
             return _bones[boneIndex];
+        }
+
+        public void Move(float speed) {
+            Vector3 vel = Rigidbody.velocity;
+            vel.x = speed;
+
+            if (Direction)
+                vel.x *= -1;
+
+            Rigidbody.velocity = vel;
+        }
+
+        public void Jump() {
+            if (JumpCount >= MaxJumpCount)//Restricted)
+                return;
+
+            // Apply upward force to jump
+            Rigidbody.AddForce(Vector3.up * _jumpPower[JumpCount]);
+
+            JumpCount++;
+
+            CharacterEvents.Publish(new JumpEvent { ground = IsGrounded, remainingJumps = MaxJumpCount - JumpCount });
         }
         #endregion
 
@@ -94,12 +195,45 @@ namespace HouraiTeahouse.SmashBrew {
                 root = _rootBone;
 
             _bones = root.GetComponentsInChildren<Transform>();
+            _ground = new HashSet<Collider>();
 
             // Initialize all animation behaviours
             BaseAnimationBehaviour.InitializeAll(Animator);
         }
 
-        void Reset() {
+        protected virtual void FixedUpdate() {
+            Rigidbody.AddForce(-Vector3.up * _gravity);
+
+            Vector3 velocity = Rigidbody.velocity;
+
+            //if (!IsFastFalling && InputSource != null && InputSource.Movement.y < 0)
+            //    _fastFall = true;
+
+            if (IsFastFalling || velocity.y < -FallSpeed)
+                velocity.y = -FallSpeed;
+
+            Rigidbody.velocity = velocity;
+        }
+
+        protected virtual void OnCollisionEnter(Collision col) {
+            ContactPoint[] points = col.contacts;
+            if (points.Length <= 0)
+                return;
+
+            float r2 = MovementCollider.radius * MovementCollider.radius;
+            Vector3 bottom = transform.TransformPoint(MovementCollider.center - Vector3.up * MovementCollider.height / 2);
+            foreach (ContactPoint contact in points)
+                if ((contact.point - bottom).sqrMagnitude < r2)
+                    _ground.Add(contact.otherCollider);
+            IsGrounded = _ground.Count > 0;
+        }
+
+        protected virtual void OnCollisionExit(Collision col) {
+            if (_ground.Remove(col.collider))
+                IsGrounded = _ground.Count > 0;
+        }
+
+        protected virtual void Reset() {
             MovementCollider = GetComponent<CapsuleCollider>();
             MovementCollider.isTrigger = false;
 
@@ -118,7 +252,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
 
             foreach(Type component in GetRequiredComponents())
-                if (gameObject.GetComponent(component))
+                if (!gameObject.GetComponent(component))
                     gameObject.AddComponent(component);
 #endif
         }
