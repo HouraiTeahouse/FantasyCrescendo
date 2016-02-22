@@ -50,12 +50,11 @@ namespace UnityConstants
 
     public static class Scenes
     {
-        public const int Game_Start_Bootstrap = 0;
+        public const int Splash_Screen = 0;
         public const int Stage_Bootstrap = 1;
-        public const int Splash_Screen = 2;
-        public const int Main_Menu = 3;
-        public const int Forest_of_Magic_Stage = 4;
-        public const int Physics_Test_Scene = 5;
+        public const int Main_Menu = 2;
+        public const int Forest_of_Magic_Stage = 3;
+        public const int Physics_Test_Scene = 4;
     }
 
     public static class Axes

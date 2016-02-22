@@ -40,7 +40,6 @@ namespace HouraiTeahouse {
                 default:
                     return;
             }
-            Debug.Log(copyPath);
 
             // Copy all Post Build files to output directory
 

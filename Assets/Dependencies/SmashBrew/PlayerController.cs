@@ -10,7 +10,8 @@ namespace HouraiTeahouse.SmashBrew {
 
         private Character _character;
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             _character = GetComponent<Character>();
         }
 
