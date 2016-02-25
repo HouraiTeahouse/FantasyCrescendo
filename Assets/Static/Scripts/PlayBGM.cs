@@ -6,9 +6,11 @@ namespace HouraiTeahouse {
     public class PlayBGM : MonoBehaviour {
 
         [SerializeField]
+        private AudioSource _musicSource;
+
+        [SerializeField]
         private BGMGroup _group;
 
-        private AudioSource _musicSource;
         private BGMData _currentBGM;
 
         void Start() {
@@ -18,7 +20,8 @@ namespace HouraiTeahouse {
             }
             var effect = gameObject.AddComponent<SoundEffect>();
             effect.hideFlags = HideFlags.HideInInspector;
-            _musicSource = GetComponent<AudioSource>();
+            if(_musicSource == null)
+                _musicSource = GetComponent<AudioSource>();
             Play(_group);
         }
 
