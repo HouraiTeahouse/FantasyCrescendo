@@ -15,12 +15,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         private RectTransform _rTransform;
         private RectTransform _cTransform;
-        private PlayerUIColor _cUIColor;
         private Text _text;
 
         private Player _target;
         private CapsuleCollider _collider;
 
+        /// <summary>
+        /// The Player for the PlayerIndicator to follow.
+        /// </summary>
         public Player Target {
             get { return _target; }
             set {
@@ -28,23 +30,30 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 _collider = (_target != null)? _target.PlayerObject.MovementCollider : null;
                 if (_target != null)
                     _text.text = (_target.PlayerNumber + 1).ToString(_format);
-                _cUIColor.SetPlayer(_target);
+                foreach(IPlayerGUIComponent component in 
+                    gameObject.GetComponentsInChildren<IPlayerGUIComponent>())
+                    component.SetPlayer(_target);
             }
         }
 
-        private void Awake() {
+        /// <summary>
+        /// Unity callback. Called on object instantiation.  
+        /// </summary>
+        void Awake() {
             GameObject gui = GameObject.FindGameObjectWithTag(Tags.GUI); 
             if(!gui)
                 Destroy(this);
             _text = GetComponent<Text>();
-            _cUIColor = GetComponent<PlayerUIColor>();
             _rTransform = GetComponent<RectTransform>();
             _rTransform.SetParent(gui.transform);
             _rTransform.localScale = Vector3.one;
             _cTransform = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         }
 
-        private void LateUpdate() {
+        /// <summary>
+        /// Unity callback. Called once every frame, after all Update calls are processed.
+        /// </summary>
+        void LateUpdate() {
             if (Target == null) {
                 _text.enabled = false;
                 return;

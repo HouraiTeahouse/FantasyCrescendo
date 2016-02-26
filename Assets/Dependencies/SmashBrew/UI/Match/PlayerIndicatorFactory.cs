@@ -1,36 +1,23 @@
+using System;
 using HouraiTeahouse.Events;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
-    public class PlayerIndicatorFactory : MonoBehaviour {
+    /// <summary>
+    /// A PrefabFactoryEventHandler that produces PlayerIndicators in response to Players spawning.
+    /// </summary>
+    public sealed class PlayerIndicatorFactory : PrefabFactoryEventHandler<PlayerIndicator, PlayerSpawnEvent> {
 
-        [SerializeField]
-        private PlayerIndicator _prefab;
-
-        private Mediator _eventManager;
-
-        void Awake() {
-            if (!_prefab) {
-                Destroy(this);
-                return;
-            }
-            _eventManager = GlobalMediator.Instance;
-            _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawnPlayer);
-        }
-
-        private void OnDestroy() {
-            if (_eventManager != null)
-                _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawnPlayer);
-        }
-
-        private void OnSpawnPlayer(PlayerSpawnEvent eventArgs) {
-            if (eventArgs == null || eventArgs.Player == null)
-                return;
-            PlayerIndicator indicator = Instantiate(_prefab);
+        /// <summary>
+        /// <see cref="AbstractFactoryEventHandler{T,TEvent}.Create"/>
+        /// </summary>
+        protected override PlayerIndicator Create(PlayerSpawnEvent eventArgs) {
+            PlayerIndicator indicator = base.Create(eventArgs);
             indicator.Target = eventArgs.Player;
+            return indicator;
         }
-
 
     }
 

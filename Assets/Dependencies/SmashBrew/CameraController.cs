@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using HouraiTeahouse.Events;
 using UnityEngine;
@@ -6,7 +5,7 @@ using UnityEngine;
 namespace HouraiTeahouse.SmashBrew {
 
     [RequireComponent(typeof (Camera))]
-    public sealed class CameraController : HouraiBehaviour {
+    public sealed class CameraController : EventHandlerBehaviour<PlayerSpawnEvent> {
 
         private Camera _camera;
 
@@ -23,27 +22,26 @@ namespace HouraiTeahouse.SmashBrew {
         private Vector3 _targetPositionBias;
 
         private HashSet<Transform> _targets;
-        private Mediator _eventManager;
 
+        /// <summary>
+        /// Unity callback. Called on object instantiation.
+        /// </summary>
         protected override void Awake() {
             base.Awake();
             _camera = GetComponent<Camera>();
             _targets = new HashSet<Transform>();
-            _eventManager = GlobalMediator.Instance;
-            _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawnPlayer);
         }
 
-        void OnDestroy() {
-            _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawnPlayer);
-        }
-
-        void OnSpawnPlayer(PlayerSpawnEvent eventArgs) {
+        protected override void OnEvent(PlayerSpawnEvent eventArgs) {
             if (eventArgs == null || !eventArgs.PlayerObject)
                 return;
             _targets.Add(eventArgs.PlayerObject.transform);
         }
-
-        private void LateUpdate() {
+        
+        /// <summary>
+        /// Unity callback. Called once per frame after all Updates are processed.
+        /// </summary>
+        void LateUpdate() {
             var count = 0;
             float dt = DeltaTime;
 

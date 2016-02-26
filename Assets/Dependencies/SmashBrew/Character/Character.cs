@@ -41,10 +41,17 @@ namespace HouraiTeahouse.SmashBrew {
             get; private set;
         }
 
+        /// <summary>
+        /// Gets how many bones the Character has.
+        /// </summary>
         public int BoneCount {
             get { return _bones.Length; }
         }
 
+        /// <summary>
+        /// Gets whether the Character is currently on solid ground.
+        /// Assumed to be in the air when false.
+        /// </summary>
         public bool IsGrounded {
             get { return Animator.GetBool(CharacterAnimVars.Grounded); }
             private set {
@@ -59,10 +66,15 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether the Character is currently fast falling or not
+        /// </summary>
         public bool IsFastFalling { get; set; }
 
         public float FallSpeed {
-            get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
+            get {
+                return IsFastFalling ? _fastFallSpeed : _maxFallSpeed;
+            }
         }
 
         /// <summary>
@@ -90,13 +102,22 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        public float GravityForce {
+        /// <summary>
+        /// Gets or sets the magnitude of gravity applied to the Character.
+        /// </summary>
+        public float Gravity {
             get { return _gravity; }
             set { _gravity = Mathf.Abs(value); }
         }
 
+        /// <summary>
+        /// Gets how many remaining jumps the Character currently has.
+        /// </summary>
         public int JumpCount { get; private set; }
 
+        /// <summary>
+        /// Gets the maximum number of jumps the Character can preform.
+        /// </summary>
         public int MaxJumpCount {
             get { return _jumpPower == null ? 0 : _jumpPower.Length; }
         }
@@ -181,6 +202,10 @@ namespace HouraiTeahouse.SmashBrew {
         #endregion
 
         #region Unity Callbacks
+
+        /// <summary>
+        /// Unity callback. Called on object instantiation.
+        /// </summary>
         protected override void Awake() {
             base.Awake();
             CharacterEvents = new Mediator();
@@ -190,13 +215,11 @@ namespace HouraiTeahouse.SmashBrew {
             KnockbackDealt = new ModifierList();
 
             GameObject root = gameObject;
-
             if (_rootBone)
                 root = _rootBone;
+            _bones = root.GetComponentsInChildren<Transform>();
 
             MovementCollider = GetComponent<CapsuleCollider>();
-
-            _bones = root.GetComponentsInChildren<Transform>();
             _ground = new HashSet<Collider>();
 
             // Initialize all animation behaviours

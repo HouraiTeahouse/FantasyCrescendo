@@ -721,9 +721,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f069a71a8df4fb347957acdd58d68d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _container: {fileID: 286019992}
-  _displayPrefab: {fileID: 197896, guid: b602759a6796f974492a0e315d753809, type: 2}
-  _spacePrefab: {fileID: 128550, guid: 1e88ac160d4cf1247a1708163e5c640a, type: 2}
+  _prefab: {fileID: 22445206, guid: b602759a6796f974492a0e315d753809, type: 2}
+  _container: {fileID: 286019993}
+  _spacePrefab: {fileID: 22433504, guid: 1e88ac160d4cf1247a1708163e5c640a, type: 2}
 --- !u!114 &1177385122
 MonoBehaviour:
   m_ObjectHideFlags: 0

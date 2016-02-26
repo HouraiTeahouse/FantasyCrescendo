@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public class RespawnPlatform : HouraiBehaviour {
+    public class RespawnPlatform : EventHandlerBehaviour<RespawnEvent> {
 
         [SerializeField]
         private float _invicibilityTimer;
@@ -18,16 +18,16 @@ namespace HouraiTeahouse.SmashBrew {
         private Character _character;
         private Invincibility _invincibility;
         private float _timer;
-        private Mediator eventManager;
 
+        /// <summary>
+        /// Unity callback. Called on object instantiation.
+        /// </summary>
         protected override void Awake() {
             base.Awake();
             gameObject.SetActive(false);
-            eventManager = GlobalMediator.Instance;
-            eventManager.Subscribe<RespawnEvent>(RespawnPlayer);
         }
 
-        void RespawnPlayer(RespawnEvent eventArgs) {
+        protected override void OnEvent(RespawnEvent eventArgs) {
             if (Occupied || eventArgs.Consumed)
                 return;
             eventArgs.Consumed = true;
@@ -40,7 +40,9 @@ namespace HouraiTeahouse.SmashBrew {
             gameObject.SetActive(true);
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// Unity callback. Called once per frame.
+        /// </summary>
         void Update() {
             if (_character == null)
                 return;
