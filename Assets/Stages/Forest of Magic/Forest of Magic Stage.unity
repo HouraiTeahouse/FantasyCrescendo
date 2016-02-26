@@ -1749,19 +1749,6 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11440180, guid: 6fa977e12b0efcd4aa0b43f138f74be7, type: 2}
-      propertyPath: group
-      value: 
-      objectReference: {fileID: 11400000, guid: 8d79fa23890a7e34bb353807cea6c06e,
-        type: 2}
-    - target: {fileID: 8257096, guid: 6fa977e12b0efcd4aa0b43f138f74be7, type: 2}
-      propertyPath: panLevelCustomCurve.m_RotationOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257096, guid: 6fa977e12b0efcd4aa0b43f138f74be7, type: 2}
-      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440180, guid: 6fa977e12b0efcd4aa0b43f138f74be7, type: 2}
       propertyPath: _group
       value: 
       objectReference: {fileID: 11400000, guid: 8d79fa23890a7e34bb353807cea6c06e,

@@ -194,6 +194,8 @@ namespace HouraiTeahouse.SmashBrew {
             if (_rootBone)
                 root = _rootBone;
 
+            MovementCollider = GetComponent<CapsuleCollider>();
+
             _bones = root.GetComponentsInChildren<Transform>();
             _ground = new HashSet<Collider>();
 
