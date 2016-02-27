@@ -1,101 +1,94 @@
+using System;
+using HouraiTeahouse.SmashBrew.Util;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public class DamageEvent {
+    public class DamageType {
 
-        public float damage;
-        public float currentDamage;
+        public string Suffix { get; private set; }
+        public float MinDamage { get; private set; }
+        public float MaxDamage { get; private set; }
+
+        public static readonly DamageType Percent = new DamageType {
+            Change = (currentDamage, delta) => currentDamage + delta,
+            Suffix = "%",
+            MaxDamage = 999f,
+            MinDamage = 0f
+        };
+
+        public static readonly DamageType Stamina = new DamageType {
+            Change = (currentDamage, delta) => currentDamage + delta,
+            Suffix = "HP",
+            MaxDamage = 999f,
+            MinDamage = 0f
+        };
+
+        private Func<float, float, float> Change;
+
+        public float Damage(float currentDamage, float delta) {
+            float newDamage = Change(currentDamage, Mathf.Abs(delta));
+            return Mathf.Clamp(newDamage, MinDamage, MaxDamage);
+        }
+
+        public float Heal(float currentDamage, float delta) {
+            float newDamage = Change(currentDamage, -Mathf.Abs(delta));
+            return Mathf.Clamp(newDamage, MinDamage, MaxDamage);
+        }
 
     }
 
-    public class HealEvent {
+    /// <summary>
+    /// A MonoBehaviour that handles all of the damage dealt and recieved by a character.
+    /// </summary>
+    public partial class Character {
 
-        public float healing;
-        public float currentDamage;
-
-    }
-
-    [DisallowMultipleComponent]
-    public class Damage : CharacterComponent, IDamageable, IHealable {
-
+        /// <summary>
+        /// The current internal damage value. Used for knockback calculations.
+        /// </summary>
         public float CurrentDamage { get; set; }
-
         public float DefaultDamage { get; set; }
 
-        public virtual string Suffix {
-            get { return "%"; }
+        public DamageType DamageType { get; set; }
+        public ModifierGroup<object> DamageModifiers { get; private set; }
+        public ModifierGroup<object> HealingModifiers { get; private set; }
+
+        internal float ModifyDamage(float baseDamage, object source = null) {
+            return DamageModifiers.Out.Modifiy(source, baseDamage);
         }
 
-        public float MinDamage { get; protected set; }
-        public float MaxDamage { get; protected set; }
-
-        public ModifierList<object> DefensiveModifiers {
-            get; private set;
-        }
-
-        public ModifierList<object> HealingModifiers {
-            get; private set;
-        }
-
-        protected override void Awake() {
-            base.Awake();
-            MinDamage = 0f;
-            MaxDamage = 999.9999f;
-            DefensiveModifiers = new ModifierList<object>();
-            HealingModifiers = new ModifierList<object>();
+        public void Damage(float damage) {
+            Damage(null, damage);
         }
         
-        public void Hurt(object source, float damage) {
-            if (!enabled)
-                return;
-
+        public void Damage(object source, float damage) {
             damage = Mathf.Abs(damage);
 
-            if (DefensiveModifiers.Count > 0)
-                damage = DefensiveModifiers.Modifiy(source, damage);
+            if (DamageModifiers.In.Count > 0)
+                damage = DamageModifiers.In.Modifiy(source, damage);
 
-            HurtImpl(damage);
+            CurrentDamage = DamageType.Damage(CurrentDamage, damage);
 
-            Mathf.Clamp(CurrentDamage, MinDamage, MaxDamage);
+            Mathf.Clamp(CurrentDamage, DamageType.MinDamage, DamageType.MaxDamage);
 
-            CharacterEvents.Publish(new DamageEvent {damage = damage, currentDamage = CurrentDamage});
+            CharacterEvents.Publish(new PlayerDamageEvent {damage = damage, currentDamage = CurrentDamage});
         }
 
-        protected virtual void HurtImpl(float damage) {
-            CurrentDamage += damage;
-            if (CurrentDamage > MaxDamage)
-                CurrentDamage = MaxDamage;
+        public void Heal(float healing) {
+           Heal(null, healing); 
         }
 
-        public virtual void Heal(object source, float healing) {
-            if (!enabled)
-                return;
-
+        public void Heal(object source, float healing) {
             healing = Mathf.Abs(healing);
 
-            if (HealingModifiers.Count > 0)
-                healing = HealingModifiers.Modifiy(source, healing);
+            if (HealingModifiers.In.Count > 0)
+                healing = HealingModifiers.In.Modifiy(source, healing);
 
-            HealImpl(healing);
+            CurrentDamage = DamageType.Heal(CurrentDamage, healing);
 
-            CharacterEvents.Publish(new HealEvent { healing = healing, currentDamage = CurrentDamage });
-
+            CharacterEvents.Publish(new PlayerHealEvent { healing = healing, currentDamage = CurrentDamage });
         }
 
-        protected virtual void HealImpl(float damage) {
-            CurrentDamage += damage;
-            if (CurrentDamage > MaxDamage)
-                CurrentDamage = MaxDamage;
-        }
-
-        void IDamageable.Damage(object source, float damage) {
-            Hurt(source, damage);
-        }
-
-        public void Reset() {
-            CurrentDamage = DefaultDamage;
-        }
     }
 
 }

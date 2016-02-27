@@ -1,21 +1,15 @@
 using UnityEngine;
-using System.Collections;
 
 namespace HouraiTeahouse.SmashBrew {
-    
+   
+    /// <summary>
+    /// A Status effect that prevents players from being knocked back while active.
+    /// </summary> 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    [RequireComponent(typeof(CharacterKnockback))]
     public sealed class SuperArmor : Status {
 
-        //private CharacterKnockback _knockback;
-
         //TODO: Properly implement
-
-        //protected override void Awake() {
-        //    base.Awake();
-        //    _knockback = GetComponent<CharacterKnockback>();
-        //}
 
     }
 

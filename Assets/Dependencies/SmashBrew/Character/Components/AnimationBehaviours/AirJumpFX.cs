@@ -1,8 +1,10 @@
 using UnityEngine;
-using System.Collections;
 
 namespace HouraiTeahouse.SmashBrew {
 
+    /// <summary>
+    /// A AnimationBehaviour that spawns an effect at the base of the object that is being animated
+    /// </summary>
     public class AirJumpFX : BaseAnimationBehaviour<Transform> {
 
         [SerializeField]

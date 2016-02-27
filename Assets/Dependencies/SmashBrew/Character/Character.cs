@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using HouraiTeahouse.Events;
+using HouraiTeahouse.SmashBrew.Util;
 using UnityConstants;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -20,7 +21,7 @@ namespace HouraiTeahouse.SmashBrew {
 #endif
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
-    public class Character : HouraiBehaviour {
+    public partial class Character : HouraiBehaviour, IDamageable, IHealable, IKnockbackable {
 
         private enum FacingMode {
             Rotation,
@@ -30,14 +31,6 @@ namespace HouraiTeahouse.SmashBrew {
         #region Public Properties
 
         public Mediator CharacterEvents {
-            get; private set;
-        }
-        
-        public ModifierList DamageDealt {
-            get; private set;
-        }
-
-        public ModifierList KnockbackDealt {
             get; private set;
         }
 
@@ -62,7 +55,7 @@ namespace HouraiTeahouse.SmashBrew {
                     JumpCount = 0;
                 }
                 Animator.SetBool(CharacterAnimVars.Grounded, value);
-                CharacterEvents.Publish(new GroundEvent { Grounded = value });
+                CharacterEvents.Publish(new PlayerGroundEvent { Grounded = value });
             }
         }
 
@@ -184,17 +177,11 @@ namespace HouraiTeahouse.SmashBrew {
 
             JumpCount++;
 
-            CharacterEvents.Publish(new JumpEvent { ground = IsGrounded, remainingJumps = MaxJumpCount - JumpCount });
+            CharacterEvents.Publish(new PlayerJumpEvent { ground = IsGrounded, remainingJumps = MaxJumpCount - JumpCount });
         }
         #endregion
 
         #region Internal Methods
-        internal float ModifyDamage(float baseDamage) {
-            if (DamageDealt.Count <= 0)
-                return baseDamage;
-            return DamageDealt.Modifiy(baseDamage);
-        }
-
         internal void Attack(Attack.Type type, Attack.Direction direction, int index) {
             if (OnAttack != null)
                 OnAttack(type, direction, index);
@@ -211,9 +198,6 @@ namespace HouraiTeahouse.SmashBrew {
             CharacterEvents = new Mediator();
             Reset();
 
-            DamageDealt = new ModifierList();
-            KnockbackDealt = new ModifierList();
-
             GameObject root = gameObject;
             if (_rootBone)
                 root = _rootBone;
@@ -221,6 +205,10 @@ namespace HouraiTeahouse.SmashBrew {
 
             MovementCollider = GetComponent<CapsuleCollider>();
             _ground = new HashSet<Collider>();
+
+            DamageModifiers = new ModifierGroup<object>();
+            HealingModifiers = new ModifierGroup<object>();
+            KnockbackModifiers = new ModifierGroup<Vector2>();
 
             // Initialize all animation behaviours
             BaseAnimationBehaviour.InitializeAll(Animator);

@@ -1,8 +1,10 @@
 using UnityEngine;
-using System.Collections;
 
 namespace HouraiTeahouse.SmashBrew {
 
+    /// <summary>
+    /// A AnimationBehaviour that cancels all vertical momentum on entry into a state
+    /// </summary>
     public class DisableGravity : BaseAnimationBehaviour<Rigidbody> {
 
         private RigidbodyConstraints _oldConstraints;

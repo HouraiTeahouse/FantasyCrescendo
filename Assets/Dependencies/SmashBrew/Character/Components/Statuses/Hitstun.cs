@@ -1,8 +1,11 @@
 using UnityEngine;
-using System.Collections;
 
 namespace HouraiTeahouse.SmashBrew {
 
+    /// <summary>
+    /// A Status effect that causes Characters to become uncontrollable for a short period
+    /// after being hit
+    /// </summary>
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     [RequireComponent(typeof(Rigidbody))]
@@ -10,14 +13,24 @@ namespace HouraiTeahouse.SmashBrew {
         
         private Vector3 _oldVelocity;
 
+        /// <summary>
+        /// Gets whether the player has been hit recently
+        /// </summary>
         public bool IsHit {
             get { return enabled; }
         }
 
+        /// <summary>
+        /// <see cref="Status.OnStatusUpdate"/>
+        /// </summary>
         protected override void OnStatusUpdate(float dt) {
             _oldVelocity = Rigidbody.velocity;
         }
 
+        /// <summary>
+        /// Unity callback. Called on entry into a physical collision with another object.
+        /// </summary>
+        /// <param name="col">the collision data</param>
         protected virtual void OnCollisionEnter(Collision col) {
             if (!IsHit)
                 return;
@@ -36,5 +49,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
     }
+
 
 }

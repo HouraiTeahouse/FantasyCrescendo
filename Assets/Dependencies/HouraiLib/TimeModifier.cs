@@ -10,7 +10,6 @@ namespace HouraiTeahouse {
     }
 
     [DisallowMultipleComponent]
-    [RequiredCharacterComponent]
     public sealed class TimeModifier : MonoBehaviour, ITimeObject {
 
         private float _localTimeScale = 1f;
