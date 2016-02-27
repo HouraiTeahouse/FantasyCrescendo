@@ -30,9 +30,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 _collider = (_target != null)? _target.PlayerObject.MovementCollider : null;
                 if (_target != null)
                     _text.text = (_target.PlayerNumber + 1).ToString(_format);
-                foreach(IPlayerGUIComponent component in 
-                    gameObject.GetComponentsInChildren<IPlayerGUIComponent>())
-                    component.SetPlayer(_target);
+                foreach(var component in gameObject.GetComponentsInChildren<IDataComponent<Player>>())
+                    component.SetData(_target);
             }
         }
 

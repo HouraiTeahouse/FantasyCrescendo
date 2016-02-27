@@ -11,8 +11,8 @@ namespace HouraiTeahouse.SmashBrew {
                 Component.Play();
         }
 
-        public override void SetCharacter(CharacterData data) {
-            base.SetCharacter(data);
+        public override void SetData(CharacterData data) {
+            base.SetData(data);
             if (Component == null || data == null)
                 return;
             Component.clip = data.Announcer.Load();

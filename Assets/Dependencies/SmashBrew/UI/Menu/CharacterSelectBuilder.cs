@@ -52,8 +52,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 RectTransform character = Instantiate(_character);
                 Attach(character, _characterContainer);
                 character.name = data.name;
-                foreach (ICharacterGUIComponent guiComponent in character.GetComponentsInChildren<ICharacterGUIComponent>())
-                    guiComponent.SetCharacter(data);
+                character.GetComponentsInChildren<IDataComponent<CharacterData>>().SetData(data);
             }
 
         } 
@@ -69,9 +68,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
                 display.name = string.Format("Player {0}", player.PlayerNumber + 1);
 
-                // Use the IPlayerGUIComponent interface to set the player data on all of the components that use it
-                foreach (IPlayerGUIComponent guiComponent in display.GetComponentsInChildren<IPlayerGUIComponent>())
-                    guiComponent.SetPlayer(player);
+                // Use the IDataComponent interface to set the player data on all of the components that use it
+                display.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);
             }
 
             if (!_space)

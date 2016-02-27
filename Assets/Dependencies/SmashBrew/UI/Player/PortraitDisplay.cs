@@ -53,8 +53,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Component.uvRect = imageRect;
         }
 
-        public override void SetCharacter(CharacterData data) {
-            base.SetCharacter(data);
+        public override void SetData(CharacterData data) {
+            base.SetData(data);
             if (Component == null || data == null || data.AlternativeCount <= 0)
                 return;
             int portrait = Player != null ? Player.Pallete : 0;

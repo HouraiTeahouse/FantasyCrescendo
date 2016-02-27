@@ -64,7 +64,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                     return;
                 }
                 psu.UpdateUiMode(player.Type);
-                psu.SetPlayer(player);
+                psu.SetData(player);
 
                 go.transform.SetParent(_playerSlotPanel.transform, false);
             }

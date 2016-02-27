@@ -5,7 +5,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
     [ExecuteInEditMode]
     [RequireComponent(typeof (Graphic))]
-    public sealed class PlayerUIColor : MonoBehaviour, IPlayerGUIComponent {
+    public sealed class PlayerUIColor : MonoBehaviour, IDataComponent<Player> {
 
         private enum AlphaBlend {
             Multiplicative,
@@ -37,7 +37,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
         
         [SerializeField]
         private AnimationCurve _green = AnimationCurve.Linear(0, 0, 1f, 1f);
-
 
         public Color AdjustedColor {
             get {
@@ -99,7 +98,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 #endif
 
-        public void SetPlayer(Player data) {
+        public void SetData(Player data) {
             if (data == null)
                 return;
             if (_player != null)

@@ -61,8 +61,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             display.transform.SetParent(_container.transform, false);
             display.name = string.Format("Player Display {0}", player.PlayerNumber + 1);
             LayoutRebuilder.MarkLayoutForRebuild(display);
-            foreach (IPlayerGUIComponent component in display.GetComponentsInChildren<IPlayerGUIComponent>())
-                component.SetPlayer(player);
+            display.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);
             _finalSpace.transform.SetAsLastSibling();
             return display;
         }

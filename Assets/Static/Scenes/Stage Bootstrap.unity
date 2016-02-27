@@ -419,6 +419,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ee3fd18072eb34db47fa80077d4ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _displayText: {fileID: 610117700}
+  _timeMatch: {fileID: 268162958}
 --- !u!114 &610117699
 MonoBehaviour:
   m_ObjectHideFlags: 0

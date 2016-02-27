@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace HouraiTeahouse.SmashBrew.UI {
 
     [RequireComponent(typeof (Text))]
-    public class StockIndicator : MonoBehaviour, IPlayerGUIComponent {
+    public class StockIndicator : MonoBehaviour, IDataComponent<Player> {
 
         private Text display;
         private Player _player;
@@ -26,7 +26,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             display.text = _stockMatch[_player].ToString();
         }
 
-        public void SetPlayer(Player data) {
+        public void SetData(Player data) {
             _player = data;
         }
 

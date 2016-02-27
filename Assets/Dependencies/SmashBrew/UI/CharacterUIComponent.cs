@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
-    public abstract class PlayerUIComponent<T> : UIBehaviour, IPlayerGUIComponent where T : Component {
+    public abstract class PlayerUIComponent<T> : UIBehaviour, IDataComponent<Player> where T : Component {
 
         private Player _player;
 
@@ -18,7 +17,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         public Player Player {
             get { return _player; }
-            set { SetPlayer(value); }
+            set { SetData(value); }
         }
 
         protected override void Awake() {
@@ -33,7 +32,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 _player.OnChanged -= OnPlayerChange;
         }
 
-        public virtual void SetPlayer(Player data) {
+        public virtual void SetData(Player data) {
             if (_player != null)
                 _player.OnChanged -= OnPlayerChange;
             _player = data;
@@ -46,14 +45,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
     }
 
-    public abstract class CharacterUIComponent<T> : PlayerUIComponent<T>, ICharacterGUIComponent where T : Component {
+    public abstract class CharacterUIComponent<T> : PlayerUIComponent<T>, IDataComponent<CharacterData> where T : Component {
 
         [SerializeField]
         private CharacterData _character;
 
         public CharacterData Character {
             get { return _character; }
-            set { SetCharacter(value); }
+            set { SetData(value); }
         }
 
         /// <summary>
@@ -61,15 +60,16 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         protected override void Awake() {
             base.Awake();
-            SetCharacter(_character); 
+            SetData(_character); 
         }
 
         protected override void OnPlayerChange() {
-            SetCharacter(Player == null ? null : Player.SelectedCharacter);
+            SetData(Player == null ? null : Player.SelectedCharacter);
         }
 
-        public virtual void SetCharacter(CharacterData data) {
+        public virtual void SetData(CharacterData data) {
             _character = data;
         }
+
     }
 }

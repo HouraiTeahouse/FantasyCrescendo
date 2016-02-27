@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
     
-    public class PlayerSlotUI : MonoBehaviour, IPlayerGUIComponent {
+    public class PlayerSlotUI : MonoBehaviour, IDataComponent<Player> {
 
         private Mediator mediator;
         private Player _player;
@@ -18,6 +18,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
         [SerializeField]
         private Button _playerModeBtn = null;
 
+        /// <summary>
+        /// Unity callback. Called once before object's first frame.
+        /// </summary>
         void Start() {
             DataManager dm = DataManager.Instance;
     
@@ -73,7 +76,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             UpdateUiMode(cmd.Player.Type);
         }
 
-        public void SetPlayer(Player data) {
+        public void SetData(Player data) {
             _player = data;
         }
     }

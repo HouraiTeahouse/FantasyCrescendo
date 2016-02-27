@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
-    public class PlayerStockIndicator : MonoBehaviour, IPlayerGUIComponent {
+    public class PlayerStockDisplay : MonoBehaviour, IDataComponent<Player> {
 
         [SerializeField]
         private NumberText ExcessDisplay;
@@ -55,7 +55,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             enabled = false;
         }
 
-        public void SetPlayer(Player data) {
+        public void SetData(Player data) {
             _player = data;
         }
 
