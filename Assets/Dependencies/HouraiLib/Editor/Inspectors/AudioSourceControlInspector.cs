@@ -3,9 +3,15 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
+    /// <summary>
+    /// Custom Editor for AudioSourceControl.
+    /// </summary>
     [CustomEditor(typeof(AudioSourceControl))]
-    public class AudioSourcePlayerInspector : ScriptlessEditor {
+    internal class AudioSourceControlInspector : ScriptlessEditor {
 
+        /// <summary>
+        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
+        /// </summary>
         public override void OnInspectorGUI() {
             var source = (target as MonoBehaviour).GetComponent<AudioSource>();
             EditorGUILayout.BeginHorizontal();

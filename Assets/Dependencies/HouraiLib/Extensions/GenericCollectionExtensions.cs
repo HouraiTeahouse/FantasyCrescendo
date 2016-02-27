@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace HouraiTeahouse {
 
+    /// <summary>
+    /// Set of extension methods for collections and enumerations of any type.
+    /// </summary>
     public static class GenericCollectionExtensions {
 
         /// <summary>
@@ -36,4 +39,5 @@ namespace HouraiTeahouse {
         }
 
     }
+
 }

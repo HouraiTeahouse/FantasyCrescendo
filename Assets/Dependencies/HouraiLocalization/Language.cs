@@ -110,9 +110,8 @@ namespace HouraiTeahouse.Localization {
         /// <returns>a dictionary containing the same keys/values as the Language</returns>
         public Dictionary<string, string> ToDictionary() {
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            foreach (var sst in data) {
+            foreach (var sst in data) 
                 dict[sst.Key] = sst.Value;
-            }
             return dict;
         }
 

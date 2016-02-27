@@ -3,30 +3,22 @@ using HouraiTeahouse.Events;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public class PlayerDieEvent {
-
-        public bool Revived;
-        public Player Player;
-
-    }
-
+    /// <summary>
+    /// The Blast Zone script.
+    /// Publishes PlayerDieEvents in response to Players leaving it's bounds.
+    /// </summary>
     [RequireComponent(typeof (Collider))]
     public sealed class BlastZone : MonoBehaviour {
 
         private Collider _col;
         private Mediator _eventManager;
-        private PlayerDieEvent _event;
 
         /// <summary>
         /// Unity Callback. Called on object instantiation.
         /// </summary>
         void Awake() {
             _eventManager = GlobalMediator.Instance;
-
             _col = GetComponent<Collider>();
-            
-            _event = new PlayerDieEvent();
-
             // Make sure that the colliders are triggers
             foreach(Collider col in gameObject.GetComponents<Collider>())
                 col.isTrigger = true;

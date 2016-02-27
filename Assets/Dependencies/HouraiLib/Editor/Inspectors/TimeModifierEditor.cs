@@ -1,17 +1,24 @@
 using UnityEditor;
+using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
+    /// <summary>
+    /// Custom Editor for TimeModifier.
+    /// </summary>
     [CustomEditor(typeof(TimeModifier))]
-    public class TimeModifierEditor : ScriptlessEditor {
+    internal class TimeModifierEditor : ScriptlessEditor {
 
+        /// <summary>
+        /// <see cref="UnityEditor.Editor.OnInspectorGU"/>
+        /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
 
-            var damage = target as TimeModifier;
-            if (damage == null || !EditorApplication.isPlayingOrWillChangePlaymode)
-                return;
-            damage.LocalTimeScale = EditorGUILayout.FloatField("Time Scale", damage.LocalTimeScale);
+            var modifier = target as TimeModifier;
+            GUI.enabled = modifier != null && !EditorApplication.isPlayingOrWillChangePlaymode;
+            modifier.LocalTimeScale = EditorGUILayout.FloatField("Time Scale", modifier.LocalTimeScale);
+            GUI.enabled = true;
         }
 
     }

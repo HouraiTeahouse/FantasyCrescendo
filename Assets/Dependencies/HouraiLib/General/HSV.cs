@@ -1,17 +1,41 @@
+using System;
 using UnityEngine;
-using System.Collections;
 
 namespace HouraiTeahouse {
 
-    using UnityEngine;
-
-    [System.Serializable]
+    /// <summary>
+    /// HSV (Hue/Saturation/Value) color struct.
+    /// </summary>
+    [Serializable]
     public struct HSV {
+
+        /// <summary>
+        /// The hue of the color. Range: [0, 360)
+        /// </summary>
         public float h;
+
+        /// <summary>
+        /// The saturation of the color. Range: [0, 1]
+        /// </summary>
         public float s;
+
+        /// <summary>
+        /// The value of the color. Range: [0, 1]
+        /// </summary>
         public float v;
+
+        /// <summary>
+        /// The alpha of the color. Range: [0, 1]
+        /// </summary>
         public float a;
 
+        /// <summary>
+        /// Initializes an instance of HSV.
+        /// </summary>
+        /// <param name="h">the hue of the color</param>
+        /// <param name="s">the saturation of the color</param>
+        /// <param name="v">the value of the color</param>
+        /// <param name="a">the alpha of  the color</param>
         public HSV(float h, float s, float v, float a) {
             this.h = h;
             this.s = s;
@@ -19,6 +43,12 @@ namespace HouraiTeahouse {
             this.a = a;
         }
 
+        /// <summary>
+        /// Initializes an instance of HSV.
+        /// </summary>
+        /// <param name="h">the hue of the color</param>
+        /// <param name="s">the saturation of the color</param>
+        /// <param name="v">the value of the color</param>
         public HSV(float h, float s, float v) {
             this.h = h;
             this.s = s;
@@ -26,112 +56,104 @@ namespace HouraiTeahouse {
             this.a = 1f;
         }
 
-        public HSV(Color col) {
-            HSV temp = FromColor(col);
-            h = temp.h;
-            s = temp.s;
-            v = temp.v;
-            a = temp.a;
-        }
+        /// <summary>
+        /// Initializes an instance of HSV from a RGBA color.
+        /// </summary>
+        /// <param name="col">the source Color</param>
+        public HSV(Color col) : this(0, 0, 0, col.a) {
+            float r = col.r;
+            float g = col.g;
+            float b = col.b;
 
-        public static HSV FromColor(Color color) {
-            HSV ret = new HSV(0f, 0f, 0f, color.a);
+            float max = Mathf.Max(r, Mathf.Max(g, b));
 
-            float r = color.r;
-            float g = color.g;
-            float v = color.b;
+            if (max <= 0)
+                return;
 
-            float max = Mathf.Max(r, Mathf.Max(g, v));
-
-            if (max <= 0) {
-                return ret;
-            }
-
-            float min = Mathf.Min(r, Mathf.Min(g, v));
+            float min = Mathf.Min(r, Mathf.Min(g, b));
             float dif = max - min;
 
             if (max > min) {
                 if (g == max) {
-                    ret.h = (v - r) / dif * 60f + 120f;
+                    h = (b - r) / dif * 60f + 120f;
                 }
-                else if (v == max) {
-                    ret.h = (r - g) / dif * 60f + 240f;
+                else if (b == max) {
+                    h = (r - g) / dif * 60f + 240f;
                 }
-                else if (v > g) {
-                    ret.h = (g - v) / dif * 60f + 360f;
+                else if (b > g) {
+                    h = (g - b) / dif * 60f + 360f;
                 }
                 else {
-                    ret.h = (g - v) / dif * 60f;
+                    h = (g - b) / dif * 60f;
                 }
-                if (ret.h < 0) {
-                    ret.h = ret.h + 360f;
+                if (h < 0) {
+                    h = h + 360f;
                 }
             }
             else {
-                ret.h = 0;
+                h = 0;
             }
 
-            ret.h *= 1f / 360f;
-            ret.s = (dif / max) * 1f;
-            ret.v = max;
-
-            return ret;
+            h *= 1f / 360f;
+            s = (dif / max) * 1f;
+            v = max;
         }
 
-        public static Color ToColor(HSV hsv) {
-            float r = hsv.v;
-            float g = hsv.v;
-            float v = hsv.v;
-            if (hsv.s != 0) {
-                float max = hsv.v;
-                float dif = hsv.v * hsv.s;
-                float min = hsv.v - dif;
+        /// <summary>
+        /// Converts the HSVA representatio to a RGBA representation. 
+        /// </summary>
+        /// <returns>the RGBA color representation</returns>
+        public Color ToColor() {
+            float r = v;
+            float g = v;
+            float b = v;
+            if (s != 0) {
+                float max = v;
+                float dif = v * s;
+                float min = v - dif;
 
-                float h = hsv.h * 360f;
+                float hue = h * 360f;
 
-                if (h < 60f) {
+                if (hue < 60f) {
                     r = max;
-                    g = h * dif / 60f + min;
-                    v = min;
+                    g = hue * dif / 60f + min;
+                    b = min;
                 }
-                else if (h < 120f) {
-                    r = -(h - 120f) * dif / 60f + min;
+                else if (hue < 120f) {
+                    r = -(hue - 120f) * dif / 60f + min;
                     g = max;
-                    v = min;
+                    b = min;
                 }
-                else if (h < 180f) {
+                else if (hue < 180f) {
                     r = min;
                     g = max;
-                    v = (h - 120f) * dif / 60f + min;
+                    b = (hue - 120f) * dif / 60f + min;
                 }
-                else if (h < 240f) {
+                else if (hue < 240f) {
                     r = min;
-                    g = -(h - 240f) * dif / 60f + min;
-                    v = max;
+                    g = -(hue - 240f) * dif / 60f + min;
+                    b = max;
                 }
-                else if (h < 300f) {
-                    r = (h - 240f) * dif / 60f + min;
+                else if (hue < 300f) {
+                    r = (hue - 240f) * dif / 60f + min;
                     g = min;
-                    v = max;
+                    b = max;
                 }
-                else if (h <= 360f) {
+                else if (hue <= 360f) {
                     r = max;
                     g = min;
-                    v = -(h - 360f) * dif / 60 + min;
+                    b = -(hue - 360f) * dif / 60 + min;
                 }
                 else {
                     r = 0;
                     g = 0;
-                    v = 0;
+                    b = 0;
                 }
             }
 
-            return new Color(Mathf.Clamp01(r), Mathf.Clamp01(g), Mathf.Clamp01(v), hsv.a);
+            return new Color(Mathf.Clamp01(r), Mathf.Clamp01(g), Mathf.Clamp01(b), a);
         }
 
-        public Color ToColor() {
-            return ToColor(this);
-        }
 
         public override string ToString() {
             return string.Format("(H:{0}, S:{1}, V:{2}, A:{3}", h, s, v, a);

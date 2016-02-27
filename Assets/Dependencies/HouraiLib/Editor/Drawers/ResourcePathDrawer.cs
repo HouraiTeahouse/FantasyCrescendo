@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
 using Object = UnityEngine.Object;
@@ -9,7 +8,7 @@ namespace HouraiTeahouse.Editor {
     /// <summary>
     /// Custom PropertyDrawer for ResourcePathAttribute.
     /// </summary>
-    [CustomPropertyDrawer(typeof(ResourceAttribute))]
+    [CustomPropertyDrawer(typeof (ResourceAttribute))]
     public class ResourcePathEditor : PropertyDrawer {
 
         private SerializedProperty prop;
@@ -18,7 +17,9 @@ namespace HouraiTeahouse.Editor {
         private string message;
         private bool success;
 
-        
+        /// <summary>
+        /// <see cref="PropertyDrawer.OnGUI"/>
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             if (property.propertyType != SerializedPropertyType.String) {
                 EditorGUI.PropertyField(position, property, label);
@@ -36,7 +37,7 @@ namespace HouraiTeahouse.Editor {
             float height = base.GetPropertyHeight(property, label);
             position.height = height;
 
-            label.text += " (" + ((success) ? "\u2713" : "\u2715") + ")"; 
+            label.text += " (" + ((success) ? "\u2713" : "\u2715") + ")";
             label.tooltip = message;
 
             obj = EditorGUI.ObjectField(position, label, obj, (attribute as ResourceAttribute).TypeRestriction, false);
@@ -47,11 +48,13 @@ namespace HouraiTeahouse.Editor {
                 if (!obj) {
                     path = string.Empty;
                     message = "No Object Specified";
-                } else {
+                }
+                else {
                     string resourcePath = AssetUtil.GetResourcePath(obj);
                     if (string.IsNullOrEmpty(resourcePath)) {
                         message = "Not in a Resources folder. Will not be saved.";
-                    } else {
+                    }
+                    else {
                         message = "Path: " + resourcePath;
                         path = resourcePath;
                         success = true;

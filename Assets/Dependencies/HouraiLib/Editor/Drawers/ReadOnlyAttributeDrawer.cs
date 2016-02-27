@@ -1,12 +1,17 @@
-using HouraiTeahouse.SmashBrew;
 using UnityEditor;
 using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
+    /// <summary>
+    /// Custom PropertyDrawer for ReadOnlyAttribute.
+    /// </summary>
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyAttributeDrawer : PropertyDrawer {
 
+        /// <summary>
+        /// <see cref="PropertyDrawer.OnGUI"/>
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             string value;
             switch (property.propertyType) {

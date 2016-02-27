@@ -1,4 +1,3 @@
-using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,12 +11,12 @@ namespace HouraiTeahouse.Editor {
     /// </summary>
     public abstract class LockableEditorWindow : EditorWindow, IHasCustomMenu {
 
-        [NonSerialized]
         private GUIStyle lockButtonStyle;
-
-        [NonSerialized]
         private bool locked;
 
+        /// <summary>
+        /// Whether the EditorWindow is currently locked or not.
+        /// </summary>
         public bool IsLocked {
             get { return locked; }
             set { locked = value; }

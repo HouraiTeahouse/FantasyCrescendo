@@ -5,11 +5,17 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
+    /// <summary>
+    /// Custom PropertyDrawer for SceneAttribute
+    /// </summary>
     [CustomPropertyDrawer(typeof (SceneAttribute))]
-    public class SceneAttributeDrawer : PropertyDrawer {
+    internal class SceneAttributeDrawer : PropertyDrawer {
 
         private Dictionary<SerializedProperty, SceneAsset> _scenes; 
 
+        /// <summary>
+        /// <see cref="PropertyDrawer.OnGUI"/>
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             if (property.propertyType != SerializedPropertyType.String) {
                 base.OnGUI(position, property, label);

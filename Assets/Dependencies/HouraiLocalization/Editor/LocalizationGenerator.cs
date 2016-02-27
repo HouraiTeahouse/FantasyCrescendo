@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 using UnityEditor;
 using Google.GData.Spreadsheets;
@@ -7,6 +6,10 @@ using HouraiTeahouse.Editor;
 
 namespace HouraiTeahouse.Localization.Editor {
 
+    /// <summary>
+    /// A Editor-Only ScriptableObject for pulling localization data from Google Spreadsheets
+    /// and creating the approriate Langauge assets.
+    /// </summary>
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localization_Generator")]
     public class LocalizationGenerator : ScriptableObject {
 
@@ -23,15 +26,18 @@ namespace HouraiTeahouse.Localization.Editor {
             }
         }
         
-        [SerializeField]
+        [SerializeField, Tooltip("The public Google Spreadsheets link to pull data from")]
         private string GoogleLink;
 
-        [SerializeField]
+        [SerializeField, Tooltip("Columns in the spreadsheet to ignore")]
         private string[] _ignoreColumns;
 
-        [SerializeField]
+        [SerializeField, Tooltip("The folder to save all of the generated assets into.")]
         private Object _saveFolder;
 
+        /// <summary>
+        /// Reads the Google Spreadsheet and generates/updates the Language asset files
+        /// </summary>
         public void Generate() {
             ListFeed test = GDocService.GetSpreadsheet(GoogleLink);
             var languageMap = new Dictionary<string, Dictionary<string, string>>();

@@ -29,7 +29,7 @@ namespace HouraiTeahouse {
             if (colliders == null)
                 return;
 
-            GizmoUtil.DrawColliders3D(colliders, color, solid);
+            GizmoUtil.DrawColliders(colliders, color, solid);
         }
 #endif
     }

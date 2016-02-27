@@ -6,19 +6,23 @@ using System.Linq;
 
 namespace HouraiTeahouse.Localization {
 
+    /// <summary>
+    /// Singleton MonoBehaviour that manages all of localization system.
+    /// </summary>
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Manager")]
-    public sealed  class LanguageManager : MonoBehaviour {
+    public sealed class LanguageManager : MonoBehaviour {
 
-        [SerializeField]
+        [SerializeField, Tooltip("The Resources directory to load the Language files from")]
         private string localizaitonResourceDirectory = "Lang/";
 
-        [SerializeField]
+        [SerializeField, Tooltip("The PlayerPrefs key to store the Player's language in") ]
         private string _langPlayerPrefKey = "lang";
 
-        [SerializeField]
+        [SerializeField, Tooltip("Destroy this object on scene changes?")]
         private bool _dontDestroyOnLoad = false;
 
-        [SerializeField, Resource(typeof(Language))]
+        [SerializeField, Tooltip("The default language to use if the Player's current language is not supported")]
+        [Resource(typeof(Language))]
         private string _defaultLanguage;
 
         private Language _currentLanguage;
@@ -65,6 +69,11 @@ namespace HouraiTeahouse.Localization {
             return _keys.Contains(key);
         }
 
+        /// <summary>
+        /// Converts a SystemLanugage value into a CultureInfo.
+        /// </summary>
+        /// <param name="language">the SystemLanugage value to map</param>
+        /// <returns>the corresponding CultureInfo</returns>
         public static CultureInfo GetCultureInfo(SystemLanguage language) {
             switch (language) {
                 case SystemLanguage.Afrikaans:

@@ -10,7 +10,6 @@ namespace HouraiTeahouse {
     /// </summary>
     [AttributeUsage(AttributeTargets.Field)]
     public class SceneAttribute : PropertyAttribute {
-
     }
 
 }

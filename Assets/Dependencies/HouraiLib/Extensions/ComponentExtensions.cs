@@ -1,12 +1,27 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-    
+
     /// <summary>
-    /// A set of extention methods for all components 
+    /// A set of extention methods for all components.
     /// </summary>
     public static class ComponentExtensions  {
+
+        /// <summary>
+        /// Gets the GameObjects of all
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="components"></param>
+        /// <returns></returns>
+        public static IEnumerable<GameObject> GetGameObject<T>(this IEnumerable<T> components) where T : Component {
+            if(components == null)
+                throw new ArgumentNullException("components");
+            foreach (T component in components)
+                if(component != null)
+                    yield return component.gameObject;
+        }
 
         /// <summary>
         /// Gets a component of a certain type.

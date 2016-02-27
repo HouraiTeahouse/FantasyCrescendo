@@ -7,12 +7,10 @@ using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.Editor {
 
-    public class HouraiEditor : MonoBehaviour {
-
-        [MenuItem("Assets/Create/BGM Group")]
-        static void CreateStageData() {
-            AssetUtil.CreateAssetInProjectWindow<BGMGroup>();
-        }
+    /// <summary>
+    /// General Editor functions
+    /// </summary>
+    internal static class HouraiEditor {
 
         [MenuItem("Assets/Create/Sound Effect from Clip")]
         static void CreateSoundEffect() {
@@ -29,7 +27,7 @@ namespace HouraiTeahouse.Editor {
                 prefabs.Add(prefab);
             }
             Selection.objects = prefabs.ToArray();
-            DestroyImmediate(tempGO);
+            Object.DestroyImmediate(tempGO);
         }
 
         [MenuItem("Assets/Create/Sound Effect from Clip", true)]

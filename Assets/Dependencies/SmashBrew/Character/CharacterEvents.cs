@@ -11,4 +11,11 @@ namespace HouraiTeahouse.SmashBrew {
         public bool Grounded;
 
     }
+        
+    public class PlayerDieEvent {
+
+        public bool Revived;
+        public Player Player;
+
+    }
 }

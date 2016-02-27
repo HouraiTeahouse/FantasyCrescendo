@@ -4,11 +4,20 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
+    /// <summary>
+    /// A PrefabFactoryEventHandler that creates 
+    /// </summary>
     public class PlayerInfoGUI : PrefabFactoryEventHandler<RectTransform, PlayerSpawnEvent> {
 
+        /// <summary>
+        /// The parent RectTransform to attach the spawned objects to.
+        /// </summary>
         [SerializeField]
         private RectTransform _container;
 
+        /// <summary>
+        /// The space prefabs to place before and after all of the elements to keep them centered.
+        /// </summary>
         [SerializeField]
         private RectTransform _spacePrefab;
 
@@ -36,10 +45,16 @@ namespace HouraiTeahouse.SmashBrew.UI {
             _finalSpace.name = _spacePrefab.name;
         }
 
+        /// <summary>
+        /// <see cref="AbstractFactoryEventHandler{T,TEvent}.ShouldCreate"/>
+        /// </summary>
         protected override bool ShouldCreate(PlayerSpawnEvent eventArgs) {
             return base.ShouldCreate(eventArgs) && eventArgs.Player != null;
         }
 
+        /// <summary>
+        /// <see cref="AbstractFactoryEventHandler{T,TEvent}.Create"/>
+        /// </summary>
         protected override RectTransform Create(PlayerSpawnEvent eventArgs) {
             Player player = eventArgs.Player;
             RectTransform display = base.Create(eventArgs); 

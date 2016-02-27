@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace HouraiTeahouse {
 
+    [CreateAssetMenu(fileName = "New BGM Group", menuName = "Hourai Teahouse/BGM Group")]
     public class BGMGroup : ScriptableObject {
 
         [SerializeField, Tooltip("The name of the BGM group")]

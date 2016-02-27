@@ -3,11 +3,15 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using HouraiTeahouse.Editor;
 using UnityEditor;
+using UnityEngine;
 
 namespace HouraiTeahouse.Localization.Editor {
 
+    /// <summary>
+    /// A custom Editor for LanguageManager.
+    /// </summary>
     [CustomEditor(typeof(LanguageManager))]
-    public class LanguageManagerEditor : ScriptlessEditor {
+    internal class LanguageManagerEditor : ScriptlessEditor {
 
         private string[] availableLanguages;
         private string[] display;
@@ -20,10 +24,11 @@ namespace HouraiTeahouse.Localization.Editor {
             _splitCamelCase = new Regex(".([A-Z])");
         }
 
+        /// <summary>
+        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
+        /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
-            if (!EditorApplication.isPlayingOrWillChangePlaymode) 
-                return;
             var langManager = target as LanguageManager;
 
             if (availableLanguages == null) {
@@ -32,11 +37,12 @@ namespace HouraiTeahouse.Localization.Editor {
                 _index = Array.LastIndexOf(availableLanguages, langManager.CurrentLangauge.name);
             }
 
+            GUI.enabled = EditorApplication.isPlayingOrWillChangePlaymode;
             int oldIndex = _index;
             _index = EditorGUILayout.Popup("Current Language", _index, display);
-            if (_index != oldIndex) {
+            if (_index != oldIndex)
                 langManager.LoadLanguage(availableLanguages[_index]);
-            }
+            GUI.enabled = true;
         }
 
     }
