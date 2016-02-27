@@ -2,20 +2,33 @@ using UnityEngine;
 
 namespace HouraiTeahouse {
 
-    [RequireComponent(typeof (BoxCollider))]
+    /// <summary>
+    /// A MonoBehaviour that restricts the posiiton of all of the children
+    /// of the GameObject it is attached to.
+    /// </summary>
     public class RestrainChildren : MonoBehaviour {
 
-        private BoxCollider bounds;
+        /// <summary>
+        /// In local coordiates, the bounds for where the children of the GameObject can move
+        /// </summary>
+        [SerializeField]
+        private Bounds _bounds;
 
-        private void Awake() {
-            bounds = GetComponent<BoxCollider>();
-            bounds.enabled = false;
+        /// <summary>
+        /// Unity callback. Called once per frame after all Update calls.
+        /// </summary>
+        void LateUpdate() {
+            foreach (Transform child in transform)
+                child.localPosition = _bounds.ClosestPoint(child.localPosition);
         }
 
-        private void LateUpdate() {
-            var boundedArea = new Bounds(bounds.center, bounds.size);
-            foreach (Transform child in transform)
-                child.localPosition = boundedArea.ClosestPoint(child.localPosition);
+        /// <summary>
+        /// Unity callback. Called in the editor to draw gizmos in the scene view.
+        /// </summary>
+        void OnDrawGizmos() {
+            using (GizmoUtil.With(Color.white, transform)) {
+                Gizmos.DrawWireCube(_bounds.center, _bounds.extents);
+            } 
         }
 
     }
