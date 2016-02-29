@@ -7,7 +7,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// <summary>
     /// A PrefabFactoryEventHandler that creates 
     /// </summary>
-    public class PlayerInfoGUI : PrefabFactoryEventHandler<RectTransform, PlayerSpawnEvent> {
+    public sealed class PlayerInfoGUI : PrefabFactoryEventHandler<RectTransform, PlayerSpawnEvent> {
 
         /// <summary>
         /// The parent RectTransform to attach the spawned objects to.

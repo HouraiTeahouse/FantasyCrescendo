@@ -2,8 +2,15 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
-    public class PlayerText : PlayerUIComponent<Text> {
+    /// <summary>
+    /// A PlayerUIComponent that displays the Player's string representation on a]
+    /// UI Text object.
+    /// </summary>
+    public sealed class PlayerText : PlayerUIComponent<Text> {
 
+        /// <summary>
+        /// <see cref="PlayerUIComponent{T}.OnPlayerChange"/>
+        /// </summary>
         protected override void OnPlayerChange() {
             base.OnPlayerChange();
             if (Player == null)

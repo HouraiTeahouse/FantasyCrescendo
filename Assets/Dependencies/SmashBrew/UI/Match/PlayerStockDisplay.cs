@@ -2,12 +2,16 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
+    /// <summary>
+    /// A behaviour used to display a Player's remaining stock
+    /// </summary>
+    //TODO: Change to be event based 
     public class PlayerStockDisplay : MonoBehaviour, IDataComponent<Player> {
 
-        [SerializeField]
+        [SerializeField, Tooltip("The Text object used to display the additional stock beyond shown by the simple indicators")]
         private NumberText ExcessDisplay;
 
-        [SerializeField]
+        [SerializeField, Tooltip("The standard indicators to show current stock values")]
         private GameObject[] standardIndicators;
 
         private StockMatch _stockMatch;
@@ -55,6 +59,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
             enabled = false;
         }
 
+        /// <summary>
+        /// <see cref="IDataComponent{T}.SetData"/>
+        /// </summary>
         public void SetData(Player data) {
             _player = data;
         }

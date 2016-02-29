@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// <summary>
     /// Constructs the player section of the in-match UI 
     /// </summary>
-    public class CharacterSelectBuilder : MonoBehaviour {
+    public sealed class CharacterSelectBuilder : MonoBehaviour {
 
         [Header("Character Select")]
         [SerializeField]
@@ -29,18 +29,27 @@ namespace HouraiTeahouse.SmashBrew.UI {
         private RectTransform _playerDisplay;
 
         /// <summary>
-        /// Unity Callback. Called before object's first frame.
+        /// Unity Callback. Called on object instantation.
         /// </summary>
-        void Start() {
+        void Awake() {
             CreateCharacterSelect();
             CreatePlayerDisplay();
         }
 
+        /// <summary>
+        /// Attaches a instantiated object to an existing parent.
+        /// Also handles the request to rebuild the layout of the child and parent
+        /// </summary>
+        /// <param name="child">the instantiated child</param>
+        /// <param name="parent">the parent to attache the child to</param>
         static void Attach(RectTransform child, Transform parent) {
             child.SetParent(parent, false);
             LayoutRebuilder.MarkLayoutForRebuild(child);
         }
 
+        /// <summary>
+        /// Construct the select area for characters.
+        /// </summary>
         void CreateCharacterSelect() {
             DataManager dataManager = DataManager.Instance;
             if (dataManager == null || !_characterContainer || !_character)
@@ -54,9 +63,11 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 character.name = data.name;
                 character.GetComponentsInChildren<IDataComponent<CharacterData>>().SetData(data);
             }
-
         } 
 
+        /// <summary>
+        /// Create the display for the character's selections and options
+        /// </summary>
         void CreatePlayerDisplay() {
             if (!_playerContainer || !_playerDisplay)
                 return;

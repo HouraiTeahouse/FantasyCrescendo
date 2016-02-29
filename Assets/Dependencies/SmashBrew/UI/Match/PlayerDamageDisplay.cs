@@ -5,11 +5,11 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// <summary>
     /// A UI Text driver that displays the current damage of the a given player.
     /// </summary>
-    public class PlayerDamageDisplay : GradientNumberText, IDataComponent<Player> {
+    public sealed class PlayerDamageDisplay : GradientNumberText, IDataComponent<Player> {
 
         private Character _character;
 
-        [SerializeField]
+        [SerializeField, Tooltip("The font size of the suffix")]
         private int suffixSize = 25;
 
         /// <summary>
@@ -37,14 +37,13 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        /// <see cref="IDataComponent.SetPlayer"/>
+        /// <see cref="IDataComponent{T}.SetData"/>
         /// </summary>
         public void SetData(Player data) {
-            if (data == null || data.PlayerObject == null) {
+            if (data == null || data.PlayerObject == null) 
                 _character = null;
-                return;
-            }
-            _character = data.PlayerObject;
+            else
+                _character = data.PlayerObject;
         }
 
     }

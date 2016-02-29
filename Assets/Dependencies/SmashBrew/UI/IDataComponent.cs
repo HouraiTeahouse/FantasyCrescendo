@@ -6,12 +6,19 @@ namespace HouraiTeahouse.SmashBrew {
     /// <summary>
     /// An interface for defining Player driven components.
     /// </summary>
-    public interface IDataComponent<T>  {
+    public interface IDataComponent<in T>  {
 
+        /// <summary>
+        /// Sets the data for the IDataComponent
+        /// </summary>
+        /// <param name="data">the new data to set</param>
         void SetData(T data);
 
     }
 
+    /// <summary>
+    /// Extension methods for IDataComponent and collections of IDataComponents
+    /// </summary>
     public static class IDataComponentExtensions {
 
         /// <summary>

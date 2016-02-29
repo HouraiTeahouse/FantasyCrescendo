@@ -3,17 +3,20 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
-    public class PortraitDisplay : CharacterUIComponent<RawImage> {
+    /// <summary>
+    /// A CharacterUIComponent that displays the portrait of a character on a RawImage object
+    /// </summary>
+    public sealed class PortraitDisplay : CharacterUIComponent<RawImage> {
 
         private RectTransform _rectTransform;
 
-        [SerializeField]
+        [SerializeField, Tooltip("Should the character's portrait be cropped?")]
         private bool _cropped;
 
-        [SerializeField]
+        [SerializeField, Tooltip("Tint to cover the potrait, should the character be disabled")]
         private Color _disabledTint = Color.gray;
 
-        [SerializeField]
+        [SerializeField, Tooltip("An offset to move the crop rect")]
         private Vector2 _rectBias;
 
         private Color _defaultColor;
@@ -29,6 +32,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
             _defaultColor = Component.color;
         }
 
+        /// <summary>
+        /// <see cref="UIBehaviour.OnRectTransformDimensionsChange"/>
+        /// </summary>
         protected override void OnRectTransformDimensionsChange() {
             if (_rectTransform == null)
                 return;
@@ -53,6 +59,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Component.uvRect = imageRect;
         }
 
+        /// <summary>
+        /// <see cref="IDataComponent{T}.SetData"/>
+        /// </summary>
         public override void SetData(CharacterData data) {
             base.SetData(data);
             if (Component == null || data == null || data.PalleteCount <= 0)

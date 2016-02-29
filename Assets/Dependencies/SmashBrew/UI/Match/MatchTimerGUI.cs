@@ -7,7 +7,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// The GUI display for the Match timer.  
     /// </summary>
     [RequireComponent(typeof(Text))]
-    public class MatchTimerGUI : MonoBehaviour {
+    public sealed class MatchTimerGUI : MonoBehaviour {
 
         /// <summary>
         /// The UI Text object to display the time on.

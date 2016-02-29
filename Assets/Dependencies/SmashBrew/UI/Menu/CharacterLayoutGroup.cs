@@ -3,36 +3,56 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
+    /// <summary>
+    /// A custom layout group created for controlling the layout of the
+    /// individual character select squares on the character select screen
+    /// </summary>
     public class CharacterLayoutGroup : LayoutGroup, ILayoutSelfController {
 
-        [SerializeField]
+        [SerializeField, Tooltip("The spacing between child elements, in pixels")]
         private Vector2 _spacing;
 
-        [SerializeField]
+        [SerializeField, Tooltip("The target aspect ratio for the overall layout")]
         private float _selfAspectRatio;
 
-        [SerializeField]
+        [SerializeField, Tooltip("The target aspect ratio for the individual children")]
         private float _childAspectRatio;
 
 
+        /// <summary>
+        /// <see cref="LayoutGroup.CalculateLayoutInputHorizontal"/>
+        /// </summary>
         public override void CalculateLayoutInputHorizontal() {
             base.CalculateLayoutInputHorizontal();
             SetLayoutInputForAxis(padding.horizontal, padding.horizontal, -1, 0);
         }
 
+        /// <summary>
+        /// <see cref="LayoutGroup.CalculateLayoutInputVertical"/>
+        /// </summary>
         public override void CalculateLayoutInputVertical() {
             SetLayoutInputForAxis(padding.vertical, padding.vertical, -1, 1);
         }
 
+        /// <summary>
+        /// <see cref="LayoutGroup.SetLayoutHorizontal"/>
+        /// </summary>
         public override void SetLayoutHorizontal() {
             SetLayout(true);
         }
 
+        /// <summary>
+        /// <see cref="LayoutGroup.SetLayoutVertical"/>
+        /// </summary>
         public override void SetLayoutVertical() {
             SetLayout(false);
         }
 
-        private void SetLayout(bool axis) {
+        /// <summary>
+        /// Builds the full layout of all children along one axis.
+        /// </summary>
+        /// <param name="axis">which axis to build on, true if vertical, false if horizontal</param>
+        void SetLayout(bool axis) {
             // Givens
             // Child Aspect Ratio
             Vector2 availableSpace = rectTransform.rect.size;

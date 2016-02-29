@@ -1,3 +1,0 @@
-namespace HouraiTeahouse.SmashBrew.UI {
-
-}
