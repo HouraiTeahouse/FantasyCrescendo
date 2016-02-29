@@ -51,22 +51,10 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 else
                     rawColor.a = rawColor.a - (1 - _alpha);
 
-                HSV hsv = new HSV(rawColor);
-
+                HSV hsv = rawColor;
                 hsv.s *= _saturation;
                 hsv.v *= _value;
-
-                //const float Pr = .299f;
-                //const float Pg = .587f;
-                //const float Pb = .114f;
-
-                //float P = Mathf.Sqrt(rawColor.r * rawColor.r * Pr + rawColor.g * rawColor.g * Pg + rawColor.b * rawColor.b * Pb);
-
-                //rawColor.r = P + (rawColor.r - P) * _saturation;
-                //rawColor.g = P + (rawColor.g - P) * _saturation;
-                //rawColor.b = P + (rawColor.b - P) * _saturation;
-
-                return hsv.ToColor();
+                return hsv;
             }
         }
 
