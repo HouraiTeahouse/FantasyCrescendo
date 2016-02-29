@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public class RespawnPlatform : EventHandlerBehaviour<RespawnEvent> {
+    public class RespawnPlatform : EventHandlerBehaviour<PlayerRespawnEvent> {
 
         [SerializeField]
         private float _invicibilityTimer;
@@ -27,7 +27,7 @@ namespace HouraiTeahouse.SmashBrew {
             gameObject.SetActive(false);
         }
 
-        protected override void OnEvent(RespawnEvent eventArgs) {
+        protected override void OnEvent(PlayerRespawnEvent eventArgs) {
             if (Occupied || eventArgs.Consumed)
                 return;
             eventArgs.Consumed = true;

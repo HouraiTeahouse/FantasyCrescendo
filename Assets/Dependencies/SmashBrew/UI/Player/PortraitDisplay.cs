@@ -55,7 +55,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         public override void SetData(CharacterData data) {
             base.SetData(data);
-            if (Component == null || data == null || data.AlternativeCount <= 0)
+            if (Component == null || data == null || data.PalleteCount <= 0)
                 return;
             int portrait = Player != null ? Player.Pallete : 0;
             if (data.GetPortrait(portrait).Load() == null)

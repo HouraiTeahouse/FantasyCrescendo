@@ -17,17 +17,21 @@ namespace HouraiTeahouse.Localization {
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Asset")]
     public class Language : ScriptableObject, ISerializationCallbackReceiver {
 
+        /// <summary>
+        /// A serializable alternative to KeyValuePair
+        /// </summary>
         [Serializable]
         private struct StrStrTuple {
 
+            [Tooltip("The localization key")]
             public string Key;
 
-            [Multiline]
+            [Multiline, Tooltip("The localized string for the language")]
             public string Value;
 
         }
 
-        [SerializeField]
+        [SerializeField, Tooltip("All of the localizaiton key and localized string pairs")]
         private StrStrTuple[] data;
 
         /// <summary>

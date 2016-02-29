@@ -4,9 +4,6 @@ using HouraiTeahouse.SmashBrew.Util;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public class PlayerKnockbackEvent {
-        
-    }
 
     /// <summary>
     /// A MonoBehaviour that handles the knockback dealt to a Player

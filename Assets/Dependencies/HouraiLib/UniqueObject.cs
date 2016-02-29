@@ -10,11 +10,14 @@ namespace HouraiTeahouse {
     /// Trying to create/instantiate more copies will have the object destroyed instantly.
     /// </summary>
     [DisallowMultipleComponent]
-    public class UniqueObject : MonoBehaviour {
+    public sealed class UniqueObject : MonoBehaviour {
 
+        /// <summary>
+        /// A collection of all of the UniqueObjects currently in the game.
+        /// </summary>
         private static Dictionary<string, UniqueObject> _allIds;
 
-        [SerializeField, ReadOnly]
+        [SerializeField, ReadOnly, Tooltip("The unique id for this object")]
         private string _id;
 
         /// <summary>
@@ -30,9 +33,8 @@ namespace HouraiTeahouse {
         /// Unity Callback. Called on object instantiation.
         /// </summary>
         void Awake() {
-            if (_allIds == null) {
+            if (_allIds == null) 
                 _allIds = new Dictionary<string, UniqueObject>();
-            }
             if(_allIds.ContainsKey(ID)) {
                 Destroy(gameObject);
                 return;
@@ -47,9 +49,8 @@ namespace HouraiTeahouse {
             if (_allIds == null || _allIds[ID] != this)
                 return;
             _allIds.Remove(ID);
-            if (_allIds.Count <= 0) {
+            if (_allIds.Count <= 0)
                 _allIds = null;
-            }
         }
 
         /// <summary>

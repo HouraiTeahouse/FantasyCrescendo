@@ -71,7 +71,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             Mathf.Clamp(CurrentDamage, DamageType.MinDamage, DamageType.MaxDamage);
 
-            CharacterEvents.Publish(new PlayerDamageEvent {damage = damage, currentDamage = CurrentDamage});
+            CharacterEvents.Publish(new PlayerDamageEvent {Damage = damage, CurrentDamage = CurrentDamage});
         }
 
         public void Heal(float healing) {
@@ -86,7 +86,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             CurrentDamage = DamageType.Heal(CurrentDamage, healing);
 
-            CharacterEvents.Publish(new PlayerHealEvent { healing = healing, currentDamage = CurrentDamage });
+            CharacterEvents.Publish(new PlayerHealEvent { Healing = healing, CurrentDamage = CurrentDamage });
         }
 
     }

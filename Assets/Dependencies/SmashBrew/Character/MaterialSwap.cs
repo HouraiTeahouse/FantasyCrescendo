@@ -1,23 +1,29 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
 
+    /// <summary>
+    /// The pallete swap behaviour for changing out the 
+    /// </summary>
     [RequiredCharacterComponent]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(PlayerController))]
     public class MaterialSwap : MonoBehaviour {
 
-        [System.Serializable]
+        [Serializable]
         private class Swap {
 
-            [System.Serializable]
+            [Serializable]
             public class MaterialSet {
 
                 [SerializeField, Resource(typeof (Material))]
+                [Tooltip("The materials to apply to the renderers")]
                 private string[] _materials;
 
-                public void Set(IEnumerable<Renderer> targets) {
+                public void Set(Renderer[] targets) {
                     if (targets == null)
                         return;
                     Material[] loadedMaterials = new Material[_materials.Length];
@@ -30,10 +36,10 @@ namespace HouraiTeahouse.SmashBrew {
 
             }
 
-            [SerializeField]
+            [SerializeField, Tooltip("The set of materials to swap to")]
             private MaterialSet[] MaterialSets;
 
-            [SerializeField]
+            [SerializeField, Tooltip("The set of renderers to apply the materials to")]
             private Renderer[] TargetRenderers;
 
             public void Set(int palleteSwap) {
@@ -42,12 +48,23 @@ namespace HouraiTeahouse.SmashBrew {
                 MaterialSets[palleteSwap].Set(TargetRenderers);
             }
 
+            public int SetCount {
+                get { return MaterialSets.Length; }
+            }
         }
 
         [SerializeField]
         private Swap[] _swaps;
 
         private int _color;
+
+        /// <summary>
+        /// Gets the number of pallete swaps are available
+        /// </summary>
+        public int PalleteCount {
+            get { return _swaps.Max(swap => swap.SetCount);  }
+        }
+
 
         public int Pallete {
             get { return _color; }

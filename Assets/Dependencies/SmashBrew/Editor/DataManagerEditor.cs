@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
+    /// <summary>
+    /// A custom Editor for DataManager
+    /// </summary>
     [CustomEditor(typeof(DataManager))]
     public class DataManagerEditor : ScriptlessEditor {
 
@@ -13,6 +16,9 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         private ReorderableList characterList;
         private ReorderableList sceneList;
 
+        /// <summary>
+        /// <see cref="UnityEditor.Editor.OnEnable"/>
+        /// </summary>
         protected override void OnEnable() {
             base.OnEnable();
             characters = serializedObject.FindProperty("_characters");
@@ -38,6 +44,9 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             };
         }
 
+        /// <summary>
+        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
+        /// </summary>
         public override void OnInspectorGUI() {
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_dontDestroyOnLoad"));
             characterList.DoLayoutList();

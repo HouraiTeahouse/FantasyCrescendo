@@ -4,9 +4,15 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
+    /// <summary>
+    /// A custom Editor for Character
+    /// </summary>
     [CustomEditor(typeof(Character))]
     internal class CharacterEditor : ScriptlessEditor {
 
+        /// <summary>
+        /// <see cref="Editor.OnInspectorGUI"/>
+        /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
 

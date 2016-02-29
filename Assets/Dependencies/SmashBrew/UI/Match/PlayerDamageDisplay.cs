@@ -5,7 +5,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// <summary>
     /// A UI Text driver that displays the current damage of the a given player.
     /// </summary>
-    public class DataDamageDisplay : GradientNumberText, IDataComponent<Player> {
+    public class PlayerDamageDisplay : GradientNumberText, IDataComponent<Player> {
 
         private Character _character;
 

@@ -4,16 +4,12 @@ using HouraiTeahouse.Events;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public class PlayerSpawnEvent {
-
-        public Player Player; 
-        public GameObject PlayerObject;
-
-    }
-
+    /// <summary>
+    /// A EventHandler for spawning characters at the start of the match
+    /// </summary>
     public class Spawn : EventHandlerBehaviour<MatchStartEvent> {
 
-        [SerializeField]
+        [SerializeField, Tooltip("The spawn points for each of the characters")]
         private Transform[] _spawnPoints;
 
         /// <summary>

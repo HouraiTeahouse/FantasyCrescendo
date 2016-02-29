@@ -267,7 +267,7 @@ namespace HouraiTeahouse.SmashBrew {
             // If the character is null, randomly select a character and pallete
             if(SpawnedCharacter == null) {
                 SpawnedCharacter = DataManager.Instance.Characters.Random();
-                Pallete = Random.Range(0, SpawnedCharacter.AlternativeCount);
+                Pallete = Random.Range(0, SpawnedCharacter.PalleteCount);
             }
 
             GameObject prefab = SpawnedCharacter.Prefab.Load();

@@ -106,7 +106,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (eventArgs.Revived || _stocks[eventArgs.Player] <= 0)
                 return;
             _stocks[eventArgs.Player]--;
-            _eventManager.Publish(new RespawnEvent { Player = eventArgs.Player });
+            _eventManager.Publish(new PlayerRespawnEvent { Player = eventArgs.Player });
             eventArgs.Revived = true;
         }
 

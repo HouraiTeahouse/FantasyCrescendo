@@ -4,12 +4,18 @@ using UnityEditor;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
+    /// <summary>
+    /// A custom Editor for CharacterData
+    /// </summary>
     [CustomEditor(typeof(CharacterData))]
-    public class CharacterDataEditor : UnityEditor.Editor {
+    internal class CharacterDataEditor : UnityEditor.Editor {
 
         private int _previewSelect;
         private bool _crop;
 
+        /// <summary>
+        /// <see cref="Editor.OnInspectorGUI"/>
+        /// </summary>
         public override void OnInspectorGUI() {
             DrawDefaultInspector();
             string message;
@@ -25,21 +31,27 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             EditorGUILayout.HelpBox(message, type);
         }
 
+        /// <summary>
+        /// <see cref="Editor.HasPreviewGUI"/>
+        /// </summary>
         public override bool HasPreviewGUI() {
             if (targets.Length != 1)
                 return false;
             var data = target as CharacterData;
-            if (data == null || data.AlternativeCount <= 0)
+            if (data == null || data.PalleteCount <= 0)
                 return false;
-            if (_previewSelect < 0 || _previewSelect >= data.AlternativeCount)
+            if (_previewSelect < 0 || _previewSelect >= data.PalleteCount)
                 _previewSelect = 0;
             //Debug.Log(data.GetPortrait(_previewSelect).Load());
             return data.GetPortrait(_previewSelect).Load() != null;
         }
 
+        /// <summary>
+        /// <see cref="Editor.DrawPreview"/>
+        /// </summary>
         public override void DrawPreview(Rect previewArea) {
             var data = target as CharacterData;
-            if (data == null || data.AlternativeCount < 1)
+            if (data == null || data.PalleteCount < 1)
                 return;
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -51,10 +63,10 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 _previewSelect++;
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
-            if (_previewSelect >= data.AlternativeCount)
+            if (_previewSelect >= data.PalleteCount)
                 _previewSelect = 0;
             if (_previewSelect < 0)
-                _previewSelect = data.AlternativeCount - 1;
+                _previewSelect = data.PalleteCount - 1;
             Texture texture = data.GetPortrait(_previewSelect).Load().texture;
             if (_crop) {
                 Rect drawRect = previewArea;

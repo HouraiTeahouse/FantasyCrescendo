@@ -4,16 +4,21 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
+    /// <summary>
+    /// UI element that shows where players are
+    /// </summary>
     [RequireComponent(typeof(Text), typeof(PlayerUIColor))]
     public sealed class PlayerIndicator : MonoBehaviour {
 
-        [SerializeField]
+        [SerializeField, Tooltip("Real world position bias for the indicator's position")]
         private Vector3 _positionBias = new Vector3(0f, 1f, 0f);
 
-        [SerializeField]
+        [SerializeField, Tooltip("The text formatting applied to the indicator's text")]
         private string _format;
 
+        // the indicator's RectTransform
         private RectTransform _rTransform;
+        // the canvas's RectTransform
         private RectTransform _cTransform;
         private Text _text;
 
@@ -61,15 +66,12 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + _positionBias;
 
             //then you calculate the position of the UI element
-            //0,0 for the canvas is at the center of the screen, whereas WorldToViewPortPoint treats the lower left corner as 0,0. Because of this, you need to subtract the height / width of the canvas * 0.5 to get the correct position.
+            //0,0 for the canvas is at the center of the screen, whereas WorldToViewPortPoint treats the lower left corner as 0,0. Because of this,
+            // you need to subtract the height / width of the canvas * 0.5 to get the correct position.
 
             Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(worldPosition);
-            Vector2 WorldObject_ScreenPosition = new Vector2(
-            ((ViewportPosition.x * _cTransform.sizeDelta.x) - (_cTransform.sizeDelta.x * 0.5f)),
-            ((ViewportPosition.y * _cTransform.sizeDelta.y) - (_cTransform.sizeDelta.y * 0.5f)));
-
             //now you can set the position of the ui element
-            _rTransform.anchoredPosition = WorldObject_ScreenPosition;
+            _rTransform.anchoredPosition = ViewportPosition.Mult(_cTransform.sizeDelta) - 0.5f * _cTransform.sizeDelta;
         }
     }
 }

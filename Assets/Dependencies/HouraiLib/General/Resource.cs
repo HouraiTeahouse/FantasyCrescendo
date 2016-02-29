@@ -52,8 +52,6 @@ namespace HouraiTeahouse {
             if (IsLoaded)
                 return Asset;
             T loadedObject = Resources.Load<T>(_path);
-            if (loadedObject == null)
-                Debug.LogError("Tried to load asset of type" + typeof (T) + " at " + _path + " and found nothing.");
             Asset = loadedObject;
             return Asset;
         }

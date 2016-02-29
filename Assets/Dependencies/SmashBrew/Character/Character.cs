@@ -14,8 +14,6 @@ namespace HouraiTeahouse.SmashBrew {
     /// <summary>
     /// General character class for handling the physics and animations of individual characters
     /// </summary>
-    /// Author: James Liu
-    /// Authored on 07/01/2015
 #if UNITY_EDITOR
     [InitializeOnLoad]
 #endif
@@ -42,7 +40,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary>
-        /// Gets whether the Character is currently on solid ground.
+        /// Gets whether the Character is currently on solid Ground.
         /// Assumed to be in the air when false.
         /// </summary>
         public bool IsGrounded {
@@ -177,7 +175,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             JumpCount++;
 
-            CharacterEvents.Publish(new PlayerJumpEvent { ground = IsGrounded, remainingJumps = MaxJumpCount - JumpCount });
+            CharacterEvents.Publish(new PlayerJumpEvent { Ground = IsGrounded, RemainingJumps = MaxJumpCount - JumpCount });
         }
         #endregion
 

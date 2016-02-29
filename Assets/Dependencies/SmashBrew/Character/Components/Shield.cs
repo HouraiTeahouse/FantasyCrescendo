@@ -1,15 +1,14 @@
-using HouraiTeahouse.Events;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public class ShieldBreak {
+    public class PlayerShieldBreakEvent {
     }
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    public sealed class Shield : RestrictableCharacterComponent, IDamageable {
+    public sealed class Shield : HouraiBehaviour, IDamageable {
 
         //TODO: properly implement
 
@@ -33,23 +32,25 @@ namespace HouraiTeahouse.SmashBrew {
 
         //private float _currentHP;
 
+        private Character _character;
         private GameObject _shieldObj;
         private Transform _shieldTransform;
         private PlayerController _playerController;
 
-        protected override void Start() {
-            base.Start();
+        protected override void Awake() {
+            base.Awake();
 
-            // No point in continuing if Character is null
-            if (Character == null)
-                Destroy(this);
+            _character = GetComponent<Character>();
+
+            if (!_character)
+                return;
 
             // Create Shield Object
             _shieldObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             _shieldObj.name = "Shield";
             _shieldTransform = _shieldObj.transform;
-            _shieldTransform.parent = Character.transform;
-            _shieldTransform.localPosition = Character.MovementCollider.center;
+            _shieldTransform.parent = _character.transform;
+            _shieldTransform.localPosition = _character.MovementCollider.center;
 
             // Setup Collider
             _shieldObj.GetComponent<Collider>().isTrigger = true;
@@ -81,7 +82,7 @@ namespace HouraiTeahouse.SmashBrew {
         //    _currentHP += (active ? -_depletionRate : _regenerationRate) * Time.fixedDeltaTime;
 
         //    if (_currentHP < 0)
-        //        ShieldBreak();
+        //        PlayerShieldBreakEvent();
         //    else if (_currentHP > _maxHP)
         //        _currentHP = _maxHP;
 
@@ -90,7 +91,7 @@ namespace HouraiTeahouse.SmashBrew {
         //}
 
         void ShieldBreak() {
-            CharacterEvents.Publish(new ShieldBreak());
+            _character.CharacterEvents.Publish(new PlayerShieldBreakEvent());
             //_currentHP = _resetHP;
         }
 

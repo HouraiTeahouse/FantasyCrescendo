@@ -4,13 +4,6 @@ using UnityEngine.SceneManagement;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public class LoadSceneEvent {
-
-        public AsyncOperation LoadOperation;
-        public SceneData Scene;
-
-    }
-
     [CreateAssetMenu(fileName = "New Stage", menuName = "SmashBrew/Scene Data")]
     public class SceneData : BGMGroup {
 
