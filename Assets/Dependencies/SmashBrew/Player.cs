@@ -61,8 +61,7 @@ namespace HouraiTeahouse.SmashBrew {
         private static readonly ReadOnlyCollection<Player> _playerCollection; 
 
         static Player() {
-            var config = Config.Instance;
-            _players = new Player[config.MaxPlayers];
+            _players = new Player[GameMode.Current.MaxPlayers];
             for (var i = 0; i < _players.Length; i++)
                 _players[i] = new Player(i);
             _playerCollection = new ReadOnlyCollection<Player>(_players);
@@ -245,7 +244,7 @@ namespace HouraiTeahouse.SmashBrew {
             get {
                 //if (Type.Color != null)
                 //    return Type.Color.Value;
-                return Config.Instance.GetPlayerColor(PlayerNumber);
+                return Config.Instance.PlayerColors[PlayerNumber];
             }
         }
 

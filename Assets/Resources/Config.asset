@@ -9,15 +9,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e06ba603e8092b4f8ff52df06fdcbf3, type: 3}
-  m_Name: Config
+  m_Name: New Config
   m_EditorClassIdentifier: 
-  PlayerColors:
+  _playerColors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  _cpuColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  - {r: 1, g: 0.5, b: 0, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  _cpuColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
   DamageableHitboxColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}
   InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
   OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}
+  _standardVersus:
+    _minimumPlayers: 1
+    _maximumPlayers: 4
+    _cpusAllowed: 1
+  _training:
+    _minimumPlayers: 1
+    _maximumPlayers: 4
+    _cpusAllowed: 1
+  _arcade:
+    _minimumPlayers: 1
+    _maximumPlayers: 1
+    _cpusAllowed: 0
+  _allStar:
+    _minimumPlayers: 1
+    _maximumPlayers: 1
+    _cpusAllowed: 0
