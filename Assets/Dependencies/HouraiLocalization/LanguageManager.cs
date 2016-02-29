@@ -57,7 +57,11 @@ namespace HouraiTeahouse.Localization {
         /// All available languages currently supported by the system.
         /// </summary>
         public IEnumerable<string> AvailableLanguages {
-            get { return _languages; }
+            get {
+                if (_languages != null)
+                    return _languages;
+                return new string[0];
+            }
         }
 
         /// <summary>

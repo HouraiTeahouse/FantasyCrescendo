@@ -53,7 +53,7 @@ namespace HouraiTeahouse.SmashBrew {
             get { return _cpuColor; }
         }
 
-        public GameMode StandardVerus {
+        public GameMode StandardVersus {
             get { return _standardVersus; }            
         }
 
@@ -90,7 +90,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         void OnEnable() {
             _colors = new ReadOnlyCollection<Color>(_playerColors);
-            GameMode.Current = StandardVerus;
+            GameMode.Current = StandardVersus;
         }
 
         public Color GetHitboxColor(Hitbox.Type type) {

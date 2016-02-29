@@ -1455,10 +1455,9 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53df60394bef2ce4f898a7c0ad4c7597, type: 2}
   m_IsPrefabParent: 0
---- !u!224 &410131190 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 22461784, guid: 53df60394bef2ce4f898a7c0ad4c7597,
-    type: 2}
+--- !u!4 &410131190 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 410131189}
 --- !u!1 &410131191 stripped
 GameObject:
@@ -2467,8 +2466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8ba33510a1f9d43843948d0806798b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mode: 0
   _trigger: 3
+  _mode: 0
   _scenes:
   - Stages/Forest of Magic/Forest of Magic Stage
   _ignoreLoadedScenes: 0
@@ -4590,9 +4589,9 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
+  _spacing: {x: 3, y: 3}
   _selfAspectRatio: 3
   _childAspectRatio: 1
-  _spacing: {x: 3, y: 3}
 --- !u!1 &1639907191
 GameObject:
   m_ObjectHideFlags: 0

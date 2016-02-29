@@ -1,56 +1,41 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace HouraiTeahouse {
 
-    public class LevelLoader : MonoBehaviour, ISubmitHandler {
+    /// <summary>
+    /// A SingleActionBehaviour that loads new Scenes
+    /// </summary>
+    public class LevelLoader : SingleActionBehaviour {
 
-        private enum Type {
-            Awake,
-            Start,
-            Collision,
-            UIEvent
-        }
-
-        [SerializeField]
+        [SerializeField, Tooltip("The mode to load scenes in")]
         private LoadSceneMode _mode = LoadSceneMode.Single;
 
-        [SerializeField]
-        private Type _trigger;
-
-        [SerializeField, Scene]
+        [SerializeField, Scene, Tooltip("The target scenes to load")]
         private string[] _scenes;
 
         [SerializeField, Tooltip("Ignore if scenes are already loaded?")]
         private bool _ignoreLoadedScenes;
 
+        /// <summary>
+        /// The paths of the scenes to load
+        /// </summary>
         public string[] Scenes {
             get { return _scenes; }
             set { _scenes = value; }
         }
 
-        void Awake() {
-            if (_trigger == Type.Awake)
-                Load();
+        /// <summary>
+        /// <see cref="SingleActionBehaviour.Action"/>
+        /// </summary>
+        protected override void Action() {
+            Load();
         }
 
-        void Start() {
-            if (_trigger == Type.Start)
-                Load();
-        }
-
-        void OnTriggerEnter(Collider other) {
-            if (_trigger == Type.Collision)
-                Load();
-        }
-
-        public void OnSubmit(BaseEventData eventData) {
-            if(_trigger == Type.UIEvent)
-                Load();
-        }
-
+        /// <summary>
+        /// Loads the scenes
+        /// </summary>
         public void Load() {
             HashSet<string> paths = new HashSet<string>();
             for (var i = 0; i < SceneManager.sceneCount; i++)
@@ -61,8 +46,6 @@ namespace HouraiTeahouse {
                 SceneManager.LoadScene(scenePath, _mode);
             }
         }
-
     }
-
 }
 

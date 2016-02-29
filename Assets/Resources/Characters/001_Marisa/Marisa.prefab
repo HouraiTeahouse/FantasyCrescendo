@@ -1944,7 +1944,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 459282}
-  - 95: {fileID: 9526656}
   m_Layer: 0
   m_Name: marisa
   m_TagString: Untagged
@@ -2929,7 +2928,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196364}
-  m_LocalRotation: {x: 0.7042969, y: 0.016810635, z: 0.7094263, w: -0.019940961}
+  m_LocalRotation: {x: 0.70429695, y: 0.016810637, z: 0.70942634, w: -0.019940963}
   m_LocalPosition: {x: 0.43600506, y: 0.0018399827, z: 0.52018905}
   m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 1}
   m_Children:
@@ -4576,23 +4575,6 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 5f3e57a1080012c4499e21bfa33d0ce7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &9526656
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 182720}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 35f509ccb44fe1e4a8e688402ad0586f, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

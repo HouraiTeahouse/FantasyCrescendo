@@ -4,20 +4,60 @@ using System.Collections.ObjectModel;
 
 namespace HouraiTeahouse.SmashBrew {
 
+    /// <summary>
+    /// An abstract class for controlling the global status of the game while under a certain game mode.
+    /// </summary>
     public abstract class GameMode {
 
-        public static GameMode Current { get; set; }
+        private static GameMode _current;
 
+        /// <summary>
+        /// The current game mode.
+        /// </summary>
+        public static GameMode Current {
+            get {
+                if (_current == null)
+                    _current = Config.Instance.StandardVersus;
+                return _current;
+            }
+            set {
+                if (value == null)
+                    _current = Config.Instance.StandardVersus;
+                else
+                    _current = value;
+            }
+        }
+
+        /// <summary>
+        /// The maximum number of chosen players in a match under this game mode.
+        /// This does not affect the number of game-inserted number of players in the match.
+        /// </summary>
         public abstract int MaxPlayers { get; }
+
+        /// <summary>
+        /// The minimum number of chosen players in a match to start playing the game mode.
+        /// </summary>
         public abstract int MinPlayers { get; }
+
+        /// <summary>
+        /// Whether choosing CPU characters is OK for the game mode
+        /// </summary>
         public abstract bool CPUsAllowed { get; }
+
+        /// <summary>
+        /// All of the characters that cannot be selected for this  
+        /// </summary>
         public abstract ReadOnlyCollection<CharacterData> ExcludedCharacters { get; }
+       
+        /// <summary>
+        /// All of the stages that cannot be selected for the game mode
+        /// </summary>
         public abstract ReadOnlyCollection<SceneData> ExcludedStages { get; }
 
     }
 
     [Serializable]
-    internal sealed class SerializedGameMode : GameMode {
+    public sealed class SerializedGameMode : GameMode {
 
         [SerializeField]
         private int _minimumPlayers = 1;
@@ -53,5 +93,9 @@ namespace HouraiTeahouse.SmashBrew {
         public override ReadOnlyCollection<SceneData> ExcludedStages {
             get { return new ReadOnlyCollection<SceneData>(_excludedStages); }
         }
+    }
+
+    public abstract class MultiMatchGameMode : GameMode {
+
     }
 }
