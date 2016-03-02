@@ -1,11 +1,19 @@
 using UnityConstants;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HouraiTeahouse.SmashBrew {
 
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Collider))]
     public sealed class Hitbox : MonoBehaviour {
+
+        /// <summary>
+        /// Whether hitboxes should be drawn or not.
+        /// </summary>
+        public static bool DrawHitboxes { get; set; }
 
         public enum Type {
             Offensive,
@@ -16,6 +24,22 @@ namespace HouraiTeahouse.SmashBrew {
             Absorb,
             Reflective
         }
+
+        [SerializeField]
+        [HideInInspector]
+        private Mesh _sphere;
+
+        [SerializeField]
+        [HideInInspector]
+        private Mesh _cube;
+
+        [SerializeField]
+        [HideInInspector]
+        private Mesh _capsule;
+
+        [SerializeField]
+        [HideInInspector]
+        private Material _material;
 
         //TODO: Add triggers for on hit effects and SFX
         //private ParticleSystem _effect;
@@ -42,7 +66,13 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        private void Awake() {
+
+        #region Unity Callbacks
+
+        /// <summary>
+        /// Unity callback. Called on object instantiation.
+        /// </summary>
+        void Awake() {
             Source = GetComponentInParent<Character>();
             _damageable = GetComponentInParent<IDamageable>();
             _knockbackable = GetComponentInParent<IKnockbackable>();
@@ -59,15 +89,79 @@ namespace HouraiTeahouse.SmashBrew {
                     gameObject.layer = Layers.Hitbox;
                     break;
             }
-
+            DrawHitboxes = true;
             _colliders = GetComponents<Collider>();
             foreach (Collider col in _colliders)
                 col.isTrigger = true;
         }
 
-        #region Unity Callbacks
-         void OnDrawGizmos() {
-            GizmoUtil.DrawColliders(GetComponentsInChildren<Collider>(), Config.Instance.GetHitboxColor(type), true);
+#if UNITY_EDITOR
+        void OnDrawGizmos() {
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+                return;
+            GizmoUtil.DrawColliders(GetComponents<Collider>(), Config.Instance.GetHitboxColor(type), true);
+        }
+#endif
+
+        void OnRenderObject() {
+            if (!DrawHitboxes)
+                return;
+            if (_colliders == null)
+                _colliders = GetComponents<Collider>();
+            Color color = Config.Instance.GetHitboxColor(type);
+            foreach (var col in _colliders)
+                DrawCollider(col, color);
+            GL.wireframe = true;
+            foreach (var col in _colliders)
+                DrawCollider(col, Color.white);;
+            GL.wireframe = false;
+        }
+
+        void DrawCollider(Collider col, Color color) {
+            if (col == null)
+                return;
+            Mesh mesh = null;
+            var boxCol = col as BoxCollider;
+            var sphereCol = col as SphereCollider;
+            var capsuleCol = col as CapsuleCollider;
+            Vector3 position = Vector3.zero;
+            Quaternion rotation = Quaternion.identity;
+            Vector3 scale = Vector3.one;
+            Matrix4x4 localToWorld;
+            if (boxCol != null) {
+                mesh = _cube;
+                position = boxCol.center;
+                scale = boxCol.size;
+                localToWorld = transform.localToWorldMatrix;
+            }
+            else if (sphereCol != null) {
+                mesh = _sphere;
+                position = sphereCol.center;
+                scale = sphereCol.radius * Vector3.one;
+                localToWorld = Matrix4x4.TRS(transform.position, transform.rotation,
+                    Vector3.one * transform.lossyScale.Max());
+            }
+            else if(capsuleCol != null) {
+                mesh = _capsule;
+                position = capsuleCol.center;
+                scale = Vector3.one * capsuleCol.radius * 2;
+                scale[capsuleCol.direction] = capsuleCol.height / 2;
+                switch (capsuleCol.direction) {
+                    case 1:
+                        rotation = Quaternion.Euler(0, 90, 0);
+                        break;
+                    case 2:
+                        rotation = Quaternion.Euler(90, 0, 0);
+                        break;
+                }
+                localToWorld = transform.localToWorldMatrix;
+            }
+            else {
+                localToWorld = transform.localToWorldMatrix;
+            }
+            _material.SetColor("_Color", color);
+            _material.SetPass(0);
+            Graphics.DrawMeshNow(mesh, localToWorld * Matrix4x4.TRS(position, rotation, scale));
         }
         
         void OnTriggerEnter(Collider other) {
@@ -125,6 +219,12 @@ namespace HouraiTeahouse.SmashBrew {
         #endregion
 
         #region Public Access Properties
+
+        public Type CurrentType {
+            get { return type; }
+            set { type = value; }
+        }
+
         public int Priority {
             get { return _priority; }
             set { _priority = value; }

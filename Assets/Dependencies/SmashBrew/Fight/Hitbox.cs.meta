@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 0cfe52ab2f1046e4ba7bdead40232213
-timeCreated: 1444622699
+timeCreated: 1456892059
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
+  - _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  - _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

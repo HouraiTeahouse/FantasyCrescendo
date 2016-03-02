@@ -9,7 +9,7 @@ namespace HouraiTeahouse.SmashBrew {
     /// 
     /// Note this rule does not determine a winner, only ends the Match.
     /// </summary>
-    public class TimeMatch : MatchRule {
+    public sealed class TimeMatch : MatchRule {
 
         [SerializeField]
         private float _time = 180f;

@@ -21,10 +21,10 @@ MonoBehaviour:
   - {r: 1, g: 0, b: 1, a: 1}
   - {r: 0.25, g: 0.25, b: 0.25, a: 1}
   _cpuColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
-  DamageableHitboxColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}
-  InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
-  OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}
+  DamageableHitboxColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.5019608}
+  IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 0.5019608}
+  InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 0.5019608}
+  OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 0.5019608}
   _standardVersus:
     _minimumPlayers: 1
     _maximumPlayers: 4

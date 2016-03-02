@@ -12,7 +12,7 @@ namespace HouraiTeahouse.SmashBrew {
     /// After which they will no longer respawn, and cannot further participate.
     /// The winner is the last player standing.
     /// </summary>
-    public class StockMatch : MatchRule {
+    public sealed class StockMatch : MatchRule {
 
         /// <summary>
         /// The number of stock the players start with.

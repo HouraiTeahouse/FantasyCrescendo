@@ -47,12 +47,10 @@ namespace HouraiTeahouse.SmashBrew {
             if (_character == null)
                 return;
 
-            Debug.Log(_character);
             _timer += Time.deltaTime;
 
             // TODO: Find better alternative to this hack
             if (_timer > _platformTimer || (_character.Rigidbody.velocity.magnitude > 0.5f)) {
-                Debug.Log(_timer + " " + _character.Rigidbody.velocity);
                 _invincibility.Duration -= _platformTimer;
                 gameObject.SetActive(false);
             }
