@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logDebugInfo: 0
   invertYAxis: 0
-  enableXInput: 0
+  enableXInput: 1
   useFixedUpdate: 1
   dontDestroyOnLoad: 1
   customProfiles: []
@@ -86,27 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mixer: {fileID: 24100000, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
-  _channels:
-  - _name: Volume
-    _baseVolume: 1
-    _playerPrefsKey: mainVol
-    _associatedParams:
-    - Main Volume
-  - _name: Music Volume
-    _baseVolume: 1
-    _playerPrefsKey: musicVol
-    _associatedParams:
-    - Music Volume
-  - _name: Sound Effects Volume
-    _baseVolume: 1
-    _playerPrefsKey: sfxVol
-    _associatedParams:
-    - SFX Volume
-  - _name: Voice Volume
-    _baseVolume: 1
-    _playerPrefsKey: vaVol
-    _associatedParams:
-    - Voice Acting Volume
+  _audioChannels: []
 --- !u!114 &11478998
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -89,7 +89,6 @@ namespace HouraiTeahouse.SmashBrew {
                     gameObject.layer = Layers.Hitbox;
                     break;
             }
-            DrawHitboxes = true;
             _colliders = GetComponents<Collider>();
             foreach (Collider col in _colliders)
                 col.isTrigger = true;

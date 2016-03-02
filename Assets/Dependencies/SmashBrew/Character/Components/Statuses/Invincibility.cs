@@ -10,6 +10,7 @@ namespace HouraiTeahouse.SmashBrew {
     public sealed class Invincibility : Status {
 
         private Character _character;
+        private Hitbox[] _hitboxes;
 
         /// <summary>
         /// Unity callback. Called once before the object's first frame.
@@ -18,6 +19,7 @@ namespace HouraiTeahouse.SmashBrew {
             base.Start();
             _character = GetComponent<Character>();
             _character.DamageModifiers.In.Add(InvincibilityModifier, int.MaxValue);
+            _hitboxes = GetComponentsInChildren<Hitbox>();
         }
 
         /// <summary>
@@ -26,6 +28,25 @@ namespace HouraiTeahouse.SmashBrew {
         void OnDestroy() {
             if(_character)
                 _character.DamageModifiers.In.Remove(InvincibilityModifier);
+        }
+
+        /// <summary>
+        /// Unity callback. Called when component is enabled.
+        /// </summary>
+        void OnEnable() {
+            foreach (var hitbox in _hitboxes)
+                if (hitbox.CurrentType == Hitbox.Type.Damageable)
+                    hitbox.CurrentType = Hitbox.Type.Invincible;
+            ;
+        }
+
+        /// <summary>
+        /// Unity callback. Called when component is disabled.
+        /// </summary>
+        void OnDisable() {
+            foreach(var hitbox in _hitboxes)
+                if (hitbox.CurrentType == Hitbox.Type.Invincible)
+                    hitbox.CurrentType = Hitbox.Type.Damageable;
         }
 
         /// <summary>
