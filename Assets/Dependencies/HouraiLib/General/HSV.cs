@@ -100,8 +100,9 @@ namespace HouraiTeahouse {
         /// Initializes an instance of HSV from a RGBA color.
         /// </summary>
         /// <param name="col">the source Color</param>
-        public HSV(Color col) : this(0, 0, 0, col.a) {
+        public HSV(Color col) {
             Color.RGBToHSV(col, out h, out s, out v);
+            a = col.a;
         }
 
         /// <summary>
@@ -123,7 +124,9 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <returns>the RGBA color representation</returns>
         public Color ToColor() {
-            return Color.HSVToRGB(h, s, v);
+            Color col = Color.HSVToRGB(h, s, v);
+            col.a = a;
+            return col;
         }
 
         // implicit converter between color and HSV
