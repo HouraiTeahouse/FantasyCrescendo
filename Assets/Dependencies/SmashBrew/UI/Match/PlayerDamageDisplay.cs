@@ -17,10 +17,10 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         protected override void Update() {
             base.Update();
-            if (!Text)
+            if (!Text || !_character)
                 return;
             //TODO: Change this into a event
-            bool visible = _character && _character.isActiveAndEnabled;
+            bool visible = _character.isActiveAndEnabled;
             Text.enabled = visible;
             float value = Mathf.Floor(_character.CurrentDamage);
             if (visible && !Mathf.Approximately(Number, value))
@@ -40,10 +40,12 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <see cref="IDataComponent{T}.SetData"/>
         /// </summary>
         public void SetData(Player data) {
-            if (data == null || data.PlayerObject == null) 
+            if (data == null || data.PlayerObject == null)
                 _character = null;
-            else
+            else {
                 _character = data.PlayerObject;
+                Number = _character.CurrentDamage;
+            }
         }
 
     }

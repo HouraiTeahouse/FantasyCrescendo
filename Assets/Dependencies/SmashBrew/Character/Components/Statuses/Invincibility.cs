@@ -34,6 +34,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// Unity callback. Called when component is enabled.
         /// </summary>
         void OnEnable() {
+            if (_hitboxes == null)
+                _hitboxes = GetComponentsInChildren<Hitbox>();
             foreach (var hitbox in _hitboxes)
                 if (hitbox.CurrentType == Hitbox.Type.Damageable)
                     hitbox.CurrentType = Hitbox.Type.Invincible;
@@ -44,6 +46,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// Unity callback. Called when component is disabled.
         /// </summary>
         void OnDisable() {
+            if (_hitboxes == null)
+                _hitboxes = GetComponentsInChildren<Hitbox>();
             foreach(var hitbox in _hitboxes)
                 if (hitbox.CurrentType == Hitbox.Type.Invincible)
                     hitbox.CurrentType = Hitbox.Type.Damageable;

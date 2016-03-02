@@ -31,6 +31,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
         void Update() {
             DisableCheck();
 
+            if (_stockMatch == null)
+                return;
+
             int stock = _stockMatch[_player];
             bool excess = stock > standardIndicators.Length;
             if (ExcessDisplay)
