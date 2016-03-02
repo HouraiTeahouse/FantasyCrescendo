@@ -1,8 +1,46 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace HouraiTeahouse.SmashBrew {
+
+    public enum TouhouGame {
+        HighlyResponsiveToPrayers = 0,
+        StoryOfEasternWonderland,
+        PhantasmagoriaOfDimDream,
+        LotusLandStory,
+        MysticSquare,
+        EmbodimentOfScarletDevil,
+        PerfectCherryBlossom,
+        ImmaterialAndMissingPower,
+        ImperishableNight,
+        PhantasmagoriaOfFlowerView,
+        ShootTheBullet,
+        MountainOfFaith,
+        ScarletWeatherRhapsody,
+        SubterraneanAnimism,
+        UndefinedFantasticObject,
+        Hisoutensoku,
+        DoubleSpoiler,
+        FairyWars,
+        TenDesires,
+        HopelessMasquerade,
+        ImpossibleSpellCard,
+        UrbanLegendInLimbo,
+        LegacyOfLunaticKingdom,
+        Other
+    }
+
+    public enum TouhouStage {
+        PlayableCharacter = 0,
+        Stage1,
+        Stage2,
+        Stage3,
+        Stage4,
+        Stage5,
+        Stage6,
+        Extra,
+        Other
+    }
 
     /// <summary>
     /// A ScriptableObject 
@@ -14,6 +52,12 @@ namespace HouraiTeahouse.SmashBrew {
     public class CharacterData : ScriptableObject {
 
         [Header("General Data")]
+        [SerializeField]
+        private TouhouGame _sourceGame = TouhouGame.Other;
+
+        [SerializeField]
+        private TouhouStage _sourceStage = TouhouStage.Other;
+
         [SerializeField, Resource(typeof(GameObject))]
         [Tooltip("The prefab of the Character to spawn.")]
         private string _prefab;
@@ -68,6 +112,20 @@ namespace HouraiTeahouse.SmashBrew {
         [Tooltip("The theme played on the match results screen when the character wins")]
         private string _victoryTheme;
         private Resource<AudioClip> _victoryThemeResource;
+
+        /// <summary>
+        /// The source game the character is from
+        /// </summary>
+        public TouhouGame SourceGame {
+            get { return _sourceGame; }
+        }
+
+        /// <summary>
+        /// The source stage the character is from
+        /// </summary>
+        public TouhouStage SourceStage {
+            get { return _sourceStage; }
+        }
 
         /// <summary>
         /// The short name of the character. Usually just their first name.

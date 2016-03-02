@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using HouraiTeahouse.Editor;
 using UnityEditor;
 using UnityEditorInternal;
@@ -52,7 +54,8 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             characterList.DoLayoutList();
             sceneList.DoLayoutList();
             if (GUILayout.Button("Refresh")) {
-                characters.SetArray(Resources.LoadAll<CharacterData>(""));
+                int stageCount = Enum.GetValues(typeof (TouhouStage)).Length;
+                characters.SetArray(Resources.LoadAll<CharacterData>("").OrderBy(character => stageCount * (int)character.SourceGame + (int)character.SourceStage));
                 scenes.SetArray(Resources.LoadAll<SceneData>(""));
                 serializedObject.ApplyModifiedProperties();
             }
