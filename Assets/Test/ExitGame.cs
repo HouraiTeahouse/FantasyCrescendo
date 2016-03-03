@@ -7,14 +7,10 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// An ISubmitHandler for exiting the game.
     /// Attach to a button or other "Submitable" elements to use to quit the game.
     /// </summary>
-    public class ExitGame : MonoBehaviour, ISubmitHandler {
-
-        // ISubmitHandler implementation
-        public void OnSubmit(BaseEventData eventData) {
-            Debug.Log("Game Exited.");
+    public sealed class ExitGame : SingleActionBehaviour {
+        protected override void Action() {
             Application.Quit();
         }
-
     }
 
 }
