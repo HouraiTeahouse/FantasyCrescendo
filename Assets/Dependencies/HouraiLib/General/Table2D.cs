@@ -81,7 +81,7 @@ namespace HouraiTeahouse {
     /// </summary>
     /// <typeparam name="K">the type of the keys</typeparam>
     /// <typeparam name="V">the value stored by the table</typeparam>
-    public class Table2D<K, V> : SmashBrew.Table2D<K, K, V> {
+    public class Table2D<K, V> : Table2D<K, K, V> {
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ namespace HouraiTeahouse {
     /// </summary>
     /// <typeparam name="K">the type of the keys</typeparam>
     /// <typeparam name="V">the value stored by the table</typeparam>
-    public class MirroredTable2D<K, V> : SmashBrew.Table2D<K, V> {
+    public class MirroredTable2D<K, V> : Table2D<K, V> {
 
         /// <summary>
         /// Gets or sets the value associated with the specified pair of keys. 

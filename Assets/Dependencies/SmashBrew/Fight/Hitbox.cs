@@ -21,7 +21,11 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         static void DrawEffect(Hitbox src, Hitbox dst) {
-            
+            throw new NotImplementedException();
+        }
+
+        public static void Resolve(Hitbox src, Hitbox dst) {
+            throw new NotImplementedException();
         }
 
         static Hitbox() {
@@ -41,16 +45,6 @@ namespace HouraiTeahouse.SmashBrew {
                 ExecuteInterface<IReflectable>(Type.Reflective, src, dst, h => h.Reflectable, (r, o) => r.Reflect(o));
             };
             ReactionMatrix[Type.Offensive, Type.Invincible] = DrawEffect;
-#if UNITY_EDITOR
-            Action<Hitbox, Hitbox> debug = delegate(Hitbox hitbox, Hitbox hitbox1) {
-                Debug.Log("Two hurtboxes should not collide with each other.");
-            };
-            Type[] types = Enum.GetValues(typeof (Type)) as Type[];
-            foreach(var type1 in types)
-                foreach(var type2 in types)
-                    if (!ReactionMatrix.ContainsKey(type1, type2))
-                        ReactionMatrix[type1, type2] = debug;
-#endif
         }
 
         /// <summary>
@@ -108,7 +102,6 @@ namespace HouraiTeahouse.SmashBrew {
                 return _knockbackable;
             }
         }
-
 
         #region Unity Callbacks
 
@@ -210,9 +203,9 @@ namespace HouraiTeahouse.SmashBrew {
             if (!other.CompareTag(Tags.Hitbox))
                 return;
             Hitbox otherHitbox = other.GetComponent<Hitbox>();
-            if (otherHitbox == null)
+            if (otherHitbox == null || !ReactionMatrix.ContainsKey(type, otherHitbox.type))
                 return;
-            
+            HitboxResolver.AddCollision(this, otherHitbox);
         }
         #endregion
 
