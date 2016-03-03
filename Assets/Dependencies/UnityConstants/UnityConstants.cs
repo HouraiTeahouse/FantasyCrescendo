@@ -34,6 +34,7 @@ namespace UnityConstants
         public const int Character = 9;
         public const int Hitbox = 10;
         public const int Hurtbox = 11;
+        public const int Intangible = 12;
         public const int Blast_Zone = 31;
 
         public const int DefaultMask = 1 << 0;
@@ -45,6 +46,7 @@ namespace UnityConstants
         public const int CharacterMask = 1 << 9;
         public const int HitboxMask = 1 << 10;
         public const int HurtboxMask = 1 << 11;
+        public const int IntangibleMask = 1 << 12;
         public const int Blast_ZoneMask = 1 << 31;
     }
 

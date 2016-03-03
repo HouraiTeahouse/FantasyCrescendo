@@ -16,8 +16,15 @@ namespace HouraiTeahouse.SmashBrew {
 
     public interface IKnockbackable {
 
-        void Knockback(Vector2 knockback);
+        void Knockback(object source, Vector2 knockback);
 
     }
 
+    public interface IAbsorbable {
+        void Absorb(object source);
+    }
+
+    public interface IReflectable {
+        void Reflect(object source);
+    }
 }

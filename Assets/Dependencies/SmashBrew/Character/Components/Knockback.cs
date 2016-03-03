@@ -19,7 +19,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary>
         /// <see cref="IKnockbackable.Knockback"/>
         /// </summary>
-        public void Knockback(Vector2 knockback) {
+        public void Knockback(object src, Vector2 knockback) {
             //TODO: Reimplement
             //if (_defensiveModifiers.Count > 0)
             //    knockback = _defensiveModifiers.Modifiy(knockback);

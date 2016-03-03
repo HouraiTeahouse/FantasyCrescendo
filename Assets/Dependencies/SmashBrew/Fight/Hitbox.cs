@@ -1,3 +1,4 @@
+using System;
 using UnityConstants;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -10,6 +11,48 @@ namespace HouraiTeahouse.SmashBrew {
     [RequireComponent(typeof (Collider))]
     public sealed class Hitbox : MonoBehaviour {
 
+        private static Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;
+
+        static void ExecuteInterface<T>(Type typeCheck, Hitbox src, Hitbox dst, Predicate<Hitbox> check, Action<T, object> action) {;
+            if (!check(src))
+                return;
+            foreach (T t in src.GetComponents<T>())
+                action(t, dst);
+        }
+
+        static void DrawEffect(Hitbox src, Hitbox dst) {
+            
+        }
+
+        static Hitbox() {
+            ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
+            ReactionMatrix[Type.Offensive, Type.Damageable] = delegate(Hitbox src, Hitbox dst) {
+                if (dst.Damageable != null)
+                    dst.Damageable.Damage(src, src.BaseDamage);
+                if (dst.Knockbackable != null)
+                    //TODO : FIX
+                    dst.Knockbackable.Knockback(src, Vector2.one);
+                DrawEffect(src, dst);
+            };
+            ReactionMatrix[Type.Offensive, Type.Absorb] = delegate(Hitbox src, Hitbox dst) {
+                ExecuteInterface<IAbsorbable>(Type.Absorb, src, dst, h => h.Absorbable, (a, o) => a.Absorb(o));
+            };
+            ReactionMatrix[Type.Offensive, Type.Reflective] = delegate(Hitbox src, Hitbox dst) {
+                ExecuteInterface<IReflectable>(Type.Reflective, src, dst, h => h.Reflectable, (r, o) => r.Reflect(o));
+            };
+            ReactionMatrix[Type.Offensive, Type.Invincible] = DrawEffect;
+#if UNITY_EDITOR
+            Action<Hitbox, Hitbox> debug = delegate(Hitbox hitbox, Hitbox hitbox1) {
+                Debug.Log("Two hurtboxes should not collide with each other.");
+            };
+            Type[] types = Enum.GetValues(typeof (Type)) as Type[];
+            foreach(var type1 in types)
+                foreach(var type2 in types)
+                    if (!ReactionMatrix.ContainsKey(type1, type2))
+                        ReactionMatrix[type1, type2] = debug;
+#endif
+        }
+
         /// <summary>
         /// Whether hitboxes should be drawn or not.
         /// </summary>
@@ -19,7 +62,7 @@ namespace HouraiTeahouse.SmashBrew {
             Offensive,
             Damageable,
             Invincible,
-            Intangible,
+            Intangible = Layers.Intangible,
             Shield,
             Absorb,
             Reflective
@@ -170,22 +213,6 @@ namespace HouraiTeahouse.SmashBrew {
             if (otherHitbox == null)
                 return;
             
-            switch (otherHitbox.type) {
-                case Type.Damageable:
-                    switch (type) {
-                        case Type.Damageable:
-                            Debug.Log("Two hurtboxes should not collide with each other.");
-                            break;
-                        case Type.Offensive:
-                            if(otherHitbox.Damageable != null)
-                                otherHitbox.Damageable.Damage(this, BaseDamage);
-                            if (otherHitbox.Knockbackable != null)
-                                //TODO : FIX
-                                otherHitbox.Knockbackable.Knockback(Vector2.one);
-                            break;
-                    }
-                    break;
-            }
         }
         #endregion
 
