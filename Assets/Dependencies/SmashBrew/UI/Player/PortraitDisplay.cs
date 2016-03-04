@@ -36,6 +36,10 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <see cref="UIBehaviour.OnRectTransformDimensionsChange"/>
         /// </summary>
         protected override void OnRectTransformDimensionsChange() {
+            SetRect(); 
+        }
+
+        void SetRect() {
             if (_rectTransform == null)
                 return;
             Vector2 size = _rectTransform.rect.size;
@@ -44,17 +48,21 @@ namespace HouraiTeahouse.SmashBrew.UI {
             float diff, dim;
             if (aspect > _aspectRatio) {
                 // Image is wider than cropRect, extend it sideways
-                dim = aspect * imageRect.height;
-                diff = imageRect.width - dim;
-                imageRect.width = dim;
-                imageRect.x += 0.5f * diff;
-                ;
+                imageRect.width = aspect * imageRect.height;
+                imageRect.center = _cropRect.center;
             } else {
-                // Image is wider than cropRect, extend it vertically 
-                dim = imageRect.width / aspect;
-                diff = imageRect.height - dim;
-                imageRect.height = dim;
-                imageRect.y += 0.5f * diff;
+                // Image is wider than cropRect, extend it vertically
+                imageRect.height = imageRect.width / aspect;
+                imageRect.center = _cropRect.center;
+            }
+            if (imageRect.width > 1) {
+                imageRect.width = 1;
+                imageRect.height = 1 / aspect;
+                imageRect.center = 0.5f * Vector2.one;
+            } else if (imageRect.height > 1) {
+                imageRect.width = aspect;
+                imageRect.height = 1;
+                imageRect.center = 0.5f * Vector2.one;
             }
             Component.uvRect = imageRect;
         }
@@ -75,8 +83,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
             _cropRect.x += _rectBias.x;
             _cropRect.y += _rectBias.y;
             Component.texture = texture;
-            Component.uvRect = _cropRect;
             Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
+            SetRect();
         }
 
     }

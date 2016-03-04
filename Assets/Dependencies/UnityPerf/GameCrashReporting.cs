@@ -11,12 +11,12 @@ public class GameCrashReporting : MonoBehaviour
     /// </summary>
     [SerializeField]
     private string _unityProjectID;
-
+#if !UNITY_EDITOR
     /// <summary>
     /// Unity callback. Called on object instantiation.
     /// </summary>
     void Awake() {
 		CrashReporting.Init(_unityProjectID);
     }
-
+#endif 
 }
