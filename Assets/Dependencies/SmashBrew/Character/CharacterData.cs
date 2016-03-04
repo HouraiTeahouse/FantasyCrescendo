@@ -1,4 +1,5 @@
 using System;
+using HouraiTeahouse.SmashBrew.UI;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -203,7 +204,9 @@ namespace HouraiTeahouse.SmashBrew {
         /// <param name="texture">the texture to get the rect relative to</param>
         /// <returns>the crop rect</returns>
         public Rect CropRect(Texture texture) {
-            return new Rect(_cropPositon.x, _cropPositon.y, _cropSize, _cropSize);
+            if(!texture)
+                return new Rect(0, 0, 1, 1);
+            return texture.UVToPixelRect(new Rect(_cropPositon.x, _cropPositon.y, _cropSize, _cropSize));
         }
 
         /// <summary>

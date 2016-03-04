@@ -21,7 +21,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         private Color _defaultColor;
         private Rect _cropRect;
-        private float _aspectRatio;
 
         /// <summary>
         /// Unity Callback. Called on object instantiation.
@@ -40,31 +39,17 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         void SetRect() {
-            if (_rectTransform == null)
+            if (_rectTransform == null || Component == null || Component.texture == null)
                 return;
             Vector2 size = _rectTransform.rect.size;
             float aspect = size.x / size.y;
-            Rect imageRect = _cropRect;
-            float diff, dim;
-            if (aspect > _aspectRatio) {
-                // Image is wider than cropRect, extend it sideways
-                imageRect.width = aspect * imageRect.height;
-                imageRect.center = _cropRect.center;
-            } else {
-                // Image is wider than cropRect, extend it vertically
-                imageRect.height = imageRect.width / aspect;
-                imageRect.center = _cropRect.center;
+            Texture texture = Component.texture;
+            Rect imageRect = _cropRect.EnforceAspect(aspect);
+            if (imageRect.width > texture.width || imageRect.height > texture.height) {
+                imageRect = imageRect.Restrict(texture.width, texture.height, aspect);
+                imageRect.center = texture.Center();
             }
-            if (imageRect.width > 1) {
-                imageRect.width = 1;
-                imageRect.height = 1 / aspect;
-                imageRect.center = 0.5f * Vector2.one;
-            } else if (imageRect.height > 1) {
-                imageRect.width = aspect;
-                imageRect.height = 1;
-                imageRect.center = 0.5f * Vector2.one;
-            }
-            Component.uvRect = imageRect;
+            Component.uvRect = texture.PixelToUVRect(imageRect);
         }
 
         /// <summary>
@@ -78,10 +63,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (data.GetPortrait(portrait).Load() == null)
                 return;
             Texture2D texture = data.GetPortrait(portrait).Asset.texture;
-            _cropRect = _cropped ? data.CropRect(texture) : new Rect(0, 0, 1, 1);
-            _aspectRatio = _cropRect.width / _cropRect.height;
-            _cropRect.x += _rectBias.x;
-            _cropRect.y += _rectBias.y;
+            _cropRect = _cropped ? data.CropRect(texture) : texture.PixelRect();
+            _cropRect.x += _rectBias.x * texture.width;
+            _cropRect.y += _rectBias.y * texture.height;
             Component.texture = texture;
             Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
             SetRect();

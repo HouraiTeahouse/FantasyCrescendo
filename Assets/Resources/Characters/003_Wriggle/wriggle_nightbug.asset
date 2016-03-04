@@ -20,8 +20,11 @@ MonoBehaviour:
   _shortNameKey: name.wriggle
   _fullNameKey: fullname.wriggle
   _portraits:
-  - Characters/001_Marisa/Portraits/marisa_portrait_1
-  _cropPositon: {x: 0.3, y: 0.7}
+  - Characters/003_Wriggle/Portraits/wriggle_portrait 1
+  - Characters/003_Wriggle/Portraits/wriggle_portrait 1
+  - Characters/003_Wriggle/Portraits/wriggle_portrait 1
+  - Characters/003_Wriggle/Portraits/wriggle_portrait 1
+  _cropPositon: {x: 0.4, y: 0.68}
   _cropSize: 0.24
   _icon: Icons/marisa_icon
   _announcerClip: Characters/003_Wriggle/Audio/wriggle_announcer
