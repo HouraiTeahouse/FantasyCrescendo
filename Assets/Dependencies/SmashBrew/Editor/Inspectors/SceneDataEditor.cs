@@ -8,7 +8,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     /// A custom Editor for SceneData
     /// </summary>
     [CustomEditor(typeof(SceneData))]
-    public class SceneDataEditor : UnityEditor.Editor {
+    public class SceneDataEditor : ScriptlessEditor {
 
         /// <summary>
         /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>

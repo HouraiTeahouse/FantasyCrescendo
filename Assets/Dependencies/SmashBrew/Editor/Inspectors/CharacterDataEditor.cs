@@ -8,7 +8,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     /// A custom Editor for CharacterData
     /// </summary>
     [CustomEditor(typeof(CharacterData))]
-    internal class CharacterDataEditor : UnityEditor.Editor {
+    internal class CharacterDataEditor : ScriptlessEditor {
 
         private int _previewSelect;
         private bool _crop;
