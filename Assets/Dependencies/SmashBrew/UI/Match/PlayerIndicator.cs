@@ -43,13 +43,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <summary>
         /// Unity callback. Called on object instantiation.  
         /// </summary>
-        void Awake() {
-            GameObject gui = GameObject.FindGameObjectWithTag(Tags.GUI); 
-            if(!gui)
-                Destroy(this);
+        void Awake() { 
             _text = GetComponent<Text>();
             _rTransform = GetComponent<RectTransform>();
-            _rTransform.SetParent(gui.transform);
             _rTransform.localScale = Vector3.one;
             _cTransform = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         }
