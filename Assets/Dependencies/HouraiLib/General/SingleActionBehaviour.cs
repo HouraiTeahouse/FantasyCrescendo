@@ -10,17 +10,23 @@ namespace HouraiTeahouse {
 
         private enum Type {
             // Do the action on instantiation 
-            Awake = 0,
-            // Do the action in response to a a Submit action
-            UIEvent = 2,
+            Instantiation,
+            // Do the action in response to being enabled
+            OnEnable,
+            // Do the action in response to being disabled 
+            OnDisable,
             // Do the action on the first frame
-            Start = 1,
+            Start,
             // Do the action once per frame
-            Update = 3,
+            Update,
             // Do the action once per fixed timestep
-            FixedUpdate = 4,
+            FixedUpdate,
             // Do the action on physical collision with an object
-            Collision = 5
+            Collision,
+            // Do the action when the object is destroyed
+            Destruction,
+            // Do the action in response to a a Submit action
+            UIEvent,
         }
 
         [SerializeField]
@@ -30,18 +36,20 @@ namespace HouraiTeahouse {
         /// Unity callback. Called on object instantiation.
         /// </summary>
         protected virtual void Awake() {
-            if (_trigger == Type.Awake)
+            if (_trigger == Type.Instantiation) {
                 Action();
-            enabled = _trigger >= Type.Start;
+                Destroy(this);
+            }
         }
 
         /// <summary>
         /// Unity callback. Called once before the object's first frame.
         /// </summary>
         protected virtual void Start() {
-            if (_trigger == Type.Start)
+            if (_trigger == Type.Start) {
                 Action();
-            enabled = _trigger > Type.Start;
+                Destroy(this);
+            }
         }
 
         /// <summary>
@@ -61,10 +69,34 @@ namespace HouraiTeahouse {
         }
 
         /// <summary>
+        /// Unity callback. Called when the object is enabled.
+        /// </summary>
+        protected virtual void OnEnable() {
+            if(_trigger == Type.OnEnable)
+                Action();
+        }
+
+        /// <summary>
+        /// Unity callback. Called when the object is no longer enabled.
+        /// </summary>
+        protected virtual void OnDisable() {
+            if (_trigger == Type.OnDisable)
+                Action();
+        }
+
+        /// <summary>
         /// Unity callback. Called repeatedly on a fixed timestep.
         /// </summary>
         protected virtual void FixedUpdate() {
             if (_trigger == Type.FixedUpdate)
+                Action();
+        }
+
+        /// <summary>
+        /// Unity callback. Called on object destruction.
+        /// </summary>
+        protected virtual void OnDestroy() {
+            if (_trigger == Type.Destruction)
                 Action();
         }
 
