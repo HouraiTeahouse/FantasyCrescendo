@@ -568,6 +568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _invicibilityTimer: 7.5
   _platformTimer: 5
+  _facing: 0
 --- !u!114 &11404292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -641,6 +642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _invicibilityTimer: 7.5
   _platformTimer: 5
+  _facing: 0
 --- !u!114 &11462700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -654,6 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _invicibilityTimer: 7.5
   _platformTimer: 5
+  _facing: 1
 --- !u!114 &11464224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -667,6 +670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _invicibilityTimer: 7.5
   _platformTimer: 5
+  _facing: 1
 --- !u!114 &11466820
 MonoBehaviour:
   m_ObjectHideFlags: 1
