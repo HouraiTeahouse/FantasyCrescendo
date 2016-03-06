@@ -50,6 +50,7 @@ MonoBehaviour:
   _tag: GUI
   _child: {fileID: 22423068}
   _keepWorldPosition: 0
+  _siblingIndex: 0
 --- !u!114 &11429496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -214,6 +215,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _tag
       value: GUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _siblingIndex
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

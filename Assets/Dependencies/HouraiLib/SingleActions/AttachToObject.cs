@@ -19,6 +19,9 @@ namespace HouraiTeahouse {
         [SerializeField, Tooltip("Whether to keep the child's world position when attaching to the parent")]
         private bool _keepWorldPosition;
 
+        [SerializeField, Tooltip("The sibiling index to set the child to. Set as -1 to leave as is.")]
+        private int _siblingIndex = -1;
+
         /// <summary>
         /// Unity callback. Called when the Editor resets the object.
         /// </summary>
@@ -37,8 +40,11 @@ namespace HouraiTeahouse {
                 if (go)
                     parent = go.transform;
             }
-            if (parent)
+            if (parent) {
                 child.SetParent(parent, _keepWorldPosition);
+                if(_siblingIndex >= 0)
+                    child.SetSiblingIndex(_siblingIndex);
+            }
         }
     }
 
