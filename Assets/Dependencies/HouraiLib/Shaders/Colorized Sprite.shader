@@ -1,4 +1,4 @@
-﻿Shader "Sprites/Colorized"
+Shader "Sprites/Colorized"
 {
 	Properties
 	{

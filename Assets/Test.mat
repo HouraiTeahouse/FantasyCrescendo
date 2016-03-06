@@ -6,13 +6,12 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: marisa_body_3
-  m_Shader: {fileID: 4800000, guid: 82b106a640ad4f542a544fc130e555bf, type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON _EMISSION _NORMALMAP
-  m_LightmapFlags: 1
-  m_CustomRenderQueue: 2450
-  stringTagMap:
-    RenderType: TransparentCutout
+  m_Name: Test
+  m_Shader: {fileID: 4800000, guid: 765578c94c4f882489d828be93d8cbe0, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -20,14 +19,14 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 5a006d95f4821c5449c0473d2a84ba69, type: 3}
+          m_Texture: {fileID: 2800000, guid: 1d638a2305275614fb0c7ee2dcf51627, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 2800000, guid: 44749e3b12aae664d824613696747a83, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -55,7 +54,7 @@ Material:
         first:
           name: _EmissionMap
         second:
-          m_Texture: {fileID: 2800000, guid: 5a006d95f4821c5449c0473d2a84ba69, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -74,21 +73,21 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _SpecGlossMap
+          name: _MetallicGlossMap
         second:
-          m_Texture: {fileID: 2800000, guid: 93c1c3bf4911efe459e82793298edc10, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _ToonShade
+          name: _Front
         second:
-          m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
+          m_Texture: {fileID: 2800000, guid: abbb035522aefc646960949b7e3d0825, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Ramp
+          name: _Back
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -105,7 +104,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: 0.551
+        second: 0.5
       data:
         first:
           name: _Parallax
@@ -137,17 +136,33 @@ Material:
       data:
         first:
           name: _Mode
-        second: 1
+        second: 0
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
+          name: _Emission
+        second: 0
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+        second: {r: 0, g: 0, b: 0, a: 1}
       data:
         first:
           name: _Color
-        second: {r: 0.60294116, g: 0.60294116, b: 0.60294116, a: 1}
+        second: {r: 0.9862069, g: 1, b: 0, a: 1}
       data:
         first:
-          name: _SpecColor
-        second: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+          name: _Top
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Bottom
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _BackTint
+        second: {r: 1, g: 1, b: 1, a: 1}

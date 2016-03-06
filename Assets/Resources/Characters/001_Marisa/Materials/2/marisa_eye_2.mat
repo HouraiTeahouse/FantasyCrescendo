@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: c6bf03fea824c99459836c75754ad54d, type: 3}
+          m_Texture: {fileID: 2800000, guid: 1d638a2305275614fb0c7ee2dcf51627, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -99,6 +99,20 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Front
+        second:
+          m_Texture: {fileID: 2800000, guid: 1d638a2305275614fb0c7ee2dcf51627, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Back
+        second:
+          m_Texture: {fileID: 2800000, guid: 5c12528ebe1421c428f5caa1cfe9474d, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -151,7 +165,7 @@ Material:
       data:
         first:
           name: _Emission
-        second: 0.319
+        second: 0.298
     m_Colors:
       data:
         first:
@@ -165,3 +179,15 @@ Material:
         first:
           name: _SpecColor
         second: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+      data:
+        first:
+          name: _Top
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Bottom
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _BackTint
+        second: {r: 1, g: 1, b: 1, a: 1}
