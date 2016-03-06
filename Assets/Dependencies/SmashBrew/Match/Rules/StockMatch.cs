@@ -77,7 +77,7 @@ namespace HouraiTeahouse.SmashBrew {
             foreach (KeyValuePair<Player, int> playerStock in _stocks) {
                 if (playerStock.Value < maxStocks)
                     continue;
-                else if (playerStock.Value == maxStocks) {
+                if (playerStock.Value == maxStocks) {
                     // More than one player has the maximum number of lives
                     // it is a tie, don't declare a winner
                     winner = null;
