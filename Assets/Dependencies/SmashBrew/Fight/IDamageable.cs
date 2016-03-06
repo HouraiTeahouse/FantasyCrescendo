@@ -2,19 +2,32 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public interface IDamageable {
+    /// <summary>
+    /// Represents a single object that can be hit
+    /// </summary>
+    public interface IStrikable {
+    }
+
+    /// <summary>
+    /// Represents a single object that can be hit and can take damage from it
+    /// </summary>
+    public interface IDamageable : IStrikable {
 
         void Damage(object source, float damage);
 
     }
 
-    public interface IHealable {
+    /// <summary>
+    /// Represents a single objec that can be 
+    /// </summary>
+    public interface IHealable : IStrikable {
 
         void Heal(object source, float healing);
 
     }
 
-    public interface IKnockbackable {
+    ///
+    public interface IKnockbackable : IStrikable{
 
         void Knockback(object source, Vector2 knockback);
 

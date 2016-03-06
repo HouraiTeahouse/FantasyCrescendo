@@ -7,6 +7,8 @@ using UnityEditor;
 
 namespace HouraiTeahouse.SmashBrew {
 
+
+
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Collider))]
     public sealed class Hitbox : MonoBehaviour {
@@ -25,7 +27,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public static void Resolve(Hitbox src, Hitbox dst) {
-            throw new NotImplementedException();
+            ReactionMatrix[src.CurrentType, dst.CurrentType](src, dst);
         }
 
         static Hitbox() {
@@ -53,13 +55,14 @@ namespace HouraiTeahouse.SmashBrew {
         public static bool DrawHitboxes { get; set; }
 
         public enum Type {
-            Offensive,
-            Damageable,
-            Invincible,
-            Intangible = Layers.Intangible,
-            Shield,
-            Absorb,
-            Reflective
+            // The values here are used as priority mulitpliers
+            Offensive = 1,
+            Damageable = 2,
+            Invincible = 3,
+            Intangible = 4,
+            Shield = 10000,
+            Absorb = 20000,
+            Reflective = 30000
         }
 
         [SerializeField]
