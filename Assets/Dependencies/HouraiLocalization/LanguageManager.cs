@@ -48,6 +48,8 @@ namespace HouraiTeahouse.Localization {
             get { return _currentLanguage;}
             private set {
                 bool changed = _currentLanguage != value;
+                if(_currentLanguage != null)
+                    Resources.UnloadAsset(_currentLanguage);
                 _currentLanguage = value;
                 if (changed && OnChangeLanguage != null)
                     OnChangeLanguage(value);
@@ -206,6 +208,10 @@ namespace HouraiTeahouse.Localization {
             }
             Instance = this;
 
+#if HOURAI_EVENTS
+            _eventManager = GlobalMediator.Instance;
+#endif
+
             Language[] languages = Resources.LoadAll<Language>(localizaitonResourceDirectory);
             _languages = new HashSet<string>(languages.Select(lang => lang.name));
             _keys = new HashSet<string>(languages.SelectMany(lang => lang.Keys));
@@ -229,10 +235,6 @@ namespace HouraiTeahouse.Localization {
 
             if(_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
-
-#if HOURAI_EVENTS
-            _eventManager = GlobalMediator.Instance;
-#endif
         }
 
         /// <summary>
@@ -273,28 +275,10 @@ namespace HouraiTeahouse.Localization {
         }
 
         /// <summary>
-        /// Loads a new language given a CultureInfo instance.
-        /// </summary>
-        /// <param name="language">the culture information for a language.</param>
-        /// <exception cref="ArgumentNullException">throw if <paramref name="language"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">thrown if the language specified by <paramref name="language"/> is not currently supported.</exception>>
-        /// <returns>the localization language</returns>
-        public Language LoadLanguage(CultureInfo language) {
-            if(language == null)
-                throw  new ArgumentNullException("language");
-            while (!language.IsNeutralCulture)
-                language = language.Parent;
-            if(!_languages.Contains(language.ToString()))
-                throw new InvalidOperationException(string.Format("Language {0} is not supported at this time.", language.EnglishName));
-            return LoadLanguage(language.ToString());
-        }
-
-        /// <summary>
         /// Loads a new language given the Microsoft language identifier.
         /// </summary>
         /// <param name="identifier">the Microsoft identifier for a lanuguage</param>
         /// <exception cref="ArgumentNullException">throw if <paramref name="identifier"/> is null.</exception>
-        /// <exception cref="ArgumentException">thrown if <paramref name="identifier"/> does not correspond to any known language</exception>
         /// <exception cref="InvalidOperationException">thrown if the language specified by <paramref name="identifier"/> is not currently supported.</exception>
         /// <returns>the localization language</returns>
         public Language LoadLanguage(string identifier) {
