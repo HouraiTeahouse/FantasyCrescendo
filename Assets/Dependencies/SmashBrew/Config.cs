@@ -44,11 +44,6 @@ namespace HouraiTeahouse.SmashBrew {
         private SerializedGameMode _allStar; 
         #endregion
 
-        private ReadOnlyCollection<Color> _colors;
-        public ReadOnlyCollection<Color> PlayerColors {
-            get { return _colors; } 
-        }
-
         public Color CPUColor {
             get { return _cpuColor; }
         }
@@ -89,8 +84,11 @@ namespace HouraiTeahouse.SmashBrew {
         /// Unity callback. Called on load.
         /// </summary>
         void OnEnable() {
-            _colors = new ReadOnlyCollection<Color>(_playerColors);
             GameMode.Current = StandardVersus;
+        }
+
+        public Color GetPlayerColor(int playerNumber) {
+            return _playerColors[playerNumber % _playerColors.Length];
         }
 
         public Color GetHitboxColor(Hitbox.Type type) {
