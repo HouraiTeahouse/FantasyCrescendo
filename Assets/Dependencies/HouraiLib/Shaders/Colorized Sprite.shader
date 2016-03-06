@@ -63,9 +63,9 @@ Shader "Sprites/Colorized"
 				fixed4 targetColor = IN.color;
 				fixed4 texColor = tex2D(_MainTex, IN.texcoord);
 				fixed greyScale = (texColor.r + texColor.g + texColor.b) / 3;
-				fixed4 a = (1, 1, 1, texColor.a * targetColor.a);
 				fixed4 b = lerp(targetColor, _Color, greyScale);
-				return a*b;
+				b.a = texColor.a * targetColor.a;
+				return b;
 			}
 			ENDCG
 		}

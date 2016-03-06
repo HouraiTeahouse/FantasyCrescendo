@@ -1,4 +1,4 @@
-﻿Shader "Custom/EyeShader2" {
+﻿Shader "Custom/Anime Eye" {
 	Properties {
 		_Color ("Eye Color", Color) = (1,1,1,1)
 		_BackTint("Back Tint", Color) = (1,1,1,1)
