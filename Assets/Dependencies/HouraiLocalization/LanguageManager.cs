@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Globalization;
 using System.Linq;
+#if HOURAI_EVENTS
+using HouraiTeahouse.Events;
+#endif
 
 namespace HouraiTeahouse.Localization {
 
+#if HOURAI_EVENTS
+    public class LanguageEvent {
+
+        public Language NewLanguage;
+
+    }
+#endif
     /// <summary>
     /// Singleton MonoBehaviour that manages all of localization system.
     /// </summary>
@@ -27,6 +37,10 @@ namespace HouraiTeahouse.Localization {
 
         private Language _currentLanguage;
 
+#if HOURAI_EVENTS
+        private Mediator _eventManager;
+#endif
+
         /// <summary>
         /// The currently used language.
         /// </summary>
@@ -37,6 +51,9 @@ namespace HouraiTeahouse.Localization {
                 _currentLanguage = value;
                 if (changed && OnChangeLanguage != null)
                     OnChangeLanguage(value);
+#if HOURAI_EVENTS
+                _eventManager.Publish(new LanguageEvent { NewLanguage = value });
+#endif
             }
         }
 
@@ -63,6 +80,16 @@ namespace HouraiTeahouse.Localization {
                 return new string[0];
             }
         }
+
+        /// <summary>
+        /// Gets an enumeration of all of the localizable keys.  
+        /// </summary>
+        public IEnumerable<string> Keys {
+            get {
+                foreach (var key in _keys)
+                    yield return key;
+            }
+        } 
 
         /// <summary>
         /// Is the provided key localizable?
@@ -202,6 +229,10 @@ namespace HouraiTeahouse.Localization {
 
             if(_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
+
+#if HOURAI_EVENTS
+            _eventManager = GlobalMediator.Instance;
+#endif
         }
 
         /// <summary>
