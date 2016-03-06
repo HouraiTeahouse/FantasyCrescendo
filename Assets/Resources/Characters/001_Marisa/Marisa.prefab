@@ -2950,7 +2950,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196364}
-  m_LocalRotation: {x: 0.7042969, y: 0.016810635, z: 0.7094263, w: -0.019940961}
+  m_LocalRotation: {x: 0.70429695, y: 0.016810637, z: 0.70942634, w: -0.019940963}
   m_LocalPosition: {x: 0.43600506, y: 0.0018399827, z: 0.52018905}
   m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 1}
   m_Children:
@@ -4628,7 +4628,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4651,7 +4651,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4674,7 +4674,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4697,7 +4697,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4720,7 +4720,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4830,7 +4830,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4872,7 +4872,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4895,7 +4895,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4918,7 +4918,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4941,7 +4941,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4986,7 +4986,7 @@ MonoBehaviour:
   _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  type: 1
+  type: 2
   _priority: 100
   _damage: 5
   _angle: 45
