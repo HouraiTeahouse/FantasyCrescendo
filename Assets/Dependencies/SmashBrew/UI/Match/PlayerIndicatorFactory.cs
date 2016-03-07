@@ -15,7 +15,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         protected override PlayerIndicator Create(PlayerSpawnEvent eventArgs) {
             PlayerIndicator indicator = base.Create(eventArgs);
-            indicator.Target = eventArgs.Player;
+            indicator.GetComponentsInChildren<IDataComponent<Player>>().SetData(eventArgs.Player);
             return indicator;
         }
 

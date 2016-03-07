@@ -7,19 +7,15 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// UI element that shows where players are
     /// </summary>
     [RequireComponent(typeof(Text), typeof(PlayerUIColor))]
-    public sealed class PlayerIndicator : MonoBehaviour {
+    public sealed class PlayerIndicator : PlayerUIComponent {
 
         [SerializeField, Tooltip("Real world position bias for the indicator's position")]
         private Vector3 _positionBias = new Vector3(0f, 1f, 0f);
-
-        [SerializeField, Tooltip("The text formatting applied to the indicator's text")]
-        private string _format;
 
         // the indicator's RectTransform
         private RectTransform _rTransform;
         // the canvas's RectTransform
         private RectTransform _cTransform;
-        private Text _text;
 
         private Player _target;
         private CapsuleCollider _collider;
@@ -29,23 +25,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         public Player Target {
             get { return _target; }
-            set {
-                _target = value;
-                _collider = (_target != null)? _target.PlayerObject.MovementCollider : null;
-                if (_target != null) {
-                    _text.text = (_target.PlayerNumber + 1).ToString(_format);
-                    name = string.Format("Player {0} Indicator", _target.PlayerNumber + 1);
-                }
-                foreach(var component in gameObject.GetComponentsInChildren<IDataComponent<Player>>())
-                    component.SetData(_target);
-            }
+            set { SetData(value); }
         }
 
         /// <summary>
         /// Unity callback. Called on object instantiation.  
         /// </summary>
-        void Awake() { 
-            _text = GetComponent<Text>();
+        protected override void Awake() { 
+            base.Awake();
             _rTransform = GetComponent<RectTransform>();
             _rTransform.localScale = Vector3.one;
             _cTransform = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
@@ -55,10 +42,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// Unity callback. Called once every frame, after all Update calls are processed.
         /// </summary>
         void LateUpdate() {
-            if (Target == null) {
-                _text.enabled = false;
+            if (Target == null)
                 return;
-            }
             Bounds bounds = _collider.bounds;
             Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + _positionBias;
 
@@ -69,6 +54,17 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(worldPosition);
             //now you can set the position of the ui element
             _rTransform.anchoredPosition = ViewportPosition.Mult(_cTransform.sizeDelta) - 0.5f * _cTransform.sizeDelta;
+        }
+
+        /// <summary>
+        /// <see cref="IDataComponent{T}.SetData"/>
+        /// </summary>
+        public override void SetData(Player data) {
+            base.SetData(data);
+            _target = data;
+            _collider = (_target != null) ? _target.PlayerObject.MovementCollider : null;
+            if (_target != null)
+                name = string.Format("Player {0} Indicator", _target.PlayerNumber + 1);
         }
     }
 }

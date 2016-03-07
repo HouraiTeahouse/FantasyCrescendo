@@ -4,23 +4,11 @@ using UnityEngine.EventSystems;
 namespace HouraiTeahouse.SmashBrew.UI {
 
     /// <summary>
-    /// An abstract UI behaviour class for handling a Player's current state
+    /// A UI Component that depends on data assigned from a Player object 
     /// </summary>
-    /// <typeparam name="T">the type of component the PlayerUIComponent manipulates</typeparam>
-    public abstract class PlayerUIComponent<T> : UIBehaviour, IDataComponent<Player> where T : Component {
+    public abstract class PlayerUIComponent : UIBehaviour, IDataComponent<Player> {
 
         private Player _player;
-
-        [SerializeField]
-        private T _component;
-
-        /// <summary>
-        /// The component the behaviour manipulates
-        /// </summary>
-        public T Component {
-            get { return _component; }
-            protected set { _component = value; }
-        }
 
         /// <summary>
         /// The target Player the behaviour represents
@@ -31,21 +19,18 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        /// Unity callback. Called on object instantiation.
-        /// </summary>
-        protected override void Awake() {
-            base.Awake();
-            if (!_component)
-                _component = GetComponent<T>();
-        }
-
-        /// <summary>
         /// Unity callback. Called on object destruction.
         /// </summary>
         protected override void OnDestroy() {
             base.OnDestroy();
             if (_player != null)
                 _player.OnChanged -= OnPlayerChange;
+        }
+
+        /// <summary>
+        /// Event callback. Called whenever <see cref="Player"/>'s state changes
+        /// </summary>
+        protected virtual void OnPlayerChange() {
         }
 
         /// <summary>
@@ -60,12 +45,34 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 _player.OnChanged += OnPlayerChange;
             OnPlayerChange();
         }
+    }
+
+    /// <summary>
+    /// An abstract UI behaviour class for handling a Player's current state
+    /// </summary>
+    /// <typeparam name="T">the type of component the PlayerUIComponent manipulates</typeparam>
+    public abstract class PlayerUIComponent<T> : PlayerUIComponent where T : Component {
+
+        [SerializeField]
+        private T _component;
 
         /// <summary>
-        /// Event callback. Called whenever <see cref="Player"/>'s state changes
+        /// The component the behaviour manipulates
         /// </summary>
-        protected virtual void OnPlayerChange() {
+        public T Component {
+            get { return _component; }
+            protected set { _component = value; }
         }
+
+        /// <summary>
+        /// Unity callback. Called on object instantiation.
+        /// </summary>
+        protected override void Awake() {
+            base.Awake();
+            if (!_component)
+                _component = GetComponent<T>();
+        }
+
     }
 
     /// <summary>

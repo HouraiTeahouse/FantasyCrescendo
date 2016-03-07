@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
@@ -8,6 +9,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// </summary>
     public sealed class PlayerText : PlayerUIComponent<Text> {
 
+        [SerializeField, Tooltip("Whether to use the short moniker or not.")]
+        private bool _short;
+
         /// <summary>
         /// <see cref="PlayerUIComponent{T}.OnPlayerChange"/>
         /// </summary>
@@ -16,7 +20,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (Player == null)
                 Component.text = string.Empty;
             else
-                Component.text = Player.ToString();
+                Component.text = Player.GetName(_short);
         }
 
     }

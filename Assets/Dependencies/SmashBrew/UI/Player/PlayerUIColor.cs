@@ -8,7 +8,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// </summary>
     [ExecuteInEditMode]
     [RequireComponent(typeof (Graphic))]
-    public sealed class PlayerUIColor : MonoBehaviour, IDataComponent<Player> {
+    public sealed class PlayerUIColor : PlayerUIComponent<Graphic> {
 
         private enum AlphaBlend {
             // Applys the alpha change multiplicatively
@@ -16,11 +16,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
             // Applys the alpha change additively, by subtraction 
             Additive
         }
-
-        [SerializeField, Tooltip("The target Graphic to apply the color to")]
-        private Graphic _graphic;
-
-        private Player _player;
         
         [SerializeField, Range(0f, 1f), Tooltip("The change in the color's saturation")]
         private float _saturation = 1f;
@@ -48,7 +43,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         public Color AdjustedColor {
             get {
-                Color rawColor = _player != null ? _player.Color : Color.clear;
+                Color rawColor = Player != null ? Player.Color : Color.clear;
 
                 rawColor.r = _red.Evaluate(rawColor.r);
                 rawColor.g = _green.Evaluate(rawColor.g);
@@ -66,50 +61,23 @@ namespace HouraiTeahouse.SmashBrew.UI {
             }
         }
 
-        /// <summary>
-        /// Unity Callback. Called on object instantiation.
-        /// </summary>
-        void Awake() {
-            if(_graphic == null)
-                _graphic = GetComponent<Graphic>();
-        }
-
-        /// <summary>
-        /// Unity Callback. Called on object destruction.
-        /// </summary>
-        void OnDestroy() {
-            if (_player != null)
-                _player.OnChanged -= UpdateColor;
-        }
-
 #if UNITY_EDITOR
         /// <summary>
         /// Unity Callback. Called once per frame in-game, and 100 times/sec in the Editor.
         /// </summary>
         void Update() {
             if(Application.isPlaying)
-            if (_graphic == null)
-                _graphic = GetComponent<Graphic>();
-            _graphic.color = AdjustedColor;
+            if (Component == null)
+                Component = GetComponent<Graphic>();
+            if(Component != null)
+                Component.color = AdjustedColor;
         }
 #endif
 
-        public void SetData(Player data) {
-            if (data == null)
-                return;
-            if (_player != null)
-                _player.OnChanged += UpdateColor;
-            _player = data;
-            _player.OnChanged += UpdateColor;
-            UpdateColor();
-        }
-
-        void UpdateColor() {
-            if (_graphic == null)
-                _graphic = GetComponent<Graphic>();
-            if (_graphic) {
-                _graphic.color = AdjustedColor;
-            }
+        protected override void OnPlayerChange() {
+            base.OnPlayerChange();
+            if (Component) 
+                Component.color = AdjustedColor;
         }
     }
 }

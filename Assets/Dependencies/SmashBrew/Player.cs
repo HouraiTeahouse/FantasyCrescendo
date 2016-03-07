@@ -12,6 +12,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         public class PlayerType {
             public string Name { get; private set; }
+            public string ShortName { get; private set; }
             public bool IsActive { get; private set; }
             public bool IsCPU { get; private set; }
             public Color? Color { get; private set; }
@@ -22,6 +23,7 @@ namespace HouraiTeahouse.SmashBrew {
             public static readonly PlayerType None =
                 new PlayerType {
                     Name = "None",
+                    ShortName = "",
                     IsActive = false,
                     IsCPU = false,
                     Color = UnityEngine.Color.clear
@@ -30,6 +32,7 @@ namespace HouraiTeahouse.SmashBrew {
             public static readonly PlayerType HumanPlayer =
                 new PlayerType {
                     Name = "Player {0}",
+                    ShortName = "P{0}",
                     IsActive = true,
                     IsCPU = false,
                     Color = null
@@ -38,6 +41,7 @@ namespace HouraiTeahouse.SmashBrew {
             public static readonly PlayerType CPU =
                 new PlayerType {
                     Name = "CPU",
+                    ShortName =  "CPU",
                     IsActive = true,
                     IsCPU = true,
                     Color = UnityEngine.Color.gray
@@ -283,8 +287,12 @@ namespace HouraiTeahouse.SmashBrew {
             return PlayerObject;
         }
 
+        public string GetName(bool shortName = false) {
+            return string.Format(shortName ? Type.ShortName : Type.Name, PlayerNumber + 1);
+        }
+
         public override string ToString() {
-            return string.Format(Type.Name, PlayerNumber + 1);
+            return GetName();
         }
 
         public override bool Equals(object obj) {

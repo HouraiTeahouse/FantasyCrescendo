@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11401674}
   - 114: {fileID: 11486576}
   - 114: {fileID: 11423900}
+  - 114: {fileID: 11468700}
   m_Layer: 5
   m_Name: Player Indicator
   m_TagString: Untagged
@@ -33,7 +34,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _positionBias: {x: 0, y: 0.5, z: 0}
-  _format: P#
 --- !u!114 &11423900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,6 +98,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 0
+--- !u!114 &11468700
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c67d3681fcd5c34b84be1ba5da084ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _component: {fileID: 11429496}
+  _short: 1
 --- !u!114 &11486576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,6 +233,14 @@ Prefab:
       propertyPath: _siblingIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _short
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _component
+      value: 
+      objectReference: {fileID: 11429496}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 124338}
