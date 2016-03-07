@@ -17,6 +17,10 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         private Color _cpuColor = new Color(0.75f, 0.75f, 0.75f);
 
+        [Header("Physics")]
+        [SerializeField]
+        private float _tangibleSpeedCap = 1.5f;
+
         [Header("Debug")]
         [SerializeField]
         private Color DamageableHitboxColor = Color.yellow;
@@ -43,6 +47,10 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         private SerializedGameMode _allStar; 
         #endregion
+
+        public float TangibleSpeedCap {
+            get { return _tangibleSpeedCap; }
+        }
 
         public Color CPUColor {
             get { return _cpuColor; }

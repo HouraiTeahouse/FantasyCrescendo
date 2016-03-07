@@ -224,6 +224,7 @@ namespace HouraiTeahouse.SmashBrew {
                 velocity.y = -FallSpeed;
 
             Rigidbody.velocity = velocity;
+            gameObject.layer = (velocity.magnitude > Config.Instance.TangibleSpeedCap) ? Layers.Intangible : Layers.Character;
         }
 
         protected virtual void OnCollisionEnter(Collision col) {

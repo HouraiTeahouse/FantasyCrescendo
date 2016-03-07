@@ -116,8 +116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732fa02e3b70eb94ebd510c0e08aaade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _trigger: 1
   _musicSource: {fileID: 8257096}
-  _group: {fileID: 0}
+  _group: {fileID: 11400000, guid: 8d79fa23890a7e34bb353807cea6c06e, type: 2}
 --- !u!114 &11465532
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -27,7 +27,7 @@ namespace HouraiTeahouse {
         /// </summary>
         void OnDrawGizmos() {
             using (GizmoUtil.With(Color.white, transform)) {
-                Gizmos.DrawWireCube(_bounds.center, _bounds.extents);
+                Gizmos.DrawWireCube(_bounds.center, _bounds.size);
             } 
         }
 
