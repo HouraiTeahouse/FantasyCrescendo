@@ -254,13 +254,13 @@ namespace HouraiTeahouse.SmashBrew {
             CPULevel = 3;
         }
 
-        internal Character Spawn(Transform transform) {
+        internal Character Spawn(Transform transform, bool direction) {
             if(transform == null)
                 throw new ArgumentNullException("transform");
-            return Spawn(transform.position, transform.rotation);
+            return Spawn(transform.position, direction);
         }
 
-        internal Character Spawn(Vector3 pos, Quaternion rot) {
+        internal Character Spawn(Vector3 pos, bool direction) {
             SpawnedCharacter = SelectedCharacter;
 
             // If the character is null, randomly select a character and pallete
@@ -272,7 +272,8 @@ namespace HouraiTeahouse.SmashBrew {
             GameObject prefab = SpawnedCharacter.Prefab.Load();
             if (prefab == null)
                 return null;
-            PlayerObject = prefab.Duplicate(pos, rot).GetComponent<Character>();
+            PlayerObject = prefab.Duplicate(pos).GetComponent<Character>();
+            PlayerObject.Direction = direction;
             var controller = PlayerObject.GetComponentInChildren<PlayerController>();
             var materialSwap = PlayerObject.GetComponentInChildren<MaterialSwap>();
             if (controller)

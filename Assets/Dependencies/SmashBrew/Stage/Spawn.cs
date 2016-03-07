@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using HouraiTeahouse.Events;
@@ -9,8 +10,14 @@ namespace HouraiTeahouse.SmashBrew {
     /// </summary>
     public class Spawn : EventHandlerBehaviour<MatchStartEvent> {
 
+        [Serializable]
+        private class SpawnPoint {
+            public Transform Point;
+            public bool Direction;
+        }
+
         [SerializeField, Tooltip("The spawn points for each of the characters")]
-        private Transform[] _spawnPoints;
+        private SpawnPoint[] _spawnPoints;
 
         /// <summary>
         /// Spawns players when the match begins.
@@ -21,7 +28,7 @@ namespace HouraiTeahouse.SmashBrew {
             IEnumerator<Player> activePlayers = Player.ActivePlayers.GetEnumerator();
             while (i < _spawnPoints.Length && activePlayers.MoveNext()) {
                 Player player = activePlayers.Current;
-                Character runtimeCharacter = player.Spawn(_spawnPoints[i]);
+                Character runtimeCharacter = player.Spawn(_spawnPoints[i].Point, _spawnPoints[i].Direction);
                 i++;
                 if (runtimeCharacter == null)
                     continue;

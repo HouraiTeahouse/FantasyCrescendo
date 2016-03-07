@@ -115,7 +115,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1439043700}
-  - 114: {fileID: 268162962}
   - 114: {fileID: 268162961}
   - 114: {fileID: 268162960}
   - 114: {fileID: 268162963}
@@ -181,19 +180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseButton: 20
---- !u!114 &268162962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11421022, guid: 0ba914c4c7fc6a6438577914877a7c38,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 268162957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8be1d9a5933bdb43b9ff1200fc925d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inEditor: 0
 --- !u!114 &268162963
 MonoBehaviour:
   m_ObjectHideFlags: 0
