@@ -63,8 +63,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
             base.SetData(data);
             _target = data;
             _collider = (_target != null) ? _target.PlayerObject.MovementCollider : null;
-            if (_target != null)
-                name = string.Format("Player {0} Indicator", _target.PlayerNumber + 1);
         }
     }
 }

@@ -59,7 +59,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Player player = eventArgs.Player;
             RectTransform display = base.Create(eventArgs); 
             display.transform.SetParent(_container.transform, false);
-            display.name = string.Format("Player Display {0}", player.PlayerNumber + 1);
             LayoutRebuilder.MarkLayoutForRebuild(display);
             display.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);
             _finalSpace.transform.SetAsLastSibling();

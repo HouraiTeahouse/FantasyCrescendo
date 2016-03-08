@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseSpeed: 3
+  _ignoreStateSpeed: 0
 --- !u!114 &11402786
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -127,6 +128,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23efe68c21c3fc4a9a08d10cfe155e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11406734
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b812c1671467b584dbca255764da446c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layer: 12
+  gameObject: {fileID: 0}
+  previousLayer: 0
 --- !u!114 &11406746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -288,6 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseSpeed: 5
+  _ignoreStateSpeed: 0
 --- !u!114 &11434182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4653,8 +4669,8 @@ AnimatorStateMachine:
       second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 780, y: -684, z: 0}
-  m_EntryPosition: {x: 552, y: -744, z: 0}
-  m_ExitPosition: {x: 552, y: -708, z: 0}
+  m_EntryPosition: {x: 552, y: -792, z: 0}
+  m_ExitPosition: {x: 552, y: -756, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 110282680}
 --- !u!1107 &110714246

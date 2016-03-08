@@ -11,7 +11,6 @@ namespace HouraiTeahouse.Localization {
         [SerializeField]
         private Text _text;
 
-        private LanguageManager _languageManager;
         private string _localizationKey;
 
         /// <summary>
@@ -31,8 +30,9 @@ namespace HouraiTeahouse.Localization {
                 if (_localizationKey == value || value == null)
                     return;
                 _localizationKey = value;
-                if (_languageManager.HasKey(_localizationKey))
-                    _text.text = Process(_languageManager[_localizationKey]);
+                var languageManager = LanguageManager.Instance;
+                if (languageManager.HasKey(_localizationKey))
+                    _text.text = Process(languageManager[_localizationKey]);
                 else
                     Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key", _localizationKey));
             }
@@ -42,21 +42,21 @@ namespace HouraiTeahouse.Localization {
         /// Unity Callback. Called once upon object instantiation.
         /// </summary>
         protected virtual void Awake() {
-            _languageManager = LanguageManager.Instance;
             if (!_text)
                 _text = GetComponent<Text>();
-            enabled = _languageManager && _text;
+            enabled = _text;
         }
 
         /// <summary>
         /// Unity Callback. Called on the first frame before Update is called.
         /// </summary>
         protected virtual void Start() {
-            _languageManager.OnChangeLanguage += OnChangeLanguage;
+            var languageManager = LanguageManager.Instance;
+            languageManager.OnChangeLanguage += OnChangeLanguage;
             if (_localizationKey == null)
                 return;
-            if (_languageManager.HasKey(_localizationKey))
-                _text.text = Process(_languageManager[_localizationKey]);
+            if (languageManager.HasKey(_localizationKey))
+                _text.text = Process(languageManager[_localizationKey]);
             else
                 Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key", _localizationKey));
         }
@@ -109,8 +109,8 @@ namespace HouraiTeahouse.Localization {
         /// <summary>
         /// Unity callback. Called once before the object's first frame.
         /// </summary>
-        protected override void Start() {
-            base.Start();
+        protected override void Awake() {
+            base.Awake();
             LocalizationKey = _key;
         }
 

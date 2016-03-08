@@ -36,20 +36,16 @@ namespace HouraiTeahouse {
         /// Unity callback. Called on object instantiation.
         /// </summary>
         protected virtual void Awake() {
-            if (_trigger == Type.Instantiation) {
+            if (_trigger == Type.Instantiation)
                 Action();
-                Destroy(this);
-            }
         }
 
         /// <summary>
         /// Unity callback. Called once before the object's first frame.
         /// </summary>
         protected virtual void Start() {
-            if (_trigger == Type.Start) {
+            if (_trigger == Type.Start)
                 Action();
-                Destroy(this);
-            }
         }
 
         /// <summary>

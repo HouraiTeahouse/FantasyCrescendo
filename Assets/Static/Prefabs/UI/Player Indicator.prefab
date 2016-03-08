@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768cfd30225fcc040ac9bc68e0b10808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _graphic: {fileID: 0}
+  _component: {fileID: 0}
   _saturation: 1
   _value: 1
   _alpha: 1
@@ -207,7 +207,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: _format
-      value: P#
+      value: Player {0} Indicator
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: positionBias.y

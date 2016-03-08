@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
 
@@ -161,6 +163,24 @@ namespace HouraiTeahouse {
         /// <returns>the copied instance</returns>
         public static T Duplicate<T>(this T obj, Vector3 position, float rotation) where T : Object {
             return obj.Duplicate(position, Quaternion.Euler(0f, 0f, rotation));
+        }
+
+        /// <summary>
+        /// Gets an object's GameObject, if it has one.
+        /// Returns itself if it is a GameObject.
+        /// Returns the containing GameObject if it is a component.
+        /// Returns null otherwise.
+        /// </summary>
+        /// <param name="obj">the object in question</param>
+        /// <returns>The object GameObject, null if not associated with one</returns>
+        public static GameObject GetGameObject(this Object obj) {
+            GameObject go = obj as GameObject;
+            Component comp = obj as Component;
+            if (go != null)
+                return go;
+            if (comp != null)
+                return comp.gameObject;
+            return null;
         }
 
     }

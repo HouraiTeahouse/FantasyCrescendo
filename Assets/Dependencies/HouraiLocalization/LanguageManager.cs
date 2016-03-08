@@ -202,10 +202,6 @@ namespace HouraiTeahouse.Localization {
         /// Unity Callback. Called once on object instantation.
         /// </summary>
         void Awake() {
-            if (Instance) {
-                Destroy(this);
-                return;
-            }
             Instance = this;
 
 #if HOURAI_EVENTS
