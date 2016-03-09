@@ -116,7 +116,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 22412444}
-  - 114: {fileID: 11471328}
   - 114: {fileID: 11446404}
   m_Layer: 5
   m_Name: Spawn
@@ -294,6 +293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faac2c0d3184d67439e14c9a31f43948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pointer: {fileID: 22467192, guid: e55da35382ec7974ba1368933a66a591, type: 2}
+  _tag: GUI
 --- !u!114 &11451958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -367,21 +368,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1234
---- !u!114 &11471328
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 188932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbbfdae51e4223b4c8b34a8395dddb88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trigger: 3
-  _object: {fileID: 185332, guid: e55da35382ec7974ba1368933a66a591, type: 2}
-  _copyPosiiton: 1
-  _copyRotation: 0
 --- !u!114 &11472672
 MonoBehaviour:
   m_ObjectHideFlags: 1

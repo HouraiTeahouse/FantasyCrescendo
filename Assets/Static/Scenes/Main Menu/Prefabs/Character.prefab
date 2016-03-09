@@ -193,7 +193,7 @@ MonoBehaviour:
   _component: {fileID: 11424162}
   _character: {fileID: 0}
   _cropped: 1
-  _disabledTint: {r: 0.3455882, g: 0.3455882, b: 0.3455882, a: 1}
+  _disabledTint: {r: 0, g: 0, b: 0, a: 0.5019608}
   _rectBias: {x: 0, y: -0.025}
 --- !u!114 &11475524
 MonoBehaviour:
@@ -310,15 +310,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.r
-      value: 0.42647058
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.g
-      value: 0.42647058
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.b
-      value: 0.42647058
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

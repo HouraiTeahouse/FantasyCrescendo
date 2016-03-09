@@ -42,6 +42,12 @@ namespace HouraiTeahouse {
             }
             if (parent) {
                 child.SetParent(parent, _keepWorldPosition);
+                var rt = parent as RectTransform;
+                var crt = child as RectTransform;
+                if (_keepWorldPosition && rt && crt) {
+                    var canvasRt = rt.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+
+                }
                 if(_siblingIndex >= 0)
                     child.SetSiblingIndex(_siblingIndex);
             }
