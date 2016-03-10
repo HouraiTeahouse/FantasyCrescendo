@@ -70,6 +70,7 @@ GameObject:
   - 114: {fileID: 11466284}
   - 114: {fileID: 11434868}
   - 114: {fileID: 11467064}
+  - 114: {fileID: 11454192}
   m_Layer: 5
   m_Name: Player Pointer
   m_TagString: Untagged
@@ -89,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -182,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -197,6 +198,30 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11454192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb256975c0201b47bad570713271d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targets:
+  - Behaviour: {fileID: 11400540}
+    EditMode: 0
+    IncludeCharacterCheck: 0
+    Invert: 0
+  - Behaviour: {fileID: 11453842}
+    EditMode: 0
+    IncludeCharacterCheck: 0
+    Invert: 0
+  - Behaviour: {fileID: 11484934}
+    EditMode: 0
+    IncludeCharacterCheck: 0
+    Invert: 0
 --- !u!114 &11459248
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -209,7 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 2.5, y: 2.5}
+  m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 1
 --- !u!114 &11465244
 MonoBehaviour:

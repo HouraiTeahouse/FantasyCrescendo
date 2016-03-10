@@ -43,7 +43,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         public Color AdjustedColor {
             get {
-                Color rawColor = Player != null ? Player.Color : Color.clear;
+                Color rawColor = Player != null ? Player.Color : Color.white;
 
                 rawColor.r = _red.Evaluate(rawColor.r);
                 rawColor.g = _green.Evaluate(rawColor.g);

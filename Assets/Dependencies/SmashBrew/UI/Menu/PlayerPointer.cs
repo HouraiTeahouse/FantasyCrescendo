@@ -33,6 +33,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (_input == null)
                 return;
             Vector2 movement = new Vector2(_input.GetControl(_horizontal), _input.GetControl(_vertical));
+            if(!Player.IsActive && movement != Vector2.zero)
+                Player.CycleType();
             Bounds bounds = new Bounds(Vector3.zero, (_rTransform.parent as RectTransform).rect.size - 0.5f * _rTransform.sizeDelta);
             _rTransform.anchoredPosition = bounds.ClosestPoint(_rTransform.anchoredPosition + _movementSpeed * movement * Time.deltaTime);
         }

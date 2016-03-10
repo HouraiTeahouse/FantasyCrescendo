@@ -57,6 +57,10 @@ namespace HouraiTeahouse.SmashBrew {
                 Types[Types.Length - 1].Next = Types[0];
             }
 
+            public override string ToString() {
+                return Name;
+            }
+
             PlayerType() {                
             }
         }
@@ -242,6 +246,8 @@ namespace HouraiTeahouse.SmashBrew {
 
         public void CycleType() {
             Type = Type.Next;
+            if (OnChanged != null)
+                OnChanged();
         }
 
         public Color Color {
