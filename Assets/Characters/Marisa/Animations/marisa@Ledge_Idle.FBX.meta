@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 35f509ccb44fe1e4a8e688402ad0586f
-timeCreated: 1456197877
+guid: 6615b01dec151ef489576c44e54ebe4d
+timeCreated: 1457672761
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -161,23 +161,6 @@ ModelImporter:
     100306: End_Thumb_Left_End
     100308: End_Thumb_Right_End
     100310: //RootNode
-    100312: Mesh_Broom
-    100314: Mesh_hakkero
-    100316: Mesh_Marisa_Body
-    100318: Mesh_Marisa_Hat
-    100320: UpdateMesh_Broom
-    100322: UpdateMesh_Marisa_Bag
-    100324: UpdateMesh_Marisa_Body
-    100326: UpdateMesh_Marisa_Bow
-    100328: UpdateMesh_Marisa_BraidBow
-    100330: UpdateMesh_Marisa_Clothes
-    100332: UpdateMesh_Marisa_Eye_Left
-    100334: UpdateMesh_Marisa_Eye_Right
-    100336: UpdateMesh_Marisa_Hair
-    100338: UpdateMesh_Marisa_Hat
-    100340: UpdateMesh_Marisa_Head
-    100342: UpdateMesh_Marisa_Skirt
-    100344: UpdateMesh_Marisa_Teeth
     400000: B_Arm_Left_Forearm
     400002: B_Arm_Left_Shoulder
     400004: B_Arm_Right_End
@@ -334,60 +317,10 @@ ModelImporter:
     400306: End_Thumb_Left_End
     400308: End_Thumb_Right_End
     400310: //RootNode
-    400312: Mesh_Broom
-    400314: Mesh_hakkero
-    400316: Mesh_Marisa_Body
-    400318: Mesh_Marisa_Hat
-    400320: UpdateMesh_Broom
-    400322: UpdateMesh_Marisa_Bag
-    400324: UpdateMesh_Marisa_Body
-    400326: UpdateMesh_Marisa_Bow
-    400328: UpdateMesh_Marisa_BraidBow
-    400330: UpdateMesh_Marisa_Clothes
-    400332: UpdateMesh_Marisa_Eye_Left
-    400334: UpdateMesh_Marisa_Eye_Right
-    400336: UpdateMesh_Marisa_Hair
-    400338: UpdateMesh_Marisa_Hat
-    400340: UpdateMesh_Marisa_Head
-    400342: UpdateMesh_Marisa_Skirt
-    400344: UpdateMesh_Marisa_Teeth
-    4300000: Mesh_Marisa_Body
-    4300002: Mesh_Broom
-    4300004: Mesh_Marisa_Hat
-    4300006: Mesh_hakkero
-    4300008: UpdateMesh_Marisa_Clothes
-    4300010: UpdateMesh_Marisa_Bow
-    4300012: UpdateMesh_Marisa_Body
-    4300014: UpdateMesh_Marisa_Eye_Left
-    4300016: UpdateMesh_Marisa_Teeth
-    4300018: UpdateMesh_Marisa_Eye_Right
-    4300020: UpdateMesh_Marisa_Bag
-    4300022: UpdateMesh_Marisa_Head
-    4300024: UpdateMesh_Broom
-    4300026: UpdateMesh_Marisa_Hat
-    4300028: UpdateMesh_Marisa_Hair
-    4300030: UpdateMesh_Marisa_BraidBow
-    4300032: UpdateMesh_Marisa_Skirt
+    7400000: Take 001
     9500000: //RootNode
-    13700000: Mesh_Broom
-    13700002: Mesh_hakkero
-    13700004: Mesh_Marisa_Body
-    13700006: Mesh_Marisa_Hat
-    13700008: UpdateMesh_Broom
-    13700010: UpdateMesh_Marisa_Bag
-    13700012: UpdateMesh_Marisa_Body
-    13700014: UpdateMesh_Marisa_Bow
-    13700016: UpdateMesh_Marisa_BraidBow
-    13700018: UpdateMesh_Marisa_Clothes
-    13700020: UpdateMesh_Marisa_Eye_Left
-    13700022: UpdateMesh_Marisa_Eye_Right
-    13700024: UpdateMesh_Marisa_Hair
-    13700026: UpdateMesh_Marisa_Hat
-    13700028: UpdateMesh_Marisa_Head
-    13700030: UpdateMesh_Marisa_Skirt
-    13700032: UpdateMesh_Marisa_Teeth
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
@@ -429,8 +362,8 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 0
-  copyAvatar: 0
+  importAnimation: 1
+  copyAvatar: 1
   humanDescription:
     human: []
     skeleton: []
@@ -443,7 +376,8 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
     hasTranslationDoF: 0
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 35f509ccb44fe1e4a8e688402ad0586f,
+    type: 3}
   animationType: 2
   humanoidOversampling: 1
   additionalBone: 0

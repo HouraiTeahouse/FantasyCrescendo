@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: da8b023e6dd320540a7a06b6d9e26f83
-timeCreated: 1456200164
+guid: 90e6b8e254c2f21418a4ae068cfbf0f6
+timeCreated: 1457672762
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -317,7 +317,7 @@ ModelImporter:
     400306: End_Thumb_Left_End
     400308: End_Thumb_Right_End
     400310: //RootNode
-    7400000: Neutral3
+    7400000: Crouch_Idle
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -341,17 +341,17 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Neutral3
+      name: Crouch_Idle
       takeName: Take 001
-      firstFrame: 326
-      lastFrame: 390
+      firstFrame: 505
+      lastFrame: 588
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
