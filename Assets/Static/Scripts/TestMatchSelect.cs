@@ -30,7 +30,7 @@ namespace HouraiTeahouse.SmashBrew {
                     continue;
                 player.SelectedCharacter = testCharacters[index].Data;
                 player.Pallete = testCharacters[index].Pallete;
-                player.Type = Player.PlayerType.HumanPlayer;
+                player.Type = player.SelectedCharacter ? Player.PlayerType.HumanPlayer : Player.PlayerType.None;
                 index++;
             }
         }
