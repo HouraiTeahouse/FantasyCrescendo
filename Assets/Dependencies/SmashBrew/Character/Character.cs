@@ -171,7 +171,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
 
             // Apply upward force to jump
-            Rigidbody.AddForce(Vector3.up * _jumpPower[JumpCount]);
+            Rigidbody.velocity += Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpPower[JumpCount]);
 
             JumpCount++;
 
