@@ -1,14 +1,12 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    
     /// <summary>
     /// A Status effect that prevents players from taking damage while active.
     /// </summary>
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     public sealed class Invincibility : Status {
-
         private Character _character;
         private Hitbox[] _hitboxes;
 
@@ -26,7 +24,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// Unity callback. Called on object destruction.
         /// </summary>
         void OnDestroy() {
-            if(_character)
+            if (_character)
                 _character.DamageModifiers.In.Remove(InvincibilityModifier);
         }
 
@@ -48,7 +46,7 @@ namespace HouraiTeahouse.SmashBrew {
         void OnDisable() {
             if (_hitboxes == null)
                 _hitboxes = GetComponentsInChildren<Hitbox>();
-            foreach(var hitbox in _hitboxes)
+            foreach (var hitbox in _hitboxes)
                 if (hitbox.CurrentType == Hitbox.Type.Invincible)
                     hitbox.CurrentType = Hitbox.Type.Damageable;
         }
@@ -59,8 +57,5 @@ namespace HouraiTeahouse.SmashBrew {
         float InvincibilityModifier(object source, float damage) {
             return enabled ? damage : 0f;
         }
-
     }
-
 }
-

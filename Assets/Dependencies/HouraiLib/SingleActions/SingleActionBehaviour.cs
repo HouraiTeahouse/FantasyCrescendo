@@ -2,12 +2,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A MonoBehaviour that does only one action, which can be set to do so on a variety of triggers.
     /// </summary>
     public abstract class SingleActionBehaviour : MonoBehaviour, ISubmitHandler {
-
         private enum Type {
             // Do the action on instantiation 
             Instantiation,
@@ -29,8 +27,7 @@ namespace HouraiTeahouse {
             UIEvent,
         }
 
-        [SerializeField]
-        private Type _trigger;
+        [SerializeField] private Type _trigger;
 
         /// <summary>
         /// Unity callback. Called on object instantiation.
@@ -68,7 +65,7 @@ namespace HouraiTeahouse {
         /// Unity callback. Called when the object is enabled.
         /// </summary>
         protected virtual void OnEnable() {
-            if(_trigger == Type.OnEnable)
+            if (_trigger == Type.OnEnable)
                 Action();
         }
 
@@ -108,6 +105,5 @@ namespace HouraiTeahouse {
         /// The action to execute.
         /// </summary>
         protected abstract void Action();
-
     }
 }

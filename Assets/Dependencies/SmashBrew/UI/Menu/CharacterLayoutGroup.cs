@@ -2,21 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     /// <summary>
     /// A custom layout group created for controlling the layout of the
     /// individual character select squares on the character select screen
     /// </summary>
     public class CharacterLayoutGroup : LayoutGroup, ILayoutSelfController {
+        [SerializeField, Tooltip("The spacing between child elements, in pixels")] private Vector2 _spacing;
 
-        [SerializeField, Tooltip("The spacing between child elements, in pixels")]
-        private Vector2 _spacing;
+        [SerializeField, Tooltip("The target aspect ratio for the overall layout")] private float _selfAspectRatio;
 
-        [SerializeField, Tooltip("The target aspect ratio for the overall layout")]
-        private float _selfAspectRatio;
-
-        [SerializeField, Tooltip("The target aspect ratio for the individual children")]
-        private float _childAspectRatio;
+        [SerializeField, Tooltip("The target aspect ratio for the individual children")] private float _childAspectRatio;
 
 
         /// <summary>
@@ -59,7 +54,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             int count = rectChildren.Count;
 
             if (availableSpace.x / availableSpace.y > _selfAspectRatio) {
-                availableSpace.x = availableSpace.y*_selfAspectRatio;
+                availableSpace.x = availableSpace.y * _selfAspectRatio;
             }
 
             // Calculated
@@ -116,14 +111,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
             }
 
             Vector2 center = rectTransform.rect.size / 2;
-            Vector2 extents = 0.5f * new Vector2(bestCols * itemSize.x + Mathf.Max(0, bestCols - 1) * _spacing.x, 
+            Vector2 extents = 0.5f * new Vector2(bestCols * itemSize.x + Mathf.Max(0, bestCols - 1) * _spacing.x,
                 bestRows * itemSize.y + Mathf.Max(0, bestRows - 1) * _spacing.y);
             Vector2 start = center - extents;
 
-            for(var i = 0; i < bestRows; i++) {
+            for (var i = 0; i < bestRows; i++) {
                 float x = start.x;
-                float y = start.y + i * delta.y; 
-                if(count - i * bestCols < bestCols)
+                float y = start.y + i * delta.y;
+                if (count - i * bestCols < bestCols)
                     x = center.x - 0.5f * (count % bestCols * itemSize.x);
 
                 for (var j = 0; j < bestCols; j++) {

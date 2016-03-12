@@ -2,15 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     /// <summary>
     /// A PlayerUIComponent that displays the Player's string representation on a]
     /// UI Text object.
     /// </summary>
     public sealed class PlayerText : PlayerUIComponent<Text> {
-
-        [SerializeField, Tooltip("Whether to use the short moniker or not.")]
-        private bool _short;
+        [SerializeField, Tooltip("Whether to use the short moniker or not.")] private bool _short;
 
         /// <summary>
         /// <see cref="PlayerUIComponent{T}.OnPlayerChange"/>
@@ -22,7 +19,5 @@ namespace HouraiTeahouse.SmashBrew.UI {
             else
                 Component.text = Player.GetName(_short);
         }
-
     }
-
 }

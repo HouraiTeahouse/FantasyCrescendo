@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     sealed class GizmoDisposable : IDisposable {
-
         private readonly Color? _oldColor;
         private readonly Matrix4x4? _oldTransform;
 
@@ -26,7 +24,6 @@ namespace HouraiTeahouse {
             if (_oldTransform != null)
                 Gizmos.matrix = (Matrix4x4) _oldTransform;
         }
-
     }
 
 
@@ -34,7 +31,6 @@ namespace HouraiTeahouse {
     /// A static utlity class of functions for helping draw Gizmos
     /// </summary>
     public static class GizmoUtil {
-
         /// <summary>
         /// Creates an IDisposable object for drawing Gizmos of a certain color.
         /// </summary>
@@ -113,9 +109,9 @@ namespace HouraiTeahouse {
         /// <param name="solid">if true, draws a a solid gizmo, otherwise draws it as a wire mesh</param>
         /// <param name="filter">a check for whether to draw a collider or not, if null, all colliders are drawn</param>
         public static void DrawColliders(IEnumerable<Collider> colliders,
-                                           Color color,
-                                           bool solid = false,
-                                           Predicate<Collider> filter = null) {
+            Color color,
+            bool solid = false,
+            Predicate<Collider> filter = null) {
             if (colliders == null)
                 return;
 
@@ -128,7 +124,8 @@ namespace HouraiTeahouse {
                         Gizmos.matrix = collider.transform.localToWorldMatrix;
                         DrawCollider3D_Impl(collider, solid);
                     }
-                } else {
+                }
+                else {
                     foreach (Collider collider in colliders) {
                         if (collider == null || (filter != null && !filter(collider)))
                             continue;
@@ -150,7 +147,8 @@ namespace HouraiTeahouse {
                     Gizmos.DrawSphere(sphereCollider.center, sphereCollider.radius);
                 else if (meshCollider != null)
                     Gizmos.DrawMesh(meshCollider.sharedMesh, Vector3.zero);
-            } else {
+            }
+            else {
                 if (boxCollider != null)
                     Gizmos.DrawWireCube(boxCollider.center, boxCollider.size);
                 else if (sphereCollider != null)
@@ -159,7 +157,5 @@ namespace HouraiTeahouse {
                     Gizmos.DrawWireMesh(meshCollider.sharedMesh, Vector3.zero);
             }
         }
-
     }
-
 }

@@ -3,19 +3,18 @@ using UnityConstants;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
-
-
-
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Collider))]
     public sealed class Hitbox : MonoBehaviour {
-
         private static Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;
 
-        static void ExecuteInterface<T>(Type typeCheck, Hitbox src, Hitbox dst, Predicate<Hitbox> check, Action<T, object> action) {;
+        static void ExecuteInterface<T>(Type typeCheck, Hitbox src, Hitbox dst, Predicate<Hitbox> check,
+            Action<T, object> action) {
+            ;
             if (!check(src))
                 return;
             foreach (T t in src.GetComponents<T>())
@@ -40,12 +39,14 @@ namespace HouraiTeahouse.SmashBrew {
                     dst.Knockbackable.Knockback(src, Vector2.one);
                 DrawEffect(src, dst);
             };
-            ReactionMatrix[Type.Offensive, Type.Absorb] = delegate(Hitbox src, Hitbox dst) {
-                ExecuteInterface<IAbsorbable>(Type.Absorb, src, dst, h => h.Absorbable, (a, o) => a.Absorb(o));
-            };
-            ReactionMatrix[Type.Offensive, Type.Reflective] = delegate(Hitbox src, Hitbox dst) {
-                ExecuteInterface<IReflectable>(Type.Reflective, src, dst, h => h.Reflectable, (r, o) => r.Reflect(o));
-            };
+            ReactionMatrix[Type.Offensive, Type.Absorb] =
+                delegate(Hitbox src, Hitbox dst) {
+                    ExecuteInterface<IAbsorbable>(Type.Absorb, src, dst, h => h.Absorbable, (a, o) => a.Absorb(o));
+                };
+            ReactionMatrix[Type.Offensive, Type.Reflective] =
+                delegate(Hitbox src, Hitbox dst) {
+                    ExecuteInterface<IReflectable>(Type.Reflective, src, dst, h => h.Reflectable, (r, o) => r.Reflect(o));
+                };
             ReactionMatrix[Type.Offensive, Type.Invincible] = DrawEffect;
         }
 
@@ -65,21 +66,13 @@ namespace HouraiTeahouse.SmashBrew {
             Reflective = 30000
         }
 
-        [SerializeField]
-        [HideInInspector]
-        private Mesh _sphere;
+        [SerializeField] [HideInInspector] private Mesh _sphere;
 
-        [SerializeField]
-        [HideInInspector]
-        private Mesh _cube;
+        [SerializeField] [HideInInspector] private Mesh _cube;
 
-        [SerializeField]
-        [HideInInspector]
-        private Mesh _capsule;
+        [SerializeField] [HideInInspector] private Mesh _capsule;
 
-        [SerializeField]
-        [HideInInspector]
-        private Material _material;
+        [SerializeField] [HideInInspector] private Material _material;
 
         //TODO: Add triggers for on hit effects and SFX
         //private ParticleSystem _effect;
@@ -95,15 +88,11 @@ namespace HouraiTeahouse.SmashBrew {
         private IKnockbackable _knockbackable;
 
         public IDamageable Damageable {
-            get {
-                return _damageable;
-            }
+            get { return _damageable; }
         }
 
         public IKnockbackable Knockbackable {
-            get {
-                return _knockbackable;
-            }
+            get { return _knockbackable; }
         }
 
         #region Unity Callbacks
@@ -119,7 +108,7 @@ namespace HouraiTeahouse.SmashBrew {
             //_soundEffect = GetComponent<AudioSource>();
 
             gameObject.tag = Tags.Hitbox;
-            switch(type) {
+            switch (type) {
                 case Type.Damageable:
                 case Type.Shield:
                     gameObject.layer = Layers.Hurtbox;
@@ -151,7 +140,8 @@ namespace HouraiTeahouse.SmashBrew {
                 DrawCollider(col, color);
             GL.wireframe = true;
             foreach (var col in _colliders)
-                DrawCollider(col, Color.white);;
+                DrawCollider(col, Color.white);
+            ;
             GL.wireframe = false;
         }
 
@@ -179,7 +169,7 @@ namespace HouraiTeahouse.SmashBrew {
                 localToWorld = Matrix4x4.TRS(transform.position, transform.rotation,
                     Vector3.one * transform.lossyScale.Max());
             }
-            else if(capsuleCol != null) {
+            else if (capsuleCol != null) {
                 mesh = _capsule;
                 position = capsuleCol.center;
                 scale = Vector3.one * capsuleCol.radius * 2;
@@ -201,7 +191,7 @@ namespace HouraiTeahouse.SmashBrew {
             _material.SetPass(0);
             Graphics.DrawMeshNow(mesh, localToWorld * Matrix4x4.TRS(position, rotation, scale));
         }
-        
+
         void OnTriggerEnter(Collider other) {
             if (!other.CompareTag(Tags.Hitbox))
                 return;
@@ -210,33 +200,26 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             HitboxResolver.AddCollision(this, otherHitbox);
         }
+
         #endregion
 
         #region Serializable Fields
 
-        [SerializeField]
-        private Type type;
+        [SerializeField] private Type type;
 
-        [SerializeField]
-        private int _priority = 100;
+        [SerializeField] private int _priority = 100;
 
-        [SerializeField]
-        private float _damage = 5f;
+        [SerializeField] private float _damage = 5f;
 
-        [SerializeField]
-        private float _angle = 45f;
+        [SerializeField] private float _angle = 45f;
 
-        [SerializeField]
-        private float _baseKnockback;
+        [SerializeField] private float _baseKnockback;
 
-        [SerializeField]
-        private float _knockbackScaling;
+        [SerializeField] private float _knockbackScaling;
 
-        [SerializeField]
-        private bool _reflectable;
+        [SerializeField] private bool _reflectable;
 
-        [SerializeField]
-        private bool _absorbable;
+        [SerializeField] private bool _absorbable;
 
         #endregion
 
@@ -283,9 +266,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public float BaseDamage {
-            get {
-                return Source == null ? _damage : Source.ModifyDamage(_damage);
-            }
+            get { return Source == null ? _damage : Source.ModifyDamage(_damage); }
         }
 
         public bool FlipDirection {
@@ -294,6 +275,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return false;
             }
         }
+
         #endregion
     }
 }

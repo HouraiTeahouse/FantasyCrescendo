@@ -1,11 +1,9 @@
 namespace HouraiTeahouse.Events {
-
     /// <summary>
     /// Singleton version of the Mediator class.
     /// Use Instance to get the singleton object.
     /// </summary>
     public class GlobalMediator : Mediator {
-
         private static GlobalMediator _instance;
 
         /// <summary>
@@ -21,8 +19,5 @@ namespace HouraiTeahouse.Events {
         /// </summary>
         GlobalMediator() {
         }
-
     }
-
-
 }

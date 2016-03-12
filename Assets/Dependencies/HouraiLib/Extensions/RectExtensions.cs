@@ -2,12 +2,10 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A set of useful utility funcitons for the UnityEngine Rect struct 
     /// </summary>
     public static class RectExtensions {
-
         /// <summary>
         /// Changes the width of a Rect without changing the centered position of the Rect.
         /// </summary>
@@ -110,14 +108,15 @@ namespace HouraiTeahouse {
                 rect.height = Mathf.Min(rect.height, height);
             }
             else {
-                if(height == 0)
+                if (height == 0)
                     throw new ArgumentException();
                 float enclosingAspectRatio = width / height;
                 float aspectRatio = aspect.Value;
                 if (aspectRatio < enclosingAspectRatio) {
                     rect.width = width;
                     rect.height = width / aspectRatio;
-                } else {
+                }
+                else {
                     rect.height = height;
                     rect.width = height * aspectRatio;
                 }
@@ -125,6 +124,5 @@ namespace HouraiTeahouse {
             rect.center = center;
             return rect;
         }
-
     }
 }

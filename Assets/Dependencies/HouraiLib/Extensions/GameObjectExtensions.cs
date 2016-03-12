@@ -4,12 +4,10 @@ using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-    
     /// <summary>
     /// Set of extension methods for GameObjects
     /// </summary>
     public static class GameObjectExtensions {
-
         /// <summary>
         /// Gets a component of a certain type.
         /// If one doesn't exist, one will be added and returned.
@@ -37,8 +35,9 @@ namespace HouraiTeahouse {
             if (!gameObject)
                 throw new ArgumentNullException("gameObject");
             var attempt = gameObject.GetComponent<T>();
-            if(attempt != null)
-                Debug.LogWarning("Attempted to find a component of type " + typeof(T) + ", but did not find one.", gameObject);
+            if (attempt != null)
+                Debug.LogWarning("Attempted to find a component of type " + typeof (T) + ", but did not find one.",
+                    gameObject);
             return attempt;
         }
 
@@ -49,15 +48,12 @@ namespace HouraiTeahouse {
         /// <param name="gameObjects">the GameObjects to retrieve</param>
         /// <returns>an enumeration of all components of the type attached to the GameObjects</returns>
         public static IEnumerable<T> GetComponents<T>(this IEnumerable<GameObject> gameObjects) where T : class {
-            if(gameObjects == null)
+            if (gameObjects == null)
                 throw new ArgumentNullException("gameObjects");
-            foreach(GameObject gameObject in gameObjects)
-                if(gameObject != null)
+            foreach (GameObject gameObject in gameObjects)
+                if (gameObject != null)
                     foreach (T component in gameObject.GetComponents<T>())
                         yield return component;
-        } 
-
+        }
     }
-
 }
-

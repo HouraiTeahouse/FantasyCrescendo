@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// Static class for editing the global time properties of the game.
     /// Allows for pausing of the game and altering the global time scale.
@@ -11,7 +10,6 @@ namespace HouraiTeahouse {
     /// state of the game from the Editor.
     /// </summary>
     public class TimeManager : MonoBehaviour {
-
         private static float _timeScale = 1f;
         private static bool _paused;
 
@@ -40,12 +38,12 @@ namespace HouraiTeahouse {
         /// If the game is not paused, Time.timeScale will also be set to the same value
         /// </summary>
         public static float TimeScale {
-            get { return  _timeScale; }
+            get { return _timeScale; }
             set {
                 if (_timeScale == value)
                     return;
                 _timeScale = value;
-                if(!Paused)
+                if (!Paused)
                     Time.timeScale = value;
                 if (OnTimeScaleChange != null)
                     OnTimeScaleChange();
@@ -68,7 +66,5 @@ namespace HouraiTeahouse {
         void Awake() {
             _timeScale = Time.timeScale;
         }
-
     }
-
 }

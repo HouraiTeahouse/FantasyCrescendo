@@ -2,31 +2,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     /// <summary>
     /// Constructs the player section of the in-match UI 
     /// </summary>
     public sealed class CharacterSelectBuilder : MonoBehaviour {
+        [Header("Character Select")] [SerializeField] private RectTransform _characterContainer;
 
-        [Header("Character Select")]
-        [SerializeField]
-        private RectTransform _characterContainer;
+        [SerializeField] private RectTransform _character;
 
-        [SerializeField]
-        private RectTransform _character;
+        [Header("Player Display")] [SerializeField] [Tooltip("The parent container object to add the created  displays to")] private RectTransform _playerContainer;
 
-        [Header("Player Display")]
-        [SerializeField]
-        [Tooltip("The parent container object to add the created  displays to")]
-        private RectTransform _playerContainer;
+        [SerializeField] [Tooltip("Space prefab to buffer the UI on the sides")] private RectTransform _space;
 
-        [SerializeField]
-        [Tooltip("Space prefab to buffer the UI on the sides")]
-        private RectTransform _space;
-
-        [SerializeField]
-        [Tooltip("The Player Display Prefab to create.")]
-        private RectTransform _playerDisplay;
+        [SerializeField] [Tooltip("The Player Display Prefab to create.")] private RectTransform _playerDisplay;
 
         /// <summary>
         /// Unity Callback. Called on object instantation.
@@ -63,7 +51,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 character.name = data.name;
                 character.GetComponentsInChildren<IDataComponent<CharacterData>>().SetData(data);
             }
-        } 
+        }
 
         /// <summary>
         /// Create the display for the character's selections and options
@@ -94,7 +82,5 @@ namespace HouraiTeahouse.SmashBrew.UI {
             firstSpace.SetAsFirstSibling();
             lastSpace.SetAsLastSibling();
         }
-
     }
-
 }

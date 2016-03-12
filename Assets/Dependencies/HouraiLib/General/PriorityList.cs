@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// An generic iterable priority queue.
     /// </summary>
     /// <typeparam name="T">the type of elements contained by the PriorityList</typeparam>
     public class PriorityList<T> : ICollection<T> {
-
         // The actual collection. Maps a priority to a bucket of items at that priority.
         // This is a solution to the fact that SortedList does not support duplicate keys
         private readonly SortedList<int, List<T>> _items;
@@ -49,7 +47,7 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <param name="priorities"></param>
         public PriorityList(IDictionary<T, int> priorities) {
-            if(priorities == null)
+            if (priorities == null)
                 throw new ArgumentNullException("priorities");
             _priorities = new Dictionary<T, int>(priorities);
             foreach (KeyValuePair<T, int> priority in priorities)
@@ -57,6 +55,7 @@ namespace HouraiTeahouse {
         }
 
         #region ICollection Implementation
+
         public IEnumerator<T> GetEnumerator() {
             return _items.SelectMany(pair => pair.Value).GetEnumerator();
         }
@@ -114,7 +113,10 @@ namespace HouraiTeahouse {
             get { return _priorities.Count; }
         }
 
-        public bool IsReadOnly { get { return false; } }
+        public bool IsReadOnly {
+            get { return false; }
+        }
+
         #endregion
 
         /// <summary>
@@ -124,7 +126,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentException">thrown if the PriorityList does not contain this item</exception>
         /// <returns>the priority of the item within the list</returns>
         public int GetPriority(T item) {
-            if(!Contains(item))
+            if (!Contains(item))
                 throw new ArgumentException("item");
             return _priorities[item];
         }
@@ -149,9 +151,9 @@ namespace HouraiTeahouse {
 
             List<T> currentBucket = _items[current];
             List<T> newBucket = GetOrCreateBucket(priority);
-            
+
             // Remove from the old bucket
-           currentBucket.Remove(item);
+            currentBucket.Remove(item);
             // Add to the new bucket
             newBucket.Add(item);
 
@@ -172,7 +174,7 @@ namespace HouraiTeahouse {
             if (!_items.ContainsKey(priority))
                 return false;
             List<T> bucket = _items[priority];
-            
+
             // Remove the bucket
             _items.Remove(priority);
 
@@ -196,7 +198,7 @@ namespace HouraiTeahouse {
                 minPriority = maxPriority;
                 maxPriority = temp;
             }
-            if (minPriority == maxPriority) 
+            if (minPriority == maxPriority)
                 return RemoveAllByPriority(minPriority);
             int[] toRemove = _items.Keys.Where(p => p >= minPriority && p <= maxPriority).ToArray();
             return toRemove.Any(RemoveAllByPriority);
@@ -213,5 +215,4 @@ namespace HouraiTeahouse {
             return bucket;
         }
     }
-
 }

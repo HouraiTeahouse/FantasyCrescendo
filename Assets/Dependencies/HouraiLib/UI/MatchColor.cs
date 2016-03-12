@@ -2,18 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// Matches the color between multiple Graphics.
     /// </summary>
     [ExecuteInEditMode]
     public class MatchColor : MonoBehaviour {
+        [SerializeField] private Graphic _source;
 
-        [SerializeField]
-        private Graphic _source;
-
-        [SerializeField]
-        private Graphic[] _targets;
+        [SerializeField] private Graphic[] _targets;
 
         /// <summary>
         /// Unity Callback. Called on object instantiation.
@@ -34,5 +30,4 @@ namespace HouraiTeahouse {
                 graphic.color = _source.color;
         }
     }
-
 }

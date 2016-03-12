@@ -2,10 +2,8 @@ using InControl;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     [DisallowMultipleComponent]
     public class PlayerController : HouraiBehaviour {
-
         public Player PlayerData { get; set; }
 
         private Character _character;
@@ -33,7 +31,5 @@ namespace HouraiTeahouse.SmashBrew {
             Animator.SetBool(CharacterAnimVars.JumpInput, input.Action3.WasPressed || input.Action4.WasPressed);
             Animator.SetBool(CharacterAnimVars.ShieldInput, input.LeftTrigger || input.RightTrigger);
         }
-
     }
-
 }

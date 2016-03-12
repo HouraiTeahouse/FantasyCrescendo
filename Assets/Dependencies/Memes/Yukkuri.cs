@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class Yukkuri : MonoBehaviour {
-    
     public string Reimu {
         get {
             return
@@ -18,7 +17,7 @@ public class Yukkuri : MonoBehaviour {
                 " 　レ ル｀ ー--─ ´ルﾚ　ﾚ´";
         }
     }
-    
+
     public string Marisa {
         get {
             return
@@ -55,9 +54,7 @@ public class Yukkuri : MonoBehaviour {
             ",.ﾍ,）､　　）＞,､ _____,　,.イ　 ハ　　　　レ ル｀ ー--─ ´ルﾚ　ﾚ´";
     }
 
-	override public string ToString() {
+    override public string ToString() {
         return "ゆっくりしていってね！！！";
     }
-
-
 }

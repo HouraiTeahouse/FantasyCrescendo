@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A 2D HashTable. One that requires two keys to access the value.
     /// </summary>
@@ -11,7 +10,6 @@ namespace HouraiTeahouse {
     /// <typeparam name="K2">the type of the second key</typeparam>
     /// <typeparam name="V">the type of the values stored</typeparam>
     public class Table2D<K1, K2, V> : Dictionary<K1, Dictionary<K2, V>> {
-
         /// <summary>
         /// Gets or sets the value associated with the specified pair of keys.
         /// </summary>
@@ -92,7 +90,6 @@ namespace HouraiTeahouse {
     /// <typeparam name="K">the type of the keys</typeparam>
     /// <typeparam name="V">the value stored by the table</typeparam>
     public class MirroredTable2D<K, V> : Table2D<K, V> {
-
         /// <summary>
         /// Gets or sets the value associated with the specified pair of keys. 
         /// If (a, b) does not exist, then (b, a) is gotten/set.
@@ -139,5 +136,4 @@ namespace HouraiTeahouse {
             return base.ContainsKey(key1, key2) || base.ContainsKey(key2, key1);
         }
     }
-
 }

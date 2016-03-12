@@ -1,14 +1,12 @@
 using System;
 
 namespace HouraiTeahouse {
-    
     public delegate float Modifier<T>(T source, float damage);
 
     /// <summary>
     /// A ordered list of modifiers.
     /// </summary>
     public class ModifierList : PriorityList<Func<float, float>> {
-
         /// <summary>
         /// Modifies a base value based on the provided modifiers.
         /// </summary>
@@ -22,7 +20,6 @@ namespace HouraiTeahouse {
                 value = mod(value);
             return value;
         }
-
     }
 
     /// <summary>
@@ -30,7 +27,6 @@ namespace HouraiTeahouse {
     /// </summary>
     /// <typeparam name="T">the modifier parameter type</typeparam>
     public class ModifierList<T> : PriorityList<Modifier<T>> {
-     
         /// <summary>
         /// Modifies a base value based on the provided modifiers
         /// </summary>  
@@ -45,7 +41,5 @@ namespace HouraiTeahouse {
                 value = mod(source, value);
             return value;
         }
-
     }
-
 }

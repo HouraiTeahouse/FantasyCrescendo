@@ -3,12 +3,10 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A set of extenion methods for all Unity Objects.
     /// </summary>
     public static class UnityObjectExtensions {
-
         /// <summary>
         /// Destroys objects if they exist.
         /// Shorthand for Object.Destroy()
@@ -182,8 +180,5 @@ namespace HouraiTeahouse {
                 return comp.gameObject;
             return null;
         }
-
     }
-
 }
-

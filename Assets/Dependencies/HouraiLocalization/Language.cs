@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections.Generic;
 
 namespace HouraiTeahouse.Localization {
-
     /// <summary>
     /// A class of ScriptableObjects that simply stores a set of String-String 
     /// key-value pairs corresponding to the localization keys and the respective
@@ -16,30 +15,23 @@ namespace HouraiTeahouse.Localization {
     /// </summary>
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Asset")]
     public class Language : ScriptableObject, ISerializationCallbackReceiver {
-
         /// <summary>
         /// A serializable alternative to KeyValuePair
         /// </summary>
         [Serializable]
         private struct StrStrTuple {
+            [Tooltip("The localization key")] public string Key;
 
-            [Tooltip("The localization key")]
-            public string Key;
-
-            [Multiline, Tooltip("The localized string for the language")]
-            public string Value;
-
+            [Multiline, Tooltip("The localized string for the language")] public string Value;
         }
 
-        [SerializeField, Tooltip("All of the localizaiton key and localized string pairs")]
-        private StrStrTuple[] data;
+        [SerializeField, Tooltip("All of the localizaiton key and localized string pairs")] private StrStrTuple[] data;
 
         /// <summary>
         /// Gets an enumeration of all of the localization keys supported by the Language
         /// </summary>
         public IEnumerable<string> Keys {
-            get
-            {
+            get {
                 if (_map == null)
                     _map = ToDictionary();
                 return _map.Keys;
@@ -67,8 +59,7 @@ namespace HouraiTeahouse.Localization {
         /// <param name="key">the localization key to retrieve</param>
         /// <returns>the localized string</returns>
         public string this[string key] {
-            get
-            {
+            get {
                 if (_map == null)
                     _map = ToDictionary();
                 if (!_map.ContainsKey(key))
@@ -85,7 +76,7 @@ namespace HouraiTeahouse.Localization {
         /// <returns>the new Language instance</returns>
         public static Language FromDictionary(Dictionary<string, string> src) {
             var lang = CreateInstance<Language>();
-            if(src != null)
+            if (src != null)
                 lang.ReadFromDictionary(src);
             return lang;
         }
@@ -96,7 +87,7 @@ namespace HouraiTeahouse.Localization {
         /// <exception cref="ArgumentNullException">thrown if <paramref name="src"/> is null</exception>
         /// <param name="src">the source Dictionary</param>
         public void ReadFromDictionary(Dictionary<string, string> src) {
-            if(src == null)
+            if (src == null)
                 throw new ArgumentNullException("src");
             data = new StrStrTuple[src.Count];
             _map = new Dictionary<string, string>(src);
@@ -114,7 +105,7 @@ namespace HouraiTeahouse.Localization {
         /// <returns>a dictionary containing the same keys/values as the Language</returns>
         public Dictionary<string, string> ToDictionary() {
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            foreach (var sst in data) 
+            foreach (var sst in data)
                 dict[sst.Key] = sst.Value;
             return dict;
         }
@@ -125,7 +116,7 @@ namespace HouraiTeahouse.Localization {
         void ISerializationCallbackReceiver.OnBeforeSerialize() {
             // Copy the dictionary key-value pairs into the StrStrTuples
             // before serialization. As Unity does not support generic serialziaiton.
-            if(_map != null)
+            if (_map != null)
                 ReadFromDictionary(_map);
         }
 
@@ -136,7 +127,5 @@ namespace HouraiTeahouse.Localization {
             //Turn off this, deserialize when necessary
             //_map = ToDictionary();
         }
-
     }
-
 }

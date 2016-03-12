@@ -6,12 +6,10 @@ using UnityEngine;
 using InControl;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// Debug mode to turn on and off the rendering of hitboxes
     /// </summary>
     public class ConsoleCommands : MonoBehaviour {
-
         void OnEnable() {
             GameConsole.RegisterCommand("hitbox", HitboxCommand);
             GameConsole.RegisterCommand("language", LanguageCommand);
@@ -60,10 +58,12 @@ namespace HouraiTeahouse.SmashBrew {
             if (playerNum != null) {
                 if (playerNum <= 0 || playerNum > Player.MaxPlayers) {
                     GameConsole.Log("There is no Player #{0}, try between 1 and {1}", playerNum, Player.MaxPlayers);
-                } else {
+                }
+                else {
                     return Player.GetPlayer(playerNum.Value - 1);
                 }
-            } else {
+            }
+            else {
                 GameConsole.Log("The term {0} cannot be converted to a player number.", playerNumber);
             }
             return null;
@@ -122,6 +122,5 @@ namespace HouraiTeahouse.SmashBrew {
                     break;
             }
         }
-
     }
 }

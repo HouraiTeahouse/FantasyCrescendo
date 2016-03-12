@@ -2,14 +2,12 @@ using UnityEngine;
 using HouraiTeahouse.Events;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// The Blast Zone script.
     /// Publishes PlayerDieEvents in response to Players leaving it's bounds.
     /// </summary>
     [RequireComponent(typeof (Collider))]
     public sealed class BlastZone : MonoBehaviour {
-
         private Collider _col;
         private Mediator _eventManager;
 
@@ -20,7 +18,7 @@ namespace HouraiTeahouse.SmashBrew {
             _eventManager = GlobalMediator.Instance;
             _col = GetComponent<Collider>();
             // Make sure that the colliders are triggers
-            foreach(Collider col in gameObject.GetComponents<Collider>())
+            foreach (Collider col in gameObject.GetComponents<Collider>())
                 col.isTrigger = true;
         }
 
@@ -31,16 +29,14 @@ namespace HouraiTeahouse.SmashBrew {
         void OnTriggerExit(Collider other) {
             // Filter only for player characters
             Player player = Player.GetPlayer(other);
-            if(player == null)
+            if (player == null)
                 return;
 
             Vector3 position = other.transform.position;
             if (_col.ClosestPointOnBounds(position) == position)
                 return;
 
-            _eventManager.Publish(new PlayerDieEvent { Player = player, Revived = false});
+            _eventManager.Publish(new PlayerDieEvent {Player = player, Revived = false});
         }
-
     }
-
 }

@@ -1,18 +1,14 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// Plays a BGM in response to an event
     /// </summary>
-    [RequireComponent(typeof(AudioSource))]
-    public class PlayBGM : SingleActionBehaviour { 
+    [RequireComponent(typeof (AudioSource))]
+    public class PlayBGM : SingleActionBehaviour {
+        [SerializeField, Tooltip("The audio source to play the music out of")] private AudioSource _musicSource;
 
-        [SerializeField, Tooltip("The audio source to play the music out of")]
-        private AudioSource _musicSource;
-
-        [SerializeField, Tooltip("The BGM group to sample a BGM from")]
-        private BGMGroup _group;
+        [SerializeField, Tooltip("The BGM group to sample a BGM from")] private BGMGroup _group;
 
         private BGMData _currentBGM;
 
@@ -33,7 +29,7 @@ namespace HouraiTeahouse {
             }
             var effect = gameObject.GetOrAddComponent<SoundEffect>();
             effect.hideFlags = HideFlags.HideInInspector;
-            if(!_musicSource)
+            if (!_musicSource)
                 _musicSource = GetComponent<AudioSource>();
             base.Awake();
         }
@@ -83,8 +79,7 @@ namespace HouraiTeahouse {
         /// <see cref="SingleActionBehaviour.Action"/>
         /// </summary>
         protected override void Action() {
-            Play(); 
+            Play();
         }
     }
-
 }

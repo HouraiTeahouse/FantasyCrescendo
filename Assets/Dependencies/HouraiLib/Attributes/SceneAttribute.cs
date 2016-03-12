@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// PropertyAttribute with a drawer that exposes a SceneAsset object field.
     /// MUST be a string field.
@@ -11,5 +10,4 @@ namespace HouraiTeahouse {
     [AttributeUsage(AttributeTargets.Field)]
     public class SceneAttribute : PropertyAttribute {
     }
-
 }

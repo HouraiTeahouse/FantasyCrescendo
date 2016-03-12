@@ -4,10 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     public sealed class Platform : MonoBehaviour {
-
-        public enum HardnessSetting { 
+        public enum HardnessSetting {
             // Both ways + can be knocked through 
             Supersoft = 0,
             // Both ways
@@ -17,8 +15,8 @@ namespace HouraiTeahouse.SmashBrew {
             Semisoft = 2
         }
 
-        [SerializeField, Tooltip("The hardness of the platform")]
-        private HardnessSetting _hardness = HardnessSetting.Soft;
+        [SerializeField, Tooltip("The hardness of the platform")] private HardnessSetting _hardness =
+            HardnessSetting.Soft;
 
         public HardnessSetting Hardness {
             get { return _hardness; }
@@ -83,7 +81,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// Unity callback. Called every physics loop for each for each .
         /// </summary>
         void OnCollisionStay(Collision col) {
-            if(Hardness <= HardnessSetting.Soft)
+            if (Hardness <= HardnessSetting.Soft)
                 Check(col.collider);
         }
 
@@ -91,10 +89,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// Unity callback. Called when another collider enters an attached trigger collider.
         /// </summary>
         void OnCollisionEnter(Collision col) {
-            if(Hardness <= HardnessSetting.Soft)
+            if (Hardness <= HardnessSetting.Soft)
                 Check(col.collider);
         }
-
     }
-
 }

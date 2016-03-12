@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A set of extention methods for all components.
     /// </summary>
-    public static class ComponentExtensions  {
-
+    public static class ComponentExtensions {
         /// <summary>
         /// Gets the GameObjects of all
         /// </summary>
@@ -16,10 +14,10 @@ namespace HouraiTeahouse {
         /// <param name="components"></param>
         /// <returns></returns>
         public static IEnumerable<GameObject> GetGameObject<T>(this IEnumerable<T> components) where T : Component {
-            if(components == null)
+            if (components == null)
                 throw new ArgumentNullException("components");
             foreach (T component in components)
-                if(component != null)
+                if (component != null)
                     yield return component.gameObject;
         }
 
@@ -53,7 +51,8 @@ namespace HouraiTeahouse {
             GameObject gameObject = component.gameObject;
             var attempt = gameObject.GetComponent<T>();
             if (attempt != null)
-                Debug.LogWarning("Attempted to find a component of type " + typeof(T) + ", but did not find one.", gameObject);
+                Debug.LogWarning("Attempted to find a component of type " + typeof (T) + ", but did not find one.",
+                    gameObject);
             return attempt;
         }
     }

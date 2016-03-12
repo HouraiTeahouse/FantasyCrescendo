@@ -4,20 +4,17 @@ using UnityEngine;
 using HouraiTeahouse.Events;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// A EventHandler for spawning characters at the start of the match
     /// </summary>
     public class Spawn : EventHandlerBehaviour<MatchStartEvent> {
-
         [Serializable]
         private class SpawnPoint {
             public Transform Point;
             public bool Direction;
         }
 
-        [SerializeField, Tooltip("The spawn points for each of the characters")]
-        private SpawnPoint[] _spawnPoints;
+        [SerializeField, Tooltip("The spawn points for each of the characters")] private SpawnPoint[] _spawnPoints;
 
         /// <summary>
         /// Spawns players when the match begins.
@@ -35,11 +32,10 @@ namespace HouraiTeahouse.SmashBrew {
 
                 //TODO: Fix this hack, get netplay working
                 runtimeCharacter.gameObject.SetActive(true);
-                runtimeCharacter.name = string.Format("Player {0} ({1})", player.PlayerNumber + 1, player.SpawnedCharacter.name);
+                runtimeCharacter.name = string.Format("Player {0} ({1})", player.PlayerNumber + 1,
+                    player.SpawnedCharacter.name);
                 EventManager.Publish(new PlayerSpawnEvent {Player = player, PlayerObject = runtimeCharacter.gameObject});
             }
         }
-
     }
-
 }

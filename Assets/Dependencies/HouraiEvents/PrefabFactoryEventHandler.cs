@@ -2,14 +2,12 @@ using UnityEngine;
 using System.Collections;
 
 namespace HouraiTeahouse.Events {
-
     /// <summary>
     /// An AbstractFactoryEventHandler that creates objects from prefabs in response to events.
     /// </summary>
     /// <typeparam name="T">the type of the object and prefab</typeparam>
     /// <typeparam name="TEvent">the type of event</typeparam>
     public abstract class PrefabFactoryEventHandler<T, TEvent> : AbstractFactoryEventHandler<T, TEvent> where T : Object {
-
         [SerializeField] private T _prefab;
 
         /// <summary>

@@ -4,23 +4,18 @@ using HouraiTeahouse.Events;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// A manager of all of the game data loaded into the game.
     /// </summary>
     public sealed class DataManager : MonoBehaviour {
+        [SerializeField, Tooltip("Destroy this instance on scene loads?")] private bool _dontDestroyOnLoad;
 
-        [SerializeField, Tooltip("Destroy this instance on scene loads?")]
-        private bool _dontDestroyOnLoad;
+        [SerializeField, Tooltip("The characters to display in the game")] private List<CharacterData> _characters;
 
-        [SerializeField, Tooltip("The characters to display in the game")]
-        private List<CharacterData> _characters;
-
-        [SerializeField, Tooltip("The scenes to show in the game")]
-        private List<SceneData> _scenes;
+        [SerializeField, Tooltip("The scenes to show in the game")] private List<SceneData> _scenes;
 
         private ReadOnlyCollection<CharacterData> _characterCollection;
-        private ReadOnlyCollection<SceneData> _sceneCollection;  
+        private ReadOnlyCollection<SceneData> _sceneCollection;
 
         public Mediator Mediator { get; private set; }
 
@@ -51,11 +46,11 @@ namespace HouraiTeahouse.SmashBrew {
         void Awake() {
             Instance = this;
 
-            if(_dontDestroyOnLoad)
+            if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
 
             Mediator = GlobalMediator.Instance;
-           
+
             _characterCollection = new ReadOnlyCollection<CharacterData>(_characters);
             _sceneCollection = new ReadOnlyCollection<SceneData>(_scenes);
         }

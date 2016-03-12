@@ -1,11 +1,8 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     public class ConstantRotation : MonoBehaviour {
-
-        [SerializeField]
-        private Vector3 rotationPerSecond;
+        [SerializeField] private Vector3 rotationPerSecond;
 
         public Vector3 RotationPerSecond {
             get { return rotationPerSecond; }
@@ -16,7 +13,5 @@ namespace HouraiTeahouse {
         private void Update() {
             transform.Rotate(RotationPerSecond * Time.deltaTime);
         }
-
     }
-
 }

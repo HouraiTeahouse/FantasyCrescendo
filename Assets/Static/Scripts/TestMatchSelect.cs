@@ -2,21 +2,16 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    
     public class TestMatchSelect : MonoBehaviour {
-
         [Serializable]
         private class Selection {
-
 #pragma warning disable 0649
             public CharacterData Data;
             public int Pallete;
 #pragma warning restore 0649
-
         }
 
-        [SerializeField]
-        private Selection[] testCharacters;
+        [SerializeField] private Selection[] testCharacters;
 
         /// <summary>
         /// Unity callback. Called on object instantiation.
@@ -36,4 +31,3 @@ namespace HouraiTeahouse.SmashBrew {
         }
     }
 }
-

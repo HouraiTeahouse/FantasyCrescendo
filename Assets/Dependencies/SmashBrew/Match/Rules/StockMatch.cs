@@ -4,7 +4,6 @@ using HouraiTeahouse.Events;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// A Match Rule defining a Stock-based Match.
     /// 
@@ -13,12 +12,10 @@ namespace HouraiTeahouse.SmashBrew {
     /// The winner is the last player standing.
     /// </summary>
     public sealed class StockMatch : MatchRule {
-
         /// <summary>
         /// The number of stock the players start with.
         /// </summary>
-        [SerializeField]
-        private int stock = 5;
+        [SerializeField] private int stock = 5;
 
         private Mediator _eventManager;
 
@@ -42,14 +39,14 @@ namespace HouraiTeahouse.SmashBrew {
         /// Unity Callback. Called on object destruction.
         /// </summary>
         void OnDestroy() {
-           _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawn);
+            _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawn);
         }
 
         /// <summary>
         /// Unity Callback. Called once every frame.
         /// </summary>
         void Update() {
-            if(_stocks.Values.Count(lives => lives > 0) <= 1)
+            if (_stocks.Values.Count(lives => lives > 0) <= 1)
                 Match.FinishMatch();
         }
 
@@ -81,7 +78,8 @@ namespace HouraiTeahouse.SmashBrew {
                     // More than one player has the maximum number of lives
                     // it is a tie, don't declare a winner
                     winner = null;
-                } else {
+                }
+                else {
                     // a new maximum number of lives has been found
                     // declare them the winner
                     winner = playerStock.Key;
@@ -106,7 +104,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (eventArgs.Revived || _stocks[eventArgs.Player] <= 0)
                 return;
             _stocks[eventArgs.Player]--;
-            _eventManager.Publish(new PlayerRespawnEvent { Player = eventArgs.Player });
+            _eventManager.Publish(new PlayerRespawnEvent {Player = eventArgs.Player});
             eventArgs.Revived = true;
         }
 
@@ -121,7 +119,5 @@ namespace HouraiTeahouse.SmashBrew {
             _stocks[eventArgs.Player] = stock;
             eventArgs.Player.PlayerObject.DamageType = DamageType.Percent;
         }
-
     }
-
 }

@@ -7,10 +7,10 @@ using HouraiTeahouse.SmashBrew.Util;
 using UnityConstants;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// General character class for handling the physics and animations of individual characters
     /// </summary>
@@ -18,9 +18,8 @@ namespace HouraiTeahouse.SmashBrew {
     [InitializeOnLoad]
 #endif
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
+    [RequireComponent(typeof (Rigidbody), typeof (CapsuleCollider))]
     public partial class Character : HouraiBehaviour, IDamageable, IHealable, IKnockbackable {
-
         private enum FacingMode {
             Rotation,
             Scale
@@ -28,9 +27,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Public Properties
 
-        public Mediator CharacterEvents {
-            get; private set;
-        }
+        public Mediator CharacterEvents { get; private set; }
 
         /// <summary>
         /// Gets how many bones the Character has.
@@ -53,7 +50,7 @@ namespace HouraiTeahouse.SmashBrew {
                     JumpCount = 0;
                 }
                 Animator.SetBool(CharacterAnimVars.Grounded, value);
-                CharacterEvents.Publish(new PlayerGroundEvent { Grounded = value });
+                CharacterEvents.Publish(new PlayerGroundEvent {Grounded = value});
             }
         }
 
@@ -63,9 +60,7 @@ namespace HouraiTeahouse.SmashBrew {
         public bool IsFastFalling { get; set; }
 
         public float FallSpeed {
-            get {
-                return IsFastFalling ? _fastFallSpeed : _maxFallSpeed;
-            }
+            get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
         /// <summary>
@@ -112,44 +107,47 @@ namespace HouraiTeahouse.SmashBrew {
         public int MaxJumpCount {
             get { return _jumpPower == null ? 0 : _jumpPower.Length; }
         }
+
         #endregion
 
         #region Runtime Variables
+
         private Transform[] _bones;
         private HashSet<Collider> _ground;
         private bool _facing;
+
         #endregion
 
         #region Serialized Variables
-        [SerializeField]
-        private GameObject _rootBone;
 
-        [SerializeField]
-        private FacingMode _facingMode;
+        [SerializeField] private GameObject _rootBone;
 
-        [Header("Physics")]
-        [SerializeField]
-        private float _gravity = 9.86f;
+        [SerializeField] private FacingMode _facingMode;
 
-        [SerializeField]
-        private float _fastFallSpeed = 9f;
+        [Header("Physics")] [SerializeField] private float _gravity = 9.86f;
 
-        [SerializeField]
-        private float _maxFallSpeed = 5f;
+        [SerializeField] private float _fastFallSpeed = 9f;
 
-        [SerializeField]
-        private float[] _jumpPower = {1.5f, 1.5f};
+        [SerializeField] private float _maxFallSpeed = 5f;
+
+        [SerializeField] private float[] _jumpPower = {1.5f, 1.5f};
+
         #endregion
 
         #region Public Events
+
         public event Action<Attack.Type, Attack.Direction, int> OnAttack;
+
         #endregion
 
         #region Required Components
+
         public CapsuleCollider MovementCollider { get; private set; }
+
         #endregion
 
         #region Public Action Methods
+
         public Transform GetBone(int boneIndex) {
             if (boneIndex < 0 || boneIndex >= BoneCount)
                 return transform;
@@ -167,7 +165,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void Jump() {
-            if (JumpCount >= MaxJumpCount)//Restricted)
+            if (JumpCount >= MaxJumpCount) //Restricted)
                 return;
 
             // Apply upward force to jump
@@ -175,15 +173,18 @@ namespace HouraiTeahouse.SmashBrew {
 
             JumpCount++;
 
-            CharacterEvents.Publish(new PlayerJumpEvent { Ground = IsGrounded, RemainingJumps = MaxJumpCount - JumpCount });
+            CharacterEvents.Publish(new PlayerJumpEvent {Ground = IsGrounded, RemainingJumps = MaxJumpCount - JumpCount});
         }
+
         #endregion
 
         #region Internal Methods
+
         internal void Attack(Attack.Type type, Attack.Direction direction, int index) {
             if (OnAttack != null)
                 OnAttack(type, direction, index);
         }
+
         #endregion
 
         #region Unity Callbacks
@@ -224,7 +225,9 @@ namespace HouraiTeahouse.SmashBrew {
                 velocity.y = -FallSpeed;
 
             Rigidbody.velocity = velocity;
-            gameObject.layer = (velocity.magnitude > Config.Instance.TangibleSpeedCap) ? Layers.Intangible : Layers.Character;
+            gameObject.layer = (velocity.magnitude > Config.Instance.TangibleSpeedCap)
+                ? Layers.Intangible
+                : Layers.Character;
         }
 
         protected virtual void OnCollisionEnter(Collision col) {
@@ -263,7 +266,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
                 return;
 
-            foreach(Type component in GetRequiredComponents())
+            foreach (Type component in GetRequiredComponents())
                 if (!gameObject.GetComponent(component))
                     gameObject.AddComponent(component);
 #endif
@@ -276,18 +279,18 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         /// <returns>an array of all of the concrete component types marked with RequiredCharacterComponent</returns>
         public static Type[] GetRequiredComponents() {
-            var componentType = typeof(Component);
-            var requiredComponentType = typeof(RequiredCharacterComponentAttribute);
+            var componentType = typeof (Component);
+            var requiredComponentType = typeof (RequiredCharacterComponentAttribute);
             // Use reflection to find required Components for Characters and statuses
             // Enumerate all concrete Component types
             return (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                                  from assemblyType in domainAssembly.GetTypes()
-                                  where
-                                      assemblyType != null &&
-                                      !assemblyType.IsAbstract &&
-                                      componentType.IsAssignableFrom(assemblyType) &&
-                                      assemblyType.IsDefined(requiredComponentType, true)
-                                  select assemblyType).ToArray();
+                from assemblyType in domainAssembly.GetTypes()
+                where
+                    assemblyType != null &&
+                    !assemblyType.IsAbstract &&
+                    componentType.IsAssignableFrom(assemblyType) &&
+                    assemblyType.IsDefined(requiredComponentType, true)
+                select assemblyType).ToArray();
         }
 #endif
 
@@ -296,7 +299,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;
         }
+
         #endregion
     }
-
 }

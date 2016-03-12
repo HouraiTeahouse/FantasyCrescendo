@@ -2,18 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using System.Linq;
+
 #endif
 
 namespace HouraiTeahouse {
-
     [CreateAssetMenu(fileName = "New BGM Group", menuName = "Hourai Teahouse/BGM Group")]
     public class BGMGroup : ScriptableObject {
+        [SerializeField, Tooltip("The name of the BGM group")] private string _name;
 
-        [SerializeField, Tooltip("The name of the BGM group")]
-        private string _name;
-
-        [SerializeField]
-        private BGMData[] backgroundMusicData;
+        [SerializeField] private BGMData[] backgroundMusicData;
 
         private WeightedRNG<BGMData> _selection;
 
@@ -41,37 +38,25 @@ namespace HouraiTeahouse {
             backgroundMusicData = resourcePaths.Select(path => new BGMData(path, 1f)).ToArray();
         }
 
-#endif 
-
+#endif
     }
 
     [System.Serializable]
     public class BGMData {
-
         private const string delimiter = "/";
         private const string suffix = "weight";
 
-        [SerializeField]
-        [Tooltip("The name of the BGM.")]
-        private string _name;
+        [SerializeField] [Tooltip("The name of the BGM.")] private string _name;
 
-        [SerializeField]
-        [Tooltip("The artist who created this piece of music")]
-        private string _artist;
+        [SerializeField] [Tooltip("The artist who created this piece of music")] private string _artist;
 
-        [SerializeField, Resource(typeof(AudioClip))]
-        private string _bgm;
+        [SerializeField, Resource(typeof (AudioClip))] private string _bgm;
 
-        [SerializeField, Range(0f, 1f)]
-        private float _baseWeight = 1f;
+        [SerializeField, Range(0f, 1f)] private float _baseWeight = 1f;
 
-        [SerializeField]
-        [Tooltip("The sample number of the start point the loop.")]
-        private int _loopStart;
+        [SerializeField] [Tooltip("The sample number of the start point the loop.")] private int _loopStart;
 
-        [SerializeField]
-        [Tooltip("The sample number of the end point the loop.")]
-        private int _loopEnd;
+        [SerializeField] [Tooltip("The sample number of the end point the loop.")] private int _loopEnd;
 
         private Resource<AudioClip> _bgmResource;
         private float _weight;
@@ -113,7 +98,5 @@ namespace HouraiTeahouse {
         public override string ToString() {
             return _bgm + " - (" + _baseWeight + ")";
         }
-
     }
-
 }

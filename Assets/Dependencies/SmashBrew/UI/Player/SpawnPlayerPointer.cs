@@ -4,9 +4,7 @@ using HouraiTeahouse.SmashBrew.UI;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     public class SpawnPlayerPointer : PlayerUIComponent {
-
         [SerializeField] private RectTransform _pointer;
 
         [SerializeField, Tag] private string _tag;
@@ -43,15 +41,14 @@ namespace HouraiTeahouse {
         /// </summary>
         protected override void OnDestroy() {
             base.OnDestroy();
-            if(_currentPointer)
+            if (_currentPointer)
                 Destroy(_currentPointer.gameObject);
         }
 
         protected override void OnPlayerChange() {
             base.OnPlayerChange();
-            if(_currentPointer)
+            if (_currentPointer)
                 _currentPointer.GetComponentsInChildren<IDataComponent<Player>>().SetData(Player);
         }
     }
-
 }

@@ -2,23 +2,19 @@ using UnityEngine;
 using System.Linq;
 
 namespace HouraiTeahouse {
-
     public interface ITimeObject {
-
         float LocalTimeScale { get; set; }
-
     }
 
     [DisallowMultipleComponent]
     public sealed class TimeModifier : MonoBehaviour, ITimeObject {
-
         private float _localTimeScale = 1f;
 
         private Animator[] _animators;
 
         //TODO: Figure out how to get this working with particle system
         //private ParticleSystem[] particles;
-        
+
         public float LocalTimeScale {
             get { return _localTimeScale; }
             set {
@@ -51,6 +47,4 @@ namespace HouraiTeahouse {
             //    particles = null;
         }
     }
-
 }
-

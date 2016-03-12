@@ -2,18 +2,15 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace HouraiTeahouse.SmashBrew {
-
     public class PlayerShieldBreakEvent {
     }
 
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     public sealed class Shield : HouraiBehaviour, IDamageable {
-
         //TODO: properly implement
 
-        [SerializeField]
-        private Material _shieldMaterial;
+        [SerializeField] private Material _shieldMaterial;
 
         //[SerializeField]
         //private float _maxHP = 100f;
@@ -96,9 +93,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void Damage(object source, float damage) {
-            
         }
-
     }
-
 }

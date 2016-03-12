@@ -2,9 +2,7 @@ using UnityEngine;
 using System;
 
 namespace HouraiTeahouse.SmashBrew {
-
     public sealed class Attack : BaseAnimationBehaviour<Character> {
-
         public enum Type {
             Normal,
             Smash,
@@ -19,7 +17,7 @@ namespace HouraiTeahouse.SmashBrew {
             Back,
             Down
         }
-        
+
         [Serializable]
         public class HitboxData {
             public int Bone = -1;
@@ -31,7 +29,9 @@ namespace HouraiTeahouse.SmashBrew {
             private int _index;
 
             public void Initialize(Character character, Attack parent, int hitboxIndex) {
-                _gameObject = new GameObject("hb_" + hitboxIndex + "_" + parent._direction + "_" + parent._type + "_" + parent.index);
+                _gameObject =
+                    new GameObject("hb_" + hitboxIndex + "_" + parent._direction + "_" + parent._type + "_" +
+                                   parent.index);
                 Transform hitboxTransform = _gameObject.transform;
                 hitboxTransform.parent = character.GetBone(Bone);
                 hitboxTransform.localPosition = Offset;
@@ -58,17 +58,13 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        [SerializeField]
-        private Direction _direction;
+        [SerializeField] private Direction _direction;
 
-        [SerializeField]
-        private Type _type;
+        [SerializeField] private Type _type;
 
-        [SerializeField]
-        private int index;
+        [SerializeField] private int index;
 
-        [SerializeField]
-        private HitboxData[] _data;
+        [SerializeField] private HitboxData[] _data;
 
         public override void Initialize(GameObject gameObject) {
             base.Initialize(gameObject);
@@ -80,7 +76,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
             if (Target)
-               Target.Attack(_type, _direction, index);
+                Target.Attack(_type, _direction, index);
 
             Transition();
         }

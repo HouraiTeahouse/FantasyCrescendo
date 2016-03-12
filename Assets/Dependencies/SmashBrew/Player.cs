@@ -7,9 +7,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace HouraiTeahouse.SmashBrew {
-    
     public sealed class Player {
-
         public class PlayerType {
             public string Name { get; private set; }
             public string ShortName { get; private set; }
@@ -41,7 +39,7 @@ namespace HouraiTeahouse.SmashBrew {
             public static readonly PlayerType CPU =
                 new PlayerType {
                     Name = "CPU",
-                    ShortName =  "CPU",
+                    ShortName = "CPU",
                     IsActive = true,
                     IsCPU = true,
                     Color = UnityEngine.Color.gray
@@ -49,7 +47,7 @@ namespace HouraiTeahouse.SmashBrew {
 
 
             static PlayerType() {
-                Types = new [] {
+                Types = new[] {
                     None, HumanPlayer, CPU
                 };
                 for (var i = 0; i < Types.Length - 1; i++)
@@ -61,12 +59,12 @@ namespace HouraiTeahouse.SmashBrew {
                 return Name;
             }
 
-            PlayerType() {                
+            PlayerType() {
             }
         }
 
         private static readonly Player[] _players;
-        private static readonly ReadOnlyCollection<Player> _playerCollection; 
+        private static readonly ReadOnlyCollection<Player> _playerCollection;
 
         static Player() {
             _players = new Player[GameMode.Current.MaxPlayers];
@@ -193,7 +191,7 @@ namespace HouraiTeahouse.SmashBrew {
         public PlayerType Type {
             get { return _type; }
             set {
-                if(value == null)
+                if (value == null)
                     throw new ArgumentNullException();
                 _type = value;
             }
@@ -220,7 +218,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <param name="playerNumber">the Player Number of the player to retrieve</param>
         /// <returns>the Player object</returns>
         public static Player GetPlayer(int playerNumber) {
-            if(playerNumber < 0 || playerNumber > _players.Length)
+            if (playerNumber < 0 || playerNumber > _players.Length)
                 throw new ArgumentException("playerNumber");
             return _players[playerNumber];
         }
@@ -265,7 +263,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         internal Character Spawn(Transform transform, bool direction) {
-            if(transform == null)
+            if (transform == null)
                 throw new ArgumentNullException("transform");
             return Spawn(transform.position, direction);
         }
@@ -274,7 +272,7 @@ namespace HouraiTeahouse.SmashBrew {
             SpawnedCharacter = SelectedCharacter;
 
             // If the character is null, randomly select a character and pallete
-            if(SpawnedCharacter == null) {
+            if (SpawnedCharacter == null) {
                 SpawnedCharacter = DataManager.Instance.Characters.Random();
                 Pallete = Random.Range(0, SpawnedCharacter.PalleteCount);
             }
@@ -320,7 +318,5 @@ namespace HouraiTeahouse.SmashBrew {
         public static bool operator !=(Player p1, Player p2) {
             return !(p1 == p2);
         }
-
     }
-
 }

@@ -5,35 +5,30 @@ using System.Globalization;
 using System.Linq;
 #if HOURAI_EVENTS
 using HouraiTeahouse.Events;
+
 #endif
 
 namespace HouraiTeahouse.Localization {
-
 #if HOURAI_EVENTS
     public class LanguageEvent {
-
         public Language NewLanguage;
-
     }
 #endif
+
     /// <summary>
     /// Singleton MonoBehaviour that manages all of localization system.
     /// </summary>
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Manager")]
     public sealed class LanguageManager : MonoBehaviour {
+        [SerializeField, Tooltip("The Resources directory to load the Language files from")] private string
+            localizaitonResourceDirectory = "Lang/";
 
-        [SerializeField, Tooltip("The Resources directory to load the Language files from")]
-        private string localizaitonResourceDirectory = "Lang/";
+        [SerializeField, Tooltip("The PlayerPrefs key to store the Player's language in")] private string
+            _langPlayerPrefKey = "lang";
 
-        [SerializeField, Tooltip("The PlayerPrefs key to store the Player's language in") ]
-        private string _langPlayerPrefKey = "lang";
+        [SerializeField, Tooltip("Destroy this object on scene changes?")] private bool _dontDestroyOnLoad = false;
 
-        [SerializeField, Tooltip("Destroy this object on scene changes?")]
-        private bool _dontDestroyOnLoad = false;
-
-        [SerializeField, Tooltip("The default language to use if the Player's current language is not supported")]
-        [Resource(typeof(Language))]
-        private string _defaultLanguage;
+        [SerializeField, Tooltip("The default language to use if the Player's current language is not supported")] [Resource(typeof (Language))] private string _defaultLanguage;
 
         private Language _currentLanguage;
 
@@ -45,16 +40,16 @@ namespace HouraiTeahouse.Localization {
         /// The currently used language.
         /// </summary>
         public Language CurrentLangauge {
-            get { return _currentLanguage;}
+            get { return _currentLanguage; }
             private set {
                 bool changed = _currentLanguage != value;
-                if(_currentLanguage != null)
+                if (_currentLanguage != null)
                     Resources.UnloadAsset(_currentLanguage);
                 _currentLanguage = value;
                 if (changed && OnChangeLanguage != null)
                     OnChangeLanguage(value);
 #if HOURAI_EVENTS
-                _eventManager.Publish(new LanguageEvent { NewLanguage = value });
+                _eventManager.Publish(new LanguageEvent {NewLanguage = value});
 #endif
             }
         }
@@ -70,7 +65,7 @@ namespace HouraiTeahouse.Localization {
         public event Action<Language> OnChangeLanguage;
 
         private HashSet<string> _languages;
-        private HashSet<string> _keys; 
+        private HashSet<string> _keys;
 
         /// <summary>
         /// All available languages currently supported by the system.
@@ -91,7 +86,7 @@ namespace HouraiTeahouse.Localization {
                 foreach (var key in _keys)
                     yield return key;
             }
-        } 
+        }
 
         /// <summary>
         /// Is the provided key localizable?
@@ -218,7 +213,8 @@ namespace HouraiTeahouse.Localization {
                 if (!_languages.Contains(currentLang) || Application.systemLanguage == SystemLanguage.Unknown)
                     currentLang = Resources.Load<Language>(_defaultLanguage).name;
                 Prefs.SetString(_langPlayerPrefKey, currentLang);
-            } else {
+            }
+            else {
                 currentLang = Prefs.GetString(_langPlayerPrefKey);
             }
 
@@ -229,7 +225,7 @@ namespace HouraiTeahouse.Localization {
                     Resources.UnloadAsset(lang);
             }
 
-            if(_dontDestroyOnLoad)
+            if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
         }
 
@@ -264,7 +260,7 @@ namespace HouraiTeahouse.Localization {
         /// <returns>the localized string</returns>
         public string this[string key] {
             get {
-                if(!CurrentLangauge)
+                if (!CurrentLangauge)
                     throw new InvalidOperationException();
                 return CurrentLangauge[key];
             }
@@ -281,11 +277,10 @@ namespace HouraiTeahouse.Localization {
             if (identifier == null)
                 throw new ArgumentNullException("identifier");
             if (!_languages.Contains(identifier))
-                throw new InvalidOperationException(string.Format("Language with identifier of {0} is not supported.", identifier));
+                throw new InvalidOperationException(string.Format("Language with identifier of {0} is not supported.",
+                    identifier));
             CurrentLangauge = Resources.Load<Language>(localizaitonResourceDirectory + identifier);
             return CurrentLangauge;
         }
-
     }
-
 }

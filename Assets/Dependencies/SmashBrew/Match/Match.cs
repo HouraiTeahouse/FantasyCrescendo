@@ -2,14 +2,12 @@ using HouraiTeahouse.Events;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    
     /// <summary>
     /// The Match Singleton.
     /// 
     /// Manages the current state of the match and all of the defined Match rules.
     /// </summary>
     public class Match : MonoBehaviour {
-
         private Mediator _eventManager;
 
         /// <summary>
@@ -34,12 +32,13 @@ namespace HouraiTeahouse.SmashBrew {
                     continue;
                 rule.enabled = false;
                 Player ruleWinner = rule.GetWinner();
-                if(ruleWinner == null || noContest)
+                if (ruleWinner == null || noContest)
                     continue;
                 if (winner == null) {
                     // No other winner has been declared yet
                     winner = ruleWinner;
-                } else {
+                }
+                else {
                     // Another winner has been declared, set as a tie
                     result = MatchResult.Tie;
                     winner = null;
@@ -66,7 +65,5 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             _eventManager.Publish(new MatchStartEvent());
         }
-
     }
-
 }

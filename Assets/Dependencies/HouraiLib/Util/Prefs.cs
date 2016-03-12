@@ -1,12 +1,10 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A static PlayerPrefs wrapper that provides additional type support.
     /// </summary>
     public static class Prefs {
-
         /// <summary>
         /// Saves all the changes to disk .
         /// </summary>
@@ -22,7 +20,7 @@ namespace HouraiTeahouse {
         public static bool HasKey(string key) {
             return PlayerPrefs.HasKey(key);
         }
-       
+
         #region Object Values
 
         /// <summary>
@@ -64,8 +62,9 @@ namespace HouraiTeahouse {
         public static void ReadObject(string key, object obj) {
             JsonUtility.FromJsonOverwrite(PlayerPrefs.GetString(key), obj);
         }
+
         #endregion
-        
+
         #region Bool Values
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace HouraiTeahouse {
         /// <seealso cref="GetBool"/>
         /// <param name="key">the key the boolean value is saved to</param>
         public static void SetBool(string key, bool value) {
-            PlayerPrefs.SetInt(key, value ? 1 : 0);    
+            PlayerPrefs.SetInt(key, value ? 1 : 0);
         }
 
         #endregion
@@ -168,7 +167,5 @@ namespace HouraiTeahouse {
         }
 
         #endregion
-
     }
-
 }

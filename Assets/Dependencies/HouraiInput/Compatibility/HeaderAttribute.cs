@@ -1,4 +1,5 @@
-﻿#if UNITY_4_3
+﻿
+#if UNITY_4_3
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -46,4 +47,3 @@ namespace InControl
 }
 
 #endif
-

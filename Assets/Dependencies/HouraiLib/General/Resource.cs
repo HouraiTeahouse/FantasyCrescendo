@@ -3,7 +3,6 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A simple object that encapsulates the operations on a dynamically loaded asset using UnityEngine.Resources.
     /// </summary>
@@ -11,9 +10,7 @@ namespace HouraiTeahouse {
     [Serializable]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Resources#ResourcePathAttribute_and_Resource_Wrapper")]
     public sealed class Resource<T> where T : Object {
-
-        [SerializeField]
-        private readonly string _path;
+        [SerializeField] private readonly string _path;
 
         /// <summary>
         /// Initializes a new instance of Resource with a specified Resources file path.
@@ -64,7 +61,5 @@ namespace HouraiTeahouse {
                 Resources.UnloadAsset(Asset);
             Asset = null;
         }
-
     }
-
 }

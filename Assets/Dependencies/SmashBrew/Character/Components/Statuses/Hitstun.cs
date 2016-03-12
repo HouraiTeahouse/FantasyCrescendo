@@ -1,16 +1,14 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// A Status effect that causes Characters to become uncontrollable for a short period
     /// after being hit
     /// </summary>
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof (Rigidbody))]
     public class Hitstun : Status {
-        
         private Vector3 _oldVelocity;
 
         /// <summary>
@@ -38,7 +36,7 @@ namespace HouraiTeahouse.SmashBrew {
             ContactPoint[] points = col.contacts;
             if (points.Length <= 0)
                 return;
-            
+
             Vector3 point = points[0].point;
             Vector3 normal = points[0].normal;
             Vector3 reflection = _oldVelocity - 2 * Vector2.Dot(_oldVelocity, normal) * normal;
@@ -47,8 +45,5 @@ namespace HouraiTeahouse.SmashBrew {
             Debug.DrawRay(point, -_oldVelocity, Color.yellow);
             Rigidbody.velocity = Vector3.ClampMagnitude(reflection, 0.8f * _oldVelocity.magnitude);
         }
-
     }
-
-
 }

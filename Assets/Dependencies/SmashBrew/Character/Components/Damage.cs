@@ -3,9 +3,7 @@ using HouraiTeahouse.SmashBrew.Util;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     public class DamageType {
-
         public string Suffix { get; private set; }
         public float MinDamage { get; private set; }
         public float MaxDamage { get; private set; }
@@ -35,18 +33,17 @@ namespace HouraiTeahouse.SmashBrew {
             float newDamage = Change(currentDamage, -Mathf.Abs(delta));
             return Mathf.Clamp(newDamage, MinDamage, MaxDamage);
         }
-
     }
 
     /// <summary>
     /// A MonoBehaviour that handles all of the damage dealt and recieved by a character.
     /// </summary>
     public partial class Character {
-
         /// <summary>
         /// The current internal damage value. Used for knockback calculations.
         /// </summary>
         public float CurrentDamage { get; set; }
+
         public float DefaultDamage { get; set; }
 
         public DamageType DamageType { get; set; }
@@ -60,7 +57,7 @@ namespace HouraiTeahouse.SmashBrew {
         public void Damage(float damage) {
             Damage(null, damage);
         }
-        
+
         public void Damage(object source, float damage) {
             damage = Mathf.Abs(damage);
 
@@ -75,7 +72,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void Heal(float healing) {
-           Heal(null, healing); 
+            Heal(null, healing);
         }
 
         public void Heal(object source, float healing) {
@@ -86,9 +83,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             CurrentDamage = DamageType.Heal(CurrentDamage, healing);
 
-            CharacterEvents.Publish(new PlayerHealEvent { Healing = healing, CurrentDamage = CurrentDamage });
+            CharacterEvents.Publish(new PlayerHealEvent {Healing = healing, CurrentDamage = CurrentDamage});
         }
-
     }
-
 }

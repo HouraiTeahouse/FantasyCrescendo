@@ -3,38 +3,26 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     public class SmashBrewInputModule : PointerInputModule {
+        [SerializeField] private string _horizontalKeyboard = "horizontal";
 
-        [SerializeField]
-        private string _horizontalKeyboard = "horizontal";
+        [SerializeField] private string _verticalKeyboard = "vertical";
 
-        [SerializeField]
-        private string _verticalKeyboard = "vertical";
+        [SerializeField] private string _submitKeyboard = "submit";
 
-        [SerializeField]
-        private string _submitKeyboard = "submit";
+        [SerializeField] private string _cancelKeyboard = "cancel";
 
-        [SerializeField]
-        private string _cancelKeyboard = "cancel";
+        [SerializeField] private InputControlTarget _horizontalGamepad = InputControlTarget.LeftStickX;
 
-        [SerializeField]
-        private InputControlTarget _horizontalGamepad = InputControlTarget.LeftStickX;
+        [SerializeField] private InputControlTarget _verticalGamepad = InputControlTarget.LeftStickY;
 
-        [SerializeField]
-        private InputControlTarget _verticalGamepad = InputControlTarget.LeftStickY;
+        [SerializeField] private InputControlTarget _submitGamepad = InputControlTarget.Action1;
 
-        [SerializeField]
-        private InputControlTarget _submitGamepad = InputControlTarget.Action1;
+        [SerializeField] private InputControlTarget _cancelGamepad = InputControlTarget.Action2;
 
-        [SerializeField]
-        private InputControlTarget _cancelGamepad = InputControlTarget.Action2;
+        [SerializeField] private float _deadZone = 0.1f;
 
-        [SerializeField]
-        private float _deadZone = 0.1f;
-
-        [SerializeField]
-        private float _navigationDelay = 0.25f;
+        [SerializeField] private float _navigationDelay = 0.25f;
 
         private float currentDelay;
 
@@ -44,7 +32,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         public override void ActivateModule() {
             base.ActivateModule();
 
-            if(!eventSystem.currentSelectedGameObject)
+            if (!eventSystem.currentSelectedGameObject)
                 eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject, GetBaseEventData());
         }
 
@@ -80,9 +68,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 count++;
             }
 
-            if(submit)
+            if (submit)
                 ExecuteEvents.Execute(target, GetBaseEventData(), ExecuteEvents.submitHandler);
-            if(cancel)
+            if (cancel)
                 ExecuteEvents.Execute(target, GetBaseEventData(), ExecuteEvents.cancelHandler);
 
             currentDelay -= Time.deltaTime;
@@ -96,7 +84,5 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (moveData.moveDir != MoveDirection.None)
                 currentDelay = _navigationDelay;
         }
-
     }
-
 }

@@ -3,20 +3,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A SingleActionBehaviour that loads new Scenes
     /// </summary>
     public class LevelLoader : SingleActionBehaviour {
+        [SerializeField, Tooltip("The mode to load scenes in")] private LoadSceneMode _mode = LoadSceneMode.Single;
 
-        [SerializeField, Tooltip("The mode to load scenes in")]
-        private LoadSceneMode _mode = LoadSceneMode.Single;
+        [SerializeField, Scene, Tooltip("The target scenes to load")] private string[] _scenes;
 
-        [SerializeField, Scene, Tooltip("The target scenes to load")]
-        private string[] _scenes;
-
-        [SerializeField, Tooltip("Ignore if scenes are already loaded?")]
-        private bool _ignoreLoadedScenes;
+        [SerializeField, Tooltip("Ignore if scenes are already loaded?")] private bool _ignoreLoadedScenes;
 
         /// <summary>
         /// The paths of the scenes to load
@@ -48,4 +43,3 @@ namespace HouraiTeahouse {
         }
     }
 }
-

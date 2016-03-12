@@ -2,50 +2,35 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     [CreateAssetMenu(fileName = "New Config", menuName = "SmashBrew/Config")]
     public sealed class Config : ScriptableObject {
-
         #region Serialized Fields
-        [Header("Players")]
-        [SerializeField]
-        private Color[] _playerColors = {
+
+        [Header("Players")] [SerializeField] private Color[] _playerColors = {
             Color.red, Color.blue, Color.green, Color.yellow,
             new Color(1, 0.5f, 0), Color.cyan, Color.magenta, new Color(0.25f, 0.25f, 0.25f)
         };
 
-        [SerializeField]
-        private Color _cpuColor = new Color(0.75f, 0.75f, 0.75f);
+        [SerializeField] private Color _cpuColor = new Color(0.75f, 0.75f, 0.75f);
 
-        [Header("Physics")]
-        [SerializeField]
-        private float _tangibleSpeedCap = 1.5f;
+        [Header("Physics")] [SerializeField] private float _tangibleSpeedCap = 1.5f;
 
-        [Header("Debug")]
-        [SerializeField]
-        private Color DamageableHitboxColor = Color.yellow;
+        [Header("Debug")] [SerializeField] private Color DamageableHitboxColor = Color.yellow;
 
-        [SerializeField]
-        private Color IntangibleHitboxColor = Color.blue;
+        [SerializeField] private Color IntangibleHitboxColor = Color.blue;
 
-        [SerializeField]
-        private Color InvincibleHitboxColor = Color.green;
-        
-        [SerializeField]
-        private Color OffensiveHitboxColor = Color.red;
+        [SerializeField] private Color InvincibleHitboxColor = Color.green;
 
-        [Header("Game Modes")]
-        [SerializeField]
-        private SerializedGameMode _standardVersus;
+        [SerializeField] private Color OffensiveHitboxColor = Color.red;
 
-        [SerializeField]
-        private SerializedGameMode _training;
+        [Header("Game Modes")] [SerializeField] private SerializedGameMode _standardVersus;
 
-        [SerializeField]
-        private SerializedGameMode _arcade;
+        [SerializeField] private SerializedGameMode _training;
 
-        [SerializeField]
-        private SerializedGameMode _allStar; 
+        [SerializeField] private SerializedGameMode _arcade;
+
+        [SerializeField] private SerializedGameMode _allStar;
+
         #endregion
 
         public float TangibleSpeedCap {
@@ -57,7 +42,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public GameMode StandardVersus {
-            get { return _standardVersus; }            
+            get { return _standardVersus; }
         }
 
         public GameMode Training {
@@ -79,7 +64,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         public static Config Instance {
             get {
-                if(_instance)
+                if (_instance)
                     return _instance;
                 var configs = Resources.LoadAll<Config>(string.Empty);
                 if (configs.Length > 0)

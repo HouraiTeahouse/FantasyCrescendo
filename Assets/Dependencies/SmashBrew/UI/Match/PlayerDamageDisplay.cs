@@ -1,16 +1,13 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     /// <summary>
     /// A UI Text driver that displays the current damage of the a given player.
     /// </summary>
     public sealed class PlayerDamageDisplay : GradientNumberText, IDataComponent<Player> {
-
         private Character _character;
 
-        [SerializeField, Tooltip("The font size of the suffix")]
-        private int suffixSize = 25;
+        [SerializeField, Tooltip("The font size of the suffix")] private int suffixSize = 25;
 
         /// <summary>
         /// Unity callback. Called once per frame.
@@ -47,7 +44,5 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 Number = _character.CurrentDamage;
             }
         }
-
     }
 }
-

@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     public static class TransformExtensions {
-
         public static void SetX(this Transform transform, float x, bool local = false) {
             transform.SetPositionLocation(0, x, local);
         }
@@ -26,7 +24,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException">thrown if <paramref name="transform"/>
         ///  or <paramref name="target"/> are null</exception>
         public static void Copy(this Transform transform, Transform target) {
-            if(!transform || !target)
+            if (!transform || !target)
                 throw new ArgumentNullException();
             transform.position = target.position;
             transform.rotation = target.rotation;
@@ -73,7 +71,5 @@ namespace HouraiTeahouse {
             else
                 transform.position = position;
         }
-
     }
-
 }

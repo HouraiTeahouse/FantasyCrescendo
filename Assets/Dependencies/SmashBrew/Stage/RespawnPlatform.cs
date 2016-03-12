@@ -2,17 +2,12 @@ using HouraiTeahouse.Events;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     public class RespawnPlatform : EventHandlerBehaviour<PlayerRespawnEvent> {
+        [SerializeField] private float _invicibilityTimer;
 
-        [SerializeField]
-        private float _invicibilityTimer;
+        [SerializeField] private float _platformTimer;
 
-        [SerializeField]
-        private float _platformTimer;
-
-        [SerializeField]
-        private bool _facing;
+        [SerializeField] private bool _facing;
 
         public bool Occupied {
             get { return _character; }
@@ -58,7 +53,5 @@ namespace HouraiTeahouse.SmashBrew {
                 gameObject.SetActive(false);
             }
         }
-
     }
-
 }

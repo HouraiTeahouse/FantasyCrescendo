@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// An abstract for poolable objects
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class AbstractPool<T> {
-
         private readonly Queue<T> _pool;
 
         /// <summary>
@@ -56,7 +54,7 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <param name="count">the number of objects to spawn</param>
         protected void Spawn(int count) {
-            for(var i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
                 _pool.Enqueue(Create());
         }
 
@@ -65,7 +63,6 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <returns>the new instance</returns>
         protected abstract T Create();
-
     }
 
     /// <summary>
@@ -73,7 +70,6 @@ namespace HouraiTeahouse {
     /// </summary>
     /// <typeparam name="T">the type of object to create and pool</typeparam>
     public class PrefabPool<T> : AbstractPool<T> where T : Object {
-
         private readonly T _source;
 
         /// <summary>
@@ -84,7 +80,7 @@ namespace HouraiTeahouse {
         /// <param name="initialCount">the number of objects to initially spawn</param>>
         /// <exception cref="ArgumentNullException">thrown if <paramref name="source"/> is null</exception>
         public PrefabPool(T source, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
-            if(source == null)
+            if (source == null)
                 throw new ArgumentNullException();
             _source = source;
             Spawn(initialCount);
@@ -108,7 +104,6 @@ namespace HouraiTeahouse {
     /// </summary>
     /// <typeparam name="T">the type of object to create and pool</typeparam>
     public class EventBasedPool<T> : AbstractPool<T> {
-
         private readonly Func<T> _creatFunc;
 
         /// <summary>
@@ -118,7 +113,7 @@ namespace HouraiTeahouse {
         /// <param name="spawnCount">the number of objects to spawn when the pool is empty</param>
         /// <param name="initialCount">the number of objects to initially spawn</param>
         /// <exception cref="ArgumentNullException">thrown if <paramref name="createFunc"/> is null.</exception>
-        public EventBasedPool(Func<T> createFunc, int spawnCount, int initialCount = 0) : base(spawnCount, 0){
+        public EventBasedPool(Func<T> createFunc, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
             if (_creatFunc == null)
                 throw new ArgumentNullException();
             _creatFunc = createFunc;
@@ -140,7 +135,6 @@ namespace HouraiTeahouse {
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class Pool<T> : AbstractPool<T> where T : new() {
-
         /// <summary>
         /// Initializes an instance of Pool.
         /// </summary>

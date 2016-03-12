@@ -3,10 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse {
-
     [RequireComponent(typeof (Text))]
     public sealed class FPSCounter : MonoBehaviour {
-
         private Text Counter;
         private float deltaTime;
         private float fps;
@@ -19,9 +17,9 @@ namespace HouraiTeahouse {
         }
 
         private void Update() {
-            deltaTime += (Time.deltaTime - deltaTime)*0.1f;
-            msec = deltaTime*1000.0f;
-            fps = 1.0f/deltaTime;
+            deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+            msec = deltaTime * 1000.0f;
+            fps = 1.0f / deltaTime;
         }
 
         private IEnumerator UpdateDisplay() {
@@ -30,7 +28,5 @@ namespace HouraiTeahouse {
                 Counter.text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
             }
         }
-
     }
-
 }

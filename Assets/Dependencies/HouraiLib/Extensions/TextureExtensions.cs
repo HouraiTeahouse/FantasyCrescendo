@@ -2,9 +2,7 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     public static class TextureExtensions {
-
         public static float AspectRatio(this Texture texture) {
             if (texture == null)
                 throw new NullReferenceException();
@@ -58,7 +56,5 @@ namespace HouraiTeahouse {
             }
             return uvRect;
         }
-
     }
-
 }

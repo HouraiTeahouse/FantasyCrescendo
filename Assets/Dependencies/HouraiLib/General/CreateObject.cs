@@ -4,9 +4,7 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
-
     public class CreateObject : SingleActionBehaviour {
-
         [SerializeField] private Object _object;
 
         [SerializeField] private bool _copyPosiiton;
@@ -24,7 +22,7 @@ namespace HouraiTeahouse {
             var go = obj as GameObject;
             var comp = obj as Component;
             Transform objTransform = null;
-            if (go != null) 
+            if (go != null)
                 objTransform = go.transform;
             else if (comp != null)
                 objTransform = comp.transform;

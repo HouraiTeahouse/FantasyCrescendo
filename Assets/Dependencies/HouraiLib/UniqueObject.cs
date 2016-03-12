@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections.Generic;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// Component that marks a unique object.
     /// Objects instantiated with this attached only allows one to exist.
@@ -11,31 +10,27 @@ namespace HouraiTeahouse {
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class UniqueObject : MonoBehaviour {
-
         /// <summary>
         /// A collection of all of the UniqueObjects currently in the game.
         /// </summary>
         private static Dictionary<string, UniqueObject> _allIds;
 
-        [SerializeField, ReadOnly, Tooltip("The unique id for this object")]
-        private string _id;
+        [SerializeField, ReadOnly, Tooltip("The unique id for this object")] private string _id;
 
         /// <summary>
         /// The unique ID of the object.
         /// </summary>
         public string ID {
-            get {
-                return _id;
-            }
+            get { return _id; }
         }
 
         /// <summary>
         /// Unity Callback. Called on object instantiation.
         /// </summary>
         void Awake() {
-            if (_allIds == null) 
+            if (_allIds == null)
                 _allIds = new Dictionary<string, UniqueObject>();
-            if(_allIds.ContainsKey(ID)) {
+            if (_allIds.ContainsKey(ID)) {
                 Destroy(gameObject);
                 return;
             }
@@ -59,6 +54,5 @@ namespace HouraiTeahouse {
         void Reset() {
             _id = Guid.NewGuid().ToString();
         }
-
     }
 }

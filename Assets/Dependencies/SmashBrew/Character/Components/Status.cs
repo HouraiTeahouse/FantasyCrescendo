@@ -2,11 +2,8 @@ using UnityEngine;
 using System;
 
 namespace HouraiTeahouse.SmashBrew {
-    
     public abstract class Status : HouraiBehaviour {
-        
-        public static T Apply<T>(GameObject target, float duration = -1f) where T : Status
-        {
+        public static T Apply<T>(GameObject target, float duration = -1f) where T : Status {
             if (!target)
                 throw new ArgumentNullException("target");
             T instance = target.GetComponent<T>();
@@ -16,8 +13,7 @@ namespace HouraiTeahouse.SmashBrew {
             return instance;
         }
 
-        public static T Apply<T>(Component target, float duration = -1f) where T : Status
-        {
+        public static T Apply<T>(Component target, float duration = -1f) where T : Status {
             if (!target)
                 throw new ArgumentNullException("target");
             return Apply<T>(target.gameObject, duration);
@@ -34,7 +30,7 @@ namespace HouraiTeahouse.SmashBrew {
                 enabled = EllapsedTime < Duration;
             }
         }
-        
+
         protected virtual void Start() {
             enabled = false;
         }
@@ -60,15 +56,18 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void StartStatus(float duration = -1) {
-            if(duration > 0)
+            if (duration > 0)
                 Duration = duration;
             enabled = true;
         }
 
-        protected virtual void OnStatusStart() {}
-        protected virtual void OnStatusUpdate(float dt) {}
-        protected virtual void OnStatusEnd() {}
+        protected virtual void OnStatusStart() {
+        }
 
+        protected virtual void OnStatusUpdate(float dt) {
+        }
+
+        protected virtual void OnStatusEnd() {
+        }
     }
-
 }

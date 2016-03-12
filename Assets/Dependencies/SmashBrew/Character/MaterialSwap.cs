@@ -4,24 +4,18 @@ using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// The pallete swap behaviour for changing out the 
     /// </summary>
     [RequiredCharacterComponent]
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof (PlayerController))]
     public class MaterialSwap : MonoBehaviour {
-
         [Serializable]
         private class Swap {
-
             [Serializable]
             public class MaterialSet {
-
-                [SerializeField, Resource(typeof (Material))]
-                [Tooltip("The materials to apply to the renderers")]
-                private string[] _materials;
+                [SerializeField, Resource(typeof (Material))] [Tooltip("The materials to apply to the renderers")] private string[] _materials;
 
                 public void Set(Renderer[] targets) {
                     if (targets == null)
@@ -29,18 +23,16 @@ namespace HouraiTeahouse.SmashBrew {
                     Material[] loadedMaterials = new Material[_materials.Length];
                     for (var i = 0; i < loadedMaterials.Length; i++)
                         loadedMaterials[i] = Resources.Load<Material>(_materials[i]);
-                    foreach(Renderer renderer in targets)
-                        if(renderer)
+                    foreach (Renderer renderer in targets)
+                        if (renderer)
                             renderer.sharedMaterials = loadedMaterials;
                 }
-
             }
 
-            [SerializeField, Tooltip("The set of materials to swap to")]
-            private MaterialSet[] MaterialSets;
+            [SerializeField, Tooltip("The set of materials to swap to")] private MaterialSet[] MaterialSets;
 
-            [SerializeField, Tooltip("The set of renderers to apply the materials to")]
-            private Renderer[] TargetRenderers;
+            [SerializeField, Tooltip("The set of renderers to apply the materials to")] private Renderer[]
+                TargetRenderers;
 
             public void Set(int palleteSwap) {
                 if (palleteSwap < 0 || palleteSwap >= MaterialSets.Length)
@@ -53,8 +45,7 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        [SerializeField]
-        private Swap[] _swaps;
+        [SerializeField] private Swap[] _swaps;
 
         private int _color;
 
@@ -62,7 +53,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// Gets the number of pallete swaps are available
         /// </summary>
         public int PalleteCount {
-            get { return _swaps.Max(swap => swap.SetCount);  }
+            get { return _swaps.Max(swap => swap.SetCount); }
         }
 
 
@@ -74,7 +65,5 @@ namespace HouraiTeahouse.SmashBrew {
                     swap.Set(value);
             }
         }
-
     }
-
-} 
+}

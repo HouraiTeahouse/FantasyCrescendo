@@ -1,9 +1,7 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     public class AutoDestroy : MonoBehaviour {
-
         private Animation _animation;
         private AudioSource _audio;
         private ParticleSystem _particleSystem;
@@ -24,7 +22,5 @@ namespace HouraiTeahouse {
                 return;
             Destroy(gameObject);
         }
-
     }
-
 }

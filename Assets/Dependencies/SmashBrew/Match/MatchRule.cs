@@ -1,7 +1,6 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    
     /// <summary>
     /// An abstract class  to define a Match Rule.
     /// 
@@ -10,9 +9,8 @@ namespace HouraiTeahouse.SmashBrew {
     /// 
     /// They run as normal MonoBehaviours, but are regularly polled for
     /// </summary>
-    [RequireComponent(typeof(Match))]
+    [RequireComponent(typeof (Match))]
     public abstract class MatchRule : MonoBehaviour {
-
         /// <summary>
         /// A refernce to the central Match object.
         /// </summary>
@@ -27,8 +25,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// If the key does not exist. The rule remains in whatever
         ///     state it was left in the editor.
         /// </summary>
-        [SerializeField]
-        private string _playerPrefCheck;
+        [SerializeField] private string _playerPrefCheck;
 
         /// <summary>
         /// Unity Callback. Called on object instantiation.
@@ -48,7 +45,5 @@ namespace HouraiTeahouse.SmashBrew {
         /// <returns>the Player that won. Null if there is a tie, or no winner
         ///     is declared.</returns>
         public abstract Player GetWinner();
-
     }
-
 }

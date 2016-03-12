@@ -2,9 +2,7 @@ using System;
 using UnityEngine;
 
 namespace InControl {
-
     public class InputDevice {
-
         public static readonly InputDevice Null = new InputDevice("NullInputDevice");
 
         internal int SortOrder = int.MaxValue;
@@ -27,7 +25,7 @@ namespace InControl {
 
             LastChangeTick = 0;
 
-            int numInputControlTypes = Enum.GetValues(typeof(InputControlTarget)).Length;
+            int numInputControlTypes = Enum.GetValues(typeof (InputControlTarget)).Length;
             Controls = new InputControl[numInputControlTypes];
 
             LeftStick = new TwoAxisInputControl();
@@ -44,7 +42,7 @@ namespace InControl {
 
         // Warning: this is not efficient. Don't use it unless you have to, m'kay?
         public static InputControlTarget GetInputControlTypeByName(string inputControlName) {
-            return (InputControlTarget) Enum.Parse(typeof(InputControlTarget), inputControlName);
+            return (InputControlTarget) Enum.Parse(typeof (InputControlTarget), inputControlName);
         }
 
 
@@ -96,8 +94,8 @@ namespace InControl {
                 if (control != null) {
                     if (control.RawValue.HasValue) {
                         control.UpdateWithValue(control.RawValue.Value, updateTick);
-                    } else
-                    if (control.PreValue.HasValue) {
+                    }
+                    else if (control.PreValue.HasValue) {
                         control.UpdateWithValue(ProcessAnalogControlValue(control, deltaTime), updateTick);
                     }
 
@@ -125,11 +123,14 @@ namespace InControl {
             if (obverseTarget.HasValue) {
                 var obverseControl = GetControl(obverseTarget.Value);
                 if (obverseControl.PreValue.HasValue) {
-                    analogValue = ApplyCircularDeadZone(analogValue, obverseControl.PreValue.Value, control.LowerDeadZone, control.UpperDeadZone);
-                } else {
+                    analogValue = ApplyCircularDeadZone(analogValue, obverseControl.PreValue.Value,
+                        control.LowerDeadZone, control.UpperDeadZone);
+                }
+                else {
                     analogValue = ApplyDeadZone(analogValue, control.LowerDeadZone, control.UpperDeadZone);
                 }
-            } else {
+            }
+            else {
                 analogValue = ApplyDeadZone(analogValue, control.LowerDeadZone, control.UpperDeadZone);
             }
 
@@ -204,11 +205,11 @@ namespace InControl {
         public bool MenuWasPressed {
             get {
                 return GetControl(InputControlTarget.Back).WasPressed ||
-                    GetControl(InputControlTarget.Start).WasPressed ||
-                    GetControl(InputControlTarget.Select).WasPressed ||
-                    GetControl(InputControlTarget.System).WasPressed ||
-                    GetControl(InputControlTarget.Pause).WasPressed ||
-                    GetControl(InputControlTarget.Menu).WasPressed;
+                       GetControl(InputControlTarget.Start).WasPressed ||
+                       GetControl(InputControlTarget.Select).WasPressed ||
+                       GetControl(InputControlTarget.System).WasPressed ||
+                       GetControl(InputControlTarget.Pause).WasPressed ||
+                       GetControl(InputControlTarget.Menu).WasPressed;
             }
         }
 
@@ -228,51 +229,91 @@ namespace InControl {
         }
 
 
-        public InputControl LeftStickX { get { return GetControl(InputControlTarget.LeftStickX); } }
-        public InputControl LeftStickY { get { return GetControl(InputControlTarget.LeftStickY); } }
+        public InputControl LeftStickX {
+            get { return GetControl(InputControlTarget.LeftStickX); }
+        }
 
-        public InputControl RightStickX { get { return GetControl(InputControlTarget.RightStickX); } }
-        public InputControl RightStickY { get { return GetControl(InputControlTarget.RightStickY); } }
+        public InputControl LeftStickY {
+            get { return GetControl(InputControlTarget.LeftStickY); }
+        }
 
-        public InputControl DPadUp { get { return GetControl(InputControlTarget.DPadUp); } }
-        public InputControl DPadDown { get { return GetControl(InputControlTarget.DPadDown); } }
-        public InputControl DPadLeft { get { return GetControl(InputControlTarget.DPadLeft); } }
-        public InputControl DPadRight { get { return GetControl(InputControlTarget.DPadRight); } }
+        public InputControl RightStickX {
+            get { return GetControl(InputControlTarget.RightStickX); }
+        }
 
-        public InputControl Action1 { get { return GetControl(InputControlTarget.Action1); } }
-        public InputControl Action2 { get { return GetControl(InputControlTarget.Action2); } }
-        public InputControl Action3 { get { return GetControl(InputControlTarget.Action3); } }
-        public InputControl Action4 { get { return GetControl(InputControlTarget.Action4); } }
+        public InputControl RightStickY {
+            get { return GetControl(InputControlTarget.RightStickY); }
+        }
 
-        public InputControl LeftTrigger { get { return GetControl(InputControlTarget.LeftTrigger); } }
-        public InputControl RightTrigger { get { return GetControl(InputControlTarget.RightTrigger); } }
+        public InputControl DPadUp {
+            get { return GetControl(InputControlTarget.DPadUp); }
+        }
 
-        public InputControl LeftBumper { get { return GetControl(InputControlTarget.LeftBumper); } }
-        public InputControl RightBumper { get { return GetControl(InputControlTarget.RightBumper); } }
+        public InputControl DPadDown {
+            get { return GetControl(InputControlTarget.DPadDown); }
+        }
 
-        public InputControl LeftStickButton { get { return GetControl(InputControlTarget.LeftStickButton); } }
-        public InputControl RightStickButton { get { return GetControl(InputControlTarget.RightStickButton); } }
+        public InputControl DPadLeft {
+            get { return GetControl(InputControlTarget.DPadLeft); }
+        }
+
+        public InputControl DPadRight {
+            get { return GetControl(InputControlTarget.DPadRight); }
+        }
+
+        public InputControl Action1 {
+            get { return GetControl(InputControlTarget.Action1); }
+        }
+
+        public InputControl Action2 {
+            get { return GetControl(InputControlTarget.Action2); }
+        }
+
+        public InputControl Action3 {
+            get { return GetControl(InputControlTarget.Action3); }
+        }
+
+        public InputControl Action4 {
+            get { return GetControl(InputControlTarget.Action4); }
+        }
+
+        public InputControl LeftTrigger {
+            get { return GetControl(InputControlTarget.LeftTrigger); }
+        }
+
+        public InputControl RightTrigger {
+            get { return GetControl(InputControlTarget.RightTrigger); }
+        }
+
+        public InputControl LeftBumper {
+            get { return GetControl(InputControlTarget.LeftBumper); }
+        }
+
+        public InputControl RightBumper {
+            get { return GetControl(InputControlTarget.RightBumper); }
+        }
+
+        public InputControl LeftStickButton {
+            get { return GetControl(InputControlTarget.LeftStickButton); }
+        }
+
+        public InputControl RightStickButton {
+            get { return GetControl(InputControlTarget.RightStickButton); }
+        }
 
 
         public float DPadX {
-            get {
-                return DPad.X;
-            }
+            get { return DPad.X; }
         }
 
 
         public float DPadY {
-            get {
-                return DPad.Y;
-            }
+            get { return DPad.Y; }
         }
 
 
         public TwoAxisInputControl Direction {
-            get {
-                return DPad.UpdateTick > LeftStick.UpdateTick ? DPad : LeftStick;
-            }
+            get { return DPad.UpdateTick > LeftStick.UpdateTick ? DPad : LeftStick; }
         }
     }
 }
-

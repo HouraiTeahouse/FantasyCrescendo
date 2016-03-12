@@ -1,12 +1,10 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-   
     /// <summary>
     /// A simple struct representing a range of real numbers.
     /// </summary> 
     public struct Range {
-        
         private float _min;
         private float _max;
 
@@ -19,7 +17,8 @@ namespace HouraiTeahouse {
                 if (value > Max) {
                     _min = _max;
                     _max = value;
-                } else {
+                }
+                else {
                     _min = value;
                 }
             }
@@ -34,7 +33,8 @@ namespace HouraiTeahouse {
                 if (value < Min) {
                     _max = _min;
                     _min = value;
-                } else {
+                }
+                else {
                     _min = value;
                 }
             }
@@ -44,7 +44,7 @@ namespace HouraiTeahouse {
         /// Returns the width of the Range. Equal to the difference between Max and Min.
         /// </summary>
         public float Width {
-            get { return _max - _min;  }
+            get { return _max - _min; }
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace HouraiTeahouse {
         /// Gets the full range of real numbers, from negative infinity to positive infinity
         /// </summary>
         public static Range FullRange {
-            get { return new Range(float.NegativeInfinity, float.PositiveInfinity);}
+            get { return new Range(float.NegativeInfinity, float.PositiveInfinity); }
         }
 
         /// <summary>

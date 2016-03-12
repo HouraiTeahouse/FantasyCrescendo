@@ -1,26 +1,23 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// Hides the cursor
     /// </summary>
     public class HideMouse : MonoBehaviour {
-
         /// <summary>
         /// Whether the cursor hiding works in the editor or not.
         /// </summary>
-        [SerializeField]
-        private bool _inEditor;
+        [SerializeField] private bool _inEditor;
 
 #if UNITY_EDITOR
         void OnEnable() {
-            if(_inEditor)
+            if (_inEditor)
                 Cursor.visible = false;
         }
 
         void OnDisable() {
-            if(_inEditor)
+            if (_inEditor)
                 Cursor.visible = true;
         }
 #else
@@ -33,5 +30,4 @@ namespace HouraiTeahouse {
         }
 #endif
     }
-
 }

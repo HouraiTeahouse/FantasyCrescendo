@@ -1,10 +1,8 @@
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// Event for declaring the end of the Match
     /// </summary>
     public class MatchEndEvent {
-
         /// <summary>
         /// The result of the Match. Whether there is a winner, a tie, or no contest.
         /// </summary>

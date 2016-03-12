@@ -1,13 +1,11 @@
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     /// <summary>
     /// A CharacterUIComponent that displays the Character's UI icon
     /// on an Image. 
     /// </summary>
     public sealed class IconDisplay : CharacterUIComponent<Image> {
-
         /// <summary>
         /// <see cref="IDataComponent{T}.SetData"/>
         /// </summary>
@@ -17,8 +15,5 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 return;
             Component.sprite = data.Icon.Load();
         }
-
     }
-
 }
-

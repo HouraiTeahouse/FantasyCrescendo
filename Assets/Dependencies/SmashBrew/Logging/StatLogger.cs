@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     public class Counter {
-
         private float _count;
 
         public float Count {
@@ -30,12 +28,9 @@ namespace HouraiTeahouse.SmashBrew {
             counter += 10;
             return counter;
         }
-
-
     }
 
     public sealed class StatLogger {
-
         private Dictionary<string, Counter> _counters;
 
         public Counter this[string counterName] {
@@ -56,7 +51,5 @@ namespace HouraiTeahouse.SmashBrew {
             }
             return counter;
         }
-
     }
-
 }

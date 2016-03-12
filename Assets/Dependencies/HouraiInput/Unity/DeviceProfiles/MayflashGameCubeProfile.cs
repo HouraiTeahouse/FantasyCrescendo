@@ -80,7 +80,7 @@ namespace InControl {
                 }
             };
 
-            AnalogMappings = new [] {
+            AnalogMappings = new[] {
                 new InputControlMapping {
                     Handle = "Control Stick X",
                     Target = InputControlTarget.LeftStickX,
@@ -104,5 +104,6 @@ namespace InControl {
             };
         }
     }
+
     // @endcond
 }

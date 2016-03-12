@@ -4,12 +4,10 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     /// <summary>
     /// A PrefabFactoryEventHandler that produces PlayerIndicators in response to Players spawning.
     /// </summary>
     public sealed class PlayerIndicatorFactory : PrefabFactoryEventHandler<PlayerIndicator, PlayerSpawnEvent> {
-
         /// <summary>
         /// <see cref="AbstractFactoryEventHandler{T,TEvent}.Create"/>
         /// </summary>
@@ -18,7 +16,5 @@ namespace HouraiTeahouse.SmashBrew.UI {
             indicator.GetComponentsInChildren<IDataComponent<Player>>().SetData(eventArgs.Player);
             return indicator;
         }
-
     }
-
 }

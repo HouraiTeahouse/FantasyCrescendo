@@ -1,20 +1,15 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A NumberText element that changes the color the Text based on a the current number value and a defined Gradient.
     /// </summary>
     public class GradientNumberText : NumberText {
+        [SerializeField] private Gradient _gradient;
 
-        [SerializeField]
-        private Gradient _gradient;
+        [SerializeField] private float _start;
 
-        [SerializeField]
-        private float _start;
-
-        [SerializeField]
-        private float _end;
+        [SerializeField] private float _end;
 
         /// <summary>
         /// The Color gradient used to determine the color of the text.
@@ -51,12 +46,9 @@ namespace HouraiTeahouse {
                 _end = temp;
             }
 
-            float point = _start == _end ? 0f : Mathf.Clamp01((Number - _start)/(_end - _start));
+            float point = _start == _end ? 0f : Mathf.Clamp01((Number - _start) / (_end - _start));
 
             Text.color = _gradient.Evaluate(point);
         }
-
     }
-
 }
-

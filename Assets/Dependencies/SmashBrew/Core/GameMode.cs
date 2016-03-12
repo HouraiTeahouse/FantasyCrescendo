@@ -3,12 +3,10 @@ using UnityEngine;
 using System.Collections.ObjectModel;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// An abstract class for controlling the global status of the game while under a certain game mode.
     /// </summary>
     public abstract class GameMode {
-
         private static GameMode _current;
 
         /// <summary>
@@ -48,31 +46,24 @@ namespace HouraiTeahouse.SmashBrew {
         /// All of the characters that cannot be selected for this  
         /// </summary>
         public abstract ReadOnlyCollection<CharacterData> ExcludedCharacters { get; }
-       
+
         /// <summary>
         /// All of the stages that cannot be selected for the game mode
         /// </summary>
         public abstract ReadOnlyCollection<SceneData> ExcludedStages { get; }
-
     }
 
     [Serializable]
     public sealed class SerializedGameMode : GameMode {
+        [SerializeField] private int _minimumPlayers = 1;
 
-        [SerializeField]
-        private int _minimumPlayers = 1;
+        [SerializeField] private int _maximumPlayers = 4;
 
-        [SerializeField]
-        private int _maximumPlayers = 4;
+        [SerializeField] private bool _cpusAllowed = true;
 
-        [SerializeField]
-        private bool _cpusAllowed = true;
+        [SerializeField] private CharacterData[] _excludedCharacters;
 
-        [SerializeField]
-        private CharacterData[] _excludedCharacters;
-
-        [SerializeField]
-        private SceneData[] _excludedStages;
+        [SerializeField] private SceneData[] _excludedStages;
 
         public override int MaxPlayers {
             get { return _maximumPlayers; }
@@ -96,6 +87,5 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     public abstract class MultiMatchGameMode : GameMode {
-
     }
 }

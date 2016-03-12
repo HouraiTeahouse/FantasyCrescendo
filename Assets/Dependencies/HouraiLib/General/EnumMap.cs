@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// Map between the values of a Enum and the values of another type.
     /// Essentially works as a dictionary prepopulated with all the values of a enum that cannot have keys added or removed.
@@ -12,7 +11,6 @@ namespace HouraiTeahouse {
     /// <typeparam name="TValue">the type to map the enum to.</typeparam>
     public class EnumMap<TEnum, TValue> : IEnumerable<TValue>
         where TEnum : struct, IComparable, IFormattable, IConvertible {
-
         // The backing dictionary
         private readonly Dictionary<TEnum, TValue> _map;
 
@@ -21,8 +19,8 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <exception cref="ArgumentException">thrown if <typeparamref name="TEnum"/> is not a Enum type.</exception>
         public EnumMap() {
-            Type enumType = typeof(TEnum);
-            if (!typeof(TEnum).IsEnum)
+            Type enumType = typeof (TEnum);
+            if (!typeof (TEnum).IsEnum)
                 throw new ArgumentException("Cannot create an EnumMap from a non-enum type!");
             _map = new Dictionary<TEnum, TValue>();
             foreach (TEnum enumVal in Enum.GetValues(enumType))
@@ -47,7 +45,8 @@ namespace HouraiTeahouse {
             get { return _map.Count; }
         }
 
-#region IEnumerable Implementation
+        #region IEnumerable Implementation
+
         public IEnumerator<TValue> GetEnumerator() {
             foreach (KeyValuePair<TEnum, TValue> kvp in _map)
                 yield return kvp.Value;
@@ -56,8 +55,7 @@ namespace HouraiTeahouse {
         IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
-#endregion
+
+        #endregion
     }
-
-
 }

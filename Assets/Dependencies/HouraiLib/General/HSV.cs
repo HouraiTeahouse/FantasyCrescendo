@@ -2,13 +2,11 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// HSV (Hue/Saturation/Value) color struct.
     /// </summary>
     [Serializable]
     public struct HSV {
-
         public static HSV white {
             get { return new HSV(Color.white); }
         }
@@ -46,7 +44,7 @@ namespace HouraiTeahouse {
         }
 
         public static HSV grey {
-            get { return new HSV(Color.grey);}
+            get { return new HSV(Color.grey); }
         }
 
         /// <summary>

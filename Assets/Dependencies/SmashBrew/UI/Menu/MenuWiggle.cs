@@ -2,17 +2,12 @@ using UnityEngine;
 using InControl;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     public class MenuWiggle : MonoBehaviour {
+        [SerializeField] private InputControlTarget _horizontalAxis = InputControlTarget.RightStickX;
 
-        [SerializeField]
-        private InputControlTarget _horizontalAxis = InputControlTarget.RightStickX;
+        [SerializeField] private InputControlTarget _verticalAxis = InputControlTarget.RightStickY;
 
-        [SerializeField]
-        private InputControlTarget _verticalAxis = InputControlTarget.RightStickY;
-
-        [SerializeField]
-        private Vector2 _scale = new Vector2(30, 30);
+        [SerializeField] private Vector2 _scale = new Vector2(30, 30);
 
         /// <summary>
         /// Unity Callback. Called once every frame.
@@ -34,7 +29,5 @@ namespace HouraiTeahouse.SmashBrew.UI {
             distortion.y *= _scale.y;
             transform.rotation = Quaternion.Euler(distortion);
         }
-
     }
-
 }

@@ -1,14 +1,12 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// A Status effect that keeps a character frozen for a short amount of time after being hit.
     /// </summary>
     [RequiredCharacterComponent]
     [DisallowMultipleComponent]
     public class Hitlag : Status {
-
         private float _cachedTimeScale;
 
         /// <summary>
@@ -17,7 +15,7 @@ namespace HouraiTeahouse.SmashBrew {
         protected override float GetDeltaTime() {
             return Time.unscaledDeltaTime;
         }
-        
+
         /// <summary>
         /// <see cref="Status.OnStatusStart"/>
         /// </summary>
@@ -34,7 +32,5 @@ namespace HouraiTeahouse.SmashBrew {
             base.OnStatusEnd();
             LocalTimeScale = _cachedTimeScale;
         }
-
     }
-
 }

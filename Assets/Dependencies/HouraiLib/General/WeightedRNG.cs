@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A collection of objects/values
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class WeightedRNG<T> : ICollection<T> {
-
         // The backing dictionary
         private readonly Dictionary<T, float> _weights;
 
@@ -93,7 +91,8 @@ namespace HouraiTeahouse {
             return default(T);
         }
 
-#region ICollection Implemenation
+        #region ICollection Implemenation
+
         public void CopyTo(T[] array, int arrayIndex) {
             _weights.Keys.CopyTo(array, arrayIndex);
         }
@@ -103,7 +102,7 @@ namespace HouraiTeahouse {
                 return false;
 
             bool success = _weights.Remove(obj);
-            if(success)
+            if (success)
                 _weightSum -= _weights[obj];
             return success;
         }
@@ -111,9 +110,13 @@ namespace HouraiTeahouse {
         /// <summary>
         /// A count of how many elements are in the WeightedRNG.
         /// </summary>
-        public int Count { get { return _weights.Count; } }
+        public int Count {
+            get { return _weights.Count; }
+        }
 
-        public bool IsReadOnly { get { return false; } }
+        public bool IsReadOnly {
+            get { return false; }
+        }
 
         /// <summary>
         /// Adds an item to the WeightedRNG with a weight of 1.
@@ -147,7 +150,7 @@ namespace HouraiTeahouse {
         IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
-#endregion
-    }
 
+        #endregion
+    }
 }

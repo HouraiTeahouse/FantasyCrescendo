@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 
 namespace HouraiTeahouse.Events {
-
     /// <summary>
     /// A generalized object that encapsulates the interactions between multiple objects.
     /// Meant to be used as either local or global event managers.
     /// </summary>
     public class Mediator {
-
         // Maps types of events to a set of handlers
         private readonly Dictionary<Type, Delegate> _subscribers = new Dictionary<Type, Delegate>();
 
@@ -58,12 +56,10 @@ namespace HouraiTeahouse.Events {
         /// There is no specification saying that the event object may not be mutated. The object may be altered after execution.
         /// </remarks>
         /// <param name="e">the event object</param>
-        public void Publish(object e) { 
+        public void Publish(object e) {
             Type tp = e.GetType();
             if (_subscribers.ContainsKey(tp))
                 _subscribers[tp].DynamicInvoke(e);
         }
-
     }
-
 }

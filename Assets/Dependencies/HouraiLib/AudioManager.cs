@@ -5,24 +5,19 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A controllable audio channel 
     /// </summary>
     [Serializable]
     public sealed class AudioChannel {
+        [SerializeField, Tooltip("The viewable name for the channel. May be used for in-game UI elements.")] private
+            string _name;
 
-        [SerializeField, Tooltip("The viewable name for the channel. May be used for in-game UI elements.")]
-        private string _name;
+        [SerializeField, Tooltip("The default volume for the channel")] private float _baseVolume = 1f;
 
-        [SerializeField, Tooltip("The default volume for the channel")]
-        private float _baseVolume = 1f;
+        [SerializeField, Tooltip("The PlayerPrefs key to save the volume data onto")] private string _playerPrefsKey;
 
-        [SerializeField, Tooltip("The PlayerPrefs key to save the volume data onto")]
-        private string _playerPrefsKey;
-
-        [SerializeField, Tooltip("The associated exposed parameters on the Audio Mixer that are to be changed.")]
-        private string[] _associatedParams;
+        [SerializeField, Tooltip("The associated exposed parameters on the Audio Mixer that are to be changed.")] private string[] _associatedParams;
 
         private AudioMixer _mixer;
         private float _currentVolume;
@@ -68,19 +63,15 @@ namespace HouraiTeahouse {
         internal void Save() {
             Prefs.SetFloat(_playerPrefsKey, _currentVolume);
         }
-
     }
 
     /// <summary>
     /// A singleton wrapper for the master AudioMixer to provide easier programmatic control over defined audio channels
     /// </summary>
     public sealed class AudioManager : MonoBehaviour {
+        [SerializeField, Tooltip("The editable audio mixer")] private AudioMixer _mixer;
 
-        [SerializeField, Tooltip("The editable audio mixer")]
-        private AudioMixer _mixer;
-
-        [SerializeField, Tooltip("The controllable defined channels1")]
-        private AudioChannel[] _audioChannels;
+        [SerializeField, Tooltip("The controllable defined channels1")] private AudioChannel[] _audioChannels;
 
         private ReadOnlyCollection<AudioChannel> _channelCollection;
         private Dictionary<string, AudioChannel> _channelByName;

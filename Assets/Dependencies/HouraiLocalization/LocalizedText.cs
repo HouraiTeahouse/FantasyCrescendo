@@ -2,14 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.Localization {
-
     /// <summary>
     /// An abstract MonoBehaviour class that localizes the strings displayed on UI Text objects.
     /// </summary>
     public abstract class AbstractLocalizedText : MonoBehaviour {
-
-        [SerializeField]
-        private Text _text;
+        [SerializeField] private Text _text;
 
         private string _localizationKey;
 
@@ -34,7 +31,8 @@ namespace HouraiTeahouse.Localization {
                 if (languageManager.HasKey(_localizationKey))
                     _text.text = Process(languageManager[_localizationKey]);
                 else
-                    Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key", _localizationKey));
+                    Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key",
+                        _localizationKey));
             }
         }
 
@@ -58,7 +56,8 @@ namespace HouraiTeahouse.Localization {
             if (languageManager.HasKey(_localizationKey))
                 _text.text = Process(languageManager[_localizationKey]);
             else
-                Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key", _localizationKey));
+                Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key",
+                    _localizationKey));
         }
 
         /// <summary>
@@ -73,7 +72,8 @@ namespace HouraiTeahouse.Localization {
             if (language.ContainsKey(_localizationKey))
                 _text.text = Process(language[_localizationKey]);
             else
-                Debug.LogWarning(string.Format("Tried to localize key {0}, but langauge {1} has no such key", _localizationKey, language));
+                Debug.LogWarning(string.Format("Tried to localize key {0}, but langauge {1} has no such key",
+                    _localizationKey, language));
         }
 
         /// <summary>
@@ -84,7 +84,6 @@ namespace HouraiTeahouse.Localization {
         protected virtual string Process(string val) {
             return val;
         }
-
     }
 
     /// <summary>
@@ -92,19 +91,16 @@ namespace HouraiTeahouse.Localization {
     /// </summary>
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localized_Text")]
     public sealed class LocalizedText : AbstractLocalizedText {
-
         /// <summary>
         /// The serialized localization key
         /// </summary>
-        [SerializeField]
-        private string _key;
+        [SerializeField] private string _key;
 
         /// <summary>
         /// The format for the localization string to be displayed in.
         /// </summary>
         /// <see cref="string.Format"/>
-        [SerializeField]
-        private string _format;
+        [SerializeField] private string _format;
 
         /// <summary>
         /// Unity callback. Called once before the object's first frame.
@@ -131,5 +127,4 @@ namespace HouraiTeahouse.Localization {
             return string.Format(_format, val);
         }
     }
-
 }

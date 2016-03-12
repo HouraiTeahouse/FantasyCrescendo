@@ -1,26 +1,19 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     [ExecuteInEditMode]
     public class Dio : MonoBehaviour {
+        [SerializeField] private Vector2 center;
 
-        [SerializeField]
-        private Vector2 center;
+        [SerializeField, Range(0, 1)] private float _innerRatio;
 
-        [SerializeField, Range(0, 1)]
-        private float _innerRatio;
+        [SerializeField, Range(0, 1)] private float _outerRatio;
 
-        [SerializeField, Range(0, 1)]
-        private float _outerRatio;
-
-        [SerializeField, HideInInspector]
-        private Shader _shader;
+        [SerializeField, HideInInspector] private Shader _shader;
 
         private Material _mat;
 
         void OnRenderImage(RenderTexture src, RenderTexture dst) {
-
             if (_mat == null) {
                 if (_shader == null) {
                     enabled = false;
@@ -35,9 +28,6 @@ namespace HouraiTeahouse {
             _mat.SetVector("_Center", new Vector4(center.x, center.y, _innerRatio, _outerRatio));
 
             Graphics.Blit(src, dst, _mat);
-
         }
-
     }
-
 }

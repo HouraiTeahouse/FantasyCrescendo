@@ -2,7 +2,6 @@ using UnityEngine;
 using HouraiTeahouse.Events;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// A MatchRule that adds a time limit.
     /// The match ends the instant the timer hits zero.
@@ -10,9 +9,7 @@ namespace HouraiTeahouse.SmashBrew {
     /// Note this rule does not determine a winner, only ends the Match.
     /// </summary>
     public sealed class TimeMatch : MatchRule {
-
-        [SerializeField]
-        private float _time = 180f;
+        [SerializeField] private float _time = 180f;
 
         /// <summary>
         /// The amount of time remaining in the Match, in seconds.
@@ -38,7 +35,7 @@ namespace HouraiTeahouse.SmashBrew {
             _eventManager = GlobalMediator.Instance;
             _eventManager.Subscribe<MatchStartEvent>(OnMatchStart);
         }
-        
+
         /// <summary>
         /// Event callback. Called when the Match starts and ends.
         /// </summary>
@@ -52,10 +49,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         void Update() {
             CurrentTime -= Time.unscaledDeltaTime;
-            if(CurrentTime <= 0)
+            if (CurrentTime <= 0)
                 Match.FinishMatch();
         }
-
     }
-
 }

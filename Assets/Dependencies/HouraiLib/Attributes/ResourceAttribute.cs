@@ -3,7 +3,6 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A PropertyAttribute for the Unity Editor. Marks a string field to store a path to an asset stored in a Resources folder.
     /// The resultant string can be used with Resources.Load to get said asset.
@@ -12,7 +11,6 @@ namespace HouraiTeahouse {
     [AttributeUsage(AttributeTargets.Field)]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Resources#ResourcePathAttribute_and_Resource_Wrapper")]
     public class ResourceAttribute : PropertyAttribute {
-
         /// <summary>
         /// The type of asset to be stored. All instances of this type, including those of derived types, can be used.
         /// </summary>
@@ -26,12 +24,11 @@ namespace HouraiTeahouse {
             TypeRestriction = typeof (Object);
             if (type == null)
                 return;
-            if (typeof (Object).IsAssignableFrom(type)) 
+            if (typeof (Object).IsAssignableFrom(type))
                 TypeRestriction = type;
             else
-                Debug.LogWarning("Trying to get a resource type restriction on type: " + type.FullName + " is impossible. Use a type derived from UnityEngine.Object.");
+                Debug.LogWarning("Trying to get a resource type restriction on type: " + type.FullName +
+                                 " is impossible. Use a type derived from UnityEngine.Object.");
         }
-
     }
-
 }

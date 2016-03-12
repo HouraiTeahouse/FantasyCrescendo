@@ -2,15 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     /// <summary>
     /// UI element that shows where players are
     /// </summary>
-    [RequireComponent(typeof(Text), typeof(PlayerUIColor))]
+    [RequireComponent(typeof (Text), typeof (PlayerUIColor))]
     public sealed class PlayerIndicator : PlayerUIComponent {
-
-        [SerializeField, Tooltip("Real world position bias for the indicator's position")]
-        private Vector3 _positionBias = new Vector3(0f, 1f, 0f);
+        [SerializeField, Tooltip("Real world position bias for the indicator's position")] private Vector3 _positionBias
+            = new Vector3(0f, 1f, 0f);
 
         // the indicator's RectTransform
         private RectTransform _rTransform;
@@ -31,7 +29,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <summary>
         /// Unity callback. Called on object instantiation.  
         /// </summary>
-        protected override void Awake() { 
+        protected override void Awake() {
             base.Awake();
             _rTransform = GetComponent<RectTransform>();
             _rTransform.localScale = Vector3.one;

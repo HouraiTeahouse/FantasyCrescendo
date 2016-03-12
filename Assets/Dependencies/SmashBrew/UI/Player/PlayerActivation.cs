@@ -2,12 +2,9 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     public class PlayerActivation : PlayerUIComponent {
-
         [Serializable]
         private class ActivateTarget {
-
             private enum Mode {
                 Assign,
                 And,
@@ -15,17 +12,12 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 Xor
             }
 
-            [SerializeField]
-            private Behaviour Behaviour;
-            [SerializeField]
-            private Mode EditMode;
-            [SerializeField]
-            private bool IncludeCharacterCheck;
-            [SerializeField]
-            private bool Invert;
+            [SerializeField] private Behaviour Behaviour;
+            [SerializeField] private Mode EditMode;
+            [SerializeField] private bool IncludeCharacterCheck;
+            [SerializeField] private bool Invert;
 
             public void Edit(Player player) {
-
                 if (!Behaviour)
                     return;
                 bool playerActive = player != null && player.IsActive;
@@ -48,11 +40,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
                         break;
                 }
             }
-
         }
 
-        [SerializeField]
-        private ActivateTarget[] _targets;
+        [SerializeField] private ActivateTarget[] _targets;
 
         protected override void OnPlayerChange() {
             base.OnPlayerChange();
@@ -60,5 +50,4 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 target.Edit(Player);
         }
     }
-
 }

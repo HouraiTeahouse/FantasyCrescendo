@@ -1,18 +1,16 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// A utility base behaviour for Hourai Teahouse game elements.
     /// </summary>
     public abstract class HouraiBehaviour : MonoBehaviour, ITimeObject {
-        
         private TimeModifier _timeMod;
 
         // Cached component references.
         private Rigidbody _rigidbody;
         private Animator _animator;
-        
+
         /// <summary>
         /// Unity Callback. Called on object instatiation .
         /// </summary>
@@ -96,8 +94,6 @@ namespace HouraiTeahouse {
             }
         }
 
-#endregion
-
+        #endregion
     }
-
 }

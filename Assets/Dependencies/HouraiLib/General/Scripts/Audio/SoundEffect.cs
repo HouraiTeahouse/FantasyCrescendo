@@ -1,12 +1,10 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
-    
-    [RequireComponent(typeof(AudioSource))]
+    [RequireComponent(typeof (AudioSource))]
     public sealed class SoundEffect : HouraiBehaviour {
-
         private AudioSource _audio;
-        
+
         public AudioSource Audio {
             get { return _audio; }
         }
@@ -23,8 +21,8 @@ namespace HouraiTeahouse {
 
         void Update() {
             _audio.pitch = EffectiveTimeScale * Pitch;
-            if(destroyOnFinish && !_audio.isPlaying)
-                Destroy(gameObject); 
+            if (destroyOnFinish && !_audio.isPlaying)
+                Destroy(gameObject);
         }
 
         public AudioSource Play() {
@@ -48,9 +46,5 @@ namespace HouraiTeahouse {
             audioSource.volume = volume;
             return audioSource;
         }
-
     }
-
-
 }
-

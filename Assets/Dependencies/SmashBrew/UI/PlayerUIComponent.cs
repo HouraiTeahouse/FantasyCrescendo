@@ -2,12 +2,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-
     /// <summary>
     /// A UI Component that depends on data assigned from a Player object 
     /// </summary>
     public abstract class PlayerUIComponent : UIBehaviour, IDataComponent<Player> {
-
         private Player _player;
 
         /// <summary>
@@ -52,9 +50,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// </summary>
     /// <typeparam name="T">the type of component the PlayerUIComponent manipulates</typeparam>
     public abstract class PlayerUIComponent<T> : PlayerUIComponent where T : Component {
-
-        [SerializeField]
-        private T _component;
+        [SerializeField] private T _component;
 
         /// <summary>
         /// The component the behaviour manipulates
@@ -72,17 +68,15 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (!_component)
                 _component = GetComponent<T>();
         }
-
     }
 
     /// <summary>
     /// An abstract UI behaviour class for handling a Character's data
     /// </summary>
     /// <typeparam name="T">the type of component the CharacterUIComponent manipulates</typeparam>
-    public abstract class CharacterUIComponent<T> : PlayerUIComponent<T>, IDataComponent<CharacterData> where T : Component {
-
-        [SerializeField, Tooltip("The character whose data is to be displayed")]
-        private CharacterData _character;
+    public abstract class CharacterUIComponent<T> : PlayerUIComponent<T>, IDataComponent<CharacterData>
+        where T : Component {
+        [SerializeField, Tooltip("The character whose data is to be displayed")] private CharacterData _character;
 
         /// <summary>
         /// The target Character currently represented by the behaviour
@@ -97,7 +91,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         protected override void Awake() {
             base.Awake();
-            SetData(_character); 
+            SetData(_character);
         }
 
         /// <summary>
@@ -113,6 +107,5 @@ namespace HouraiTeahouse.SmashBrew.UI {
         public virtual void SetData(CharacterData data) {
             _character = data;
         }
-
     }
 }

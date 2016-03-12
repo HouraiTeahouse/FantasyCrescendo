@@ -1,13 +1,11 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.Events {
-
     /// <summary>
     /// An abstract class for MonoBehaviours that handle events published by Mediators.
     /// </summary>
     /// <typeparam name="T">the event type to subscribe to</typeparam>
     public abstract class EventHandlerBehaviour<T> : HouraiBehaviour {
-
         private Mediator _eventManager;
 
         /// <summary>
@@ -16,10 +14,10 @@ namespace HouraiTeahouse.Events {
         public Mediator EventManager {
             get { return _eventManager; }
             set {
-                if(_eventManager != null)
+                if (_eventManager != null)
                     _eventManager.Unsubscribe<T>(OnEvent);
                 _eventManager = value;
-                if(_eventManager != null)
+                if (_eventManager != null)
                     _eventManager.Subscribe<T>(OnEvent);
             }
         }
@@ -37,7 +35,7 @@ namespace HouraiTeahouse.Events {
         /// Unity callback. Called on object destruction.
         /// </summary>>
         protected virtual void OnDestroy() {
-            if(_eventManager != null)
+            if (_eventManager != null)
                 _eventManager.Unsubscribe<T>(OnEvent);
         }
 
@@ -46,7 +44,5 @@ namespace HouraiTeahouse.Events {
         /// </summary>
         /// <param name="EventArgs">event arguments</param>
         protected abstract void OnEvent(T EventArgs);
-
     }
-
 }

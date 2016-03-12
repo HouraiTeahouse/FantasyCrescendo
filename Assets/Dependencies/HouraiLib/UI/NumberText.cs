@@ -3,18 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse {
-
     /// <summary>
     /// Displays a number to a UnityEngine.UI.Text UI object.
     /// </summary>
     [ExecuteInEditMode]
     public class NumberText : MonoBehaviour {
+        [SerializeField, Tooltip("The Text UI object driven by this script")] private Text _text;
 
-        [SerializeField, Tooltip("The Text UI object driven by this script")]
-        private Text _text;
-
-        [SerializeField, Tooltip("The number to display using this script")]
-        private float _number;
+        [SerializeField, Tooltip("The number to display using this script")] private float _number;
 
         public event Action OnNumberChange;
 
@@ -34,8 +30,7 @@ namespace HouraiTeahouse {
             }
         }
 
-        [SerializeField, Tooltip("The string format used to display")]
-        private string _format;
+        [SerializeField, Tooltip("The string format used to display")] private string _format;
 
         /// <summary>
         /// The string format used to display the number.
@@ -45,7 +40,7 @@ namespace HouraiTeahouse {
             set {
                 bool changed = _format == value;
                 _format = value;
-                if(changed)
+                if (changed)
                     UpdateText();
             }
         }
@@ -82,7 +77,7 @@ namespace HouraiTeahouse {
         /// Unity Callback. Called once per frame.
         /// </summary>
         protected virtual void Update() {
-            if(!Application.isPlaying)
+            if (!Application.isPlaying)
                 UpdateText();
         }
 
@@ -97,4 +92,3 @@ namespace HouraiTeahouse {
         }
     }
 }
-

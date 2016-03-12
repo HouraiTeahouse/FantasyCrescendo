@@ -2,12 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 namespace HouraiTeahouse.SmashBrew {
-
     /// <summary>
     /// Enum containing the possible end results of a Match
     /// </summary>
     public enum MatchResult {
-
         /// <summary>
         /// No Contest. The match was ended prematurely. No winner.
         /// </summary>
@@ -23,5 +21,4 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         HasWinner
     }
-
 }
