@@ -174,7 +174,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 0d10ca0c65849be4fbb752ed2454b800, type: 3}
+      m_Icon: {fileID: 0}
       m_Width: 128
       m_Height: 128
   m_BuildTargetBatching: []
@@ -185,7 +185,7 @@ PlayerSettings:
   - m_BuildTarget: WindowsStandaloneSupport
     m_APIs: 0200000001000000
     m_Automatic: 1
-  webPlayerTemplate: APPLICATION:Default
+  webPlayerTemplate: APPLICATION:Black Background
   m_TemplateCustomTags: {}
   wiiUTitleID: 0005000011000000
   wiiUGroupID: 00010000
