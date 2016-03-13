@@ -180,7 +180,14 @@ namespace HouraiTeahouse.SmashBrew {
             set {
                 if (_pallete == value)
                     return;
-                _pallete = value;
+                if (SelectedCharacter) {
+                    int count = SelectedCharacter.PalleteCount;
+                    if (count > 0)
+                        _pallete = value - count * Mathf.FloorToInt(value / (float) count);
+                }
+                else {
+                    _pallete = value;
+                }
                 if (OnChanged != null)
                     OnChanged();
             }
