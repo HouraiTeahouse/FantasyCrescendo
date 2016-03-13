@@ -442,7 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testCharacters:
-  - Data: {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
+  - Data: {fileID: 11400000, guid: 909122be91dfc3f488344cb130b405b3, type: 2}
     Pallete: 0
   - Data: {fileID: 0}
     Pallete: 3
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
 --- !u!114 &766653197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2486,8 +2486,8 @@ MonoBehaviour:
   _vertical: 2
   _submit: 11
   _cancel: 12
-  _changeLeft: 9
-  _changeRight: 10
+  _changeLeft: 13
+  _changeRight: 14
 --- !u!114 &2025085317
 MonoBehaviour:
   m_ObjectHideFlags: 0

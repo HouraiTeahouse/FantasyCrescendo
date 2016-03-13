@@ -41,7 +41,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         public override void Process() {
-            Debug.Log(_pointers.Count);
             for (var i = 0; i < _pointers.Count; i++) {
                 PlayerPointer pointer = _pointers[i];
                 Player player = pointer.Player;
@@ -57,7 +56,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         void ProcessPointerSubmit(PlayerPointer pointer, int i, InputDevice controller) {
             GetPointerData(i, out _eventData, true);
-            _eventData.position = Camera.main.WorldToViewportPoint(pointer.transform.position);
+            _eventData.position = Camera.main.WorldToScreenPoint(pointer.transform.position);
             EventSystem.current.RaycastAll(_eventData, m_RaycastResultCache);
             RaycastResult result = FindFirstRaycast(m_RaycastResultCache);
             ProcessMove(_eventData);
