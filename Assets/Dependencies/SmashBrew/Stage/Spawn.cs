@@ -10,8 +10,10 @@ namespace HouraiTeahouse.SmashBrew {
     public class Spawn : EventHandlerBehaviour<MatchStartEvent> {
         [Serializable]
         private class SpawnPoint {
+#pragma warning disable 0649
             public Transform Point;
             public bool Direction;
+#pragma warning restore 0649
         }
 
         [SerializeField, Tooltip("The spawn points for each of the characters")] private SpawnPoint[] _spawnPoints;

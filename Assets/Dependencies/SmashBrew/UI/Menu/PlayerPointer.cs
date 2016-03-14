@@ -10,12 +10,12 @@ namespace HouraiTeahouse.SmashBrew.UI {
         protected override void Awake() {
             base.Awake();
             _rectTransform = transform as RectTransform;
-            var inputModule = CharacterSelectInputModule.Instance;
-            if (!inputModule) {
+            _inputModule = CharacterSelectInputModule.Instance;
+            if (!_inputModule) {
                 Destroy(this);
                 return;
             }
-            inputModule.AddPointer(this);
+            _inputModule.AddPointer(this);
         }
 
         protected override void OnDestroy() {

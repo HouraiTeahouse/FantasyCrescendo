@@ -10,7 +10,6 @@ namespace HouraiTeahouse {
         [SerializeField, Tag] private string _tag;
 
         private RectTransform _cTransform;
-        private RectTransform _rTransform;
         private RectTransform _currentPointer;
 
         /// <summary>
@@ -19,7 +18,6 @@ namespace HouraiTeahouse {
         protected override void Awake() {
             base.Awake();
             GameObject go = GameObject.FindWithTag(_tag);
-            _rTransform = transform as RectTransform;
             _currentPointer = Instantiate(_pointer);
             _currentPointer.SetParent(go.transform);
             _cTransform = _currentPointer.GetComponentInParent<Canvas>().transform as RectTransform;
