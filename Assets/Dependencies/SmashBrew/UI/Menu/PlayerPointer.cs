@@ -7,8 +7,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         [SerializeField] private float _movementSpeed = 20;
 
-        protected override void Awake() {
-            base.Awake();
+        protected override void Start() {
+            base.Start();
             _rectTransform = transform as RectTransform;
             _inputModule = CharacterSelectInputModule.Instance;
             if (!_inputModule) {

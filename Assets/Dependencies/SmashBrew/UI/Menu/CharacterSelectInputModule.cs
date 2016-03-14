@@ -5,20 +5,29 @@ using UnityEngine.EventSystems;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
+    public interface IPlayerClickable {
+        void Click(Player player);
+    }
+
     public class CharacterSelectInputModule : PointerInputModule {
 
-        [SerializeField] private InputTarget _horizontal = InputTarget.LeftStickX;
+        [SerializeField]
+        private InputTarget _horizontal = InputTarget.LeftStickX;
 
-        [SerializeField] private InputTarget _vertical = InputTarget.LeftStickY;
+        [SerializeField]
+        private InputTarget _vertical = InputTarget.LeftStickY;
 
         [SerializeField]
         private InputTarget _submit = InputTarget.Action1;
 
-        [SerializeField] private InputTarget _cancel = InputTarget.Action2;
+        [SerializeField]
+        private InputTarget _cancel = InputTarget.Action2;
 
-        [SerializeField] private InputTarget _changeLeft = InputTarget.DPadLeft;
+        [SerializeField]
+        private InputTarget _changeLeft = InputTarget.Action3;
 
-        [SerializeField] private InputTarget _changeRight = InputTarget.DPadRight;
+        [SerializeField]
+        private InputTarget _changeRight = InputTarget.Action4;
 
         private List<PlayerPointer> _pointers;
         private PointerEventData _eventData;
@@ -72,6 +81,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
                     _eventData.pointerPress = ExecuteEvents.ExecuteHierarchy(result.gameObject, _eventData,
                         ExecuteEvents.submitHandler);
                     _eventData.rawPointerPress = result.gameObject;
+                    Debug.Log(result.gameObject.GetComponents<IPlayerClickable>().Length);
+                    foreach (var clickable in result.gameObject.GetComponentsInParent<IPlayerClickable>())
+                        clickable.Click(pointer.Player);
                     success = true;
                 }
             }

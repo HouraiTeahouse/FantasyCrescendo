@@ -33,6 +33,8 @@ GameObject:
   - 222: {fileID: 22266036}
   - 114: {fileID: 11490306}
   - 114: {fileID: 11440556}
+  - 114: {fileID: 11412656}
+  - 114: {fileID: 11418438}
   m_Layer: 5
   m_Name: Portrait
   m_TagString: Untagged
@@ -151,6 +153,29 @@ MonoBehaviour:
     EditMode: 0
     IncludeCharacterCheck: 0
     Invert: 0
+--- !u!114 &11412656
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac07a6a3224933a4f822825727038c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11418438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d97f1ab49b4544db8a686af01b5327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _format: Player {0} Portrait
 --- !u!114 &11419144
 MonoBehaviour:
   m_ObjectHideFlags: 1

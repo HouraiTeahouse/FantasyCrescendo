@@ -46,6 +46,43 @@ namespace HouraiTeahouse.SmashBrew.UI {
     }
 
     /// <summary>
+    /// An abstract UI behaviour class for handling a Character's data
+    /// </summary>
+    public abstract class CharacterUIComponent : PlayerUIComponent, IDataComponent<CharacterData> {
+        [SerializeField, Tooltip("The character whose data is to be displayed")]
+        private CharacterData _character;
+        /// <summary>
+        /// The target Character currently represented by the behaviour
+        /// </summary>
+        public CharacterData Character {
+            get { return _character; }
+            set { SetData(value); }
+        }
+
+        /// <summary>
+        /// Unity Callback. Called on object instantiation.
+        /// </summary>
+        protected override void Awake() {
+            base.Awake();
+            SetData(_character);
+        }
+
+        /// <summary>
+        /// <see cref="PlayerUIComponent{T}.OnPlayerChange"/>
+        /// </summary>
+        protected override void OnPlayerChange() {
+            SetData(Player == null ? null : Player.SelectedCharacter);
+        }
+
+        /// <summary>
+        /// <see cref="IDataComponent{T}.SetData"/>
+        /// </summary>
+        public virtual void SetData(CharacterData data) {
+            _character = data;
+        }
+    }
+
+    /// <summary>
     /// An abstract UI behaviour class for handling a Player's current state
     /// </summary>
     /// <typeparam name="T">the type of component the PlayerUIComponent manipulates</typeparam>

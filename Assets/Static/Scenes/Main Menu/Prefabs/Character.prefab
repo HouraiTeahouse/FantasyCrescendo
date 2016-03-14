@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11485542}
   - 82: {fileID: 8240548}
   - 114: {fileID: 11475524}
+  - 114: {fileID: 11441146}
   m_Layer: 5
   m_Name: Character
   m_TagString: Untagged
@@ -153,6 +154,18 @@ MonoBehaviour:
   _cropped: 1
   _disabledTint: {r: 0, g: 0, b: 0, a: 0.5019608}
   _rectBias: {x: 0, y: -0.025}
+--- !u!114 &11441146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 649fbf6490927bd4ab244a0c3dc3895d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _character: {fileID: 0}
 --- !u!114 &11475524
 MonoBehaviour:
   m_ObjectHideFlags: 1
