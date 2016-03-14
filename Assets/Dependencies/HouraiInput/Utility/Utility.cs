@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public static class Utility {
         private static Vector2[] circleVertexList = {
             new Vector2(+0.0000f, +1.0000f),

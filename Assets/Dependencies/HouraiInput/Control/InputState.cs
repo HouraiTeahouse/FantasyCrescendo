@@ -3,8 +3,8 @@ using UnityEngine;
 
 #pragma warning disable 0660, 0661
 
-namespace InControl {
-    public struct InputControlState {
+namespace HouraiTeahouse.HouraiInput {
+    public struct InputState {
         public bool State;
         public float Value;
 
@@ -33,22 +33,22 @@ namespace InControl {
         }
 
 
-        public static implicit operator bool(InputControlState state) {
+        public static implicit operator bool(InputState state) {
             return state.State;
         }
 
 
-        public static implicit operator float(InputControlState state) {
+        public static implicit operator float(InputState state) {
             return state.Value;
         }
 
 
-        public static bool operator ==(InputControlState a, InputControlState b) {
+        public static bool operator ==(InputState a, InputState b) {
             return Mathf.Approximately(a.Value, b.Value);
         }
 
 
-        public static bool operator !=(InputControlState a, InputControlState b) {
+        public static bool operator !=(InputState a, InputState b) {
             return !Mathf.Approximately(a.Value, b.Value);
         }
     }

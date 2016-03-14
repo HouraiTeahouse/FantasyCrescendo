@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public class InputControl {
         public static readonly InputControl Null = new InputControl("NullInputControl");
 
         public string Handle { get; protected set; }
-        public InputControlTarget Target { get; protected set; }
+        public InputTarget Target { get; protected set; }
 
         public ulong UpdateTick { get; protected set; }
 
@@ -19,9 +19,9 @@ namespace InControl {
         /// </summary>
         public bool IsButton { get; protected set; }
 
-        InputControlState thisState;
-        InputControlState lastState;
-        InputControlState tempState;
+        InputState thisState;
+        InputState lastState;
+        InputState tempState;
 
         ulong zeroTick;
 
@@ -34,12 +34,12 @@ namespace InControl {
         }
 
 
-        public InputControl(string handle, InputControlTarget target) {
+        public InputControl(string handle, InputTarget target) {
             Handle = handle;
             Target = target;
 
-            IsButton = (target >= InputControlTarget.Action1 && target <= InputControlTarget.Action4) ||
-                       (target >= InputControlTarget.Button0 && target <= InputControlTarget.Button19);
+            IsButton = (target >= InputTarget.Action1 && target <= InputTarget.Action4) ||
+                       (target >= InputTarget.Button0 && target <= InputTarget.Button19);
         }
 
 
@@ -163,17 +163,17 @@ namespace InControl {
         }
 
 
-        public InputControlTarget? Obverse {
+        public InputTarget? Obverse {
             get {
                 switch (Target) {
-                    case InputControlTarget.LeftStickX:
-                        return InputControlTarget.LeftStickY;
-                    case InputControlTarget.LeftStickY:
-                        return InputControlTarget.LeftStickX;
-                    case InputControlTarget.RightStickX:
-                        return InputControlTarget.RightStickY;
-                    case InputControlTarget.RightStickY:
-                        return InputControlTarget.RightStickX;
+                    case InputTarget.LeftStickX:
+                        return InputTarget.LeftStickY;
+                    case InputTarget.LeftStickY:
+                        return InputTarget.LeftStickX;
+                    case InputTarget.RightStickX:
+                        return InputTarget.RightStickY;
+                    case InputTarget.RightStickY:
+                        return InputTarget.RightStickX;
                     default:
                         return null;
                 }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public class InputDevice {
         public static readonly InputDevice Null = new InputDevice("NullInputDevice");
 
@@ -25,7 +25,7 @@ namespace InControl {
 
             LastChangeTick = 0;
 
-            int numInputControlTypes = Enum.GetValues(typeof (InputControlTarget)).Length;
+            int numInputControlTypes = Enum.GetValues(typeof (InputTarget)).Length;
             Controls = new InputControl[numInputControlTypes];
 
             LeftStick = new TwoAxisInputControl();
@@ -34,39 +34,39 @@ namespace InControl {
         }
 
 
-        public InputControl GetControl(InputControlTarget inputControlTarget) {
-            InputControl control = Controls[(int) inputControlTarget];
+        public InputControl GetControl(InputTarget inputTarget) {
+            InputControl control = Controls[(int) inputTarget];
             return control ?? InputControl.Null;
         }
 
 
         // Warning: this is not efficient. Don't use it unless you have to, m'kay?
-        public static InputControlTarget GetInputControlTypeByName(string inputControlName) {
-            return (InputControlTarget) Enum.Parse(typeof (InputControlTarget), inputControlName);
+        public static InputTarget GetInputControlTypeByName(string inputControlName) {
+            return (InputTarget) Enum.Parse(typeof (InputTarget), inputControlName);
         }
 
 
         // Warning: this is not efficient. Don't use it unless you have to, m'kay?
         public InputControl GetControlByName(string inputControlName) {
-            InputControlTarget inputControlType = GetInputControlTypeByName(inputControlName);
-            return GetControl(inputControlType);
+            InputTarget inputType = GetInputControlTypeByName(inputControlName);
+            return GetControl(inputType);
         }
 
 
-        public InputControl AddControl(InputControlTarget inputControlTarget, string handle) {
-            var inputControl = new InputControl(handle, inputControlTarget);
-            Controls[(int) inputControlTarget] = inputControl;
+        public InputControl AddControl(InputTarget inputTarget, string handle) {
+            var inputControl = new InputControl(handle, inputTarget);
+            Controls[(int) inputTarget] = inputControl;
             return inputControl;
         }
 
 
-        public void UpdateWithState(InputControlTarget inputControlTarget, bool state, ulong updateTick) {
-            GetControl(inputControlTarget).UpdateWithState(state, updateTick);
+        public void UpdateWithState(InputTarget inputTarget, bool state, ulong updateTick) {
+            GetControl(inputTarget).UpdateWithState(state, updateTick);
         }
 
 
-        public void UpdateWithValue(InputControlTarget inputControlTarget, float value, ulong updateTick) {
-            GetControl(inputControlTarget).UpdateWithValue(value, updateTick);
+        public void UpdateWithValue(InputTarget inputTarget, float value, ulong updateTick) {
+            GetControl(inputTarget).UpdateWithValue(value, updateTick);
         }
 
 
@@ -172,7 +172,7 @@ namespace InControl {
             get {
                 var x = DPadLeft.State ? -DPadLeft.Value : DPadRight.Value;
                 var t = DPadUp.State ? DPadUp.Value : -DPadDown.Value;
-                var y = InputManager.InvertYAxis ? -t : t;
+                var y = HInput.InvertYAxis ? -t : t;
                 return new Vector2(x, y).normalized;
             }
         }
@@ -204,12 +204,12 @@ namespace InControl {
 
         public bool MenuWasPressed {
             get {
-                return GetControl(InputControlTarget.Back).WasPressed ||
-                       GetControl(InputControlTarget.Start).WasPressed ||
-                       GetControl(InputControlTarget.Select).WasPressed ||
-                       GetControl(InputControlTarget.System).WasPressed ||
-                       GetControl(InputControlTarget.Pause).WasPressed ||
-                       GetControl(InputControlTarget.Menu).WasPressed;
+                return GetControl(InputTarget.Back).WasPressed ||
+                       GetControl(InputTarget.Start).WasPressed ||
+                       GetControl(InputTarget.Select).WasPressed ||
+                       GetControl(InputTarget.System).WasPressed ||
+                       GetControl(InputTarget.Pause).WasPressed ||
+                       GetControl(InputTarget.Menu).WasPressed;
             }
         }
 
@@ -230,75 +230,75 @@ namespace InControl {
 
 
         public InputControl LeftStickX {
-            get { return GetControl(InputControlTarget.LeftStickX); }
+            get { return GetControl(InputTarget.LeftStickX); }
         }
 
         public InputControl LeftStickY {
-            get { return GetControl(InputControlTarget.LeftStickY); }
+            get { return GetControl(InputTarget.LeftStickY); }
         }
 
         public InputControl RightStickX {
-            get { return GetControl(InputControlTarget.RightStickX); }
+            get { return GetControl(InputTarget.RightStickX); }
         }
 
         public InputControl RightStickY {
-            get { return GetControl(InputControlTarget.RightStickY); }
+            get { return GetControl(InputTarget.RightStickY); }
         }
 
         public InputControl DPadUp {
-            get { return GetControl(InputControlTarget.DPadUp); }
+            get { return GetControl(InputTarget.DPadUp); }
         }
 
         public InputControl DPadDown {
-            get { return GetControl(InputControlTarget.DPadDown); }
+            get { return GetControl(InputTarget.DPadDown); }
         }
 
         public InputControl DPadLeft {
-            get { return GetControl(InputControlTarget.DPadLeft); }
+            get { return GetControl(InputTarget.DPadLeft); }
         }
 
         public InputControl DPadRight {
-            get { return GetControl(InputControlTarget.DPadRight); }
+            get { return GetControl(InputTarget.DPadRight); }
         }
 
         public InputControl Action1 {
-            get { return GetControl(InputControlTarget.Action1); }
+            get { return GetControl(InputTarget.Action1); }
         }
 
         public InputControl Action2 {
-            get { return GetControl(InputControlTarget.Action2); }
+            get { return GetControl(InputTarget.Action2); }
         }
 
         public InputControl Action3 {
-            get { return GetControl(InputControlTarget.Action3); }
+            get { return GetControl(InputTarget.Action3); }
         }
 
         public InputControl Action4 {
-            get { return GetControl(InputControlTarget.Action4); }
+            get { return GetControl(InputTarget.Action4); }
         }
 
         public InputControl LeftTrigger {
-            get { return GetControl(InputControlTarget.LeftTrigger); }
+            get { return GetControl(InputTarget.LeftTrigger); }
         }
 
         public InputControl RightTrigger {
-            get { return GetControl(InputControlTarget.RightTrigger); }
+            get { return GetControl(InputTarget.RightTrigger); }
         }
 
         public InputControl LeftBumper {
-            get { return GetControl(InputControlTarget.LeftBumper); }
+            get { return GetControl(InputTarget.LeftBumper); }
         }
 
         public InputControl RightBumper {
-            get { return GetControl(InputControlTarget.RightBumper); }
+            get { return GetControl(InputTarget.RightBumper); }
         }
 
         public InputControl LeftStickButton {
-            get { return GetControl(InputControlTarget.LeftStickButton); }
+            get { return GetControl(InputTarget.LeftStickButton); }
         }
 
         public InputControl RightStickButton {
-            get { return GetControl(InputControlTarget.RightStickButton); }
+            get { return GetControl(InputTarget.RightStickButton); }
         }
 
 

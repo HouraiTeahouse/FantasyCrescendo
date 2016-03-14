@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 
-namespace InControl {
-    public class UnityKeyCodeSource : InputControlSource {
+namespace HouraiTeahouse.HouraiInput {
+    public class UnityKeyCodeSource : InputSource {
         KeyCode[] keyCodeList;
 
 

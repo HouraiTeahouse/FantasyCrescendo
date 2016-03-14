@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public class UnityInputDevice : InputDevice {
         public const int MaxDevices = 10;
         public const int MaxButtons = 20;

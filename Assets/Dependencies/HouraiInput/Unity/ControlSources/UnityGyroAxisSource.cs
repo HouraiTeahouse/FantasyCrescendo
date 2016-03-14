@@ -2,13 +2,13 @@ using System;
 using UnityEngine;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     // This is kind of "beta"... while it works on iOS, gyro controls are
     // inconsistent and are usually fine tuned to the games that use them
     // which is somewhat beyond the scope of this project. But, if you 
     // are curious how to go about it, here you go.
     //
-    public class UnityGyroAxisSource : InputControlSource {
+    public class UnityGyroAxisSource : InputSource {
         public enum GyroAxis {
             X = 0,
             Y = 1,

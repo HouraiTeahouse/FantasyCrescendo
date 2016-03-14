@@ -1,7 +1,7 @@
 using System;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     // @cond nodoc
     [AutoDiscover]
     public class LogitechWingManWinProfile : UnityInputDeviceProfile {
@@ -18,119 +18,119 @@ namespace InControl {
             };
 
             ButtonMappings = new[] {
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "A",
-                    Target = InputControlTarget.Action1,
+                    Target = InputTarget.Action1,
                     Source = Button1
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "B",
-                    Target = InputControlTarget.Action2,
+                    Target = InputTarget.Action2,
                     Source = Button2
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "C",
-                    Target = InputControlTarget.Button0,
+                    Target = InputTarget.Button0,
                     Source = Button2
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "X",
-                    Target = InputControlTarget.Action3,
+                    Target = InputTarget.Action3,
                     Source = Button4
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Y",
-                    Target = InputControlTarget.Action4,
+                    Target = InputTarget.Action4,
                     Source = Button5
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Z",
-                    Target = InputControlTarget.Button1,
+                    Target = InputTarget.Button1,
                     Source = Button6
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Left Bumper",
-                    Target = InputControlTarget.LeftBumper,
+                    Target = InputTarget.LeftBumper,
                     Source = Button7
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Right Bumper",
-                    Target = InputControlTarget.RightBumper,
+                    Target = InputTarget.RightBumper,
                     Source = Button8
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Left Trigger",
-                    Target = InputControlTarget.LeftTrigger,
+                    Target = InputTarget.LeftTrigger,
                     Source = Button10
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Right Trigger",
-                    Target = InputControlTarget.RightTrigger,
+                    Target = InputTarget.RightTrigger,
                     Source = Button11,
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Start",
-                    Target = InputControlTarget.Start,
+                    Target = InputTarget.Start,
                     Source = Button9
                 }
             };
 
             AnalogMappings = new[] {
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Left Stick X",
-                    Target = InputControlTarget.LeftStickX,
+                    Target = InputTarget.LeftStickX,
                     Source = Analog0
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Left Stick Y",
-                    Target = InputControlTarget.LeftStickY,
+                    Target = InputTarget.LeftStickY,
                     Source = Analog1,
                     Invert = true
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Right Stick X",
-                    Target = InputControlTarget.RightStickX,
+                    Target = InputTarget.RightStickX,
                     Source = Analog3
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Right Stick Y",
-                    Target = InputControlTarget.RightStickY,
+                    Target = InputTarget.RightStickY,
                     Source = Analog4,
                     Invert = true
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Left",
-                    Target = InputControlTarget.DPadLeft,
+                    Target = InputTarget.DPadLeft,
                     Source = Analog5,
-                    SourceRange = InputControlMapping.Range.Negative,
-                    TargetRange = InputControlMapping.Range.Negative,
+                    SourceRange = InputMapping.Range.Negative,
+                    TargetRange = InputMapping.Range.Negative,
                     Invert = true
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Right",
-                    Target = InputControlTarget.DPadRight,
+                    Target = InputTarget.DPadRight,
                     Source = Analog5,
-                    SourceRange = InputControlMapping.Range.Positive,
-                    TargetRange = InputControlMapping.Range.Positive
+                    SourceRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Range.Positive
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Up",
-                    Target = InputControlTarget.DPadUp,
+                    Target = InputTarget.DPadUp,
                     Source = Analog6,
-                    SourceRange = InputControlMapping.Range.Positive,
-                    TargetRange = InputControlMapping.Range.Positive
+                    SourceRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Range.Positive
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Down",
-                    Target = InputControlTarget.DPadDown,
+                    Target = InputTarget.DPadDown,
                     Source = Analog6,
-                    SourceRange = InputControlMapping.Range.Negative,
-                    TargetRange = InputControlMapping.Range.Negative,
+                    SourceRange = InputMapping.Range.Negative,
+                    TargetRange = InputMapping.Range.Negative,
                     Invert = true
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Throttle",
-                    Target = InputControlTarget.Analog0,
+                    Target = InputTarget.Analog0,
                     Source = Analog2
                 }
             };

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public class UnityUnknownDeviceProfile : UnityInputDeviceProfile {
         public UnityUnknownDeviceProfile(string joystickName) {
             Name = "Unknown Device";
@@ -18,21 +18,21 @@ namespace InControl {
             SupportedPlatforms = null;
             JoystickNames = new[] {joystickName};
 
-            AnalogMappings = new InputControlMapping[UnityInputDevice.MaxAnalogs];
+            AnalogMappings = new InputMapping[UnityInputDevice.MaxAnalogs];
             for (int i = 0; i < UnityInputDevice.MaxAnalogs; i++) {
-                AnalogMappings[i] = new InputControlMapping {
+                AnalogMappings[i] = new InputMapping {
                     Handle = "Analog " + i,
                     Source = Analog(i),
-                    Target = InputControlTarget.Analog0 + i
+                    Target = InputTarget.Analog0 + i
                 };
             }
 
-            ButtonMappings = new InputControlMapping[UnityInputDevice.MaxButtons];
+            ButtonMappings = new InputMapping[UnityInputDevice.MaxButtons];
             for (int i = 0; i < UnityInputDevice.MaxButtons; i++) {
-                ButtonMappings[i] = new InputControlMapping {
+                ButtonMappings[i] = new InputMapping {
                     Handle = "Button " + i,
                     Source = Button(i),
-                    Target = InputControlTarget.Button0 + i
+                    Target = InputTarget.Button0 + i
                 };
             }
         }

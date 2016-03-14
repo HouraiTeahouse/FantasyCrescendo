@@ -6,7 +6,7 @@ using UnityEngine;
 using XInputDotNetPure;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public class XInputDeviceManager : InputDeviceManager {
         bool[] deviceConnected = new bool[] {false, false, false, false};
 
@@ -31,10 +31,10 @@ namespace InControl {
 
                 if (device.IsConnected != deviceConnected[deviceIndex]) {
                     if (device.IsConnected) {
-                        InputManager.AttachDevice(device);
+                        HInput.AttachDevice(device);
                     }
                     else {
-                        InputManager.DetachDevice(device);
+                        HInput.DetachDevice(device);
                     }
 
                     deviceConnected[deviceIndex] = device.IsConnected;
@@ -66,11 +66,11 @@ namespace InControl {
         public static void Enable() {
             var errors = new List<string>();
             if (XInputDeviceManager.CheckPlatformSupport(errors)) {
-                InputManager.HideDevicesWithProfile(typeof (Xbox360WinProfile));
-                InputManager.HideDevicesWithProfile(typeof (XboxOneWinProfile));
-                InputManager.HideDevicesWithProfile(typeof (LogitechF710ModeXWinProfile));
-                InputManager.HideDevicesWithProfile(typeof (LogitechF310ModeXWinProfile));
-                InputManager.AddDeviceManager<XInputDeviceManager>();
+                HInput.HideDevicesWithProfile(typeof (Xbox360WinProfile));
+                HInput.HideDevicesWithProfile(typeof (XboxOneWinProfile));
+                HInput.HideDevicesWithProfile(typeof (LogitechF710ModeXWinProfile));
+                HInput.HideDevicesWithProfile(typeof (LogitechF310ModeXWinProfile));
+                HInput.AddDeviceManager<XInputDeviceManager>();
             }
             else {
                 foreach (var error in errors) {

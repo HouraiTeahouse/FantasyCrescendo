@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public class InputDeviceManager {
         protected List<InputDevice> devices = new List<InputDevice>();
 

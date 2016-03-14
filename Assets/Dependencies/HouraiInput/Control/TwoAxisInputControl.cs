@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public class TwoAxisInputControl {
         public float X { get; protected set; }
         public float Y { get; protected set; }
@@ -37,7 +37,7 @@ namespace InControl {
             Left.UpdateWithValue(Mathf.Clamp01(-X), updateTick, StateThreshold);
             Right.UpdateWithValue(Mathf.Clamp01(X), updateTick, StateThreshold);
 
-            if (InputManager.InvertYAxis) {
+            if (HInput.InvertYAxis) {
                 Up.UpdateWithValue(Mathf.Clamp01(-Y), updateTick, StateThreshold);
                 Down.UpdateWithValue(Mathf.Clamp01(Y), updateTick, StateThreshold);
             }

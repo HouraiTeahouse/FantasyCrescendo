@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace InControl {
-    public class InControlManager : MonoBehaviour {
+namespace HouraiTeahouse.HouraiInput {
+    public class InputManager : MonoBehaviour {
         public bool logDebugInfo = false;
         public bool invertYAxis = false;
         public bool enableXInput = false;
@@ -15,13 +15,13 @@ namespace InControl {
 
         void OnEnable() {
             if (logDebugInfo) {
-                Debug.Log("InControl (version " + InputManager.Version + ")");
+                Debug.Log("InControl (version " + HInput.Version + ")");
                 Logger.OnLogMessage += HandleOnLogMessage;
             }
 
-            InputManager.InvertYAxis = invertYAxis;
-            InputManager.EnableXInput = enableXInput;
-            InputManager.SetupInternal();
+            HInput.InvertYAxis = invertYAxis;
+            HInput.EnableXInput = enableXInput;
+            HInput.SetupInternal();
 
             foreach (string className in customProfiles) {
                 Type classType = Type.GetType(className);
@@ -30,7 +30,7 @@ namespace InControl {
                 }
                 else {
                     var customProfileInstance = Activator.CreateInstance(classType) as UnityInputDeviceProfile;
-                    InputManager.AttachDevice(new UnityInputDevice(customProfileInstance));
+                    HInput.AttachDevice(new UnityInputDevice(customProfileInstance));
                 }
             }
 
@@ -41,7 +41,7 @@ namespace InControl {
 
 
         void OnDisable() {
-            InputManager.ResetInternal();
+            HInput.ResetInternal();
         }
 
 
@@ -66,30 +66,30 @@ namespace InControl {
 
         void Update() {
             if (!useFixedUpdate || Mathf.Approximately(Time.timeScale, 0.0f)) {
-                InputManager.UpdateInternal();
+                HInput.UpdateInternal();
             }
         }
 
 
         void FixedUpdate() {
             if (useFixedUpdate) {
-                InputManager.UpdateInternal();
+                HInput.UpdateInternal();
             }
         }
 
 
         void OnApplicationFocus(bool focusState) {
-            InputManager.OnApplicationFocus(focusState);
+            HInput.OnApplicationFocus(focusState);
         }
 
 
         void OnApplicationPause(bool pauseState) {
-            InputManager.OnApplicationPause(pauseState);
+            HInput.OnApplicationPause(pauseState);
         }
 
 
         void OnApplicationQuit() {
-            InputManager.OnApplicationQuit();
+            HInput.OnApplicationQuit();
         }
 
 

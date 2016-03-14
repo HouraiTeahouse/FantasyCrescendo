@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using InControl;
+using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -206,9 +206,9 @@ namespace HouraiTeahouse.SmashBrew {
 
         public InputDevice Controller {
             get {
-                if (PlayerNumber < 0 || PlayerNumber >= InputManager.Devices.Count)
+                if (PlayerNumber < 0 || PlayerNumber >= HInput.Devices.Count)
                     return null;
-                return InputManager.Devices[PlayerNumber];
+                return HInput.Devices[PlayerNumber];
             }
         }
 

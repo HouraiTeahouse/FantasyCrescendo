@@ -1,16 +1,16 @@
-﻿using HouraiTeahouse;
+using HouraiTeahouse;
 using UnityEngine;
-using InControl;
+using HouraiTeahouse.HouraiInput;
 using UnityEngine.SceneManagement;
 
 public class StartMatch : MonoBehaviour {
-    [SerializeField] private InputControlTarget button;
+    [SerializeField] private InputTarget button;
 
     [SerializeField, Scene] private string scene;
 
     // Update is called once per frame
     void Update() {
-        foreach (InputDevice device in InputManager.Devices)
+        foreach (InputDevice device in HInput.Devices)
             if (device.GetControl(button).WasPressed)
                 SceneManager.LoadScene(scene);
     }

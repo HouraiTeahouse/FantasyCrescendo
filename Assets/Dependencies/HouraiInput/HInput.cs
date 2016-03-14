@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
-namespace InControl {
-    public static class InputManager {
+namespace HouraiTeahouse.HouraiInput {
+    public static class HInput {
         public static readonly VersionInfo Version = VersionInfo.InControlVersion();
 
         public static event Action OnSetup;
@@ -34,9 +34,9 @@ namespace InControl {
         static VersionInfo? unityVersion;
 
         /// <summary>
-        /// DEPRECATED: Use the InControlManager component instead.
+        /// DEPRECATED: Use the InputManager component instead.
         /// </summary>
-        [Obsolete("Calling InputManager.Setup() manually is deprecated. Use the InControlManager component instead.")]
+        [Obsolete("Calling HInput.Setup() manually is deprecated. Use the InputManager component instead.")]
         public static void Setup() {
             SetupInternal();
         }
@@ -83,9 +83,9 @@ namespace InControl {
 
 
         /// <summary>
-        /// DEPRECATED: Use the InControlManager component instead.
+        /// DEPRECATED: Use the InputManager component instead.
         /// </summary>
-        [Obsolete("Calling InputManager.Reset() manually is deprecated. Use the InControlManager component instead.")]
+        [Obsolete("Calling HInput.Reset() manually is deprecated. Use the InputManager component instead.")]
         public static void Reset() {
             ResetInternal();
         }
@@ -107,15 +107,15 @@ namespace InControl {
 
         static void AssertIsSetup() {
             if (!isSetup) {
-                throw new Exception("InputManager is not initialized. Call InputManager.Setup() first.");
+                throw new Exception("HInput is not initialized. Call HInput.Setup() first.");
             }
         }
 
 
         /// <summary>
-        /// DEPRECATED: Use the InControlManager component instead.
+        /// DEPRECATED: Use the InputManager component instead.
         /// </summary>
-        [Obsolete("Calling InputManager.Update() manually is deprecated. Use the InControlManager component instead.")]
+        [Obsolete("Calling HInput.Update() manually is deprecated. Use the InputManager component instead.")]
         public static void Update() {
             UpdateInternal();
         }

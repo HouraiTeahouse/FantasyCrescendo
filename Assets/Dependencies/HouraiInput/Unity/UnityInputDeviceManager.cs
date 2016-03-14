@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEngine;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public class UnityInputDeviceManager : InputDeviceManager {
         float deviceRefreshTimer = 0.0f;
         const float deviceRefreshInterval = 1.0f;
@@ -44,7 +44,7 @@ namespace InControl {
 
         void AttachDevice(UnityInputDevice device) {
             devices.Add(device);
-            InputManager.AttachDevice(device);
+            HInput.AttachDevice(device);
         }
 
 
@@ -98,7 +98,7 @@ namespace InControl {
             }
 
             // PS4 controller works properly as of Unity 4.5
-            if (InputManager.UnityVersion <= new VersionInfo(4, 5)) {
+            if (HInput.UnityVersion <= new VersionInfo(4, 5)) {
                 if (Application.platform == RuntimePlatform.OSXEditor ||
                     Application.platform == RuntimePlatform.OSXPlayer ||
                     Application.platform == RuntimePlatform.OSXWebPlayer) {
@@ -110,7 +110,7 @@ namespace InControl {
             }
 
             // As of Unity 4.6.3p1, empty strings on windows represent disconnected devices.
-            if (InputManager.UnityVersion >= new VersionInfo(4, 6, 3)) {
+            if (HInput.UnityVersion >= new VersionInfo(4, 6, 3)) {
                 if (Application.platform == RuntimePlatform.WindowsEditor ||
                     Application.platform == RuntimePlatform.WindowsPlayer ||
                     Application.platform == RuntimePlatform.WindowsWebPlayer) {
@@ -180,7 +180,7 @@ namespace InControl {
                 if (joystickNames.Length < inputDevice.JoystickId ||
                     !inputDevice.Profile.HasJoystickOrRegexName(joystickNames[inputDevice.JoystickId - 1])) {
                     devices.Remove(inputDevice);
-                    InputManager.DetachDevice(inputDevice);
+                    HInput.DetachDevice(inputDevice);
 
                     Logger.LogInfo("Detached device: " + inputDevice.Profile.Name);
                 }

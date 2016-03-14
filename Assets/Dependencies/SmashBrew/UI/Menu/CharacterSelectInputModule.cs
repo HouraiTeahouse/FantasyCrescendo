@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using InControl;
+using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,18 +7,18 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
     public class CharacterSelectInputModule : PointerInputModule {
 
-        [SerializeField] private InputControlTarget _horizontal = InputControlTarget.LeftStickX;
+        [SerializeField] private InputTarget _horizontal = InputTarget.LeftStickX;
 
-        [SerializeField] private InputControlTarget _vertical = InputControlTarget.LeftStickY;
+        [SerializeField] private InputTarget _vertical = InputTarget.LeftStickY;
 
         [SerializeField]
-        private InputControlTarget _submit = InputControlTarget.Action1;
+        private InputTarget _submit = InputTarget.Action1;
 
-        [SerializeField] private InputControlTarget _cancel = InputControlTarget.Action2;
+        [SerializeField] private InputTarget _cancel = InputTarget.Action2;
 
-        [SerializeField] private InputControlTarget _changeLeft = InputControlTarget.DPadLeft;
+        [SerializeField] private InputTarget _changeLeft = InputTarget.DPadLeft;
 
-        [SerializeField] private InputControlTarget _changeRight = InputControlTarget.DPadRight;
+        [SerializeField] private InputTarget _changeRight = InputTarget.DPadRight;
 
         private List<PlayerPointer> _pointers;
         private PointerEventData _eventData;

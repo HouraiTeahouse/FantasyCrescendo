@@ -1,11 +1,11 @@
 using UnityEngine;
-using InControl;
+using HouraiTeahouse.HouraiInput;
 
 namespace HouraiTeahouse.SmashBrew.UI {
     public class MenuWiggle : MonoBehaviour {
-        [SerializeField] private InputControlTarget _horizontalAxis = InputControlTarget.RightStickX;
+        [SerializeField] private InputTarget _horizontalAxis = InputTarget.RightStickX;
 
-        [SerializeField] private InputControlTarget _verticalAxis = InputControlTarget.RightStickY;
+        [SerializeField] private InputTarget _verticalAxis = InputTarget.RightStickY;
 
         [SerializeField] private Vector2 _scale = new Vector2(30, 30);
 
@@ -14,7 +14,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         void Update() {
             Vector2 distortion = Vector2.zero;
-            foreach (InputDevice device in InputManager.Devices) {
+            foreach (InputDevice device in HInput.Devices) {
                 if (device == null)
                     continue;
                 float x = device.GetControl(_verticalAxis);

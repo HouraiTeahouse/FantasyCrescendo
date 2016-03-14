@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 
-namespace InControl {
-    public class UnityAnalogSource : InputControlSource {
+namespace HouraiTeahouse.HouraiInput {
+    public class UnityAnalogSource : InputSource {
         int analogId;
         static string[,] analogQueries;
 

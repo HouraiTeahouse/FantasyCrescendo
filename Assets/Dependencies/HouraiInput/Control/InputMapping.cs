@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 
-namespace InControl {
-    public class InputControlMapping {
+namespace HouraiTeahouse.HouraiInput {
+    public class InputMapping {
         public class Range {
             public static Range Complete = new Range {Minimum = -1.0f, Maximum = 1.0f};
             public static Range Positive = new Range {Minimum = 0.0f, Maximum = 1.0f};
@@ -14,8 +14,8 @@ namespace InControl {
         }
 
 
-        public InputControlSource Source;
-        public InputControlTarget Target;
+        public InputSource Source;
+        public InputTarget Target;
 
         // Invert the final mapped value.
         public bool Invert;
@@ -56,7 +56,7 @@ namespace InControl {
                 targetValue = Mathf.Lerp(TargetRange.Minimum, TargetRange.Maximum, sourceValue);
             }
 
-            if (Invert ^ (IsYAxis && InputManager.InvertYAxis)) {
+            if (Invert ^ (IsYAxis && HInput.InvertYAxis)) {
                 targetValue = -targetValue;
             }
 
@@ -72,8 +72,8 @@ namespace InControl {
 
         bool IsYAxis {
             get {
-                return Target == InputControlTarget.LeftStickY ||
-                       Target == InputControlTarget.RightStickY;
+                return Target == InputTarget.LeftStickY ||
+                       Target == InputTarget.RightStickY;
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     // Tested with ADT-1
     // Profile by Artūras 'arturaz' Šlajus <arturas@tinylabproductions.com>
     //
@@ -22,42 +22,42 @@ namespace InControl {
             };
 
             ButtonMappings = new[] {
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "A",
-                    Target = InputControlTarget.Action1,
+                    Target = InputTarget.Action1,
                     Source = Button0
                 }
             };
 
             AnalogMappings = new[] {
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Left",
-                    Target = InputControlTarget.DPadLeft,
+                    Target = InputTarget.DPadLeft,
                     Source = Analog4,
-                    SourceRange = InputControlMapping.Range.Negative,
-                    TargetRange = InputControlMapping.Range.Negative,
+                    SourceRange = InputMapping.Range.Negative,
+                    TargetRange = InputMapping.Range.Negative,
                     Invert = true
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Right",
-                    Target = InputControlTarget.DPadRight,
+                    Target = InputTarget.DPadRight,
                     Source = Analog4,
-                    SourceRange = InputControlMapping.Range.Positive,
-                    TargetRange = InputControlMapping.Range.Positive
+                    SourceRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Range.Positive
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Up",
-                    Target = InputControlTarget.DPadUp,
+                    Target = InputTarget.DPadUp,
                     Source = Analog5,
-                    SourceRange = InputControlMapping.Range.Negative,
-                    TargetRange = InputControlMapping.Range.Negative
+                    SourceRange = InputMapping.Range.Negative,
+                    TargetRange = InputMapping.Range.Negative
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Down",
-                    Target = InputControlTarget.DPadDown,
+                    Target = InputTarget.DPadDown,
                     Source = Analog5,
-                    SourceRange = InputControlMapping.Range.Positive,
-                    TargetRange = InputControlMapping.Range.Positive,
+                    SourceRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Range.Positive,
                     Invert = true
                 },
             };

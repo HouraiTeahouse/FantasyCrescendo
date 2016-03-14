@@ -3,7 +3,7 @@ using HouraiTeahouse.Console;
 using HouraiTeahouse.Events;
 using HouraiTeahouse.Localization;
 using UnityEngine;
-using InControl;
+using HouraiTeahouse.HouraiInput;
 
 namespace HouraiTeahouse.SmashBrew {
     /// <summary>

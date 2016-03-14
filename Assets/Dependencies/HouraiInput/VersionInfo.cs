@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public struct VersionInfo : IComparable<VersionInfo> {
         public int Major;
         public int Minor;

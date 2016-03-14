@@ -1,4 +1,4 @@
-using InControl;
+using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,13 +12,13 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         [SerializeField] private string _cancelKeyboard = "cancel";
 
-        [SerializeField] private InputControlTarget _horizontalGamepad = InputControlTarget.LeftStickX;
+        [SerializeField] private InputTarget _horizontalGamepad = InputTarget.LeftStickX;
 
-        [SerializeField] private InputControlTarget _verticalGamepad = InputControlTarget.LeftStickY;
+        [SerializeField] private InputTarget _verticalGamepad = InputTarget.LeftStickY;
 
-        [SerializeField] private InputControlTarget _submitGamepad = InputControlTarget.Action1;
+        [SerializeField] private InputTarget _submitGamepad = InputTarget.Action1;
 
-        [SerializeField] private InputControlTarget _cancelGamepad = InputControlTarget.Action2;
+        [SerializeField] private InputTarget _cancelGamepad = InputTarget.Action2;
 
         [SerializeField] private float _deadZone = 0.1f;
 
@@ -58,7 +58,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             float x = Input.GetAxisRaw(_horizontalKeyboard);
             float y = Input.GetAxisRaw(_verticalKeyboard);
             var count = 1;
-            foreach (InputDevice device in InputManager.Devices) {
+            foreach (InputDevice device in HInput.Devices) {
                 if (device == null)
                     continue;
                 x += device.GetControl(_horizontalGamepad);

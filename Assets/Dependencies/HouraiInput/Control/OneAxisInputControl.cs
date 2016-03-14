@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     public class OneAxisInputControl {
         public ulong UpdateTick { get; private set; }
 
-        InputControlState thisState;
-        InputControlState lastState;
+        InputState thisState;
+        InputState lastState;
 
 
         public void UpdateWithValue(float value, ulong updateTick, float stateThreshold) {

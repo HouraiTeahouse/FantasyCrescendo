@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 
-namespace InControl {
-    public class UnityMouseAxisSource : InputControlSource {
+namespace HouraiTeahouse.HouraiInput {
+    public class UnityMouseAxisSource : InputSource {
         string mouseAxisQuery;
 
 

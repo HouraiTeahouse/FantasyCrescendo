@@ -1,4 +1,4 @@
-using InControl;
+using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {

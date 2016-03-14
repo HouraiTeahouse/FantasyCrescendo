@@ -1,7 +1,7 @@
 using System;
 
 
-namespace InControl {
+namespace HouraiTeahouse.HouraiInput {
     // @cond nodoc
     [AutoDiscover]
     public class OuyaWinProfile : UnityInputDeviceProfile {
@@ -20,124 +20,124 @@ namespace InControl {
             LowerDeadZone = 0.3f;
 
             ButtonMappings = new[] {
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "O",
-                    Target = InputControlTarget.Action1,
+                    Target = InputTarget.Action1,
                     Source = Button0
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "A",
-                    Target = InputControlTarget.Action2,
+                    Target = InputTarget.Action2,
                     Source = Button3
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "U",
-                    Target = InputControlTarget.Action3,
+                    Target = InputTarget.Action3,
                     Source = Button1
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Y",
-                    Target = InputControlTarget.Action4,
+                    Target = InputTarget.Action4,
                     Source = Button2
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Left Bumper",
-                    Target = InputControlTarget.LeftBumper,
+                    Target = InputTarget.LeftBumper,
                     Source = Button4
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Right Bumper",
-                    Target = InputControlTarget.RightBumper,
+                    Target = InputTarget.RightBumper,
                     Source = Button5
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Left Stick Button",
-                    Target = InputControlTarget.LeftStickButton,
+                    Target = InputTarget.LeftStickButton,
                     Source = Button6
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Right Stick Button",
-                    Target = InputControlTarget.RightStickButton,
+                    Target = InputTarget.RightStickButton,
                     Source = Button7
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Up",
-                    Target = InputControlTarget.DPadUp,
+                    Target = InputTarget.DPadUp,
                     Source = Button8
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Down",
-                    Target = InputControlTarget.DPadDown,
+                    Target = InputTarget.DPadDown,
                     Source = Button9
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Left",
-                    Target = InputControlTarget.DPadLeft,
+                    Target = InputTarget.DPadLeft,
                     Source = Button10
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "DPad Right",
-                    Target = InputControlTarget.DPadRight,
+                    Target = InputTarget.DPadRight,
                     Source = Button11
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "System",
-                    Target = InputControlTarget.System,
+                    Target = InputTarget.System,
                     Source = Button14
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "TouchPad Tap",
-                    Target = InputControlTarget.TouchPadTap,
+                    Target = InputTarget.TouchPadTap,
                     Source = MouseButton0
                 }
             };
 
             AnalogMappings = new[] {
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Left Stick X",
-                    Target = InputControlTarget.LeftStickX,
+                    Target = InputTarget.LeftStickX,
                     Source = Analog0
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Left Stick Y",
-                    Target = InputControlTarget.LeftStickY,
+                    Target = InputTarget.LeftStickY,
                     Source = Analog1,
                     Invert = true
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Right Stick X",
-                    Target = InputControlTarget.RightStickX,
+                    Target = InputTarget.RightStickX,
                     Source = Analog3
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Right Stick Y",
-                    Target = InputControlTarget.RightStickY,
+                    Target = InputTarget.RightStickY,
                     Source = Analog4,
                     Invert = true
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Left Trigger",
-                    Target = InputControlTarget.LeftTrigger,
+                    Target = InputTarget.LeftTrigger,
                     Source = Analog2,
-                    SourceRange = InputControlMapping.Range.Positive,
-                    TargetRange = InputControlMapping.Range.Positive
+                    SourceRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Range.Positive
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "Right Trigger",
-                    Target = InputControlTarget.RightTrigger,
+                    Target = InputTarget.RightTrigger,
                     Source = Analog5,
-                    SourceRange = InputControlMapping.Range.Positive,
-                    TargetRange = InputControlMapping.Range.Positive
+                    SourceRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Range.Positive
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "TouchPad X Axis",
-                    Target = InputControlTarget.TouchPadXAxis,
+                    Target = InputTarget.TouchPadXAxis,
                     Source = MouseXAxis,
                     Raw = true
                 },
-                new InputControlMapping {
+                new InputMapping {
                     Handle = "TouchPad Y Axis",
-                    Target = InputControlTarget.TouchPadYAxis,
+                    Target = InputTarget.TouchPadYAxis,
                     Source = MouseYAxis,
                     Raw = true
                 }
