@@ -7,28 +7,106 @@ QualitySettings:
   m_CurrentQuality: 5
   m_QualitySettings:
   - serializedVersion: 2
-    name: Yukari (Phantasmic)
-    pixelLightCount: 4
-    shadows: 2
-    shadowResolution: 3
+    name: Aya (Fastest)
+    pixelLightCount: 0
+    shadows: 0
+    shadowResolution: 0
     shadowProjection: 1
-    shadowCascades: 4
-    shadowDistance: 150
+    shadowCascades: 1
+    shadowDistance: 15
     shadowNearPlaneOffset: 2
     shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.06666667, y: 0.19999999, z: 0.46666664}
+    shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
+    blendWeights: 4
+    textureQuality: 1
+    anisotropicTextures: 0
+    antiAliasing: 0
+    softParticles: 0
+    softVegetation: 0
+    realtimeReflectionProbes: 0
+    billboardsFaceCameraPosition: 0
+    vSyncCount: 1
+    lodBias: 0.3
+    maximumLODLevel: 0
+    particleRaycastBudget: 4
+    asyncUploadTimeSlice: 2
+    asyncUploadBufferSize: 4
+    excludedTargetPlatforms: []
+  - serializedVersion: 2
+    name: Marisa (Fast)
+    pixelLightCount: 0
+    shadows: 0
+    shadowResolution: 0
+    shadowProjection: 1
+    shadowCascades: 1
+    shadowDistance: 20
+    shadowNearPlaneOffset: 2
+    shadowCascade2Split: 0.33333334
+    shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
+    blendWeights: 4
+    textureQuality: 1
+    anisotropicTextures: 0
+    antiAliasing: 0
+    softParticles: 0
+    softVegetation: 0
+    realtimeReflectionProbes: 0
+    billboardsFaceCameraPosition: 0
+    vSyncCount: 1
+    lodBias: 0.4
+    maximumLODLevel: 0
+    particleRaycastBudget: 16
+    asyncUploadTimeSlice: 2
+    asyncUploadBufferSize: 4
+    excludedTargetPlatforms: []
+  - serializedVersion: 2
+    name: Cirno (Simple)
+    pixelLightCount: 1
+    shadows: 1
+    shadowResolution: 0
+    shadowProjection: 1
+    shadowCascades: 1
+    shadowDistance: 20
+    shadowNearPlaneOffset: 2
+    shadowCascade2Split: 0.33333334
+    shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
     blendWeights: 4
     textureQuality: 0
-    anisotropicTextures: 2
-    antiAliasing: 8
-    softParticles: 1
+    anisotropicTextures: 1
+    antiAliasing: 0
+    softParticles: 0
+    softVegetation: 0
+    realtimeReflectionProbes: 0
+    billboardsFaceCameraPosition: 0
+    vSyncCount: 1
+    lodBias: 0.7
+    maximumLODLevel: 0
+    particleRaycastBudget: 64
+    asyncUploadTimeSlice: 2
+    asyncUploadBufferSize: 4
+    excludedTargetPlatforms: []
+  - serializedVersion: 2
+    name: Reimu (Good)
+    pixelLightCount: 2
+    shadows: 2
+    shadowResolution: 1
+    shadowProjection: 1
+    shadowCascades: 2
+    shadowDistance: 40
+    shadowNearPlaneOffset: 2
+    shadowCascade2Split: 0.33333334
+    shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
+    blendWeights: 4
+    textureQuality: 0
+    anisotropicTextures: 1
+    antiAliasing: 2
+    softParticles: 0
     softVegetation: 1
     realtimeReflectionProbes: 1
     billboardsFaceCameraPosition: 1
     vSyncCount: 1
-    lodBias: 2
+    lodBias: 1
     maximumLODLevel: 0
-    particleRaycastBudget: 4096
+    particleRaycastBudget: 256
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 4
     excludedTargetPlatforms: []
@@ -59,107 +137,31 @@ QualitySettings:
     asyncUploadBufferSize: 4
     excludedTargetPlatforms: []
   - serializedVersion: 2
-    name: Reimu (Good)
-    pixelLightCount: 2
+    name: Yukari (Phantasmic)
+    pixelLightCount: 4
     shadows: 2
-    shadowResolution: 1
+    shadowResolution: 3
     shadowProjection: 1
-    shadowCascades: 2
-    shadowDistance: 40
+    shadowCascades: 4
+    shadowDistance: 150
     shadowNearPlaneOffset: 2
     shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
-    blendWeights: 2
+    shadowCascade4Split: {x: 0.06666667, y: 0.19999999, z: 0.46666664}
+    blendWeights: 4
     textureQuality: 0
-    anisotropicTextures: 1
-    antiAliasing: 2
-    softParticles: 0
+    anisotropicTextures: 2
+    antiAliasing: 8
+    softParticles: 1
     softVegetation: 1
     realtimeReflectionProbes: 1
     billboardsFaceCameraPosition: 1
     vSyncCount: 1
-    lodBias: 1
+    lodBias: 2
     maximumLODLevel: 0
-    particleRaycastBudget: 256
+    particleRaycastBudget: 4096
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 4
     excludedTargetPlatforms: []
-  - serializedVersion: 2
-    name: Cirno (Simple)
-    pixelLightCount: 1
-    shadows: 1
-    shadowResolution: 0
-    shadowProjection: 1
-    shadowCascades: 1
-    shadowDistance: 20
-    shadowNearPlaneOffset: 2
-    shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
-    blendWeights: 2
-    textureQuality: 0
-    anisotropicTextures: 1
-    antiAliasing: 0
-    softParticles: 0
-    softVegetation: 0
-    realtimeReflectionProbes: 0
-    billboardsFaceCameraPosition: 0
-    vSyncCount: 1
-    lodBias: 0.7
-    maximumLODLevel: 0
-    particleRaycastBudget: 64
-    asyncUploadTimeSlice: 2
-    asyncUploadBufferSize: 4
-    excludedTargetPlatforms: []
-  - serializedVersion: 2
-    name: Marisa (Fast)
-    pixelLightCount: 0
-    shadows: 0
-    shadowResolution: 0
-    shadowProjection: 1
-    shadowCascades: 1
-    shadowDistance: 20
-    shadowNearPlaneOffset: 2
-    shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
-    blendWeights: 2
-    textureQuality: 1
-    anisotropicTextures: 0
-    antiAliasing: 0
-    softParticles: 0
-    softVegetation: 0
-    realtimeReflectionProbes: 0
-    billboardsFaceCameraPosition: 0
-    vSyncCount: 1
-    lodBias: 0.4
-    maximumLODLevel: 0
-    particleRaycastBudget: 16
-    asyncUploadTimeSlice: 2
-    asyncUploadBufferSize: 4
-    excludedTargetPlatforms: []
-  - serializedVersion: 2
-    name: Aya (Fastest)
-    pixelLightCount: 0
-    shadows: 0
-    shadowResolution: 0
-    shadowProjection: 1
-    shadowCascades: 1
-    shadowDistance: 15
-    shadowNearPlaneOffset: 2
-    shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
-    blendWeights: 1
-    textureQuality: 1
-    anisotropicTextures: 0
-    antiAliasing: 0
-    softParticles: 0
-    softVegetation: 0
-    realtimeReflectionProbes: 0
-    billboardsFaceCameraPosition: 0
-    vSyncCount: 1
-    lodBias: 0.3
-    maximumLODLevel: 0
-    particleRaycastBudget: 4
-    asyncUploadTimeSlice: 2
-    asyncUploadBufferSize: 4
-    excludedTargetPlatforms: []
-  m_PerPlatformDefaultQuality: {}
+  m_PerPlatformDefaultQuality:
+    Standalone: 0
+    Web: 0
