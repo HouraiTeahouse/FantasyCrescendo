@@ -77,6 +77,8 @@ namespace HouraiTeahouse.SmashBrew {
         [Header("2D Art Data")] [SerializeField, Resource(typeof (Sprite))] private string[] _portraits;
         private Resource<Sprite>[] _portraitResources;
 
+        [SerializeField] private Color _backgroundColor = Color.white;
+
         [SerializeField] [Tooltip("The center of the crop for smaller cropped views")] private Vector2 _cropPositon;
 
         [SerializeField] [Range(0f, 1f)] [Tooltip("The size of the crop. In normalized coordinates.")] private float
@@ -186,6 +188,13 @@ namespace HouraiTeahouse.SmashBrew {
             if (!texture)
                 return new Rect(0, 0, 1, 1);
             return texture.UVToPixelRect(new Rect(_cropPositon.x, _cropPositon.y, _cropSize, _cropSize));
+        }
+
+        /// <summary>
+        /// The color used in the character's select image
+        /// </summary>
+        public Color BackgroundColor {
+            get { return _backgroundColor; }
         }
 
         /// <summary>

@@ -4690,14 +4690,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rootBone: {fileID: 0}
+  _rootBone: {fileID: 171578}
   _facingMode: 0
   _gravity: 9.86
-  _fastFallSpeed: 9
   _maxFallSpeed: 5
-  _jumpPower:
+  _fastFallSpeed: 9
+  _jumpHeights:
   - 1.5
   - 1.5
+  _walkSpeed: 3
+  _runSpeed: 5
+  _airSpeed: 3
 --- !u!114 &11493518
 MonoBehaviour:
   m_ObjectHideFlags: 1
