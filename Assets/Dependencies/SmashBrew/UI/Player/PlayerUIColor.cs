@@ -7,13 +7,16 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// </summary>
     [ExecuteInEditMode]
     [RequireComponent(typeof (Graphic))]
-    public sealed class PlayerUIColor : PlayerUIComponent<Graphic> {
+    public sealed class PlayerUIColor : CharacterUIComponent<Graphic> {
         private enum AlphaBlend {
             // Applys the alpha change multiplicatively
             Multiplicative,
             // Applys the alpha change additively, by subtraction 
             Additive
         }
+
+        [SerializeField]
+        private bool _useCharacterColor;
 
         [SerializeField, Range(0f, 1f), Tooltip("The change in the color's saturation")] private float _saturation = 1f;
 
@@ -38,6 +41,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
         public Color AdjustedColor {
             get {
                 Color rawColor = Player != null ? Player.Color : Color.white;
+
+                if (_useCharacterColor && Character)
+                    rawColor = Character.BackgroundColor;
 
                 rawColor.r = _red.Evaluate(rawColor.r);
                 rawColor.g = _green.Evaluate(rawColor.g);

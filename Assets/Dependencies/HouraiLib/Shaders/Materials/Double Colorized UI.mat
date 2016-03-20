@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Colorized UI
-  m_Shader: {fileID: 4800000, guid: df2f591050af81547b23ecd7d4a7a86e, type: 3}
+  m_Name: Double Colorized UI
+  m_Shader: {fileID: 4800000, guid: 6565f201f82510544a1fdcb6f23b6fb5, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
@@ -168,3 +168,7 @@ Material:
         first:
           name: _Top
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Bottom
+        second: {r: 0, g: 0, b: 0, a: 1}

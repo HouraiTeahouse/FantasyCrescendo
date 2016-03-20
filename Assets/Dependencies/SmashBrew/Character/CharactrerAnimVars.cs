@@ -4,7 +4,7 @@ namespace HouraiTeahouse.SmashBrew {
     /// <summary>
     /// Constants for fast access to Character's animator parameters
     /// </summary>
-    public static class CharacterAnimVars {
+    public static class CharacterAnim {
         // Input
         public static readonly int HorizontalInput = Animator.StringToHash("horizontal input");
         public static readonly int VerticalInput = Animator.StringToHash("vertical input");
@@ -19,5 +19,13 @@ namespace HouraiTeahouse.SmashBrew {
         // State Variables
         public static readonly int Grounded = Animator.StringToHash("grounded");
         public static readonly int ShieldHP = Animator.StringToHash("shieldHealth");
+
+        // States
+        public static readonly int Run = Animator.StringToHash("run");
+
+        public static bool IsInState(this Animator animator, int stateHash) {
+            return animator && animator.GetCurrentAnimatorStateInfo(0).shortNameHash == stateHash;
+        }
+
     }
 }

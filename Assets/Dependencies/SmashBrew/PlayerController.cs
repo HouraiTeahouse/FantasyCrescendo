@@ -24,12 +24,12 @@ namespace HouraiTeahouse.SmashBrew {
                 (input.LeftStickX < 0 && !_character.Direction))
                 _character.Direction = !_character.Direction;
 
-            Animator.SetFloat(CharacterAnimVars.HorizontalInput, input.LeftStickX.Value);
-            Animator.SetFloat(CharacterAnimVars.VerticalInput, input.LeftStickY.Value);
-            Animator.SetBool(CharacterAnimVars.AttackInput, input.Action2.WasPressed);
-            Animator.SetBool(CharacterAnimVars.SpecialInput, input.Action2.WasPressed);
-            Animator.SetBool(CharacterAnimVars.JumpInput, input.Action3.WasPressed || input.Action4.WasPressed);
-            Animator.SetBool(CharacterAnimVars.ShieldInput, input.LeftTrigger || input.RightTrigger);
+            Animator.SetFloat(CharacterAnim.HorizontalInput, input.LeftStickX.Value);
+            Animator.SetFloat(CharacterAnim.VerticalInput, input.LeftStickY.Value);
+            Animator.SetBool(CharacterAnim.AttackInput, input.Action2.WasPressed);
+            Animator.SetBool(CharacterAnim.SpecialInput, input.Action2.WasPressed);
+            Animator.SetBool(CharacterAnim.JumpInput, input.Action3.WasPressed || input.Action4.WasPressed);
+            Animator.SetBool(CharacterAnim.ShieldInput, input.LeftTrigger || input.RightTrigger);
         }
     }
 }

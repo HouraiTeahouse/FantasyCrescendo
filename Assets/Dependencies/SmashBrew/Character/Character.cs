@@ -19,7 +19,7 @@ namespace HouraiTeahouse.SmashBrew {
 #endif
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Rigidbody), typeof (CapsuleCollider))]
-    public partial class Character : HouraiBehaviour, IDamageable, IHealable, IKnockbackable {
+    public sealed partial class Character : HouraiBehaviour, IDamageable, IHealable, IKnockbackable {
         private enum FacingMode {
             Rotation,
             Scale
@@ -41,7 +41,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// Assumed to be in the air when false.
         /// </summary>
         public bool IsGrounded {
-            get { return Animator.GetBool(CharacterAnimVars.Grounded); }
+            get { return Animator.GetBool(CharacterAnim.Grounded); }
             private set {
                 if (IsGrounded == value)
                     return;
@@ -49,7 +49,7 @@ namespace HouraiTeahouse.SmashBrew {
                     IsFastFalling = false;
                     JumpCount = 0;
                 }
-                Animator.SetBool(CharacterAnimVars.Grounded, value);
+                Animator.SetBool(CharacterAnim.Grounded, value);
                 CharacterEvents.Publish(new PlayerGroundEvent {Grounded = value});
             }
         }
@@ -105,7 +105,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// Gets the maximum number of jumps the Character can preform.
         /// </summary>
         public int MaxJumpCount {
-            get { return _jumpPower == null ? 0 : _jumpPower.Length; }
+            get { return _jumpHeights == null ? 0 : _jumpHeights.Length; }
         }
 
         #endregion
@@ -120,17 +120,33 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Serialized Variables
 
-        [SerializeField] private GameObject _rootBone;
+        [SerializeField]
+        private GameObject _rootBone;
 
-        [SerializeField] private FacingMode _facingMode;
+        [SerializeField]
+        private FacingMode _facingMode;
 
-        [Header("Physics")] [SerializeField] private float _gravity = 9.86f;
+        [Header("Physics")]
+        [SerializeField, Tooltip("The acceleration downward per second applied")]
+        private float _gravity = 9.86f;
 
-        [SerializeField] private float _fastFallSpeed = 9f;
+        [SerializeField]
+        private float _maxFallSpeed = 5f;
 
-        [SerializeField] private float _maxFallSpeed = 5f;
+        [SerializeField, Tooltip("The falling speed applied ")]
+        private float _fastFallSpeed = 9f;
 
-        [SerializeField] private float[] _jumpPower = {1.5f, 1.5f};
+        [SerializeField, Tooltip("The heights of each jump")]
+        private float[] _jumpHeights = {1.5f, 1.5f};
+
+        [SerializeField]
+        private float _walkSpeed = 3;
+
+        [SerializeField]
+        private float _runSpeed = 5;
+
+        [SerializeField]
+        private float _airSpeed = 3;
 
         #endregion
 
@@ -169,7 +185,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
 
             // Apply upward force to jump
-            Rigidbody.velocity += Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpPower[JumpCount]);
+            Rigidbody.AddForce(Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]), ForceMode.VelocityChange);
 
             JumpCount++;
 
@@ -213,8 +229,8 @@ namespace HouraiTeahouse.SmashBrew {
             BaseAnimationBehaviour.InitializeAll(Animator);
         }
 
-        protected virtual void FixedUpdate() {
-            Rigidbody.AddForce(-Vector3.up * _gravity);
+       void FixedUpdate() {
+            Rigidbody.AddForce(-Vector3.up * _gravity, ForceMode.Acceleration);
 
             Vector3 velocity = Rigidbody.velocity;
 
@@ -230,7 +246,7 @@ namespace HouraiTeahouse.SmashBrew {
                 : Layers.Character;
         }
 
-        protected virtual void OnCollisionEnter(Collision col) {
+        void OnCollisionEnter(Collision col) {
             ContactPoint[] points = col.contacts;
             if (points.Length <= 0)
                 return;
@@ -243,12 +259,12 @@ namespace HouraiTeahouse.SmashBrew {
             IsGrounded = _ground.Count > 0;
         }
 
-        protected virtual void OnCollisionExit(Collision col) {
+        void OnCollisionExit(Collision col) {
             if (_ground.Remove(col.collider))
                 IsGrounded = _ground.Count > 0;
         }
 
-        protected virtual void Reset() {
+        void Reset() {
             MovementCollider = GetComponent<CapsuleCollider>();
             MovementCollider.isTrigger = false;
 
@@ -294,7 +310,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 #endif
 
-        protected virtual void OnAnimatorMove() {
+        void OnAnimatorMove() {
             //TODO: Merge Physics and Animation Movements here
 
             //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;

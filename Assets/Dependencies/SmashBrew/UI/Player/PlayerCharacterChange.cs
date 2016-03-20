@@ -2,7 +2,7 @@
 
     public class PlayerCharacterChange : CharacterUIComponent, IPlayerClickable {
         public void Click(Player player) {
-            if(Character.IsSelectable)
+            if(Character && Character.IsSelectable)
                 player.SelectedCharacter = Character;
         }
     }
