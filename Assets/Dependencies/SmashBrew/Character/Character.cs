@@ -133,7 +133,7 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         private float _maxFallSpeed = 5f;
 
-        [SerializeField, Tooltip("The falling speed applied ")]
+        [SerializeField, Tooltip("The fast falling speed applied")]
         private float _fastFallSpeed = 9f;
 
         [SerializeField, Tooltip("The heights of each jump")]
