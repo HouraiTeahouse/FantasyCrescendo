@@ -41,17 +41,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// Assumed to be in the air when false.
         /// </summary>
         public bool IsGrounded {
-            get { return Animator.GetBool(CharacterAnim.Grounded); }
-            private set {
-                if (IsGrounded == value)
-                    return;
-                if (value) {
-                    IsFastFalling = false;
-                    JumpCount = 0;
-                }
-                Animator.SetBool(CharacterAnim.Grounded, value);
-                CharacterEvents.Publish(new PlayerGroundEvent {Grounded = value});
-            }
+            get { return _ground.Count > 0; }
         }
 
         /// <summary>
@@ -108,6 +98,13 @@ namespace HouraiTeahouse.SmashBrew {
             get { return _jumpHeights == null ? 0 : _jumpHeights.Length; }
         }
 
+        /// <summary>
+        /// Can the Character currently jump?
+        /// </summary>
+        public bool CanJump {
+            get { return JumpCount < MaxJumpCount; }
+        }
+
         #endregion
 
         #region Runtime Variables
@@ -115,6 +112,8 @@ namespace HouraiTeahouse.SmashBrew {
         private Transform[] _bones;
         private HashSet<Collider> _ground;
         private bool _facing;
+
+        private bool _jumpQueued;
 
         #endregion
 
@@ -138,15 +137,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         [SerializeField, Tooltip("The heights of each jump")]
         private float[] _jumpHeights = {1.5f, 1.5f};
-
-        [SerializeField]
-        private float _walkSpeed = 3;
-
-        [SerializeField]
-        private float _runSpeed = 5;
-
-        [SerializeField]
-        private float _airSpeed = 3;
 
         #endregion
 
@@ -181,15 +171,20 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void Jump() {
-            if (JumpCount >= MaxJumpCount) //Restricted)
-                return;
+            if (CanJump)
+                _jumpQueued = true;
+        }
 
+        /// <summary>
+        /// Actually applies the force to jump.
+        /// </summary>
+        void JumpImpl() {
             // Apply upward force to jump
             Rigidbody.AddForce(Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]), ForceMode.VelocityChange);
 
             JumpCount++;
 
-            CharacterEvents.Publish(new PlayerJumpEvent {Ground = IsGrounded, RemainingJumps = MaxJumpCount - JumpCount});
+            CharacterEvents.Publish(new PlayerJumpEvent { Ground = IsGrounded, RemainingJumps = MaxJumpCount - JumpCount });
         }
 
         #endregion
@@ -229,6 +224,13 @@ namespace HouraiTeahouse.SmashBrew {
             BaseAnimationBehaviour.InitializeAll(Animator);
         }
 
+        void AnimationUpdate() {
+            Animator.SetBool(CharacterAnim.Grounded, IsGrounded);
+            Animator.SetBool(CharacterAnim.Jump, _jumpQueued);
+
+            _jumpQueued = false;
+        }
+
        void FixedUpdate() {
             Rigidbody.AddForce(-Vector3.up * _gravity, ForceMode.Acceleration);
 
@@ -239,15 +241,24 @@ namespace HouraiTeahouse.SmashBrew {
 
             if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;
-
+           if (IsGrounded) {
+               IsFastFalling = false;
+               JumpCount = 0;
+           }
             Rigidbody.velocity = velocity;
             gameObject.layer = (velocity.magnitude > Config.Instance.TangibleSpeedCap)
                 ? Layers.Intangible
                 : Layers.Character;
+
+            AnimationUpdate();
         }
 
         void OnCollisionEnter(Collision col) {
-            ContactPoint[] points = col.contacts;
+            GroundCheck(col);
+        }
+
+        void GroundCheck(Collision collison) {
+            ContactPoint[] points = collison.contacts;
             if (points.Length <= 0)
                 return;
 
@@ -256,12 +267,14 @@ namespace HouraiTeahouse.SmashBrew {
             foreach (ContactPoint contact in points)
                 if ((contact.point - bottom).sqrMagnitude < r2)
                     _ground.Add(contact.otherCollider);
-            IsGrounded = _ground.Count > 0;
+        }
+
+        void OnCollisionStay(Collision col) {
+            GroundCheck(col);
         }
 
         void OnCollisionExit(Collision col) {
-            if (_ground.Remove(col.collider))
-                IsGrounded = _ground.Count > 0;
+            _ground.Remove(col.collider);
         }
 
         void Reset() {

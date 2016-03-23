@@ -28,8 +28,11 @@ namespace HouraiTeahouse.SmashBrew {
             Animator.SetFloat(CharacterAnim.VerticalInput, input.LeftStickY.Value);
             Animator.SetBool(CharacterAnim.AttackInput, input.Action2.WasPressed);
             Animator.SetBool(CharacterAnim.SpecialInput, input.Action2.WasPressed);
-            Animator.SetBool(CharacterAnim.JumpInput, input.Action3.WasPressed || input.Action4.WasPressed);
             Animator.SetBool(CharacterAnim.ShieldInput, input.LeftTrigger || input.RightTrigger);
+
+            // Jump on X and Y presses
+            if(input.Action3.WasPressed || input.Action4.WasPressed)
+                _character.Jump();
         }
     }
 }
