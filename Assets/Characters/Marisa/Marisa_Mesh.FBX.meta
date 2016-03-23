@@ -165,6 +165,30 @@ ModelImporter:
     100314: Mesh_hakkero
     100316: Mesh_Marisa_Body
     100318: Mesh_Marisa_Hat
+    100320: Ctrl_Arm_Left
+    100322: Ctrl_Arm_Right
+    100324: Ctrl_Bag
+    100326: Ctrl_Braid
+    100328: Ctrl_Footpad_Left
+    100330: ctrl_Footpad_Right
+    100332: Ctrl_Hair
+    100334: Ctrl_Head
+    100336: IK_Arm_Left
+    100338: IK_Arm_Right
+    100340: IK_Leg_Left_Foot
+    100342: IK_Leg_Left_Leg
+    100344: IK_Leg_Left_Toe
+    100346: IK_Leg_Right_Foot
+    100348: IK_Leg_Right_Leg
+    100350: IK_Leg_Right_Toe
+    100352: Rig_Ankle_Left
+    100354: Rig_Ankle_Right
+    100356: Rig_Foot_Left
+    100358: Rig_Foot_Right
+    100360: Rig_Heel_Left
+    100362: Rig_Heel_Right
+    100364: Rig_Toe_Left
+    100366: Rig_Toe_Right
     400000: B_Arm_Left_Forearm
     400002: B_Arm_Left_Shoulder
     400004: B_Arm_Right_End
@@ -325,6 +349,30 @@ ModelImporter:
     400314: Mesh_hakkero
     400316: Mesh_Marisa_Body
     400318: Mesh_Marisa_Hat
+    400320: Ctrl_Arm_Left
+    400322: Ctrl_Arm_Right
+    400324: Ctrl_Bag
+    400326: Ctrl_Braid
+    400328: Ctrl_Footpad_Left
+    400330: ctrl_Footpad_Right
+    400332: Ctrl_Hair
+    400334: Ctrl_Head
+    400336: IK_Arm_Left
+    400338: IK_Arm_Right
+    400340: IK_Leg_Left_Foot
+    400342: IK_Leg_Left_Leg
+    400344: IK_Leg_Left_Toe
+    400346: IK_Leg_Right_Foot
+    400348: IK_Leg_Right_Leg
+    400350: IK_Leg_Right_Toe
+    400352: Rig_Ankle_Left
+    400354: Rig_Ankle_Right
+    400356: Rig_Foot_Left
+    400358: Rig_Foot_Right
+    400360: Rig_Heel_Left
+    400362: Rig_Heel_Right
+    400364: Rig_Toe_Left
+    400366: Rig_Toe_Right
     4300000: Mesh_Marisa_Body
     4300002: Mesh_Broom
     4300004: Mesh_Marisa_Hat
@@ -341,7 +389,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 

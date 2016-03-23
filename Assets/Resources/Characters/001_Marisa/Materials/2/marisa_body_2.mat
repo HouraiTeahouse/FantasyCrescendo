@@ -9,7 +9,7 @@ Material:
   m_Name: marisa_body_2
   m_Shader: {fileID: 4800000, guid: 82b106a640ad4f542a544fc130e555bf, type: 3}
   m_ShaderKeywords: _ALPHATEST_ON _EMISSION _NORMALMAP
-  m_LightmapFlags: 1
+  m_LightmapFlags: 0
   m_CustomRenderQueue: 2450
   stringTagMap:
     RenderType: TransparentCutout
@@ -146,8 +146,8 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.60294116, g: 0.60294116, b: 0.60294116, a: 1}
+        second: {r: 0.6039216, g: 0.6039216, b: 0.6039216, a: 1}
       data:
         first:
           name: _SpecColor
-        second: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+        second: {r: 0.09019608, g: 0.09019608, b: 0.09019608, a: 1}

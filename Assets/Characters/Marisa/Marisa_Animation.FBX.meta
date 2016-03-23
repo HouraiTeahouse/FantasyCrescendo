@@ -161,6 +161,30 @@ ModelImporter:
     100306: End_Thumb_Left_End
     100308: End_Thumb_Right_End
     100310: //RootNode
+    100312: Ctrl_Arm_Left
+    100314: Ctrl_Arm_Right
+    100316: Ctrl_Bag
+    100318: Ctrl_Braid
+    100320: Ctrl_Footpad_Left
+    100322: ctrl_Footpad_Right
+    100324: Ctrl_Hair
+    100326: Ctrl_Head
+    100328: IK_Arm_Left
+    100330: IK_Arm_Right
+    100332: IK_Leg_Left_Foot
+    100334: IK_Leg_Left_Leg
+    100336: IK_Leg_Left_Toe
+    100338: IK_Leg_Right_Foot
+    100340: IK_Leg_Right_Leg
+    100342: IK_Leg_Right_Toe
+    100344: Rig_Ankle_Left
+    100346: Rig_Ankle_Right
+    100348: Rig_Foot_Left
+    100350: Rig_Foot_Right
+    100352: Rig_Heel_Left
+    100354: Rig_Heel_Right
+    100356: Rig_Toe_Left
+    100358: Rig_Toe_Right
     400000: B_Arm_Left_Forearm
     400002: B_Arm_Left_Shoulder
     400004: B_Arm_Right_End
@@ -317,6 +341,30 @@ ModelImporter:
     400306: End_Thumb_Left_End
     400308: End_Thumb_Right_End
     400310: //RootNode
+    400312: Ctrl_Arm_Left
+    400314: Ctrl_Arm_Right
+    400316: Ctrl_Bag
+    400318: Ctrl_Braid
+    400320: Ctrl_Footpad_Left
+    400322: ctrl_Footpad_Right
+    400324: Ctrl_Hair
+    400326: Ctrl_Head
+    400328: IK_Arm_Left
+    400330: IK_Arm_Right
+    400332: IK_Leg_Left_Foot
+    400334: IK_Leg_Left_Leg
+    400336: IK_Leg_Left_Toe
+    400338: IK_Leg_Right_Foot
+    400340: IK_Leg_Right_Leg
+    400342: IK_Leg_Right_Toe
+    400344: Rig_Ankle_Left
+    400346: Rig_Ankle_Right
+    400348: Rig_Foot_Left
+    400350: Rig_Foot_Right
+    400352: Rig_Heel_Left
+    400354: Rig_Heel_Right
+    400356: Rig_Toe_Left
+    400358: Rig_Toe_Right
     7400000: Idle
     7400002: Walk
     7400004: Run
@@ -331,6 +379,10 @@ ModelImporter:
     7400022: Crouch Exit
     7400024: Ledge Grab
     7400026: Ledge Grab Idle
+    7400028: Side Smash Charge
+    7400030: Side Smash
+    7400032: Up Tilt
+    7400034: Hit
     9500000: //RootNode
   materials:
     importMaterials: 0
@@ -339,7 +391,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -1397,8 +1449,8 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.14550264
-        functionName: Jump
+      - time: 0.39760348
+        functionName: JumpImpl
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -5116,6 +5168,1478 @@ ModelImporter:
       - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight
         weight: 1
       - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight/B_Skirt_Bottom_6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Side Smash Charge
+      takeName: Take 001
+      firstFrame: 378
+      lastFrame: 438
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ctrl_Hakkero
+        weight: 1
+      - path: Ctrl_Hakkero/B_Hakkero
+        weight: 1
+      - path: Ctrl_Headgear
+        weight: 1
+      - path: Ctrl_Headgear/B_Headgear
+        weight: 1
+      - path: Ctrl_Master
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint/B_Broom_Bottom
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint/B_Broom_Bottom/B_Broom_Bristles
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/IK_Leg_Left_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/IK_Leg_Left_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/Rig_Heel_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/Rig_Heel_Left/IK_Leg_Left_Leg
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/IK_Leg_Right_Toe
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/IK_Leg_Right_Foot
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/Rig_Ankle_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/Rig_Ankle_Right/IK_Leg_Right_Leg
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot/B_Leg_Left_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot/B_Leg_Left_Toe/End_Leg_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot/B_Leg_Right_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot/B_Leg_Right_Toe/End_Leg_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4/Ctrl_Skirt_BotBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4/Ctrl_Skirt_BotBackLeft/B_Skirt_Bottom_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5/Ctrl_Skirt_BotBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5/Ctrl_Skirt_BotBackRight/B_Skirt_Bottom_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2/Ctrl_Skirt_BotFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2/Ctrl_Skirt_BotFrontLeft/B_Skirt_Bottom_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1/Ctrl_Skirt_BotFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1/Ctrl_Skirt_BotFrontRight/B_Skirt_Bottom_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3/Ctrl_Skirt_BotLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3/Ctrl_Skirt_BotLeft/B_Skirt_Bottom_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight/B_Skirt_Bottom_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap/Ctrl_Bag
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap/Ctrl_Bag/B_Bag_Bag
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Left_1/B_Bow_Ribbon_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Right_1/B_Bow_Ribbon_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/B_Hand_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1/B_IndexFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1/B_IndexFinger_Left_2/B_IndexFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1/B_MiddleFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1/B_MiddleFinger_Left_2/B_MiddleFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1/B_Pinkie_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1/B_Pinkie_Left_2/B_Pinkie_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1/B_RingFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1/B_RingFinger_Left_2/B_RingFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1/B_Thumb_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1/B_Thumb_Left_2/B_Thumb_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/B_Hand_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1/B_IndexFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1/B_IndexFinger_Right_2/B_IndexFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1/B_MiddleFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1/B_MiddleFinger_Right_2/B_MiddleFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1/B_Pinkie_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1/B_Pinkie_Right_2/B_Pinkie_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1/B_RingFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1/B_RingFinger_Right_2/B_RingFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1/B_Thumb_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1/B_Thumb_Right_2/B_Thumb_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_BotLid/B_Face_Left_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_Mouth/B_Face_Left_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_TopLid/B_Face_Left_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_LowerJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_LowerJaw/B_Face_LowerJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_BotLid/B_Face_Right_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_Mouth/B_Face_Right_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_TopLid/B_Face_Right_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_UpperJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_UpperJaw/B_Face_UpperJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1/B_Hair_Braid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1/B_Hair_Braid_2/B_Hair_Braid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1/B_Hair_Mid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1/B_Hair_Mid_2/B_Hair_Mid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Left/IK_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Right/IK_Arm_Right
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Side Smash
+      takeName: Take 001
+      firstFrame: 437
+      lastFrame: 507
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ctrl_Hakkero
+        weight: 1
+      - path: Ctrl_Hakkero/B_Hakkero
+        weight: 1
+      - path: Ctrl_Headgear
+        weight: 1
+      - path: Ctrl_Headgear/B_Headgear
+        weight: 1
+      - path: Ctrl_Master
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint/B_Broom_Bottom
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint/B_Broom_Bottom/B_Broom_Bristles
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/IK_Leg_Left_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/IK_Leg_Left_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/Rig_Heel_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/Rig_Heel_Left/IK_Leg_Left_Leg
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/IK_Leg_Right_Toe
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/IK_Leg_Right_Foot
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/Rig_Ankle_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/Rig_Ankle_Right/IK_Leg_Right_Leg
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot/B_Leg_Left_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot/B_Leg_Left_Toe/End_Leg_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot/B_Leg_Right_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot/B_Leg_Right_Toe/End_Leg_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4/Ctrl_Skirt_BotBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4/Ctrl_Skirt_BotBackLeft/B_Skirt_Bottom_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5/Ctrl_Skirt_BotBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5/Ctrl_Skirt_BotBackRight/B_Skirt_Bottom_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2/Ctrl_Skirt_BotFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2/Ctrl_Skirt_BotFrontLeft/B_Skirt_Bottom_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1/Ctrl_Skirt_BotFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1/Ctrl_Skirt_BotFrontRight/B_Skirt_Bottom_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3/Ctrl_Skirt_BotLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3/Ctrl_Skirt_BotLeft/B_Skirt_Bottom_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight/B_Skirt_Bottom_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap/Ctrl_Bag
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap/Ctrl_Bag/B_Bag_Bag
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Left_1/B_Bow_Ribbon_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Right_1/B_Bow_Ribbon_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/B_Hand_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1/B_IndexFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1/B_IndexFinger_Left_2/B_IndexFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1/B_MiddleFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1/B_MiddleFinger_Left_2/B_MiddleFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1/B_Pinkie_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1/B_Pinkie_Left_2/B_Pinkie_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1/B_RingFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1/B_RingFinger_Left_2/B_RingFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1/B_Thumb_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1/B_Thumb_Left_2/B_Thumb_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/B_Hand_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1/B_IndexFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1/B_IndexFinger_Right_2/B_IndexFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1/B_MiddleFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1/B_MiddleFinger_Right_2/B_MiddleFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1/B_Pinkie_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1/B_Pinkie_Right_2/B_Pinkie_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1/B_RingFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1/B_RingFinger_Right_2/B_RingFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1/B_Thumb_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1/B_Thumb_Right_2/B_Thumb_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_BotLid/B_Face_Left_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_Mouth/B_Face_Left_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_TopLid/B_Face_Left_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_LowerJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_LowerJaw/B_Face_LowerJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_BotLid/B_Face_Right_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_Mouth/B_Face_Right_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_TopLid/B_Face_Right_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_UpperJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_UpperJaw/B_Face_UpperJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1/B_Hair_Braid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1/B_Hair_Braid_2/B_Hair_Braid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1/B_Hair_Mid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1/B_Hair_Mid_2/B_Hair_Mid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Left/IK_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Right/IK_Arm_Right
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Up Tilt
+      takeName: Take 001
+      firstFrame: 600
+      lastFrame: 645
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ctrl_Hakkero
+        weight: 1
+      - path: Ctrl_Hakkero/B_Hakkero
+        weight: 1
+      - path: Ctrl_Headgear
+        weight: 1
+      - path: Ctrl_Headgear/B_Headgear
+        weight: 1
+      - path: Ctrl_Master
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint/B_Broom_Bottom
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint/B_Broom_Bottom/B_Broom_Bristles
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/IK_Leg_Left_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/IK_Leg_Left_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/Rig_Heel_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/Rig_Heel_Left/IK_Leg_Left_Leg
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/IK_Leg_Right_Toe
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/IK_Leg_Right_Foot
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/Rig_Ankle_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/Rig_Ankle_Right/IK_Leg_Right_Leg
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot/B_Leg_Left_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot/B_Leg_Left_Toe/End_Leg_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot/B_Leg_Right_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot/B_Leg_Right_Toe/End_Leg_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4/Ctrl_Skirt_BotBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4/Ctrl_Skirt_BotBackLeft/B_Skirt_Bottom_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5/Ctrl_Skirt_BotBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5/Ctrl_Skirt_BotBackRight/B_Skirt_Bottom_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2/Ctrl_Skirt_BotFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2/Ctrl_Skirt_BotFrontLeft/B_Skirt_Bottom_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1/Ctrl_Skirt_BotFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1/Ctrl_Skirt_BotFrontRight/B_Skirt_Bottom_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3/Ctrl_Skirt_BotLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3/Ctrl_Skirt_BotLeft/B_Skirt_Bottom_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight/B_Skirt_Bottom_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap/Ctrl_Bag
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap/Ctrl_Bag/B_Bag_Bag
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Left_1/B_Bow_Ribbon_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Right_1/B_Bow_Ribbon_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/B_Hand_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1/B_IndexFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1/B_IndexFinger_Left_2/B_IndexFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1/B_MiddleFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1/B_MiddleFinger_Left_2/B_MiddleFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1/B_Pinkie_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1/B_Pinkie_Left_2/B_Pinkie_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1/B_RingFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1/B_RingFinger_Left_2/B_RingFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1/B_Thumb_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1/B_Thumb_Left_2/B_Thumb_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/B_Hand_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1/B_IndexFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1/B_IndexFinger_Right_2/B_IndexFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1/B_MiddleFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1/B_MiddleFinger_Right_2/B_MiddleFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1/B_Pinkie_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1/B_Pinkie_Right_2/B_Pinkie_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1/B_RingFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1/B_RingFinger_Right_2/B_RingFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1/B_Thumb_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1/B_Thumb_Right_2/B_Thumb_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_BotLid/B_Face_Left_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_Mouth/B_Face_Left_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_TopLid/B_Face_Left_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_LowerJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_LowerJaw/B_Face_LowerJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_BotLid/B_Face_Right_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_Mouth/B_Face_Right_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_TopLid/B_Face_Right_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_UpperJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_UpperJaw/B_Face_UpperJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1/B_Hair_Braid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1/B_Hair_Braid_2/B_Hair_Braid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1/B_Hair_Mid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1/B_Hair_Mid_2/B_Hair_Mid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Left/IK_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Right/IK_Arm_Right
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Hit
+      takeName: Take 001
+      firstFrame: 653
+      lastFrame: 672
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ctrl_Hakkero
+        weight: 1
+      - path: Ctrl_Hakkero/B_Hakkero
+        weight: 1
+      - path: Ctrl_Headgear
+        weight: 1
+      - path: Ctrl_Headgear/B_Headgear
+        weight: 1
+      - path: Ctrl_Master
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint/B_Broom_Bottom
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Broom/B_Broom_GrabPoint/B_Broom_Bottom/B_Broom_Bristles
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/IK_Leg_Left_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/IK_Leg_Left_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/Rig_Heel_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Footpad_Left/Rig_Ankle_Left/Rig_Toe_Left/Rig_Foot_Left/Rig_Heel_Left/IK_Leg_Left_Leg
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/IK_Leg_Right_Toe
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/IK_Leg_Right_Foot
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/Rig_Ankle_Right
+        weight: 1
+      - path: Ctrl_Master/ctrl_Footpad_Right/Rig_Heel_Right/Rig_Toe_Right/Rig_Foot_Right/Rig_Ankle_Right/IK_Leg_Right_Leg
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot/B_Leg_Left_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot/B_Leg_Left_Toe/End_Leg_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot/B_Leg_Right_Toe
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot/B_Leg_Right_Toe/End_Leg_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4/Ctrl_Skirt_BotBackLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackLeft/B_Skirt_Top_4/Ctrl_Skirt_MidBackLeft/B_Skirt_Mid_4/Ctrl_Skirt_BotBackLeft/B_Skirt_Bottom_4
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5/Ctrl_Skirt_BotBackRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopBackRight/B_Skirt_Top_5/Ctrl_Skirt_MidBackRight/B_Skirt_Mid_5/Ctrl_Skirt_BotBackRight/B_Skirt_Bottom_5
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2/Ctrl_Skirt_BotFrontLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontLeft/B_Skirt_Top_2/Ctrl_Skirt_MidFrontLeft/B_Skirt_Mid_2/Ctrl_Skirt_BotFrontLeft/B_Skirt_Bottom_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1/Ctrl_Skirt_BotFrontRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopFrontRight/B_Skirt_Top_1/Ctrl_Skirt_MidFrontRight/B_Skirt_Mid_1/Ctrl_Skirt_BotFrontRight/B_Skirt_Bottom_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3/Ctrl_Skirt_BotLeft
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopLeft/B_Skirt_Top_3/Ctrl_Skirt_MidLeft/B_Skirt_Mid_3/Ctrl_Skirt_BotLeft/B_Skirt_Bottom_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Skirt_TopRight/B_Skirt_Top_6/Ctrl_Skirt_MidRight/B_Skirt_Mid_6/Ctrl_Skirt_BotRight/B_Skirt_Bottom_6
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap/Ctrl_Bag
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Bag_Strap/Ctrl_Bag/B_Bag_Bag
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Left_1/B_Bow_Ribbon_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Ribbon_Right_1/B_Bow_Ribbon_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/B_Bow_Center/B_Bow_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/B_Hand_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1/B_IndexFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_IndexFinger_left/B_IndexFinger_Left_1/B_IndexFinger_Left_2/B_IndexFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1/B_MiddleFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_MiddleFinger_left/B_MiddleFinger_Left_1/B_MiddleFinger_Left_2/B_MiddleFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1/B_Pinkie_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Pinkie_Left/B_Pinkie_Left_1/B_Pinkie_Left_2/B_Pinkie_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1/B_RingFinger_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_RingFinger_Left/B_RingFinger_Left_1/B_RingFinger_Left_2/B_RingFinger_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1/B_Thumb_Left_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/Ctrl_Thumb_Left/B_Thumb_Left_1/B_Thumb_Left_2/B_Thumb_Left_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/B_Hand_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1/B_IndexFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_IndexFinger_Right/B_IndexFinger_Right_1/B_IndexFinger_Right_2/B_IndexFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1/B_MiddleFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_MiddleFinger_Right/B_MiddleFinger_Right_1/B_MiddleFinger_Right_2/B_MiddleFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1/B_Pinkie_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Pinkie_Right/B_Pinkie_Right_1/B_Pinkie_Right_2/B_Pinkie_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1/B_RingFinger_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_RingFinger_Right/B_RingFinger_Right_1/B_RingFinger_Right_2/B_RingFinger_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1/B_Thumb_Right_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/Ctrl_Thumb_Right/B_Thumb_Right_1/B_Thumb_Right_2/B_Thumb_Right_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_BotLid/B_Face_Left_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_Mouth/B_Face_Left_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Left_TopLid/B_Face_Left_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_LowerJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_LowerJaw/B_Face_LowerJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_BotLid/B_Face_Right_BotLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_Mouth/B_Face_Right_Mouth
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_Right_TopLid/B_Face_Right_TopLid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_UpperJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/B_Head/Ctrl_UpperJaw/B_Face_UpperJaw
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1/B_Hair_Braid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Braid/B_Hair_Braid_1/B_Hair_Braid_2/B_Hair_Braid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1/B_Hair_Mid_2
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head/Ctrl_Hair/B_Hair_Mid_1/B_Hair_Mid_2/B_Hair_Mid_3
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Left/IK_Arm_Left
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Right
+        weight: 1
+      - path: Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/Ctrl_Arm_Right/IK_Arm_Right
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
