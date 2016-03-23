@@ -134,6 +134,12 @@ ModelImporter:
     100252: tree2
     100254: tree3
     100256: tree4
+    100258: Circle031
+    100260: Cylinder001
+    100262: Line025
+    100264: shrooom012
+    100266: terrainuv
+    100268: windows
     400000: Box016
     400002: Box017
     400004: Box018
@@ -263,6 +269,12 @@ ModelImporter:
     400252: tree2
     400254: tree3
     400256: tree4
+    400258: Circle031
+    400260: Cylinder001
+    400262: Line025
+    400264: shrooom012
+    400266: terrainuv
+    400268: windows
     2300000: Box016
     2300002: Box017
     2300004: Box018
@@ -375,6 +387,10 @@ ModelImporter:
     2300218: tree2
     2300220: tree3
     2300222: tree4
+    2300224: Circle031
+    2300226: Line025
+    2300228: terrainuv
+    2300230: windows
     3300000: Box016
     3300002: Box017
     3300004: Box018
@@ -487,6 +503,10 @@ ModelImporter:
     3300218: tree2
     3300220: tree3
     3300222: tree4
+    3300224: Circle031
+    3300226: Line025
+    3300228: terrainuv
+    3300230: windows
     4300000: Rectangle001
     4300002: Circle002
     4300004: Circle001
@@ -599,6 +619,10 @@ ModelImporter:
     4300218: Line004
     4300220: Circle008
     4300222: grass
+    4300224: terrainuv
+    4300226: Circle031
+    4300228: Line025
+    4300230: windows
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -607,7 +631,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
