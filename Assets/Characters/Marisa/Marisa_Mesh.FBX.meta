@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 69045cd5b732f1c4d94f66fbdc8ccbda
-timeCreated: 1458271819
+guid: c3aa84534828a9e4f99d62e23fb9cd6d
+timeCreated: 1458787007
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -101,94 +101,84 @@ ModelImporter:
     100186: B_Thumb_Right_3
     100188: B_Torso_Lower
     100190: B_Torso_Upper
-    100192: Ctrl_Broom
-    100194: Ctrl_Chest
-    100196: Ctrl_FK_Hand_Left
-    100198: Ctrl_FK_Hand_Left001
-    100200: Ctrl_Hakkero
-    100202: Ctrl_Headgear
-    100204: Ctrl_Hips
-    100206: Ctrl_IndexFinger_left
-    100208: Ctrl_IndexFinger_Right
-    100210: Ctrl_Left_BotLid
-    100212: Ctrl_Left_Mouth
-    100214: Ctrl_Left_TopLid
-    100216: Ctrl_LowerJaw
-    100218: Ctrl_Master
-    100220: Ctrl_MiddleFinger_left
-    100222: Ctrl_MiddleFinger_Right
-    100224: Ctrl_Neck
-    100226: Ctrl_Pinkie_Left
-    100228: Ctrl_Pinkie_Right
-    100230: Ctrl_Right_BotLid
-    100232: Ctrl_Right_Mouth
-    100234: Ctrl_Right_TopLid
-    100236: Ctrl_RingFinger_Left
-    100238: Ctrl_RingFinger_Right
-    100240: Ctrl_Skirt_BotBackLeft
-    100242: Ctrl_Skirt_BotBackRight
-    100244: Ctrl_Skirt_BotFrontLeft
-    100246: Ctrl_Skirt_BotFrontRight
-    100248: Ctrl_Skirt_BotLeft
-    100250: Ctrl_Skirt_BotRight
-    100252: Ctrl_Skirt_MidBackLeft
-    100254: Ctrl_Skirt_MidBackRight
-    100256: Ctrl_Skirt_MidFrontLeft
-    100258: Ctrl_Skirt_MidFrontRight
-    100260: Ctrl_Skirt_MidLeft
-    100262: Ctrl_Skirt_MidRight
-    100264: Ctrl_Skirt_TopBackLeft
-    100266: Ctrl_Skirt_TopBackRight
-    100268: Ctrl_Skirt_TopFrontLeft
-    100270: Ctrl_Skirt_TopFrontRight
-    100272: Ctrl_Skirt_TopLeft
-    100274: Ctrl_Skirt_TopRight
-    100276: Ctrl_Thumb_Left
-    100278: Ctrl_Thumb_Right
-    100280: Ctrl_UpperJaw
-    100282: Ctrl_Waist
-    100284: End_Arm_Left
-    100286: End_IndexFinger_Left_End
-    100288: End_IndexFinger_Right_End
-    100290: End_Leg_Left
-    100292: End_Leg_Right
-    100294: End_MiddleFinger_Left_End
-    100296: End_MiddleFinger_Right_End
-    100298: End_Pinkie_Left_End
-    100300: End_Pinkie_Right_End
-    100302: End_RingFinger_Left_End
-    100304: End_RingFinger_Right_End
-    100306: End_Thumb_Left_End
-    100308: End_Thumb_Right_End
-    100310: //RootNode
-    100312: Mesh_Broom
-    100314: Mesh_hakkero
-    100316: Mesh_Marisa_Body
-    100318: Mesh_Marisa_Hat
-    100320: Ctrl_Arm_Left
-    100322: Ctrl_Arm_Right
-    100324: Ctrl_Bag
-    100326: Ctrl_Braid
-    100328: Ctrl_Footpad_Left
-    100330: ctrl_Footpad_Right
-    100332: Ctrl_Hair
-    100334: Ctrl_Head
-    100336: IK_Arm_Left
-    100338: IK_Arm_Right
-    100340: IK_Leg_Left_Foot
-    100342: IK_Leg_Left_Leg
-    100344: IK_Leg_Left_Toe
-    100346: IK_Leg_Right_Foot
-    100348: IK_Leg_Right_Leg
-    100350: IK_Leg_Right_Toe
-    100352: Rig_Ankle_Left
-    100354: Rig_Ankle_Right
-    100356: Rig_Foot_Left
-    100358: Rig_Foot_Right
-    100360: Rig_Heel_Left
-    100362: Rig_Heel_Right
-    100364: Rig_Toe_Left
-    100366: Rig_Toe_Right
+    100192: Ctrl_Arm_Left
+    100194: Ctrl_Arm_Right
+    100196: Ctrl_Bag
+    100198: Ctrl_Braid
+    100200: Ctrl_Broom
+    100202: Ctrl_Chest
+    100204: Ctrl_FK_Hand_Left
+    100206: Ctrl_FK_Hand_Left001
+    100208: Ctrl_Footpad_Left
+    100210: ctrl_Footpad_Right
+    100212: Ctrl_Hair
+    100214: Ctrl_Hakkero
+    100216: Ctrl_Head
+    100218: Ctrl_Headgear
+    100220: Ctrl_Hips
+    100222: Ctrl_IndexFinger_left
+    100224: Ctrl_IndexFinger_Right
+    100226: Ctrl_Left_BotLid
+    100228: Ctrl_Left_Mouth
+    100230: Ctrl_Left_TopLid
+    100232: Ctrl_LowerJaw
+    100234: Ctrl_Master
+    100236: Ctrl_MiddleFinger_left
+    100238: Ctrl_MiddleFinger_Right
+    100240: Ctrl_Neck
+    100242: Ctrl_Pinkie_Left
+    100244: Ctrl_Pinkie_Right
+    100246: Ctrl_Right_BotLid
+    100248: Ctrl_Right_Mouth
+    100250: Ctrl_Right_TopLid
+    100252: Ctrl_RingFinger_Left
+    100254: Ctrl_RingFinger_Right
+    100256: Ctrl_Skirt_BotBackLeft
+    100258: Ctrl_Skirt_BotBackRight
+    100260: Ctrl_Skirt_BotFrontLeft
+    100262: Ctrl_Skirt_BotFrontRight
+    100264: Ctrl_Skirt_BotLeft
+    100266: Ctrl_Skirt_BotRight
+    100268: Ctrl_Skirt_MidBackLeft
+    100270: Ctrl_Skirt_MidBackRight
+    100272: Ctrl_Skirt_MidFrontLeft
+    100274: Ctrl_Skirt_MidFrontRight
+    100276: Ctrl_Skirt_MidLeft
+    100278: Ctrl_Skirt_MidRight
+    100280: Ctrl_Skirt_TopBackLeft
+    100282: Ctrl_Skirt_TopBackRight
+    100284: Ctrl_Skirt_TopFrontLeft
+    100286: Ctrl_Skirt_TopFrontRight
+    100288: Ctrl_Skirt_TopLeft
+    100290: Ctrl_Skirt_TopRight
+    100292: Ctrl_Thumb_Left
+    100294: Ctrl_Thumb_Right
+    100296: Ctrl_UpperJaw
+    100298: Ctrl_Waist
+    100300: End_Arm_Left
+    100302: End_Leg_Left
+    100304: End_Leg_Right
+    100306: IK_Arm_Left
+    100308: IK_Arm_Right
+    100310: IK_Leg_Left_Foot
+    100312: IK_Leg_Left_Leg
+    100314: IK_Leg_Left_Toe
+    100316: IK_Leg_Right_Foot
+    100318: IK_Leg_Right_Leg
+    100320: IK_Leg_Right_Toe
+    100322: //RootNode
+    100324: Mesh_Broom
+    100326: Mesh_hakkero
+    100328: Mesh_Marisa_Body
+    100330: Mesh_Marisa_Hat
+    100332: Rig_Ankle_Left
+    100334: Rig_Ankle_Right
+    100336: Rig_Foot_Left
+    100338: Rig_Foot_Right
+    100340: Rig_Heel_Left
+    100342: Rig_Heel_Right
+    100344: Rig_Toe_Left
+    100346: Rig_Toe_Right
     400000: B_Arm_Left_Forearm
     400002: B_Arm_Left_Shoulder
     400004: B_Arm_Right_End
@@ -285,94 +275,84 @@ ModelImporter:
     400186: B_Thumb_Right_3
     400188: B_Torso_Lower
     400190: B_Torso_Upper
-    400192: Ctrl_Broom
-    400194: Ctrl_Chest
-    400196: Ctrl_FK_Hand_Left
-    400198: Ctrl_FK_Hand_Left001
-    400200: Ctrl_Hakkero
-    400202: Ctrl_Headgear
-    400204: Ctrl_Hips
-    400206: Ctrl_IndexFinger_left
-    400208: Ctrl_IndexFinger_Right
-    400210: Ctrl_Left_BotLid
-    400212: Ctrl_Left_Mouth
-    400214: Ctrl_Left_TopLid
-    400216: Ctrl_LowerJaw
-    400218: Ctrl_Master
-    400220: Ctrl_MiddleFinger_left
-    400222: Ctrl_MiddleFinger_Right
-    400224: Ctrl_Neck
-    400226: Ctrl_Pinkie_Left
-    400228: Ctrl_Pinkie_Right
-    400230: Ctrl_Right_BotLid
-    400232: Ctrl_Right_Mouth
-    400234: Ctrl_Right_TopLid
-    400236: Ctrl_RingFinger_Left
-    400238: Ctrl_RingFinger_Right
-    400240: Ctrl_Skirt_BotBackLeft
-    400242: Ctrl_Skirt_BotBackRight
-    400244: Ctrl_Skirt_BotFrontLeft
-    400246: Ctrl_Skirt_BotFrontRight
-    400248: Ctrl_Skirt_BotLeft
-    400250: Ctrl_Skirt_BotRight
-    400252: Ctrl_Skirt_MidBackLeft
-    400254: Ctrl_Skirt_MidBackRight
-    400256: Ctrl_Skirt_MidFrontLeft
-    400258: Ctrl_Skirt_MidFrontRight
-    400260: Ctrl_Skirt_MidLeft
-    400262: Ctrl_Skirt_MidRight
-    400264: Ctrl_Skirt_TopBackLeft
-    400266: Ctrl_Skirt_TopBackRight
-    400268: Ctrl_Skirt_TopFrontLeft
-    400270: Ctrl_Skirt_TopFrontRight
-    400272: Ctrl_Skirt_TopLeft
-    400274: Ctrl_Skirt_TopRight
-    400276: Ctrl_Thumb_Left
-    400278: Ctrl_Thumb_Right
-    400280: Ctrl_UpperJaw
-    400282: Ctrl_Waist
-    400284: End_Arm_Left
-    400286: End_IndexFinger_Left_End
-    400288: End_IndexFinger_Right_End
-    400290: End_Leg_Left
-    400292: End_Leg_Right
-    400294: End_MiddleFinger_Left_End
-    400296: End_MiddleFinger_Right_End
-    400298: End_Pinkie_Left_End
-    400300: End_Pinkie_Right_End
-    400302: End_RingFinger_Left_End
-    400304: End_RingFinger_Right_End
-    400306: End_Thumb_Left_End
-    400308: End_Thumb_Right_End
-    400310: //RootNode
-    400312: Mesh_Broom
-    400314: Mesh_hakkero
-    400316: Mesh_Marisa_Body
-    400318: Mesh_Marisa_Hat
-    400320: Ctrl_Arm_Left
-    400322: Ctrl_Arm_Right
-    400324: Ctrl_Bag
-    400326: Ctrl_Braid
-    400328: Ctrl_Footpad_Left
-    400330: ctrl_Footpad_Right
-    400332: Ctrl_Hair
-    400334: Ctrl_Head
-    400336: IK_Arm_Left
-    400338: IK_Arm_Right
-    400340: IK_Leg_Left_Foot
-    400342: IK_Leg_Left_Leg
-    400344: IK_Leg_Left_Toe
-    400346: IK_Leg_Right_Foot
-    400348: IK_Leg_Right_Leg
-    400350: IK_Leg_Right_Toe
-    400352: Rig_Ankle_Left
-    400354: Rig_Ankle_Right
-    400356: Rig_Foot_Left
-    400358: Rig_Foot_Right
-    400360: Rig_Heel_Left
-    400362: Rig_Heel_Right
-    400364: Rig_Toe_Left
-    400366: Rig_Toe_Right
+    400192: Ctrl_Arm_Left
+    400194: Ctrl_Arm_Right
+    400196: Ctrl_Bag
+    400198: Ctrl_Braid
+    400200: Ctrl_Broom
+    400202: Ctrl_Chest
+    400204: Ctrl_FK_Hand_Left
+    400206: Ctrl_FK_Hand_Left001
+    400208: Ctrl_Footpad_Left
+    400210: ctrl_Footpad_Right
+    400212: Ctrl_Hair
+    400214: Ctrl_Hakkero
+    400216: Ctrl_Head
+    400218: Ctrl_Headgear
+    400220: Ctrl_Hips
+    400222: Ctrl_IndexFinger_left
+    400224: Ctrl_IndexFinger_Right
+    400226: Ctrl_Left_BotLid
+    400228: Ctrl_Left_Mouth
+    400230: Ctrl_Left_TopLid
+    400232: Ctrl_LowerJaw
+    400234: Ctrl_Master
+    400236: Ctrl_MiddleFinger_left
+    400238: Ctrl_MiddleFinger_Right
+    400240: Ctrl_Neck
+    400242: Ctrl_Pinkie_Left
+    400244: Ctrl_Pinkie_Right
+    400246: Ctrl_Right_BotLid
+    400248: Ctrl_Right_Mouth
+    400250: Ctrl_Right_TopLid
+    400252: Ctrl_RingFinger_Left
+    400254: Ctrl_RingFinger_Right
+    400256: Ctrl_Skirt_BotBackLeft
+    400258: Ctrl_Skirt_BotBackRight
+    400260: Ctrl_Skirt_BotFrontLeft
+    400262: Ctrl_Skirt_BotFrontRight
+    400264: Ctrl_Skirt_BotLeft
+    400266: Ctrl_Skirt_BotRight
+    400268: Ctrl_Skirt_MidBackLeft
+    400270: Ctrl_Skirt_MidBackRight
+    400272: Ctrl_Skirt_MidFrontLeft
+    400274: Ctrl_Skirt_MidFrontRight
+    400276: Ctrl_Skirt_MidLeft
+    400278: Ctrl_Skirt_MidRight
+    400280: Ctrl_Skirt_TopBackLeft
+    400282: Ctrl_Skirt_TopBackRight
+    400284: Ctrl_Skirt_TopFrontLeft
+    400286: Ctrl_Skirt_TopFrontRight
+    400288: Ctrl_Skirt_TopLeft
+    400290: Ctrl_Skirt_TopRight
+    400292: Ctrl_Thumb_Left
+    400294: Ctrl_Thumb_Right
+    400296: Ctrl_UpperJaw
+    400298: Ctrl_Waist
+    400300: End_Arm_Left
+    400302: End_Leg_Left
+    400304: End_Leg_Right
+    400306: IK_Arm_Left
+    400308: IK_Arm_Right
+    400310: IK_Leg_Left_Foot
+    400312: IK_Leg_Left_Leg
+    400314: IK_Leg_Left_Toe
+    400316: IK_Leg_Right_Foot
+    400318: IK_Leg_Right_Leg
+    400320: IK_Leg_Right_Toe
+    400322: //RootNode
+    400324: Mesh_Broom
+    400326: Mesh_hakkero
+    400328: Mesh_Marisa_Body
+    400330: Mesh_Marisa_Hat
+    400332: Rig_Ankle_Left
+    400334: Rig_Ankle_Right
+    400336: Rig_Foot_Left
+    400338: Rig_Foot_Right
+    400340: Rig_Heel_Left
+    400342: Rig_Heel_Right
+    400344: Rig_Toe_Left
+    400346: Rig_Toe_Right
     4300000: Mesh_Marisa_Body
     4300002: Mesh_Broom
     4300004: Mesh_Marisa_Hat
@@ -413,7 +393,7 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 0
+    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
@@ -425,7 +405,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []

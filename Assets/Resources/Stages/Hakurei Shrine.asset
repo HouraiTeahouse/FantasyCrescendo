@@ -15,17 +15,17 @@ MonoBehaviour:
   backgroundMusicData:
   - _name: Battle Concerto
     _artist: Crescentia
-    _bgm: 
+    _bgm: Audio/BGM/Hakurei Shrine/Battle Concerto
     _baseWeight: 1
     _loopStart: 0
     _loopEnd: 7263744
   - _name: Eternal Shrine Maiden
     _artist: Peacock Roy
-    _bgm: 
+    _bgm: Audio/BGM/Hakurei Shrine/Eternal Shrine Maiden
     _baseWeight: 1
     _loopStart: 288000
     _loopEnd: 4281600
-  _icon: Icons/reimu_icon
+  _sceneName: Stages/Hakurei Shrine/Hakurei Shrine Stage
   _isStage: 1
   _previewImage: 
-  _sceneName: Stages/Hakurei Shrine/Hakurei Shrine Stage
+  _icon: Icons/reimu_icon

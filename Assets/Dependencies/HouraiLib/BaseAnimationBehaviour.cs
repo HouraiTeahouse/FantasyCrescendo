@@ -8,9 +8,10 @@ namespace HouraiTeahouse.SmashBrew {
         public static void InitializeAll(Animator animator) {
             if (!animator)
                 return;
-            foreach (BaseAnimationBehaviour bab in animator.GetBehaviours<BaseAnimationBehaviour>())
+            foreach (BaseAnimationBehaviour bab in animator.GetBehaviours<BaseAnimationBehaviour>()) {
                 if (bab)
                     bab.Initialize(animator.gameObject);
+            }
         }
     }
 

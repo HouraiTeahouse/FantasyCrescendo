@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace HouraiTeahouse.HouraiInput {
     // @cond nodoc
@@ -89,7 +89,8 @@ namespace HouraiTeahouse.HouraiInput {
                 new InputMapping {
                     Handle = "Control Stick Y",
                     Target = InputTarget.LeftStickY,
-                    Source = Analog1
+                    Source = Analog1,
+                    Invert = true
                 },
                 new InputMapping {
                     Handle = "C Stick X",

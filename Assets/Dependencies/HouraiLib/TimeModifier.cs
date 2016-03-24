@@ -21,6 +21,7 @@ namespace HouraiTeahouse {
                 _localTimeScale = value;
                 if (_animators.Length <= 0)
                     return;
+                Debug.Log(value);
                 foreach (Animator animator in _animators.Where(animator => animator != null))
                     animator.speed = value;
             }

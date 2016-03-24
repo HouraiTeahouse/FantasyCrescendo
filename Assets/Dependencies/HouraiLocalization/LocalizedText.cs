@@ -24,7 +24,7 @@ namespace HouraiTeahouse.Localization {
         protected string LocalizationKey {
             get { return _localizationKey; }
             set {
-                if (_localizationKey == value || value == null)
+                if (_localizationKey == value || value == null || !_text)
                     return;
                 _localizationKey = value;
                 var languageManager = LanguageManager.Instance;

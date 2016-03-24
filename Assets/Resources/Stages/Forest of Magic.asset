@@ -15,23 +15,23 @@ MonoBehaviour:
   backgroundMusicData:
   - _name: Love Colored Magic
     _artist: Squiggle Glitz
-    _bgm: 
+    _bgm: Audio/BGM/Forest of Magic/Love Colored Magic
     _baseWeight: 1
     _loopStart: 2304
     _loopEnd: 4460928
   - _name: Magus Night
     _artist: Pigu
-    _bgm: 
+    _bgm: Audio/BGM/Forest of Magic/Magus Night
     _baseWeight: 1
     _loopStart: 276480
     _loopEnd: 6912007
   - _name: Ghostly Eyes
     _artist: Flurrybolt
-    _bgm: 
+    _bgm: Audio/BGM/Forest of Magic/Ghostly Eyes
     _baseWeight: 1
     _loopStart: 0
     _loopEnd: 13011176
-  _icon: Icons/marisa_icon
+  _sceneName: Stages/Forest of Magic/Forest of Magic Stage
   _isStage: 1
   _previewImage: 
-  _sceneName: Stages/Forest of Magic/Forest of Magic Stage
+  _icon: Icons/marisa_icon

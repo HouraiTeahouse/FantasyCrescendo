@@ -138,6 +138,12 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField, Tooltip("The heights of each jump")]
         private float[] _jumpHeights = {1.5f, 1.5f};
 
+        [SerializeField]
+        private Renderer[] _weapons;
+
+        [SerializeField]
+        private ParticleSystem[] _particles;
+
         #endregion
 
         #region Public Events
@@ -187,6 +193,18 @@ namespace HouraiTeahouse.SmashBrew {
             CharacterEvents.Publish(new PlayerJumpEvent { Ground = IsGrounded, RemainingJumps = MaxJumpCount - JumpCount });
         }
 
+        public void SetWeaponVisibilty(int weapon, bool state) {
+            if (_weapons[weapon])
+                _weapons[weapon].enabled = state;
+        }
+
+        public void SetParticleVisibilty(int particle, bool state) {
+            if(state)
+                _particles[particle].Play();
+            else
+                _particles[particle].Stop();
+        }
+
         #endregion
 
         #region Internal Methods
@@ -219,6 +237,14 @@ namespace HouraiTeahouse.SmashBrew {
             DamageModifiers = new ModifierGroup<object>();
             HealingModifiers = new ModifierGroup<object>();
             KnockbackModifiers = new ModifierGroup<Vector2>();
+
+            foreach (ParticleSystem particle in _particles)
+               if(particle) 
+                    particle.Stop();
+
+            foreach(var weapon in _weapons)
+                if (weapon)
+                    weapon.enabled = false;
 
             // Initialize all animation behaviours
             BaseAnimationBehaviour.InitializeAll(Animator);

@@ -17,6 +17,8 @@ namespace HouraiTeahouse.SmashBrew {
         public static readonly int Grounded = Animator.StringToHash("grounded");
         public static readonly int ShieldHP = Animator.StringToHash("shieldHealth");
 
+        public static readonly int Combo = Animator.StringToHash("combo");
+
         // States
         public static readonly int Run = Animator.StringToHash("run");
 

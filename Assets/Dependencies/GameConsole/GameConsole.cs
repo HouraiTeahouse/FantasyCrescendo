@@ -38,8 +38,8 @@ namespace HouraiTeahouse.Console {
             }
         }
 
-        private static readonly Dictionary<string, ConsoleCommand> _commands;
-        private static readonly FixedSizeQueue<string> _history;
+        private static Dictionary<string, ConsoleCommand> _commands;
+        private static FixedSizeQueue<string> _history;
 
         /// <summary>
         /// Called every time the Console is updated.
@@ -62,6 +62,14 @@ namespace HouraiTeahouse.Console {
         }
 
         static GameConsole() {
+            Init();
+        }
+
+        private static bool init = false;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void Init() {
+            if (init) return;
             _commands = new Dictionary<string, ConsoleCommand>();
             _history = new FixedSizeQueue<string>(100);
 
@@ -70,6 +78,7 @@ namespace HouraiTeahouse.Console {
 
             RegisterCommand("echo", Commands.Echo);
             RegisterCommand("clear", Commands.Clear);
+            init = true;
         }
 
         /// <summary>
@@ -127,6 +136,7 @@ namespace HouraiTeahouse.Console {
         /// <param name="message">the message, can be formatted as seen in String.Format</param>
         /// <param name="objs">the object arguments used to format the message</param>
         public static void Log(string message, params object[] objs) {
+            Debug.Log("Hello");
             if (message == null)
                 message = string.Empty;
             _history.Enqueue(string.Format(message, objs));

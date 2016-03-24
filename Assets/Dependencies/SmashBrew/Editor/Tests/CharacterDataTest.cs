@@ -33,6 +33,16 @@ namespace HouraiTeahouse.SmashBrew.Tests {
         }
 
         [Test]
+        public void PrefabStatusTest() {
+            LoadCharacterData();
+            foreach (CharacterData character in data) {
+                Assert.NotNull(character.Prefab.Load());
+                foreach(Status status in character.Prefab.Load().GetComponentsInChildren<Status>())
+                    Assert.False(status.enabled);
+            }
+        }
+
+        [Test]
         public void HasCharacterComponentTest() {
             // Checks that the Character's prefab has a Character script attached
             CharacterCheck(d => d.Prefab.Load().GetComponent<Character>());

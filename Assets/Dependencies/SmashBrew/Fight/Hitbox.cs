@@ -138,11 +138,10 @@ namespace HouraiTeahouse.SmashBrew {
             Color color = Config.Instance.GetHitboxColor(type);
             foreach (var col in _colliders)
                 DrawCollider(col, color);
-            GL.wireframe = true;
-            foreach (var col in _colliders)
-                DrawCollider(col, Color.white);
-            ;
-            GL.wireframe = false;
+            //GL.wireframe = true;
+            //foreach (var col in _colliders)
+            //    DrawCollider(col, Color.white);
+            //GL.wireframe = false;
         }
 
         void DrawCollider(Collider col, Color color) {
