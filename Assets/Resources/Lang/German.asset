@@ -15,12 +15,12 @@ MonoBehaviour:
   - Key: name.game
     Value: Fantasy Crescendo
   - Key: controllerNotice
-    Value: "Dieses Spiel l\xE4sst sich am besten mit Gamepads spielen.\nIst ein Gamepad
-      vorhanden? Schlie\xDF es an!"
+    Value: "Dieses Spiel l\xE4sst sich am besten mit einem Gamepad spielen.\nIst ein
+      Gamepad vorhanden? Schlie\xDFen Sie es an!"
   - Key: derivativeDisclaimer
-    Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
-      may contain story, character personalities, and settings different from  the
-      original works.\nIf you feel unconfortable with this, please proceed with caution."
+    Value: "Hinweis!\n\nDieses Spiel basiert auf Touhou Project (\u6771\u65B9Project).\nStory,
+      Charakter-Pers\xF6nlichkeiten und Kulisse k\xF6nnen sich vom Original unterscheiden.\nSollten
+      Sie sich damit unwohl f\xFChlen, fahren Sie bitte mit Vorsicht fort."
   - Key: name.reimu
     Value: Reimu
   - Key: fullname.reimu
@@ -33,6 +33,18 @@ MonoBehaviour:
     Value: Wriggle
   - Key: fullname.wriggle
     Value: Wriggle Nightbug
+  - Key: name.yuuka
+    Value: Yuuka
+  - Key: fullname.yuuka
+    Value: Yuuka Kazami
+  - Key: name.yuugi
+    Value: Yuugi
+  - Key: fullname.yuugi
+    Value: Yuugi Hoshiguma
+  - Key: name.murasa
+    Value: Murasa
+  - Key: fullname.murasa
+    Value: Minamitsu Murasa
   - Key: name.cirno
     Value: Cirno
   - Key: fullname.cirno
@@ -140,9 +152,9 @@ MonoBehaviour:
   - Key: fullname.miko
     Value: Toyosatomimi no Miko
   - Key: name.mamizou
-    Value: ' Mamizou'
+    Value: Mamizou
   - Key: fullname.mamizou
-    Value: ' Mamizou Futatsuiwa'
+    Value: Mamizou Futatsuiwa
   - Key: name.kokoro
     Value: Kokoro
   - Key: fullname.kokoro
@@ -163,6 +175,8 @@ MonoBehaviour:
     Value: Makai
   - Key: name.sdm
     Value: Villa des Scharlachroten Teufels
+  - Key: name.netherworld
+    Value: Unterwelt
   - Key: name.humanVilliage
     Value: Menschendorf
   - Key: name.genbuRavine
@@ -201,3 +215,7 @@ MonoBehaviour:
     Value: "Stimmenlautst\xE4rke"
   - Key: menu.language
     Value: Sprache
+  - Key: flavour.forestOfMagic
+    Value: '"Ein Wald voller Magie, daher der Name."'
+  - Key: flavour.hakureiShrine
+    Value: '"Wird gerne als Ort zum Feiern missbraucht. Tenshi draussen bleiben!"'

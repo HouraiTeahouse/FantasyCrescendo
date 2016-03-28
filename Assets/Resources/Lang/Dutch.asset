@@ -15,9 +15,10 @@ MonoBehaviour:
   - Key: name.game
     Value: Fantasy Crescendo
   - Key: controllerNotice
-    Value: 'This game is best expirenced with one or more gamepad controllers.
+    Value: 'Voor de beste spelervaring is het aangeraden een (of meerdere) controllers
+      te gebruiken.
 
-      Got a controller? Plug it in!'
+      Heb je er een? Sluit hem dan maar aan!'
   - Key: derivativeDisclaimer
     Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
       may contain story, character personalities, and settings different from  the
@@ -34,6 +35,18 @@ MonoBehaviour:
     Value: Wriggle
   - Key: fullname.wriggle
     Value: Wriggle Nightbug
+  - Key: name.yuuka
+    Value: Yuuka
+  - Key: fullname.yuuka
+    Value: Yuuka Kazami
+  - Key: name.yuugi
+    Value: Yuugi
+  - Key: fullname.yuugi
+    Value: Yuugi Hoshiguma
+  - Key: name.murasa
+    Value: Murasa
+  - Key: fullname.murasa
+    Value: Minamitsu Murasa
   - Key: name.cirno
     Value: Cirno
   - Key: fullname.cirno
@@ -141,9 +154,9 @@ MonoBehaviour:
   - Key: fullname.miko
     Value: Toyosatomimi no Miko
   - Key: name.mamizou
-    Value: ' Mamizou'
+    Value: Mamizou
   - Key: fullname.mamizou
-    Value: ' Mamizou Futatsuiwa'
+    Value: Mamizou Futatsuiwa
   - Key: name.kokoro
     Value: Kokoro
   - Key: fullname.kokoro
@@ -164,6 +177,8 @@ MonoBehaviour:
     Value: Makai
   - Key: name.sdm
     Value: Scharlaken Duivelsteen
+  - Key: name.netherworld
+    Value: Dodenrijk
   - Key: name.humanVilliage
     Value: Mensendorp
   - Key: name.genbuRavine
@@ -202,3 +217,8 @@ MonoBehaviour:
     Value: Stemvolume
   - Key: menu.language
     Value: Taal
+  - Key: flavour.forestOfMagic
+    Value: '"Een bos vol magie. En paddo''s."'
+  - Key: flavour.hakureiShrine
+    Value: '"Hier wordt haast meer aan Bacchus dan aan de Hakureigod geofferd. Tenshi
+      blijft er beter weg."'
