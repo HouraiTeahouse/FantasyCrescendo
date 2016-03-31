@@ -105,8 +105,9 @@ namespace HouraiTeahouse.SmashBrew {
             get { return JumpCount < MaxJumpCount; }
         }
 
-		public void ResetCollision() {
-			_ground = new HashSet<Collider>();
+		public void ResetCharacter() {
+			_ground.Clear();
+			_collided = false;
 		}
 
         #endregion
@@ -116,6 +117,7 @@ namespace HouraiTeahouse.SmashBrew {
         private Transform[] _bones;
         private HashSet<Collider> _ground;
         private bool _facing;
+		private bool _collided;
 
         private bool _jumpQueued;
 
@@ -148,9 +150,6 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         private ParticleSystem[] _particles;
 
-		[SerializeField]
-		public bool _collided;
-
         #endregion
 
         #region Public Events
@@ -177,8 +176,7 @@ namespace HouraiTeahouse.SmashBrew {
 			//Check to see if we can move or not. Fixes getting stuck on wall
 			if (_collided && !IsGrounded) { //We are hitting a wall or someone.
 				Ray ray = new Ray(transform.position,  Direction? -Vector3.right:Vector3.right);
-				RaycastHit info = new RaycastHit ();
-				if(Physics.Raycast (ray, out info, MovementCollider.radius * 2, 9))
+				if(Physics.Raycast (ray, MovementCollider.radius * 2, 9))
 				{
 					return;//Raycast will ignore characters...probably.
 				}
