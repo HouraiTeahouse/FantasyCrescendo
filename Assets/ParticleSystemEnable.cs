@@ -21,7 +21,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
             if (Target && stateInfo.normalizedTime > toggleTime && !toggled) {
-                Debug.Log(stateInfo.normalizedTime);
                 Target.SetParticleVisibilty(particleIndex, true);
                 toggled = true;
             }
