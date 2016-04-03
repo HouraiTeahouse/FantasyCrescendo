@@ -2,8 +2,8 @@
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class MaxFireBlaze5Profile : UnityInputDeviceProfile {
         public MaxFireBlaze5Profile() {
             Name = "MaxFire Blaze5";

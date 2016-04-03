@@ -2,8 +2,8 @@ using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class LogitechF710ModeDWinProfile : UnityInputDeviceProfile {
         public LogitechF710ModeDWinProfile() {
             Name = "Logitech F710 Controller";

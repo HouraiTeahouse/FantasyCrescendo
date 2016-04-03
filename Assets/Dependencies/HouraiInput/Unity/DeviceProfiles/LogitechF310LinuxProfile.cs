@@ -1,9 +1,6 @@
-using System;
-
-
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class LogitechF310LinuxProfile : UnityInputDeviceProfile {
         public LogitechF310LinuxProfile() {
             Name = "Logitech F310 Controller";
@@ -16,8 +13,6 @@ namespace HouraiTeahouse.HouraiInput {
             JoystickNames = new[] {
                 "Logitech Gamepad F310"
             };
-
-            MaxUnityVersion = new VersionInfo(4, 9);
 
             ButtonMappings = new[] {
                 new InputMapping {

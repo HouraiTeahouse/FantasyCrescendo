@@ -2,8 +2,8 @@ using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class GreenThrottleAtlasAndroidProfile : UnityInputDeviceProfile {
         public GreenThrottleAtlasAndroidProfile() {
             Name = "Green Throttle Atlas Controller";

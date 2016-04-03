@@ -1,9 +1,5 @@
-﻿using System;
-
-
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
     public class GenericLinuxProfile : UnityInputDeviceProfile {
         public GenericLinuxProfile() {
             Name = "Generic Controller";
@@ -16,8 +12,6 @@ namespace HouraiTeahouse.HouraiInput {
             JoystickRegex = new[] {
                 "."
             };
-
-            MinUnityVersion = new VersionInfo(5);
 
             ButtonMappings = new[] {
                 new InputMapping {

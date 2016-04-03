@@ -2,8 +2,8 @@
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class NatecGenesisP44Profile : UnityInputDeviceProfile {
         public NatecGenesisP44Profile() {
             Name = "Natec Genesis P44 Controller";

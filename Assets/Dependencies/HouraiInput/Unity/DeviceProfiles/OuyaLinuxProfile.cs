@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
-
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
     public class OuyaLinuxProfile : UnityInputDeviceProfile {
         public OuyaLinuxProfile() {
             Name = "OUYA Controller";
@@ -17,8 +14,6 @@ namespace HouraiTeahouse.HouraiInput {
             JoystickNames = new[] {
                 "OUYA Game Controller"
             };
-
-            MaxUnityVersion = new VersionInfo(4, 9);
 
             LowerDeadZone = 0.3f;
 

@@ -2,8 +2,8 @@ using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class ExecutionerXProfile : UnityInputDeviceProfile {
         public ExecutionerXProfile() {
             Name = "Executioner X Controller";

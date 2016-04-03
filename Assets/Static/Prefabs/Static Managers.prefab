@@ -48,12 +48,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logDebugInfo: 0
-  invertYAxis: 0
-  enableXInput: 1
-  useFixedUpdate: 1
-  dontDestroyOnLoad: 1
-  customProfiles: []
+  _logDebugInfo: 0
+  _invertYAxis: 0
+  _enableXInput: 0
+  _useFixedUpdate: 0
+  _dontDestroyOnLoad: 0
+  _customProfiles:
+  - HouraiTeahouse.SmashBrew.SmashBrewKeyboardProfile
 --- !u!114 &11442866
 MonoBehaviour:
   m_ObjectHideFlags: 1

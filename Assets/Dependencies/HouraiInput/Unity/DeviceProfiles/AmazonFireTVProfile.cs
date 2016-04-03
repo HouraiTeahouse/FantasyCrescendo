@@ -2,8 +2,8 @@ using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class AmazonFireTVProfile : UnityInputDeviceProfile {
         public AmazonFireTVProfile() {
             Name = "Amazon Fire Controller";

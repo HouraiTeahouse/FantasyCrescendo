@@ -1,9 +1,6 @@
-using System;
-
-
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class MogaProLinuxProfile : UnityInputDeviceProfile {
         public MogaProLinuxProfile() {
             Name = "MOGA Pro";
@@ -16,8 +13,6 @@ namespace HouraiTeahouse.HouraiInput {
             JoystickNames = new[] {
                 "Moga Pro HID",
             };
-
-            MaxUnityVersion = new VersionInfo(4, 9);
 
             ButtonMappings = new[] {
                 new InputMapping {

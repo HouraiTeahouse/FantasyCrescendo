@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 
 namespace HouraiTeahouse {
@@ -17,6 +18,11 @@ namespace HouraiTeahouse {
 
         [SerializeField]
         private string _dateTimeFormat = "MM-dd-yyyy-HHmmss";
+
+        void Start() {
+            foreach(var device in HInput.Devices)
+                Debug.Log(device.Name);
+        }
 
         /// <summary>
         /// Unity callback. Called once per frame.
