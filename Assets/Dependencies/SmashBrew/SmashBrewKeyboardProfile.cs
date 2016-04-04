@@ -41,7 +41,7 @@ namespace HouraiTeahouse.SmashBrew {
                 new InputMapping {
                     Handle = "Left Horizontal",
                     Target = InputTarget.LeftStickX,
-                    Source = KeyCodeAxis(KeyCode.RightArrow, KeyCode.LeftArrow) 
+                    Source = KeyCodeAxis(KeyCode.LeftArrow, KeyCode.RightArrow) 
                 },
                 new InputMapping {
                     Handle = "Left Vertical",
