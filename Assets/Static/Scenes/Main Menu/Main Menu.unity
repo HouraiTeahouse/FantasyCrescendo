@@ -922,6 +922,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1863,88 +1864,6 @@ MonoBehaviour:
   _spacing: {x: 3, y: 3}
   _selfAspectRatio: 3
   _childAspectRatio: 1
---- !u!1001 &1606132890
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 1634
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 919
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 89ca40838967f494b95225a5529cad8a, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1630875615
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,6 +2107,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

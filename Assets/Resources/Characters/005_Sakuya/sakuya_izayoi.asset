@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
   m_Name: sakuya_izayoi
   m_EditorClassIdentifier: 
-  _sourceGame: 5
-  _sourceStage: 5
+  _sourceGame: 23
+  _sourceStage: 8
   _prefab: Characters/001_Marisa/Marisa
   _homeStage: Stages/Forest of Magic
   _isSelectable: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   - Characters/005_Sakuya/Portraits/sakuya_portrait_1
   - Characters/005_Sakuya/Portraits/sakuya_portrait_1
   - Characters/005_Sakuya/Portraits/sakuya_portrait_1
-  _backgroundColor: {r: 0, g: 0.08833647, b: 0.9852941, a: 1}
+  _backgroundColor: {r: 0, g: 0, b: 1, a: 1}
   _cropPositon: {x: 0.445, y: 0.75}
   _cropSize: 0.225
   _icon: Icons/marisa_icon

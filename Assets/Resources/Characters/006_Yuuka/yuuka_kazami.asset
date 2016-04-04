@@ -16,7 +16,7 @@ MonoBehaviour:
   _prefab: Characters/001_Marisa/Marisa
   _homeStage: Stages/Forest of Magic
   _isSelectable: 0
-  _isVisible: 1
+  _isVisible: 0
   _shortNameKey: name.yuuka
   _fullNameKey: fullname.yuuka
   _portraits:
@@ -24,7 +24,7 @@ MonoBehaviour:
   - Characters/001_Marisa/Portraits/marisa_portrait_2
   - Characters/001_Marisa/Portraits/marisa_portrait_3
   - Characters/001_Marisa/Portraits/marisa_portrait_4
-  _backgroundColor: {r: 1, g: 0.803, b: 0, a: 1}
+  _backgroundColor: {r: 0, g: 0.39705884, b: 0, a: 1}
   _cropPositon: {x: 0.3, y: 0.7}
   _cropSize: 0.24
   _icon: Icons/marisa_icon
