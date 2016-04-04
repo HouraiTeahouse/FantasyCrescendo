@@ -122,12 +122,12 @@ namespace HouraiTeahouse.HouraiInput {
             }
         }
 
-
         private void DetectDetachedJoystickDevices() {
             string[] joystickNames = Input.GetJoystickNames();
 
-            foreach (UnityInputDevice inputDevice in devices.OfType<UnityInputDevice>()) {
-                if (!inputDevice.Profile.IsJoystick)
+            for(int i = devices.Count; i >= 0; i--) {
+                var inputDevice = devices[i] as UnityInputDevice;
+                if (inputDevice == null || !inputDevice.Profile.IsJoystick)
                     continue;
                 if (joystickNames.Length >= inputDevice.JoystickId &&
                     inputDevice.Profile.HasJoystickOrRegexName(joystickNames[inputDevice.JoystickId - 1])) continue;
@@ -147,7 +147,6 @@ namespace HouraiTeahouse.HouraiInput {
                     _deviceProfiles.Add(deviceProfile);
             }
         }
-
 
         private static string JoystickHash {
             get {
