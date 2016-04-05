@@ -125,7 +125,7 @@ namespace HouraiTeahouse.HouraiInput {
         private void DetectDetachedJoystickDevices() {
             string[] joystickNames = Input.GetJoystickNames();
 
-            for(int i = devices.Count; i >= 0; i--) {
+            for(int i = devices.Count - 1; i >= 0; i--) {
                 var inputDevice = devices[i] as UnityInputDevice;
                 if (inputDevice == null || !inputDevice.Profile.IsJoystick)
                     continue;
