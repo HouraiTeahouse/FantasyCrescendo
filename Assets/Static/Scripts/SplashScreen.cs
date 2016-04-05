@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using System.Collections;
+using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,6 +12,11 @@ public class SplashScreen : MonoBehaviour {
     [SerializeField] private Graphic[] splashGraphics;
 
     [SerializeField] private string targetSceneName;
+
+    [SerializeField] private InputTarget[] _skipButtons = {InputTarget.Action1, InputTarget.Start};
+
+    [SerializeField]
+    private float _skipSpeed = 2f;
 
     // Use this for initialization
     private void Start() {
@@ -36,7 +42,13 @@ public class SplashScreen : MonoBehaviour {
 
                 //Wait one frame
                 yield return null;
-                t += Time.deltaTime;
+
+                bool skipCheck = false;
+                foreach (InputDevice device in HInput.Devices)
+                    foreach (InputTarget target in _skipButtons)
+                        skipCheck |= device.GetControl(target);
+
+                t += ( skipCheck ? _skipSpeed : 1 ) * Time.deltaTime;
             }
             graphic.enabled = false;
             graphic.color = targetColor;
