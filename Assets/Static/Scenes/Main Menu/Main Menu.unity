@@ -741,7 +741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 622326853}
-  _key: 
+  _key: menu.singleplayer
   _format: 
 --- !u!114 &622326853
 MonoBehaviour:
@@ -953,10 +953,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 766653195}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< 9f739467a547c1782e2e1fc1746f3214b774a252
   m_Script: {fileID: 11500000, guid: f22bd7cfe307e83448bd4d04ab8bc46d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _level: 0
+=======
+  m_Script: {fileID: 11500000, guid: d19b17c69babcd54d925f90d1b4852a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentMenu: {fileID: 1816494013}
+>>>>>>> Menu Manager and General Menus
 --- !u!1 &811208117
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,8 +977,6 @@ GameObject:
   - 114: {fileID: 811208121}
   - 114: {fileID: 811208120}
   - 114: {fileID: 811208119}
-  - 114: {fileID: 811208125}
-  - 114: {fileID: 811208124}
   m_Layer: 5
   m_Name: Multiplayer
   m_TagString: Untagged
@@ -992,10 +997,10 @@ RectTransform:
   - {fileID: 1785786042}
   m_Father: {fileID: 645653816}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 368.22827, y: -418.03003}
-  m_SizeDelta: {x: 743.45654, y: 128}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &811208119
 MonoBehaviour:
@@ -1063,7 +1068,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 811208122}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 766653200}
+        m_MethodName: ChangeMenu
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1291742137}
+          m_ObjectArgumentAssemblyTypeName: HouraiTeahouse.Menu, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &811208122
@@ -1099,34 +1115,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 811208117}
---- !u!114 &811208124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 811208117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8ba33510a1f9d43843948d0806798b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trigger: 3
-  _mode: 0
-  _scenes:
-  - Stages/Forest of Magic/Forest of Magic Stage
-  _ignoreLoadedScenes: 0
---- !u!114 &811208125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 811208117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8786e5a21826446befc7f4937f81e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
 --- !u!224 &838044298 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22482564, guid: 89ca40838967f494b95225a5529cad8a,
@@ -1346,7 +1334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1140411554}
-  _key: 
+  _key: menu.exit
   _format: 
 --- !u!1 &1210625167 stripped
 GameObject:
@@ -1481,6 +1469,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 1291742134}
+  - 114: {fileID: 1291742137}
   - 114: {fileID: 1291742136}
   - 114: {fileID: 1291742135}
   m_Layer: 5
@@ -1489,7 +1478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1291742134
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1541,6 +1530,18 @@ MonoBehaviour:
   _playerContainer: {fileID: 1894261961}
   _space: {fileID: 0}
   _playerDisplay: {fileID: 22459560, guid: a411aa3ab51315f48b86c59eed7dfe0a, type: 2}
+--- !u!114 &1291742137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1291742133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a968a065c1def7e4f8a5ef69673fb997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Character Select Screen
 --- !u!1001 &1491931560
 Prefab:
   m_ObjectHideFlags: 0
@@ -1724,7 +1725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1559841218}
-  _key: 
+  _key: menu.options
   _format: 
 --- !u!1001 &1585028218
 Prefab:
@@ -1943,10 +1944,10 @@ RectTransform:
   - {fileID: 1559841217}
   m_Father: {fileID: 645653816}
   m_RootOrder: 3
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 368.22827, y: -733.97}
-  m_SizeDelta: {x: 743.45654, y: 128}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1675960875
 MonoBehaviour:
@@ -2228,7 +2229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1785786043}
-  _key: 
+  _key: menu.multiplayer
   _format: 
 --- !u!1 &1816494011
 GameObject:
@@ -2238,13 +2239,14 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 1816494012}
+  - 114: {fileID: 1816494013}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1816494012
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2263,6 +2265,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1816494013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1816494011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a968a065c1def7e4f8a5ef69673fb997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Main Menu
 --- !u!1 &1829170892
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,10 +2311,10 @@ RectTransform:
   - {fileID: 1140411553}
   m_Father: {fileID: 645653816}
   m_RootOrder: 4
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 368.22827, y: -891.93994}
-  m_SizeDelta: {x: 743.45654, y: 128}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1829170894
 MonoBehaviour:
@@ -2415,7 +2429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a41077e0f82044c8e5aa413e3b899e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trigger: 0
+  _trigger: 8
 --- !u!1 &1852901439
 GameObject:
   m_ObjectHideFlags: 0
@@ -2615,10 +2629,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 645653816}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 368.22827, y: -224.06003}
-  m_SizeDelta: {x: 743.45654, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1989973603
 MonoBehaviour:
@@ -2695,19 +2709,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2025085314}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4204082ef2bdb9441afd1f56529cc10f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _horizontalKeyboard: horizontal
-  _verticalKeyboard: vertical
-  _submitKeyboard: submit
-  _cancelKeyboard: cancel
-  _horizontalGamepad: 1
-  _verticalGamepad: 2
-  _submitGamepad: 11
-  _cancelGamepad: 12
+  _horizontal: 1
+  _vertical: 2
+  _submit: 11
+  _cancel: 12
   _deadZone: 0.1
   _navigationDelay: 0.25
 --- !u!114 &2025085316
@@ -2786,10 +2796,10 @@ RectTransform:
   - {fileID: 622326851}
   m_Father: {fileID: 645653816}
   m_RootOrder: 2
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 368.22827, y: -576}
-  m_SizeDelta: {x: 743.45654, y: 128}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2104739424
 MonoBehaviour:
