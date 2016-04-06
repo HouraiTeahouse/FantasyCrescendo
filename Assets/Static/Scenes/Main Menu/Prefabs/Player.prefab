@@ -188,6 +188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _component: {fileID: 11478386}
+  _character: {fileID: 0}
+  _useCharacterColor: 0
   _saturation: 0.5
   _value: 0.75
   _alpha: 1
@@ -364,6 +366,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _component: {fileID: 11451958}
+  _character: {fileID: 0}
+  _useCharacterColor: 0
   _saturation: 1
   _value: 0.9
   _alpha: 1
@@ -449,9 +453,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 37412604454550d4b84517feef2116f4, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
-  m_FillCenter: 0
+  m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1

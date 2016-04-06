@@ -48,7 +48,7 @@ namespace HouraiTeahouse {
         public T Load() {
             if (IsLoaded)
                 return Asset;
-            T loadedObject = Resources.Load<T>(_path);
+            var loadedObject = Resources.Load<T>(_path);
             Asset = loadedObject;
             return Asset;
         }

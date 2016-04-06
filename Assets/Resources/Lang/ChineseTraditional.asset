@@ -8,215 +8,118 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 227dee6326711f745a6c16d591c85acb, type: 3}
   m_Name: ChineseTraditional
   m_EditorClassIdentifier: 
-  data:
-  - Key: name.game
-    Value: Fantasy Crescendo
-  - Key: controllerNotice
-    Value: 'This game is best expirenced with one or more gamepad controllers.
+  _strings:
+  - ChineseTraditional
+  - Fantasy Crescendo
+  - 'This game is best expirenced with one or more gamepad controllers.
 
-      Got a controller? Plug it in!'
-  - Key: derivativeDisclaimer
-    Value: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
-      may contain story, character personalities, and settings different from  the
-      original works.\nIf you feel unconfortable with this, please proceed with caution."
-  - Key: name.reimu
-    Value: "\u9748\u5922"
-  - Key: fullname.reimu
-    Value: "\u535A\u9E97\u9748\u5922"
-  - Key: name.marisa
-    Value: "\u9B54\u7406\u6C99"
-  - Key: fullname.marisa
-    Value: "\u9727\u96E8\u9B54\u7406\u6C99"
-  - Key: name.wriggle
-    Value: "\u8389\u683C\u9732"
-  - Key: fullname.wriggle
-    Value: "\u8389\u683C\u9732\xB7\u5948\u7279\u5DF4\u683C"
-  - Key: name.yuuka
-    Value: Yuuka
-  - Key: fullname.yuuka
-    Value: Yuuka Kazami
-  - Key: name.yuugi
-    Value: Yuugi
-  - Key: fullname.yuugi
-    Value: Yuugi Hoshiguma
-  - Key: name.murasa
-    Value: Murasa
-  - Key: fullname.murasa
-    Value: Minamitsu Murasa
-  - Key: name.cirno
-    Value: "\u742A\u9732\u8AFE"
-  - Key: fullname.cirno
-    Value: "\u742A\u9732\u8AFE"
-  - Key: name.meiling
-    Value: "\u7F8E\u9234"
-  - Key: fullname.meiling
-    Value: "\u7D05\u7F8E\u9234"
-  - Key: name.patchouli
-    Value: "\u5E15\u79CB\u8389"
-  - Key: fullname.patchouli
-    Value: "\u5E15\u79CB\u8389\xB7\u8BFA\u857E\u59EC"
-  - Key: name.sakuya
-    Value: "\u54B2\u591C"
-  - Key: fullname.sakuya
-    Value: "\u5341\u516D\u591C\u54B2\u591C"
-  - Key: name.remilia
-    Value: "\u857E\u7C73\u8389\u4E9E"
-  - Key: fullname.remilia
-    Value: "\u857E\u7C73\u8389\u4E9E\xB7\u65AF\u5361\u857E\u7279"
-  - Key: name.flandre
-    Value: "\u8299\u862D\u6735\u9732"
-  - Key: fullname.flandre
-    Value: "\u8299\u862D\u6735\u9732\xB7\u65AF\u5361\u857E\u7279"
-  - Key: name.alice
-    Value: "\u611B\u9E97\u7D72"
-  - Key: fullname.alice
-    Value: "\u611B\u9E97\u7D72\xB7\u746A\u683C\u7279\u6D1B\u4F9D\u5FB7"
-  - Key: name.youmu
-    Value: "\u5996\u5922"
-  - Key: fullname.youmu
-    Value: "\u9B42\u9B44\u5996\u5922"
-  - Key: name.yuyuko
-    Value: "\u5E7D\u5E7D\u5B50"
-  - Key: fullname.yuyuko
-    Value: "\u897F\u884C\u5BFA\u5E7D\u5E7D\u5B50"
-  - Key: name.yukari
-    Value: "\u7D2B"
-  - Key: fullname.yukari
-    Value: "\u516B\u96F2\u7D2B"
-  - Key: name.suika
-    Value: "\u8403\u9999"
-  - Key: fullname.suika
-    Value: "\u4F0A\u5439\u8403\u9999"
-  - Key: name.aya
-    Value: "\u6587"
-  - Key: fullname.aya
-    Value: "\u5C04\u547D\u4E38\u6587"
-  - Key: name.mokou
-    Value: "\u59B9\u7D05"
-  - Key: fullname.mokou
-    Value: "\u85E4\u539F\u59B9\u7D05"
-  - Key: name.komachi
-    Value: "\u5C0F\u753A"
-  - Key: fullname.komachi
-    Value: "\u5C0F\u91CE\u585A\u5C0F\u753A"
-  - Key: name.nitori
-    Value: "\u8377\u53D6"
-  - Key: fullname.nitori
-    Value: "\u6CB3\u57CE\u8377\u53D6"
-  - Key: name.sanae
-    Value: "\u65E9\u82D7"
-  - Key: fullname.sanae
-    Value: "\u6771\u98A8\u8C37\u65E9\u82D7"
-  - Key: name.suwako
-    Value: "\u8ACF\u8A2A\u5B50"
-  - Key: fullname.suwako
-    Value: "\u6D29\u77E2\u8ACF\u8A2A\u5B50"
-  - Key: name.kanako
-    Value: "\u795E\u5948\u5B50"
-  - Key: fullname.kanako
-    Value: "\u516B\u5742\u795E\u5948\u5B50"
-  - Key: name.iku
-    Value: "\u8863\u7396"
-  - Key: fullname.iku
-    Value: "\u6C38\u6C5F\u8863\u7396"
-  - Key: name.tenshi
-    Value: "\u5929\u5B50"
-  - Key: fullname.tenshi
-    Value: "\u6BD4\u90A3\u540D\u5C45\u5929\u5B50"
-  - Key: name.utsuho
-    Value: "\u7A7A"
-  - Key: fullname.utsuho
-    Value: "\u9748\u70CF\u8DEF\u7A7A"
-  - Key: name.koishi
-    Value: "\u6200"
-  - Key: fullname.koishi
-    Value: "\u53E4\u660E\u5730\u6200"
-  - Key: name.ichirin
-    Value: "\u4E00\u8F2A"
-  - Key: fullname.ichirin
-    Value: "\u96F2\u5C45\u4E00\u8F2A"
-  - Key: name.unzan
-    Value: "\u96F2\u5C71"
-  - Key: name.byakuren
-    Value: "\u767D\u84EE"
-  - Key: fullname.byakuren
-    Value: "\u8056\u767D\u84EE"
-  - Key: name.futo
-    Value: "\u5E03\u90FD"
-  - Key: fullname.futo
-    Value: "\u7269\u90E8\u5E03\u90FD"
-  - Key: name.miko
-    Value: "\u795E\u5B50"
-  - Key: fullname.miko
-    Value: "\u8C50\u8070\u8033\u795E\u5B50"
-  - Key: name.mamizou
-    Value: "\u732F\u85CF"
-  - Key: fullname.mamizou
-    Value: "\u4E8C\u5CA9\u732F\u85CF"
-  - Key: name.kokoro
-    Value: "\u5FC3"
-  - Key: fullname.kokoro
-    Value: "\u79E6\u5FC3"
-  - Key: name.sukuna
-    Value: "\u91DD\u5999\u4E38"
-  - Key: fullname.sukuna
-    Value: "\u5C11\u540D\u91DD\u5999\u4E38"
-  - Key: name.sumireko
-    Value: "\u83EB\u5B50"
-  - Key: fullname.sumireko
-    Value: "\u5B87\u4F50\u898B\u5807\u5B50"
-  - Key: name.hakureiShrine
-    Value: "\u535A\u9E97\u795E\u793E"
-  - Key: name.magicForest
-    Value: "\u9B54\u6CD5\u68EE\u6797"
-  - Key: name.makai
-    Value: "\u9B54\u754C"
-  - Key: name.sdm
-    Value: "\u7D05\u9B54\u9928"
-  - Key: name.netherworld
-    Value: 
-  - Key: name.humanVilliage
-    Value: "\u4EBA\u985E\u6751\u843D"
-  - Key: name.genbuRavine
-    Value: "\u7384\u6B66\u4E4B\u6CFD"
-  - Key: random
-    Value: "\u96A8\u6A5F"
-  - Key: menu.multiplayer
-    Value: "\u5927\u4E82\u9B25"
-  - Key: menu.singleplayer
-    Value: "\u55AE\u6A5F\u6A21\u5F0F"
-  - Key: menu.standard
-    Value: "\u57FA\u672C\u683C\u9B25"
-  - Key: menu.special
-    Value: "\u7279\u5225\u683C\u9B25"
-  - Key: menu.classic
-    Value: "\u7D93\u5178\u6A21\u5F0F"
-  - Key: menu.allStar
-    Value: "\u5168\u660E\u661F\u4E82\u9B25"
-  - Key: menu.story
-    Value: "\u6545\u4E8B\u6A21\u5F0F"
-  - Key: menu.options
-    Value: "\u9078\u9805"
-  - Key: menu.back
-    Value: "\u9000\u51FA"
-  - Key: menu.exit
-    Value: "\u96E2\u958B\u904A\u6232"
-  - Key: menu.training
-    Value: "\u7DF4\u7FD2\u6A21\u5F0F"
-  - Key: menu.music
-    Value: "\u97F3\u6A02\u9078\u9805"
-  - Key: menu.sfxVolume
-    Value: "\u6548\u679C\u97F3\u91CF"
-  - Key: menu.bgmVolume
-    Value: "\u97F3\u6A02\u97F3\u91CF"
-  - Key: menu.vaVolume
-    Value: "\u8A9E\u97F3\u97F3\u91CF"
-  - Key: menu.language
-    Value: "\u8A9E\u8A00"
-  - Key: flavour.forestOfMagic
-    Value: 
-  - Key: flavour.hakureiShrine
-    Value: 
+    Got a controller? Plug it in!'
+  - "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
+    may contain story, character personalities, and settings different from  the original
+    works.\nIf you feel unconfortable with this, please proceed with caution."
+  - "\u9748\u5922"
+  - "\u535A\u9E97\u9748\u5922"
+  - "\u9B54\u7406\u6C99"
+  - "\u9727\u96E8\u9B54\u7406\u6C99"
+  - "\u8389\u683C\u9732"
+  - "\u8389\u683C\u9732\xB7\u5948\u7279\u5DF4\u683C"
+  - Yuuka
+  - Yuuka Kazami
+  - Yuugi
+  - Yuugi Hoshiguma
+  - Murasa
+  - Minamitsu Murasa
+  - "\u742A\u9732\u8AFE"
+  - '"Home to quite a few revels. Tenshi not welcome."'
+  - "\u7F8E\u9234"
+  - "\u7D05\u7F8E\u9234"
+  - "\u5E15\u79CB\u8389"
+  - "\u5E15\u79CB\u8389\xB7\u8BFA\u857E\u59EC"
+  - "\u54B2\u591C"
+  - "\u5341\u516D\u591C\u54B2\u591C"
+  - "\u857E\u7C73\u8389\u4E9E"
+  - "\u857E\u7C73\u8389\u4E9E\xB7\u65AF\u5361\u857E\u7279"
+  - "\u8299\u862D\u6735\u9732"
+  - "\u8299\u862D\u6735\u9732\xB7\u65AF\u5361\u857E\u7279"
+  - "\u611B\u9E97\u7D72"
+  - "\u611B\u9E97\u7D72\xB7\u746A\u683C\u7279\u6D1B\u4F9D\u5FB7"
+  - "\u5996\u5922"
+  - "\u9B42\u9B44\u5996\u5922"
+  - "\u5E7D\u5E7D\u5B50"
+  - "\u897F\u884C\u5BFA\u5E7D\u5E7D\u5B50"
+  - "\u7D2B"
+  - "\u516B\u96F2\u7D2B"
+  - "\u8403\u9999"
+  - "\u4F0A\u5439\u8403\u9999"
+  - "\u6587"
+  - "\u5C04\u547D\u4E38\u6587"
+  - "\u59B9\u7D05"
+  - "\u85E4\u539F\u59B9\u7D05"
+  - "\u5C0F\u753A"
+  - "\u5C0F\u91CE\u585A\u5C0F\u753A"
+  - "\u8377\u53D6"
+  - "\u6CB3\u57CE\u8377\u53D6"
+  - "\u65E9\u82D7"
+  - "\u6771\u98A8\u8C37\u65E9\u82D7"
+  - "\u8ACF\u8A2A\u5B50"
+  - "\u6D29\u77E2\u8ACF\u8A2A\u5B50"
+  - "\u795E\u5948\u5B50"
+  - "\u516B\u5742\u795E\u5948\u5B50"
+  - "\u8863\u7396"
+  - "\u6C38\u6C5F\u8863\u7396"
+  - "\u5929\u5B50"
+  - "\u6BD4\u90A3\u540D\u5C45\u5929\u5B50"
+  - "\u7A7A"
+  - "\u9748\u70CF\u8DEF\u7A7A"
+  - "\u6200"
+  - "\u53E4\u660E\u5730\u6200"
+  - "\u4E00\u8F2A"
+  - "\u96F2\u5C45\u4E00\u8F2A"
+  - "\u96F2\u5C71"
+  - "\u767D\u84EE"
+  - "\u8056\u767D\u84EE"
+  - "\u5E03\u90FD"
+  - "\u7269\u90E8\u5E03\u90FD"
+  - "\u795E\u5B50"
+  - "\u8C50\u8070\u8033\u795E\u5B50"
+  - "\u732F\u85CF"
+  - "\u4E8C\u5CA9\u732F\u85CF"
+  - "\u5FC3"
+  - "\u79E6\u5FC3"
+  - "\u91DD\u5999\u4E38"
+  - "\u5C11\u540D\u91DD\u5999\u4E38"
+  - "\u83EB\u5B50"
+  - "\u5B87\u4F50\u898B\u5807\u5B50"
+  - "\u535A\u9E97\u795E\u793E"
+  - "\u9B54\u6CD5\u68EE\u6797"
+  - "\u9B54\u754C"
+  - "\u7D05\u9B54\u9928"
+  - Netherworld
+  - "\u4EBA\u985E\u6751\u843D"
+  - "\u7384\u6B66\u4E4B\u6CFD"
+  - "\u96A8\u6A5F"
+  - "\u5927\u4E82\u9B25"
+  - "\u55AE\u6A5F\u6A21\u5F0F"
+  - "\u57FA\u672C\u683C\u9B25"
+  - "\u7279\u5225\u683C\u9B25"
+  - "\u7D93\u5178\u6A21\u5F0F"
+  - "\u5168\u660E\u661F\u4E82\u9B25"
+  - "\u6545\u4E8B\u6A21\u5F0F"
+  - "\u9078\u9805"
+  - "\u9000\u51FA"
+  - "\u96E2\u958B\u904A\u6232"
+  - "\u7DF4\u7FD2\u6A21\u5F0F"
+  - "\u97F3\u6A02\u9078\u9805"
+  - "\u6548\u679C\u97F3\u91CF"
+  - "\u97F3\u6A02\u97F3\u91CF"
+  - "\u8A9E\u97F3\u97F3\u91CF"
+  - "\u8A9E\u8A00"
+  - '"Full of magic and greenery, hence the name."'
+  - '"Home to quite a few revels. Tenshi not welcome."'
+  - Yes
+  - No
+  - OK
+  - We have set your language to {0}, is this OK?

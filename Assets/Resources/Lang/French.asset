@@ -8,215 +8,118 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c27e3040c7081f4b962428d4f4dc3ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 227dee6326711f745a6c16d591c85acb, type: 3}
   m_Name: French
   m_EditorClassIdentifier: 
-  data:
-  - Key: name.game
-    Value: Fantasy Crescendo
-  - Key: controllerNotice
-    Value: "Une ou plusieurs manettes sont recommand\xE9es pour une meilleure exp\xE9rience
-      de jeu.\nVous avez une manette ? Branchez-la !"
-  - Key: derivativeDisclaimer
-    Value: "Attention!\n\nCe jeu est un d\xE9riv\xE9 de Touhou Project (\u6771\u65B9Project).\nIl
-      se pourrait qu'il contienne une histoire, des personalit\xE9s de personnages,
-      et un cadre diff\xE9rent des oeuvres d'origine.\nSi cela vous g\xEAne, veillez
-      poursuivre avec pr\xE9caution."
-  - Key: name.reimu
-    Value: Reimu
-  - Key: fullname.reimu
-    Value: Reimu Hakurei
-  - Key: name.marisa
-    Value: Marisa
-  - Key: fullname.marisa
-    Value: Marisa Kirisame
-  - Key: name.wriggle
-    Value: Wriggle
-  - Key: fullname.wriggle
-    Value: Wriggle Nightbug
-  - Key: name.yuuka
-    Value: Yuuka
-  - Key: fullname.yuuka
-    Value: Yuuka Kazami
-  - Key: name.yuugi
-    Value: Yuugi
-  - Key: fullname.yuugi
-    Value: Yuugi Hoshiguma
-  - Key: name.murasa
-    Value: Murasa
-  - Key: fullname.murasa
-    Value: Minamitsu Murasa
-  - Key: name.cirno
-    Value: Cirno
-  - Key: fullname.cirno
-    Value: Cirno
-  - Key: name.meiling
-    Value: Meiling
-  - Key: fullname.meiling
-    Value: Hong Meiling
-  - Key: name.patchouli
-    Value: Patchouli
-  - Key: fullname.patchouli
-    Value: Patchouli Knowledge
-  - Key: name.sakuya
-    Value: Sakuya
-  - Key: fullname.sakuya
-    Value: Sakuya Izayoi
-  - Key: name.remilia
-    Value: Remilia
-  - Key: fullname.remilia
-    Value: Remilia Scarlet
-  - Key: name.flandre
-    Value: Flandre
-  - Key: fullname.flandre
-    Value: Flandre Scarlet
-  - Key: name.alice
-    Value: Alice
-  - Key: fullname.alice
-    Value: Alice Margatroid
-  - Key: name.youmu
-    Value: Youmu
-  - Key: fullname.youmu
-    Value: Youmu Konpaku
-  - Key: name.yuyuko
-    Value: Yuyuko
-  - Key: fullname.yuyuko
-    Value: Yuyuko Saigyouji
-  - Key: name.yukari
-    Value: Yukari
-  - Key: fullname.yukari
-    Value: Yukari Yakumo
-  - Key: name.suika
-    Value: Suika
-  - Key: fullname.suika
-    Value: Suika Ibuki
-  - Key: name.aya
-    Value: Aya
-  - Key: fullname.aya
-    Value: Aya Shameimaru
-  - Key: name.mokou
-    Value: Mokou
-  - Key: fullname.mokou
-    Value: Fujiwara no Mokou
-  - Key: name.komachi
-    Value: Komachi
-  - Key: fullname.komachi
-    Value: Komachi Onozuka
-  - Key: name.nitori
-    Value: Nitori
-  - Key: fullname.nitori
-    Value: Nitori Kawashiro
-  - Key: name.sanae
-    Value: Sanae
-  - Key: fullname.sanae
-    Value: Sanae Kochiya
-  - Key: name.suwako
-    Value: Suwako
-  - Key: fullname.suwako
-    Value: Suwako Moriya
-  - Key: name.kanako
-    Value: Kanako
-  - Key: fullname.kanako
-    Value: Kanako Yasaka
-  - Key: name.iku
-    Value: Iku
-  - Key: fullname.iku
-    Value: Iku Nagae
-  - Key: name.tenshi
-    Value: Tenshi
-  - Key: fullname.tenshi
-    Value: Tenshi Hinanawi
-  - Key: name.utsuho
-    Value: Utsuho
-  - Key: fullname.utsuho
-    Value: Utsuho Reiuji
-  - Key: name.koishi
-    Value: Koishi
-  - Key: fullname.koishi
-    Value: Koishi Komeiji
-  - Key: name.ichirin
-    Value: Ichirin
-  - Key: fullname.ichirin
-    Value: Ichirin Kumoi
-  - Key: name.unzan
-    Value: Unzan
-  - Key: name.byakuren
-    Value: Byakuren
-  - Key: fullname.byakuren
-    Value: Byakuren Hijiri
-  - Key: name.futo
-    Value: Futo
-  - Key: fullname.futo
-    Value: Mononobe no Futo
-  - Key: name.miko
-    Value: Miko
-  - Key: fullname.miko
-    Value: Toyosatomimi no Miko
-  - Key: name.mamizou
-    Value: Mamizou
-  - Key: fullname.mamizou
-    Value: Mamizou Futatsuiwa
-  - Key: name.kokoro
-    Value: Kokoro
-  - Key: fullname.kokoro
-    Value: Hata no Kokoro
-  - Key: name.sukuna
-    Value: Shinmyoumaru
-  - Key: fullname.sukuna
-    Value: Shinmyoumaru Sukuna
-  - Key: name.sumireko
-    Value: Sumireko
-  - Key: fullname.sumireko
-    Value: 'Sumireko Usami '
-  - Key: name.hakureiShrine
-    Value: Sanctuaire Hakurei
-  - Key: name.magicForest
-    Value: "For\xEAt de la magie"
-  - Key: name.makai
-    Value: Makai
-  - Key: name.sdm
-    Value: "Manoir du D\xE9mon \xC9carlate"
-  - Key: name.netherworld
-    Value: 
-  - Key: name.humanVilliage
-    Value: Village Humain
-  - Key: name.genbuRavine
-    Value: Ravin Genbu
-  - Key: random
-    Value: "Al\xE9atoire"
-  - Key: menu.multiplayer
-    Value: Multijoueur
-  - Key: menu.singleplayer
-    Value: Solo
-  - Key: menu.standard
-    Value: Standard
-  - Key: menu.special
-    Value: "Sp\xE9cial"
-  - Key: menu.classic
-    Value: Mode Classique
-  - Key: menu.allStar
-    Value: Mode All-Star
-  - Key: menu.story
-    Value: Mode Histoire
-  - Key: menu.options
-    Value: Options
-  - Key: menu.back
-    Value: Retour
-  - Key: menu.exit
-    Value: Quitter
-  - Key: menu.training
-    Value: Entrainement
-  - Key: menu.music
-    Value: Musique
-  - Key: menu.sfxVolume
-    Value: Volume des Effets Sonores
-  - Key: menu.bgmVolume
-    Value: Volume de la Musique
-  - Key: menu.vaVolume
-    Value: Volume des Voix
-  - Key: menu.language
-    Value: Langue
-  - Key: flavour.forestOfMagic
-    Value: 
-  - Key: flavour.hakureiShrine
-    Value: 
+  _strings:
+  - French
+  - Fantasy Crescendo
+  - "Une ou plusieurs manettes sont recommand\xE9es pour une meilleure exp\xE9rience
+    de jeu.\nVous avez une manette ? Branchez-la !"
+  - "Attention!\n\nCe jeu est un d\xE9riv\xE9 de Touhou Project (\u6771\u65B9Project).\nIl
+    se pourrait qu'il contienne une histoire, des personalit\xE9s de personnages,
+    et un cadre diff\xE9rent des oeuvres d'origine.\nSi cela vous g\xEAne, veillez
+    poursuivre avec pr\xE9caution."
+  - Reimu
+  - Reimu Hakurei
+  - Marisa
+  - Marisa Kirisame
+  - Wriggle
+  - Wriggle Nightbug
+  - Yuuka
+  - Yuuka Kazami
+  - Yuugi
+  - Yuugi Hoshiguma
+  - Murasa
+  - Minamitsu Murasa
+  - Cirno
+  - Cirno
+  - Meiling
+  - Hong Meiling
+  - Patchouli
+  - Patchouli Knowledge
+  - Sakuya
+  - Sakuya Izayoi
+  - Remilia
+  - Remilia Scarlet
+  - Flandre
+  - Flandre Scarlet
+  - Alice
+  - Alice Margatroid
+  - Youmu
+  - Youmu Konpaku
+  - Yuyuko
+  - Yuyuko Saigyouji
+  - Yukari
+  - Yukari Yakumo
+  - Suika
+  - Suika Ibuki
+  - Aya
+  - Aya Shameimaru
+  - Mokou
+  - Fujiwara no Mokou
+  - Komachi
+  - Komachi Onozuka
+  - Nitori
+  - Nitori Kawashiro
+  - Sanae
+  - Sanae Kochiya
+  - Suwako
+  - Suwako Moriya
+  - Kanako
+  - Kanako Yasaka
+  - Iku
+  - Iku Nagae
+  - Tenshi
+  - Tenshi Hinanawi
+  - Utsuho
+  - Utsuho Reiuji
+  - Koishi
+  - Koishi Komeiji
+  - Ichirin
+  - Ichirin Kumoi
+  - Unzan
+  - Byakuren
+  - Byakuren Hijiri
+  - Futo
+  - Mononobe no Futo
+  - Miko
+  - Toyosatomimi no Miko
+  - Mamizou
+  - Mamizou Futatsuiwa
+  - Kokoro
+  - Hata no Kokoro
+  - Shinmyoumaru
+  - Shinmyoumaru Sukuna
+  - Sumireko
+  - 'Sumireko Usami '
+  - Sanctuaire Hakurei
+  - "For\xEAt de la magie"
+  - Makai
+  - "Manoir du D\xE9mon \xC9carlate"
+  - Netherworld
+  - Village Humain
+  - Ravin Genbu
+  - "Al\xE9atoire"
+  - Multijoueur
+  - Solo
+  - Standard
+  - "Sp\xE9cial"
+  - Mode Classique
+  - Mode All-Star
+  - Mode Histoire
+  - Options
+  - Retour
+  - Quitter
+  - Entrainement
+  - Musique
+  - Volume des Effets Sonores
+  - Volume de la Musique
+  - Volume des Voix
+  - Langue
+  - 
+  - 
+  - Yes
+  - No
+  - OK
+  - We have set your language to {0}, is this OK?

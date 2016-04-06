@@ -36,34 +36,37 @@ namespace HouraiTeahouse.Localization.Editor {
         private Object _saveFolder;
 
         /// <summary>
-        /// Reads the Google Spreadsheet and generates/updates the Language asset files
+        /// Reads the Google Spreadsheet and generates/updates the StringSet asset files
         /// </summary>
         public void Generate() {
             ListFeed test = GDocService.GetSpreadsheet(GoogleLink);
-            var languageMap = new Dictionary<string, Dictionary<string, string>>();
-            HashSet<string> ignore = new HashSet<string>(_ignoreColumns);
+            var languageMap = new Dictionary<string, StringSet>();
+            var keys = CreateInstance<StringSet>();
+            languageMap.Add("Keys", keys);
+            var ignore = new HashSet<string>(_ignoreColumns);
             foreach (ListEntry row in test.Entries) {
+                keys.Add(row.Title.Text);
                 foreach (ListEntry.Custom element in row.Elements) {
                     string lang = element.LocalName;
                     if (ignore.Contains(lang))
                         continue;
-                    if(!languageMap.ContainsKey(lang))
-                        languageMap[lang] = new Dictionary<string, string>();
-                    languageMap[lang][row.Title.Text] = element.Value;
+                    if (!languageMap.ContainsKey(lang))
+                        languageMap[lang] = CreateInstance<StringSet>();
+                    languageMap[lang].Add(element.Value);
                 }
             }
             string folderPath = _saveFolder ? AssetDatabase.GetAssetPath(_saveFolder) : "Assets/Resources/Lang";
             foreach (var lang in languageMap) {
                 var method = "Generating";
                 string path = string.Format("{0}/{1}.asset", folderPath, lang.Key);
-                var language = AssetDatabase.LoadAssetAtPath<Language>(path);
+                var language = AssetDatabase.LoadAssetAtPath<StringSet>(path);
                 if (language) {
                     method = "Updating";
-                    language.ReadFromDictionary(lang.Value);
+                    language.Copy(lang.Value);
                     EditorUtility.SetDirty(language);
                }
                 else
-                    AssetDatabase.CreateAsset(Language.FromDictionary(lang.Value), path);
+                    AssetDatabase.CreateAsset(lang.Value, path);
                 Debug.Log(string.Format("{0} language files for: {1}", method, lang.Key));
             }
             EditorApplication.SaveAssets();

@@ -65,9 +65,7 @@ namespace HouraiTeahouse.Localization {
         /// </summary>
         /// <param name="language">the language set that was changed to.</param>
         void OnChangeLanguage(Language language) {
-            if (!language)
-                return;
-            if (_localizationKey == null)
+            if (language == null || _localizationKey == null)
                 return;
             if (language.ContainsKey(_localizationKey))
                 _text.text = Process(language[_localizationKey]);
