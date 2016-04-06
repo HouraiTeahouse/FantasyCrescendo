@@ -5,17 +5,23 @@ using UnityEngine.EventSystems;
 
 namespace HouraiTeahouse.SmashBrew.UI {
     public class SmashBrewInputModule : PointerInputModule {
-        [SerializeField] private InputTarget _horizontal = InputTarget.LeftStickX;
+        [SerializeField]
+        private InputTarget _horizontal = InputTarget.LeftStickX;
 
-        [SerializeField] private InputTarget _vertical = InputTarget.LeftStickY;
+        [SerializeField]
+        private InputTarget _vertical = InputTarget.LeftStickY;
 
-        [SerializeField] private InputTarget _submit = InputTarget.Action1;
+        [SerializeField]
+        private InputTarget _submit = InputTarget.Action1;
 
-        [SerializeField] private InputTarget _cancel = InputTarget.Action2;
+        [SerializeField]
+        private InputTarget _cancel = InputTarget.Action2;
 
-        [SerializeField] private float _deadZone = 0.1f;
+        [SerializeField]
+        private float _deadZone = 0.1f;
 
-        [SerializeField] private float _navigationDelay = 0.25f;
+        [SerializeField]
+        private float _navigationDelay = 0.25f;
 
         private float _currentDelay;
 
@@ -45,9 +51,11 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 return;
             GameObject target = eventSystem.currentSelectedGameObject;
 
-            if (HInput.Devices.Any(device => device.GetControl(_submit)))
+            if (HInput.Devices.Any(device => device.GetControl(_submit).WasPressed)) {
                 ExecuteEvents.Execute(target, GetBaseEventData(), ExecuteEvents.submitHandler);
-            if (HInput.Devices.Any(device => device.GetControl(_cancel)))
+                Debug.Log("Submit");
+            }
+            if (HInput.Devices.Any(device => device.GetControl(_cancel).WasPressed))
                 ExecuteEvents.Execute(target, GetBaseEventData(), ExecuteEvents.cancelHandler);
 
             _currentDelay -= Time.deltaTime;

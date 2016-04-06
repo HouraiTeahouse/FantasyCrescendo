@@ -764,11 +764,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: cfe4813e0409c6148a1fbf1db2e3d307, type: 3}
-    m_FontSize: 70
+    m_FontSize: 10
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 75
+    m_MaxSize: 10
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -919,7 +919,7 @@ Canvas:
   m_RenderMode: 1
   m_Camera: {fileID: 203963824}
   m_PlaneDistance: 5
-  m_PixelPerfect: 1
+  m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -1304,11 +1304,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: cfe4813e0409c6148a1fbf1db2e3d307, type: 3}
-    m_FontSize: 70
+    m_FontSize: 10
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 75
+    m_MaxSize: 10
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1478,7 +1478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1291742134
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1695,11 +1695,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: cfe4813e0409c6148a1fbf1db2e3d307, type: 3}
-    m_FontSize: 70
+    m_FontSize: 10
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 75
+    m_MaxSize: 10
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2068,7 +2068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1687757746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2199,11 +2199,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: cfe4813e0409c6148a1fbf1db2e3d307, type: 3}
-    m_FontSize: 70
+    m_FontSize: 10
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 75
+    m_MaxSize: 10
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2476,7 +2476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

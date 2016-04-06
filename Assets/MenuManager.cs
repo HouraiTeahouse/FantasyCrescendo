@@ -28,6 +28,9 @@ namespace HouraiTeahouse {
             }
             if(_currentMenu != null)
                 _menuBreadcrumnbs.Push(_currentMenu.Name);
+            foreach(Menu inactiveMenu in _availableMenus.Values)
+                if(inactiveMenu && inactiveMenu != _currentMenu)
+                    inactiveMenu.gameObject.SetActive(false);
         }
 
         public void ChangeMenu(Menu menu) {
