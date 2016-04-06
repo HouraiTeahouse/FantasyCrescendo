@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using HouraiTeahouse.SmashBrew.UI;
 using UnityEngine;
 
@@ -57,12 +58,9 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField, Resource(typeof (GameObject))] [Tooltip("The prefab of the Character to spawn.")] private
             string _prefab;
 
-        private Resource<GameObject> _prefabResource;
-
-        [SerializeField, Resource(typeof (SceneData))] [Tooltip("The Character's associated stage.")] private string
-            _homeStage;
-
-        private Resource<SceneData> _homeStageResource;
+        [SerializeField, Resource(typeof (SceneData))]
+        [Tooltip("The Character's associated stage.")]
+        private string _homeStage;
 
         [SerializeField, Tooltip(" Is the Character selectable from the character select screen?")] private bool
             _isSelectable;
@@ -87,13 +85,9 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField, Resource(typeof (Sprite))] [Tooltip("The icon used to represent the character.")] private
             string _icon;
 
-        private Resource<Sprite> _iconResource;
-
         [Header("Audio Data")] [SerializeField, Resource(typeof (AudioClip))] [Tooltip("The audio clip played for the Character's announer")] private string _announcerClip;
-        private Resource<AudioClip> _announcerResource;
 
         [SerializeField, Resource(typeof (AudioClip))] [Tooltip("The theme played on the match results screen when the character wins")] private string _victoryTheme;
-        private Resource<AudioClip> _victoryThemeResource;
 
         /// <summary>
         /// The source game the character is from
@@ -147,37 +141,27 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary>
         /// Gets the resource for the character's icon
         /// </summary>
-        public Resource<Sprite> Icon {
-            get { return _iconResource; }
-        }
+        public Resource<Sprite> Icon { get; private set; }
 
         /// <summary>
         /// Get the resource for the character's home stage
         /// </summary>
-        public Resource<SceneData> HomeStage {
-            get { return _homeStageResource; }
-        }
+        public Resource<SceneData> HomeStage { get; private set; }
 
         /// <summary>
         /// Gets the resource for the character's prefab
         /// </summary>
-        public Resource<GameObject> Prefab {
-            get { return _prefabResource; }
-        }
+        public Resource<GameObject> Prefab { get; private set; }
 
         /// <summary>
         /// Gets the resource for the character's announcer clip 
         /// </summary>
-        public Resource<AudioClip> Announcer {
-            get { return _announcerResource; }
-        }
+        public Resource<AudioClip> Announcer { get; private set; }
 
         /// <summary>
         /// Gets the resource for the character's victory theme clip 
         /// </summary>
-        public Resource<AudioClip> VictoryTheme {
-            get { return _victoryThemeResource; }
-        }
+        public Resource<AudioClip> VictoryTheme { get; private set; }
 
         /// <summary>
         /// Gets the crop rect relative to a texture 
@@ -217,12 +201,21 @@ namespace HouraiTeahouse.SmashBrew {
         void OnEnable() {
             if (_portraits == null)
                 return;
-            _iconResource = new Resource<Sprite>(_icon);
-            _prefabResource = new Resource<GameObject>(_prefab);
-            _homeStageResource = new Resource<SceneData>(_homeStage);
-            _announcerResource = new Resource<AudioClip>(_announcerClip);
-            _victoryThemeResource = new Resource<AudioClip>(_victoryTheme);
+            Icon = new Resource<Sprite>(_icon);
+            Prefab = new Resource<GameObject>(_prefab);
+            HomeStage = new Resource<SceneData>(_homeStage);
+            Announcer = new Resource<AudioClip>(_announcerClip);
+            VictoryTheme = new Resource<AudioClip>(_victoryTheme);
             RegeneratePortraits();
+        }
+
+        public void UnloadAll() {
+            Icon.Unload();
+            Prefab.Unload();
+            HomeStage.Unload();
+            VictoryTheme.Unload();
+            foreach (Resource<Sprite> portrait in _portraitResources)
+                portrait.Unload();
         }
 
         void RegeneratePortraits() {

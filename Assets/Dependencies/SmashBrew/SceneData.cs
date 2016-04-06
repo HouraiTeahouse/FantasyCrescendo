@@ -52,5 +52,10 @@ namespace HouraiTeahouse.SmashBrew {
             PreviewImage = new Resource<Sprite>(_previewImage);
             Icon = new Resource<Sprite>(_icon);
         }
+
+        public void UnloadAll() {
+            PreviewImage.Unload();
+            Icon.Unload();
+        }
     }
 }

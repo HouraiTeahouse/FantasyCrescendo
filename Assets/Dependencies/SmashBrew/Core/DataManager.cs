@@ -54,5 +54,13 @@ namespace HouraiTeahouse.SmashBrew {
             _characterCollection = new ReadOnlyCollection<CharacterData>(_characters);
             _sceneCollection = new ReadOnlyCollection<SceneData>(_scenes);
         }
+
+        void OnLevelWasLoaded(int level) {
+            Debug.Log("Unload");
+            foreach (SceneData scene in _scenes)
+                scene.UnloadAll();
+            foreach (CharacterData character in _characters)
+                character.UnloadAll();
+        }
     }
 }
