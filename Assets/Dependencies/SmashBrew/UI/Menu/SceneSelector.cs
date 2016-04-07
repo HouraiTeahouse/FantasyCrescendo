@@ -1,9 +1,11 @@
-﻿namespace HouraiTeahouse.SmashBrew.UI {
+﻿
+namespace HouraiTeahouse.SmashBrew.UI {
 
-    public class StageSelector : CharacterUIComponent, IPlayerClickable {
+    public class SceneSelector : SceneUIComponent, IPlayerClickable{
         public void Click(Player player) {
-            if(Character && Character.IsSelectable)
-                player.SelectedCharacter = Character;
+            if (Scene) {
+                Scene.Load ();
+            }
         }
     }
 }
