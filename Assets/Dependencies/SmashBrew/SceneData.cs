@@ -8,14 +8,23 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary>
         /// The internal name of the scene. Must be in build settings. 
         /// </summary>
-        [SerializeField, Scene] [Tooltip("The internal name of the scene. Must be in build settings.")] private string
-            _sceneName;
+        [SerializeField, Scene]
+        [Tooltip("The internal name of the scene. Must be in build settings.")]
+        private string _sceneName;
 
-        [SerializeField] [Tooltip("Is this scene a stage?")] private bool _isStage = true;
+        [SerializeField]
+        [Tooltip("Is this scene a stage?")]
+        private bool _isStage = true;
 
-        [SerializeField] [Resource(typeof (Sprite))] [Tooltip("The image shown on menus to represent the scene.")] private string _previewImage;
+        [SerializeField]
+        [Resource(typeof (Sprite))]
+        [Tooltip("The image shown on menus to represent the scene.")]
+        private string _previewImage;
 
-        [SerializeField] [Resource(typeof (Sprite))] [Tooltip("The icon used shown on menus to represent the scene.")] private string _icon;
+        [SerializeField]
+        [Resource(typeof (Sprite))]
+        [Tooltip("The icon used shown on menus to represent the scene.")]
+        private string _icon;
 
         /// <summary>
         /// Loads the scene described by the SceneData
@@ -51,6 +60,13 @@ namespace HouraiTeahouse.SmashBrew {
             base.OnEnable();
             PreviewImage = new Resource<Sprite>(_previewImage);
             Icon = new Resource<Sprite>(_icon);
+        }
+
+        /// <summary>
+        /// Unity callback. Called when ScriptableObject is unloaded.
+        /// </summary>
+        void OnDisable() {
+            UnloadAll();
         }
 
         public void UnloadAll() {

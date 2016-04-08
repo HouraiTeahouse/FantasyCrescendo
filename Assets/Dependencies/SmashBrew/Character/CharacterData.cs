@@ -51,43 +51,63 @@ namespace HouraiTeahouse.SmashBrew {
     [CreateAssetMenu(fileName = "New Character", menuName = "SmashBrew/Character Data")]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
     public class CharacterData : ScriptableObject {
-        [Header("General Data")] [SerializeField] private TouhouGame _sourceGame = TouhouGame.Other;
+        [Header("General Data")]
+        [SerializeField]
+        private TouhouGame _sourceGame = TouhouGame.Other;
 
-        [SerializeField] private TouhouStage _sourceStage = TouhouStage.Other;
+        [SerializeField]
+        private TouhouStage _sourceStage = TouhouStage.Other;
 
-        [SerializeField, Resource(typeof (GameObject))] [Tooltip("The prefab of the Character to spawn.")] private
-            string _prefab;
+        [SerializeField, Resource(typeof (GameObject))]
+        [Tooltip("The prefab of the Character to spawn.")]
+        private string _prefab;
 
         [SerializeField, Resource(typeof (SceneData))]
         [Tooltip("The Character's associated stage.")]
         private string _homeStage;
 
-        [SerializeField, Tooltip(" Is the Character selectable from the character select screen?")] private bool
-            _isSelectable;
+        [SerializeField, Tooltip(" Is the Character selectable from the character select screen?")]
+        private bool _isSelectable;
 
-        [SerializeField, Tooltip("Is the Character viewable in the character select screen?")] private bool _isVisible;
+        [SerializeField, Tooltip("Is the Character viewable in the character select screen?")]
+        private bool _isVisible;
 
-        [SerializeField] [Tooltip("The localization key used for the character's shortened name")] [Header("Localization Data")] private string _shortNameKey;
+        [Header("Localization Data")] 
+        [SerializeField, Tooltip("The localization key used for the character's shortened name")]
+        private string _shortNameKey;
 
-        [SerializeField] [Tooltip("The localization key used for the character's full name.")] private string
-            _fullNameKey;
+        [SerializeField, Tooltip("The localization key used for the character's full name.")]
+        private string _fullNameKey;
 
-        [Header("2D Art Data")] [SerializeField, Resource(typeof (Sprite))] private string[] _portraits;
+        [Header("2D Art Data")]
+        [SerializeField, Resource(typeof (Sprite))]
+        private string[] _portraits;
         private Resource<Sprite>[] _portraitResources;
 
-        [SerializeField] private Color _backgroundColor = Color.white;
+        [SerializeField]
+        private Color _backgroundColor = Color.white;
 
-        [SerializeField] [Tooltip("The center of the crop for smaller cropped views")] private Vector2 _cropPositon;
+        [SerializeField]
+        [Tooltip("The center of the crop for smaller cropped views")]
+        private Vector2 _cropPositon;
 
-        [SerializeField] [Range(0f, 1f)] [Tooltip("The size of the crop. In normalized coordinates.")] private float
-            _cropSize;
+        [SerializeField]
+        [Range(0f, 1f)]
+        [Tooltip("The size of the crop. In normalized coordinates.")]
+        private float _cropSize;
 
-        [SerializeField, Resource(typeof (Sprite))] [Tooltip("The icon used to represent the character.")] private
-            string _icon;
+        [SerializeField, Resource(typeof (Sprite))]
+        [Tooltip("The icon used to represent the character.")]
+        private string _icon;
 
-        [Header("Audio Data")] [SerializeField, Resource(typeof (AudioClip))] [Tooltip("The audio clip played for the Character's announer")] private string _announcerClip;
+        [Header("Audio Data")]
+        [SerializeField, Resource(typeof (AudioClip))]
+        [Tooltip("The audio clip played for the Character's announer")]
+        private string _announcerClip;
 
-        [SerializeField, Resource(typeof (AudioClip))] [Tooltip("The theme played on the match results screen when the character wins")] private string _victoryTheme;
+        [SerializeField, Resource(typeof (AudioClip))]
+        [Tooltip("The theme played on the match results screen when the character wins")]
+        private string _victoryTheme;
 
         /// <summary>
         /// The source game the character is from
@@ -207,6 +227,13 @@ namespace HouraiTeahouse.SmashBrew {
             Announcer = new Resource<AudioClip>(_announcerClip);
             VictoryTheme = new Resource<AudioClip>(_victoryTheme);
             RegeneratePortraits();
+        }
+
+        /// <summary>
+        /// Unity callback. Called when the asset instance is unloaded from memory.
+        /// </summary>
+        void OnDisable() {
+            UnloadAll();
         }
 
         public void UnloadAll() {
