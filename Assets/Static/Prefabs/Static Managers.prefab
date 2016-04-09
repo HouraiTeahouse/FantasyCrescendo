@@ -18,6 +18,7 @@ GameObject:
   - 114: {fileID: 11490834}
   - 114: {fileID: 11473446}
   - 114: {fileID: 11463294}
+  - 114: {fileID: 11482896}
   - 114: {fileID: 11439540}
   m_Layer: 0
   m_Name: Static Managers
@@ -58,7 +59,7 @@ MonoBehaviour:
   - HouraiTeahouse.SmashBrew.SmashBrewKeyboardProfile
 --- !u!114 &11439540
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189600}
@@ -173,6 +174,17 @@ MonoBehaviour:
   _dontDestroyOnLoad: 1
   _defaultLanguage: Lang/English
   _keys: {fileID: 11400000, guid: 219e2644cb9df084e801b37c423d1655, type: 2}
+--- !u!114 &11482896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3644896509639e4eb7658cb00ec24ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11486768
 MonoBehaviour:
   m_ObjectHideFlags: 1
