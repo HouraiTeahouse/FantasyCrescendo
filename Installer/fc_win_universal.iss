@@ -4,7 +4,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define APP_NAME      'Fantasy Crescendo'
-#define APP_VERSION   '0.2.0'
+#define APP_VERSION   '0.2.1'
 #define BUILD_NAME    'fc'
 
 #define README        '..\README.md'

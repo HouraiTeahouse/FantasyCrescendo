@@ -191,7 +191,8 @@ namespace HouraiTeahouse.SmashBrew {
         public Rect CropRect(Texture texture) {
             if (!texture)
                 return new Rect(0, 0, 1, 1);
-            return texture.UVToPixelRect(new Rect(_cropPositon.x, _cropPositon.y, _cropSize, _cropSize));
+            float extents = _cropSize / 2;
+            return texture.UVToPixelRect(new Rect(_cropPositon.x - extents, _cropPositon.y - extents, _cropSize, _cropSize));
         }
 
         /// <summary>
