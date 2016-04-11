@@ -17,6 +17,10 @@ public class Serno {
     override public string ToString() {
         return "⑨";
     }
+
+    public int IComparable.CompareTo(object anyOtherBeing){
+        return -1;
+    }
 }
 
 public class NoBusesInGensokyoException : System.Exception {
