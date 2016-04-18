@@ -27,7 +27,7 @@ namespace HouraiTeahouse.SmashBrew {
             Vector2 altStick = _controlMapping.AltStick(input);
 
             //Ensure that the character is walking in the right direction
-            if ((stick.x > 0 && _character.Direction) ||
+            if (!TimeManager.Paused && (stick.x > 0 && _character.Direction) ||
                 (stick.x < 0 && !_character.Direction))
                 _character.Direction = !_character.Direction;
 
