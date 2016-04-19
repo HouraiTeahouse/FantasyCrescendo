@@ -6,9 +6,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// A Component that displays a Character (or a Player's Character) name on a UI Text object
     /// </summary>
     public sealed class SceneName : AbstractLocalizedText, IDataComponent<SceneData> {
-        [SerializeField, Tooltip("The character who's name is to be displayed")] private SceneData _scene;
+        [SerializeField, Tooltip("The Scene who's name is to be displayed")] private SceneData _scene;
 
-        [SerializeField, Tooltip("Capitalize the character's name?")] private bool _capitalize;
+        [SerializeField, Tooltip("Capitalize the Scene's name?")] private bool _capitalize;
 
         /// <summary>
         /// <see cref="IDataComponent{CharacterData}.SetData"/>

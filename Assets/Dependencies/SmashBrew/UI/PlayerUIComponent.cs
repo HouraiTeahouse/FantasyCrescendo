@@ -68,13 +68,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        /// <see cref="PlayerUIComponent{T}.OnPlayerChange"/>
-        /// </summary>
-        protected override void OnPlayerChange() {
-            return;
-        }
-
-        /// <summary>
         /// <see cref="IDataComponent{T}.SetData"/>
         /// </summary>
         public virtual void SetData(SceneData data) {
