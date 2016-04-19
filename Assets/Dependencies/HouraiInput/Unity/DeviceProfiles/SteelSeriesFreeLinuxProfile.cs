@@ -2,8 +2,8 @@ using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class SteelSeriesFreeLinuxProfile : UnityInputDeviceProfile {
         public SteelSeriesFreeLinuxProfile() {
             Name = "SteelSeries Free";

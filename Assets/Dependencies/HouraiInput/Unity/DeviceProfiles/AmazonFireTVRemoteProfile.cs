@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class AmazonFireTVRemote : UnityInputDeviceProfile {
         public AmazonFireTVRemote() {
             Name = "Amazon Fire TV Remote";

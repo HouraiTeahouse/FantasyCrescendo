@@ -2,8 +2,8 @@ using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class Xbox360MacProfile : UnityInputDeviceProfile {
         public Xbox360MacProfile() {
             Name = "XBox 360 Controller";

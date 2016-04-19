@@ -18,6 +18,8 @@ GameObject:
   - 114: {fileID: 11490834}
   - 114: {fileID: 11473446}
   - 114: {fileID: 11463294}
+  - 114: {fileID: 11482896}
+  - 114: {fileID: 11439540}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: GameController
@@ -48,12 +50,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logDebugInfo: 0
-  invertYAxis: 0
-  enableXInput: 1
-  useFixedUpdate: 1
-  dontDestroyOnLoad: 1
-  customProfiles: []
+  _logDebugInfo: 0
+  _invertYAxis: 0
+  _enableXInput: 0
+  _useFixedUpdate: 0
+  _dontDestroyOnLoad: 0
+  _customProfiles:
+  - HouraiTeahouse.SmashBrew.SmashBrewKeyboardProfile
+--- !u!114 &11439540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3644896509639e4eb7658cb00ec24ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11442866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,9 +145,12 @@ MonoBehaviour:
   _characters:
   - {fileID: 11400000, guid: 909122be91dfc3f488344cb130b405b3, type: 2}
   - {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
+  - {fileID: 11400000, guid: e30df62a022e1444184b24b3d299cd46, type: 2}
   - {fileID: 11400000, guid: bbb5dd3a7c08b724db73c8fd56edcd99, type: 2}
   - {fileID: 11400000, guid: 08f598346f8cc9a47a9c4b6862537c30, type: 2}
   - {fileID: 11400000, guid: 32bc70f9f255d3c4aaffc13450ffe9e1, type: 2}
+  - {fileID: 11400000, guid: b80cef4f7afc64743832c2b0ef22c060, type: 2}
+  - {fileID: 11400000, guid: 07a01ef61634ca64598faa7809281798, type: 2}
   _scenes:
   - {fileID: 11400000, guid: 4fdd220a86869f347a639eb8a61773fa, type: 2}
   - {fileID: 11400000, guid: 8d79fa23890a7e34bb353807cea6c06e, type: 2}
@@ -156,6 +173,18 @@ MonoBehaviour:
   _langPlayerPrefKey: lang
   _dontDestroyOnLoad: 1
   _defaultLanguage: Lang/English
+  _keys: {fileID: 11400000, guid: 219e2644cb9df084e801b37c423d1655, type: 2}
+--- !u!114 &11482896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3644896509639e4eb7658cb00ec24ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11486768
 MonoBehaviour:
   m_ObjectHideFlags: 1

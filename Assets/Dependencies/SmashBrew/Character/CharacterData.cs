@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using HouraiTeahouse.SmashBrew.UI;
 using UnityEngine;
 
@@ -50,50 +51,63 @@ namespace HouraiTeahouse.SmashBrew {
     [CreateAssetMenu(fileName = "New Character", menuName = "SmashBrew/Character Data")]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
     public class CharacterData : ScriptableObject {
-        [Header("General Data")] [SerializeField] private TouhouGame _sourceGame = TouhouGame.Other;
+        [Header("General Data")]
+        [SerializeField]
+        private TouhouGame _sourceGame = TouhouGame.Other;
 
-        [SerializeField] private TouhouStage _sourceStage = TouhouStage.Other;
+        [SerializeField]
+        private TouhouStage _sourceStage = TouhouStage.Other;
 
-        [SerializeField, Resource(typeof (GameObject))] [Tooltip("The prefab of the Character to spawn.")] private
-            string _prefab;
+        [SerializeField, Resource(typeof (GameObject))]
+        [Tooltip("The prefab of the Character to spawn.")]
+        private string _prefab;
 
-        private Resource<GameObject> _prefabResource;
+        [SerializeField, Resource(typeof (SceneData))]
+        [Tooltip("The Character's associated stage.")]
+        private string _homeStage;
 
-        [SerializeField, Resource(typeof (SceneData))] [Tooltip("The Character's associated stage.")] private string
-            _homeStage;
+        [SerializeField, Tooltip(" Is the Character selectable from the character select screen?")]
+        private bool _isSelectable;
 
-        private Resource<SceneData> _homeStageResource;
+        [SerializeField, Tooltip("Is the Character viewable in the character select screen?")]
+        private bool _isVisible;
 
-        [SerializeField, Tooltip(" Is the Character selectable from the character select screen?")] private bool
-            _isSelectable;
+        [Header("Localization Data")] 
+        [SerializeField, Tooltip("The localization key used for the character's shortened name")]
+        private string _shortNameKey;
 
-        [SerializeField, Tooltip("Is the Character viewable in the character select screen?")] private bool _isVisible;
+        [SerializeField, Tooltip("The localization key used for the character's full name.")]
+        private string _fullNameKey;
 
-        [SerializeField] [Tooltip("The localization key used for the character's shortened name")] [Header("Localization Data")] private string _shortNameKey;
-
-        [SerializeField] [Tooltip("The localization key used for the character's full name.")] private string
-            _fullNameKey;
-
-        [Header("2D Art Data")] [SerializeField, Resource(typeof (Sprite))] private string[] _portraits;
+        [Header("2D Art Data")]
+        [SerializeField, Resource(typeof (Sprite))]
+        private string[] _portraits;
         private Resource<Sprite>[] _portraitResources;
 
-        [SerializeField] private Color _backgroundColor = Color.white;
+        [SerializeField]
+        private Color _backgroundColor = Color.white;
 
-        [SerializeField] [Tooltip("The center of the crop for smaller cropped views")] private Vector2 _cropPositon;
+        [SerializeField]
+        [Tooltip("The center of the crop for smaller cropped views")]
+        private Vector2 _cropPositon;
 
-        [SerializeField] [Range(0f, 1f)] [Tooltip("The size of the crop. In normalized coordinates.")] private float
-            _cropSize;
+        [SerializeField]
+        [Range(0f, 1f)]
+        [Tooltip("The size of the crop. In normalized coordinates.")]
+        private float _cropSize;
 
-        [SerializeField, Resource(typeof (Sprite))] [Tooltip("The icon used to represent the character.")] private
-            string _icon;
+        [SerializeField, Resource(typeof (Sprite))]
+        [Tooltip("The icon used to represent the character.")]
+        private string _icon;
 
-        private Resource<Sprite> _iconResource;
+        [Header("Audio Data")]
+        [SerializeField, Resource(typeof (AudioClip))]
+        [Tooltip("The audio clip played for the Character's announer")]
+        private string _announcerClip;
 
-        [Header("Audio Data")] [SerializeField, Resource(typeof (AudioClip))] [Tooltip("The audio clip played for the Character's announer")] private string _announcerClip;
-        private Resource<AudioClip> _announcerResource;
-
-        [SerializeField, Resource(typeof (AudioClip))] [Tooltip("The theme played on the match results screen when the character wins")] private string _victoryTheme;
-        private Resource<AudioClip> _victoryThemeResource;
+        [SerializeField, Resource(typeof (AudioClip))]
+        [Tooltip("The theme played on the match results screen when the character wins")]
+        private string _victoryTheme;
 
         /// <summary>
         /// The source game the character is from
@@ -147,37 +161,27 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary>
         /// Gets the resource for the character's icon
         /// </summary>
-        public Resource<Sprite> Icon {
-            get { return _iconResource; }
-        }
+        public Resource<Sprite> Icon { get; private set; }
 
         /// <summary>
         /// Get the resource for the character's home stage
         /// </summary>
-        public Resource<SceneData> HomeStage {
-            get { return _homeStageResource; }
-        }
+        public Resource<SceneData> HomeStage { get; private set; }
 
         /// <summary>
         /// Gets the resource for the character's prefab
         /// </summary>
-        public Resource<GameObject> Prefab {
-            get { return _prefabResource; }
-        }
+        public Resource<GameObject> Prefab { get; private set; }
 
         /// <summary>
         /// Gets the resource for the character's announcer clip 
         /// </summary>
-        public Resource<AudioClip> Announcer {
-            get { return _announcerResource; }
-        }
+        public Resource<AudioClip> Announcer { get; private set; }
 
         /// <summary>
         /// Gets the resource for the character's victory theme clip 
         /// </summary>
-        public Resource<AudioClip> VictoryTheme {
-            get { return _victoryThemeResource; }
-        }
+        public Resource<AudioClip> VictoryTheme { get; private set; }
 
         /// <summary>
         /// Gets the crop rect relative to a texture 
@@ -187,7 +191,8 @@ namespace HouraiTeahouse.SmashBrew {
         public Rect CropRect(Texture texture) {
             if (!texture)
                 return new Rect(0, 0, 1, 1);
-            return texture.UVToPixelRect(new Rect(_cropPositon.x, _cropPositon.y, _cropSize, _cropSize));
+            float extents = _cropSize / 2;
+            return texture.UVToPixelRect(new Rect(_cropPositon.x - extents, _cropPositon.y - extents, _cropSize, _cropSize));
         }
 
         /// <summary>
@@ -217,12 +222,28 @@ namespace HouraiTeahouse.SmashBrew {
         void OnEnable() {
             if (_portraits == null)
                 return;
-            _iconResource = new Resource<Sprite>(_icon);
-            _prefabResource = new Resource<GameObject>(_prefab);
-            _homeStageResource = new Resource<SceneData>(_homeStage);
-            _announcerResource = new Resource<AudioClip>(_announcerClip);
-            _victoryThemeResource = new Resource<AudioClip>(_victoryTheme);
+            Icon = new Resource<Sprite>(_icon);
+            Prefab = new Resource<GameObject>(_prefab);
+            HomeStage = new Resource<SceneData>(_homeStage);
+            Announcer = new Resource<AudioClip>(_announcerClip);
+            VictoryTheme = new Resource<AudioClip>(_victoryTheme);
             RegeneratePortraits();
+        }
+
+        /// <summary>
+        /// Unity callback. Called when the asset instance is unloaded from memory.
+        /// </summary>
+        void OnDisable() {
+            UnloadAll();
+        }
+
+        public void UnloadAll() {
+            Icon.Unload();
+            Prefab.Unload();
+            HomeStage.Unload();
+            VictoryTheme.Unload();
+            foreach (Resource<Sprite> portrait in _portraitResources)
+                portrait.Unload();
         }
 
         void RegeneratePortraits() {

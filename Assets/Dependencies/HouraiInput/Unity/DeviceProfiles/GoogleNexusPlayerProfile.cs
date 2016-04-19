@@ -2,8 +2,8 @@ using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class GoogleNexusPlayerProfile : UnityInputDeviceProfile {
         public GoogleNexusPlayerProfile() {
             Name = "Google Nexus Player Controller";

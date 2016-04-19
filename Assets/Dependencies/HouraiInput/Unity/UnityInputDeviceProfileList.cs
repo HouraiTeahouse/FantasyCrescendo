@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HouraiTeahouse.HouraiInput {
     public class UnityInputDeviceProfileList : ScriptableObject {
         public static string[] Profiles = new string[] {
-            "HouraiTeahouse.HouraiInput.AmazonFireTVProfile",
+            "HouraiTeahouse.HouraiInput.SmashBrewKeyboardProfile",
             "HouraiTeahouse.HouraiInput.AmazonFireTVRemote",
             "HouraiTeahouse.HouraiInput.AndroidTVProfile",
             "HouraiTeahouse.HouraiInput.AndroidTVRemoteProfile",

@@ -2,8 +2,8 @@ using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class OuyaWinProfile : UnityInputDeviceProfile {
         public OuyaWinProfile() {
             Name = "OUYA Controller";

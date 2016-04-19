@@ -2,8 +2,8 @@ using System;
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class AppleMFiProfile : UnityInputDeviceProfile {
         public AppleMFiProfile() {
             Name = "Apple MFi Controller";

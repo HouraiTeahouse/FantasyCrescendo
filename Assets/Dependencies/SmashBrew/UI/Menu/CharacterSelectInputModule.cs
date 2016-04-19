@@ -81,8 +81,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                     _eventData.pointerPress = ExecuteEvents.ExecuteHierarchy(result.gameObject, _eventData,
                         ExecuteEvents.submitHandler);
                     _eventData.rawPointerPress = result.gameObject;
-                    Debug.Log(result.gameObject.GetComponents<IPlayerClickable>().Length);
-                    foreach (var clickable in result.gameObject.GetComponentsInParent<IPlayerClickable>())
+                    foreach (IPlayerClickable clickable in result.gameObject.GetComponentsInParent<IPlayerClickable>())
                         clickable.Click(pointer.Player);
                     success = true;
                 }

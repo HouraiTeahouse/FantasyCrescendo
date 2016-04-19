@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+using System;
 
-public class Serno {
+public class Serno : IComparable {
     public bool IsBaka {
         get { return true; }
     }
@@ -14,8 +13,12 @@ public class Serno {
         get { throw new NoBusesInGensokyoException("There are no buses in Gensokyo!"); }
     }
 
-    override public string ToString() {
+    public override string ToString() {
         return "⑨";
+    }
+
+    public int CompareTo(object anyOtherBeing){
+        return -1;
     }
 }
 

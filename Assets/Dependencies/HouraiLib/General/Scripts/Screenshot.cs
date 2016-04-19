@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 
 namespace HouraiTeahouse {

@@ -1,9 +1,4 @@
-using System;
-
-
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
     public class PlayStation3LinuxProfile : UnityInputDeviceProfile {
         public PlayStation3LinuxProfile() {
             Name = "PlayStation 3 Controller";
@@ -17,8 +12,6 @@ namespace HouraiTeahouse.HouraiInput {
                 "Sony PLAYSTATION(R)3 Controller",
                 "SHENGHIC 2009/0708ZXW-V1Inc. PLAYSTATION(R)3Conteroller" // Not a typo.
             };
-
-            MaxUnityVersion = new VersionInfo(4, 9);
 
             ButtonMappings = new[] {
                 new InputMapping {

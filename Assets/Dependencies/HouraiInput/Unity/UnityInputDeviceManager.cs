@@ -1,82 +1,65 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 using UnityEngine;
-
 
 namespace HouraiTeahouse.HouraiInput {
     public class UnityInputDeviceManager : InputDeviceManager {
-        float deviceRefreshTimer = 0.0f;
-        const float deviceRefreshInterval = 1.0f;
+        private float _deviceRefreshTimer;
+        private const float DeviceRefreshInterval = 1.0f;
 
-        List<UnityInputDeviceProfile> deviceProfiles = new List<UnityInputDeviceProfile>();
-        bool keyboardDevicesAttached = false;
-        string joystickHash = "";
-
+        private readonly List<UnityInputDeviceProfile> _deviceProfiles = new List<UnityInputDeviceProfile>();
+        private bool _keyboardDevicesAttached;
+        private string _joystickHash = "";
 
         public UnityInputDeviceManager() {
             AutoDiscoverDeviceProfiles();
             RefreshDevices();
         }
 
-
         public override void Update(ulong updateTick, float deltaTime) {
-            deviceRefreshTimer += deltaTime;
-            if (string.IsNullOrEmpty(joystickHash) || deviceRefreshTimer >= deviceRefreshInterval) {
-                deviceRefreshTimer = 0.0f;
+            _deviceRefreshTimer += deltaTime;
+            if (!string.IsNullOrEmpty(_joystickHash) && !(_deviceRefreshTimer >= DeviceRefreshInterval)) return;
+            _deviceRefreshTimer = 0.0f;
 
-                if (joystickHash != JoystickHash) {
-                    Logger.LogInfo("Change in Unity attached joysticks detected; refreshing device list.");
-                    RefreshDevices();
-                }
-            }
+            if (_joystickHash == JoystickHash) return;
+            Logger.LogInfo("Change in Unity attached joysticks detected; refreshing device list.");
+            RefreshDevices();
         }
-
 
         void RefreshDevices() {
             AttachKeyboardDevices();
             DetectAttachedJoystickDevices();
             DetectDetachedJoystickDevices();
-            joystickHash = JoystickHash;
+            _joystickHash = JoystickHash;
         }
 
-
-        void AttachDevice(UnityInputDevice device) {
+        private void AttachDevice(InputDevice device) {
             devices.Add(device);
             HInput.AttachDevice(device);
         }
 
-
-        void AttachKeyboardDevices() {
-            int deviceProfileCount = deviceProfiles.Count;
-            for (int i = 0; i < deviceProfileCount; i++) {
-                var deviceProfile = deviceProfiles[i];
-                if (deviceProfile.IsNotJoystick && deviceProfile.IsSupportedOnThisPlatform) {
+        private void AttachKeyboardDevices() {
+            foreach (UnityInputDeviceProfile deviceProfile in _deviceProfiles)
+                if (!deviceProfile.IsJoystick && deviceProfile.IsSupportedOnThisPlatform)
                     AttachKeyboardDeviceWithConfig(deviceProfile);
-                }
-            }
         }
 
-
-        void AttachKeyboardDeviceWithConfig(UnityInputDeviceProfile config) {
-            if (keyboardDevicesAttached) {
+        private void AttachKeyboardDeviceWithConfig(UnityInputDeviceProfile config) {
+            if (_keyboardDevicesAttached)
                 return;
-            }
 
             var keyboardDevice = new UnityInputDevice(config);
             AttachDevice(keyboardDevice);
 
-            keyboardDevicesAttached = true;
+            _keyboardDevicesAttached = true;
         }
 
-
-        void DetectAttachedJoystickDevices() {
+        private void DetectAttachedJoystickDevices() {
             try {
-                var joystickNames = Input.GetJoystickNames();
-                for (int i = 0; i < joystickNames.Length; i++) {
+                string[] joystickNames = Input.GetJoystickNames();
+                for (var i = 0; i < joystickNames.Length; i++)
                     DetectAttachedJoystickDevice(i + 1, joystickNames[i]);
-                }
             }
             catch (Exception e) {
                 Logger.LogError(e.Message);
@@ -84,8 +67,7 @@ namespace HouraiTeahouse.HouraiInput {
             }
         }
 
-
-        void DetectAttachedJoystickDevice(int unityJoystickId, string unityJoystickName) {
+        private void DetectAttachedJoystickDevice(int unityJoystickId, string unityJoystickName) {
             if (unityJoystickName == "WIRED CONTROLLER" ||
                 unityJoystickName == " WIRED CONTROLLER") {
                 // Ignore Steam controller for now.
@@ -97,68 +79,42 @@ namespace HouraiTeahouse.HouraiInput {
                 return;
             }
 
-            // PS4 controller works properly as of Unity 4.5
-            if (HInput.UnityVersion <= new VersionInfo(4, 5)) {
-                if (Application.platform == RuntimePlatform.OSXEditor ||
-                    Application.platform == RuntimePlatform.OSXPlayer ||
-                    Application.platform == RuntimePlatform.OSXWebPlayer) {
-                    if (unityJoystickName == "Unknown Wireless Controller") {
-                        // Ignore PS4 controller in Bluetooth mode on Mac since it connects but does nothing.
-                        return;
-                    }
-                }
-            }
-
             // As of Unity 4.6.3p1, empty strings on windows represent disconnected devices.
-            if (HInput.UnityVersion >= new VersionInfo(4, 6, 3)) {
-                if (Application.platform == RuntimePlatform.WindowsEditor ||
-                    Application.platform == RuntimePlatform.WindowsPlayer ||
-                    Application.platform == RuntimePlatform.WindowsWebPlayer) {
-                    if (String.IsNullOrEmpty(unityJoystickName)) {
-                        return;
-                    }
-                }
-            }
+            if ((Application.platform == RuntimePlatform.WindowsEditor ||
+                Application.platform == RuntimePlatform.WindowsPlayer ||
+                Application.platform == RuntimePlatform.WindowsWebPlayer) && 
+                string.IsNullOrEmpty(unityJoystickName))
+                return;
 
-            var matchedDeviceProfile = deviceProfiles.Find(config => config.HasJoystickName(unityJoystickName));
-
-            if (matchedDeviceProfile == null) {
-                matchedDeviceProfile = deviceProfiles.Find(config => config.HasLastResortRegex(unityJoystickName));
-            }
+            UnityInputDeviceProfile matchedDeviceProfile = _deviceProfiles.Find(config => config.HasJoystickName(unityJoystickName)) ??
+                                                           _deviceProfiles.Find(config => config.HasLastResortRegex(unityJoystickName));
 
             UnityInputDeviceProfile deviceProfile = null;
 
             if (matchedDeviceProfile == null) {
                 deviceProfile = new UnityUnknownDeviceProfile(unityJoystickName);
-                deviceProfiles.Add(deviceProfile);
+                _deviceProfiles.Add(deviceProfile);
             }
             else {
                 deviceProfile = matchedDeviceProfile;
             }
 
-            int deviceCount = devices.Count;
-            for (int i = 0; i < deviceCount; i++) {
-                var device = devices[i];
-                var unityDevice = device as UnityInputDevice;
-                if (unityDevice != null && unityDevice.IsConfiguredWith(deviceProfile, unityJoystickId)) {
-                    Logger.LogInfo("Device \"" + unityJoystickName + "\" is already configured with " +
-                                   deviceProfile.Name);
-                    return;
-                }
+            if (devices.OfType<UnityInputDevice>().Any(unityDevice => unityDevice.IsConfiguredWith(deviceProfile, unityJoystickId))) {
+                Logger.LogInfo("Device \"" + unityJoystickName + "\" is already configured with " +
+                               deviceProfile.Name);
+                return;
             }
 
             if (!deviceProfile.IsHidden) {
                 var joystickDevice = new UnityInputDevice(deviceProfile, unityJoystickId);
                 AttachDevice(joystickDevice);
 
-                if (matchedDeviceProfile == null) {
+                if (matchedDeviceProfile == null) 
                     Logger.LogWarning("Device " + unityJoystickId + " with name \"" + unityJoystickName +
                                       "\" does not match any known profiles.");
-                }
-                else {
+                else 
                     Logger.LogInfo("Device " + unityJoystickId + " matched profile " + deviceProfile.GetType().Name +
                                    " (" + deviceProfile.Name + ")");
-                }
             }
             else {
                 Logger.LogInfo("Device " + unityJoystickId + " matching profile " + deviceProfile.GetType().Name + " (" +
@@ -166,43 +122,36 @@ namespace HouraiTeahouse.HouraiInput {
             }
         }
 
+        private void DetectDetachedJoystickDevices() {
+            string[] joystickNames = Input.GetJoystickNames();
 
-        void DetectDetachedJoystickDevices() {
-            var joystickNames = Input.GetJoystickNames();
-
-            for (int i = devices.Count - 1; i >= 0; i--) {
+            for(int i = devices.Count - 1; i >= 0; i--) {
                 var inputDevice = devices[i] as UnityInputDevice;
-
-                if (inputDevice.Profile.IsNotJoystick) {
+                if (inputDevice == null || !inputDevice.Profile.IsJoystick)
                     continue;
-                }
+                if (joystickNames.Length >= inputDevice.JoystickId &&
+                    inputDevice.Profile.HasJoystickOrRegexName(joystickNames[inputDevice.JoystickId - 1])) continue;
+                devices.Remove(inputDevice);
+                HInput.DetachDevice(inputDevice);
 
-                if (joystickNames.Length < inputDevice.JoystickId ||
-                    !inputDevice.Profile.HasJoystickOrRegexName(joystickNames[inputDevice.JoystickId - 1])) {
-                    devices.Remove(inputDevice);
-                    HInput.DetachDevice(inputDevice);
-
-                    Logger.LogInfo("Detached device: " + inputDevice.Profile.Name);
-                }
+                Logger.LogInfo("Detached device: " + inputDevice.Profile.Name);
             }
         }
 
-
-        void AutoDiscoverDeviceProfiles() {
-            foreach (var typeName in UnityInputDeviceProfileList.Profiles) {
-                var deviceProfile = (UnityInputDeviceProfile) Activator.CreateInstance(Type.GetType(typeName));
-                if (deviceProfile.IsSupportedOnThisPlatform) {
-                    // Logger.LogInfo( "Found profile: " + deviceProfile.GetType().Name + " (" + deviceProfile.Name + ")" );
-                    deviceProfiles.Add(deviceProfile);
-                }
+        private void AutoDiscoverDeviceProfiles() {
+            foreach (string typeName in UnityInputDeviceProfileList.Profiles) {
+                Type type = Type.GetType(typeName);
+                if (type == null) continue;
+                var deviceProfile = Activator.CreateInstance(type) as UnityInputDeviceProfile;
+                if (deviceProfile != null && deviceProfile.IsSupportedOnThisPlatform) 
+                    _deviceProfiles.Add(deviceProfile);
             }
         }
 
-
-        static string JoystickHash {
+        private static string JoystickHash {
             get {
-                var joystickNames = Input.GetJoystickNames();
-                return joystickNames.Length + ": " + String.Join(", ", joystickNames);
+                string[] joystickNames = Input.GetJoystickNames();
+                return joystickNames.Length + ": " + string.Join(", ", joystickNames);
             }
         }
     }

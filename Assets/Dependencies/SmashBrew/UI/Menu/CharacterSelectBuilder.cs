@@ -45,7 +45,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
             foreach (CharacterData data in dataManager.Characters) {
                 if (data == null || !data.IsVisible)
-                    return;
+                    continue;
                 RectTransform character = Instantiate(_character);
                 Attach(character, _characterContainer);
                 character.name = data.name;

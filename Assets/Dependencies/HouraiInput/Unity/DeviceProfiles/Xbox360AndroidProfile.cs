@@ -2,8 +2,8 @@
 
 
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
+
     public class Xbox360AndroidProfile : UnityInputDeviceProfile {
         public Xbox360AndroidProfile() {
             Name = "XBox 360 Controller";

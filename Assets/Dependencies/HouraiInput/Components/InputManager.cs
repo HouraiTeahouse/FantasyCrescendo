@@ -2,28 +2,30 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace HouraiTeahouse.HouraiInput {
     public class InputManager : MonoBehaviour {
-        public bool logDebugInfo = false;
-        public bool invertYAxis = false;
-        public bool enableXInput = false;
-        public bool useFixedUpdate = false;
-        public bool dontDestroyOnLoad = false;
-        public List<string> customProfiles = new List<string>();
+        [SerializeField]
+        private bool _logDebugInfo = false;
+        [SerializeField]
+        private bool _invertYAxis = false;
+        [SerializeField]
+        private bool _enableXInput = false;
+        [SerializeField]
+        private bool _useFixedUpdate = false;
+        [SerializeField]
+        private bool _dontDestroyOnLoad = false;
+        [SerializeField]
+        private List<string> _customProfiles = new List<string>();
 
-
-        void OnEnable() {
-            if (logDebugInfo) {
-                Debug.Log("InControl (version " + HInput.Version + ")");
+        private void OnEnable() {
+            if (_logDebugInfo)
                 Logger.OnLogMessage += HandleOnLogMessage;
-            }
 
-            HInput.InvertYAxis = invertYAxis;
-            HInput.EnableXInput = enableXInput;
+            HInput.InvertYAxis = _invertYAxis;
+            HInput.EnableXInput = _enableXInput;
             HInput.SetupInternal();
 
-            foreach (string className in customProfiles) {
+            foreach (string className in _customProfiles) {
                 Type classType = Type.GetType(className);
                 if (classType == null) {
                     Debug.LogError("Cannot find class for custom profile: " + className);
@@ -34,66 +36,43 @@ namespace HouraiTeahouse.HouraiInput {
                 }
             }
 
-            if (dontDestroyOnLoad) {
+            if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
-            }
         }
 
-
-        void OnDisable() {
+        private void OnDisable() {
             HInput.ResetInternal();
         }
 
-
 #if UNITY_ANDROID && INCONTROL_OUYA && !UNITY_EDITOR
-		void Start()
-		{
+		void Start() {
 			StartCoroutine( CheckForOuyaEverywhereSupport() );
 		}
 
 
-		IEnumerator CheckForOuyaEverywhereSupport()
-		{
+		IEnumerator CheckForOuyaEverywhereSupport() {
 			while (!OuyaSDK.isIAPInitComplete())
-			{
 				yield return null;
-			}
 
 			OuyaEverywhereDeviceManager.Enable();
 		}
-		#endif
+#endif
 
-
-        void Update() {
-            if (!useFixedUpdate || Mathf.Approximately(Time.timeScale, 0.0f)) {
+        private void Update() {
+            if (!_useFixedUpdate || Mathf.Approximately(Time.timeScale, 0.0f)) 
                 HInput.UpdateInternal();
-            }
         }
 
-
-        void FixedUpdate() {
-            if (useFixedUpdate) {
+        private void FixedUpdate() {
+            if (_useFixedUpdate)
                 HInput.UpdateInternal();
-            }
         }
 
-
-        void OnApplicationFocus(bool focusState) {
+        private void OnApplicationFocus(bool focusState) {
             HInput.OnApplicationFocus(focusState);
         }
 
-
-        void OnApplicationPause(bool pauseState) {
-            HInput.OnApplicationPause(pauseState);
-        }
-
-
-        void OnApplicationQuit() {
-            HInput.OnApplicationQuit();
-        }
-
-
-        void HandleOnLogMessage(LogMessage logMessage) {
+        private static void HandleOnLogMessage(LogMessage logMessage) {
             switch (logMessage.type) {
                 case LogMessageType.Info:
                     Debug.Log(logMessage.text);

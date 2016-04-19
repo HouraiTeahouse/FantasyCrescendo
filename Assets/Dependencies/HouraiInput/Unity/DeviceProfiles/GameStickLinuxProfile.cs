@@ -1,9 +1,5 @@
-using System;
-
-
 namespace HouraiTeahouse.HouraiInput {
-    // @cond nodoc
-    [AutoDiscover]
+
     public class GameStickLinuxProfile : UnityInputDeviceProfile {
         public GameStickLinuxProfile() {
             Name = "GameStick Controller";
@@ -16,8 +12,6 @@ namespace HouraiTeahouse.HouraiInput {
             JoystickNames = new[] {
                 "GameStick Controller"
             };
-
-            MaxUnityVersion = new VersionInfo(4, 9);
 
             ButtonMappings = new[] {
                 new InputMapping {
