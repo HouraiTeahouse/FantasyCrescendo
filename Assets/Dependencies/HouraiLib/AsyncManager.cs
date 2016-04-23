@@ -3,13 +3,12 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Assertions;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
 
     /// <summary>
-    /// A Singleton for 
+    /// A Singleton for managing a number of asynchronous operations
     /// </summary>
     public sealed class AsyncManager : Singleton<AsyncManager> {
 
@@ -68,6 +67,7 @@ namespace HouraiTeahouse {
 
         IEnumerator WaitForResource<T>(ResourceRequest request, Action<T> callback) where T : Object {
             yield return request;
+            _operations.Remove(request);
             if (callback == null)
                 yield break;
             var obj = request.asset as T;

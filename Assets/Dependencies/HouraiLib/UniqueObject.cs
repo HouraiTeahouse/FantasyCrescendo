@@ -15,7 +15,8 @@ namespace HouraiTeahouse {
         /// </summary>
         private static Dictionary<string, UniqueObject> _allIds;
 
-        [SerializeField, ReadOnly, Tooltip("The unique id for this object")] private string _id;
+        [SerializeField, ReadOnly, Tooltip("The unique id for this object")]
+        private string _id;
 
         /// <summary>
         /// The unique ID of the object.
@@ -31,7 +32,11 @@ namespace HouraiTeahouse {
             if (_allIds == null)
                 _allIds = new Dictionary<string, UniqueObject>();
             if (_allIds.ContainsKey(ID)) {
-                Destroy(gameObject);
+                // Destroy only destroys the object after a frame is finished, which still allows
+                // other code in other attached scripts to execute.
+                // DestroyImmediate ensures that said code is not executed and immediately removes the
+                // GameObject from the scene.
+                DestroyImmediate(gameObject);
                 return;
             }
             _allIds[ID] = this;

@@ -19,7 +19,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <summary>
         /// Unity Callback. Called on object instantation.
         /// </summary>
-        void Awake() {
+        void Start() {
             CreateCharacterSelect();
             CreatePlayerDisplay();
         }
