@@ -19,7 +19,7 @@ GameObject:
   - 114: {fileID: 11473446}
   - 114: {fileID: 11463294}
   - 114: {fileID: 11482896}
-  - 114: {fileID: 11439540}
+  - 114: {fileID: 11442566}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: GameController
@@ -57,15 +57,15 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   _customProfiles:
   - HouraiTeahouse.SmashBrew.SmashBrewKeyboardProfile
---- !u!114 &11439540
+--- !u!114 &11442566
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3644896509639e4eb7658cb00ec24ad, type: 3}
+  m_Script: {fileID: 11500000, guid: cb5e645c62a8f9c4ab835c447489b0ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11442866

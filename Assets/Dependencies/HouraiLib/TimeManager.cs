@@ -9,7 +9,7 @@ namespace HouraiTeahouse {
     /// Inherits from MonoBehaviour. A custom Editor allows editing the pause/timescale
     /// state of the game from the Editor.
     /// </summary>
-    public class TimeManager : MonoBehaviour {
+    public class TimeManager : Singleton<TimeManager> {
         private static float _timeScale = 1f;
         private static bool _paused;
 
@@ -63,7 +63,8 @@ namespace HouraiTeahouse {
         /// <summary>
         /// Unity callback. Called on object instantiation.
         /// </summary>
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             _timeScale = Time.timeScale;
         }
     }

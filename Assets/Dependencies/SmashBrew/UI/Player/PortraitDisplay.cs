@@ -8,12 +8,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
     public sealed class PortraitDisplay : CharacterUIComponent<RawImage> {
         private RectTransform _rectTransform;
 
-        [SerializeField, Tooltip("Should the character's portrait be cropped?")] private bool _cropped;
+        [SerializeField, Tooltip("Should the character's portrait be cropped?")]
+        private bool _cropped;
 
-        [SerializeField, Tooltip("Tint to cover the potrait, should the character be disabled")] private Color
-            _disabledTint = Color.gray;
+        [SerializeField, Tooltip("Tint to cover the potrait, should the character be disabled")]
+        private Color _disabledTint = Color.gray;
 
-        [SerializeField, Tooltip("An offset to move the crop rect")] private Vector2 _rectBias;
+        [SerializeField, Tooltip("An offset to move the crop rect")]
+        private Vector2 _rectBias;
 
         private Color _defaultColor;
         private Rect _cropRect;
@@ -56,15 +58,17 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (Component == null || data == null || data.PalleteCount <= 0)
                 return;
             int portrait = Player != null ? Player.Pallete : 0;
-            if (data.GetPortrait(portrait).Load() == null)
-                return;
-            Texture2D texture = data.GetPortrait(portrait).Asset.texture;
-            _cropRect = _cropped ? data.CropRect(texture) : texture.PixelRect();
-            _cropRect.x += _rectBias.x * texture.width;
-            _cropRect.y += _rectBias.y * texture.height;
-            Component.texture = texture;
-            Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
-            SetRect();
+            data.GetPortrait(portrait).LoadAsync(delegate(Sprite sprite) {
+                if (!sprite)
+                    return;
+                Texture2D texture = data.GetPortrait(portrait).Asset.texture;
+                _cropRect = _cropped ? data.CropRect(texture) : texture.PixelRect();
+                _cropRect.x += _rectBias.x * texture.width;
+                _cropRect.y += _rectBias.y * texture.height;
+                Component.texture = texture;
+                Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
+                SetRect();
+            });
         }
     }
 }

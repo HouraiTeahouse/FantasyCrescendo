@@ -23,7 +23,7 @@ namespace HouraiTeahouse.SmashBrew {
             base.SetData(data);
             if (Component == null || data == null)
                 return;
-            Component.clip = data.Announcer.Load();
+            data.Announcer.LoadAsync(clip => Component.clip = clip);
         }
     }
 }

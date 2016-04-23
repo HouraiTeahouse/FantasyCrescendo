@@ -10,7 +10,8 @@ namespace HouraiTeahouse {
     [Serializable]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Resources#ResourcePathAttribute_and_Resource_Wrapper")]
     public sealed class Resource<T> where T : Object {
-        [SerializeField] private readonly string _path;
+        [SerializeField]
+        private readonly string _path;
 
         /// <summary>
         /// Initializes a new instance of Resource with a specified Resources file path.
@@ -60,6 +61,26 @@ namespace HouraiTeahouse {
             if (IsLoaded)
                 Resources.UnloadAsset(Asset);
             Asset = null;
+        }
+
+        /// <summary>
+        /// Loads the asset in an asynchronous manner. 
+        /// </summary>
+        /// <param name="callback">optional parameter, if not null, will execute with the loaded asset as the parameter</param>
+        /// <param name="priority">optional parameter, the priority of the resource request</param>
+        /// <returns>the ResourceRequest associated with the </returns>
+        public ResourceRequest LoadAsync(Action<T> callback = null, int priority = 0) {
+            AsyncManager manager = AsyncManager.Instance;
+            if(!manager)
+                throw new InvalidOperationException("Cannot execute a async load without a AsyncManager instance.");
+            ResourceRequest request = Resources.LoadAsync<T>(_path);
+            request.priority = priority;
+            manager.AddOpreation(request, delegate(T obj) {
+                Asset = obj;
+                if (callback != null)
+                    callback(obj);
+            });
+            return request;
         }
     }
 }

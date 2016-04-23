@@ -284,6 +284,7 @@ namespace HouraiTeahouse.SmashBrew {
                 Pallete = Random.Range(0, SpawnedCharacter.PalleteCount);
             }
 
+            //TODO: Make the loading of characters asynchronous 
             GameObject prefab = SpawnedCharacter.Prefab.Load();
             if (prefab == null)
                 return null;

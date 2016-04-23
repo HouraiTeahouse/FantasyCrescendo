@@ -46,17 +46,27 @@ namespace HouraiTeahouse {
         private const string delimiter = "/";
         private const string suffix = "weight";
 
-        [SerializeField] [Tooltip("The name of the BGM.")] private string _name;
+        [SerializeField]
+        [Tooltip("The name of the BGM.")]
+        private string _name;
 
-        [SerializeField] [Tooltip("The artist who created this piece of music")] private string _artist;
+        [SerializeField]
+        [Tooltip("The artist who created this piece of music")]
+        private string _artist;
 
-        [SerializeField, Resource(typeof (AudioClip))] private string _bgm;
+        [SerializeField, Resource(typeof (AudioClip))]
+        private string _bgm;
 
-        [SerializeField, Range(0f, 1f)] private float _baseWeight = 1f;
+        [SerializeField, Range(0f, 1f)]
+        private float _baseWeight = 1f;
 
-        [SerializeField] [Tooltip("The sample number of the start point the loop.")] private int _loopStart;
+        [SerializeField]
+        [Tooltip("The sample number of the start point the loop.")]
+        private int _loopStart;
 
-        [SerializeField] [Tooltip("The sample number of the end point the loop.")] private int _loopEnd;
+        [SerializeField]
+        [Tooltip("The sample number of the end point the loop.")]
+        private int _loopEnd;
 
         private Resource<AudioClip> _bgmResource;
         private float _weight;

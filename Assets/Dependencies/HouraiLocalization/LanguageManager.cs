@@ -19,7 +19,7 @@ namespace HouraiTeahouse.Localization {
     /// Singleton MonoBehaviour that manages all of localization system.
     /// </summary>
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Manager")]
-    public sealed class LanguageManager : MonoBehaviour {
+    public sealed class LanguageManager : Singleton<LanguageManager> {
         [SerializeField, Tooltip("The Resources directory to load the Language files from")] private string
             localizaitonResourceDirectory = "Lang/";
 
@@ -47,11 +47,6 @@ namespace HouraiTeahouse.Localization {
         public Language CurrentLangauge {
             get { return _currentLanguage; }
         }
-
-        /// <summary>
-        /// The Singleton instance of LanguamgeManager.
-        /// </summary>
-        public static LanguageManager Instance { get; private set; }
 
         /// <summary>
         /// An event that is called every time the language is changed.
@@ -199,11 +194,8 @@ namespace HouraiTeahouse.Localization {
             }
         }
 
-        /// <summary>
-        /// Unity Callback. Called once on object instantation.
-        /// </summary>
-        void Awake() {
-            Instance = this;
+        protected override void Awake() {
+            base.Awake();
 
             _currentLanguage = new Language();
 #if HOURAI_EVENTS

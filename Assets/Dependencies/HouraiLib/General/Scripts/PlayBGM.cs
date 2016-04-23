@@ -58,10 +58,14 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <param name="bgm"></param>
         public void Play(BGMData bgm) {
-            _currentBGM = bgm;
-            _musicSource.Stop();
-            _musicSource.clip = bgm.BGM.Load();
-            _musicSource.Play();
+            bgm.BGM.LoadAsync(delegate(AudioClip clip) {
+                if(_currentBGM != null && _currentBGM.BGM.IsLoaded)
+                    _currentBGM.BGM.Unload();
+                _musicSource.Stop();
+                _musicSource.clip = clip;
+                _musicSource.Play();
+                _currentBGM = bgm;
+            });
         }
 
         /// <summary>
