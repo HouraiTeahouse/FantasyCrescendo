@@ -27,7 +27,7 @@ namespace HouraiTeahouse {
                 string filename = string.Format("{0}.{1}",string.Format(_format, DateTime.UtcNow.ToString(_dateTimeFormat)), "png");
                 string path = Path.Combine(Application.dataPath, filename);
 
-                Debug.Log(string.Format("Screenshot taken at: {0}", path));
+                Log.Info("Screenshot taken. Saved to {0}", path);
 
                 if (File.Exists(path))
                     File.Delete(path);

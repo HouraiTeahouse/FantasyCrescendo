@@ -70,14 +70,14 @@ namespace HouraiTeahouse {
         /// <param name="priority">optional parameter, the priority of the resource request</param>
         /// <returns>the ResourceRequest associated with the </returns>
         public ResourceRequest LoadAsync(Action<T> callback = null, int priority = 0) {
-            Debug.LogFormat("Requesting load of {0} from {1}", typeof(T), _path);
+            Log.Info("Requesting load of {0} from {1}", typeof(T), _path);
             AsyncManager manager = AsyncManager.Instance;
             if(!manager)
                 throw new InvalidOperationException("Cannot execute a async load without a AsyncManager instance.");
             ResourceRequest request = Resources.LoadAsync<T>(_path);
             request.priority = priority;
             manager.AddOpreation(request, delegate(T obj) {
-                Debug.LogFormat("Loaded of {0} from {1}", typeof(T), _path);
+                Log.Info("Loaded {0} from {1}", typeof(T), _path);
                 Asset = obj;
                 if (callback != null)
                     callback(obj);

@@ -38,7 +38,6 @@ namespace HouraiTeahouse.Editor {
             PrefabType type = PrefabUtility.GetPrefabType(obj);
 
             UnityObject prefab = null;
-            Debug.Log(type);
 
             switch (PrefabUtility.GetPrefabType(obj)) {
                 case PrefabType.Prefab:
@@ -48,7 +47,6 @@ namespace HouraiTeahouse.Editor {
                     prefab = PrefabUtility.GetPrefabParent(obj);
                     break;
             }
-            Debug.Log(prefab);
             return prefab;
         }
 

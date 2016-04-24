@@ -136,7 +136,6 @@ namespace HouraiTeahouse.Console {
         /// <param name="message">the message, can be formatted as seen in String.Format</param>
         /// <param name="objs">the object arguments used to format the message</param>
         public static void Log(string message, params object[] objs) {
-            Debug.Log("Hello");
             if (message == null)
                 message = string.Empty;
             _history.Enqueue(string.Format(message, objs));

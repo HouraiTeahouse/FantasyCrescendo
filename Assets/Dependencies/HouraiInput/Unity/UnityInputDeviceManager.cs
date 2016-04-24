@@ -23,7 +23,7 @@ namespace HouraiTeahouse.HouraiInput {
             _deviceRefreshTimer = 0.0f;
 
             if (_joystickHash == JoystickHash) return;
-            Logger.LogInfo("Change in Unity attached joysticks detected; refreshing device list.");
+            Log.Info("Change in Unity attached joysticks detected; refreshing device list.");
             RefreshDevices();
         }
 
@@ -62,11 +62,10 @@ namespace HouraiTeahouse.HouraiInput {
                     DetectAttachedJoystickDevice(i + 1, joystickNames[i]);
             }
             catch (Exception e) {
-                Logger.LogError(e.Message);
-                Logger.LogError(e.StackTrace);
+                Log.Error(e.Message);
+                Log.Error(e.StackTrace);
             }
         }
-
         private void DetectAttachedJoystickDevice(int unityJoystickId, string unityJoystickName) {
             if (unityJoystickName == "WIRED CONTROLLER" ||
                 unityJoystickName == " WIRED CONTROLLER") {
@@ -100,8 +99,7 @@ namespace HouraiTeahouse.HouraiInput {
             }
 
             if (devices.OfType<UnityInputDevice>().Any(unityDevice => unityDevice.IsConfiguredWith(deviceProfile, unityJoystickId))) {
-                Logger.LogInfo("Device \"" + unityJoystickName + "\" is already configured with " +
-                               deviceProfile.Name);
+                Log.Info("Device \"{0}\" is already configured with {1}", unityJoystickName, deviceProfile.Name);
                 return;
             }
 
@@ -110,15 +108,13 @@ namespace HouraiTeahouse.HouraiInput {
                 AttachDevice(joystickDevice);
 
                 if (matchedDeviceProfile == null) 
-                    Logger.LogWarning("Device " + unityJoystickId + " with name \"" + unityJoystickName +
-                                      "\" does not match any known profiles.");
+                    Log.Warning("Device {0} with name \"{1}\" does not match any known profiles.", unityJoystickId, unityJoystickName);
                 else 
-                    Logger.LogInfo("Device " + unityJoystickId + " matched profile " + deviceProfile.GetType().Name +
-                                   " (" + deviceProfile.Name + ")");
+                    Log.Info("Device {0} matched profile {1} ({2})", unityJoystickId, deviceProfile.GetType().Name, deviceProfile.Name);
             }
             else {
-                Logger.LogInfo("Device " + unityJoystickId + " matching profile " + deviceProfile.GetType().Name + " (" +
-                               deviceProfile.Name + ")" + " is hidden and will not be attached.");
+                Log.Info("Device {0} matching profile {1} ({2}) is hidden and will not be attached.", unityJoystickId,
+                    deviceProfile.GetType().Name, deviceProfile.Name);
             }
         }
 
@@ -133,8 +129,7 @@ namespace HouraiTeahouse.HouraiInput {
                     inputDevice.Profile.HasJoystickOrRegexName(joystickNames[inputDevice.JoystickId - 1])) continue;
                 devices.Remove(inputDevice);
                 HInput.DetachDevice(inputDevice);
-
-                Logger.LogInfo("Detached device: " + inputDevice.Profile.Name);
+                Log.Info("Detached device: {0}", inputDevice.Profile.Name);
             }
         }
 

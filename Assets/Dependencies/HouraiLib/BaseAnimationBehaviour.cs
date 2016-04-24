@@ -21,7 +21,7 @@ namespace HouraiTeahouse.SmashBrew {
         public override void Initialize(GameObject gameObject) {
             Target = gameObject.GetComponent<T>();
             if (!Target)
-                Debug.LogError("Expected a component of type" + typeof (T) + " but found none.");
+                Log.Error("Expected a component of type {0} but found none.", typeof(T));
         }
     }
 }

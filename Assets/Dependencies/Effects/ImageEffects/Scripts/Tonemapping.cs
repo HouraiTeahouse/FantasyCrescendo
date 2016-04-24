@@ -33,7 +33,7 @@ namespace UnityStandardAssets.ImageEffects
         public TonemapperType type = TonemapperType.Photographic;
         public AdaptiveTexSize adaptiveTextureSize = AdaptiveTexSize.Square256;
 
-        // CURVE parameter
+        // CURVE parameterLogError
         public AnimationCurve remapCurve;
         private Texture2D curveTex = null;
 

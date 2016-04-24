@@ -27,8 +27,9 @@ namespace HouraiTeahouse {
             if (typeof (Object).IsAssignableFrom(type))
                 TypeRestriction = type;
             else
-                Debug.LogWarning("Trying to get a resource type restriction on type: " + type.FullName +
-                                 " is impossible. Use a type derived from UnityEngine.Object.");
+                Log.Warning(
+                    "Trying to get a resource type restriction on type: {0} is impossible. Use a type derived from UnityEngine.Object.",
+                    type.FullName);
         }
     }
 }

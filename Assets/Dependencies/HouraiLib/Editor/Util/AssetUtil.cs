@@ -30,7 +30,6 @@ namespace HouraiTeahouse.Editor {
 
             foreach (KeyValuePair<string, string> pair in delayedMoves) {
                 string result = AssetDatabase.ValidateMoveAsset(pair.Key, pair.Value);
-                Debug.Log(result);
                 if (!string.IsNullOrEmpty(result))
                     continue;
                 AssetDatabase.MoveAsset(pair.Key, pair.Value);
@@ -119,12 +118,8 @@ namespace HouraiTeahouse.Editor {
                 }
             }
 
-            Debug.Log(asset);
-
             if (asset.IsAsset()) {
                 string assetPath = AssetDatabase.GetAssetPath(asset);
-                Debug.Log(assetPath);
-                Debug.Log(Path.GetFileName(assetPath));
 
                 // Create the folder if it doesn't already exist
                 CreateFolder(targetFolder);

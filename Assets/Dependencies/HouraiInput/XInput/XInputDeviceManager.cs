@@ -1,6 +1,5 @@
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
@@ -65,7 +64,7 @@ namespace HouraiTeahouse.HouraiInput {
 
         public static void Enable() {
             var errors = new List<string>();
-            if (XInputDeviceManager.CheckPlatformSupport(errors)) {
+            if (CheckPlatformSupport(errors)) {
                 HInput.HideDevicesWithProfile(typeof (Xbox360WinProfile));
                 HInput.HideDevicesWithProfile(typeof (XboxOneWinProfile));
                 HInput.HideDevicesWithProfile(typeof (LogitechF710ModeXWinProfile));
@@ -73,9 +72,8 @@ namespace HouraiTeahouse.HouraiInput {
                 HInput.AddDeviceManager<XInputDeviceManager>();
             }
             else {
-                foreach (var error in errors) {
-                    Logger.LogError(error);
-                }
+                foreach (string error in errors)
+                    Log.Error(error);
             }
         }
     }

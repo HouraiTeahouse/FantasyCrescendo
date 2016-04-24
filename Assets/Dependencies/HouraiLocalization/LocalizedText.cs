@@ -31,8 +31,7 @@ namespace HouraiTeahouse.Localization {
                 if (languageManager.HasKey(_localizationKey))
                     _text.text = Process(languageManager[_localizationKey]);
                 else
-                    Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key",
-                        _localizationKey));
+                    Log.Warning("Tried to localize key {0}, but LanguageManager has no such key", LocalizationKey);
             }
         }
 
@@ -56,8 +55,8 @@ namespace HouraiTeahouse.Localization {
             if (languageManager.HasKey(_localizationKey))
                 _text.text = Process(languageManager[_localizationKey]);
             else
-                Debug.LogWarning(string.Format("Tried to localize key {0}, but LanguageManager has no such key",
-                    _localizationKey));
+                Log.Warning("Tried to localize key {0}, but LanguageManager has no such key",
+                    _localizationKey);
         }
 
         /// <summary>
@@ -70,8 +69,8 @@ namespace HouraiTeahouse.Localization {
             if (language.ContainsKey(_localizationKey))
                 _text.text = Process(language[_localizationKey]);
             else
-                Debug.LogWarning(string.Format("Tried to localize key {0}, but langauge {1} has no such key",
-                    _localizationKey, language));
+                Log.Warning("Tried to localize key {0}, but langauge {1} has no such key",
+                    _localizationKey, language);
         }
 
         /// <summary>

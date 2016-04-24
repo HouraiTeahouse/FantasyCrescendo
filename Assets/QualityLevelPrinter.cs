@@ -1,10 +1,11 @@
 using UnityEngine;
-using System.Collections;
 
-public class QualityLevelPrinter : MonoBehaviour {
+namespace HouraiTeahouse {
 
-    void Awake() {
-        Debug.Log(QualitySettings.names[QualitySettings.GetQualityLevel()]);
+    public class QualityLevelPrinter : MonoBehaviour {
+
+        void Awake() {
+            Log.Info("Quality Level: {0}", QualitySettings.names[QualitySettings.GetQualityLevel()]);
+        }
     }
-
 }

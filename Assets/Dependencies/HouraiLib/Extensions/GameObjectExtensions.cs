@@ -36,8 +36,7 @@ namespace HouraiTeahouse {
                 throw new ArgumentNullException("gameObject");
             var attempt = gameObject.GetComponent<T>();
             if (attempt != null)
-                Debug.LogWarning("Attempted to find a component of type " + typeof (T) + ", but did not find one.",
-                    gameObject);
+                Log.Warning("Attempted to find a component of type {0}, but did not find one.", typeof(T));
             return attempt;
         }
 

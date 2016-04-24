@@ -20,6 +20,7 @@ GameObject:
   - 114: {fileID: 11463294}
   - 114: {fileID: 11482896}
   - 114: {fileID: 11442566}
+  - 114: {fileID: 11458584}
   m_Layer: 0
   m_Name: Static Managers
   m_TagString: GameController
@@ -50,7 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logDebugInfo: 0
   _invertYAxis: 0
   _enableXInput: 0
   _useFixedUpdate: 0
@@ -91,6 +91,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b27a6e3803cc34eafef5c80ed427d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11458584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea53a9d0d80304bbac006109439830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showInfoLogs: 1
+  _showDebugLogs: 1
+  _showWarningLogs: 1
+  _showErrorLogs: 1
+  _infoStackTrace: 0
+  _debugStackTrace: 1
+  _warningStackTrace: 0
+  _errorStackTrace: 2
 --- !u!114 &11460476
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class TextureQualityEnforcer : MonoBehaviour {
 
@@ -8,7 +8,6 @@ public class TextureQualityEnforcer : MonoBehaviour {
 
     void Awake() {
         _cachedLevel = QualitySettings.masterTextureLimit;
-        Debug.Log(_level - _cachedLevel);
         QualitySettings.masterTextureLimit = _level;
     }
 

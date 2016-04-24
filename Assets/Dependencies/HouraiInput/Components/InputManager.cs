@@ -5,8 +5,6 @@ using UnityEngine;
 namespace HouraiTeahouse.HouraiInput {
     public class InputManager : MonoBehaviour {
         [SerializeField]
-        private bool _logDebugInfo = false;
-        [SerializeField]
         private bool _invertYAxis = false;
         [SerializeField]
         private bool _enableXInput = false;
@@ -18,18 +16,14 @@ namespace HouraiTeahouse.HouraiInput {
         private List<string> _customProfiles = new List<string>();
 
         private void OnEnable() {
-            if (_logDebugInfo)
-                Logger.OnLogMessage += HandleOnLogMessage;
-
             HInput.InvertYAxis = _invertYAxis;
             HInput.EnableXInput = _enableXInput;
             HInput.SetupInternal();
 
             foreach (string className in _customProfiles) {
                 Type classType = Type.GetType(className);
-                if (classType == null) {
-                    Debug.LogError("Cannot find class for custom profile: " + className);
-                }
+                if (classType == null) 
+                    Log.Error("Cannot find class for custom profile: {0}", className);
                 else {
                     var customProfileInstance = Activator.CreateInstance(classType) as UnityInputDeviceProfile;
                     HInput.AttachDevice(new UnityInputDevice(customProfileInstance));
@@ -70,20 +64,6 @@ namespace HouraiTeahouse.HouraiInput {
 
         private void OnApplicationFocus(bool focusState) {
             HInput.OnApplicationFocus(focusState);
-        }
-
-        private static void HandleOnLogMessage(LogMessage logMessage) {
-            switch (logMessage.type) {
-                case LogMessageType.Info:
-                    Debug.Log(logMessage.text);
-                    break;
-                case LogMessageType.Warning:
-                    Debug.LogWarning(logMessage.text);
-                    break;
-                case LogMessageType.Error:
-                    Debug.LogError(logMessage.text);
-                    break;
-            }
         }
     }
 }

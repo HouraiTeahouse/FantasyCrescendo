@@ -56,7 +56,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void OnLevelWasLoaded(int level) {
-            Debug.Log("Unload");
+            Log.Info("Unloading managed data assets");
             foreach (SceneData scene in _scenes)
                 scene.UnloadAll();
             foreach (CharacterData character in _characters)
