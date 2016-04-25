@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
-    public class Builder : MonoBehaviour {
+    public abstract class Builder : MonoBehaviour {
 
         [Header("Player Display")] [SerializeField] [Tooltip("The parent container object to add the created  displays to")] private RectTransform _playerContainer;
 
@@ -16,8 +16,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             CreatePlayerDisplay ();
         }
 
-        public virtual void CreateSelect () {
-        }
+        public abstract void CreateSelect ();
 
         /// <summary>
         /// Create the display for the character's selections and options

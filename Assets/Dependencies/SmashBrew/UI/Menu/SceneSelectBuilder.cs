@@ -15,7 +15,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         public override void CreateSelect ()
         {
-            base.CreateSelect ();
             DataManager dataManager = DataManager.Instance;
             if (dataManager == null || !_mapContainer || !_map)
                 return;
