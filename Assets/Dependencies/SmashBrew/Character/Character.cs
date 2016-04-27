@@ -195,7 +195,9 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         void JumpImpl() {
             // Apply upward force to jump
-			Rigidbody.AddForce(Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]), ForceMode.VelocityChange);
+			Vector3 force = Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]);
+			force.y -= Rigidbody.velocity.y;
+			Rigidbody.AddForce(force, ForceMode.VelocityChange);
 
             JumpCount++;
 
