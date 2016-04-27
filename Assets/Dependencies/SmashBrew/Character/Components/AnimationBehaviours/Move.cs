@@ -9,10 +9,10 @@ namespace HouraiTeahouse.SmashBrew {
         private float _initialSpeed = 2f;
 
         [SerializeField]
-        private float _acceleration = 2f;
+        private float _acceleration = 2.2f;
 
         [SerializeField]
-        private float _capSpeed = 3f;
+        private float _capSpeed = 3.2f;
 
         [SerializeField, Tooltip("Whether movement in the state ignores or adheres to the difference in state speed")]
         private bool _ignoreStateSpeed;
