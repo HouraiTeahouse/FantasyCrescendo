@@ -269,7 +269,13 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
        void FixedUpdate() {
-			Rigidbody.AddForce(-Vector3.up * _gravity, ForceMode.Acceleration);
+            float grav = _gravity;
+            if (IsGrounded)
+            {
+                //Simulates ground friction.
+                grav += (grav*0.5f);
+            }
+            Rigidbody.AddForce(-Vector3.up * grav, ForceMode.Acceleration);
 
             Vector3 velocity = Rigidbody.velocity;
 
