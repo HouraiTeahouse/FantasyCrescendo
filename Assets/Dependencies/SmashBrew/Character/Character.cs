@@ -41,7 +41,16 @@ namespace HouraiTeahouse.SmashBrew {
         /// Assumed to be in the air when false.
         /// </summary>
         public bool IsGrounded {
-            get { return _ground.Count > 0; }
+            get {
+				if (_ground.Count > 0 && Rigidbody.velocity.y <= 0.05f) {
+					foreach (var ground in _ground) {
+						if (ground.gameObject.activeInHierarchy) {
+							return true;
+						}
+					}
+				}
+				return false;
+			}
         }
 
         /// <summary>
@@ -186,7 +195,9 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         void JumpImpl() {
             // Apply upward force to jump
-            Rigidbody.AddForce(Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]), ForceMode.VelocityChange);
+			Vector3 force = Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]);
+			force.y -= Rigidbody.velocity.y;
+			Rigidbody.AddForce(force, ForceMode.VelocityChange);
 
             JumpCount++;
 
@@ -258,7 +269,13 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
        void FixedUpdate() {
-            Rigidbody.AddForce(-Vector3.up * _gravity, ForceMode.Acceleration);
+            float grav = _gravity;
+            if (IsGrounded)
+            {
+                //Simulates ground friction.
+                grav += (grav*0.5f);
+            }
+            Rigidbody.AddForce(-Vector3.up * grav, ForceMode.Acceleration);
 
             Vector3 velocity = Rigidbody.velocity;
 
@@ -267,7 +284,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;
-           if (IsGrounded) {
+			if (IsGrounded && Rigidbody.velocity.y <= 0f) {
                IsFastFalling = false;
                JumpCount = 0;
            }
@@ -291,7 +308,7 @@ namespace HouraiTeahouse.SmashBrew {
             float r2 = MovementCollider.radius * MovementCollider.radius;
             Vector3 bottom = transform.TransformPoint(MovementCollider.center - Vector3.up * MovementCollider.height / 2);
             foreach (ContactPoint contact in points)
-                if ((contact.point - bottom).sqrMagnitude < r2)
+				if ((contact.point - bottom).sqrMagnitude < r2)
                     _ground.Add(contact.otherCollider);
         }
 
