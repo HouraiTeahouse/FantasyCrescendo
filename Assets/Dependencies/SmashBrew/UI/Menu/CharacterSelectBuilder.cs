@@ -6,15 +6,25 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// Constructs the player section of the in-match UI 
     /// </summary>
     public sealed class CharacterSelectBuilder : MonoBehaviour {
-        [Header("Character Select")] [SerializeField] private RectTransform _characterContainer;
+        [Header("Character Select")]
+        [SerializeField]
+        private RectTransform _characterContainer;
 
-        [SerializeField] private RectTransform _character;
+        [SerializeField]
+        private RectTransform _character;
 
-        [Header("Player Display")] [SerializeField] [Tooltip("The parent container object to add the created  displays to")] private RectTransform _playerContainer;
+        [Header("Player Display")]
+        [SerializeField]
+        [Tooltip("The parent container object to add the created  displays to")]
+        private RectTransform _playerContainer;
 
-        [SerializeField] [Tooltip("Space prefab to buffer the UI on the sides")] private RectTransform _space;
+        [SerializeField]
+        [Tooltip("Space prefab to buffer the UI on the sides")]
+        private RectTransform _space;
 
-        [SerializeField] [Tooltip("The Player Display Prefab to create.")] private RectTransform _playerDisplay;
+        [SerializeField]
+        [Tooltip("The Player Display Prefab to create.")]
+        private RectTransform _playerDisplay;
 
         /// <summary>
         /// Unity Callback. Called on object instantation.
@@ -50,6 +60,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 Attach(character, _characterContainer);
                 character.name = data.name;
                 character.GetComponentsInChildren<IDataComponent<CharacterData>>().SetData(data);
+                Log.Info("Creating Character Select Box for {0}", data.name);
             }
         }
 
@@ -69,6 +80,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
                 // Use the IDataComponent interface to set the player data on all of the components that use it
                 display.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);
+                Log.Info("Creating Player Control Box for {0}", display.name);
             }
 
             if (!_space)

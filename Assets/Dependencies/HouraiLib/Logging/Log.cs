@@ -19,7 +19,7 @@ namespace HouraiTeahouse {
         public static StackTraceLogType StackTraceWarning = StackTraceLogType.None;
         public static StackTraceLogType StackTraceError = StackTraceLogType.None;
 
-        public static void Info(string source, params object[] objs) {
+        public static void Info(object source, params object[] objs) {
 #if UNITY_EDITOR
             const string format = "<color=green>[Info]</color> ({1}) - {0}";
 #else
@@ -28,7 +28,7 @@ namespace HouraiTeahouse {
             WriteLog(format, ShowInfo, StackTraceInfo, UnityEngine.Debug.LogFormat, source, objs);
         }
 
-        public static void Debug(string source, params object[] objs) {
+        public static void Debug(object source, params object[] objs) {
 #if UNITY_EDITOR
             const string format = "<color=blue>[Debug]</color> ({1}) - {0}";
 #else
@@ -37,7 +37,7 @@ namespace HouraiTeahouse {
             WriteLog(format, ShowDebug, StackTraceDebug, UnityEngine.Debug.LogFormat, source, objs);
         }
 
-        public static void Warning(string source, params object[] objs) {
+        public static void Warning(object source, params object[] objs) {
 #if UNITY_EDITOR
             const string format = "<color=yellow>[Warning]</color> ({1}) -  {0}";
 #else
@@ -46,7 +46,7 @@ namespace HouraiTeahouse {
             WriteLog(format, ShowWarning, StackTraceWarning, UnityEngine.Debug.LogWarningFormat, source, objs);
         }
 
-        public static void Error(string source, params object[] objs) {
+        public static void Error(object source, params object[] objs) {
 #if UNITY_EDITOR
             const string format = "<color=red>[Error]</color> ({1}) - {0}";
 #else
@@ -55,12 +55,16 @@ namespace HouraiTeahouse {
             WriteLog(format, ShowError, StackTraceError, UnityEngine.Debug.LogErrorFormat, source, objs);
         }
 
-        private static void WriteLog(string format, bool show, StackTraceLogType stack, LogAction log, string source, params object[] objs) {
+        private static void WriteLog(string format, bool show, StackTraceLogType stack, LogAction log, object source, params object[] objs) {
             if (!show)
                 return;
             StackTraceLogType logType = Application.stackTraceLogType;
             Application.stackTraceLogType = stack;
-            string output = string.Format(source, objs);
+            var output = source as string;
+            if (output != null) 
+                output = string.Format(output, objs);
+            else 
+                output = source == null ? "Null" : source.ToString();
 #if UNITY_EDITOR
             log(format, output, DateTime.Now.ToString(TimeFormat)); 
 #else

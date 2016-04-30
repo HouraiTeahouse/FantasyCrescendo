@@ -112,6 +112,7 @@ namespace HouraiTeahouse.SmashBrew {
         private Transform[] _bones;
         private HashSet<Collider> _ground;
         private bool _facing;
+        private float _lastTap;
 
         private bool _jumpQueued;
 
@@ -164,6 +165,15 @@ namespace HouraiTeahouse.SmashBrew {
             if (boneIndex < 0 || boneIndex >= BoneCount)
                 return transform;
             return _bones[boneIndex];
+        }
+
+        public bool Tap(Vector2 direction) {
+            if (direction.sqrMagnitude > 0) {
+                Log.Debug();
+                _lastTap = Time.realtimeSinceStartup;
+                return true;
+            }
+            return false;
         }
 
         public void Move(float speed) {
@@ -253,6 +263,7 @@ namespace HouraiTeahouse.SmashBrew {
         void AnimationUpdate() {
             Animator.SetBool(CharacterAnim.Grounded, IsGrounded);
             Animator.SetBool(CharacterAnim.Jump, _jumpQueued);
+            Animator.SetBool(CharacterAnim.Tap, Time.realtimeSinceStartup - _lastTap > Config.Player.TapPersistence);
 
             _jumpQueued = false;
         }
@@ -272,7 +283,7 @@ namespace HouraiTeahouse.SmashBrew {
                JumpCount = 0;
            }
             Rigidbody.velocity = velocity;
-            gameObject.layer = (velocity.magnitude > Config.Instance.TangibleSpeedCap)
+            gameObject.layer = (velocity.magnitude > Config.Physics.TangibleSpeedCap)
                 ? Layers.Intangible
                 : Layers.Character;
 

@@ -12,6 +12,7 @@ namespace HouraiTeahouse.SmashBrew {
         public static readonly int SpecialInput = Animator.StringToHash("special");
         public static readonly int Jump = Animator.StringToHash("jump");
         public static readonly int ShieldInput = Animator.StringToHash("shield");
+        public static readonly int Tap = Animator.StringToHash("tap");
 
         // State Variables
         public static readonly int Grounded = Animator.StringToHash("grounded");

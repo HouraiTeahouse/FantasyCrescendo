@@ -3,6 +3,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
+
     /// <summary>
     /// A simple object that encapsulates the operations on a dynamically loaded asset using UnityEngine.Resources.
     /// </summary>
@@ -10,6 +11,7 @@ namespace HouraiTeahouse {
     [Serializable]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Resources#ResourcePathAttribute_and_Resource_Wrapper")]
     public sealed class Resource<T> where T : Object {
+
         [SerializeField]
         private readonly string _path;
 
@@ -50,6 +52,7 @@ namespace HouraiTeahouse {
             if (IsLoaded)
                 return Asset;
             var loadedObject = Resources.Load<T>(_path);
+            Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
             Asset = loadedObject;
             return Asset;
         }
@@ -58,8 +61,11 @@ namespace HouraiTeahouse {
         /// Unloads the asset from memory. Asset will be null after this.
         /// </summary>
         public void Unload() {
-            if (IsLoaded)
-                Resources.UnloadAsset(Asset);
+            // Logs error if trying to unload a GameObject as a whole
+            if (!IsLoaded || Asset is GameObject)
+                return;
+            Resources.UnloadAsset(Asset);
+            Log.Info("Unloaded {0}", _path);
             Asset = null;
         }
 
@@ -70,14 +76,14 @@ namespace HouraiTeahouse {
         /// <param name="priority">optional parameter, the priority of the resource request</param>
         /// <returns>the ResourceRequest associated with the </returns>
         public ResourceRequest LoadAsync(Action<T> callback = null, int priority = 0) {
-            Log.Info("Requesting load of {0} from {1}", typeof(T), _path);
             AsyncManager manager = AsyncManager.Instance;
             if(!manager)
                 throw new InvalidOperationException("Cannot execute a async load without a AsyncManager instance.");
             ResourceRequest request = Resources.LoadAsync<T>(_path);
             request.priority = priority;
+            Log.Info("Requesting load of {0} from {1}", typeof(T).Name, _path);
             manager.AddOpreation(request, delegate(T obj) {
-                Log.Info("Loaded {0} from {1}", typeof(T), _path);
+                Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
                 Asset = obj;
                 if (callback != null)
                     callback(obj);

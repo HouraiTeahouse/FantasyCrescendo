@@ -15,12 +15,12 @@ namespace HouraiTeahouse.SmashBrew {
         public static GameMode Current {
             get {
                 if (_current == null)
-                    _current = Config.Instance.StandardVersus;
+                    _current = Config.GameModes.StandardVersus;
                 return _current;
             }
             set {
                 if (value == null)
-                    _current = Config.Instance.StandardVersus;
+                    _current = Config.GameModes.StandardVersus;
                 else
                     _current = value;
             }

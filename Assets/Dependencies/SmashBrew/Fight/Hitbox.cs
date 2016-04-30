@@ -126,7 +126,7 @@ namespace HouraiTeahouse.SmashBrew {
         void OnDrawGizmos() {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
                 return;
-            GizmoUtil.DrawColliders(GetComponents<Collider>(), Config.Instance.GetHitboxColor(type), true);
+            GizmoUtil.DrawColliders(GetComponents<Collider>(), Config.Debug.GetHitboxColor(type), true);
         }
 #endif
 
@@ -135,7 +135,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             if (_colliders == null)
                 _colliders = GetComponents<Collider>();
-            Color color = Config.Instance.GetHitboxColor(type);
+            Color color = Config.Debug.GetHitboxColor(type);
             foreach (var col in _colliders)
                 DrawCollider(col, color);
             //GL.wireframe = true;
