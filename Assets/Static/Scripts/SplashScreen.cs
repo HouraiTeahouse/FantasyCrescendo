@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using HouraiTeahouse.HouraiInput;
 
 public class SplashScreen : MonoBehaviour {
     [SerializeField] private AnimationCurve alphaOverTime;
@@ -16,6 +17,17 @@ public class SplashScreen : MonoBehaviour {
     private void Start() {
         StartCoroutine(DisplaySplashScreen());
     }
+
+	private bool CheckForSkip(){
+		int i = 0;
+		while (i < HInput.Devices.Count) {
+			if (HInput.Devices[i].MenuWasPressed) {
+				return true;
+			}
+			i++;
+		}
+		return false;
+	}
 
     private IEnumerator DisplaySplashScreen() {
         foreach (GameObject target in disableWhileLoading)
@@ -37,6 +49,13 @@ public class SplashScreen : MonoBehaviour {
                 //Wait one frame
                 yield return null;
                 t += Time.deltaTime;
+				if (CheckForSkip ()) {
+					if (t < logoDisplayDuration * 0.80f) {
+						t = logoDisplayDuration * 0.80f;
+					} else if (t < logoDisplayDuration * 0.95f) {
+						t = logoDisplayDuration * 0.95f;
+					}
+				}
             }
             graphic.enabled = false;
             graphic.color = targetColor;
