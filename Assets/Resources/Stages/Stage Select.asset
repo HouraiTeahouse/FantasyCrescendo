@@ -9,16 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f090ca3dfef500b41b142173fba76f1f, type: 3}
-  m_Name: Character Select
+  m_Name: Stage Select
   m_EditorClassIdentifier: 
-  _name: Character Select
-  backgroundMusicData:
-  - _name: Selection
-    _artist: Pigu & Squiggle Glitz
-    _bgm: Audio/BGM/Main Menu/Selection
-    _baseWeight: 1
-    _loopStart: 572422
-    _loopEnd: 4150062
+  _name: Stage Select
+  backgroundMusicData: []
   _sceneName: 
   _isStage: 0
   _previewImage: 

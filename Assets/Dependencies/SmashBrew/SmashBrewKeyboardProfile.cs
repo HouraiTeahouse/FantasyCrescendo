@@ -51,12 +51,12 @@ namespace HouraiTeahouse.SmashBrew {
                 new InputMapping {
                     Handle = "Right Horizontal",
                     Target = InputTarget.RightStickX,
-                    Source = KeyCodeAxis(KeyCode.S, KeyCode.W) 
+                    Source = KeyCodeAxis(KeyCode.A, KeyCode.D)
                 },
                 new InputMapping {
                     Handle = "Right Vertical",
                     Target = InputTarget.RightStickY,
-                    Source = KeyCodeAxis(KeyCode.A, KeyCode.D),
+                    Source = KeyCodeAxis(KeyCode.S, KeyCode.W) 
                 }
             };
         }

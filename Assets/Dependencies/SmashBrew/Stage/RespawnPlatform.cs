@@ -33,6 +33,7 @@ namespace HouraiTeahouse.SmashBrew {
             _character.Rigidbody.velocity = Vector3.zero;
             _character.transform.position = transform.position;
             _character.Direction = _facing;
+			_character.ResetCharacter ();
             _invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
             _timer = 0f;
             gameObject.SetActive(true);
@@ -50,6 +51,8 @@ namespace HouraiTeahouse.SmashBrew {
             // TODO: Find better alternative to this hack
             if (_timer > _platformTimer || (_character.Rigidbody.velocity.magnitude > 0.5f)) {
                 _invincibility.Duration -= _platformTimer;
+				_character.ResetCharacter ();
+
                 gameObject.SetActive(false);
             }
         }

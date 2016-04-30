@@ -46,6 +46,68 @@ namespace HouraiTeahouse.SmashBrew.UI {
     }
 
     /// <summary>
+    /// An abstract UI behaviour class for handling a Scene's data
+    /// </summary>
+    public abstract class SceneUIComponent : PlayerUIComponent, IDataComponent<SceneData> {
+        [SerializeField, Tooltip("The character whose data is to be displayed")]
+        private SceneData _scene;
+        /// <summary>
+        /// The target Character currently represented by the behaviour
+        /// </summary>
+        public SceneData Scene {
+            get { return _scene; }
+            set { SetData(value); }
+        }
+
+        /// <summary>
+        /// Unity Callback. Called on object instantiation.
+        /// </summary>
+        protected override void Awake() {
+            base.Awake();
+            SetData(_scene);
+        }
+
+        /// <summary>
+        /// <see cref="IDataComponent{T}.SetData"/>
+        /// </summary>
+        public virtual void SetData(SceneData data) {
+            _scene = data;
+        }
+    }
+
+    /// <summary>
+    /// An abstract UI behaviour class for handling a Scene's data
+    /// </summary>
+    /// <typeparam name="T">the type of component the CharacterUIComponent manipulates</typeparam>
+    public abstract class SceneUIComponent<T> : PlayerUIComponent<T>, IDataComponent<SceneData>
+        where T : Component {
+        [SerializeField, Tooltip("The map whose data is to be displayed")] private SceneData _scene;
+
+        /// <summary>
+        /// The target map currently represented by the behaviour
+        /// </summary>
+        public SceneData Scene {
+            get { return _scene; }
+            set { SetData(value); }
+        }
+
+        /// <summary>
+        /// Unity Callback. Called on object instantiation.
+        /// </summary>
+        protected override void Awake() {
+            base.Awake();
+            SetData(_scene);
+        }
+
+        /// <summary>
+        /// <see cref="IDataComponent{T}.SetData"/>
+        /// </summary>
+        public virtual void SetData(SceneData data) {
+            _scene = data;
+        }
+    }
+
+    /// <summary>
     /// An abstract UI behaviour class for handling a Character's data
     /// </summary>
     public abstract class CharacterUIComponent : PlayerUIComponent, IDataComponent<CharacterData> {

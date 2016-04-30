@@ -57,6 +57,7 @@ namespace UnityConstants
         public const int Main_Menu = 2;
         public const int Forest_of_Magic_Stage = 3;
         public const int Physics_Test_Scene = 4;
+        public const int Stage_Select = 5;
     }
 
     public static class Axes
