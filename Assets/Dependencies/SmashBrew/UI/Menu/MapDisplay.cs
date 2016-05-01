@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
@@ -8,12 +8,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
     public sealed class MapDisplay : SceneUIComponent<RawImage> {
         private RectTransform _rectTransform;
 
-        [SerializeField, Tooltip("Should the map's portrait be cropped?")] private bool _cropped;
+        [SerializeField, Tooltip("Should the map's portrait be cropped?")]
+        private bool _cropped;
 
-        [SerializeField, Tooltip("Tint to cover the potrait, should the map be disabled")] private Color
-        _disabledTint = Color.gray;
+        [SerializeField, Tooltip("Tint to cover the potrait, should the map be disabled")]
+        private Color _disabledTint = Color.gray;
 
-        [SerializeField, Tooltip("An offset to move the crop rect")] private Vector2 _rectBias;
+        [SerializeField, Tooltip("An offset to move the crop rect")]
+        private Vector2 _rectBias;
 
         private Color _defaultColor;
         private Rect _cropRect;
@@ -65,7 +67,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             _cropRect.x += _rectBias.x * texture.width;
             _cropRect.y += _rectBias.y * texture.height;
             Component.texture = texture;
-            //Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
+            Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
             SetRect();
         }
     }

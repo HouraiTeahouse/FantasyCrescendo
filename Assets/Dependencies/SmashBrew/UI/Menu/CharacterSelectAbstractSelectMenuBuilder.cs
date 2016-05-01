@@ -1,27 +1,42 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
+    /// <summary>
+    /// Constructs the player section of the in-match UI 
+    /// </summary>
+    public sealed class CharacterSelectAbstractSelectMenuBuilder : AbstractSelectMenuBuilder<CharacterData> {
 
-    public abstract class Builder : MonoBehaviour {
+        [Header("Player Display")]
+        [SerializeField]
+        [Tooltip("The parent container object to add the created  displays to")]
+        private RectTransform _playerContainer;
 
-        [Header("Player Display")] [SerializeField] [Tooltip("The parent container object to add the created  displays to")] private RectTransform _playerContainer;
+        [SerializeField]
+        [Tooltip("Space prefab to buffer the UI on the sides")]
+        private RectTransform _space;
 
-        [SerializeField] [Tooltip("Space prefab to buffer the UI on the sides")] private RectTransform _space;
+        [SerializeField]
+        [Tooltip("The Player Display Prefab to create.")]
+        private RectTransform _playerDisplay;
 
-        [SerializeField] [Tooltip("The Player Display Prefab to create.")] private RectTransform _playerDisplay;
-
-        void Awake() {
-            CreateSelect ();
-            CreatePlayerDisplay ();
+        protected override void Awake() {
+            base.Awake();
+            CreatePlayerDisplay();
         }
 
-        public abstract void CreateSelect ();
+        protected override IEnumerable<CharacterData> GetData() {
+            return DataManager.Instance.Characters;
+        }
+
+        protected override void LogCreation(CharacterData data) {
+            Log.Info("Creating Character Select Box for {0}", data.name);
+        }
 
         /// <summary>
         /// Create the display for the character's selections and options
         /// </summary>
-        private void CreatePlayerDisplay() {
+        void CreatePlayerDisplay() {
             if (!_playerContainer || !_playerDisplay)
                 return;
 
@@ -48,11 +63,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Attach(lastSpace, _playerContainer);
             firstSpace.SetAsFirstSibling();
             lastSpace.SetAsLastSibling();
-        }
-
-        public static void Attach(RectTransform child, Transform parent) {
-            child.SetParent(parent, false);
-            LayoutRebuilder.MarkLayoutForRebuild(child);
         }
     }
 }

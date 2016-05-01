@@ -4,19 +4,23 @@ using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using HouraiTeahouse.HouraiInput;
 using HouraiTeahouse.SmashBrew;
 
 public class SplashScreen : MonoBehaviour {
-    [SerializeField] private AnimationCurve alphaOverTime;
+    [SerializeField]
+    private AnimationCurve alphaOverTime;
 
-    [SerializeField] private GameObject[] disableWhileLoading;
+    [SerializeField]
+    private GameObject[] disableWhileLoading;
 
-    [SerializeField] private Graphic[] splashGraphics;
+    [SerializeField]
+    private Graphic[] splashGraphics;
 
-    [SerializeField] private string targetSceneName;
+    [SerializeField]
+    private string targetSceneName;
 
-    [SerializeField] private InputTarget[] _skipButtons = {InputTarget.Action1, InputTarget.Start};
+    [SerializeField]
+    private InputTarget[] _skipButtons = {InputTarget.Action1, InputTarget.Start};
 
     [SerializeField]
     private float _skipSpeed = 2f;

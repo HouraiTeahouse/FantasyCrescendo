@@ -73,7 +73,7 @@ namespace HouraiTeahouse.Console {
             _commands = new Dictionary<string, ConsoleCommand>();
             _history = new FixedSizeQueue<string>(100);
 
-            // Divert Debug Log messages to the GameConsole as well.
+            // Divert Debug LogCreation messages to the GameConsole as well.
             Application.logMessageReceived += (log, stackTrace, type) => Log(log);
 
             RegisterCommand("echo", Commands.Echo);

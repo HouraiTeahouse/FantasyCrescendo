@@ -35,9 +35,7 @@ namespace HouraiTeahouse.Editor {
             if (obj == null)
                 return null;
 
-            PrefabType type = PrefabUtility.GetPrefabType(obj);
-
-            UnityObject prefab = null;
+            UnityObject prefab;
 
             switch (PrefabUtility.GetPrefabType(obj)) {
                 case PrefabType.Prefab:

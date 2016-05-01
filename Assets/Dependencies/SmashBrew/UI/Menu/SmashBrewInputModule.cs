@@ -43,6 +43,11 @@ namespace HouraiTeahouse.SmashBrew.UI {
             ClearSelection();
         }
 
+        void SendMessage<T>(InputTarget targetControl, GameObject target, ExecuteEvents.EventFunction<T> handler) where T : IEventSystemHandler {
+            if (HInput.Devices.Any(device => device.GetControl(targetControl).WasPressed)) 
+                ExecuteEvents.Execute(target, GetBaseEventData(), handler);
+        }
+
         /// <summary>
         /// Called once every frame while InputModule is active.
         /// </summary>
@@ -51,12 +56,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 return;
             GameObject target = eventSystem.currentSelectedGameObject;
 
-            if (HInput.Devices.Any(device => device.GetControl(_submit).WasPressed)) {
-                ExecuteEvents.Execute(target, GetBaseEventData(), ExecuteEvents.submitHandler);
-                Debug.Log("Submit");
-            }
-            if (HInput.Devices.Any(device => device.GetControl(_cancel).WasPressed))
-                ExecuteEvents.Execute(target, GetBaseEventData(), ExecuteEvents.cancelHandler);
+            SendMessage(_submit, target, ExecuteEvents.submitHandler);
+            SendMessage(_cancel, target, ExecuteEvents.cancelHandler);
 
             _currentDelay -= Time.deltaTime;
             if (!eventSystem.sendNavigationEvents || _currentDelay >= 0)
