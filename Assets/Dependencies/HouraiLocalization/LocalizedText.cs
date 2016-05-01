@@ -49,6 +49,8 @@ namespace HouraiTeahouse.Localization {
         /// </summary>
         protected virtual void Start() {
             var languageManager = LanguageManager.Instance;
+            if (languageManager == null)
+                return;
             languageManager.OnChangeLanguage += OnChangeLanguage;
             if (_localizationKey == null)
                 return;

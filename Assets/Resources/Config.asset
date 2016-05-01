@@ -8,9 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 8e06ba603e8092b4f8ff52df06fdcbf3, type: 3}
   m_Name: Config
-  m_EditorClassIdentifier: Assembly-CSharp:HouraiTeahouse.SmashBrew:Config
+  m_EditorClassIdentifier: 
   _gameModes:
     _standardVersus:
       _minimumPlayers: 1
@@ -37,7 +37,7 @@ MonoBehaviour:
       _excludedCharacters: []
       _excludedStages: []
   _physics:
-    _tangibleSpeedCap: 1.5
+    _tangibleSpeedCap: 3
   _player:
     _playerColors:
     - {r: 1, g: 0, b: 0, a: 1}
@@ -49,6 +49,8 @@ MonoBehaviour:
     - {r: 1, g: 0, b: 1, a: 1}
     - {r: 0.25, g: 0.25, b: 0.25, a: 1}
     _cpuColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+    _tapPersistence: 0.083333336
+    _tapTreshold: 0.3
   _debug:
     DamageableHitboxColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
     IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}

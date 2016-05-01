@@ -5,7 +5,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// <summary>
     /// Constructs the player section of the in-match UI 
     /// </summary>
-    public sealed class CharacterSelectAbstractSelectMenuBuilder : AbstractSelectMenuBuilder<CharacterData> {
+    public sealed class CharacterSelectMenuBuilder : AbstractSelectMenuBuilder<CharacterData> {
 
         [Header("Player Display")]
         [SerializeField]
