@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace HouraiTeahouse {
     public class SpawnPlayerPointer : PlayerUIComponent {
-        [SerializeField] private RectTransform _pointer;
+        [SerializeField]
+        private RectTransform _pointer;
 
-        [SerializeField, Tag] private string _tag;
+        [SerializeField, Tag]
+        private string _tag;
 
         private RectTransform _cTransform;
         private RectTransform _currentPointer;
