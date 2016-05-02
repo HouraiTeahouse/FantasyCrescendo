@@ -1,17 +1,29 @@
-﻿using System.Collections;
+using System.Collections;
+using System.Linq;
+using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using HouraiTeahouse.HouraiInput;
+using HouraiTeahouse.SmashBrew;
 
 public class SplashScreen : MonoBehaviour {
-    [SerializeField] private AnimationCurve alphaOverTime;
+    [SerializeField]
+    private AnimationCurve alphaOverTime;
 
-    [SerializeField] private GameObject[] disableWhileLoading;
+    [SerializeField]
+    private GameObject[] disableWhileLoading;
 
-    [SerializeField] private Graphic[] splashGraphics;
+    [SerializeField]
+    private Graphic[] splashGraphics;
 
-    [SerializeField] private string targetSceneName;
+    [SerializeField]
+    private string targetSceneName;
+
+    [SerializeField]
+    private InputTarget[] _skipButtons = {InputTarget.Action1, InputTarget.Start};
+
+    [SerializeField]
+    private float _skipSpeed = 2f;
 
     // Use this for initialization
     private void Start() {
@@ -19,14 +31,7 @@ public class SplashScreen : MonoBehaviour {
     }
 
 	private bool CheckForSkip(){
-		int i = 0;
-		while (i < HInput.Devices.Count) {
-			if (HInput.Devices[i].MenuWasPressed) {
-				return true;
-			}
-			i++;
-		}
-		return false;
+		return HInput.Devices.Any(device => device.MenuWasPressed);
 	}
 
     private IEnumerator DisplaySplashScreen() {
@@ -48,14 +53,10 @@ public class SplashScreen : MonoBehaviour {
 
                 //Wait one frame
                 yield return null;
-                t += Time.deltaTime;
-				if (CheckForSkip ()) {
-					if (t < logoDisplayDuration * 0.80f) {
-						t = logoDisplayDuration * 0.80f;
-					} else if (t < logoDisplayDuration * 0.95f) {
-						t = logoDisplayDuration * 0.95f;
-					}
-				}
+                var skipCheck = false;
+                foreach (InputDevice device in HInput.Devices)
+                    skipCheck |= device.GetControls(_skipButtons).Any(control => control.State);
+                t += ( skipCheck ? _skipSpeed : 1 ) * Time.deltaTime;
             }
             graphic.enabled = false;
             graphic.color = targetColor;

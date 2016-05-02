@@ -39,7 +39,6 @@ namespace HouraiTeahouse {
             Log.StackTraceDebug = _debugStackTrace;
             Log.StackTraceWarning = _warningStackTrace;
             Log.StackTraceError = _errorStackTrace;
-
         }
     }
 }

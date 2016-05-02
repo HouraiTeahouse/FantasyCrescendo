@@ -259,7 +259,7 @@ namespace HouraiTeahouse.SmashBrew {
             get {
                 //if (Type.Color != null)
                 //    return Type.Color.Value;
-                return Config.Instance.GetPlayerColor(PlayerNumber);
+                return Config.Player.GetColor(PlayerNumber);
             }
         }
 

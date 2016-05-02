@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using HouraiTeahouse.SmashBrew.UI;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -50,7 +48,7 @@ namespace HouraiTeahouse.SmashBrew {
     /// <seealso cref="SceneData"/>
     [CreateAssetMenu(fileName = "New Character", menuName = "SmashBrew/Character Data")]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
-    public class CharacterData : ScriptableObject {
+    public class CharacterData : ScriptableObject, IGameData {
         [Header("General Data")]
         [SerializeField]
         private TouhouGame _sourceGame = TouhouGame.Other;
@@ -234,10 +232,10 @@ namespace HouraiTeahouse.SmashBrew {
         /// Unity callback. Called when the asset instance is unloaded from memory.
         /// </summary>
         void OnDisable() {
-            UnloadAll();
+            Unload();
         }
 
-        public void UnloadAll() {
+        public void Unload() {
             Icon.Unload();
             Prefab.Unload();
             HomeStage.Unload();

@@ -198,7 +198,7 @@ namespace UnityStandardAssets.ImageEffects
 				table += string.Format("\tfloat3({0},{1},{2}),\n", v.x, v.y, v.z);
 			}
 			table += "};\n";
-			Debug.Log (table);
+			Debug.LogCreation (table);
 		}
 		*/
     }

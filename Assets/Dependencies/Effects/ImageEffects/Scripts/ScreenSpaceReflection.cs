@@ -96,7 +96,7 @@ namespace UnityStandardAssets.ImageEffects
             [Layout(LayoutAttribute.Category.Reflections, 1)]
             public int maxSteps;
             
-            [Tooltip("Log base 2 of ray tracing coarse step size. Higher traces farther, lower gives better quality silhouettes.")]
+            [Tooltip("LogCreation base 2 of ray tracing coarse step size. Higher traces farther, lower gives better quality silhouettes.")]
             [Range(0, 4)]
             [Layout(LayoutAttribute.Category.Reflections, 2)]
             public int rayStepSize;

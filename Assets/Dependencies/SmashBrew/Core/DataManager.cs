@@ -8,11 +8,14 @@ namespace HouraiTeahouse.SmashBrew {
     /// A manager of all of the game data loaded into the game.
     /// </summary>
     public sealed class DataManager : MonoBehaviour {
-        [SerializeField, Tooltip("Destroy this instance on scene loads?")] private bool _dontDestroyOnLoad;
+        [SerializeField, Tooltip("Destroy this instance on scene loads?")]
+        private bool _dontDestroyOnLoad;
 
-        [SerializeField, Tooltip("The characters to display in the game")] private List<CharacterData> _characters;
+        [SerializeField, Tooltip("The characters to display in the game")]
+        private List<CharacterData> _characters;
 
-        [SerializeField, Tooltip("The scenes to show in the game")] private List<SceneData> _scenes;
+        [SerializeField, Tooltip("The scenes to show in the game")]
+        private List<SceneData> _scenes;
 
         private ReadOnlyCollection<CharacterData> _characterCollection;
         private ReadOnlyCollection<SceneData> _sceneCollection;
@@ -58,9 +61,9 @@ namespace HouraiTeahouse.SmashBrew {
         void OnLevelWasLoaded(int level) {
             Log.Info("Unloading managed data assets");
             foreach (SceneData scene in _scenes)
-                scene.UnloadAll();
+                scene.Unload();
             foreach (CharacterData character in _characters)
-                character.UnloadAll();
+                character.Unload();
         }
     }
 }

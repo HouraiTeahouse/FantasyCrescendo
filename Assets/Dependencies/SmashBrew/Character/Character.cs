@@ -114,6 +114,11 @@ namespace HouraiTeahouse.SmashBrew {
             get { return JumpCount < MaxJumpCount; }
         }
 
+		public void ResetCharacter() {
+			_ground.Clear();
+			_collided = false;
+		}
+
         #endregion
 
         #region Runtime Variables
@@ -121,6 +126,8 @@ namespace HouraiTeahouse.SmashBrew {
         private Transform[] _bones;
         private HashSet<Collider> _ground;
         private bool _facing;
+        private float _lastTap;
+		private bool _collided;
 
         private bool _jumpQueued;
 
@@ -175,13 +182,29 @@ namespace HouraiTeahouse.SmashBrew {
             return _bones[boneIndex];
         }
 
+        public bool Tap(Vector2 direction) {
+            if (direction.sqrMagnitude > 0) {
+                _lastTap = Time.realtimeSinceStartup;
+                return true;
+            }
+            return false;
+        }
+
         public void Move(float speed) {
-            Vector3 vel = Rigidbody.velocity;
+			//Check to see if we can move or not. Fixes getting stuck on wall
+			if (_collided && !IsGrounded) { //We are hitting a wall or someone.
+				Ray ray = new Ray(transform.position,  Direction? -Vector3.right:Vector3.right);
+				if(Physics.Raycast (ray, MovementCollider.radius * 2, 9))
+				{
+					return;//Raycast will ignore characters...probably.
+				}
+
+			}
+			Vector3 vel = Rigidbody.velocity;
             vel.x = speed;
 
             if (Direction)
                 vel.x *= -1;
-
             Rigidbody.velocity = vel;
         }
 
@@ -215,6 +238,8 @@ namespace HouraiTeahouse.SmashBrew {
             else
                 _particles[particle].Stop();
         }
+
+
 
         #endregion
 
@@ -264,6 +289,7 @@ namespace HouraiTeahouse.SmashBrew {
         void AnimationUpdate() {
             Animator.SetBool(CharacterAnim.Grounded, IsGrounded);
             Animator.SetBool(CharacterAnim.Jump, _jumpQueued);
+            Animator.SetBool(CharacterAnim.Tap, Time.realtimeSinceStartup - _lastTap > Config.Player.TapPersistence);
 
             _jumpQueued = false;
         }
@@ -289,15 +315,17 @@ namespace HouraiTeahouse.SmashBrew {
                JumpCount = 0;
            }
             Rigidbody.velocity = velocity;
-            gameObject.layer = (velocity.magnitude > Config.Instance.TangibleSpeedCap)
+            gameObject.layer = (velocity.magnitude > Config.Physics.TangibleSpeedCap)
                 ? Layers.Intangible
                 : Layers.Character;
+
 
             AnimationUpdate();
         }
 
         void OnCollisionEnter(Collision col) {
             GroundCheck(col);
+			_collided = true;
         }
 
         void GroundCheck(Collision collison) {
@@ -305,7 +333,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (points.Length <= 0)
                 return;
 
-            float r2 = MovementCollider.radius * MovementCollider.radius;
+			float r2 = MovementCollider.radius * MovementCollider.radius;
             Vector3 bottom = transform.TransformPoint(MovementCollider.center - Vector3.up * MovementCollider.height / 2);
             foreach (ContactPoint contact in points)
 				if ((contact.point - bottom).sqrMagnitude < r2)
@@ -314,10 +342,12 @@ namespace HouraiTeahouse.SmashBrew {
 
         void OnCollisionStay(Collision col) {
             GroundCheck(col);
+			_collided = true;
         }
 
         void OnCollisionExit(Collision col) {
             _ground.Remove(col.collider);
+			_collided = false;
         }
 
         void Reset() {

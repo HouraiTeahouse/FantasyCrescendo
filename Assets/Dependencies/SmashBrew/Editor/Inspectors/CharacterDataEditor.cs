@@ -42,7 +42,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 return false;
             if (_previewSelect < 0 || _previewSelect >= data.PalleteCount)
                 _previewSelect = 0;
-            //Debug.Log(data.GetPortrait(_previewSelect).Load());
+            //Debug.LogCreation(data.GetPortrait(_previewSelect).Load());
             return data.GetPortrait(_previewSelect).Load() != null;
         }
 
