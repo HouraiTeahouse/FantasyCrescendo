@@ -194,14 +194,14 @@ namespace HouraiTeahouse.SmashBrew {
         /// How fast the character is currently walking/running.
         /// </summary>
         public float movementSpeed = 0;
-        public float dashingSpeed = 3.2f;
-        public float runningSpeed = 5.4f;
+        public float walkingSpeed = 3.2f;
+        public float dashingSpeed = 5.4f;
         public bool isDashing = false;
         public float maxMovementSpeed
         {
             get
             {
-                return isDashing ? runningSpeed : dashingSpeed;
+                return isDashing ? dashingSpeed : walkingSpeed;
             }
         }
         public float acceleration = 5.2f;
