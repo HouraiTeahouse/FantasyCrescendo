@@ -14,6 +14,7 @@ namespace HouraiTeahouse {
 
         // Set of all asynchronous operations managed by the manager
         private readonly List<AsyncOperation> _operations = new List<AsyncOperation>();
+        private static readonly List<Action> _waitingSynchronousActions = new List<Action>(); 
 
         /// <summary>
         /// The overall progress of all of the asynchronous actions. Shown as a ratio in the range [0.0, 1.0]
@@ -56,6 +57,32 @@ namespace HouraiTeahouse {
                 throw new ArgumentNullException();
             _operations.Add(request);
             StartCoroutine(WaitForResource(request, callback));
+        }
+
+        public static void AddSynchronousAction(Action action) {
+            if(action != null)
+                _waitingSynchronousActions.Add(action);
+        }
+
+        protected override void Awake() {
+            base.Awake();
+            Flush();
+        }
+
+        void Start() {
+            Flush();
+        }
+
+        void Update() {
+            Flush();
+        }
+
+        static void Flush() {
+            if (_waitingSynchronousActions.Count <= 0)
+                return;
+            foreach (Action action in _waitingSynchronousActions)
+                action();
+            _waitingSynchronousActions.Clear();
         }
 
         IEnumerator WaitForOperation(AsyncOperation operation, Action callback) {

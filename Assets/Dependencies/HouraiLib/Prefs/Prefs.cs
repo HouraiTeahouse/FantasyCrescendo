@@ -1,6 +1,11 @@
+using System;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HouraiTeahouse {
+
     /// <summary>
     /// A static PlayerPrefs wrapper that provides additional type support.
     /// </summary>
@@ -167,5 +172,132 @@ namespace HouraiTeahouse {
         }
 
         #endregion
+    }
+
+    [Serializable]
+    public abstract class AbstractPref<T> : ISerializationCallbackReceiver {
+
+        [SerializeField]
+        private string _key;
+
+        [SerializeField]
+        private T _defaultValue = default(T);
+        private T _value;
+
+        protected AbstractPref(string key) {
+            _key = key;
+            Load();
+        }
+
+        public T Value {
+            get { return _value;  }
+            set {
+                _value = value;
+                Write(value);
+            }
+        }
+
+        public string Key {
+            get { return _key; }
+        }
+
+        protected abstract T Read();
+        protected abstract void Write(T value);
+
+        void Load() {
+            if (Prefs.HasKey(_key)) {
+                _value = Read();
+#if UNITY_EDITOR
+                if(EditorApplication.isPlayingOrWillChangePlaymode)
+#endif
+                Log.Info("Loaded {0} from Perfs from key {1}. Value: {2}", typeof (T), _key, _value);
+            }
+            else {
+                _value = _defaultValue;
+#if UNITY_EDITOR
+                if(EditorApplication.isPlayingOrWillChangePlaymode)
+#endif
+                Log.Info("Perf key \"{0}\" not found. Default value of {1} ({2})", _key, _value, typeof(T));
+            }
+        }
+
+        void ISerializationCallbackReceiver.OnBeforeSerialize() {
+        }
+
+        void ISerializationCallbackReceiver.OnAfterDeserialize() {
+            AsyncManager.AddSynchronousAction(Load);
+        }
+    }
+
+    [Serializable]
+    public sealed class PrefInt : AbstractPref<int> {
+        public PrefInt(string key) : base(key) {
+        }
+
+        protected override int Read() {
+            return Prefs.GetInt(Key);
+        }
+
+        protected override void Write(int value) {
+            Prefs.SetInt(Key, value);
+        }
+
+        public static implicit operator int(PrefInt prefInt) {
+            return prefInt == null ? 0 : prefInt.Value;
+        }
+    }
+
+    [Serializable]
+    public sealed class PrefBool : AbstractPref<bool> {
+        public PrefBool(string key) : base(key) {
+        }
+
+        protected override bool Read() {
+            return Prefs.GetBool(Key);
+        }
+
+        protected override void Write(bool value) {
+            Prefs.SetBool(Key, value);
+        }
+
+        public static implicit operator bool(PrefBool prefInt) {
+            return prefInt != null && prefInt.Value;
+        }
+    }
+
+    [Serializable]
+    public sealed class PrefFloat : AbstractPref<float> {
+        public PrefFloat(string key) : base(key) {
+        }
+
+        protected override float Read() {
+            return Prefs.GetFloat(Key);
+        }
+
+        protected override void Write(float value) {
+            Prefs.SetFloat(Key, value);
+        }
+
+        public static implicit operator float(PrefFloat prefFloat) {
+            return prefFloat == null ? 0f: prefFloat.Value;
+        }
+    }
+
+    [Serializable]
+    public sealed class PrefString : AbstractPref<string> {
+        public PrefString(string key) : base(key) {
+        }
+
+        protected override string Read() {
+            return Prefs.GetString(Key);
+        }
+
+        protected override void Write(string value) {
+            Prefs.SetString(Key, value);
+        }
+
+        public static implicit operator string(PrefString prefString) {
+            return prefString == null ? string.Empty : prefString.Value;
+        }
     }
 }
