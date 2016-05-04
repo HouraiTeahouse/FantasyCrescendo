@@ -29,6 +29,8 @@ namespace HouraiTeahouse.SmashBrew {
 
         public Mediator CharacterEvents { get; private set; }
 
+        public Vector2 stick;
+
         /// <summary>
         /// Gets how many bones the Character has.
         /// </summary>
@@ -190,7 +192,10 @@ namespace HouraiTeahouse.SmashBrew {
             return false;
         }
 
-        public void Move(float speed) {
+        public float movementspeed = 0;
+
+        public void Move(float? spd) {
+            
 			//Check to see if we can move or not. Fixes getting stuck on wall
 			if (_collided && !IsGrounded) { //We are hitting a wall or someone.
 				Ray ray = new Ray(transform.position,  Direction? -Vector3.right:Vector3.right);
@@ -200,12 +205,46 @@ namespace HouraiTeahouse.SmashBrew {
 				}
 
 			}
-			Vector3 vel = Rigidbody.velocity;
+            float speed = 0;
+            if (spd.HasValue)
+            {
+                speed = spd.Value;
+            }
+            else
+            {
+                float hspeed = movementspeed;
+                float dir = hspeed >= 0 ? 1 : -1;
+                float accel = 5.2f;
+                hspeed = Math.Abs(hspeed);
+                if (dir>0 == stick.x>0)
+                {
+                    //accelerate
+                    hspeed += accel * FixedDeltaTime;
+                }
+                else if (dir > 0 != stick.x > 0)
+                {
+                    //brake
+                    hspeed -= (accel*3.5f) * FixedDeltaTime;
+                }
+                hspeed = Math.Min(hspeed, 3.2f * Math.Abs(stick.x));
+                speed = hspeed * dir;
+            }
+            Vector3 vel = Rigidbody.velocity;
             vel.x = speed;
-
-            if (Direction)
-                vel.x *= -1;
+            if (speed >= 0 != movementspeed >= 0)
+            {
+                //Animator.SetBool(CharacterAnim.TurnAround, true);
+            }
+            else if (Math.Abs(speed) < Math.Abs(movementspeed))
+            {
+                //Animator.SetBool(CharacterAnim.Braking, true);
+            }
             Rigidbody.velocity = vel;
+            movementspeed = speed;
+            if (speed>=0 != !Direction)
+            {
+                Direction = !(speed >= 0);
+            }
         }
 
         public void Jump() {
@@ -296,10 +335,12 @@ namespace HouraiTeahouse.SmashBrew {
 
        void FixedUpdate() {
             float grav = _gravity;
+            movementspeed *= 1 - FixedDeltaTime;
             if (IsGrounded)
             {
                 //Simulates ground friction.
                 grav += (grav*0.5f);
+                movementspeed *= 1 - (FixedDeltaTime*0.5f);
             }
             Rigidbody.AddForce(-Vector3.up * grav, ForceMode.Acceleration);
 

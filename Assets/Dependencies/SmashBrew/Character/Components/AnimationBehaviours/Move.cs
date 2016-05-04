@@ -23,18 +23,19 @@ namespace HouraiTeahouse.SmashBrew {
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
             if (!Target)
                 return;
-            _currentSpeed = _initialSpeed;
+            /*_currentSpeed = _initialSpeed;*/
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
             if (!Target)
                 return;
-            Target.Move(_currentSpeed);
+            Target.Move(null);
+            /*Target.Move(_currentSpeed);
             _currentSpeed += _acceleration * Target.FixedDeltaTime;
             if ((_initialSpeed < _capSpeed && _currentSpeed > _capSpeed) ||
                 (_initialSpeed > _capSpeed && _currentSpeed < _capSpeed))
-                _currentSpeed = _capSpeed;
+                _currentSpeed = _capSpeed;*/
         }
     }
 }
