@@ -25,7 +25,15 @@ MonoBehaviour:
     _baseWeight: 1
     _loopStart: 96000
     _loopEnd: 4320000
+  - _name: Shinkirou Orchestra
+    _artist: sladjkf
+    _bgm: Audio/BGM/Main Menu/Shinkirou Orchestra
+    _baseWeight: 1
+    _loopStart: 143381
+    _loopEnd: 4567061
   _sceneName: Main Menu
+  _isVisible: 1
+  _isSelectable: 1
   _isStage: 0
   _previewImage: 
   _icon: 
