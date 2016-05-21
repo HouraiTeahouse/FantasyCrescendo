@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Name: German
   m_EditorClassIdentifier: 
   _strings:
-  - German
+  - Deutsch
   - Fantasy Crescendo
   - "Dieses Spiel l\xE4sst sich am besten mit einem Gamepad spielen.\nIst ein Gamepad
-    vorhanden? Schlie\xDFen Sie es an!"
+    vorhanden? Schlie\xDF es an!"
   - "Hinweis!\n\nDieses Spiel basiert auf Touhou Project (\u6771\u65B9Project).\nStory,
-    Charakter-Pers\xF6nlichkeiten und Kulisse k\xF6nnen sich vom Original unterscheiden.\nSollten
-    Sie sich damit unwohl f\xFChlen, fahren Sie bitte mit Vorsicht fort."
+    Charakter-Pers\xF6nlichkeiten und Kulisse k\xF6nnen sich vom Original unterscheiden.\nWenn
+    du dich damit unwohl f\xFChlst, fahre bitte mit Vorsicht fort."
   - Reimu
   - Reimu Hakurei
   - Marisa
@@ -31,75 +31,16 @@ MonoBehaviour:
   - Yuugi Hoshiguma
   - Murasa
   - Minamitsu Murasa
-  - Cirno
-  - Cirno
-  - Meiling
-  - Hong Meiling
-  - Patchouli
-  - Patchouli Knowledge
   - Sakuya
   - Sakuya Izayoi
-  - Remilia
-  - Remilia Scarlet
-  - Flandre
-  - Flandre Scarlet
-  - Alice
-  - Alice Margatroid
   - Youmu
   - Youmu Konpaku
-  - Yuyuko
-  - Yuyuko Saigyouji
-  - Yukari
-  - Yukari Yakumo
-  - Suika
-  - Suika Ibuki
-  - Aya
-  - Aya Shameimaru
-  - Mokou
-  - Fujiwara no Mokou
-  - Komachi
-  - Komachi Onozuka
-  - Nitori
-  - Nitori Kawashiro
-  - Sanae
-  - Sanae Kochiya
-  - Suwako
-  - Suwako Moriya
-  - Kanako
-  - Kanako Yasaka
-  - Iku
-  - Iku Nagae
-  - Tenshi
-  - Tenshi Hinanawi
-  - Utsuho
-  - Utsuho Reiuji
-  - Koishi
-  - Koishi Komeiji
-  - Ichirin
-  - Ichirin Kumoi
-  - Unzan
-  - Byakuren
-  - Byakuren Hijiri
-  - Futo
-  - Mononobe no Futo
-  - Miko
-  - Toyosatomimi no Miko
-  - Mamizou
-  - Mamizou Futatsuiwa
-  - Kokoro
-  - Hata no Kokoro
-  - Shinmyoumaru
-  - Shinmyoumaru Sukuna
-  - Sumireko
-  - 'Sumireko Usami '
   - Hakurei-Schrein
   - Wald der Magie
   - Makai
   - Villa des Scharlachroten Teufels
-  - Unterwelt
-  - Menschendorf
-  - Genbu-Schlucht
-  - "Zuf\xE4llig"
+  - Zufall
+  - Spieler {0}
   - Mehrspieler
   - Einzelspieler
   - Standard
@@ -118,7 +59,7 @@ MonoBehaviour:
   - Sprache
   - '"Ein Wald voller Magie, daher der Name."'
   - '"Wird gerne als Ort zum Feiern missbraucht. Tenshi draussen bleiben!"'
-  - Yes
-  - No
+  - Ja
+  - Nein
   - OK
-  - We have set your language to {0}, is this OK?
+  - Die Sprache wurde auf {0} umgestellt, ist das in Ordnung?
