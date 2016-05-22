@@ -3,7 +3,6 @@ using UnityConstants;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
@@ -14,7 +13,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         static void ExecuteInterface<T>(Type typeCheck, Hitbox src, Hitbox dst, Predicate<Hitbox> check,
             Action<T, object> action) {
-            ;
             if (!check(src))
                 return;
             foreach (T t in src.GetComponents<T>())
@@ -66,13 +64,21 @@ namespace HouraiTeahouse.SmashBrew {
             Reflective = 30000
         }
 
-        [SerializeField] [HideInInspector] private Mesh _sphere;
+        [SerializeField]
+        [HideInInspector]
+        private Mesh _sphere;
 
-        [SerializeField] [HideInInspector] private Mesh _cube;
+        [SerializeField]
+        [HideInInspector]
+        private Mesh _cube;
 
-        [SerializeField] [HideInInspector] private Mesh _capsule;
+        [SerializeField]
+        [HideInInspector]
+        private Mesh _capsule;
 
-        [SerializeField] [HideInInspector] private Material _material;
+        [SerializeField]
+        [HideInInspector]
+        private Material _material;
 
         //TODO: Add triggers for on hit effects and SFX
         //private ParticleSystem _effect;
@@ -265,7 +271,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public float BaseDamage {
-            get { return Source == null ? _damage : Source.ModifyDamage(_damage); }
+            get { return Source == null ? _damage : Source.GetComponent<PlayerDamage>().ModifyDamage(_damage); }
         }
 
         public bool FlipDirection {

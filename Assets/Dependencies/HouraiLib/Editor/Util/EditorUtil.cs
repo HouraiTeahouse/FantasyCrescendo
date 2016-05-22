@@ -1,92 +1,75 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-using System.Linq;
-using UnityObject = UnityEngine.Object;
 
 namespace HouraiTeahouse.Editor {
 
     public static class EditorUtil {
 
-        /*       
-                This somehow generates a compiler error. Commenting it out for now.
+        internal class HorizontalArea : IDisposable {
 
-                public class HorizontalArea : IDisposable {
-
-                    public HorizontalArea(GUIStyle style, GUILayoutOption[] options) {
-                        if (options == null) {
-                            if (style == null) {
-                                EditorGUILayout.BeginHorizontal();
-                            } else {
-                                EditorGUILayout.BeginHorizontal(style);
-                            }
-                        } else {
-                            if (style == null) {
-                                EditorGUILayout.BeginHorizontal(options);
-                            } else {
-                                EditorGUILayout.BeginHorizontal(style, options);
-                            }
-                        }
-                    }
-
-                    public void Dispose() {
-                        EditorGUILayout.EndHorizontal();
-                    }
+            public HorizontalArea(GUIStyle style, GUILayoutOption[] options) {
+                if (options == null) {
+                    if (style == null)
+                        EditorGUILayout.BeginHorizontal();
+                    else
+                        EditorGUILayout.BeginHorizontal(style);
+                } else {
+                    if (style == null)
+                        EditorGUILayout.BeginHorizontal(options);
+                    else
+                        EditorGUILayout.BeginHorizontal(style, options);
                 }
+            }
 
-                public static IDisposable Horizontal(GUIStyle style = null, params GUILayoutOption[] options) {
-                    return new HorizontalArea(style, options);
-                }*/
+            public void Dispose() {
+                EditorGUILayout.EndHorizontal();
+            }
+        }
 
-        /// <summary>
-        /// Since GameObject.GetComponentInChildren does not work on deactivated objects, which include 
-        /// prefabs in the Editor. This method is a workaround for finding Components on children of
-        /// prefabs.
-        /// 
-        /// This method also works with interfaces.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="prefab"></param>
-        /// <returns></returns>
-        //public static T GetComponentInChildren<T>(GameObject prefab) where T : class {
-        //    if (prefab == null)
-        //        throw new ArgumentNullException("prefab");
-        //
-        //    return
-        //prefab.transform.
-        //              .Select(child => child.GetComponent<T>())
-        //              .FirstOrDefault(instance => instance != null);
-        //}
+        internal class VerticalArea : IDisposable {
 
-        /// <summary>
-        /// Since GameObject.GetComponentsInChildren does not work on deactivated objects, which include 
-        /// prefabs in the Editor. This method is a workaround for finding Components on children of
-        /// prefabs.
-        /// 
-        /// This method also works with interfaces.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="prefab"></param>
-        /// <returns></returns>
-        //public static T[] GetComponentsInChildren<T>(GameObject prefab) where T : class {
-        //    if (prefab == null)
-        //        throw new ArgumentNullException("prefab");
-        //
-        //
-        //    return prefab.GetChildren().SelectMany(child => child.GetComponents<T>()).ToArray();
-        //}
+            public VerticalArea(GUIStyle style, GUILayoutOption[] options) {
+                if (options == null) {
+                    if (style == null)
+                        EditorGUILayout.BeginVertical();
+                    else
+                        EditorGUILayout.BeginVertical(style);
+                } else {
+                    if (style == null)
+                        EditorGUILayout.BeginVertical(options);
+                    else
+                        EditorGUILayout.BeginVertical(style, options);
+                }
+            }
 
-        //public static T GetComponentInChildren<T>(Component prefab) where T : class {
-        //    if (prefab == null)
-        //        throw new ArgumentNullException("prefab");
-        //    return GetComponentInChildren<T>(prefab.gameObject);
-        //}
+            public void Dispose() {
+                EditorGUILayout.EndVertical();
+            }
+        }
 
-        //public static T[] GetComponentsInChildren<T>(Component prefab) where T : class {
-        //    if (prefab == null)
-        //        throw new ArgumentNullException("prefab");
-        //    return GetComponentsInChildren<T>(prefab.gameObject);
-        //}
+        internal class PropertyArea : IDisposable {
+            
+            public PropertyArea(Rect position, GUIContent content, SerializedProperty property) {
+                EditorGUI.BeginProperty(position, content, property);
+            }
+
+            public void Dispose() {
+                EditorGUI.EndProperty();
+            }
+        }
+
+        public static IDisposable Horizontal(GUIStyle style = null, params GUILayoutOption[] options) {
+            return new HorizontalArea(style, options);
+        }
+
+        public static IDisposable Vertical(GUIStyle style = null, params GUILayoutOption[] options) {
+            return new VerticalArea(style, options);
+        }
+
+        public static IDisposable Property(GUIContent content, Rect position, SerializedProperty property) {
+            return new PropertyArea(position, content, property);
+        }
 
         public static string Text(string label, string text) {
             return EditorGUILayout.TextField(text, label);
@@ -98,7 +81,5 @@ namespace HouraiTeahouse.Editor {
             else
                 GUILayout.Space((int) space);
         }
-
     }
-
 }

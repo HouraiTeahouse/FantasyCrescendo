@@ -82,8 +82,7 @@ namespace HouraiTeahouse.SmashBrew {
         ///     than or equal to the maximum number of players</param></exception>
         /// <returns>the corresponding Player object</returns>
         public static Player GetPlayerData(int playerNumber) {
-            if (playerNumber < 0 || playerNumber >= _players.Length)
-                throw new ArgumentException("playerNumber");
+            Check.Argument("playerNumber", Check.Range(playerNumber, _players));
             return _players[playerNumber];
         }
 

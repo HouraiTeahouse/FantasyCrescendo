@@ -7,6 +7,10 @@ namespace HouraiTeahouse.SmashBrew {
         public string Suffix { get; private set; }
         public float MinDamage { get; private set; }
         public float MaxDamage { get; private set; }
+        private Func<float, float, float> Change;
+
+        private DamageType() {
+        }
 
         public static readonly DamageType Percent = new DamageType {
             Change = (currentDamage, delta) => currentDamage + delta,
@@ -22,23 +26,20 @@ namespace HouraiTeahouse.SmashBrew {
             MinDamage = 0f
         };
 
-        private Func<float, float, float> Change;
-
         public float Damage(float currentDamage, float delta) {
-            float newDamage = Change(currentDamage, Mathf.Abs(delta));
-            return Mathf.Clamp(newDamage, MinDamage, MaxDamage);
+            return Mathf.Clamp(Change(currentDamage, Mathf.Abs(delta)), MinDamage, MaxDamage);
         }
 
         public float Heal(float currentDamage, float delta) {
-            float newDamage = Change(currentDamage, -Mathf.Abs(delta));
-            return Mathf.Clamp(newDamage, MinDamage, MaxDamage);
+            return Mathf.Clamp(Change(currentDamage, -Mathf.Abs(delta)), MinDamage, MaxDamage);
         }
     }
 
     /// <summary>
     /// A MonoBehaviour that handles all of the damage dealt and recieved by a character.
     /// </summary>
-    public partial class Character {
+    public sealed class PlayerDamage : HouraiBehaviour, IResettable {
+
         /// <summary>
         /// The current internal damage value. Used for knockback calculations.
         /// </summary>
@@ -46,9 +47,19 @@ namespace HouraiTeahouse.SmashBrew {
 
         public float DefaultDamage { get; set; }
 
-        public DamageType DamageType { get; set; }
+        public DamageType Type { get; set; }
         public ModifierGroup<object> DamageModifiers { get; private set; }
         public ModifierGroup<object> HealingModifiers { get; private set; }
+
+        public static implicit operator float(PlayerDamage damage) {
+            return damage == null ? 0f : damage.CurrentDamage;
+        }
+
+        protected override void Awake() {
+            base.Awake();
+            DamageModifiers = new ModifierGroup<object>();
+            HealingModifiers = new ModifierGroup<object>();
+        }
 
         internal float ModifyDamage(float baseDamage, object source = null) {
             return DamageModifiers.Out.Modifiy(source, baseDamage);
@@ -59,16 +70,8 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void Damage(object source, float damage) {
-            damage = Mathf.Abs(damage);
-
-            if (DamageModifiers.In.Count > 0)
-                damage = DamageModifiers.In.Modifiy(source, damage);
-
-            CurrentDamage = DamageType.Damage(CurrentDamage, damage);
-
-            Mathf.Clamp(CurrentDamage, DamageType.MinDamage, DamageType.MaxDamage);
-
-            CharacterEvents.Publish(new PlayerDamageEvent {Damage = damage, CurrentDamage = CurrentDamage});
+            damage = DamageModifiers.In.Modifiy(source, Mathf.Abs(damage));
+            CurrentDamage = Type.Damage(CurrentDamage, damage);
         }
 
         public void Heal(float healing) {
@@ -76,14 +79,12 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void Heal(object source, float healing) {
-            healing = Mathf.Abs(healing);
+            healing = HealingModifiers.In.Modifiy(source, Mathf.Abs(healing));
+            CurrentDamage = Type.Heal(CurrentDamage, healing);
+        }
 
-            if (HealingModifiers.In.Count > 0)
-                healing = HealingModifiers.In.Modifiy(source, healing);
-
-            CurrentDamage = DamageType.Heal(CurrentDamage, healing);
-
-            CharacterEvents.Publish(new PlayerHealEvent {Healing = healing, CurrentDamage = CurrentDamage});
+        public void OnReset() {
+            CurrentDamage = DefaultDamage;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     public sealed class Invincibility : Status {
-        private Character _character;
+        private PlayerDamage _damage;
         private Hitbox[] _hitboxes;
 
         /// <summary>
@@ -15,8 +15,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         protected override void Start() {
             base.Start();
-            _character = GetComponent<Character>();
-            _character.DamageModifiers.In.Add(InvincibilityModifier, int.MaxValue);
+            _damage = GetComponent<PlayerDamage>();
+            _damage.DamageModifiers.In.Add(InvincibilityModifier, int.MaxValue);
             _hitboxes = GetComponentsInChildren<Hitbox>();
         }
 
@@ -24,8 +24,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// Unity callback. Called on object destruction.
         /// </summary>
         void OnDestroy() {
-            if (_character)
-                _character.DamageModifiers.In.Remove(InvincibilityModifier);
+            if (_damage)
+                _damage.DamageModifiers.In.Remove(InvincibilityModifier);
         }
 
         /// <summary>

@@ -69,7 +69,8 @@ namespace HouraiTeahouse.Console {
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Init() {
-            if (init) return;
+            if (init)
+                return;
             _commands = new Dictionary<string, ConsoleCommand>();
             _history = new FixedSizeQueue<string>(100);
 
@@ -92,8 +93,8 @@ namespace HouraiTeahouse.Console {
         /// <param name="command">the command string to use</param>
         /// <param name="callback">the handler that is to be registered</param>
         public static void RegisterCommand(string command, ConsoleCommand callback) {
-            if (callback == null || command == null)
-                throw new ArgumentNullException();
+            Check.ArgumentNull("callback", callback);
+            Check.ArgumentNull("command", command);
             if (!_commands.ContainsKey(command))
                 _commands[command] = callback;
             else
@@ -159,8 +160,7 @@ namespace HouraiTeahouse.Console {
             Log(command);
             try {
                 cc(args.Skip(1).ToArray());
-            }
-            catch {
+            } catch {
                 Log("An error has occured.");
             }
         }

@@ -45,7 +45,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        /// Event callback. Called whenever the Player changes.
+        /// Events callback. Called whenever the Player changes.
         /// </summary>
         void OnPlayerChange() {
             SetData(_player == null ? null : _player.SelectedCharacter);

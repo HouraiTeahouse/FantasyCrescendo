@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 #if HOURAI_EVENTS
 using HouraiTeahouse.Events;
-
 #endif
 
 namespace HouraiTeahouse.Localization {
@@ -20,13 +19,14 @@ namespace HouraiTeahouse.Localization {
     /// </summary>
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Manager")]
     public sealed class LanguageManager : Singleton<LanguageManager> {
-        [SerializeField, Tooltip("The Resources directory to load the Language files from")] private string
-            localizaitonResourceDirectory = "Lang/";
+        [SerializeField, Tooltip("Destroy this object on scene changes?")]
+        private bool _dontDestroyOnLoad = false;
 
-        [SerializeField, Tooltip("The PlayerPrefs key to store the Player's language in")] private string
-            _langPlayerPrefKey = "lang";
+        [SerializeField, Tooltip("The Resources directory to load the Language files from")]
+        private string localizaitonResourceDirectory = "Lang/";
 
-        [SerializeField, Tooltip("Destroy this object on scene changes?")] private bool _dontDestroyOnLoad = false;
+        [SerializeField, Tooltip("The PlayerPrefs key to store the Player's language in")]
+        private PrefString _langPlayerPref;
 
         [SerializeField, Tooltip("The default language to use if the Player's current language is not supported")]
         [Resource(typeof (StringSet))]
@@ -71,10 +71,7 @@ namespace HouraiTeahouse.Localization {
         /// Gets an enumeration of all of the localizable keys.  
         /// </summary>
         public IEnumerable<string> Keys {
-            get {
-                foreach (var key in _keySet)
-                    yield return key;
-            }
+            get { return _keySet; }
         }
 
         /// <summary>
@@ -208,14 +205,14 @@ namespace HouraiTeahouse.Localization {
             _keySet = new HashSet<string>(_keys);
 
             string currentLang;
-            if (!Prefs.HasKey(_langPlayerPrefKey)) {
+            if (!_langPlayerPref.HasKey()) {
                 currentLang = Application.systemLanguage.ToString();
                 if (!_languages.Contains(currentLang) || Application.systemLanguage == SystemLanguage.Unknown)
                     currentLang = Resources.Load<StringSet>(_defaultLanguage).name;
-                Prefs.SetString(_langPlayerPrefKey, currentLang);
+                _langPlayerPref.Value = currentLang;
             }
             else {
-                currentLang = Prefs.GetString(_langPlayerPrefKey);
+                currentLang = _langPlayerPref;
             }
 
             foreach (StringSet lang in languages) {
@@ -248,9 +245,9 @@ namespace HouraiTeahouse.Localization {
         /// </summary>
         void Save() {
             if (CurrentLangauge == null)
-                PlayerPrefs.DeleteKey(_langPlayerPrefKey);
+                _langPlayerPref.DeleteKey();
             else
-                Prefs.SetString(_langPlayerPrefKey, CurrentLangauge.Name);
+                _langPlayerPref.Value = CurrentLangauge.Name;
         }
 
         /// <summary>
@@ -270,8 +267,7 @@ namespace HouraiTeahouse.Localization {
         /// <exception cref="InvalidOperationException">thrown if the language specified by <paramref name="identifier"/> is not currently supported.</exception>
         /// <returns>the localization language</returns>
         public Language LoadLanguage(string identifier) {
-            if (identifier == null)
-                throw new ArgumentNullException("identifier");
+            Check.ArgumentNull("identifier", identifier);
             if (!_languages.Contains(identifier))
                 throw new InvalidOperationException(string.Format("Language with identifier of {0} is not supported.",
                     identifier));

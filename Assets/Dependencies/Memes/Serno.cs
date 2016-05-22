@@ -22,7 +22,7 @@ public class Serno : IComparable {
     }
 }
 
-public class NoBusesInGensokyoException : System.Exception {
+public class NoBusesInGensokyoException : Exception {
     public NoBusesInGensokyoException(string e) {
     }
 }

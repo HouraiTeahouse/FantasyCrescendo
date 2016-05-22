@@ -33,8 +33,7 @@ namespace HouraiTeahouse {
         /// <param name="key2">the first key</param>
         /// <param name="value">the associated value</param>
         public virtual void Add(K1 key1, K2 key2, V value) {
-            if (ContainsKey(key1, key2))
-                throw new ArgumentException();
+            Check.Argument(ContainsKey(key1, key2));
             this[key1, key2] = value;
         }
 

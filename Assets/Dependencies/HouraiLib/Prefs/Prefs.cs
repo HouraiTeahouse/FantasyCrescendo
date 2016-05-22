@@ -26,6 +26,14 @@ namespace HouraiTeahouse {
             return PlayerPrefs.HasKey(key);
         }
 
+        /// <summary>
+        /// Deletes the key given
+        /// </summary>
+        /// <param name="key">the key to delete</param>
+        public static void DeleteKey(string key) {
+            PlayerPrefs.DeleteKey(key);
+        }
+
         #region Object Values
 
         /// <summary>
@@ -219,6 +227,14 @@ namespace HouraiTeahouse {
 #endif
                 Log.Info("Perf key \"{0}\" not found. Default value of {1} ({2})", _key, _value, typeof(T));
             }
+        }
+
+        public bool HasKey() {
+            return Prefs.HasKey(_key);
+        }
+
+        public void DeleteKey() {
+            Prefs.DeleteKey(_key);
         }
 
         void ISerializationCallbackReceiver.OnBeforeSerialize() {

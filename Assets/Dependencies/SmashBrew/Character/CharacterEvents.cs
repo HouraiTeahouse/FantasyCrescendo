@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
     /// <summary>
-    /// Event fired when a player jumps
+    /// Events fired when a player jumps
     /// </summary>
     public class PlayerJumpEvent {
         // whether the player was on the Ground when jumping or not
@@ -13,7 +13,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     /// <summary>
-    /// Event fired when a player touches the Ground or leaves the gum
+    /// Events fired when a player touches the Ground or leaves the gum
     /// </summary>
     public class PlayerGroundEvent {
         // whether the player is now on the gorund or not
@@ -21,7 +21,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     /// <summary>
-    /// Event fired when a player dies
+    /// Events fired when a player dies
     /// </summary> 
     public class PlayerDieEvent {
         // whether or not the player has been revived or not
@@ -32,7 +32,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     /// <summary>
-    /// Event fired when a player first spawns into the match
+    /// Events fired when a player first spawns into the match
     /// </summary>
     public class PlayerSpawnEvent {
         // the player that was spawned
@@ -43,7 +43,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     /// <summary>
-    /// Event fired when a player respawns after dying
+    /// Events fired when a player respawns after dying
     /// </summary>
     public class PlayerRespawnEvent {
         // whether the player has been revived already or not
@@ -54,7 +54,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     /// <summary>
-    /// Event fired when a player is damaged
+    /// Events fired when a player is damaged
     /// </summary>
     public class PlayerDamageEvent {
         // the damage dealt to the player
@@ -65,7 +65,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     /// <summary>
-    /// Event fired when a player is healed
+    /// Events fired when a player is healed
     /// </summary>
     public class PlayerHealEvent {
         // the amount of damage that has been healed
@@ -76,7 +76,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     /// <summary>
-    /// Event fired when a player is knocked back
+    /// Events fired when a player is knocked back
     /// </summary>
     public class PlayerKnockbackEvent {
     }

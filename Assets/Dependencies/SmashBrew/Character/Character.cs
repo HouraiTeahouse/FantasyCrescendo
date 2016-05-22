@@ -1,16 +1,30 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using HouraiTeahouse.Events;
-using HouraiTeahouse.SmashBrew.Util;
 using UnityConstants;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
+
+    public interface IResettable {
+        void OnReset();
+    }
+
+    public abstract class AbstractCharacterComponent : HouraiBehaviour, IResettable {
+
+        public Character Character { get; set; }
+
+        public Mediator Events {
+            get { return Character.Events; }
+        }
+
+        public virtual void OnReset() {
+        }
+    }
+
     /// <summary>
     /// General character class for handling the physics and animations of individual characters
     /// </summary>
@@ -19,7 +33,9 @@ namespace HouraiTeahouse.SmashBrew {
 #endif
     [DisallowMultipleComponent]
     [RequireComponent(typeof (Rigidbody), typeof (CapsuleCollider))]
-    public sealed partial class Character : HouraiBehaviour, IDamageable, IHealable, IKnockbackable {
+    [RequireComponent(typeof(PlayerDamage), typeof(PlayerKnockback))]
+    [RequireComponent(typeof (Gravity), typeof (Ground))]
+    public sealed class Character : HouraiBehaviour {
         private enum FacingMode {
             Rotation,
             Scale
@@ -27,30 +43,13 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Public Properties
 
-        public Mediator CharacterEvents { get; private set; }
+        public Mediator Events { get; private set; }
 
         /// <summary>
         /// Gets how many bones the Character has.
         /// </summary>
         public int BoneCount {
             get { return _bones.Length; }
-        }
-
-        /// <summary>
-        /// Gets whether the Character is currently on solid Ground.
-        /// Assumed to be in the air when false.
-        /// </summary>
-        public bool IsGrounded {
-            get {
-				if (_ground.Count > 0 && Rigidbody.velocity.y <= 0.05f) {
-					foreach (var ground in _ground) {
-						if (ground.gameObject.activeInHierarchy) {
-							return true;
-						}
-					}
-				}
-				return false;
-			}
         }
 
         /// <summary>
@@ -78,21 +77,12 @@ namespace HouraiTeahouse.SmashBrew {
             set {
                 if (_facing == value)
                     return;
-
                 _facing = value;
                 if (_facingMode == FacingMode.Rotation)
                     transform.Rotate(0f, 180f, 0f);
                 else
                     transform.localScale *= -1;
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the magnitude of gravity applied to the Character.
-        /// </summary>
-        public float Gravity {
-            get { return _gravity; }
-            set { _gravity = Mathf.Abs(value); }
         }
 
         /// <summary>
@@ -115,8 +105,9 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
 		public void ResetCharacter() {
-			_ground.Clear();
-			_collided = false;
+            foreach(IResettable resetable in _resetableComponents)
+                if(resetable != null)
+                    resetable.OnReset();
 		}
 
         #endregion
@@ -124,11 +115,8 @@ namespace HouraiTeahouse.SmashBrew {
         #region Runtime Variables
 
         private Transform[] _bones;
-        private HashSet<Collider> _ground;
         private bool _facing;
         private float _lastTap;
-		private bool _collided;
-
         private bool _jumpQueued;
 
         #endregion
@@ -142,9 +130,6 @@ namespace HouraiTeahouse.SmashBrew {
         private FacingMode _facingMode;
 
         [Header("Physics")]
-        [SerializeField, Tooltip("The acceleration downward per second applied")]
-        private float _gravity = 9.86f;
-
         [SerializeField]
         private float _maxFallSpeed = 5f;
 
@@ -171,6 +156,11 @@ namespace HouraiTeahouse.SmashBrew {
         #region Required Components
 
         public CapsuleCollider MovementCollider { get; private set; }
+        public Gravity Gravity { get; private set; }
+        public Ground Ground { get; private set; }
+        public PlayerDamage Damage { get; private set; }
+
+        private IResettable[] _resetableComponents;
 
         #endregion
 
@@ -192,14 +182,10 @@ namespace HouraiTeahouse.SmashBrew {
 
         public void Move(float speed) {
 			//Check to see if we can move or not. Fixes getting stuck on wall
-			if (_collided && !IsGrounded) { //We are hitting a wall or someone.
-				Ray ray = new Ray(transform.position,  Direction? -Vector3.right:Vector3.right);
-				if(Physics.Raycast (ray, MovementCollider.radius * 2, 9))
-				{
-					return;//Raycast will ignore characters...probably.
-				}
-
-			}
+			//if (_collided && !Ground) { //We are hitting a wall or someone.
+			//	if(Physics.Raycast(transform.position, Direction ? -Vector3.right : Vector3.right, MovementCollider.radius * 2, 9))
+			//		return; //Raycast will ignore characters...probably.
+			//}
 			Vector3 vel = Rigidbody.velocity;
             vel.x = speed;
 
@@ -224,7 +210,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             JumpCount++;
 
-            CharacterEvents.Publish(new PlayerJumpEvent { Ground = IsGrounded, RemainingJumps = MaxJumpCount - JumpCount });
+            Events.Publish(new PlayerJumpEvent { Ground = Ground, RemainingJumps = MaxJumpCount - JumpCount });
         }
 
         public void SetWeaponVisibilty(int weapon, bool state) {
@@ -238,9 +224,6 @@ namespace HouraiTeahouse.SmashBrew {
             else
                 _particles[particle].Stop();
         }
-
-
-
         #endregion
 
         #region Internal Methods
@@ -254,12 +237,21 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Unity Callbacks
 
+        void GetCharacterComponents() {
+            Ground = GetComponent<Ground>();
+            Gravity = GetComponent<Gravity>();
+            Damage = GetComponent<PlayerDamage>();
+
+            _resetableComponents = GetComponentsInChildren<IResettable>();
+        }
+
         /// <summary>
         /// Unity callback. Called on object instantiation.
         /// </summary>
         protected override void Awake() {
             base.Awake();
-            CharacterEvents = new Mediator();
+            Events = new Mediator();
+            GetCharacterComponents();
             Reset();
 
             GameObject root = gameObject;
@@ -268,11 +260,6 @@ namespace HouraiTeahouse.SmashBrew {
             _bones = root.GetComponentsInChildren<Transform>();
 
             MovementCollider = GetComponent<CapsuleCollider>();
-            _ground = new HashSet<Collider>();
-
-            DamageModifiers = new ModifierGroup<object>();
-            HealingModifiers = new ModifierGroup<object>();
-            KnockbackModifiers = new ModifierGroup<Vector2>();
 
             foreach (ParticleSystem particle in _particles)
                if(particle) 
@@ -287,7 +274,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void AnimationUpdate() {
-            Animator.SetBool(CharacterAnim.Grounded, IsGrounded);
+            Animator.SetBool(CharacterAnim.Grounded, Ground);
             Animator.SetBool(CharacterAnim.Jump, _jumpQueued);
             Animator.SetBool(CharacterAnim.Tap, Time.realtimeSinceStartup - _lastTap > Config.Player.TapPersistence);
 
@@ -295,12 +282,10 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
        void FixedUpdate() {
-            float grav = _gravity;
-            if (IsGrounded)
-            {
-                //Simulates ground friction.
-                grav += (grav*0.5f);
-            }
+            float grav = Gravity;
+            //Simulates ground friction.
+            if (Ground)
+                grav *= 2.5f;
             Rigidbody.AddForce(-Vector3.up * grav, ForceMode.Acceleration);
 
             Vector3 velocity = Rigidbody.velocity;
@@ -310,7 +295,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;
-			if (IsGrounded && Rigidbody.velocity.y <= 0f) {
+			if (Ground && Rigidbody.velocity.y <= 0f) {
                IsFastFalling = false;
                JumpCount = 0;
            }
@@ -319,35 +304,7 @@ namespace HouraiTeahouse.SmashBrew {
                 ? Layers.Intangible
                 : Layers.Character;
 
-
             AnimationUpdate();
-        }
-
-        void OnCollisionEnter(Collision col) {
-            GroundCheck(col);
-			_collided = true;
-        }
-
-        void GroundCheck(Collision collison) {
-            ContactPoint[] points = collison.contacts;
-            if (points.Length <= 0)
-                return;
-
-			float r2 = MovementCollider.radius * MovementCollider.radius;
-            Vector3 bottom = transform.TransformPoint(MovementCollider.center - Vector3.up * MovementCollider.height / 2);
-            foreach (ContactPoint contact in points)
-				if ((contact.point - bottom).sqrMagnitude < r2)
-                    _ground.Add(contact.otherCollider);
-        }
-
-        void OnCollisionStay(Collision col) {
-            GroundCheck(col);
-			_collided = true;
-        }
-
-        void OnCollisionExit(Collision col) {
-            _ground.Remove(col.collider);
-			_collided = false;
         }
 
         void Reset() {
@@ -357,11 +314,10 @@ namespace HouraiTeahouse.SmashBrew {
             gameObject.tag = Tags.Player;
             gameObject.layer = Layers.Character;
 
-            Rigidbody rb = Rigidbody;
-            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            rb.isKinematic = false;
-            rb.useGravity = false;
+            Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            Rigidbody.isKinematic = false;
+            Rigidbody.useGravity = false;
 
             Animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
 #if UNITY_EDITOR
@@ -375,7 +331,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
 #if UNITY_EDITOR
-
         /// <summary>
         /// Editor only function that gets all of the required component types a Character needs.
         /// </summary>
@@ -398,7 +353,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         void OnAnimatorMove() {
             //TODO: Merge Physics and Animation Movements here
-
             //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;
         }
 

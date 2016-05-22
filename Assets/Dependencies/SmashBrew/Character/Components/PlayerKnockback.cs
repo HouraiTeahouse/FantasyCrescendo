@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew {
     /// <summary>
     /// A MonoBehaviour that handles the knockback dealt to a Player
     /// </summary>
-    public partial class Character {
+    public sealed class PlayerKnockback : AbstractCharacterComponent, IKnockbackable {
         private ModifierList<Vector2> _defensiveModifiers;
 
         public ModifierGroup<Vector2> KnockbackModifiers { get; private set; }

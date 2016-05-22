@@ -19,7 +19,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             //TODO: Change this into a event
             bool visible = _character.isActiveAndEnabled;
             Text.enabled = visible;
-            float value = Mathf.Floor(_character.CurrentDamage);
+            float value = Mathf.Floor(_character.Damage.CurrentDamage);
             if (visible && !Mathf.Approximately(Number, value))
                 Number = value;
         }
@@ -30,7 +30,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         protected override string ProcessNumber(string number) {
             if (!_character)
                 return number;
-            return string.Format("{0}<size={1}>{2}</size>", number, suffixSize, _character.DamageType.Suffix);
+            return string.Format("{0}<size={1}>{2}</size>", number, suffixSize, _character.Damage.Type.Suffix);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 _character = null;
             else {
                 _character = data.PlayerObject;
-                Number = _character.CurrentDamage;
+                Number = _character.Damage;
             }
         }
     }

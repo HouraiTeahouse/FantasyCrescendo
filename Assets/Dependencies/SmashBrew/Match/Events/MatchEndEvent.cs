@@ -1,6 +1,6 @@
 namespace HouraiTeahouse.SmashBrew {
     /// <summary>
-    /// Event for declaring the end of the Match
+    /// Events for declaring the end of the Match
     /// </summary>
     public class MatchEndEvent {
         /// <summary>

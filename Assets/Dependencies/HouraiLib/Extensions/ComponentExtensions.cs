@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse {
@@ -14,11 +14,8 @@ namespace HouraiTeahouse {
         /// <param name="components"></param>
         /// <returns></returns>
         public static IEnumerable<GameObject> GetGameObject<T>(this IEnumerable<T> components) where T : Component {
-            if (components == null)
-                throw new ArgumentNullException("components");
-            foreach (T component in components)
-                if (component != null)
-                    yield return component.gameObject;
+            Check.ArgumentNull("components", components);
+            return from component in components where component != null select component.gameObject;
         }
 
         /// <summary>
@@ -30,8 +27,7 @@ namespace HouraiTeahouse {
         /// <param name="component">the Component attached to the GameObject to retrieve the Component</param>
         /// <returns>the retrieved Component</returns>
         public static T GetOrAddComponent<T>(this Component component) where T : Component {
-            if (!component)
-                throw new ArgumentNullException();
+            Check.ArgumentNull("component", component);
             GameObject gameObject = component.gameObject;
             var attempt = gameObject.GetComponent<T>();
             return attempt ? attempt : gameObject.AddComponent<T>();
@@ -46,8 +42,7 @@ namespace HouraiTeahouse {
         /// <param name="component">the GameObject to retrieve the Component</param>
         /// <returns>the retrieved Component</returns>
         public static T SafeGetComponent<T>(this Component component) where T : class {
-            if (!component)
-                throw new ArgumentNullException();
+            Check.ArgumentNull("component", component);
             GameObject gameObject = component.gameObject;
             var attempt = gameObject.GetComponent<T>();
             if (attempt != null)

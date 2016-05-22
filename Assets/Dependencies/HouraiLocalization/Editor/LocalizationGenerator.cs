@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using Google.GData.Spreadsheets;
 using HouraiTeahouse.Editor;
+using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.Localization.Editor {
 
@@ -15,15 +16,10 @@ namespace HouraiTeahouse.Localization.Editor {
 
         [MenuItem("Hourai/Localization/Generate")]
         static void Create() {
-            var generatorPath = AssetUtil.FindAssetPaths<LocalizationGenerator>();
-            LocalizationGenerator generator;
-            if (generatorPath.Length <= 0)
-                AssetUtil.CreateAssetInProjectWindow<LocalizationGenerator>();
-            else {
-                generator = AssetDatabase.LoadAssetAtPath<LocalizationGenerator>(generatorPath[0]);
-                if(generator)
-                    generator.Generate();
-            }
+            var generator = AssetUtil.LoadFirstOrCreate<LocalizationGenerator>();
+            Assert.IsNotNull(generator);
+            if (generator)
+                generator.Generate();
         }
         
         [SerializeField, Tooltip("The public Google Spreadsheets link to pull data from")]
@@ -67,7 +63,7 @@ namespace HouraiTeahouse.Localization.Editor {
                }
                 else
                     AssetDatabase.CreateAsset(lang.Value, path);
-                Debug.Log(string.Format("{0} language files for: {1}", method, lang.Key));
+                Log.Info("{0} language files for: {1}", method, lang.Key);
             }
             EditorApplication.SaveAssets();
             AssetDatabase.SaveAssets();

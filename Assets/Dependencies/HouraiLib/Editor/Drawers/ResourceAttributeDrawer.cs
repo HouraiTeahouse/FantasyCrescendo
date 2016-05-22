@@ -11,7 +11,7 @@ namespace HouraiTeahouse.Editor {
     /// </summary>
     //TODO(jame7132): Move this to the Resource Attribute file
     [CustomPropertyDrawer(typeof (ResourceAttribute))]
-    internal class ResourceAttributeDrawer : PropertyDrawer {
+    internal class ResourceAttributeDrawer : BasePropertyDrawer<ResourceAttribute> {
 
         private class Data {
             private Object _object;
@@ -28,11 +28,10 @@ namespace HouraiTeahouse.Editor {
             public void Draw(Rect position, SerializedProperty property, Type type) {
                 EditorGUI.BeginChangeCheck();
                 Object obj = EditorGUI.ObjectField(position, Content, _object, type, false);
-                if (EditorGUI.EndChangeCheck()) {
-                    Update(obj);
-                    property.stringValue = _path;
-                    EditorUtility.SetDirty(property.serializedObject.targetObject);
-                }
+                if (!EditorGUI.EndChangeCheck()) return;
+                Update(obj);
+                property.stringValue = _path;
+                EditorUtility.SetDirty(property.serializedObject.targetObject);
             }
 
             public void UpdateContent(GUIContent label) {
@@ -59,7 +58,6 @@ namespace HouraiTeahouse.Editor {
         }
 
         private readonly Dictionary<string, Data> _data;
-        private ResourceAttribute _resourceAttribute;
 
         public ResourceAttributeDrawer() {
            _data = new Dictionary<string, Data>(); 
@@ -73,24 +71,16 @@ namespace HouraiTeahouse.Editor {
                 EditorGUI.PropertyField(position, property, label);
                 return;
             }
-            if (_resourceAttribute == null)
-                _resourceAttribute = attribute as ResourceAttribute;
 
             string propertyPath = property.propertyPath;
-            Data data;
             bool changed = !_data.ContainsKey(propertyPath);
-            if (changed) 
-                data = new Data(property, label);
-            else 
-                data = _data[propertyPath];
+            Data data = changed ? new Data(property, label) : _data[propertyPath];
 
-            EditorGUI.BeginProperty(position, data.Content, property);
-            data.UpdateContent(label);
-            data.Draw(position, property, _resourceAttribute.TypeRestriction);
-            _data[propertyPath] = data;
-            EditorGUI.EndProperty();
+            using (EditorUtil.Property(data.Content, position, property)) {
+                data.UpdateContent(label);
+                data.Draw(position, property, attribute.TypeRestriction);
+                _data[propertyPath] = data;
+            }
         }
-
     }
-
 }

@@ -22,7 +22,7 @@ namespace HouraiTeahouse.Console {
             get { return _limit; }
             set {
                 _limit = value;
-                Check();
+                CapactityCheck();
             }
         }
 
@@ -52,8 +52,7 @@ namespace HouraiTeahouse.Console {
         /// <exception cref="ArgumentException">thrown if <paramref name="size"/> is negative.</exception>
         /// <param name="size">the limit on the size of the instance</param>
         public FixedSizeQueue(int size) {
-            if (size < 0)
-                throw new ArgumentException();
+            Check.Argument("size", size >= 0);
             _limit = size;
             _queue = new Queue<T>();
         }
@@ -69,8 +68,7 @@ namespace HouraiTeahouse.Console {
         /// <param name="size">the limit on the size of the instance</param>
         /// <param name="collection">the source collection/enumerable to include.</param>
         public FixedSizeQueue(int size, IEnumerable<T> collection) {
-            if (size < 0)
-                throw new ArgumentException();
+            Check.Argument("size", size >= 0);
             _limit = size;
             _queue = new Queue<T>();
             if (collection == null)
@@ -85,7 +83,7 @@ namespace HouraiTeahouse.Console {
         /// <param name="obj">The object to add to the FixedQueue{T}. The value can be null for reference types.</param>
         public void Enqueue(T obj) {
             _queue.Enqueue(obj);
-            Check();
+            CapactityCheck();
         }
 
         /// <summary>
@@ -120,7 +118,7 @@ namespace HouraiTeahouse.Console {
         /// <summary>
         /// Helper funciton to check whether the FixedQueue{T} is over capacity or not.
         /// </summary>
-        void Check() {
+        void CapactityCheck() {
             if (_queue.Count <= Limit)
                 return;
             lock (this) {

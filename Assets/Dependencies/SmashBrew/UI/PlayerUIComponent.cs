@@ -26,7 +26,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        /// Event callback. Called whenever <see cref="Player"/>'s state changes
+        /// Events callback. Called whenever <see cref="Player"/>'s state changes
         /// </summary>
         protected virtual void OnPlayerChange() {
         }

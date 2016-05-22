@@ -37,7 +37,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary>
-        /// Event callback. Called when the Match starts and ends.
+        /// Events callback. Called when the Match starts and ends.
         /// </summary>
         /// <param name="startEventArgs">the event parameters</param>
         void OnMatchStart(MatchStartEvent startEventArgs) {

@@ -12,7 +12,7 @@ namespace HouraiTeahouse.Events {
         public event Action<T, TEvent> OnCreate;
 
         /// <summary>
-        /// Event callback. Called whenever said event is published by the mediator.
+        /// Events callback. Called whenever said event is published by the mediator.
         /// </summary>
         /// <param name="eventArgs">the event arguments</param>
         protected sealed override void OnEvent(TEvent eventArgs) {

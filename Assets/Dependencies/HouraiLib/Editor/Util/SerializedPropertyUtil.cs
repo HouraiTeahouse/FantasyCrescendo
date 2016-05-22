@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.Editor {
@@ -18,12 +16,10 @@ namespace HouraiTeahouse.Editor {
         /// <param name="source">the source collection to read values from</param>
         public static void SetArray<T>(this SerializedProperty property, IEnumerable<T> source, int start = 0) 
             where T : Object {
-            if(property == null)
-                throw new ArgumentNullException();
-            if(!property.isArray)
-                throw new ArgumentException();
+            Check.ArgumentNull("property", property);
+            Check.Argument("property", property.isArray);
             var i = start;
-            foreach (var obj in source) {
+            foreach (var obj in Check.ArgumentNull("source", source)) {
                 if (i >= property.arraySize)
                     property.InsertArrayElementAtIndex(i);
                 property.GetArrayElementAtIndex(i).objectReferenceValue = obj;
@@ -40,7 +36,7 @@ namespace HouraiTeahouse.Editor {
         /// <param name="source">the source collection to read values from</param>
         public static void AppendArray<T>(this SerializedProperty property, IEnumerable<T> source)
             where T : Object {
-            property.SetArray(source, property.arraySize);
+            Check.ArgumentNull("property", property).SetArray(source, property.arraySize);
         }
 
     }

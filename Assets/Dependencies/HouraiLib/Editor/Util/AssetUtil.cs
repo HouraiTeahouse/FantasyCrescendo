@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEditor;
@@ -15,20 +16,22 @@ namespace HouraiTeahouse.Editor {
     [InitializeOnLoad]
     public static class AssetUtil {
 
-        private static Dictionary<string, string> delayedMoves;
+        private static readonly Dictionary<string, string> DelayedMoves;
+        private const string ResourcePath = "Resources/";
+        private const string ResourceRegex = ".*/Resources/(.*?)\\..*";
 
         static AssetUtil() {
-            delayedMoves = new Dictionary<string, string>();
+            DelayedMoves = new Dictionary<string, string>();
             EditorApplication.update += Update;
         }
         
         static void Update() {
-            if (delayedMoves.Count <= 0)
+            if (DelayedMoves.Count <= 0)
                 return;
 
-            List<string> toRemove = new List<string>();
+            var toRemove = new List<string>();
 
-            foreach (KeyValuePair<string, string> pair in delayedMoves) {
+            foreach (KeyValuePair<string, string> pair in DelayedMoves) {
                 string result = AssetDatabase.ValidateMoveAsset(pair.Key, pair.Value);
                 if (!string.IsNullOrEmpty(result))
                     continue;
@@ -37,7 +40,7 @@ namespace HouraiTeahouse.Editor {
             }
 
             foreach (string key in toRemove)
-                delayedMoves.Remove(key);
+                DelayedMoves.Remove(key);
         }
 
         /// <summary>
@@ -49,7 +52,7 @@ namespace HouraiTeahouse.Editor {
         public static T CreateAssetInProjectWindow<T>(T asset = null) where T : ScriptableObject {
             if(asset == null)
                 asset = ScriptableObject.CreateInstance<T>();
-            ProjectWindowUtil.CreateAsset(asset, "New " + typeof(T).Name + ".asset");
+            ProjectWindowUtil.CreateAsset(asset, string.Format("New {0}.asset", typeof(T).Name));
             return asset;
         }
 
@@ -64,11 +67,9 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static string CreateAssetPath(params string[] folderNames) {
-            if (folderNames == null)
-                throw new ArgumentNullException("folderNames");
-
+            Check.ArgumentNull("folderNames", folderNames);
             if (folderNames.Length <= 0)
-                return "";
+                return string.Empty;
 
             var builder = new StringBuilder();
             builder.Append(folderNames[0]);
@@ -84,28 +85,20 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static void CreateAsset(string folder, Object obj, string suffix = null) {
-            if (folder == null)
-                throw new ArgumentNullException("folder");
-            if (obj == null)
-                throw new ArgumentNullException("obj");
-            if (suffix == null)
+            Check.ArgumentNull("folder", folder);
+            Check.ArgumentNull("obj", obj);
+            if (string.IsNullOrEmpty(suffix))
                 suffix = "asset";
-
             if (obj.IsAsset())
                 return;
-
             // Create folder if it doesn't already exist
             CreateFolder(folder);
-
-            AssetDatabase.CreateAsset(obj, "Assets/" + folder + "/" + obj.name + "." + suffix);
+            AssetDatabase.CreateAsset(obj, string.Format("Assets/{0}/{1}.{2}", folder, obj.name, suffix));
         }
 
         public static void MoveAsset(string targetFolder, Object asset) {
-            if (targetFolder == null)
-                throw new ArgumentNullException("targetFolder");
-            if (asset == null)
-                throw new ArgumentNullException("asset");
-
+            Check.ArgumentNull("targetFolder", targetFolder);
+            Check.ArgumentNull("asset", asset);
             if (!asset.IsAsset()) {
                 var gameObject = asset as GameObject;
                 var component = asset as Component;
@@ -118,66 +111,73 @@ namespace HouraiTeahouse.Editor {
                 }
             }
 
-            if (asset.IsAsset()) {
-                string assetPath = AssetDatabase.GetAssetPath(asset);
+            if (!asset.IsAsset()) return;
+            string assetPath = AssetDatabase.GetAssetPath(asset);
 
-                // Create the folder if it doesn't already exist
-                CreateFolder(targetFolder);
+            // Create the folder if it doesn't already exist
+            CreateFolder(targetFolder);
 
-                string destination = "Assets/" + targetFolder + "/" + Path.GetFileName(assetPath);
-                string result = AssetDatabase.ValidateMoveAsset(assetPath, destination);
+            string destination = "Assets/" + targetFolder + "/" + Path.GetFileName(assetPath);
+            string result = AssetDatabase.ValidateMoveAsset(assetPath, destination);
 
-                if (string.IsNullOrEmpty(result))
-                    AssetDatabase.MoveAsset(assetPath, destination);
-                else
-                    delayedMoves.Add(assetPath, destination);
-            }
+            if (string.IsNullOrEmpty(result))
+                AssetDatabase.MoveAsset(assetPath, destination);
+            else
+                DelayedMoves.Add(assetPath, destination);
         }
 
-        public static string[] FindAssetPaths<T>(string nameFilter = null) where T : Object {
-            List<string> paths = new List<string>();
-            string search = "t:" + typeof (T).Name;
-            if (nameFilter != null)
-                search += " " + nameFilter;
-            foreach (string guid in AssetDatabase.FindAssets(search))
-                paths.Add(AssetDatabase.GUIDToAssetPath(guid));
-            return paths.ToArray();
+        public static IEnumerable<string> FindAssetGUIDs<T>(string nameFilter = null) where T : Object {
+            return
+                from guid in
+                    AssetDatabase.FindAssets(string.Format(string.IsNullOrEmpty(nameFilter) ? "t: {0}" : "t:{0} {1}",
+                        typeof (T).Name, nameFilter))
+                select guid;
+        } 
+
+        public static IEnumerable<string> FindAssetPaths<T>(string nameFilter = null) where T : Object {
+            return from guid in FindAssetGUIDs<T>()
+                select AssetDatabase.GUIDToAssetPath(guid);
+        } 
+
+        public static T LoadFirstOrDefault<T>(string nameFilter = null) where T : Object {
+            return AssetDatabase.LoadAssetAtPath<T>(FindAssetPaths<T>(nameFilter).FirstOrDefault());
+        }
+
+        public static T LoadFirstOrCreate<T>(string nameFilter = null) where T : ScriptableObject {
+            var loaded = LoadFirstOrDefault<T>();
+            return loaded ?? CreateAssetInProjectWindow<T>();
+        }
+
+        public static bool IsResourcePath(string path) {
+            return !string.IsNullOrEmpty(path) && path.Contains(ResourcePath);
         }
 
         public static bool IsResource(Object asset) {
-            string assetPath = AssetDatabase.GetAssetPath(asset);
-            return !string.IsNullOrEmpty(assetPath) && assetPath.Contains("Resources/");
+            return IsResourcePath(AssetDatabase.GetAssetPath(asset));
         }
 
         public static string GetResourcePath(Object asset) {
             string assetPath = AssetDatabase.GetAssetPath(asset);
-            if (string.IsNullOrEmpty(assetPath) || !assetPath.Contains("Resources/"))
+            if (!IsResourcePath(assetPath))
                 return string.Empty;
-            else
-                return Regex.Replace(assetPath, ".*/Resources/(.*?)\\..*", "$1");
+            return Regex.Replace(assetPath, ResourceRegex, "$1");
         }
 
         public static void CreateFolder(string path) {
-            if (path == null)
-                throw new ArgumentNullException("path");
-
+            Check.ArgumentNull("path", path);
             if (IsValidFolder(path))
                 return;
 
             string[] folders = path.Split('/');
             var currentPath = "Assets";
-            for (var i = 0; i < folders.Length; i++) {
-                if (string.IsNullOrEmpty(folders[i]))
+            foreach (string folder in folders) {
+                if (string.IsNullOrEmpty(folder))
                     continue;
-
-                string newPath = currentPath + "/" + folders[i];
-
-                if (!AssetDatabase.IsValidFolder(currentPath + "/" + folders[i]))
-                    AssetDatabase.CreateFolder(currentPath, folders[i]);
+                string newPath = string.Format("{0}/{1}", currentPath, folder);
+                if (!AssetDatabase.IsValidFolder(newPath))
+                    AssetDatabase.CreateFolder(currentPath, folder);
                 currentPath = newPath;
             }
         }
-
     }
-
 }

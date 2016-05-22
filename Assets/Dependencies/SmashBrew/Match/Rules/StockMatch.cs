@@ -97,7 +97,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary>
-        /// Event callback. Called every time a Player dies.
+        /// Events callback. Called every time a Player dies.
         /// </summary>
         /// <param name="eventArgs">the death event arguments</param>
         void OnPlayerDie(PlayerDieEvent eventArgs) {
@@ -109,7 +109,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary>
-        /// Event callback. Called every time a Player spawns for the first time.
+        /// Events callback. Called every time a Player spawns for the first time.
         /// Note this is not called when the player respawns.
         /// </summary>
         /// <param name="eventArgs">the spawn event arguments</param>
@@ -117,7 +117,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (!isActiveAndEnabled)
                 return;
             _stocks[eventArgs.Player] = stock;
-            eventArgs.Player.PlayerObject.DamageType = DamageType.Percent;
+            eventArgs.Player.PlayerObject.GetComponent<PlayerDamage>().Type = DamageType.Percent;
         }
     }
 }

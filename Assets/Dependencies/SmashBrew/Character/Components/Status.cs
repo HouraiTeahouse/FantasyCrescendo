@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 namespace HouraiTeahouse.SmashBrew {
-    public abstract class Status : HouraiBehaviour {
+    public abstract class Status : AbstractCharacterComponent {
         public static T Apply<T>(GameObject target, float duration = -1f) where T : Status {
             if (!target)
                 throw new ArgumentNullException("target");

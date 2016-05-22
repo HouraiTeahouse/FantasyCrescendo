@@ -62,7 +62,7 @@ namespace HouraiTeahouse.Localization {
         }
 
         /// <summary>
-        /// Event callback for when the system wide language is changed.
+        /// Events callback for when the system wide language is changed.
         /// </summary>
         /// <param name="language">the language set that was changed to.</param>
         void OnChangeLanguage(Language language) {

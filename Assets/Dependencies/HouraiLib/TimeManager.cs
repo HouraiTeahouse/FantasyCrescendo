@@ -51,12 +51,12 @@ namespace HouraiTeahouse {
         }
 
         /// <summary>
-        /// Event. Called every time the game is paused or unpaused.
+        /// Events. Called every time the game is paused or unpaused.
         /// </summary>
         public static event Action OnPause;
 
         /// <summary>
-        /// Event. Called every time the global timescale is changed.
+        /// Events. Called every time the global timescale is changed.
         /// </summary>
         public static event Action OnTimeScaleChange;
 

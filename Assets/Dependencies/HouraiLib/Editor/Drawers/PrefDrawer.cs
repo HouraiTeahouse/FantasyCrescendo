@@ -24,12 +24,12 @@ namespace HouraiTeahouse.Editor {
             position.x += foldoutRect.width;
             position.width -= foldoutRect.width;
             position.height = EditorGUI.GetPropertyHeight(key);
-            EditorGUI.PropertyField(position, GetKey(property), new GUIContent(label.text + " Key"));
-            if(property.isExpanded) {
-                position.y += EditorGUI.GetPropertyHeight(defaultValue);
-                EditorGUI.PropertyField(position, defaultValue);
+            using(EditorUtil.Property(new GUIContent(label.text + " Key"), position, GetKey(property))) {
+                if(property.isExpanded) {
+                    position.y += EditorGUI.GetPropertyHeight(defaultValue);
+                    EditorGUI.PropertyField(position, defaultValue);
+                }
             }
-            EditorGUI.EndProperty();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {

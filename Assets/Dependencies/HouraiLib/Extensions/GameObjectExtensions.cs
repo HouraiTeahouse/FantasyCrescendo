@@ -17,8 +17,7 @@ namespace HouraiTeahouse {
         /// <param name="gameObject">the GameObject to retrieve the Component</param>
         /// <returns>the retrieved Component</returns>
         public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component {
-            if (!gameObject)
-                throw new ArgumentNullException("gameObject");
+            Check.ArgumentNull("gameObject", gameObject);
             var attempt = gameObject.GetComponent<T>();
             return attempt ? attempt : gameObject.AddComponent<T>();
         }
@@ -32,8 +31,7 @@ namespace HouraiTeahouse {
         /// <param name="gameObject">the GameObject to retrieve the Component</param>
         /// <returns>the retrieved Component</returns>
         public static T SafeGetComponent<T>(this GameObject gameObject) where T : class {
-            if (!gameObject)
-                throw new ArgumentNullException("gameObject");
+            Check.ArgumentNull("gameObject", gameObject);
             var attempt = gameObject.GetComponent<T>();
             if (attempt != null)
                 Log.Warning("Attempted to find a component of type {0}, but did not find one.", typeof(T));
@@ -47,12 +45,7 @@ namespace HouraiTeahouse {
         /// <param name="gameObjects">the GameObjects to retrieve</param>
         /// <returns>an enumeration of all components of the type attached to the GameObjects</returns>
         public static IEnumerable<T> GetComponents<T>(this IEnumerable<GameObject> gameObjects) where T : class {
-            if (gameObjects == null)
-                throw new ArgumentNullException("gameObjects");
-            foreach (GameObject gameObject in gameObjects)
-                if (gameObject != null)
-                    foreach (T component in gameObject.GetComponents<T>())
-                        yield return component;
+            return Check.ArgumentNull("gameObjects", gameObjects).Where(gameObject => gameObject != null).SelectMany(gameObject => gameObject.GetComponents<T>());
         }
     }
 }

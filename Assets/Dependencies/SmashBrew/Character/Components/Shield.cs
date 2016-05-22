@@ -88,7 +88,7 @@ namespace HouraiTeahouse.SmashBrew {
         //}
 
         void ShieldBreak() {
-            _character.CharacterEvents.Publish(new PlayerShieldBreakEvent());
+            _character.Events.Publish(new PlayerShieldBreakEvent());
             //_currentHP = _resetHP;
         }
 

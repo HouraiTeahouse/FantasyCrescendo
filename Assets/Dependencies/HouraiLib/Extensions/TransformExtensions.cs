@@ -24,8 +24,8 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException">thrown if <paramref name="transform"/>
         ///  or <paramref name="target"/> are null</exception>
         public static void Copy(this Transform transform, Transform target) {
-            if (!transform || !target)
-                throw new ArgumentNullException();
+            Check.ArgumentNull("transform", transform);
+            Check.ArgumentNull("target", target);
             transform.position = target.position;
             transform.rotation = target.rotation;
         }
@@ -42,8 +42,8 @@ namespace HouraiTeahouse {
                 return null;
             var s1 = new HashSet<Transform>();
             var s2 = new HashSet<Transform>();
-            var t1 = transform;
-            var t2 = other;
+            Transform t1 = transform;
+            Transform t2 = other;
             while (t1 || t2) {
                 if (t1) {
                     if (s2.Contains(t1))
@@ -62,8 +62,7 @@ namespace HouraiTeahouse {
         }
 
         static void SetPositionLocation(this Transform transform, int component, float value, bool local) {
-            if (!transform)
-                throw new ArgumentNullException();
+            Check.ArgumentNull("transform", transform);
             Vector3 position = local ? transform.localPosition : transform.position;
             position[component] = value;
             if (local)

@@ -38,8 +38,7 @@ namespace HouraiTeahouse {
         /// <param name="operation">the operation to manage</param>
         /// <param name="callback">optional parameter, if not null, will be called after finish executing</param>
         public void AddOperation(AsyncOperation operation, Action callback = null) {
-            if (operation == null)
-                throw new ArgumentNullException();
+            Check.ArgumentNull("operation", operation);
             _operations.Add(operation);
             StartCoroutine(WaitForOperation(operation, callback));
         }
@@ -53,8 +52,7 @@ namespace HouraiTeahouse {
         /// <param name="request">the ResourceRequest to manage</param>
         /// <param name="callback">optional parameter, if not null, will be called after finish executing</param>
         public void AddOpreation<T>(ResourceRequest request, Action<T> callback = null) where T : Object {
-            if (request == null)
-                throw new ArgumentNullException();
+            Check.ArgumentNull("request", request);
             _operations.Add(request);
             StartCoroutine(WaitForResource(request, callback));
         }
@@ -100,7 +98,5 @@ namespace HouraiTeahouse {
             var obj = request.asset as T;
             callback(obj);
         }
-
     }
-
 }

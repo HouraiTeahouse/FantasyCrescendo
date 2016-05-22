@@ -43,8 +43,7 @@ namespace HouraiTeahouse {
         /// <param name="obj">the object to return</param>
         /// <exception cref="ArgumentException">thrown if <paramref name="obj"/> is null</exception>
         public virtual void Return(T obj) {
-            if (obj == null)
-                throw new ArgumentException();
+            Check.ArgumentNull("obj", obj);
             _pool.Enqueue(obj);
         }
 
@@ -80,8 +79,7 @@ namespace HouraiTeahouse {
         /// <param name="initialCount">the number of objects to initially spawn</param>>
         /// <exception cref="ArgumentNullException">thrown if <paramref name="source"/> is null</exception>
         public PrefabPool(T source, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
-            if (source == null)
-                throw new ArgumentNullException();
+            Check.ArgumentNull("source", source);
             _source = source;
             Spawn(initialCount);
         }

@@ -207,8 +207,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <exception cref="ArgumentException">thrown if <paramref name="pallete"/> is less than 0 or greater than <see cref="PalleteCount"/></exception>
         /// <returns></returns>
         public Resource<Sprite> GetPortrait(int pallete) {
-            if (pallete < 0 || pallete >= PalleteCount)
-                throw new ArgumentException();
+            Check.Argument("pallete", Check.Range(pallete, PalleteCount));
             if (_portraits.Length != _portraitResources.Length)
                 RegeneratePortraits();
             return _portraitResources[pallete];

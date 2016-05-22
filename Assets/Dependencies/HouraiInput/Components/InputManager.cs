@@ -22,7 +22,7 @@ namespace HouraiTeahouse.HouraiInput {
 
             foreach (string className in _customProfiles) {
                 Type classType = Type.GetType(className);
-                if (classType == null) 
+                if (classType == null)
                     Log.Error("Cannot find class for custom profile: {0}", className);
                 else {
                     var customProfileInstance = Activator.CreateInstance(classType) as UnityInputDeviceProfile;
@@ -53,7 +53,7 @@ namespace HouraiTeahouse.HouraiInput {
 #endif
 
         private void Update() {
-            if (!_useFixedUpdate || Mathf.Approximately(Time.timeScale, 0.0f)) 
+            if (!_useFixedUpdate || Mathf.Approximately(Time.timeScale, 0.0f))
                 HInput.UpdateInternal();
         }
 
