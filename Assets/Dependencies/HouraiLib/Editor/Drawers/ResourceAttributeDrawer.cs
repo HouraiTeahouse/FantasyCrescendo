@@ -9,6 +9,7 @@ namespace HouraiTeahouse.Editor {
     /// <summary>
     /// Custom PropertyDrawer for ResourcePathAttribute.
     /// </summary>
+    //TODO(jame7132): Move this to the Resource Attribute file
     [CustomPropertyDrawer(typeof (ResourceAttribute))]
     internal class ResourceAttributeDrawer : PropertyDrawer {
 
