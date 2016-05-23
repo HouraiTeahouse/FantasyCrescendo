@@ -6,9 +6,7 @@ namespace HouraiTeahouse.SmashBrew {
         public static T Apply<T>(GameObject target, float duration = -1f) where T : Status {
             if (!target)
                 throw new ArgumentNullException("target");
-            T instance = target.GetComponent<T>();
-            if (instance == null)
-                instance = target.AddComponent<T>();
+            T instance = target.GetOrAddComponent<T>();
             instance.StartStatus(duration);
             return instance;
         }

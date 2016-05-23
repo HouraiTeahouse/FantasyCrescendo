@@ -33,7 +33,7 @@ namespace HouraiTeahouse {
         /// <param name="collection"></param>
         /// <exception cref="ArgumentNullException">thrown if collection is null</exception>
         public PriorityList(IEnumerable<T> collection) : this() {
-            Check.ArgumentNull("collection", collection);
+            Check.NotNull("collection", collection);
             List<T> colList = collection.ToList();
             _items.Add(0, colList);
             foreach (T element in colList)
@@ -46,7 +46,7 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <param name="priorities"></param>
         public PriorityList(IDictionary<T, int> priorities) {
-            Check.ArgumentNull("priorities", priorities);
+            Check.NotNull("priorities", priorities);
             _priorities = new Dictionary<T, int>(priorities);
             foreach (KeyValuePair<T, int> priority in priorities)
                 GetOrCreateBucket(priority.Value).Add(priority.Key);

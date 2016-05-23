@@ -6,11 +6,13 @@ using System.Linq;
 #endif
 
 namespace HouraiTeahouse {
+
     [CreateAssetMenu(fileName = "New BGM Group", menuName = "Hourai Teahouse/BGM Group")]
     public class BGMGroup : ScriptableObject {
         [SerializeField, Tooltip("The name of the BGM group")] private string _name;
 
-        [SerializeField] private BGMData[] backgroundMusicData;
+        [SerializeField]
+        private BGMData[] backgroundMusicData;
 
         private WeightedRNG<BGMData> _selection;
 

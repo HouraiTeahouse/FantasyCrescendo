@@ -269,9 +269,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         internal Character Spawn(Transform transform, bool direction) {
-            if (transform == null)
-                throw new ArgumentNullException("transform");
-            return Spawn(transform.position, direction);
+            return Spawn(Check.NotNull("transform", transform).position, direction);
         }
 
         internal Character Spawn(Vector3 pos, bool direction) {

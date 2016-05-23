@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using HouraiTeahouse.Localization;
 
 namespace HouraiTeahouse.SmashBrew.UI {
@@ -14,12 +14,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <see cref="IDataComponent{CharacterData}.SetData"/>
         /// </summary>
         public void SetData(SceneData data) {
-            if (data == null)
-                Text.text = string.Empty;
-            else
-                Text.text = data.Name;
+            Text.text = data == null ? string.Empty : data.Name;
         }
-           
 
         /// <summary>
         /// <see cref="AbstractLocalizedText.Process"/>

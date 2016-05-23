@@ -57,9 +57,7 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static string GetAssetFolderPath(Object asset) {
-            if(!asset)
-                throw new ArgumentNullException("asset");
-            return Regex.Replace(AssetDatabase.GetAssetPath(asset), "(Assets)+/(.*)/.*?\\..*", "$2");
+            return Regex.Replace(AssetDatabase.GetAssetPath(Check.NotNull("asset", asset)), "(Assets)+/(.*)/.*?\\..*", "$2");
         }
         
         public static bool IsAsset(this Object obj) {
@@ -67,7 +65,7 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static string CreateAssetPath(params string[] folderNames) {
-            Check.ArgumentNull("folderNames", folderNames);
+            Check.NotNull("folderNames", folderNames);
             if (folderNames.Length <= 0)
                 return string.Empty;
 
@@ -85,8 +83,8 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static void CreateAsset(string folder, Object obj, string suffix = null) {
-            Check.ArgumentNull("folder", folder);
-            Check.ArgumentNull("obj", obj);
+            Check.NotNull("folder", folder);
+            Check.NotNull("obj", obj);
             if (string.IsNullOrEmpty(suffix))
                 suffix = "asset";
             if (obj.IsAsset())
@@ -97,8 +95,8 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static void MoveAsset(string targetFolder, Object asset) {
-            Check.ArgumentNull("targetFolder", targetFolder);
-            Check.ArgumentNull("asset", asset);
+            Check.NotNull("targetFolder", targetFolder);
+            Check.NotNull("asset", asset);
             if (!asset.IsAsset()) {
                 var gameObject = asset as GameObject;
                 var component = asset as Component;
@@ -164,7 +162,7 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static void CreateFolder(string path) {
-            Check.ArgumentNull("path", path);
+            Check.NotNull("path", path);
             if (IsValidFolder(path))
                 return;
 

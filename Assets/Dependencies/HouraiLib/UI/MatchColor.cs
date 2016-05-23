@@ -7,9 +7,11 @@ namespace HouraiTeahouse {
     /// </summary>
     [ExecuteInEditMode]
     public class MatchColor : MonoBehaviour {
-        [SerializeField] private Graphic _source;
+        [SerializeField]
+        private Graphic _source;
 
-        [SerializeField] private Graphic[] _targets;
+        [SerializeField]
+        private Graphic[] _targets;
 
         /// <summary>
         /// Unity Callback. Called on object instantiation.
@@ -23,8 +25,10 @@ namespace HouraiTeahouse {
         /// Unity Callback. Called once per frame.
         /// </summary>
         void Update() {
-            if (_source == null || _targets == null)
+            if (_source == null || _targets == null) {
+                enabled = false;
                 return;
+            }
 
             foreach (Graphic graphic in _targets)
                 graphic.color = _source.color;

@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
     public class Counter {
@@ -10,28 +8,22 @@ namespace HouraiTeahouse.SmashBrew {
             get { return _count; }
         }
 
-        public void Increment(float value = 1f) {
+        public Counter Increment(float value = 1f) {
             _count += value;
+            return this;
         }
 
         public static Counter operator ++(Counter counter) {
-            if (counter == null)
-                throw new NullReferenceException();
-            counter.Increment();
-            return counter;
+            return Check.NotNull("counter", counter).Increment();
         }
 
         public static Counter operator +(Counter counter, float value) {
-            if (counter == null)
-                throw new NullReferenceException();
-            counter.Increment(value);
-            counter += 10;
-            return counter;
+            return Check.NotNull("counter", counter).Increment(value);
         }
     }
 
     public sealed class StatLogger {
-        private Dictionary<string, Counter> _counters;
+        private readonly Dictionary<string, Counter> _counters;
 
         public Counter this[string counterName] {
             get { return GetCounter(counterName); }

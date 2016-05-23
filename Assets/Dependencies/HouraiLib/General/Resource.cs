@@ -20,9 +20,7 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <param name="path">the Resourrces file path to the asset</param>
         public Resource(string path) {
-            if (path == null)
-                path = string.Empty;
-            _path = path;
+            _path = path ?? string.Empty;
         }
 
         /// <summary>
@@ -81,9 +79,10 @@ namespace HouraiTeahouse {
                 throw new InvalidOperationException("Cannot execute a async load without a AsyncManager instance.");
             ResourceRequest request = Resources.LoadAsync<T>(_path);
             request.priority = priority;
-            Log.Info("Requesting load of {0} from {1}", typeof(T).Name, _path);
+            string typeName = typeof (T).Name;
+            Log.Info("Requesting load of {0} from {1}", typeName, _path);
             manager.AddOpreation(request, delegate(T obj) {
-                Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
+                Log.Info("Loaded {0} from {1}", typeName, _path);
                 Asset = obj;
                 if (callback != null)
                     callback(obj);

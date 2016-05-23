@@ -38,7 +38,7 @@ namespace HouraiTeahouse {
         /// <param name="operation">the operation to manage</param>
         /// <param name="callback">optional parameter, if not null, will be called after finish executing</param>
         public void AddOperation(AsyncOperation operation, Action callback = null) {
-            Check.ArgumentNull("operation", operation);
+            Check.NotNull("operation", operation);
             _operations.Add(operation);
             StartCoroutine(WaitForOperation(operation, callback));
         }
@@ -52,7 +52,7 @@ namespace HouraiTeahouse {
         /// <param name="request">the ResourceRequest to manage</param>
         /// <param name="callback">optional parameter, if not null, will be called after finish executing</param>
         public void AddOpreation<T>(ResourceRequest request, Action<T> callback = null) where T : Object {
-            Check.ArgumentNull("request", request);
+            Check.NotNull("request", request);
             _operations.Add(request);
             StartCoroutine(WaitForResource(request, callback));
         }

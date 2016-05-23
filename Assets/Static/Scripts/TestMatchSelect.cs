@@ -18,7 +18,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         void Awake() {
             var index = 0;
-            foreach (var player in Player.AllPlayers) {
+            foreach (Player player in Player.AllPlayers) {
                 if (index >= testCharacters.Length)
                     break;
                 if (player == null || testCharacters[index] == null)

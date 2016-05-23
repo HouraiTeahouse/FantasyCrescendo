@@ -6,14 +6,21 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// A Component that displays a Character (or a Player's Character) name on a UI Text object
     /// </summary>
     public sealed class NameText : AbstractLocalizedText, IDataComponent<Player>, IDataComponent<CharacterData> {
-        [SerializeField, Tooltip("The character who's name is to be displayed")] private CharacterData _character;
+        [SerializeField, Tooltip("The character who's name is to be displayed")]
+        private CharacterData _character;
 
-        [SerializeField, Tooltip("Use the character's short or long name?")] private bool shortName;
+        [SerializeField, Tooltip("Use the character's short or long name?")]
+        private bool shortName;
 
-        [SerializeField, Tooltip("Capitalize the character's name?")] private bool _capitalize;
+        [SerializeField, Tooltip("Capitalize the character's name?")] 
+        private bool _capitalize;
 
         private Player _player;
-        private Character character;
+
+        protected override void Awake() {
+            base.Awake();
+            SetData(_character);
+        }
 
         /// <summary>
         /// <see cref="IDataComponent{CharacterData}.SetData"/>

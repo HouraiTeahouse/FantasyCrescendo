@@ -71,9 +71,7 @@ namespace HouraiTeahouse {
         /// <param name="transform">the transformation matrix to use when drawing Gizmos</param>
         /// <returns>the IDisposable object for working with Gizmos</returns>
         public static IDisposable With(Transform transform) {
-            if (transform == null)
-                throw new ArgumentNullException("transform");
-            return new GizmoDisposable(null, transform.localToWorldMatrix);
+            return new GizmoDisposable(null, Check.NotNull("transform", transform).localToWorldMatrix);
         }
 
         /// <summary>
@@ -83,9 +81,7 @@ namespace HouraiTeahouse {
         /// <param name="transform">the transformation matrix to use when drawing Gizmos</param>
         /// <returns>the IDisposable object for working with Gizmos</returns>
         public static IDisposable With(Color color, Transform transform) {
-            if (transform == null)
-                throw new ArgumentNullException("transform");
-            return new GizmoDisposable(color, transform.localToWorldMatrix);
+            return new GizmoDisposable(color, Check.NotNull("transform", transform).localToWorldMatrix);
         }
 
         /// <summary>
@@ -116,7 +112,7 @@ namespace HouraiTeahouse {
                 return;
 
             using (With(color, Matrix4x4.identity)) {
-                Collider[] asArray = colliders as Collider[];
+                var asArray = colliders as Collider[];
                 if (asArray != null) {
                     foreach (Collider collider in asArray) {
                         if (collider == null || (filter != null && !filter(collider)))

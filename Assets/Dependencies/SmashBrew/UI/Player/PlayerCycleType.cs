@@ -1,6 +1,3 @@
-using HouraiTeahouse.SmashBrew;
-using HouraiTeahouse.SmashBrew.UI;
-
 namespace HouraiTeahouse.SmashBrew.UI {
 
     public abstract class PlayerClickableUI : PlayerUIComponent, IPlayerClickable {

@@ -1,22 +1,30 @@
 using System;
 using NUnit.Framework;
 
-namespace HouraiTeahouse.Tests {
+namespace HouraiTeahouse {
 
-    public class CheckTests {
+    internal class CheckTests {
 
         [Test]
         public void CheckArgumentNullTest() {
+            var name = "test";
             Assert.Catch<ArgumentNullException>(delegate {
                 object obj = null;
-                Check.ArgumentNull("test", obj);
+                Assert.Null(Check.NotNull(name, obj));
+            });
+            Assert.DoesNotThrow(delegate {
+                Assert.NotNull(Check.NotNull(name, new object()));
             });
         }
 
         [Test]
         public void CheckArgumentTest() {
+            var name = "test";
             Assert.Catch<ArgumentException>(delegate {
-                Check.Argument("test", 3 > 5);
+                Check.Argument(name, 3 > 5);
+            });
+            Assert.DoesNotThrow(delegate {
+                Check.Argument(name, 5 > 3);
             });
         }
 

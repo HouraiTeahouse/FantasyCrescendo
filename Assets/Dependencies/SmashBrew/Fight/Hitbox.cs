@@ -200,7 +200,7 @@ namespace HouraiTeahouse.SmashBrew {
         void OnTriggerEnter(Collider other) {
             if (!other.CompareTag(Tags.Hitbox))
                 return;
-            Hitbox otherHitbox = other.GetComponent<Hitbox>();
+            var otherHitbox = other.GetComponent<Hitbox>();
             if (otherHitbox == null || !ReactionMatrix.ContainsKey(type, otherHitbox.type))
                 return;
             HitboxResolver.AddCollision(this, otherHitbox);

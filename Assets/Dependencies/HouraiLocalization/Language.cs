@@ -81,6 +81,5 @@ namespace HouraiTeahouse.Localization {
                 return _map[key];
             }
         }
-
     }
 }

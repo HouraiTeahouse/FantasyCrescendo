@@ -42,7 +42,6 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 return false;
             if (_previewSelect < 0 || _previewSelect >= data.PalleteCount)
                 _previewSelect = 0;
-            //Debug.LogCreation(data.GetPortrait(_previewSelect).Load());
             return data.GetPortrait(_previewSelect).Load() != null;
         }
 
@@ -53,16 +52,16 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             var data = target as CharacterData;
             if (data == null || data.PalleteCount < 1)
                 return;
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button("\u25c4", EditorStyles.miniButton))
-                _previewSelect++;
-            if (GUILayout.Button(_crop ? "Crop" : "Full", EditorStyles.miniButton))
-                _crop = !_crop;
-            if (GUILayout.Button("\u25ba", EditorStyles.miniButton))
-                _previewSelect++;
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
+            using (EditorUtil.Horizontal()) {
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("\u25c4", EditorStyles.miniButton))
+                    _previewSelect++;
+                if (GUILayout.Button(_crop ? "Crop" : "Full", EditorStyles.miniButton))
+                    _crop = !_crop;
+                if (GUILayout.Button("\u25ba", EditorStyles.miniButton))
+                    _previewSelect++;
+                GUILayout.FlexibleSpace();
+            }
             if (_previewSelect >= data.PalleteCount)
                 _previewSelect = 0;
             if (_previewSelect < 0)

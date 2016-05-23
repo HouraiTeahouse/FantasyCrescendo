@@ -8,9 +8,15 @@ namespace HouraiTeahouse {
     /// </summary>
     [ExecuteInEditMode]
     public class NumberText : MonoBehaviour {
-        [SerializeField, Tooltip("The Text UI object driven by this script")] private Text _text;
 
-        [SerializeField, Tooltip("The number to display using this script")] private float _number;
+        [SerializeField, Tooltip("The Text UI object driven by this script")]
+        private Text _text;
+
+        [SerializeField, Tooltip("The number to display using this script")]
+        private float _number;
+
+        [SerializeField, Tooltip("The string format used to display")]
+        private string _format;
 
         public event Action OnNumberChange;
 
@@ -30,7 +36,6 @@ namespace HouraiTeahouse {
             }
         }
 
-        [SerializeField, Tooltip("The string format used to display")] private string _format;
 
         /// <summary>
         /// The string format used to display the number.

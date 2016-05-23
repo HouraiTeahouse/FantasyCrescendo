@@ -10,6 +10,15 @@ namespace HouraiTeahouse.Events {
         // Maps types of events to a set of handlers
         private readonly Dictionary<Type, Delegate> _subscribers = new Dictionary<Type, Delegate>();
 
+        public int GetSubscriberCount<T>() {
+            Type type = typeof (T);
+            return _subscribers.ContainsKey(type) ? _subscribers[type].GetInvocationList().Length : 0;
+        }
+
+        public bool Reset<T>() {
+            return _subscribers.Remove(typeof (T));
+        }
+
         /// <summary>
         /// Adds a listener/handler for a specific event type.
         /// </summary>
@@ -20,8 +29,7 @@ namespace HouraiTeahouse.Events {
         /// <typeparam name="T">the type of event to listen for</typeparam>
         /// <param name="callback">the handler to call when an event of type <typeparamref name="T"/> is published.</param>
         public void Subscribe<T>(Action<T> callback) {
-            if (callback == null)
-                throw new ArgumentNullException("callback");
+            Check.NotNull("callback", callback);
             Type tp = typeof (T);
             if (_subscribers.ContainsKey(tp))
                 _subscribers[tp] = Delegate.Combine(_subscribers[tp], callback);
@@ -35,8 +43,7 @@ namespace HouraiTeahouse.Events {
         /// <typeparam name="T">the type of event to remove the handler from</typeparam>
         /// <param name="callback">the handler to remove</param>
         public void Unsubscribe<T>(Action<T> callback) {
-            if (callback == null)
-                throw new ArgumentNullException("callback");
+            Check.NotNull("callback", callback);
             Type eventType = typeof (T);
             if (!_subscribers.ContainsKey(eventType))
                 return;

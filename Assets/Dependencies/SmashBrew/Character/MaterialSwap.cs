@@ -11,11 +11,16 @@ namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
     [RequireComponent(typeof (PlayerController))]
     public class MaterialSwap : MonoBehaviour {
+
         [Serializable]
         private class Swap {
+            
             [Serializable]
-            public class MaterialSet {
-                [SerializeField, Resource(typeof (Material))] [Tooltip("The materials to apply to the renderers")] private string[] _materials;
+            private class MaterialSet {
+
+                [SerializeField, Resource(typeof (Material))]
+                [Tooltip("The materials to apply to the renderers")]
+                private string[] _materials;
 
                 public void Set(Renderer[] targets) {
                     if (targets == null)
@@ -27,12 +32,14 @@ namespace HouraiTeahouse.SmashBrew {
                         if (renderer)
                             renderer.sharedMaterials = loadedMaterials;
                 }
+
             }
 
-            [SerializeField, Tooltip("The set of materials to swap to")] private MaterialSet[] MaterialSets;
+            [SerializeField, Tooltip("The set of materials to swap to")]
+            private MaterialSet[] MaterialSets;
 
-            [SerializeField, Tooltip("The set of renderers to apply the materials to")] private Renderer[]
-                TargetRenderers;
+            [SerializeField, Tooltip("The set of renderers to apply the materials to")]
+            private Renderer[] TargetRenderers;
 
             public void Set(int palleteSwap) {
                 if (palleteSwap < 0 || palleteSwap >= MaterialSets.Length)
@@ -45,7 +52,8 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        [SerializeField] private Swap[] _swaps;
+        [SerializeField]
+        private Swap[] _swaps;
 
         private int _color;
 

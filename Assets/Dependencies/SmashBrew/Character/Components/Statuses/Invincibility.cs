@@ -34,10 +34,9 @@ namespace HouraiTeahouse.SmashBrew {
         void OnEnable() {
             if (_hitboxes == null)
                 _hitboxes = GetComponentsInChildren<Hitbox>();
-            foreach (var hitbox in _hitboxes)
+            foreach (Hitbox hitbox in _hitboxes)
                 if (hitbox.CurrentType == Hitbox.Type.Damageable)
                     hitbox.CurrentType = Hitbox.Type.Invincible;
-            ;
         }
 
         /// <summary>

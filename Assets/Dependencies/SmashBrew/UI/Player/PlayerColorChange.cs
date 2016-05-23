@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace HouraiTeahouse.SmashBrew.UI {
 
     public class PlayerColorChange : PlayerClickableUI {

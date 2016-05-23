@@ -9,7 +9,7 @@ namespace HouraiTeahouse.Console {
     /// </summary>
     /// <typeparam name="T">the type of the elements contained by the queue</typeparam>
     public class FixedSizeQueue<T> : IEnumerable<T> {
-        private const int DefaultSize = 100;
+        public const int DefaultSize = 100;
 
         // The underlying queue backing FixedQueue objects
         private readonly Queue<T> _queue;
@@ -24,6 +24,10 @@ namespace HouraiTeahouse.Console {
                 _limit = value;
                 CapactityCheck();
             }
+        }
+
+        public int Count {
+            get { return _queue.Count; }
         }
 
         #region IEnumerable Implementation

@@ -17,7 +17,7 @@ namespace HouraiTeahouse {
         /// <param name="gameObject">the GameObject to retrieve the Component</param>
         /// <returns>the retrieved Component</returns>
         public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component {
-            Check.ArgumentNull("gameObject", gameObject);
+            Check.NotNull("gameObject", gameObject);
             var attempt = gameObject.GetComponent<T>();
             return attempt ? attempt : gameObject.AddComponent<T>();
         }
@@ -31,7 +31,7 @@ namespace HouraiTeahouse {
         /// <param name="gameObject">the GameObject to retrieve the Component</param>
         /// <returns>the retrieved Component</returns>
         public static T SafeGetComponent<T>(this GameObject gameObject) where T : class {
-            Check.ArgumentNull("gameObject", gameObject);
+            Check.NotNull("gameObject", gameObject);
             var attempt = gameObject.GetComponent<T>();
             if (attempt != null)
                 Log.Warning("Attempted to find a component of type {0}, but did not find one.", typeof(T));
@@ -45,7 +45,7 @@ namespace HouraiTeahouse {
         /// <param name="gameObjects">the GameObjects to retrieve</param>
         /// <returns>an enumeration of all components of the type attached to the GameObjects</returns>
         public static IEnumerable<T> GetComponents<T>(this IEnumerable<GameObject> gameObjects) where T : class {
-            return Check.ArgumentNull("gameObjects", gameObjects).Where(gameObject => gameObject != null).SelectMany(gameObject => gameObject.GetComponents<T>());
+            return Check.NotNull("gameObjects", gameObjects).Where(gameObject => gameObject != null).SelectMany(gameObject => gameObject.GetComponents<T>());
         }
     }
 }

@@ -53,9 +53,7 @@ public class SplashScreen : MonoBehaviour {
 
                 //Wait one frame
                 yield return null;
-                var skipCheck = false;
-                foreach (InputDevice device in HInput.Devices)
-                    skipCheck |= device.GetControls(_skipButtons).Any(control => control.State);
+                bool skipCheck = HInput.Devices.SelectMany(d => d.GetControls(_skipButtons)).Any(control => control.State);
                 t += ( skipCheck ? _skipSpeed : 1 ) * Time.deltaTime;
             }
             graphic.enabled = false;

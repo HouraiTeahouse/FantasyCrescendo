@@ -1,33 +1,30 @@
-using System;
 using UnityEngine;
 
 namespace HouraiTeahouse {
     public static class TextureExtensions {
         public static float AspectRatio(this Texture texture) {
-            if (texture == null)
-                throw new NullReferenceException();
+            Check.NotNull("texture", texture);
             if (texture.height == 0)
                 return float.NaN;
             return (float) texture.width / texture.height;
         }
 
         public static Vector2 Center(this Texture texture) {
-            if (texture == null)
-                throw new NullReferenceException();
             return texture.Size() / 2;
         }
 
         public static Vector2 Size(this Texture texture) {
+            Check.NotNull("texture", texture);
             return new Vector2(texture.width, texture.height);
         }
 
         public static Rect PixelRect(this Texture texture) {
+            Check.NotNull("texture", texture);
             return new Rect(0, 0, texture.width, texture.height);
         }
 
         public static Rect UVToPixelRect(this Texture texture, Rect uvRect) {
-            if (texture == null)
-                throw new NullReferenceException();
+            Check.NotNull("texture", texture);
             return new Rect(texture.width * uvRect.x,
                 texture.height * uvRect.y,
                 texture.width * uvRect.width,
@@ -35,9 +32,8 @@ namespace HouraiTeahouse {
         }
 
         public static Rect PixelToUVRect(this Texture texture, Rect pixelRect) {
-            if (texture == null)
-                throw new NullReferenceException();
-            Rect uvRect = new Rect();
+            Check.NotNull("texture", texture);
+            var uvRect = new Rect();
             if (texture.width != 0) {
                 uvRect.x = pixelRect.x / texture.width;
                 uvRect.width = pixelRect.width / texture.width;

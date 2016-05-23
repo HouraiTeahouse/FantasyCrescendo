@@ -5,8 +5,9 @@ namespace HouraiTeahouse {
 
     public static class Check {
 
-        // Checks 
-        public static T ArgumentNull<T>(string name, T argument) {
+        // Performs a null check and throws a ArgumentNullException if it is null
+        // and returns the original object otherwise.
+        public static T NotNull<T>(string name, T argument) {
             if (argument == null)
                 throw new ArgumentNullException(name);
             return argument;
@@ -29,12 +30,12 @@ namespace HouraiTeahouse {
 
         // Checks if $val is in the range [$a, $b)
         public static bool Range(int val, int a, int b) {
-            return val >= 0 && val < b;
+            return val >= a && val < b;
         }
 
         // Checks if $val is in the range [$a, $b)
         public static bool Range(float val, float a, float b) {
-            return val >= 0 && val < b;
+            return val >= a && val < b;
         }
 
         // Checks if $val is in the range [0, $a)

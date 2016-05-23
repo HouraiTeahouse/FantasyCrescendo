@@ -43,7 +43,7 @@ namespace HouraiTeahouse {
         /// <param name="obj">the object to return</param>
         /// <exception cref="ArgumentException">thrown if <paramref name="obj"/> is null</exception>
         public virtual void Return(T obj) {
-            Check.ArgumentNull("obj", obj);
+            Check.NotNull("obj", obj);
             _pool.Enqueue(obj);
         }
 
@@ -79,7 +79,7 @@ namespace HouraiTeahouse {
         /// <param name="initialCount">the number of objects to initially spawn</param>>
         /// <exception cref="ArgumentNullException">thrown if <paramref name="source"/> is null</exception>
         public PrefabPool(T source, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
-            Check.ArgumentNull("source", source);
+            Check.NotNull("source", source);
             _source = source;
             Spawn(initialCount);
         }
@@ -112,9 +112,7 @@ namespace HouraiTeahouse {
         /// <param name="initialCount">the number of objects to initially spawn</param>
         /// <exception cref="ArgumentNullException">thrown if <paramref name="createFunc"/> is null.</exception>
         public EventBasedPool(Func<T> createFunc, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
-            if (_creatFunc == null)
-                throw new ArgumentNullException();
-            _creatFunc = createFunc;
+            _creatFunc = Check.NotNull("createFunc", createFunc);
             Spawn(initialCount);
         }
 

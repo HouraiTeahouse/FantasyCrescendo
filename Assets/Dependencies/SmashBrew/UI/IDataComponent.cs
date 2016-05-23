@@ -24,9 +24,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <param name="enumeration">the colleciton of IDataComponents</param>
         /// <param name="data">the data to be set</param>
         public static void SetData<T>(this IEnumerable<IDataComponent<T>> enumeration, T data) {
-            if (enumeration == null)
-                throw new ArgumentNullException("enumeration");
-            foreach (var dataComponent in enumeration)
+            foreach (IDataComponent<T> dataComponent in Check.NotNull("enumeration", enumeration))
                 if (dataComponent != null)
                     dataComponent.SetData(data);
         }
