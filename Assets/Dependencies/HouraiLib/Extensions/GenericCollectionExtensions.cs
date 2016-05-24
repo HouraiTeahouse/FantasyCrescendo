@@ -163,6 +163,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException">thrown if <paramref name="list"/> is null</exception>
         /// <returns>a random element from the list</returns>
         public static T Random<T>(this IList<T> list) {
+            Check.NotNull("list", list);
             return list.Random(0, list.Count);
         }
 
