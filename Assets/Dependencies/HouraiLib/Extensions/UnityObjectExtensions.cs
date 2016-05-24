@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -172,8 +171,8 @@ namespace HouraiTeahouse {
         /// <param name="obj">the object in question</param>
         /// <returns>The object GameObject, null if not associated with one</returns>
         public static GameObject GetGameObject(this Object obj) {
-            GameObject go = obj as GameObject;
-            Component comp = obj as Component;
+            var go = obj as GameObject;
+            var comp = obj as Component;
             if (go != null)
                 return go;
             if (comp != null)

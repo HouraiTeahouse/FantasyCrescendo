@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HouraiTeahouse {
 
@@ -50,6 +53,9 @@ namespace HouraiTeahouse {
             if (IsLoaded)
                 return Asset;
             var loadedObject = Resources.Load<T>(_path);
+#if UNITY_EDITOR
+            if(EditorApplication.isPlayingOrWillChangePlaymode)
+#endif
             Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
             Asset = loadedObject;
             return Asset;
@@ -63,6 +69,9 @@ namespace HouraiTeahouse {
             if (!IsLoaded || Asset is GameObject)
                 return;
             Resources.UnloadAsset(Asset);
+#if UNITY_EDITOR
+            if(EditorApplication.isPlayingOrWillChangePlaymode)
+#endif
             Log.Info("Unloaded {0}", _path);
             Asset = null;
         }
@@ -80,8 +89,14 @@ namespace HouraiTeahouse {
             ResourceRequest request = Resources.LoadAsync<T>(_path);
             request.priority = priority;
             string typeName = typeof (T).Name;
+#if UNITY_EDITOR
+            if(EditorApplication.isPlayingOrWillChangePlaymode)
+#endif
             Log.Info("Requesting load of {0} from {1}", typeName, _path);
             manager.AddOpreation(request, delegate(T obj) {
+#if UNITY_EDITOR
+                if(EditorApplication.isPlayingOrWillChangePlaymode)
+#endif
                 Log.Info("Loaded {0} from {1}", typeName, _path);
                 Asset = obj;
                 if (callback != null)

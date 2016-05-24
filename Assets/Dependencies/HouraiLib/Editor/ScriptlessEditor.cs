@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,29 +8,13 @@ namespace HouraiTeahouse.Editor {
     /// </summary>
     public abstract class ScriptlessEditor : UnityEditor.Editor {
 
-        private List<string> _toIgnore = new List<string>();
-
-        /// <summary>
-        /// Unity Callback. Called when the Editor is first created.
-        /// </summary>
-        protected virtual void OnEnable() {
-            _toIgnore = new List<string> {"m_Script"};
-        }
-
-        public void AddException(string propertyName) {
-            _toIgnore.Add(propertyName);
-        }
-
         /// <summary>
         /// A replacement to the old DrawDefaultInspector that does not include the Script field.
         /// </summary>
         public new void DrawDefaultInspector() {
-            SerializedProperty iterator = serializedObject.GetIterator();
-            iterator.Next(true);
-            while (iterator.NextVisible(false)) {
-                if (!_toIgnore.Contains(iterator.name))
-                    EditorGUILayout.PropertyField(iterator, true);
-            }
+            foreach(SerializedProperty property in serializedObject.GetIterator())
+                if (property.name != "m_Script")
+                    EditorGUILayout.PropertyField(property, true);
 
             if (GUI.changed)
                 serializedObject.ApplyModifiedProperties();
@@ -52,7 +35,6 @@ namespace HouraiTeahouse.Editor {
     [CanEditMultipleObjects]
     [CustomEditor(typeof (MonoBehaviour), true, isFallback = true)]
     internal sealed class MonoBehaviourEditor : ScriptlessEditor {
-
     }
     
     /// <summary>
@@ -61,6 +43,5 @@ namespace HouraiTeahouse.Editor {
     [CanEditMultipleObjects]
     [CustomEditor(typeof (ScriptableObject), true, isFallback = true)]
     internal sealed class ScriptableObjectEditor : ScriptlessEditor {
-
     }
 }

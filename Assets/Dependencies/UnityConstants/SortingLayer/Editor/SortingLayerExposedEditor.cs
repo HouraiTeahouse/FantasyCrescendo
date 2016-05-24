@@ -18,7 +18,7 @@ namespace UnityToolbag
                 return;
             }
 
-            var sortingLayerNames = SortingLayerHelper.sortingLayerNames;
+            var sortingLayerNames = SortingLayerHelper.SortingLayerNames;
 
             // If we have the sorting layers array, we can make a nice dropdown. For stability's sake, if the array is null
             // we just use our old logic. This makes sure the script works in some fashion even if Unity changes the name of

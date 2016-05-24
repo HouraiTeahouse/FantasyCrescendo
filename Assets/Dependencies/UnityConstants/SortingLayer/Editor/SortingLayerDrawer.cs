@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System;
 
@@ -9,7 +9,7 @@ namespace UnityToolbag
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var sortingLayerNames = SortingLayerHelper.sortingLayerNames;
+            var sortingLayerNames = SortingLayerHelper.SortingLayerNames;
             if (property.propertyType != SerializedPropertyType.Integer) {
                 EditorGUI.HelpBox(position, string.Format("{0} is not an integer but has [SortingLayer].", property.name), MessageType.Error);
             }

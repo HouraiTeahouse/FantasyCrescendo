@@ -21,8 +21,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         /// <summary>
         /// <see cref="UnityEditor.Editor.OnEnable"/>
         /// </summary>
-        protected override void OnEnable() {
-            base.OnEnable();
+        void OnEnable() {
             characters = serializedObject.FindProperty("_characters");
             scenes = serializedObject.FindProperty("_scenes");
             characterList = new ReorderableList(serializedObject, characters, true, false, true, true);

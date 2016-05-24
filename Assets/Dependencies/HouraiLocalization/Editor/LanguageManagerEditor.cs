@@ -19,8 +19,7 @@ namespace HouraiTeahouse.Localization.Editor {
 
         private Regex _splitCamelCase;
 
-        protected override void OnEnable() {
-            base.OnEnable();
+        void OnEnable() {
             _splitCamelCase = new Regex(".([A-Z])");
         }
 

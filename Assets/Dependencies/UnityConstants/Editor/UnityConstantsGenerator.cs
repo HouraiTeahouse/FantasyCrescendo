@@ -52,7 +52,7 @@ namespace UnityToolbag
                 writer.WriteLine();
 
                 // Write out sorting layers
-                var sortingLayerNames = SortingLayerHelper.sortingLayerNames;
+                var sortingLayerNames = SortingLayerHelper.SortingLayerNames;
                 if (sortingLayerNames != null) {
                     writer.WriteLine("    public static class SortingLayers");
                     writer.WriteLine("    {");
