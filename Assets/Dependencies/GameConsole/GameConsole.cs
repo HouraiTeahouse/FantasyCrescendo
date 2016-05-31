@@ -65,11 +65,11 @@ namespace HouraiTeahouse.Console {
             Init();
         }
 
-        private static bool init = false;
+        private static bool _init;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Init() {
-            if (init)
+            if (_init)
                 return;
             _commands = new Dictionary<string, ConsoleCommand>();
             _history = new FixedSizeQueue<string>(100);
@@ -79,7 +79,7 @@ namespace HouraiTeahouse.Console {
 
             RegisterCommand("echo", Commands.Echo);
             RegisterCommand("clear", Commands.Clear);
-            init = true;
+            _init = true;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace HouraiTeahouse.Console {
         /// Multiple callbacks can be registered to the same command. All will be executed, in the order in which
         /// they were registered.
         /// </remarks>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="command"/> or <paramref name="callback"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="command"/> or <paramref name="callback"/> is null.</exception>
         /// <param name="command">the command string to use</param>
         /// <param name="callback">the handler that is to be registered</param>
         public static void RegisterCommand(string command, ConsoleCommand callback) {
@@ -134,12 +134,10 @@ namespace HouraiTeahouse.Console {
         /// <summary>
         /// Logs a message to the GameConsole
         /// </summary>
-        /// <param name="message">the message, can be formatted as seen in String.Format</param>
+        /// <param name="message">the message, can be formatted as seen in String.With</param>
         /// <param name="objs">the object arguments used to format the message</param>
         public static void Log(string message, params object[] objs) {
-            if (message == null)
-                message = string.Empty;
-            _history.Enqueue(string.Format(message, objs));
+            _history.Enqueue(message.EmptyIfNull().With(objs));
             if (OnConsoleUpdate != null)
                 OnConsoleUpdate();
         }

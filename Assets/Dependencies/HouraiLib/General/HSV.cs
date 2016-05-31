@@ -138,7 +138,7 @@ namespace HouraiTeahouse {
         }
 
         public override string ToString() {
-            return string.Format("(H:{0}, S:{1}, V:{2}, A:{3})", h, s, v, a);
+            return "(H:{0}, S:{1}, V:{2}, A:{3})".With(h, s, v, a);
         }
     }
 }

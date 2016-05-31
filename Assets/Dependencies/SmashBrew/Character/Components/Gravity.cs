@@ -1,11 +1,11 @@
 using UnityEngine;
-using System.Collections;
 
 namespace HouraiTeahouse.SmashBrew {
 
     public sealed class Gravity : MonoBehaviour {
 
-        [SerializeField, Tooltip("The acceleration downward per second applied")] private float _gravity = 9.86f;
+        [SerializeField, Tooltip("The acceleration downward per second applied")]
+        private float _gravity = 9.86f;
 
         /// <summary>
         /// Gets or sets the magnitude of gravity applied to the Character.

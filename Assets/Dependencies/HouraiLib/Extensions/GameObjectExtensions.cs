@@ -12,9 +12,9 @@ namespace HouraiTeahouse {
         /// Gets a component of a certain type.
         /// If one doesn't exist, one will be added and returned.
         /// </summary>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="gameObject"/> is null</exception>
         /// <typeparam name="T">the type of the component to retrieve</typeparam>
         /// <param name="gameObject">the GameObject to retrieve the Component</param>
+        /// <exception cref="ArgumentNullException"><paramref name="gameObject"/> is null</exception>
         /// <returns>the retrieved Component</returns>
         public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component {
             Check.NotNull("gameObject", gameObject);
@@ -26,9 +26,9 @@ namespace HouraiTeahouse {
         /// Gets a component of a certain type on a GameObject.
         /// Works exactly like the normal GetComponent, but also logs an error in the console if one is not found.
         /// </summary>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="gameObject"/> is null</exception>
         /// <typeparam name="T">the type of the component to retrieve</typeparam>
         /// <param name="gameObject">the GameObject to retrieve the Component</param>
+        /// <exception cref="ArgumentNullException"><paramref name="gameObject"/> is null</exception>
         /// <returns>the retrieved Component</returns>
         public static T SafeGetComponent<T>(this GameObject gameObject) where T : class {
             Check.NotNull("gameObject", gameObject);
@@ -43,9 +43,10 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <typeparam name="T">the type of component to retrieve, can be an interface</typeparam>
         /// <param name="gameObjects">the GameObjects to retrieve</param>
+        /// <exception cref="ArgumentNullException"><paramref name="gameObjects"/> is null</exception>
         /// <returns>an enumeration of all components of the type attached to the GameObjects</returns>
         public static IEnumerable<T> GetComponents<T>(this IEnumerable<GameObject> gameObjects) where T : class {
-            return Check.NotNull("gameObjects", gameObjects).Where(gameObject => gameObject != null).SelectMany(gameObject => gameObject.GetComponents<T>());
+            return Check.NotNull("gameObjects", gameObjects).IgnoreNulls().SelectMany(gameObject => gameObject.GetComponents<T>());
         }
     }
 }

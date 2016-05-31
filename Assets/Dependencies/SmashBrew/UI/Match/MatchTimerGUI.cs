@@ -35,13 +35,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// Unity callback. Called once per frame.
         /// </summary>
         void Update() {
+            const string format = "d2";
             var remainingTime = Mathf.FloorToInt(_timeMatch.CurrentTime);
             if (remainingTime == currentDisplayedTime)
                 return;
             currentDisplayedTime = remainingTime;
             int seconds = remainingTime % 60;
             int minutes = remainingTime / 60;
-            _displayText.text = string.Format("{0}:{1}", minutes.ToString("d2"), seconds.ToString("d2"));
+            _displayText.text = "{0}:{1}".With(minutes.ToString(format), seconds.ToString(format));
         }
     }
 }

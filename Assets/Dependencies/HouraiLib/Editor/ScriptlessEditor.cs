@@ -12,9 +12,12 @@ namespace HouraiTeahouse.Editor {
         /// A replacement to the old DrawDefaultInspector that does not include the Script field.
         /// </summary>
         public new void DrawDefaultInspector() {
-            foreach(SerializedProperty property in serializedObject.GetIterator())
-                if (property.name != "m_Script")
-                    EditorGUILayout.PropertyField(property, true);
+            SerializedProperty iterator = serializedObject.GetIterator();
+            iterator.Next(true);
+            while (iterator.NextVisible(false)) {
+                if (iterator.name != "m_Script")
+                    EditorGUILayout.PropertyField(iterator, true);
+            }
 
             if (GUI.changed)
                 serializedObject.ApplyModifiedProperties();

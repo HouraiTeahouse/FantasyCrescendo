@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-namespace UnityToolbag
+namespace HouraiTeahouse
 {
     [CustomPropertyDrawer(typeof(SortingLayerAttribute))]
     public class SortingLayerDrawer : PropertyDrawer

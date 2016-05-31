@@ -3,8 +3,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace UnityToolbag
-{
+namespace HouraiTeahouse {
     // Helpers used by the different sorting layer classes.
     [InitializeOnLoad]
     public static class SortingLayerHelper {
@@ -16,18 +15,14 @@ namespace UnityToolbag
             SortingLayerNamesProperty = utilityType.GetProperty("sortingLayerNames", BindingFlags.Static | BindingFlags.NonPublic);
 
             // Unity 5.0 calls this "GetSortingLayerUniqueID" but in 4.x it was "GetSortingLayerUserID".
-            GetSortingLayerIdMethod = utilityType.GetMethod("GetSortingLayerUniqueID", BindingFlags.Static | BindingFlags.NonPublic) ??
-                                       utilityType.GetMethod("GetSortingLayerUserID", BindingFlags.Static | BindingFlags.NonPublic);
+            GetSortingLayerIdMethod = utilityType.GetMethod("GetSortingLayerUserID",
+                BindingFlags.Static | BindingFlags.NonPublic);
         }
 
         // Gets an array of sorting layer names.
         // Since this uses reflection, callers should check for 'null' which will be returned if the reflection fails.
         public static string[] SortingLayerNames {
-            get {
-                if (SortingLayerNamesProperty == null)
-                    return null;
-                return SortingLayerNamesProperty.GetValue(null, null) as string[];
-            }
+            get { return SortingLayerNamesProperty.GetValue(null, null) as string[]; }
         }
 
         // Given the ID of a sorting layer, returns the sorting layer's name

@@ -23,20 +23,16 @@ namespace HouraiTeahouse {
         /// Unity callback. Called once per frame.
         /// </summary>
         void Update() {
-            if (Input.GetKeyDown(_key)) {
-                string filename = string.Format("{0}.{1}",string.Format(_format, DateTime.UtcNow.ToString(_dateTimeFormat)), "png");
-                string path = Path.Combine(Application.dataPath, filename);
+            if (!Input.GetKeyDown(_key)) return;
+            string filename = _format.With(DateTime.UtcNow.ToString(_dateTimeFormat)) + ".png";
+            string path = Path.Combine(Application.dataPath, filename);
 
-                Log.Info("Screenshot taken. Saved to {0}", path);
+            Log.Info("Screenshot taken. Saved to {0}", path);
 
-                if (File.Exists(path))
-                    File.Delete(path);
+            if (File.Exists(path))
+                File.Delete(path);
 
-                if (Application.platform == RuntimePlatform.IPhonePlayer)
-                    Application.CaptureScreenshot(filename);
-                else
-                    Application.CaptureScreenshot(path);
-            }
+            Application.CaptureScreenshot(Application.platform == RuntimePlatform.IPhonePlayer ? filename : path);
         }
     }
 }

@@ -22,11 +22,11 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         /// <typeparam name="T">the type of data</typeparam>
         /// <param name="enumeration">the colleciton of IDataComponents</param>
+        /// <exception cref="ArgumentNullException"><paramref name="enumeration"/> is null</exception>
         /// <param name="data">the data to be set</param>
         public static void SetData<T>(this IEnumerable<IDataComponent<T>> enumeration, T data) {
-            foreach (IDataComponent<T> dataComponent in Check.NotNull("enumeration", enumeration))
-                if (dataComponent != null)
-                    dataComponent.SetData(data);
+            foreach (IDataComponent<T> dataComponent in Check.NotNull("enumeration", enumeration).IgnoreNulls())
+                dataComponent.SetData(data);
         }
     }
 }

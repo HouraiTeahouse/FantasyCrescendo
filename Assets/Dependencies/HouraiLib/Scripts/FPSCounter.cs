@@ -25,7 +25,7 @@ namespace HouraiTeahouse {
         private IEnumerator UpdateDisplay() {
             while (true) {
                 yield return new WaitForSeconds(0.5f);
-                Counter.text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
+                Counter.text = "{0:0.0} ms ({1:0.} fps)".With(msec, fps);
             }
         }
     }

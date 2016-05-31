@@ -34,7 +34,7 @@ namespace HouraiTeahouse.SmashBrew {
 
                 //TODO: Fix this hack, get netplay working
                 runtimeCharacter.gameObject.SetActive(true);
-                runtimeCharacter.name = string.Format("Player {0} ({1})", player.PlayerNumber + 1,
+                runtimeCharacter.name = "Player {0} ({1})".With(player.PlayerNumber + 1,
                     player.SpawnedCharacter.name);
                 EventManager.Publish(new PlayerSpawnEvent {Player = player, PlayerObject = runtimeCharacter.gameObject});
             }

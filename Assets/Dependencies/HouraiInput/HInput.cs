@@ -35,7 +35,7 @@ namespace HouraiTeahouse.HouraiInput {
             if (_isSetup) 
                 return;
 
-            Platform = string.Format("{0} {1}",SystemInfo.operatingSystem, SystemInfo.deviceModel).ToUpper();
+            Platform = "{0} {1}".With(SystemInfo.operatingSystem, SystemInfo.deviceModel).ToUpper();
 
             _initialTime = 0.0f;
             _currentTime = 0.0f;
@@ -125,9 +125,7 @@ namespace HouraiTeahouse.HouraiInput {
 
             if (lastActiveDevice == ActiveDevice)
                 return;
-            if (OnActiveDeviceChanged != null) {
-                OnActiveDeviceChanged(ActiveDevice);
-            }
+            OnActiveDeviceChanged.SafeInvoke(ActiveDevice);
         }
 
         public static void AddDeviceManager(InputDeviceManager inputDeviceManager) {
@@ -167,10 +165,8 @@ namespace HouraiTeahouse.HouraiInput {
         private static void UpdateDevices(float deltaTime) {
             foreach (InputDevice device in devices)
                 device.Update(_currentTick, deltaTime);
-
-            if (OnUpdate != null) 
-                OnUpdate.Invoke(_currentTick, deltaTime);
-        }
+            OnUpdate.SafeInvoke(_currentTick, deltaTime);
+       }
 
         private static void PostUpdateDevices(float deltaTime) {
             foreach (InputDevice device in devices)
@@ -186,8 +182,7 @@ namespace HouraiTeahouse.HouraiInput {
             devices.Add(inputDevice);
             devices.Sort((d1, d2) => d1.SortOrder.CompareTo(d2.SortOrder));
 
-            if (OnDeviceAttached != null) 
-                OnDeviceAttached(inputDevice);
+            OnDeviceAttached.SafeInvoke(inputDevice);
 
             if (ActiveDevice == InputDevice.Null) 
                 ActiveDevice = inputDevice;
@@ -201,9 +196,7 @@ namespace HouraiTeahouse.HouraiInput {
 
             if (ActiveDevice == inputDevice)
                 ActiveDevice = InputDevice.Null;
-
-            if (OnDeviceDetached != null) 
-                OnDeviceDetached(inputDevice);
+            OnDeviceDetached.SafeInvoke(inputDevice);
         }
 
         public static void HideDevicesWithProfile(Type type) {

@@ -32,11 +32,11 @@ namespace HouraiTeahouse {
         /// Loads the scenes
         /// </summary>
         public void Load() {
-            HashSet<string> paths = new HashSet<string>();
+            var paths = new HashSet<string>();
             for (var i = 0; i < SceneManager.sceneCount; i++)
                 paths.Add(SceneManager.GetSceneAt(i).path);
             foreach (string scenePath in _scenes) {
-                if (!_ignoreLoadedScenes && paths.Contains(string.Format("Assets/{0}.unity", scenePath)))
+                if (!_ignoreLoadedScenes && paths.Contains("Assets/{0}.unity".With(scenePath)))
                     continue;
                 SceneManager.LoadScene(scenePath, _mode);
             }

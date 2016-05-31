@@ -3,21 +3,29 @@ using UnityEngine;
 
 namespace HouraiTeahouse {
 
+    [Serializable]
+    public class LogTypeSettings {
+        public bool Enabled;
+        public StackTraceLogType StackTrace;
+    }
+
+    [Serializable]
+    public class LogSettings {
+        public string TimeFormat = "MM-dd-yy HH:mm:ss";
+        public LogTypeSettings Info = new LogTypeSettings { Enabled = true,  StackTrace = StackTraceLogType.None};
+        public LogTypeSettings Debug = new LogTypeSettings { Enabled = true,  StackTrace = StackTraceLogType.None};
+        public LogTypeSettings Warning = new LogTypeSettings { Enabled = true,  StackTrace = StackTraceLogType.None};
+        public LogTypeSettings Error = new LogTypeSettings { Enabled = true,  StackTrace = StackTraceLogType.None};
+    }
+
     public static class Log {
 
-        private delegate void LogAction(string source, params object[] param);
+        public static LogSettings _settings = new LogSettings();
 
-        public static string TimeFormat = "MM-dd-yy HH:mm:ss";
-
-        public static bool ShowInfo = true;
-        public static bool ShowDebug = true;
-        public static bool ShowWarning = true;
-        public static bool ShowError = true;
-
-        public static StackTraceLogType StackTraceInfo = StackTraceLogType.None;
-        public static StackTraceLogType StackTraceDebug = StackTraceLogType.None;
-        public static StackTraceLogType StackTraceWarning = StackTraceLogType.None;
-        public static StackTraceLogType StackTraceError = StackTraceLogType.None;
+        public static LogSettings Settings {
+            get { return _settings; }
+            set { _settings = value; }
+        }
 
         public static void Info(object source, params object[] objs) {
 #if UNITY_EDITOR
@@ -25,7 +33,7 @@ namespace HouraiTeahouse {
 #else
             const string format = "[Info] ({1}) - {0}";
 #endif
-            WriteLog(format, ShowInfo, StackTraceInfo, UnityEngine.Debug.LogFormat, source, objs);
+            WriteLog(format, _settings.Info, LogType.Log, source, objs);
         }
 
         public static void Debug(object source, params object[] objs) {
@@ -34,7 +42,7 @@ namespace HouraiTeahouse {
 #else
             const string format = "[Debug] ({1}) - {0}";
 #endif
-            WriteLog(format, ShowDebug, StackTraceDebug, UnityEngine.Debug.LogFormat, source, objs);
+            WriteLog(format, _settings.Debug, LogType.Log, source, objs);
         }
 
         public static void Warning(object source, params object[] objs) {
@@ -43,7 +51,7 @@ namespace HouraiTeahouse {
 #else
             const string format = "[Warning] ({1}) - {0}";
 #endif
-            WriteLog(format, ShowWarning, StackTraceWarning, UnityEngine.Debug.LogWarningFormat, source, objs);
+            WriteLog(format, _settings.Warning, LogType.Warning, source, objs);
         }
 
         public static void Error(object source, params object[] objs) {
@@ -52,21 +60,21 @@ namespace HouraiTeahouse {
 #else
             const string format = "[Error] {0}";
 #endif
-            WriteLog(format, ShowError, StackTraceError, UnityEngine.Debug.LogErrorFormat, source, objs);
+            WriteLog(format, _settings.Error, LogType.Error, source, objs);
         }
 
-        private static void WriteLog(string format, bool show, StackTraceLogType stack, LogAction log, object source, params object[] objs) {
-            if (!show)
+        private static void WriteLog(string format, LogTypeSettings settings, LogType log, object source, params object[] objs) {
+            if (!settings.Enabled)
                 return;
             StackTraceLogType logType = Application.stackTraceLogType;
-            Application.stackTraceLogType = stack;
+            Application.stackTraceLogType = settings.StackTrace;
             var output = source as string;
-            if (output != null) 
-                output = string.Format(output, objs);
+            if (output != null)
+                output = output.With(objs);
             else 
                 output = source == null ? "Null" : source.ToString();
 #if UNITY_EDITOR
-            log(format, output, DateTime.Now.ToString(TimeFormat)); 
+            UnityEngine.Debug.logger.LogFormat(log, format, output, DateTime.Now.ToString(_settings.TimeFormat));
 #else
             System.Console.WriteLine(format, output, DateTime.Now.ToString(TimeFormat));
 #endif

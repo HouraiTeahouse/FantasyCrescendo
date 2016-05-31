@@ -31,7 +31,7 @@ namespace HouraiTeahouse {
         /// All of the elements are assigned to the default priority of 0.
         /// </summary>
         /// <param name="collection"></param>
-        /// <exception cref="ArgumentNullException">thrown if collection is null</exception>
+        /// <exception cref="ArgumentNullException">collection is null</exception>
         public PriorityList(IEnumerable<T> collection) : this() {
             Check.NotNull("collection", collection);
             List<T> colList = collection.ToList();
@@ -121,7 +121,7 @@ namespace HouraiTeahouse {
         /// Gets the priority of an item stored within the PriorityList.
         /// </summary>
         /// <param name="item">the item to get the priority of</param>
-        /// <exception cref="ArgumentException">thrown if the PriorityList does not contain this item</exception>
+        /// <exception cref="ArgumentException">the PriorityList does not contain this item</exception>
         /// <returns>the priority of the item within the list</returns>
         public int GetPriority(T item) {
             Check.Argument("item", Contains(item));
@@ -134,7 +134,7 @@ namespace HouraiTeahouse {
         /// <remarks>
         /// This is for elements already in the PriorityList. To add an element instead, use Add instead.
         /// </remarks>
-        /// <exception cref="ArgumentException">thrown if the PriorityList does not contain <paramref name="item"/></exception>
+        /// <exception cref="ArgumentException">the PriorityList does not contain <paramref name="item"/></exception>
         /// <param name="item">the item to edit the</param>
         /// <param name="priority">the new priority </param>
         public void SetPriority(T item, int priority) {

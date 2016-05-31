@@ -93,13 +93,15 @@ namespace HouraiTeahouse.Localization {
         /// <summary>
         /// The serialized localization key
         /// </summary>
-        [SerializeField] private string _key;
+        [SerializeField]
+        private string _key;
 
         /// <summary>
         /// The format for the localization string to be displayed in.
         /// </summary>
         /// <see cref="string.Format"/>
-        [SerializeField] private string _format;
+        [SerializeField]
+        private string _format;
 
         /// <summary>
         /// Unity callback. Called once before the object's first frame.
@@ -121,9 +123,7 @@ namespace HouraiTeahouse.Localization {
         /// <see cref="AbstractLocalizedText"/>
         /// </summary>
         protected override string Process(string val) {
-            if (string.IsNullOrEmpty(_format))
-                return val;
-            return string.Format(_format, val);
+            return _format.IsNullOrEmpty() ? val : _format.With(val);
         }
     }
 }

@@ -31,6 +31,8 @@ namespace HouraiTeahouse.Localization.Editor {
         [SerializeField, Tooltip("The folder to save all of the generated assets into.")]
         private Object _saveFolder;
 
+        private const string DefaultStoragePath = "Assets/Resources/Lang";
+
         /// <summary>
         /// Reads the Google Spreadsheet and generates/updates the StringSet asset files
         /// </summary>
@@ -51,7 +53,7 @@ namespace HouraiTeahouse.Localization.Editor {
                     languageMap[lang].Add(element.Value);
                 }
             }
-            string folderPath = _saveFolder ? AssetDatabase.GetAssetPath(_saveFolder) : "Assets/Resources/Lang";
+            string folderPath = _saveFolder ? AssetDatabase.GetAssetPath(_saveFolder) : DefaultStoragePath;
             foreach (var lang in languageMap) {
                 var method = "Generating";
                 string path = string.Format("{0}/{1}.asset", folderPath, lang.Key);

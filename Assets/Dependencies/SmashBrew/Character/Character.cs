@@ -105,9 +105,8 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
 		public void ResetCharacter() {
-            foreach(IResettable resetable in _resetableComponents)
-                if(resetable != null)
-                    resetable.OnReset();
+            foreach(IResettable resetable in _resetableComponents.IgnoreNulls())
+                resetable.OnReset();
 		}
 
         #endregion
@@ -229,8 +228,7 @@ namespace HouraiTeahouse.SmashBrew {
         #region Internal Methods
 
         internal void Attack(Attack.Type type, Attack.Direction direction, int index) {
-            if (OnAttack != null)
-                OnAttack(type, direction, index);
+            OnAttack.SafeInvoke(type, direction, index);
         }
 
         #endregion

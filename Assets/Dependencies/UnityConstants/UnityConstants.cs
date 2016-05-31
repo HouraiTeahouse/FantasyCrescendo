@@ -20,7 +20,7 @@ namespace UnityConstants
     public static class SortingLayers
     {
         public const int Default = 0;
-        public const int VFX = 638942701;
+        public const int VFX = 0;
     }
 
     public static class Layers

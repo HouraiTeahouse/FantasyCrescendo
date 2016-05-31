@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Globalization;
 using System.Linq;
 #if HOURAI_EVENTS
 using HouraiTeahouse.Events;
@@ -88,107 +87,10 @@ namespace HouraiTeahouse.Localization {
                 return;
             _currentLanguage.Update(_keys, set);
             _currentLanguage.Name = set.name;
-            if (OnChangeLanguage != null)
-                OnChangeLanguage(_currentLanguage);
+            OnChangeLanguage.SafeInvoke(_currentLanguage);
 #if HOURAI_EVENTS
             _eventManager.Publish(new LanguageEvent {NewLanguage = _currentLanguage});
 #endif
-        }
-
-        /// <summary>
-        /// Converts a SystemLanugage value into a CultureInfo.
-        /// </summary>
-        /// <param name="language">the SystemLanugage value to map</param>
-        /// <returns>the corresponding CultureInfo</returns>
-        public static CultureInfo GetCultureInfo(SystemLanguage language) {
-            switch (language) {
-                case SystemLanguage.Afrikaans:
-                    return new CultureInfo("af");
-                case SystemLanguage.Arabic:
-                    return new CultureInfo("ar");
-                case SystemLanguage.Basque:
-                    return new CultureInfo("eu");
-                case SystemLanguage.Belarusian:
-                    return new CultureInfo("be");
-                case SystemLanguage.Bulgarian:
-                    return new CultureInfo("bg");
-                case SystemLanguage.Catalan:
-                    return new CultureInfo("ca");
-                case SystemLanguage.Chinese:
-                    return new CultureInfo("zh-cn");
-                case SystemLanguage.Czech:
-                    return new CultureInfo("cs");
-                case SystemLanguage.Danish:
-                    return new CultureInfo("da");
-                case SystemLanguage.Dutch:
-                    return new CultureInfo("nl");
-                case SystemLanguage.English:
-                    return new CultureInfo("en");
-                case SystemLanguage.Estonian:
-                    return new CultureInfo("et");
-                case SystemLanguage.Faroese:
-                    return new CultureInfo("fo");
-                case SystemLanguage.Finnish:
-                    return new CultureInfo("fi");
-                case SystemLanguage.French:
-                    return new CultureInfo("fr");
-                case SystemLanguage.German:
-                    return new CultureInfo("de");
-                case SystemLanguage.Greek:
-                    return new CultureInfo("el");
-                case SystemLanguage.Hebrew:
-                    return new CultureInfo("he");
-                case SystemLanguage.Icelandic:
-                    return new CultureInfo("is");
-                case SystemLanguage.Indonesian:
-                    return new CultureInfo("id");
-                case SystemLanguage.Italian:
-                    return new CultureInfo("it");
-                case SystemLanguage.Japanese:
-                    return new CultureInfo("ja");
-                case SystemLanguage.Korean:
-                    return new CultureInfo("ko");
-                case SystemLanguage.Latvian:
-                    return new CultureInfo("lv");
-                case SystemLanguage.Lithuanian:
-                    return new CultureInfo("lt");
-                case SystemLanguage.Norwegian:
-                    return new CultureInfo("no");
-                case SystemLanguage.Polish:
-                    return new CultureInfo("pl");
-                case SystemLanguage.Portuguese:
-                    return new CultureInfo("pt");
-                case SystemLanguage.Romanian:
-                    return new CultureInfo("ro");
-                case SystemLanguage.Russian:
-                    return new CultureInfo("ru");
-                case SystemLanguage.SerboCroatian:
-                    return new CultureInfo("hr");
-                case SystemLanguage.Slovak:
-                    return new CultureInfo("sk");
-                case SystemLanguage.Slovenian:
-                    return new CultureInfo("sl");
-                case SystemLanguage.Spanish:
-                    return new CultureInfo("es");
-                case SystemLanguage.Swedish:
-                    return new CultureInfo("sv");
-                case SystemLanguage.Thai:
-                    return new CultureInfo("th");
-                case SystemLanguage.Turkish:
-                    return new CultureInfo("tr");
-                case SystemLanguage.Ukrainian:
-                    return new CultureInfo("uk");
-                case SystemLanguage.Vietnamese:
-                    return new CultureInfo("vi");
-                case SystemLanguage.ChineseSimplified:
-                    return new CultureInfo("zh-chs");
-                case SystemLanguage.ChineseTraditional:
-                    return new CultureInfo("zh-cht");
-                case SystemLanguage.Hungarian:
-                    return new CultureInfo("hu");
-                default:
-                    return CultureInfo.InvariantCulture;
-            }
         }
 
         protected override void Awake() {
@@ -264,12 +166,12 @@ namespace HouraiTeahouse.Localization {
         /// </summary>
         /// <param name="identifier">the Microsoft identifier for a lanuguage</param>
         /// <exception cref="ArgumentNullException">throw if <paramref name="identifier"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">thrown if the language specified by <paramref name="identifier"/> is not currently supported.</exception>
+        /// <exception cref="InvalidOperationException">the language specified by <paramref name="identifier"/> is not currently supported.</exception>
         /// <returns>the localization language</returns>
         public Language LoadLanguage(string identifier) {
             Check.NotNull("identifier", identifier);
             if (!_languages.Contains(identifier))
-                throw new InvalidOperationException(string.Format("Language with identifier of {0} is not supported.",
+                throw new InvalidOperationException("Language with identifier of {0} is not supported.".With(
                     identifier));
             var languageValues = Resources.Load<StringSet>(localizaitonResourceDirectory + identifier);
             SetLanguage(languageValues.name, languageValues);

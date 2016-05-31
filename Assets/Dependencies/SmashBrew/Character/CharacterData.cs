@@ -204,7 +204,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// Gets the resource for the sprite portrait for a certain pallete.
         /// </summary>
         /// <param name="pallete">the pallete color to choose</param>
-        /// <exception cref="ArgumentException">thrown if <paramref name="pallete"/> is less than 0 or greater than <see cref="PalleteCount"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="pallete"/> is less than 0 or greater than <see cref="PalleteCount"/></exception>
         /// <returns></returns>
         public Resource<Sprite> GetPortrait(int pallete) {
             Check.Argument("pallete", Check.Range(pallete, PalleteCount));

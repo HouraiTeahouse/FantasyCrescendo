@@ -102,14 +102,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ea53a9d0d80304bbac006109439830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showInfoLogs: 1
-  _showDebugLogs: 1
-  _showWarningLogs: 1
-  _showErrorLogs: 1
-  _infoStackTrace: 0
-  _debugStackTrace: 1
-  _warningStackTrace: 0
-  _errorStackTrace: 2
+  _settings:
+    TimeFormat: MM-dd-yy HH:mm:ss
+    Info:
+      Enabled: 1
+      StackTrace: 0
+    Debug:
+      Enabled: 1
+      StackTrace: 0
+    Warning:
+      Enabled: 1
+      StackTrace: 0
+    Error:
+      Enabled: 1
+      StackTrace: 0
 --- !u!114 &11460476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,11 +194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bde28572b02ea4db7c258aa7c2e9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 1
   localizaitonResourceDirectory: Lang/
   _langPlayerPref:
     _key: lang
     _defaultValue: 
-  _dontDestroyOnLoad: 1
   _defaultLanguage: Lang/English
   _keys: {fileID: 11400000, guid: 219e2644cb9df084e801b37c423d1655, type: 2}
 --- !u!114 &11482896

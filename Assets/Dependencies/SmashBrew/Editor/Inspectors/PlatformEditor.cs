@@ -44,14 +44,13 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 if (!platform)
                     continue;
                 foreach (Collider collider in platform.GetComponents<Collider>()) {
-                    if (collider != null && !collider.isTrigger) {
-                        if (!found) {
-                            found = true;
-                            bounds = GetBounds(collider);
-                        }
-                        else
-                            bounds.Encapsulate(GetBounds(collider));
+                    if (collider.isTrigger) continue;
+                    if (!found) {
+                        found = true;
+                        bounds = GetBounds(collider);
                     }
+                    else
+                        bounds.Encapsulate(GetBounds(collider));
                 }
 
                 if (!found)

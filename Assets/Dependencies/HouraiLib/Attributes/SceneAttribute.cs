@@ -37,8 +37,9 @@ namespace HouraiTeahouse {
                 base.OnGUI(position, property, label);
                 return;
             }
-            if(!_scenes.ContainsKey(property))
-                _scenes[property] = AssetDatabase.LoadAssetAtPath<SceneAsset>(string.Format("Assets/{0}.unity", property.stringValue));
+            if (!_scenes.ContainsKey(property))
+                _scenes[property] =
+                    AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/{0}.unity".With(property.stringValue));
             EditorGUI.BeginChangeCheck();
             _scenes[property] = EditorGUI.ObjectField(position, label, _scenes[property], typeof(SceneAsset), false) as SceneAsset;
             if (EditorGUI.EndChangeCheck())

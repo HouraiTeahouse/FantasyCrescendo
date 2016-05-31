@@ -45,8 +45,7 @@ namespace HouraiTeahouse {
                 _timeScale = value;
                 if (!Paused)
                     Time.timeScale = value;
-                if (OnTimeScaleChange != null)
-                    OnTimeScaleChange();
+                OnTimeScaleChange.SafeInvoke();
             }
         }
 

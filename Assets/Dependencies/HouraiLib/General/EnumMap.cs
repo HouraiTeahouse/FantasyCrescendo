@@ -17,7 +17,7 @@ namespace HouraiTeahouse {
         /// <summary>
         /// Initializes a new EnumMap instance. Populates it with keys of all the values of the specified enumereation. 
         /// </summary>
-        /// <exception cref="ArgumentException">thrown if <typeparamref name="TEnum"/> is not a Enum type.</exception>
+        /// <exception cref="ArgumentException"><typeparamref name="TEnum"/> is not a Enum type.</exception>
         public EnumMap() {
             Type enumType = typeof (TEnum);
             if (!typeof (TEnum).IsEnum)

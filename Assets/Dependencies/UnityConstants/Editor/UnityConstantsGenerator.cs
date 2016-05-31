@@ -5,13 +5,13 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace UnityToolbag
+namespace HouraiTeahouse
 {
     public static class UnityConstantsGenerator
     {
 
 
-        [MenuItem("Edit/Generate UnityConstants.cs")]
+        [MenuItem("Edit/Generate Constants.cs")]
         [DidReloadScripts]
         public static void Generate()
         {

@@ -36,7 +36,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         /// <param name="src">the source hitbox</param>
         /// <param name="dst">the target hitbox</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="src"/> or <paramref name="dst"/> are null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="src"/> or <paramref name="dst"/> are null</exception>
         public static void AddCollision(Hitbox src, Hitbox dst) {
             Check.NotNull("src", src);
             Check.NotNull("dst", dst);

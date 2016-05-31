@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 using UnityEditor;
 
-namespace UnityToolbag
+namespace HouraiTeahouse
 {
     [CustomEditor(typeof(SortingLayerExposed))]
-    public class SortingLayerExposedEditor : Editor
+    public class SortingLayerExposedEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

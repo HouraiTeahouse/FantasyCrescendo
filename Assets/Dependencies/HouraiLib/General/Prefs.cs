@@ -34,6 +34,14 @@ namespace HouraiTeahouse {
             PlayerPrefs.DeleteKey(key);
         }
 
+        static T LogLoad<T>(string key, T value) {
+#if UNITY_EDITOR
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+#endif
+            Log.Info("Loaded value from PlayerPrefs: \"{0}\" : {1} ({2})", key, value, typeof(T).Name);
+            return value;
+        }
+
         #region Object Values
 
         /// <summary>
@@ -48,7 +56,7 @@ namespace HouraiTeahouse {
         /// <param name="key">the key the object is saved to</param>
         /// <returns>the deserialized object</returns>
         public static T GetObject<T>(string key) {
-            return JsonUtility.FromJson<T>(PlayerPrefs.GetString(key));
+            return LogLoad(key, JsonUtility.FromJson<T>(PlayerPrefs.GetString(key)));
         }
 
         /// <summary>
@@ -74,6 +82,7 @@ namespace HouraiTeahouse {
         /// <param name="obj">the object to apply the values to </param>
         public static void ReadObject(string key, object obj) {
             JsonUtility.FromJsonOverwrite(PlayerPrefs.GetString(key), obj);
+            LogLoad(key, obj);
         }
 
         #endregion
@@ -91,7 +100,7 @@ namespace HouraiTeahouse {
         /// <param name="key">the key the boolean value is saved to</param>
         /// <returns>the saved boolean value</returns>
         public static bool GetBool(string key) {
-            return PlayerPrefs.GetInt(key) != 0;
+            return LogLoad(key, PlayerPrefs.GetInt(key) != 0);
         }
 
         /// <summary>
@@ -118,7 +127,7 @@ namespace HouraiTeahouse {
         /// <param name="key">the key the integer value is saved to</param>
         /// <returns>the saved integer value</returns>
         public static int GetInt(string key) {
-            return PlayerPrefs.GetInt(key);
+            return LogLoad(key, PlayerPrefs.GetInt(key));
         }
 
         /// <summary>
@@ -142,7 +151,7 @@ namespace HouraiTeahouse {
         /// <param name="key">the key the floating point value is saved to</param>
         /// <returns>the saved floating point value</returns>
         public static float GetFloat(string key) {
-            return PlayerPrefs.GetFloat(key);
+            return LogLoad(key, PlayerPrefs.GetFloat(key));
         }
 
         /// <summary>
@@ -166,7 +175,7 @@ namespace HouraiTeahouse {
         /// <param name="key">the key the string value is saved to </param>
         /// <returns>the saved string value</returns>
         public static string GetString(string key) {
-            return PlayerPrefs.GetString(key);
+            return LogLoad(key, PlayerPrefs.GetString(key));
         }
 
         /// <summary>
@@ -191,6 +200,7 @@ namespace HouraiTeahouse {
         [SerializeField]
         private T _defaultValue = default(T);
         private T _value;
+        private bool _loaded;
 
         protected AbstractPref(string key) {
             _key = key;
@@ -209,23 +219,19 @@ namespace HouraiTeahouse {
             get { return _key; }
         }
 
+        /// <summary>
+        /// Reads the value stored in 
+        /// </summary>
+        /// <returns></returns>
         protected abstract T Read();
         protected abstract void Write(T value);
 
         void Load() {
-            if (Prefs.HasKey(_key)) {
+            if (Prefs.HasKey(_key))
                 _value = Read();
-#if UNITY_EDITOR
-                if(EditorApplication.isPlayingOrWillChangePlaymode)
-#endif
-                Log.Info("Loaded {0} from Perfs from key {1}. Value: {2}", typeof (T), _key, _value);
-            }
             else {
                 _value = _defaultValue;
-#if UNITY_EDITOR
-                if(EditorApplication.isPlayingOrWillChangePlaymode)
-#endif
-                Log.Info("Perf key \"{0}\" not found. Default value of {1} ({2})", _key, _value, typeof(T));
+                Log.Info("Perf key \"{0}\" not found. Default value of {1} ({2}) loaded.", _key, _value, typeof(T).Name);
             }
         }
 
@@ -241,7 +247,12 @@ namespace HouraiTeahouse {
         }
 
         void ISerializationCallbackReceiver.OnAfterDeserialize() {
-            AsyncManager.AddSynchronousAction(Load);
+            if (_loaded)
+                return;
+            lock (this) {
+                AsyncManager.AddSynchronousAction(Load);
+                _loaded = true;
+            }
         }
     }
 
@@ -276,8 +287,8 @@ namespace HouraiTeahouse {
             Prefs.SetBool(Key, value);
         }
 
-        public static implicit operator bool(PrefBool prefInt) {
-            return prefInt != null && prefInt.Value;
+        public static implicit operator bool(PrefBool perfBool) {
+            return perfBool != null && perfBool.Value;
         }
     }
 

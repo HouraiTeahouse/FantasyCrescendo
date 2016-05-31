@@ -15,14 +15,14 @@ namespace HouraiTeahouse {
         /// <returns></returns>
         public static IEnumerable<GameObject> GetGameObject<T>(this IEnumerable<T> components) where T : Component {
             Check.NotNull("components", components);
-            return from component in components where component != null select component.gameObject;
+            return from component in components.IgnoreNulls() select component.gameObject;
         }
 
         /// <summary>
         /// Gets a component of a certain type.
         /// If one doesn't exist, one will be added and returned.
         /// </summary>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="component"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="component"/> is null</exception>
         /// <typeparam name="T">the type of the component to retrieve</typeparam>
         /// <param name="component">the Component attached to the GameObject to retrieve the Component</param>
         /// <returns>the retrieved Component</returns>
@@ -37,7 +37,7 @@ namespace HouraiTeahouse {
         /// Gets a component of a certain type on a GameObject.
         /// Works exactly like the normal GetComponent, but also logs an error in the console if one is not found.
         /// </summary>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="component"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="component"/> is null</exception>
         /// <typeparam name="T">the type of the component to retrieve</typeparam>
         /// <param name="component">the GameObject to retrieve the Component</param>
         /// <returns>the retrieved Component</returns>

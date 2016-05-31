@@ -49,7 +49,7 @@ namespace HouraiTeahouse.Editor {
     }
 
     [CustomPropertyDrawer(typeof(PrefString))]
-    internal sealed class PerfStringDrawer : PrefDrawer {
+    internal sealed class PrefStringDrawer : PrefDrawer {
     }
 
     [CustomPropertyDrawer(typeof(PrefBool))]

@@ -30,8 +30,7 @@ namespace HouraiTeahouse {
                 _number = value;
                 if (!changed)
                     return;
-                if (OnNumberChange != null)
-                    OnNumberChange();
+                OnNumberChange.SafeInvoke();
                 UpdateText();
             }
         }

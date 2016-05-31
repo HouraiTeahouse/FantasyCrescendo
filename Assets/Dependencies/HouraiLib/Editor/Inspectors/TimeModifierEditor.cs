@@ -10,7 +10,7 @@ namespace HouraiTeahouse.Editor {
     internal class TimeModifierEditor : ScriptlessEditor {
 
         /// <summary>
-        /// <see cref="UnityEditor.Editor.OnInspectorGU"/>
+        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
         /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();

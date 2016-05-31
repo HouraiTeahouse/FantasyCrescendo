@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,7 +27,7 @@ namespace HouraiTeahouse {
         /// <summary>
         /// Adds a key, key, value triplet to the table.
         /// </summary>
-        /// <exception cref="ArgumentException">thrown if the Table2D already contains an record with those two keys</exception>
+        /// <exception cref="ArgumentException">the Table2D already contains an record with those two keys</exception>
         /// <param name="key1">the first key</param>
         /// <param name="key2">the first key</param>
         /// <param name="value">the associated value</param>
@@ -93,7 +92,7 @@ namespace HouraiTeahouse {
         /// Gets or sets the value associated with the specified pair of keys. 
         /// If (a, b) does not exist, then (b, a) is gotten/set.
         /// </summary>
-        /// <exception cref="KeyNotFoundException">thrown if both (key1, key2) and (key2, key1) do not exist when using the getter.</exception>
+        /// <exception cref="KeyNotFoundException">both (key1, key2) and (key2, key1) do not exist when using the getter.</exception>
         /// <param name="key1">one of the keys</param>
         /// <param name="key2">one of the keys</param>
         /// <returns>the value stored at (key1, key2)</returns>

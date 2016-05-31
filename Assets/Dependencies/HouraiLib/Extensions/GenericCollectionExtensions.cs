@@ -17,6 +17,8 @@ namespace HouraiTeahouse {
         /// <param name="enumeration">the enumeration of values</param>
         /// <returns>true if <paramref name="enumeration"/> is null or empty.</returns>
         public static bool IsNullOrEmpty(this IEnumerable enumeration) {
+            if(enumeration is string)
+                return string.IsNullOrEmpty(enumeration as string);
             return enumeration == null || IsEmpty(enumeration);
         }
 
@@ -24,7 +26,7 @@ namespace HouraiTeahouse {
         /// Checks if a enumeration is empty or not.
         /// </summary>
         /// <param name="enumeration">the enumeration of values</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="enumeration"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="enumeration"/> is null</exception>
         /// <returns>true if <paramref name="enumeration"/> is empty, false otherwise</returns>
         public static bool IsEmpty(this IEnumerable enumeration) {
             Check.NotNull("enumeration", enumeration);
@@ -40,7 +42,7 @@ namespace HouraiTeahouse {
         /// <typeparam name="T">the type of values being enumerated</typeparam>
         /// <param name="enumeration">the enumeration of values</param>
         /// <param name="count">the subsampling rate</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="enumeration"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="enumeration"/> is null</exception>
         /// <returns>the subsampled enumeration</returns>
         public static IEnumerable<T> SampleEvery<T>(this IEnumerable<T> enumeration, int count) {
             if (enumeration == null)
@@ -82,7 +84,7 @@ namespace HouraiTeahouse {
         /// <typeparam name="K">the type of of the keys</typeparam>
         /// <typeparam name="V">the type of the values</typeparam>
         /// <param name="values">the enumeration</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="values"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="values"/> is null</exception>
         /// <returns>the key of the maximum value</returns>
         public static K ArgMax<K, V>(this IEnumerable<KeyValuePair<K, V>> values) where V : IComparable<V> {
             return FindArg(Check.NotNull("values", values), (v1, v2) => v1.CompareTo(v2) > 0);
@@ -95,7 +97,7 @@ namespace HouraiTeahouse {
         /// <typeparam name="K">the type of of the keys</typeparam>
         /// <typeparam name="V">the type of the values</typeparam>
         /// <param name="values">the enumeration</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="values"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="values"/> is null</exception>
         /// <returns>the key of the minimum value</returns>
         public static K ArgMin<K, V>(this IEnumerable<KeyValuePair<K, V>> values) where V : IComparable<V> {
             return FindArg(Check.NotNull("values", values), (v1, v2) => v1.CompareTo(v2) < 0);
@@ -121,7 +123,7 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <typeparam name="T">the type of the values being enumerated</typeparam>
         /// <param name="values">the enumeration</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="values"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="values"/> is null</exception>
         /// <returns>the index of the maximum value</returns>
         public static int ArgMax<T>(this IEnumerable<T> values) where T : IComparable<T> {
             return FindIndex(Check.NotNull("values", values), (v1, v2) => v1.CompareTo(v2) > 0);
@@ -133,7 +135,7 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <typeparam name="T">the type of the values being enumerated</typeparam>
         /// <param name="values">the enumeration</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="values"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="values"/> is null</exception>
         /// <returns>the index of the minimum value</returns>
         public static int ArgMin<T>(this IEnumerable<T> values) where T : IComparable<T> {
             return FindIndex(Check.NotNull("values", values), (v1, v2) => v1.CompareTo(v2) < 0);
@@ -160,7 +162,7 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <typeparam name="T">the type of the list</typeparam>
         /// <param name="list">the list to randomly select from</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="list"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="list"/> is null</exception>
         /// <returns>a random element from the list</returns>
         public static T Random<T>(this IList<T> list) {
             Check.NotNull("list", list);
@@ -174,7 +176,7 @@ namespace HouraiTeahouse {
         /// <param name="list">the list to randomly select from</param>
         /// <param name="start">the start index of the range to select from. Will be clamped to [0, list.Count]</param>
         /// <param name="end">the start index of the range to select from. Will be clamped to [0, list.Count]</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="list"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="list"/> is null</exception>
         /// <returns>a random element from the list selected from the range</returns>
         public static T Random<T>(this IList<T> list, int start, int end) {
             Check.NotNull("list", list);

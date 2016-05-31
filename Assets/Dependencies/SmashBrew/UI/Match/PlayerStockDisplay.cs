@@ -56,9 +56,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 return;
             if (ExcessDisplay)
                 ExcessDisplay.gameObject.SetActive(false);
-            foreach (var indicator in standardIndicators)
-                if (indicator)
-                    indicator.SetActive(false);
+            foreach (GameObject indicator in standardIndicators.IgnoreNulls())
+                indicator.SetActive(false);
             enabled = false;
         }
 

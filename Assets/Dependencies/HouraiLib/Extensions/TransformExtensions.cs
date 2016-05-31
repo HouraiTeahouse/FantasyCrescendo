@@ -21,7 +21,7 @@ namespace HouraiTeahouse {
         /// </summary>
         /// <param name="transform"></param>
         /// <param name="target"></param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="transform"/>
+        /// <exception cref="ArgumentNullException"><paramref name="transform"/>
         ///  or <paramref name="target"/> are null</exception>
         public static void Copy(this Transform transform, Transform target) {
             Check.NotNull("transform", transform);

@@ -34,7 +34,7 @@ namespace HouraiTeahouse {
         /// Add a async operation to manage.
         /// Can optionally provide a callback to be called once the operation is finished.
         /// </summary>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="operation"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="operation"/> is null</exception>
         /// <param name="operation">the operation to manage</param>
         /// <param name="callback">optional parameter, if not null, will be called after finish executing</param>
         public void AddOperation(AsyncOperation operation, Action callback = null) {
@@ -47,7 +47,7 @@ namespace HouraiTeahouse {
         /// Adds a resource request to manage.
         /// Can optionally provide a callback to be called once the operation is finished.
         /// </summary>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="request"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="request"/> is null</exception>
         /// <typeparam name="T">the type of object loaded by</typeparam>
         /// <param name="request">the ResourceRequest to manage</param>
         /// <param name="callback">optional parameter, if not null, will be called after finish executing</param>

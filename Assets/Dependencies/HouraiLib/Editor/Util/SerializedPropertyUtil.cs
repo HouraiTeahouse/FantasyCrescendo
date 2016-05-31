@@ -10,8 +10,8 @@ namespace HouraiTeahouse.Editor {
         /// Sets an array SerializedProperty equal to a enumerable source.
         /// </summary>
         /// <typeparam name="T">the type of object to insert</typeparam>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="property"/> is null</exception>
-        /// <exception cref="ArgumentException">thrown if <paramref name="property"/> is not an array property</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="property"/> is null</exception>
+        /// <exception cref="ArgumentException"><paramref name="property"/> is not an array property</exception>
         /// <param name="property">the array property to edit</param>
         /// <param name="source">the source collection to read values from</param>
         public static void SetArray<T>(this SerializedProperty property, IEnumerable<T> source, int start = 0) 

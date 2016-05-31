@@ -70,7 +70,7 @@ namespace HouraiTeahouse.Localization {
         /// <summary>
         /// Gets a localized string for a specific localization key.
         /// </summary>
-        /// <exception cref="KeyNotFoundException">thrown if the Language does not 
+        /// <exception cref="KeyNotFoundException">the Language does not 
         ///     support the localization key</exception>
         /// <param name="key">the localization key to retrieve</param>
         /// <returns>the localized string</returns>

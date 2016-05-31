@@ -27,7 +27,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public static implicit operator bool(Ground gravity) {
-            return gravity != null && gravity.IsGrounded;
+            return gravity && gravity.IsGrounded;
         }
 
         void OnCollisionEnter(Collision col) {

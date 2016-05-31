@@ -149,7 +149,7 @@ namespace HouraiTeahouse.HouraiInput {
 
 
         public override string ToString() {
-            return string.Format("[InputControl: Handle={0}, Value={1}]", Handle, Value);
+            return "[InputControl: Handle={0}, Value={1}]".With(Handle, Value);
         }
 
 

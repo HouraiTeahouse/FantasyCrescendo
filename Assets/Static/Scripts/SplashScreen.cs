@@ -63,8 +63,7 @@ public class SplashScreen : MonoBehaviour {
         if (operation != null && !operation.isDone) {
             foreach (GameObject target in disableWhileLoading)
                 target.SetActive(true);
-            while (!operation.isDone)
-                yield return null;
+            yield return operation;
         }
         Destroy(gameObject);
     }

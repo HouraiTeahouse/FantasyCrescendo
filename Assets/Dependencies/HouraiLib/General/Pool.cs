@@ -41,7 +41,7 @@ namespace HouraiTeahouse {
         /// Returns an object to the pool.
         /// </summary>
         /// <param name="obj">the object to return</param>
-        /// <exception cref="ArgumentException">thrown if <paramref name="obj"/> is null</exception>
+        /// <exception cref="ArgumentException"><paramref name="obj"/> is null</exception>
         public virtual void Return(T obj) {
             Check.NotNull("obj", obj);
             _pool.Enqueue(obj);
@@ -77,7 +77,7 @@ namespace HouraiTeahouse {
         /// <param name="source">the source prefab to copy</param>
         /// <param name="spawnCount">the number of objects to spawn when the pool is empty</param>
         /// <param name="initialCount">the number of objects to initially spawn</param>>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="source"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null</exception>
         public PrefabPool(T source, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
             Check.NotNull("source", source);
             _source = source;
@@ -89,7 +89,7 @@ namespace HouraiTeahouse {
         /// <see cref="AbstractPool{T}.Create"/>
         /// </summary>
         /// <returns></returns> 
-        /// <exception cref="InvalidOperationException">thrown if the source prefab has been destroyed</exception>
+        /// <exception cref="InvalidOperationException">the source prefab has been destroyed</exception>
         protected override T Create() {
             if (!_source)
                 throw new InvalidOperationException();
@@ -110,7 +110,7 @@ namespace HouraiTeahouse {
         /// <param name="createFunc">the creation callback to use</param>
         /// <param name="spawnCount">the number of objects to spawn when the pool is empty</param>
         /// <param name="initialCount">the number of objects to initially spawn</param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="createFunc"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="createFunc"/> is null.</exception>
         public EventBasedPool(Func<T> createFunc, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
             _creatFunc = Check.NotNull("createFunc", createFunc);
             Spawn(initialCount);

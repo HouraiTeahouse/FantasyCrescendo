@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using HouraiTeahouse.Console;
 using HouraiTeahouse.Events;
 using HouraiTeahouse.Localization;
 using UnityEngine;
-using HouraiTeahouse.HouraiInput;
 
 namespace HouraiTeahouse.SmashBrew {
     /// <summary>
@@ -29,28 +29,25 @@ namespace HouraiTeahouse.SmashBrew {
             GameConsole.Log("Hitbox drawing: {0}", Hitbox.DrawHitboxes);
         }
 
-        bool ArgLengthCheck(int count, string[] args, string name) {
-            bool check = args.Length >= 1;
-            if (!check) {
+        static bool ArgLengthCheck(int count, ICollection<string> args, string name) {
+            bool check = args.Count >= count;
+            if (!check)
                 GameConsole.Log("The command \"{0}\" requires at least {1} parameters.", name, count);
-            }
             return check;
         }
 
-        int? IntParse(string src) {
-            int val = 0;
+        static int? IntParse(string src) {
+            int val;
             if (int.TryParse(src, out val))
                 return val;
-            else
-                return null;
+            return null;
         }
 
-        float? FloatParse(string src) {
-            float val = 0;
+        static float? FloatParse(string src) {
+            float val;
             if (float.TryParse(src, out val))
                 return val;
-            else
-                return null;
+            return null;
         }
 
         Player GetPlayer(string playerNumber) {

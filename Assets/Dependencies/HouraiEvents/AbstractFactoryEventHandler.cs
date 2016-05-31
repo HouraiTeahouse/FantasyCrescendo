@@ -19,8 +19,7 @@ namespace HouraiTeahouse.Events {
             if (!ShouldCreate(eventArgs))
                 return;
             T instance = Create(eventArgs);
-            if (OnCreate != null)
-                OnCreate(instance, eventArgs);
+            OnCreate.SafeInvoke(instance, eventArgs);
         }
 
         /// <summary>

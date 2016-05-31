@@ -36,5 +36,20 @@ namespace HouraiTeahouse {
             Assert.True(Check.Range(15, test));
             Assert.False(Check.Range(30, test));
         }
+
+        [Test]
+        public void CheckNotEmptyTest() {
+            Assert.DoesNotThrow(delegate {
+                Check.NotEmpty(new[] {0});
+            });
+            Assert.Catch<InvalidOperationException>(delegate {
+                Check.NotEmpty<int[]>(null);
+            });
+            Assert.Catch<InvalidOperationException>(delegate {
+                Check.NotEmpty(new object[] {});
+            });
+            int[] test = {1, 2, 3};
+            Assert.AreEqual(test, Check.NotEmpty(test));
+        }
     }
 }

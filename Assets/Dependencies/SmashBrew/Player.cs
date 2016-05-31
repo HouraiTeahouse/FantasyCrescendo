@@ -78,7 +78,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// Note: Player numbers are 0 indexed. What appears as Player 1 is actually player number 0 internally.
         /// </summary>
         /// <param name="playerNumber">the Player's number identifier</param>
-        /// <exception cref="ArgumentException">thrown if <param name="playerNumber"> is less than 0 or greater 
+        /// <exception cref="ArgumentException"><param name="playerNumber"> is less than 0 or greater 
         ///     than or equal to the maximum number of players</param></exception>
         /// <returns>the corresponding Player object</returns>
         public static Player GetPlayerData(int playerNumber) {
@@ -146,8 +146,7 @@ namespace HouraiTeahouse.SmashBrew {
                 if (_selectedCharacter == value)
                     return;
                 _selectedCharacter = value;
-                if (OnChanged != null)
-                    OnChanged();
+                OnChanged.SafeInvoke();
             }
         }
 
@@ -169,8 +168,7 @@ namespace HouraiTeahouse.SmashBrew {
                 if (_level == value)
                     return;
                 _level = value;
-                if (OnChanged != null)
-                    OnChanged();
+                OnChanged.SafeInvoke();
             }
         }
 
@@ -187,8 +185,7 @@ namespace HouraiTeahouse.SmashBrew {
                 else {
                     _pallete = value;
                 }
-                if (OnChanged != null)
-                    OnChanged();
+                OnChanged.SafeInvoke();
             }
         }
 
@@ -250,15 +247,12 @@ namespace HouraiTeahouse.SmashBrew {
 
         public void CycleType() {
             Type = Type.Next;
-            if (OnChanged != null)
-                OnChanged();
+            OnChanged.SafeInvoke();
         }
 
         public Color Color {
             get {
-                //if (Type.Color != null)
-                //    return Type.Color.Value;
-                return Config.Player.GetColor(PlayerNumber);
+                return Type.Color ?? Config.Player.GetColor(PlayerNumber);
             }
         }
 
