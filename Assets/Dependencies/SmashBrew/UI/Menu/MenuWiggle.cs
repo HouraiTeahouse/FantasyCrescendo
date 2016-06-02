@@ -14,11 +14,13 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         void Update() {
             Vector2 distortion = Vector2.zero;
-            foreach (InputDevice device in HInput.Devices) {
+            int count = HInput.Devices.Count;
+            for (var i = 0; i < count; i++) {
+                InputDevice device = HInput.Devices[i];
                 if (device == null)
                     continue;
-                float x = device.GetControl(_verticalAxis);
-                float y = device.GetControl(_horizontalAxis);
+                float x = device[_verticalAxis];
+                float y = device[_horizontalAxis];
                 if (Mathf.Abs(distortion.x) < Mathf.Abs(x))
                     distortion.x = x;
                 if (Mathf.Abs(distortion.y) < Mathf.Abs(y))

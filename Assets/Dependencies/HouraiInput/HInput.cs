@@ -14,7 +14,7 @@ namespace HouraiTeahouse.HouraiInput {
         public static event Action<InputDevice> OnDeviceDetached;
         public static event Action<InputDevice> OnActiveDeviceChanged;
 
-        private static readonly List<InputDeviceManager> InputDeviceManagers = new List<InputDeviceManager>();
+        private static readonly List<InputDeviceManager> DeviceManagers = new List<InputDeviceManager>();
 
         private static InputDevice _activeDevice = InputDevice.Null;
         private static readonly List<InputDevice> devices = new List<InputDevice>();
@@ -42,7 +42,7 @@ namespace HouraiTeahouse.HouraiInput {
             _lastUpdateTime = 0.0f;
             _currentTick = 0;
 
-            InputDeviceManagers.Clear();
+            DeviceManagers.Clear();
             devices.Clear();
             Devices = new ReadOnlyCollection<InputDevice>(devices);
             _activeDevice = InputDevice.Null;
@@ -71,7 +71,7 @@ namespace HouraiTeahouse.HouraiInput {
             OnDeviceAttached = null;
             OnDeviceDetached = null;
 
-            InputDeviceManagers.Clear();
+            DeviceManagers.Clear();
             devices.Clear();
             _activeDevice = InputDevice.Null;
 
@@ -108,15 +108,20 @@ namespace HouraiTeahouse.HouraiInput {
         internal static void OnApplicationFocus(bool focusState) {
             if (focusState)
                 return;
-            foreach (InputDevice device in devices)
-                foreach (InputControl control in device.Controls) 
-                    if(control != null)
+            for (var i = 0; i < devices.Count; i++) {
+                InputDevice device = devices[i];
+                for (var j = 0; j < device.Controls.Length; j++) {
+                    InputControl control = device.Controls[j];
+                    if (control != null)
                         control.SetZeroTick();
+                }
+            }
         }
 
         private static void UpdateActiveDevice() {
             InputDevice lastActiveDevice = ActiveDevice;
-            foreach (InputDevice device in devices) {
+            for (var i = 0; i < devices.Count; i++) {
+                InputDevice device = devices[i];
                 if (ActiveDevice == InputDevice.Null ||
                     device.LastChangedAfter(ActiveDevice)) {
                     ActiveDevice = device;
@@ -131,7 +136,7 @@ namespace HouraiTeahouse.HouraiInput {
         public static void AddDeviceManager(InputDeviceManager inputDeviceManager) {
             AssertIsSetup();
 
-            InputDeviceManagers.Add(inputDeviceManager);
+            DeviceManagers.Add(inputDeviceManager);
             inputDeviceManager.Update(_currentTick, _currentTime - _lastUpdateTime);
         }
 
@@ -141,7 +146,7 @@ namespace HouraiTeahouse.HouraiInput {
         }
 
         public static bool HasDeviceManager<T>() where T : InputDeviceManager {
-            return InputDeviceManagers.OfType<T>().Any();
+            return DeviceManagers.OfType<T>().Any();
         }
 
         private static void UpdateCurrentTime() {
@@ -153,24 +158,28 @@ namespace HouraiTeahouse.HouraiInput {
         }
 
         private static void UpdateDeviceManagers(float deltaTime) {
-            foreach (InputDeviceManager deviceManager in InputDeviceManagers)
-                deviceManager.Update(_currentTick, deltaTime);
+            int count = DeviceManagers.Count;
+            for (var i = 0; i < count; i++) 
+                DeviceManagers[i].Update(_currentTick, deltaTime);
         }
 
         private static void PreUpdateDevices(float deltaTime) {
-            foreach (InputDevice device in devices)
-                device.PreUpdate(_currentTick, deltaTime);
+            int count = devices.Count;
+            for (var i = 0; i < count; i++) 
+                devices[i].PreUpdate(_currentTick, deltaTime);
         }
 
         private static void UpdateDevices(float deltaTime) {
-            foreach (InputDevice device in devices)
-                device.Update(_currentTick, deltaTime);
+            int count = devices.Count;
+            for (var i = 0; i < count; i++)
+                 devices[i].Update(_currentTick, deltaTime);
             OnUpdate.SafeInvoke(_currentTick, deltaTime);
-       }
+        }
 
         private static void PostUpdateDevices(float deltaTime) {
-            foreach (InputDevice device in devices)
-                device.PostUpdate(_currentTick, deltaTime);
+            int count = devices.Count;
+            for (var i = 0; i < count; i++)
+                devices[i].PostUpdate(_currentTick, deltaTime);
         }
 
         public static void AttachDevice(InputDevice inputDevice) {

@@ -11,8 +11,10 @@ namespace HouraiTeahouse {
         /// <param name="a">the first vector</param>
         /// <param name="b">the second vector</param>
         /// <returns>the Hadamard product of the two vectors</returns>
-        public static Vector2 Mult(this Vector2 a, Vector2 b) {
-            return new Vector2(a.x * b.x, a.y * b.y);
+        public static Vector2 Mult(this Vector2 a, params Vector2[] b) {
+            for (var i = 0; i < b.Length; i++)
+                a = Vector2.Scale(a, b[i]);
+            return a;
         }
 
         /// <summary>
@@ -21,8 +23,10 @@ namespace HouraiTeahouse {
         /// <param name="a">the first vector</param>
         /// <param name="b">the second vector</param>
         /// <returns>the Hadamard product of the two vectors</returns>
-        public static Vector3 Mult(this Vector3 a, Vector3 b) {
-            return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
+        public static Vector3 Mult(this Vector3 a, params Vector3[] b) {
+            for (var i = 0; i < b.Length; i++)
+                a = Vector3.Scale(a, b[i]);
+            return a;
         }
 
         /// <summary>
@@ -31,8 +35,10 @@ namespace HouraiTeahouse {
         /// <param name="a">the first vector</param>
         /// <param name="b">the second vector</param>
         /// <returns>the Hadamard product of the two vectors</returns>
-        public static Vector4 Mult(this Vector4 a, Vector4 b) {
-            return new Vector4(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
+        public static Vector4 Mult(this Vector4 a, params Vector4[] b) {
+            for (var i = 0; i < b.Length; i++)
+                a = Vector4.Scale(a, b[i]);
+            return a;
         }
 
         /// <summary>

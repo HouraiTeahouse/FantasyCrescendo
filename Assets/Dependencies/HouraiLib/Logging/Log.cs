@@ -76,7 +76,7 @@ namespace HouraiTeahouse {
 #if UNITY_EDITOR
             UnityEngine.Debug.logger.LogFormat(log, format, output, DateTime.Now.ToString(_settings.TimeFormat));
 #else
-            System.Console.WriteLine(format, output, DateTime.Now.ToString(TimeFormat));
+            System.Console.WriteLine(format, output, DateTime.Now.ToString(_settings.TimeFormat));
 #endif
             Application.stackTraceLogType = logType;
         }

@@ -28,7 +28,7 @@ namespace HouraiTeahouse.HouraiInput {
 
             for (var joystickId = 1; joystickId <= UnityInputDevice.MaxDevices; joystickId++)
                 for (var buttonId = 0; buttonId < UnityInputDevice.MaxButtons; buttonId++) 
-                    _buttonQueries[joystickId - 1, buttonId] = "joystick " + joystickId + " button " + buttonId;
+                    _buttonQueries[joystickId - 1, buttonId] = "joystick {0} button {1}".With(joystickId, buttonId);
         }
 
         private static string GetButtonKey(int joystickId, int buttonId) {

@@ -57,9 +57,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 if (controller == null)
                     continue;
                 // Move the controller
-                pointer.Move(new Vector2(controller.GetControl(_horizontal), controller.GetControl(_vertical)));
+                pointer.Move(new Vector2(controller[_horizontal], controller[_vertical]));
                 ProcessPointerSubmit(pointer, i, controller);
-                CharacterChange(pointer, player, controller);
+                CharacterChange(player, controller);
             }
         }
 
@@ -69,9 +69,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
             EventSystem.current.RaycastAll(_eventData, m_RaycastResultCache);
             RaycastResult result = FindFirstRaycast(m_RaycastResultCache);
             ProcessMove(_eventData);
-            bool success = false;
+            var success = false;
             _eventData.clickCount = 0;
-            if (controller.GetControl(_submit).WasPressed) {
+            if (controller[_submit].WasPressed) {
                 _eventData.pressPosition = _eventData.position;
                 _eventData.clickCount = 1;
                 _eventData.clickTime = Time.unscaledTime;
@@ -94,14 +94,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
             }
         }
 
-        void CharacterChange(PlayerPointer pointer, Player player, InputDevice controller) {
+        void CharacterChange(Player player, InputDevice controller) {
             if (!player.SelectedCharacter)
                 return;
-            if (controller.GetControl(_changeLeft).WasPressed)
+            if (controller[_changeRight].WasPressed)
                 player.Pallete--;
-            if (controller.GetControl(_changeRight).WasPressed)
+            if (controller[_changeRight].WasPressed)
                 player.Pallete++;
-            if (controller.GetControl(_cancel).WasPressed) {
+            if (controller[_cancel].WasPressed) {
             }
         }
     }

@@ -44,8 +44,13 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         void SendMessage<T>(InputTarget targetControl, GameObject target, ExecuteEvents.EventFunction<T> handler) where T : IEventSystemHandler {
-            if (HInput.Devices.Any(device => device.GetControl(targetControl).WasPressed)) 
+            int count = HInput.Devices.Count;
+            for (var i = 0; i < count; i++) {
+                InputDevice device = HInput.Devices[i];
+                if (!device[targetControl].WasPressed) continue;
                 ExecuteEvents.Execute(target, GetBaseEventData(), handler);
+                return;
+            }
         }
 
         /// <summary>
@@ -63,9 +68,16 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (!eventSystem.sendNavigationEvents || _currentDelay >= 0)
                 return;
 
-            AxisEventData moveData = GetAxisEventData(HInput.Devices.Average(device => device.GetControl(_horizontal)), 
-                                                      HInput.Devices.Average(device => device.GetControl(_vertical)), 
-                                                      _deadZone);
+            Vector2 axis = Vector2.zero;
+            int count = HInput.Devices.Count;
+            for (var i = 0; i < count; i++) {
+                InputDevice device = HInput.Devices[i];
+                axis.x += device[_horizontal];
+                axis.y += device[_vertical];
+            }
+            axis /= HInput.Devices.Count;
+
+            AxisEventData moveData = GetAxisEventData(axis.x, axis.y, _deadZone);
             ExecuteEvents.Execute(target, moveData, ExecuteEvents.moveHandler);
             if (moveData.moveDir != MoveDirection.None)
                 _currentDelay = _navigationDelay;

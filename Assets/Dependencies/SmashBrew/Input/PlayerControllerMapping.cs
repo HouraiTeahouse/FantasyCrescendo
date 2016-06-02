@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
 
+    [Serializable]
     public sealed class PlayerControlMapping {
         public InputTarget[] AttackTargets = {InputTarget.Action1};
         public InputTarget[] SpecialTargets = {InputTarget.Action2};
@@ -16,14 +17,14 @@ namespace HouraiTeahouse.SmashBrew {
         public InputTarget[] AltStickHorizontalTargets = {InputTarget.RightStickX};
         public InputTarget[] AltStickVerticalTargets = {InputTarget.RightStickY};
 
-        private static readonly Func<InputControl, float> val = c => c.Value;
-        private static readonly Func<InputControl, bool> pressed = c => c.WasPressed;
+        static readonly Func<InputControl, float> val = c => c.Value;
+        static readonly Func<InputControl, bool> pressed = c => c.WasPressed;
 
-        private static bool Check(InputDevice device, IEnumerable<InputTarget> targets) {
+        static bool Check(InputDevice device, IEnumerable<InputTarget> targets) {
             return device != null && device.GetControls(targets).Any(pressed);
         }
 
-        private static Vector2 Direction(InputDevice device, IEnumerable<InputTarget> targetsX, IEnumerable<InputTarget> targetsY) {
+        static Vector2 Direction(InputDevice device, IEnumerable<InputTarget> targetsX, IEnumerable<InputTarget> targetsY) {
             var area = new Vector2();
             if (device == null) return area;
             area.x = device.GetControls(targetsX).Average(val);

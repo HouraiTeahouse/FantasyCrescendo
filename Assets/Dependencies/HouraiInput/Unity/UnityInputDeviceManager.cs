@@ -22,7 +22,7 @@ namespace HouraiTeahouse.HouraiInput {
             if (!string.IsNullOrEmpty(_joystickHash) && !(_deviceRefreshTimer >= DeviceRefreshInterval)) return;
             _deviceRefreshTimer = 0.0f;
 
-            if (_joystickHash == JoystickHash) return;
+            if (_joystickHash.Equals(JoystickHash, StringComparison.OrdinalIgnoreCase)) return;
             Log.Info("Change in Unity attached joysticks detected; refreshing device list.");
             RefreshDevices();
         }
@@ -146,7 +146,7 @@ namespace HouraiTeahouse.HouraiInput {
         private static string JoystickHash {
             get {
                 string[] joystickNames = Input.GetJoystickNames();
-                return joystickNames.Length + ": " + string.Join(", ", joystickNames);
+                return joystickNames.Length + ":" + string.Join(",", joystickNames);
             }
         }
     }
