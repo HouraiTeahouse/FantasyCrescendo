@@ -58,7 +58,7 @@ namespace HouraiTeahouse.SmashBrew {
             render.shadowCastingMode = ShadowCastingMode.Off;
             render.receiveShadows = false;
             render.reflectionProbeUsage = ReflectionProbeUsage.Off;
-            render.useLightProbes = false;
+            render.lightProbeUsage = LightProbeUsage.Off;
 
             // Make sure the Color of the shield matches the HumanPlayer
             var player = GetComponentInParent<PlayerController>();

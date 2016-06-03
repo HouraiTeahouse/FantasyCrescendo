@@ -16,6 +16,7 @@ namespace UnityStandardAssets.ImageEffects
 
     [ExecuteInEditMode]
     [RequireComponent(typeof (Camera))]
+    [ImageEffectAllowedInSceneView]
     [AddComponentMenu("Image Effects/Other/Antialiasing")]
     public class Antialiasing : PostEffectsBase
     {

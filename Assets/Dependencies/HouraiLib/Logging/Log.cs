@@ -66,8 +66,8 @@ namespace HouraiTeahouse {
         private static void WriteLog(string format, LogTypeSettings settings, LogType log, object source, params object[] objs) {
             if (!settings.Enabled)
                 return;
-            StackTraceLogType logType = Application.stackTraceLogType;
-            Application.stackTraceLogType = settings.StackTrace;
+            StackTraceLogType logType = Application.GetStackTraceLogType(log);
+            Application.SetStackTraceLogType(log, settings.StackTrace);
             var output = source as string;
             if (output != null)
                 output = output.With(objs);
@@ -78,7 +78,7 @@ namespace HouraiTeahouse {
 #else
             System.Console.WriteLine(format, output, DateTime.Now.ToString(_settings.TimeFormat));
 #endif
-            Application.stackTraceLogType = logType;
+            Application.SetStackTraceLogType(log, logType);
         }
     }
 }

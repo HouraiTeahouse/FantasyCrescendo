@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -47,7 +47,7 @@ public class ModifiedShadow : Shadow {
 #endif
 
 #if !(UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1)
-#if UNITY_5_2_1pX || UNITY_5_3
+#if UNITY_5_2_1pX || UNITY_5_3_OR_NEWER
     public override void ModifyMesh(VertexHelper vh)
 #else
     public void ModifyMesh(VertexHelper vh)

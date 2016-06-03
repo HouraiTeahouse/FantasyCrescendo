@@ -38,7 +38,6 @@ namespace HouraiTeahouse.SmashBrew {
 
             if (_character.Tap(tap + altTap))
                 stick += altStick;
-            Log.Debug(altTap);
 
             //Ensure that the character is walking in the right direction
             if (!TimeManager.Paused && (stick.x > 0 && _character.Direction) ||
@@ -106,7 +105,6 @@ namespace HouraiTeahouse.SmashBrew {
             Vector2 v = input - _value;
             _acceleration = v - _velocity;
             _velocity = v;
-            Log.Debug(v + " " + _velocity + " " + _acceleration);
             _value = input;
             return MaxComponent(Snap(input, _acceleration));
         }

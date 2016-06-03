@@ -7,7 +7,7 @@ namespace HouraiTeahouse.SmashBrew {
 
     public sealed class Ground : AbstractCharacterComponent {
 
-        private HashSet<Collider> _ground = new HashSet<Collider>();
+        private readonly HashSet<Collider> _ground = new HashSet<Collider>();
         private bool _collided;
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public static implicit operator bool(Ground gravity) {
-            return gravity && gravity.IsGrounded;
+            return gravity != null && gravity.IsGrounded;
         }
 
         void OnCollisionEnter(Collision col) {

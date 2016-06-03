@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using HouraiTeahouse.Events;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace HouraiTeahouse.SmashBrew {
     /// <summary>
@@ -56,9 +57,11 @@ namespace HouraiTeahouse.SmashBrew {
 
             _characterCollection = new ReadOnlyCollection<CharacterData>(_characters);
             _sceneCollection = new ReadOnlyCollection<SceneData>(_scenes);
+
+            SceneManager.sceneLoaded += SceneLoad;
         }
 
-        void OnLevelWasLoaded(int level) {
+        void SceneLoad(Scene newScene, LoadSceneMode mode) {
             Log.Info("Unloading managed data assets");
             foreach (SceneData scene in _scenes)
                 scene.Unload();

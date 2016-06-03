@@ -71,8 +71,7 @@ namespace HouraiTeahouse {
         private int _loopEnd;
 
         private Resource<AudioClip> _bgmResource;
-        private float _weight;
-        private string playerPrefsKey;
+        private PrefFloat _weight;
 
         public Resource<AudioClip> BGM {
             get { return _bgmResource; }
@@ -97,18 +96,11 @@ namespace HouraiTeahouse {
 
         public void Initialize(string stageName) {
             _bgmResource = new Resource<AudioClip>(_bgm);
-            playerPrefsKey = stageName + delimiter + _bgm + "_" + suffix;
-
-            if (Prefs.HasKey(playerPrefsKey))
-                _weight = Prefs.GetFloat(playerPrefsKey);
-            else {
-                Prefs.SetFloat(playerPrefsKey, _baseWeight);
-                _weight = _baseWeight;
-            }
+            _weight = new PrefFloat(string.Format("{0}{1}{2}_{3}", stageName, delimiter, _bgm, suffix));
         }
 
         public override string ToString() {
-            return _bgm + " - (" + _baseWeight + ")";
+            return string.Format("{0} - ({1})", _bgm, _baseWeight);
         }
     }
 }

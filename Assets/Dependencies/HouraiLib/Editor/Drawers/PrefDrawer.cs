@@ -15,28 +15,14 @@ namespace HouraiTeahouse.Editor {
         }
              
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
-            EditorGUI.BeginProperty(position, label, property);
             SerializedProperty key = GetKey(property);
             SerializedProperty defaultValue = GetDefaultValue(property);
-            Rect foldoutRect = position;
-            foldoutRect.width = 1;
-            property.isExpanded = EditorGUI.Foldout(foldoutRect, property.isExpanded, GUIContent.none);
-            position.x += foldoutRect.width;
-            position.width -= foldoutRect.width;
-            position.height = EditorGUI.GetPropertyHeight(key);
-            using(EditorUtil.Property(new GUIContent(label.text + " Key"), position, GetKey(property))) {
-                if(property.isExpanded) {
-                    position.y += EditorGUI.GetPropertyHeight(defaultValue);
-                    EditorGUI.PropertyField(position, defaultValue);
-                }
+            using(EditorUtil.Property(label, position, GetKey(property))) {
+                position.width /= 2;
+                EditorGUI.PropertyField(position, key, label);
+                position.x += position.width;
+                EditorGUI.PropertyField(position, defaultValue, GUIContent.none);
             }
-        }
-
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-            float baseHeight = EditorGUI.GetPropertyHeight(GetKey(property));
-            if (property.isExpanded)
-                baseHeight += EditorGUI.GetPropertyHeight(GetDefaultValue(property));
-            return baseHeight;
         }
     }
 

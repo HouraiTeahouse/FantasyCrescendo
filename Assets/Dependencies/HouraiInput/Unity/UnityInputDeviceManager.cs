@@ -80,8 +80,7 @@ namespace HouraiTeahouse.HouraiInput {
 
             // As of Unity 4.6.3p1, empty strings on windows represent disconnected devices.
             if ((Application.platform == RuntimePlatform.WindowsEditor ||
-                Application.platform == RuntimePlatform.WindowsPlayer ||
-                Application.platform == RuntimePlatform.WindowsWebPlayer) && 
+                Application.platform == RuntimePlatform.WindowsPlayer) && 
                 string.IsNullOrEmpty(unityJoystickName))
                 return;
 

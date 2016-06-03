@@ -191,14 +191,14 @@ namespace UnityStandardAssets.ImageEffects
 				samples[i] = samples[i] * Random.Range (minLength, 1.0f);
 			}
 
-			string table = string.With ("#define SAMPLE_COUNT {0}\n", count);
+			string table = string.Format ("#define SAMPLE_COUNT {0}\n", count);
 			table += "const float3 RAND_SAMPLES[SAMPLE_COUNT] = {\n";
 			for (int i = 0; i < count; ++i) {
 				Vector3 v = samples[i];
-				table += string.With("\tfloat3({0},{1},{2}),\n", v.x, v.y, v.z);
+				table += string.Format("\tfloat3({0},{1},{2}),\n", v.x, v.y, v.z);
 			}
 			table += "};\n";
-			Debug.LogCreation (table);
+			Debug.Log (table);
 		}
 		*/
     }

@@ -13,11 +13,8 @@ namespace HouraiTeahouse {
         [SerializeField, Tooltip("The viewable name for the channel. May be used for in-game UI elements.")]
         private string _name;
 
-        [SerializeField, Tooltip("The default volume for the channel")]
-        private float _baseVolume = 1f;
-
         [SerializeField, Tooltip("The PlayerPrefs key to save the volume data onto")]
-        private string _playerPrefsKey;
+        private PrefFloat _volume;
 
         [SerializeField, Tooltip("The associated exposed parameters on the Audio Mixer that are to be changed.")]
         private string[] _associatedParams;
@@ -51,20 +48,6 @@ namespace HouraiTeahouse {
         /// <param name="mixer">the main Audio mixer for the game</param>
         internal void Initialize(AudioMixer mixer) {
             _mixer = mixer;
-            if (!Prefs.HasKey(_playerPrefsKey)) {
-                Prefs.SetFloat(_playerPrefsKey, _baseVolume);
-                CurrentVolume = _baseVolume;
-            }
-            else {
-                CurrentVolume = Prefs.GetFloat(_playerPrefsKey);
-            }
-        }
-
-        /// <summary>
-        /// Saves the current volume of the channel to PlayerPrefs
-        /// </summary>
-        internal void Save() {
-            Prefs.SetFloat(_playerPrefsKey, _currentVolume);
         }
     }
 
@@ -111,29 +94,6 @@ namespace HouraiTeahouse {
                 channel.Initialize(_mixer);
                 _channelByName[channel.Name] = channel;
             }
-        }
-
-        /// <summary>
-        /// Unity Callback. Called on object destruction.
-        /// </summary>
-        void OnDestroy() {
-            Save();
-        }
-
-        /// <summary>
-        /// Unity Callback. Called when the entire application is exited.
-        /// </summary>
-        void OnApplicationQuit() {
-            Save();
-        }
-
-        /// <summary>
-        /// Saves all of the channels to PlayerPrefs to allow for persistence.
-        /// </summary>
-        void Save() {
-            foreach (AudioChannel channel in _audioChannels)
-                if (channel != null)
-                    channel.Save();
         }
     }
 }

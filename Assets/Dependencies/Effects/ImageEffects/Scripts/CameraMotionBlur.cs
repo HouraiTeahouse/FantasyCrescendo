@@ -9,7 +9,7 @@ namespace UnityStandardAssets.ImageEffects
     public class CameraMotionBlur : PostEffectsBase
     {
         // make sure to match this to MAX_RADIUS in shader ('k' in paper)
-        private const float MaxRadius = 10.0f;
+        static float MAX_RADIUS = 10.0f;
 
         public enum MotionBlurFilter {
             CameraMotion = 0,			// global screen blur based on cam motion
@@ -144,7 +144,7 @@ namespace UnityStandardAssets.ImageEffects
             bool fallbackFromDX11 = filterType == MotionBlurFilter.ReconstructionDX11 && dx11MotionBlurMaterial == null;
 
             if (filterType == MotionBlurFilter.Reconstruction || fallbackFromDX11 || filterType == MotionBlurFilter.ReconstructionDisc) {
-                maxVelocity = Mathf.Min (maxVelocity, MaxRadius);
+                maxVelocity = Mathf.Min (maxVelocity, MAX_RADIUS);
                 tileWidth = divRoundUp (velBuffer.width, (int) maxVelocity);
                 tileHeight = divRoundUp (velBuffer.height, (int) maxVelocity);
                 _maxVelocity = velBuffer.width/tileWidth;

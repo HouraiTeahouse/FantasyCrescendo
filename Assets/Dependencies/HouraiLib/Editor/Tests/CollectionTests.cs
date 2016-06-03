@@ -74,7 +74,7 @@ namespace HouraiTeahouse {
             test = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
             Assert.DoesNotThrow(() => test.Random());
             Assert.DoesNotThrow(() => test.Random(-1, test.Length * 2));
-            Random.seed = 42;
+            Random.InitState(42);
             Assert.AreEqual(4, test.Random());
             Assert.AreEqual(3, test.Random());
             Assert.AreEqual(6, test.Random());
