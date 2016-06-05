@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.SmashBrew {
 
+    [RequiredCharacterComponent]
     public sealed class Ground : AbstractCharacterComponent {
 
         private readonly HashSet<Collider> _ground = new HashSet<Collider>();
@@ -26,8 +27,8 @@ namespace HouraiTeahouse.SmashBrew {
             _collided = false;
         }
 
-        public static implicit operator bool(Ground gravity) {
-            return gravity != null && gravity.IsGrounded;
+        public static implicit operator bool(Ground ground) {
+            return ground != null && ground.IsGrounded;
         }
 
         void OnCollisionEnter(Collision col) {

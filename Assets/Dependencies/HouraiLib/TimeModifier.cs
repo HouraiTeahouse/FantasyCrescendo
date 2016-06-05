@@ -19,7 +19,7 @@ namespace HouraiTeahouse {
             get { return _localTimeScale; }
             set {
                 _localTimeScale = value;
-                if (_animators.Length <= 0)
+                if (_animators == null || _animators.Length <= 0)
                     return;
                 foreach (Animator animator in _animators.Where(animator => animator != null))
                     animator.speed = value;

@@ -21,6 +21,11 @@ namespace HouraiTeahouse.SmashBrew {
             get { return Character.Events; }
         }
 
+        protected virtual void Start() {
+            if(!Character)
+                Character = GetComponentInParent<Character>();
+        }
+
         public virtual void OnReset() {
         }
     }
@@ -105,8 +110,11 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
 		public void ResetCharacter() {
-            foreach(IResettable resetable in _resetableComponents.IgnoreNulls())
-                resetable.OnReset();
+		    for (var i = 0; i < _resetableComponents.Length; i++) {
+		        IResettable resetable = _resetableComponents[i];
+                if(resetable != null)
+                    resetable.OnReset();
+		    }
 		}
 
         #endregion
@@ -166,7 +174,7 @@ namespace HouraiTeahouse.SmashBrew {
         #region Public Action Methods
 
         public Transform GetBone(int boneIndex) {
-            if (boneIndex < 0 || boneIndex >= BoneCount)
+            if (Check.Range(boneIndex, BoneCount))
                 return transform;
             return _bones[boneIndex];
         }
@@ -259,13 +267,17 @@ namespace HouraiTeahouse.SmashBrew {
 
             MovementCollider = GetComponent<CapsuleCollider>();
 
-            foreach (ParticleSystem particle in _particles)
-               if(particle) 
+            for (var i = 0; i < _particles.Length; i++) {
+                ParticleSystem particle = _particles[i];
+                if (particle != null)
                     particle.Stop();
+            }
 
-            foreach(var weapon in _weapons)
-                if (weapon)
+            for (var i = 0; i < _weapons.Length; i++) {
+                Renderer weapon = _weapons[i];
+                if (weapon != null)
                     weapon.enabled = false;
+            }
 
             // Initialize all animation behaviours
             BaseAnimationBehaviour.InitializeAll(Animator);
@@ -322,20 +334,24 @@ namespace HouraiTeahouse.SmashBrew {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
                 return;
 
-            foreach (Type component in GetRequiredComponents())
+            Type[] requiredComponents = GetRequiredComponents();
+            for (var i = 0; i < requiredComponents.Length; i++) {
+                Type component = requiredComponents[i];
                 if (!gameObject.GetComponent(component))
                     gameObject.AddComponent(component);
+            }
 #endif
         }
 
 #if UNITY_EDITOR
+
         /// <summary>
         /// Editor only function that gets all of the required component types a Character needs.
         /// </summary>
         /// <returns>an array of all of the concrete component types marked with RequiredCharacterComponent</returns>
         public static Type[] GetRequiredComponents() {
-            var componentType = typeof (Component);
-            var requiredComponentType = typeof (RequiredCharacterComponentAttribute);
+            Type componentType = typeof (Component);
+            Type requiredComponentType = typeof (RequiredCharacterComponentAttribute);
             // Use reflection to find required Components for Characters and statuses
             // Enumerate all concrete Component types
             return (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()

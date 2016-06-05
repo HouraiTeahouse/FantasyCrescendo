@@ -11,12 +11,14 @@ namespace HouraiTeahouse.SmashBrew {
     public sealed class Hitbox : MonoBehaviour {
         private static Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;
 
-        static void ExecuteInterface<T>(Type typeCheck, Hitbox src, Hitbox dst, Predicate<Hitbox> check,
-            Action<T, object> action) {
-            if (!check(src))
-                return;
-            foreach (T t in src.GetComponents<T>())
-                action(t, dst);
+        static Action<Hitbox, Hitbox> ExecuteInterface<T>(Predicate<Hitbox> check, Action<T, object> action) {
+            return delegate(Hitbox src, Hitbox dst) {
+                if (!check(src))
+                    return;
+                T[] components = src.GetComponents<T>();
+                for(var i = 0; i < components.Length; i++)
+                    action(components[i], dst);
+            };
         }
 
         static void DrawEffect(Hitbox src, Hitbox dst) {
@@ -37,14 +39,10 @@ namespace HouraiTeahouse.SmashBrew {
                     dst.Knockbackable.Knockback(src, Vector2.one);
                 DrawEffect(src, dst);
             };
-            ReactionMatrix[Type.Offensive, Type.Absorb] =
-                delegate(Hitbox src, Hitbox dst) {
-                    ExecuteInterface<IAbsorbable>(Type.Absorb, src, dst, h => h.Absorbable, (a, o) => a.Absorb(o));
-                };
-            ReactionMatrix[Type.Offensive, Type.Reflective] =
-                delegate(Hitbox src, Hitbox dst) {
-                    ExecuteInterface<IReflectable>(Type.Reflective, src, dst, h => h.Reflectable, (r, o) => r.Reflect(o));
-                };
+            ReactionMatrix[Type.Offensive, Type.Absorb] = ExecuteInterface<IAbsorbable>(h => h.Absorbable,
+                (a, o) => a.Absorb(o));
+            ReactionMatrix[Type.Offensive, Type.Reflective] = ExecuteInterface<IReflectable>(h => h.Reflectable,
+                (a, o) => a.Reflect(o));
             ReactionMatrix[Type.Offensive, Type.Invincible] = DrawEffect;
         }
 
@@ -130,9 +128,7 @@ namespace HouraiTeahouse.SmashBrew {
 
 #if UNITY_EDITOR
         void OnDrawGizmos() {
-            if (EditorApplication.isPlayingOrWillChangePlaymode)
-                return;
-            GizmoUtil.DrawColliders(GetComponents<Collider>(), Config.Debug.GetHitboxColor(type), true);
+            GizmoUtil.DrawColliders(GetComponents<Collider>(), Config.Debug.GetHitboxColor(type));
         }
 #endif
 

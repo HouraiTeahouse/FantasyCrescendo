@@ -12,7 +12,7 @@ namespace HouraiTeahouse {
     /// </summary>
     public sealed class AsyncManager : Singleton<AsyncManager> {
 
-        // Set of all asynchronous operations managed by the manager
+         // Set of all asynchronous operations managed by the manager
         private readonly List<AsyncOperation> _operations = new List<AsyncOperation>();
         private static event Action WaitingSynchronousActions;
 

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -49,15 +50,17 @@ namespace HouraiTeahouse {
         /// Loads the asset specifed by the Resource into memory.
         /// </summary>
         /// <returns>the loaded asset</returns>
-        public T Load() {
-            if (IsLoaded)
-                return Asset;
-            var loadedObject = Resources.Load<T>(_path);
+        public T Load(Action<T> callback = null) {
+            if (!IsLoaded) {
+                
+                var loadedObject = Resources.Load<T>(_path);
 #if UNITY_EDITOR
-            if(EditorApplication.isPlayingOrWillChangePlaymode)
+                if(EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-            Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
-            Asset = loadedObject;
+                Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
+                Asset = loadedObject;
+            }
+            callback.SafeInvoke(Asset);
             return Asset;
         }
 
@@ -78,14 +81,19 @@ namespace HouraiTeahouse {
 
         /// <summary>
         /// Loads the asset in an asynchronous manner. 
+        /// If no AsyncManager is currently availble, 
         /// </summary>
         /// <param name="callback">optional parameter, if not null, will execute with the loaded asset as the parameter</param>
         /// <param name="priority">optional parameter, the priority of the resource request</param>
-        /// <returns>the ResourceRequest associated with the </returns>
+        /// <returns>the ResourceRequest associated with the load. Null if </returns>
         public ResourceRequest LoadAsync(Action<T> callback = null, int priority = 0) {
+            // Check if asset is already loaded.
             AsyncManager manager = AsyncManager.Instance;
-            if(!manager)
-                throw new InvalidOperationException("Cannot execute a async load without a AsyncManager instance.");
+            // If no AsyncManager is available, load the assets synchrounously.
+            if (manager == null || IsLoaded) {
+                Load(callback);
+                return null;
+            }
             ResourceRequest request = Resources.LoadAsync<T>(_path);
             request.priority = priority;
             string typeName = typeof (T).Name;
@@ -99,8 +107,7 @@ namespace HouraiTeahouse {
 #endif
                 Log.Info("Loaded {0} from {1}", typeName, _path);
                 Asset = obj;
-                if (callback != null)
-                    callback(obj);
+                callback.SafeInvoke(obj);
             });
             return request;
         }

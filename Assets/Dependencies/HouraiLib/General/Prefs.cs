@@ -200,11 +200,10 @@ namespace HouraiTeahouse {
         [SerializeField]
         private T _defaultValue = default(T);
         private T _value;
-        private bool _loaded;
 
         protected AbstractPref(string key) {
             _key = key;
-            Load();
+            QueueLoad();
         }
 
         public T Value {
@@ -214,6 +213,8 @@ namespace HouraiTeahouse {
                 Write(value);
             }
         }
+
+        public bool IsLoaded { get; private set; }
 
         public string Key {
             get { return _key; }
@@ -225,6 +226,15 @@ namespace HouraiTeahouse {
         /// <returns></returns>
         protected abstract T Read();
         protected abstract void Write(T value);
+
+        void QueueLoad() {
+            if (IsLoaded)
+                return;
+            lock (this) {
+                AsyncManager.AddSynchronousAction(Load);
+                IsLoaded = true;
+            }
+        }
 
         void Load() {
             if (Prefs.HasKey(_key))
@@ -247,12 +257,7 @@ namespace HouraiTeahouse {
         }
 
         void ISerializationCallbackReceiver.OnAfterDeserialize() {
-            if (_loaded)
-                return;
-            lock (this) {
-                AsyncManager.AddSynchronousAction(Load);
-                _loaded = true;
-            }
+            QueueLoad();
         }
     }
 

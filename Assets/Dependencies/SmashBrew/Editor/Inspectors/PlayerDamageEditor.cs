@@ -8,19 +8,17 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     /// A custom Editor for Character
     /// </summary>
     [CustomEditor(typeof(PlayerDamage))]
-    internal class CharacterEditor : ScriptlessEditor {
+    internal class PlayerDamageEditor : ScriptlessEditor {
 
         /// <summary>
         /// <see cref="Editor.OnInspectorGUI"/>
         /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
-
-            EditorGUILayout.LabelField("PlayerDamage", EditorStyles.boldLabel);
             var character = target as PlayerDamage;
             GUI.enabled = character != null && EditorApplication.isPlayingOrWillChangePlaymode;
-            character.CurrentDamage = EditorGUILayout.FloatField("Current PlayerDamage", character.CurrentDamage);
-            character.DefaultDamage = EditorGUILayout.FloatField("Default PlayerDamage", character.DefaultDamage);
+            character.CurrentDamage = EditorGUILayout.FloatField("Current Damage", character.CurrentDamage);
+            character.DefaultDamage = EditorGUILayout.FloatField("Default Damage", character.DefaultDamage);
             GUI.enabled = true;
         }
 

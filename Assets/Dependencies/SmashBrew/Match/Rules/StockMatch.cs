@@ -29,6 +29,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         protected override void Awake() {
             base.Awake();
+            Debug.Log("hello");
             _eventManager = GlobalMediator.Instance;
             _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawn);
             _eventManager.Subscribe<PlayerDieEvent>(OnPlayerDie);

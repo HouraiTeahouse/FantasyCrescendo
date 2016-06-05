@@ -6,22 +6,45 @@ using HouraiTeahouse.Localization;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    /// <summary>
-    /// Debug mode to turn on and off the rendering of hitboxes
-    /// </summary>
     public class ConsoleCommands : MonoBehaviour {
+
+        private class Command {
+            private readonly string _name;
+            private readonly ConsoleCommand _consoleCommand;
+
+            public Command (string name, ConsoleCommand consoleCommand) {
+                _name = name;
+                _consoleCommand = consoleCommand;
+            }
+
+            public void Register() {
+                GameConsole.RegisterCommand(_name, _consoleCommand);
+            }
+
+            public void Unregister() {
+                GameConsole.UnregisterCommand(_name, _consoleCommand);
+            }
+        }
+
+        private Command[] commands;
+
+        void Awake() {
+             commands = new[] {
+                new Command("hitbox", HitboxCommand),
+                new Command("language", LanguageCommand),
+                new Command("kill", KillCommand),
+                new Command("damage", DamageCommand)
+            };
+        }
+
         void OnEnable() {
-            GameConsole.RegisterCommand("hitbox", HitboxCommand);
-            GameConsole.RegisterCommand("language", LanguageCommand);
-            GameConsole.RegisterCommand("kill", KillCommand);
-            GameConsole.RegisterCommand("damage", DamageCommand);
+            for (var i = 0; i < commands.Length; i++)
+                commands[i].Register();
         }
 
         void OnDisable() {
-            GameConsole.UnregisterCommand("hitbox", HitboxCommand);
-            GameConsole.UnregisterCommand("language", LanguageCommand);
-            GameConsole.UnregisterCommand("kill", KillCommand);
-            GameConsole.UnregisterCommand("damage", DamageCommand);
+            for (var i = 0; i < commands.Length; i++)
+                commands[i].Unregister();
         }
 
         void ChangeHitboxes(bool state) {

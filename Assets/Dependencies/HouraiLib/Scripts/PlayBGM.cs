@@ -6,9 +6,11 @@ namespace HouraiTeahouse {
     /// </summary>
     [RequireComponent(typeof (AudioSource))]
     public class PlayBGM : SingleActionBehaviour {
-        [SerializeField, Tooltip("The audio source to play the music out of")] private AudioSource _musicSource;
+        [SerializeField, Tooltip("The audio source to play the music out of")]
+        private AudioSource _musicSource;
 
-        [SerializeField, Tooltip("The BGM group to sample a BGM from")] private BGMGroup _group;
+        [SerializeField, Tooltip("The BGM group to sample a BGM from")]
+        private BGMGroup _group;
 
         private BGMData _currentBGM;
 
