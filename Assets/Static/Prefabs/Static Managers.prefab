@@ -133,25 +133,25 @@ MonoBehaviour:
   - _name: Master Volume
     _volume:
       _key: masterVol
-      _defaultValue: 0
+      _defaultValue: 1
     _associatedParams:
     - Main Volume
   - _name: Music Volume
     _volume:
       _key: musicVol
-      _defaultValue: 0
+      _defaultValue: 1
     _associatedParams:
     - Music Volume
   - _name: SFX Volume
     _volume:
       _key: sfxVol
-      _defaultValue: 0
+      _defaultValue: 1
     _associatedParams:
     - SFX Volume
   - _name: Voice Acting Volume
     _volume:
       _key: vaVol
-      _defaultValue: 0
+      _defaultValue: 1
     _associatedParams:
     - Voice Acting Volume
 --- !u!114 &11463294

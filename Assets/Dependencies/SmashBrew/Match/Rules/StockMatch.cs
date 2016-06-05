@@ -15,7 +15,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary>
         /// The number of stock the players start with.
         /// </summary>
-        [SerializeField] private int stock = 5;
+        [SerializeField]
+        private int stock = 5;
 
         private Mediator _eventManager;
 
@@ -29,7 +30,6 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         protected override void Awake() {
             base.Awake();
-            Debug.Log("hello");
             _eventManager = GlobalMediator.Instance;
             _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawn);
             _eventManager.Subscribe<PlayerDieEvent>(OnPlayerDie);

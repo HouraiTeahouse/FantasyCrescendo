@@ -76,12 +76,10 @@ namespace HouraiTeahouse.SmashBrew {
         Player GetPlayer(string playerNumber) {
             int? playerNum = IntParse(playerNumber);
             if (playerNum != null) {
-                if (playerNum <= 0 || playerNum > Player.MaxPlayers) {
+                if (playerNum <= 0 || playerNum > Player.MaxPlayers)
                     GameConsole.Log("There is no Player #{0}, try between 1 and {1}", playerNum, Player.MaxPlayers);
-                }
-                else {
+                else
                     return Player.GetPlayer(playerNum.Value - 1);
-                }
             }
             else {
                 GameConsole.Log("The term {0} cannot be converted to a player number.", playerNumber);
@@ -110,6 +108,17 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             }
             player.PlayerObject.GetComponent<PlayerDamage>().Damage(this, damage.Value);
+        }
+
+        void TimeCommand(string[] args) {
+            if (!ArgLengthCheck(1, args, "time"))
+                return;
+            var timeScale = FloatParse(args[1]);
+            if(timeScale == null)
+                GameConsole.Log("The term {0} cannot be converted into a timescale value.", args[1]);
+            else {
+                TimeManager.TimeScale = timeScale.Value;
+            }
         }
 
         void LanguageCommand(string[] args) {

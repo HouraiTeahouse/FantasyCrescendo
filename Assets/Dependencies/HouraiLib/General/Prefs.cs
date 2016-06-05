@@ -241,6 +241,7 @@ namespace HouraiTeahouse {
                 _value = Read();
             else {
                 _value = _defaultValue;
+                Write(_defaultValue);
                 Log.Info("Perf key \"{0}\" not found. Default value of {1} ({2}) loaded.", _key, _value, typeof(T).Name);
             }
         }
