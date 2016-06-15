@@ -19,7 +19,7 @@ namespace HouraiTeahouse.SmashBrew {
         protected T Target { get; private set; }
 
         public override void Initialize(GameObject gameObject) {
-            Target = gameObject.GetComponent<T>();
+            Target = gameObject.GetComponentInParent<T>();
             if (!Target)
                 Log.Error("Expected a component of type {0} but found none.", typeof(T));
         }

@@ -84,7 +84,7 @@ namespace HouraiTeahouse {
                 if (!_animator)
 #if UNITY_EDITOR
                     if (Application.isPlaying)
-                        _animator = GetComponentInParent<Animator>();
+                        _animator = GetComponentInChildren<Animator>();
                     else
                         _animator = GetComponent<Animator>();
 #else

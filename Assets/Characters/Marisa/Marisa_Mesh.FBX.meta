@@ -370,7 +370,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 0
+    optimizeGameObjects: 1
     motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -381,7 +381,23 @@ ModelImporter:
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
-    extraExposedTransformPaths: []
+    extraExposedTransformPaths:
+    - Ctrl_Hakkero
+    - Ctrl_Headgear
+    - Ctrl_Master/Ctrl_Broom
+    - Ctrl_Master/Ctrl_Hips
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder/B_Arm_Left_Forearm/End_Arm_Left/Ctrl_FK_Hand_Left/B_Hand_Left
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/Ctrl_Neck/B_Neck/Ctrl_Head
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder/B_Arm_Right_Forearm/B_Arm_Right_End/Ctrl_FK_Hand_Left001/B_Hand_Right
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Left_Thigh/B_Leg_Left_Shin/B_Leg_Left_Foot
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder
+    - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder
     clipAnimations: []
     isReadable: 0
   meshes:
