@@ -13,10 +13,10 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     [CustomEditor(typeof(DataManager))]
     public class DataManagerEditor : ScriptlessEditor {
 
-        private SerializedProperty characters;
-        private SerializedProperty scenes;
-        private ReorderableList characterList;
-        private ReorderableList sceneList;
+        SerializedProperty characters;
+        SerializedProperty scenes;
+        ReorderableList characterList;
+        ReorderableList sceneList;
 
         /// <summary>
         /// <see cref="UnityEditor.Editor.OnEnable"/>

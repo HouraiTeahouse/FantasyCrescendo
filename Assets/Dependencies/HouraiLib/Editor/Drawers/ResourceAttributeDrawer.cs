@@ -13,9 +13,9 @@ namespace HouraiTeahouse.Editor {
     [CustomPropertyDrawer(typeof (ResourceAttribute))]
     internal class ResourceAttributeDrawer : BasePropertyDrawer<ResourceAttribute> {
 
-        private class Data {
-            private Object _object;
-            private string _path;
+        class Data {
+            Object _object;
+            string _path;
             public readonly GUIContent Content;
 
             public Data(SerializedProperty property, GUIContent content) {
@@ -57,7 +57,7 @@ namespace HouraiTeahouse.Editor {
             }
         }
 
-        private readonly Dictionary<string, Data> _data;
+        readonly Dictionary<string, Data> _data;
 
         public ResourceAttributeDrawer() {
            _data = new Dictionary<string, Data>(); 

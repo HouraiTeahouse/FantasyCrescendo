@@ -1,32 +1,59 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-    /// <summary>
-    /// A behaviour used to display a Player's remaining stock
-    /// </summary>
+    /// <summary> A behaviour used to display a Player's remaining stock </summary>
     //TODO: Change to be event based 
     public class PlayerStockDisplay : MonoBehaviour, IDataComponent<Player> {
-        [SerializeField,
-         Tooltip("The Text object used to display the additional stock beyond shown by the simple indicators")] private
-            NumberText ExcessDisplay;
+        Player _player;
 
-        [SerializeField, Tooltip("The standard indicators to show current stock values")] private GameObject[]
-            standardIndicators;
+        StockMatch _stockMatch;
 
-        private StockMatch _stockMatch;
-        private Player _player;
+        [SerializeField]
+        [Tooltip(
+            "The Text object used to display the additional stock beyond shown by the simple indicators"
+            )]
+        NumberText ExcessDisplay;
+
+        [SerializeField]
+        [Tooltip("The standard indicators to show current stock values")]
+        GameObject[] standardIndicators;
 
         /// <summary>
-        /// Unity Callback. Called before the object's first frame.
+        ///     <see cref="IDataComponent{T}.SetData" />
         /// </summary>
+        public void SetData(Player data) {
+            _player = data;
+        }
+
+        /// <summary> Unity Callback. Called before the object's first frame. </summary>
         void Start() {
             _stockMatch = FindObjectOfType<StockMatch>();
             DisableCheck();
         }
 
-        /// <summary>
-        /// Unity Callback. Called once per frame.
-        /// </summary>
+        /// <summary> Unity Callback. Called once per frame. </summary>
         void Update() {
             DisableCheck();
 
@@ -59,13 +86,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
             foreach (GameObject indicator in standardIndicators.IgnoreNulls())
                 indicator.SetActive(false);
             enabled = false;
-        }
-
-        /// <summary>
-        /// <see cref="IDataComponent{T}.SetData"/>
-        /// </summary>
-        public void SetData(Player data) {
-            _player = data;
         }
     }
 }

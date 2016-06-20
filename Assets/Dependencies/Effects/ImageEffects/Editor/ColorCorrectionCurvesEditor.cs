@@ -28,7 +28,7 @@ namespace UnityStandardAssets.ImageEffects
         SerializedProperty selectiveFromColor;
         SerializedProperty selectiveToColor;
 
-        private bool  applyCurveChanges = false;
+        bool  applyCurveChanges = false;
 
         void OnEnable () {
             serObj = new SerializedObject (target);

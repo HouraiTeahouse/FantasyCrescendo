@@ -15,7 +15,7 @@ namespace HouraiTeahouse {
     /// <typeparam name="T"></typeparam>
     public abstract class SelectableEditorWindow<T> : LockableEditorWindow where T : Object {
 
-        private T[] _selection;
+        T[] _selection;
 
         /// <summary>
         /// A list of selected objects.

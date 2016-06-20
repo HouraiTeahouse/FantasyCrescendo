@@ -1,17 +1,41 @@
-﻿#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+﻿// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
 using System;
 using System.Runtime.InteropServices;
 
-
 namespace XInputDotNetPure {
-    class Imports {
+    internal class Imports {
         internal const string DLLName = "XInputInterface";
 
         [DllImport(DLLName)]
-        public static extern uint XInputGamePadGetState(uint playerIndex, IntPtr state);
+        public static extern uint XInputGamePadGetState(uint playerIndex,
+                                                        IntPtr state);
 
         [DllImport(DLLName)]
-        public static extern void XInputGamePadSetState(uint playerIndex, float leftMotor, float rightMotor);
+        public static extern void XInputGamePadSetState(uint playerIndex,
+                                                        float leftMotor,
+                                                        float rightMotor);
     }
 
 
@@ -22,11 +46,27 @@ namespace XInputDotNetPure {
 
 
     public struct GamePadButtons {
-        ButtonState start, back, leftStick, rightStick, leftShoulder, rightShoulder, a, b, x, y;
+        ButtonState start,
+                    back,
+                    leftStick,
+                    rightStick,
+                    leftShoulder,
+                    rightShoulder,
+                    a,
+                    b,
+                    x,
+                    y;
 
-        internal GamePadButtons(ButtonState start, ButtonState back, ButtonState leftStick, ButtonState rightStick,
-            ButtonState leftShoulder, ButtonState rightShoulder, ButtonState a, ButtonState b,
-            ButtonState x, ButtonState y) {
+        internal GamePadButtons(ButtonState start,
+                                ButtonState back,
+                                ButtonState leftStick,
+                                ButtonState rightStick,
+                                ButtonState leftShoulder,
+                                ButtonState rightShoulder,
+                                ButtonState a,
+                                ButtonState b,
+                                ButtonState x,
+                                ButtonState y) {
             this.start = start;
             this.back = back;
             this.leftStick = leftStick;
@@ -92,9 +132,15 @@ namespace XInputDotNetPure {
 
 
     public struct GamePadDPad {
-        ButtonState up, down, left, right;
+        ButtonState up,
+                    down,
+                    left,
+                    right;
 
-        internal GamePadDPad(ButtonState up, ButtonState down, ButtonState left, ButtonState right) {
+        internal GamePadDPad(ButtonState up,
+                             ButtonState down,
+                             ButtonState left,
+                             ButtonState right) {
             this.up = up;
             this.down = down;
             this.left = left;
@@ -125,7 +171,8 @@ namespace XInputDotNetPure {
 
     public struct GamePadThumbSticks {
         public struct StickValue {
-            float x, y;
+            float x,
+                  y;
 
             internal StickValue(float x, float y) {
                 this.x = x;
@@ -141,7 +188,8 @@ namespace XInputDotNetPure {
             }
         }
 
-        StickValue left, right;
+        StickValue left,
+                   right;
 
 
         internal GamePadThumbSticks(StickValue left, StickValue right) {
@@ -224,7 +272,9 @@ namespace XInputDotNetPure {
         }
 
 
-        internal GamePadState(bool isConnected, RawState rawState, GamePadDeadZone deadZone) {
+        internal GamePadState(bool isConnected,
+                              RawState rawState,
+                              GamePadDeadZone deadZone) {
             this.isConnected = isConnected;
 
             if (!isConnected) {
@@ -239,61 +289,81 @@ namespace XInputDotNetPure {
             }
 
             packetNumber = rawState.dwPacketNumber;
-            buttons = new GamePadButtons(
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.Start) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.Back) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.LeftThumb) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.RightThumb) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.LeftShoulder) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.RightShoulder) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.A) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.B) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.X) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.Y) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released
-                );
-            dPad = new GamePadDPad(
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.DPadUp) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.DPadDown) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.DPadLeft) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released,
-                (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.DPadRight) != 0
-                    ? ButtonState.Pressed
-                    : ButtonState.Released
-                );
+            buttons =
+                new GamePadButtons(
+                    (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.Start)
+                        != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.Back)
+                        != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons
+                        & (uint) ButtonsConstants.LeftThumb) != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons
+                        & (uint) ButtonsConstants.RightThumb) != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons
+                        & (uint) ButtonsConstants.LeftShoulder) != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons
+                        & (uint) ButtonsConstants.RightShoulder) != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.A)
+                        != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.B)
+                        != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.X)
+                        != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.Y)
+                        != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released);
+            dPad =
+                new GamePadDPad(
+                    (rawState.Gamepad.dwButtons & (uint) ButtonsConstants.DPadUp)
+                        != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons
+                        & (uint) ButtonsConstants.DPadDown) != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons
+                        & (uint) ButtonsConstants.DPadLeft) != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released,
+                    (rawState.Gamepad.dwButtons
+                        & (uint) ButtonsConstants.DPadRight) != 0
+                        ? ButtonState.Pressed
+                        : ButtonState.Released);
 
-            thumbSticks = new GamePadThumbSticks(
-                Utils.ApplyLeftStickDeadZone(rawState.Gamepad.sThumbLX, rawState.Gamepad.sThumbLY, deadZone),
-                Utils.ApplyRightStickDeadZone(rawState.Gamepad.sThumbRX, rawState.Gamepad.sThumbRY, deadZone)
-                );
-            triggers = new GamePadTriggers(
-                Utils.ApplyTriggerDeadZone(rawState.Gamepad.bLeftTrigger, deadZone),
-                Utils.ApplyTriggerDeadZone(rawState.Gamepad.bRightTrigger, deadZone)
-                );
+            thumbSticks =
+                new GamePadThumbSticks(
+                    Utils.ApplyLeftStickDeadZone(rawState.Gamepad.sThumbLX,
+                        rawState.Gamepad.sThumbLY,
+                        deadZone),
+                    Utils.ApplyRightStickDeadZone(rawState.Gamepad.sThumbRX,
+                        rawState.Gamepad.sThumbRY,
+                        deadZone));
+            triggers =
+                new GamePadTriggers(
+                    Utils.ApplyTriggerDeadZone(rawState.Gamepad.bLeftTrigger,
+                        deadZone),
+                    Utils.ApplyTriggerDeadZone(rawState.Gamepad.bRightTrigger,
+                        deadZone));
         }
 
 
@@ -348,16 +418,26 @@ namespace XInputDotNetPure {
             return GetState(playerIndex, GamePadDeadZone.IndependentAxes);
         }
 
-        public static GamePadState GetState(PlayerIndex playerIndex, GamePadDeadZone deadZone) {
-            IntPtr gamePadStatePointer = Marshal.AllocHGlobal(Marshal.SizeOf(typeof (GamePadState.RawState)));
-            uint result = Imports.XInputGamePadGetState((uint) playerIndex, gamePadStatePointer);
-            GamePadState.RawState state =
-                (GamePadState.RawState) Marshal.PtrToStructure(gamePadStatePointer, typeof (GamePadState.RawState));
+        public static GamePadState GetState(PlayerIndex playerIndex,
+                                            GamePadDeadZone deadZone) {
+            IntPtr gamePadStatePointer =
+                Marshal.AllocHGlobal(
+                    Marshal.SizeOf(typeof(GamePadState.RawState)));
+            uint result = Imports.XInputGamePadGetState((uint) playerIndex,
+                gamePadStatePointer);
+            var state =
+                (GamePadState.RawState)
+                    Marshal.PtrToStructure(gamePadStatePointer,
+                        typeof(GamePadState.RawState));
             return new GamePadState(result == Utils.Success, state, deadZone);
         }
 
-        public static void SetVibration(PlayerIndex playerIndex, float leftMotor, float rightMotor) {
-            Imports.XInputGamePadSetState((uint) playerIndex, leftMotor, rightMotor);
+        public static void SetVibration(PlayerIndex playerIndex,
+                                        float leftMotor,
+                                        float rightMotor) {
+            Imports.XInputGamePadSetState((uint) playerIndex,
+                leftMotor,
+                rightMotor);
         }
     }
 }

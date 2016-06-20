@@ -1,28 +1,51 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-    /// <summary>
-    /// A CharacterUIComponent that displays the portrait of a character on a RawImage object
-    /// </summary>
+    /// <summary> A CharacterUIComponent that displays the portrait of a character on a RawImage object </summary>
     public sealed class MapDisplay : SceneUIComponent<RawImage> {
-        private RectTransform _rectTransform;
+        [SerializeField]
+        [Tooltip("Should the map's portrait be cropped?")]
+        bool _cropped;
 
-        [SerializeField, Tooltip("Should the map's portrait be cropped?")]
-        private bool _cropped;
+        Rect _cropRect;
 
-        [SerializeField, Tooltip("Tint to cover the potrait, should the map be disabled")]
-        private Color _disabledTint = Color.gray;
+        Color _defaultColor;
 
-        [SerializeField, Tooltip("An offset to move the crop rect")]
-        private Vector2 _rectBias;
+        [SerializeField]
+        [Tooltip("Tint to cover the potrait, should the map be disabled")]
+        Color _disabledTint = Color.gray;
 
-        private Color _defaultColor;
-        private Rect _cropRect;
+        [SerializeField]
+        [Tooltip("An offset to move the crop rect")]
+        Vector2 _rectBias;
 
-        /// <summary>
-        /// Unity Callback. Called on object instantiation.
-        /// </summary>
+        RectTransform _rectTransform;
+
+        /// <summary> Unity Callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
             _rectTransform = Component.GetComponent<RectTransform>();
@@ -30,21 +53,25 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        /// <see cref="UIBehaviour.OnRectTransformDimensionsChange"/>
+        ///     <see cref="UIBehaviour.OnRectTransformDimensionsChange" />
         /// </summary>
         protected override void OnRectTransformDimensionsChange() {
             SetRect();
         }
 
         void SetRect() {
-            if (_rectTransform == null || Component == null || Component.texture == null)
+            if (_rectTransform == null || Component == null
+                || Component.texture == null)
                 return;
             Vector2 size = _rectTransform.rect.size;
             float aspect = size.x / size.y;
             Texture texture = Component.texture;
             Rect imageRect = _cropRect.EnforceAspect(aspect);
-            if (imageRect.width > texture.width || imageRect.height > texture.height) {
-                imageRect = imageRect.Restrict(texture.width, texture.height, aspect);
+            if (imageRect.width > texture.width
+                || imageRect.height > texture.height) {
+                imageRect = imageRect.Restrict(texture.width,
+                    texture.height,
+                    aspect);
                 imageRect.center = texture.Center();
             }
 
@@ -52,13 +79,13 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        /// <see cref="IDataComponent{T}.SetData"/>
+        ///     <see cref="IDataComponent{T}.SetData" />
         /// </summary>
         public override void SetData(SceneData data) {
             base.SetData(data);
             if (Component == null || data == null)
                 return;
-            data.PreviewImage.Load ();
+            data.PreviewImage.Load();
             if (data.PreviewImage == null || data.PreviewImage.Asset == null)
                 return;
             Texture2D texture = data.PreviewImage.Asset.texture;

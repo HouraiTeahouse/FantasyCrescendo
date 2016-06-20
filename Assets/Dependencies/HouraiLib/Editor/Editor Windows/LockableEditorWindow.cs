@@ -11,8 +11,8 @@ namespace HouraiTeahouse.Editor {
     /// </summary>
     public abstract class LockableEditorWindow : EditorWindow, IHasCustomMenu {
 
-        private GUIStyle lockButtonStyle;
-        private bool locked;
+        GUIStyle lockButtonStyle;
+        bool locked;
 
         /// <summary>
         /// Whether the EditorWindow is currently locked or not.

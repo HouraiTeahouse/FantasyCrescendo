@@ -13,11 +13,11 @@ namespace HouraiTeahouse.Localization.Editor {
     [CustomEditor(typeof(LanguageManager))]
     internal class LanguageManagerEditor : ScriptlessEditor {
 
-        private string[] availableLanguages;
-        private string[] display;
-        private int _index;
+        string[] availableLanguages;
+        string[] display;
+        int _index;
 
-        private Regex _splitCamelCase;
+        Regex _splitCamelCase;
 
         void OnEnable() {
             _splitCamelCase = new Regex(".([A-Z])");

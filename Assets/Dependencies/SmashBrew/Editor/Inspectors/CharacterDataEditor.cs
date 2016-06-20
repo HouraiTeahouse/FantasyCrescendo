@@ -10,8 +10,8 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     [CustomEditor(typeof(CharacterData))]
     internal class CharacterDataEditor : ScriptlessEditor {
 
-        private int _previewSelect;
-        private bool _crop;
+        int _previewSelect;
+        bool _crop;
 
         /// <summary>
         /// <see cref="Editor.OnInspectorGUI"/>

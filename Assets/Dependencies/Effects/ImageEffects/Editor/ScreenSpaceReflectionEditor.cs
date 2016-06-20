@@ -15,7 +15,7 @@ namespace UnityStandardAssets.ImageEffects
     {
         static Styles m_Styles;
 
-        private class Styles
+        class Styles
         {
             public readonly GUIStyle header = "ShurikenModuleTitle";
 
@@ -41,7 +41,7 @@ namespace UnityStandardAssets.ImageEffects
             m_PropertyMap.Add(field, new KeyValuePair<LayoutAttribute, SerializedProperty>(attr, serializedObject.FindProperty(searchPath))); 
         }
 
-        private static class StaticFieldFinder<T>
+        static class StaticFieldFinder<T>
         {
             public static FieldInfo GetField<TValue>(Expression<Func<T, TValue>> selector)
             {
@@ -61,7 +61,7 @@ namespace UnityStandardAssets.ImageEffects
         }
 
         [Serializable]
-        private class CatFoldoutMap
+        class CatFoldoutMap
         {
             public LayoutAttribute.Category category;
             public bool display; 
@@ -74,12 +74,12 @@ namespace UnityStandardAssets.ImageEffects
         }
 
         [SerializeField]
-        private List<CatFoldoutMap> m_CategoriesToShow = new List<CatFoldoutMap>();
+        List<CatFoldoutMap> m_CategoriesToShow = new List<CatFoldoutMap>();
 
         [NonSerialized]
-        private bool m_Initialized;
+        bool m_Initialized;
 
-        private enum SettingsMode
+        enum SettingsMode
         {
             HighQuality,
             Default,
@@ -87,7 +87,7 @@ namespace UnityStandardAssets.ImageEffects
             Custom,
         }
 
-        private void Initialize()
+        void Initialize()
         {
             m_Styles = new Styles();
             var categories = Enum.GetValues(typeof (LayoutAttribute.Category)).Cast<LayoutAttribute.Category>();
@@ -135,7 +135,7 @@ namespace UnityStandardAssets.ImageEffects
             return m_PropertyMap.Values.Where(x => x.Key.category == category).OrderBy(x => x.Key.priority).Select(x => x.Value);
         }
 
-        private bool Header(String title, bool display)
+        bool Header(String title, bool display)
         {
             Rect rect = GUILayoutUtility.GetRect(16f, 22f, m_Styles.header);
             GUI.Box(rect, title, m_Styles.header);
@@ -153,7 +153,7 @@ namespace UnityStandardAssets.ImageEffects
             return display;
         }
 
-        private void DrawFields()
+        void DrawFields()
         {
             foreach (var cat in m_CategoriesToShow)
             {
@@ -178,7 +178,7 @@ namespace UnityStandardAssets.ImageEffects
             }
         }
 
-        private void Apply(SettingsMode settingsMode)
+        void Apply(SettingsMode settingsMode)
         {
             switch (settingsMode)
             {
@@ -194,7 +194,7 @@ namespace UnityStandardAssets.ImageEffects
             }
         }
 
-        private void Apply(ScreenSpaceReflection.SSRSettings settings)
+        void Apply(ScreenSpaceReflection.SSRSettings settings)
         {
             foreach (var fieldKVP in m_PropertyMap)
             {

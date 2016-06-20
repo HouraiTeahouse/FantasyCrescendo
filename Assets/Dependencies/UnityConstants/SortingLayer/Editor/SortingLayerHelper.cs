@@ -7,8 +7,8 @@ namespace HouraiTeahouse {
     // Helpers used by the different sorting layer classes.
     [InitializeOnLoad]
     public static class SortingLayerHelper {
-        private static readonly PropertyInfo SortingLayerNamesProperty;
-        private static readonly MethodInfo GetSortingLayerIdMethod;
+        static readonly PropertyInfo SortingLayerNamesProperty;
+        static readonly MethodInfo GetSortingLayerIdMethod;
 
         static SortingLayerHelper() {
             Type utilityType = Type.GetType("UnityEditorInternal.InternalEditorUtility, UnityEditor");
@@ -43,7 +43,7 @@ namespace HouraiTeahouse {
 
         // Helper to convert from a sorting layer INDEX to a sorting layer ID. These are not the same thing.
         // IDs are based on the order in which layers were created and do not change when reordering the layers.
-        // Thankfully there is a private helper we can call to get the ID for a layer given its index.
+        // Thankfully there is a helper we can call to get the ID for a layer given its index.
         public static int GetSortingLayerIDForIndex(int index) {
             if (GetSortingLayerIdMethod == null)
                 return 0;

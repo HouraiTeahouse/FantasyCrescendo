@@ -16,9 +16,9 @@ namespace HouraiTeahouse.Editor {
     [InitializeOnLoad]
     public static class AssetUtil {
 
-        private static readonly Dictionary<string, string> DelayedMoves;
-        private const string ResourcePath = "Resources/";
-        private const string ResourceRegex = ".*/Resources/(.*?)\\..*";
+        static readonly Dictionary<string, string> DelayedMoves;
+        const string ResourcePath = "Resources/";
+        const string ResourceRegex = ".*/Resources/(.*?)\\..*";
 
         static AssetUtil() {
             DelayedMoves = new Dictionary<string, string>();

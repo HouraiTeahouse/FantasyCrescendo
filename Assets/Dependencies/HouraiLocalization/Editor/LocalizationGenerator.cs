@@ -22,16 +22,19 @@ namespace HouraiTeahouse.Localization.Editor {
                 generator.Generate();
         }
         
-        [SerializeField, Tooltip("The public Google Spreadsheets link to pull data from")]
-        private string GoogleLink;
+        [SerializeField]
+        [Tooltip("The public Google Spreadsheets link to pull data from")]
+        string GoogleLink;
 
-        [SerializeField, Tooltip("Columns in the spreadsheet to ignore")]
-        private string[] _ignoreColumns;
+        [SerializeField]
+        [Tooltip("Columns in the spreadsheet to ignore")]
+        string[] _ignoreColumns;
 
-        [SerializeField, Tooltip("The folder to save all of the generated assets into.")]
-        private Object _saveFolder;
+        [SerializeField]
+        [Tooltip("The folder to save all of the generated assets into.")]
+        Object _saveFolder;
 
-        private const string DefaultStoragePath = "Assets/Resources/Lang";
+        const string DefaultStoragePath = "Assets/Resources/Lang";
 
         /// <summary>
         /// Reads the Google Spreadsheet and generates/updates the StringSet asset files

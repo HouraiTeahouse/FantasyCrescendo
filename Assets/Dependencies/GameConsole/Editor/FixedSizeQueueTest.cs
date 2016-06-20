@@ -5,7 +5,7 @@ namespace HouraiTeahouse.Console {
 
     internal class FixedSizeQueueTest {
 
-        private readonly int[] testArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        readonly int[] testArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
         public void CheckEqual(FixedSizeQueue<int> queue, int i) {
             foreach (int a in queue) {

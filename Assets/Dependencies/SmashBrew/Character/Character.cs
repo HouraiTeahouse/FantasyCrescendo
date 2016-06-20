@@ -1,78 +1,105 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using System;
-using UnityEngine;
 using System.Linq;
 using HouraiTeahouse.Events;
 using UnityConstants;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
-
     public interface IResettable {
         void OnReset();
     }
 
-    public abstract class AbstractCharacterComponent : HouraiBehaviour, IResettable {
-
+    public abstract class AbstractCharacterComponent : HouraiBehaviour,
+                                                       IResettable {
         public Character Character { get; set; }
 
         public Mediator Events {
             get { return Character.Events; }
         }
 
-        protected virtual void Start() {
-            if(!Character)
-                Character = GetComponentInParent<Character>();
-        }
+        public virtual void OnReset() { }
 
-        public virtual void OnReset() {
+        protected virtual void Start() {
+            if (!Character)
+                Character = GetComponentInParent<Character>();
         }
     }
 
-    /// <summary>
-    /// General character class for handling the physics and animations of individual characters
-    /// </summary>
+    /// <summary> General character class for handling the physics and animations of individual characters </summary>
 #if UNITY_EDITOR
     [InitializeOnLoad]
 #endif
     [DisallowMultipleComponent]
-    [RequireComponent(typeof (Rigidbody), typeof (CapsuleCollider))]
+    [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     [RequireComponent(typeof(PlayerDamage), typeof(PlayerKnockback))]
-    [RequireComponent(typeof (Gravity), typeof (Ground))]
+    [RequireComponent(typeof(Gravity), typeof(Ground))]
     public sealed class Character : HouraiBehaviour {
-        private enum FacingMode {
+        enum FacingMode {
             Rotation,
             Scale
         }
+
+        #region Public Events
+
+        public event Action<Attack.Type, Attack.Direction, int> OnAttack;
+
+        #endregion
+
+        #region Internal Methods
+
+        internal void Attack(Attack.Type type,
+                             Attack.Direction direction,
+                             int index) {
+            OnAttack.SafeInvoke(type, direction, index);
+        }
+
+        #endregion
 
         #region Public Properties
 
         public Mediator Events { get; private set; }
 
-        /// <summary>
-        /// Gets how many bones the Character has.
-        /// </summary>
+        /// <summary> Gets how many bones the Character has. </summary>
         public int BoneCount {
             get { return _bones.Length; }
         }
 
-        /// <summary>
-        /// Gets or sets whether the Character is currently fast falling or not
-        /// </summary>
+        /// <summary> Gets or sets whether the Character is currently fast falling or not </summary>
         public bool IsFastFalling { get; set; }
 
         public float FallSpeed {
             get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
-        /// <summary>
-        /// The direction the character is currently facing.
-        /// If set to true, the character faces the right.
-        /// If set to false, the character faces the left.
-        /// 
-        /// The method in which the character is flipped depends on what the Facing Mode parameter is set to.
-        /// </summary>
+        /// <summary> The direction the character is currently facing. If set to true, the character faces the right. If set to
+        /// false, the character faces the left. The method in which the character is flipped depends on what the Facing Mode
+        /// parameter is set to. </summary>
         public bool Direction {
             get {
                 if (_facingMode == FacingMode.Rotation)
@@ -90,73 +117,63 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        /// <summary>
-        /// Gets how many remaining jumps the Character currently has.
-        /// </summary>
+        /// <summary> Gets how many remaining jumps the Character currently has. </summary>
         public int JumpCount { get; private set; }
 
-        /// <summary>
-        /// Gets the maximum number of jumps the Character can preform.
-        /// </summary>
+        /// <summary> Gets the maximum number of jumps the Character can preform. </summary>
         public int MaxJumpCount {
             get { return _jumpHeights == null ? 0 : _jumpHeights.Length; }
         }
 
-        /// <summary>
-        /// Can the Character currently jump?
-        /// </summary>
+        /// <summary> Can the Character currently jump? </summary>
         public bool CanJump {
             get { return JumpCount < MaxJumpCount; }
         }
 
-		public void ResetCharacter() {
-		    for (var i = 0; i < _resetableComponents.Length; i++) {
-		        IResettable resetable = _resetableComponents[i];
-                if(resetable != null)
+        public void ResetCharacter() {
+            for (var i = 0; i < _resetableComponents.Length; i++) {
+                IResettable resetable = _resetableComponents[i];
+                if (resetable != null)
                     resetable.OnReset();
-		    }
-		}
+            }
+        }
 
         #endregion
 
         #region Runtime Variables
 
-        private Transform[] _bones;
-        private bool _facing;
-        private float _lastTap;
-        private bool _jumpQueued;
+        Transform[] _bones;
+        bool _facing;
+        float _lastTap;
+        bool _jumpQueued;
 
         #endregion
 
         #region Serialized Variables
 
         [SerializeField]
-        private GameObject _rootBone;
+        GameObject _rootBone;
 
         [SerializeField]
-        private FacingMode _facingMode;
+        FacingMode _facingMode;
 
         [Header("Physics")]
         [SerializeField]
-        private float _maxFallSpeed = 5f;
-
-        [SerializeField, Tooltip("The fast falling speed applied")]
-        private float _fastFallSpeed = 9f;
-
-        [SerializeField, Tooltip("The heights of each jump")]
-        private float[] _jumpHeights = {1.5f, 1.5f};
+        float _maxFallSpeed = 5f;
 
         [SerializeField]
-        private Renderer[] _weapons;
+        [Tooltip("The fast falling speed applied")]
+        float _fastFallSpeed = 9f;
 
         [SerializeField]
-        private ParticleSystem[] _particles;
+        [Tooltip("The heights of each jump")]
+        float[] _jumpHeights = {1.5f, 1.5f};
 
-        #endregion
+        [SerializeField]
+        Renderer[] _weapons;
 
-        #region Public Events
-
-        public event Action<Attack.Type, Attack.Direction, int> OnAttack;
+        [SerializeField]
+        ParticleSystem[] _particles;
 
         #endregion
 
@@ -167,7 +184,7 @@ namespace HouraiTeahouse.SmashBrew {
         public Ground Ground { get; private set; }
         public PlayerDamage Damage { get; private set; }
 
-        private IResettable[] _resetableComponents;
+        IResettable[] _resetableComponents;
 
         #endregion
 
@@ -188,12 +205,12 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void Move(float speed) {
-			//Check to see if we can move or not. Fixes getting stuck on wall
-			//if (_collided && !Ground) { //We are hitting a wall or someone.
-			//	if(Physics.Raycast(transform.position, Direction ? -Vector3.right : Vector3.right, MovementCollider.radius * 2, 9))
-			//		return; //Raycast will ignore characters...probably.
-			//}
-			Vector3 vel = Rigidbody.velocity;
+            //Check to see if we can move or not. Fixes getting stuck on wall
+            //if (_collided && !Ground) { //We are hitting a wall or someone.
+            //	if(Physics.Raycast(transform.position, Direction ? -Vector3.right : Vector3.right, MovementCollider.radius * 2, 9))
+            //		return; //Raycast will ignore characters...probably.
+            //}
+            Vector3 vel = Rigidbody.velocity;
             vel.x = speed;
 
             if (Direction)
@@ -206,18 +223,20 @@ namespace HouraiTeahouse.SmashBrew {
                 _jumpQueued = true;
         }
 
-        /// <summary>
-        /// Actually applies the force to jump.
-        /// </summary>
+        /// <summary> Actually applies the force to jump. </summary>
         void JumpImpl() {
             // Apply upward force to jump
-			Vector3 force = Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]);
-			force.y -= Rigidbody.velocity.y;
-			Rigidbody.AddForce(force, ForceMode.VelocityChange);
+            Vector3 force = Vector3.up
+                * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]);
+            force.y -= Rigidbody.velocity.y;
+            Rigidbody.AddForce(force, ForceMode.VelocityChange);
 
             JumpCount++;
 
-            Events.Publish(new PlayerJumpEvent { Ground = Ground, RemainingJumps = MaxJumpCount - JumpCount });
+            Events.Publish(new PlayerJumpEvent {
+                Ground = Ground,
+                RemainingJumps = MaxJumpCount - JumpCount
+            });
         }
 
         public void SetWeaponVisibilty(int weapon, bool state) {
@@ -226,17 +245,10 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void SetParticleVisibilty(int particle, bool state) {
-            if(state)
+            if (state)
                 _particles[particle].Play();
             else
                 _particles[particle].Stop();
-        }
-        #endregion
-
-        #region Internal Methods
-
-        internal void Attack(Attack.Type type, Attack.Direction direction, int index) {
-            OnAttack.SafeInvoke(type, direction, index);
         }
 
         #endregion
@@ -251,9 +263,7 @@ namespace HouraiTeahouse.SmashBrew {
             _resetableComponents = GetComponentsInChildren<IResettable>();
         }
 
-        /// <summary>
-        /// Unity callback. Called on object instantiation.
-        /// </summary>
+        /// <summary> Unity callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
             Events = new Mediator();
@@ -286,12 +296,14 @@ namespace HouraiTeahouse.SmashBrew {
         void AnimationUpdate() {
             Animator.SetBool(CharacterAnim.Grounded, Ground);
             Animator.SetBool(CharacterAnim.Jump, _jumpQueued);
-            Animator.SetBool(CharacterAnim.Tap, Time.realtimeSinceStartup - _lastTap > Config.Player.TapPersistence);
+            Animator.SetBool(CharacterAnim.Tap,
+                Time.realtimeSinceStartup - _lastTap
+                    > Config.Player.TapPersistence);
 
             _jumpQueued = false;
         }
 
-       void FixedUpdate() {
+        void FixedUpdate() {
             float grav = Gravity;
             //Simulates ground friction.
             if (Ground)
@@ -305,12 +317,13 @@ namespace HouraiTeahouse.SmashBrew {
 
             if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;
-			if (Ground && Rigidbody.velocity.y <= 0f) {
-               IsFastFalling = false;
-               JumpCount = 0;
-           }
+            if (Ground && Rigidbody.velocity.y <= 0f) {
+                IsFastFalling = false;
+                JumpCount = 0;
+            }
             Rigidbody.velocity = velocity;
-            gameObject.layer = (velocity.magnitude > Config.Physics.TangibleSpeedCap)
+            gameObject.layer = velocity.magnitude
+                > Config.Physics.TangibleSpeedCap
                 ? Layers.Intangible
                 : Layers.Character;
 
@@ -324,8 +337,10 @@ namespace HouraiTeahouse.SmashBrew {
             gameObject.tag = Tags.Player;
             gameObject.layer = Layers.Character;
 
-            Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            Rigidbody.constraints = RigidbodyConstraints.FreezeRotation
+                | RigidbodyConstraints.FreezePositionZ;
+            Rigidbody.collisionDetectionMode =
+                CollisionDetectionMode.ContinuousDynamic;
             Rigidbody.isKinematic = false;
             Rigidbody.useGravity = false;
 
@@ -345,23 +360,22 @@ namespace HouraiTeahouse.SmashBrew {
 
 #if UNITY_EDITOR
 
-        /// <summary>
-        /// Editor only function that gets all of the required component types a Character needs.
-        /// </summary>
-        /// <returns>an array of all of the concrete component types marked with RequiredCharacterComponent</returns>
+        /// <summary> Editor only function that gets all of the required component types a Character needs. </summary>
+        /// <returns> an array of all of the concrete component types marked with RequiredCharacterComponent </returns>
         public static Type[] GetRequiredComponents() {
-            Type componentType = typeof (Component);
-            Type requiredComponentType = typeof (RequiredCharacterComponentAttribute);
+            Type componentType = typeof(Component);
+            Type requiredComponentType =
+                typeof(RequiredCharacterComponentAttribute);
             // Use reflection to find required Components for Characters and statuses
             // Enumerate all concrete Component types
-            return (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                from assemblyType in domainAssembly.GetTypes()
-                where
-                    assemblyType != null &&
-                    !assemblyType.IsAbstract &&
-                    componentType.IsAssignableFrom(assemblyType) &&
-                    assemblyType.IsDefined(requiredComponentType, true)
-                select assemblyType).ToArray();
+            return
+                (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                 from assemblyType in domainAssembly.GetTypes()
+                 where
+                     assemblyType != null && !assemblyType.IsAbstract
+                         && componentType.IsAssignableFrom(assemblyType)
+                         && assemblyType.IsDefined(requiredComponentType, true)
+                 select assemblyType).ToArray();
         }
 #endif
 

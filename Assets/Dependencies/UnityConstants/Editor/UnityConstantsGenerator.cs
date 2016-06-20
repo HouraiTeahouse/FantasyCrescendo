@@ -118,7 +118,7 @@ namespace HouraiTeahouse
             AssetDatabase.Refresh();
         }
 
-        private static string MakeSafeForCode(string str)
+        static string MakeSafeForCode(string str)
         {
             str = Regex.Replace(str, "[^a-zA-Z0-9_]", "_", RegexOptions.Compiled);
             if (char.IsDigit(str[0])) {

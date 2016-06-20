@@ -1,35 +1,49 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using System;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace HouraiTeahouse {
-
-    /// <summary>
-    /// A static PlayerPrefs wrapper that provides additional type support.
-    /// </summary>
+    /// <summary> A static PlayerPrefs wrapper that provides additional type support. </summary>
     public static class Prefs {
-        /// <summary>
-        /// Saves all the changes to disk .
-        /// </summary>
+        /// <summary> Saves all the changes to disk . </summary>
         public static void Save() {
             PlayerPrefs.Save();
         }
 
-        /// <summary>
-        /// Check whether a key exists or not.
-        /// </summary>
-        /// <param name="key">the key to check for</param>
-        /// <returns>true, if the key exists, false otherwise</returns>
+        /// <summary> Check whether a key exists or not. </summary>
+        /// <param name="key"> the key to check for </param>
+        /// <returns> true, if the key exists, false otherwise </returns>
         public static bool HasKey(string key) {
             return PlayerPrefs.HasKey(key);
         }
 
-        /// <summary>
-        /// Deletes the key given
-        /// </summary>
-        /// <param name="key">the key to delete</param>
+        /// <summary> Deletes the key given </summary>
+        /// <param name="key"> the key to delete </param>
         public static void DeleteKey(string key) {
             PlayerPrefs.DeleteKey(key);
         }
@@ -38,48 +52,44 @@ namespace HouraiTeahouse {
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-            Log.Info("Loaded value from PlayerPrefs: \"{0}\" : {1} ({2})", key, value, typeof(T).Name);
+                Log.Info("Loaded value from PlayerPrefs: \"{0}\" : {1} ({2})",
+                    key,
+                    value,
+                    typeof(T).Name);
             return value;
         }
 
         #region Object Values
 
-        /// <summary>
-        /// Gets a JSON serialized object from PlayerPrefs.
-        /// </summary>
-        /// <remarks>
-        /// The underlying representation was as a string, and can be read via <see cref="GetString"/>
+        /// <summary> Gets a JSON serialized object from PlayerPrefs. </summary>
+        /// <remarks> The underlying representation was as a string, and can be read via <see cref="GetString" />
         /// </remarks>
-        /// <seealso cref="SetObject"/>
-        /// <seealso cref="ReadObject"/>
-        /// <typeparam name="T">the type of the object to deserialize to</typeparam>
-        /// <param name="key">the key the object is saved to</param>
-        /// <returns>the deserialized object</returns>
+        /// <seealso cref="SetObject" />
+        /// <seealso cref="ReadObject" />
+        /// <typeparam name="T"> the type of the object to deserialize to </typeparam>
+        /// <param name="key"> the key the object is saved to </param>
+        /// <returns> the deserialized object </returns>
         public static T GetObject<T>(string key) {
-            return LogLoad(key, JsonUtility.FromJson<T>(PlayerPrefs.GetString(key)));
+            return LogLoad(key,
+                JsonUtility.FromJson<T>(PlayerPrefs.GetString(key)));
         }
 
-        /// <summary>
-        /// Serializes an object to JSON format and saves it to PlayerPrefs.
-        /// </summary>
-        /// <remarks>
-        /// The underlying representation was as a string, and can be read via <see cref="GetString"/>
+        /// <summary> Serializes an object to JSON format and saves it to PlayerPrefs. </summary>
+        /// <remarks> The underlying representation was as a string, and can be read via <see cref="GetString" />
         /// </remarks>
-        /// <seealso cref="GetObject{T}"/>
-        /// <seealso cref="ReadObject"/>
-        /// <param name="key">the key to save the object to</param>
-        /// <param name="obj">the object to save to PlayerPrefs</param>
+        /// <seealso cref="GetObject{T}" />
+        /// <seealso cref="ReadObject" />
+        /// <param name="key"> the key to save the object to </param>
+        /// <param name="obj"> the object to save to PlayerPrefs </param>
         public static void SetObject(string key, object obj) {
             PlayerPrefs.SetString(key, JsonUtility.ToJson(obj));
         }
 
-        /// <summary>
-        /// Deserializes an object and applies it's values on an existing instance. 
-        /// </summary>
-        /// <seealso cref="GetObject{T}"/>
-        /// <seealso cref="SetObject"/>
-        /// <param name="key">the key the object is saved to</param>
-        /// <param name="obj">the object to apply the values to </param>
+        /// <summary> Deserializes an object and applies it's values on an existing instance. </summary>
+        /// <seealso cref="GetObject{T}" />
+        /// <seealso cref="SetObject" />
+        /// <param name="key"> the key the object is saved to </param>
+        /// <param name="obj"> the object to apply the values to </param>
         public static void ReadObject(string key, object obj) {
             JsonUtility.FromJsonOverwrite(PlayerPrefs.GetString(key), obj);
             LogLoad(key, obj);
@@ -89,29 +99,19 @@ namespace HouraiTeahouse {
 
         #region Bool Values
 
-        /// <summary>
-        /// Gets a boolean value from PlayerPrefs.
-        /// </summary>
-        /// <remarks>
-        /// The underlying representation is stored as an integer. 
-        /// Is false if it is 0, and true otherwise.
-        /// </remarks>
-        /// <seealso cref="SetBool"/>
-        /// <param name="key">the key the boolean value is saved to</param>
-        /// <returns>the saved boolean value</returns>
+        /// <summary> Gets a boolean value from PlayerPrefs. </summary>
+        /// <remarks> The underlying representation is stored as an integer. Is false if it is 0, and true otherwise. </remarks>
+        /// <seealso cref="SetBool" />
+        /// <param name="key"> the key the boolean value is saved to </param>
+        /// <returns> the saved boolean value </returns>
         public static bool GetBool(string key) {
             return LogLoad(key, PlayerPrefs.GetInt(key) != 0);
         }
 
-        /// <summary>
-        /// Sets a boolean value to PlayerPrefs.
-        /// </summary>
-        /// <remarks>
-        /// The underlying representation is stored as an integer. 
-        /// Is false if it is 0, and true otherwise.
-        /// </remarks>
-        /// <seealso cref="GetBool"/>
-        /// <param name="key">the key the boolean value is saved to</param>
+        /// <summary> Sets a boolean value to PlayerPrefs. </summary>
+        /// <remarks> The underlying representation is stored as an integer. Is false if it is 0, and true otherwise. </remarks>
+        /// <seealso cref="GetBool" />
+        /// <param name="key"> the key the boolean value is saved to </param>
         public static void SetBool(string key, bool value) {
             PlayerPrefs.SetInt(key, value ? 1 : 0);
         }
@@ -120,22 +120,18 @@ namespace HouraiTeahouse {
 
         #region Int Values
 
-        /// <summary>
-        /// Gets an integer value from PlayerPrefs.
-        /// </summary>
-        /// <seealso cref="SetInt"/>
-        /// <param name="key">the key the integer value is saved to</param>
-        /// <returns>the saved integer value</returns>
+        /// <summary> Gets an integer value from PlayerPrefs. </summary>
+        /// <seealso cref="SetInt" />
+        /// <param name="key"> the key the integer value is saved to </param>
+        /// <returns> the saved integer value </returns>
         public static int GetInt(string key) {
             return LogLoad(key, PlayerPrefs.GetInt(key));
         }
 
-        /// <summary>
-        /// Sets an integer value to PlayerPrefs.
-        /// </summary>
-        /// <seealso cref="GetInt"/>
-        /// <param name="key">the key the integer value is saved to</param>
-        /// <param name="value">the value to save</param>
+        /// <summary> Sets an integer value to PlayerPrefs. </summary>
+        /// <seealso cref="GetInt" />
+        /// <param name="key"> the key the integer value is saved to </param>
+        /// <param name="value"> the value to save </param>
         public static void SetInt(string key, int value) {
             PlayerPrefs.SetInt(key, value);
         }
@@ -144,22 +140,18 @@ namespace HouraiTeahouse {
 
         #region Float Values
 
-        /// <summary>
-        /// Gets a floating point value from PlayerPrefs.
-        /// </summary>
-        /// <seealso cref="SetFloat"/>
-        /// <param name="key">the key the floating point value is saved to</param>
-        /// <returns>the saved floating point value</returns>
+        /// <summary> Gets a floating point value from PlayerPrefs. </summary>
+        /// <seealso cref="SetFloat" />
+        /// <param name="key"> the key the floating point value is saved to </param>
+        /// <returns> the saved floating point value </returns>
         public static float GetFloat(string key) {
             return LogLoad(key, PlayerPrefs.GetFloat(key));
         }
 
-        /// <summary>
-        /// Sets a floating point value to PlayerPrefs
-        /// </summary>
-        /// <seealso cref="GetFloat"/>
-        /// <param name="key">the key the floating point value is saved to</param>
-        /// <param name="value">the value to save</param>
+        /// <summary> Sets a floating point value to PlayerPrefs </summary>
+        /// <seealso cref="GetFloat" />
+        /// <param name="key"> the key the floating point value is saved to </param>
+        /// <param name="value"> the value to save </param>
         public static void SetFloat(string key, float value) {
             PlayerPrefs.SetFloat(key, value);
         }
@@ -168,22 +160,18 @@ namespace HouraiTeahouse {
 
         #region String Values
 
-        /// <summary>
-        /// Gets a string value from PlayerPrefs.
-        /// </summary>
-        /// <seealso cref="SetString"/>
-        /// <param name="key">the key the string value is saved to </param>
-        /// <returns>the saved string value</returns>
+        /// <summary> Gets a string value from PlayerPrefs. </summary>
+        /// <seealso cref="SetString" />
+        /// <param name="key"> the key the string value is saved to </param>
+        /// <returns> the saved string value </returns>
         public static string GetString(string key) {
             return LogLoad(key, PlayerPrefs.GetString(key));
         }
 
-        /// <summary>
-        /// Sets a string value to PlayerPrefs.
-        /// </summary>
-        /// <seealso cref="GetString"/>
-        /// <param name="key">the key the string value is saved to</param>
-        /// <param name="value">the value to save</param>
+        /// <summary> Sets a string value to PlayerPrefs. </summary>
+        /// <seealso cref="GetString" />
+        /// <param name="key"> the key the string value is saved to </param>
+        /// <param name="value"> the value to save </param>
         public static void SetString(string key, string value) {
             PlayerPrefs.SetString(key, value);
         }
@@ -193,13 +181,13 @@ namespace HouraiTeahouse {
 
     [Serializable]
     public abstract class AbstractPref<T> : ISerializationCallbackReceiver {
+        [SerializeField]
+        T _defaultValue = default(T);
 
         [SerializeField]
-        private string _key;
+        string _key;
 
-        [SerializeField]
-        private T _defaultValue = default(T);
-        private T _value;
+        T _value;
 
         protected AbstractPref(string key) {
             _key = key;
@@ -207,7 +195,7 @@ namespace HouraiTeahouse {
         }
 
         public T Value {
-            get { return _value;  }
+            get { return _value; }
             set {
                 _value = value;
                 Write(value);
@@ -220,11 +208,16 @@ namespace HouraiTeahouse {
             get { return _key; }
         }
 
-        /// <summary>
-        /// Reads the value stored in 
-        /// </summary>
-        /// <returns></returns>
+        void ISerializationCallbackReceiver.OnBeforeSerialize() { }
+
+        void ISerializationCallbackReceiver.OnAfterDeserialize() {
+            QueueLoad();
+        }
+
+        /// <summary> Reads the value stored in </summary>
+        /// <returns> </returns>
         protected abstract T Read();
+
         protected abstract void Write(T value);
 
         void QueueLoad() {
@@ -242,38 +235,26 @@ namespace HouraiTeahouse {
             else {
                 _value = _defaultValue;
                 Write(_defaultValue);
-                Log.Info("Perf key \"{0}\" not found. Default value of {1} ({2}) loaded.", _key, _value, typeof(T).Name);
+                Log.Info(
+                    "Perf key \"{0}\" not found. Default value of {1} ({2}) loaded.",
+                    _key,
+                    _value,
+                    typeof(T).Name);
             }
         }
 
-        public bool HasKey() {
-            return Prefs.HasKey(_key);
-        }
+        public bool HasKey() { return Prefs.HasKey(_key); }
 
-        public void DeleteKey() {
-            Prefs.DeleteKey(_key);
-        }
-
-        void ISerializationCallbackReceiver.OnBeforeSerialize() {
-        }
-
-        void ISerializationCallbackReceiver.OnAfterDeserialize() {
-            QueueLoad();
-        }
+        public void DeleteKey() { Prefs.DeleteKey(_key); }
     }
 
     [Serializable]
     public sealed class PrefInt : AbstractPref<int> {
-        public PrefInt(string key) : base(key) {
-        }
+        public PrefInt(string key) : base(key) { }
 
-        protected override int Read() {
-            return Prefs.GetInt(Key);
-        }
+        protected override int Read() { return Prefs.GetInt(Key); }
 
-        protected override void Write(int value) {
-            Prefs.SetInt(Key, value);
-        }
+        protected override void Write(int value) { Prefs.SetInt(Key, value); }
 
         public static implicit operator int(PrefInt prefInt) {
             return prefInt == null ? 0 : prefInt.Value;
@@ -282,16 +263,11 @@ namespace HouraiTeahouse {
 
     [Serializable]
     public sealed class PrefBool : AbstractPref<bool> {
-        public PrefBool(string key) : base(key) {
-        }
+        public PrefBool(string key) : base(key) { }
 
-        protected override bool Read() {
-            return Prefs.GetBool(Key);
-        }
+        protected override bool Read() { return Prefs.GetBool(Key); }
 
-        protected override void Write(bool value) {
-            Prefs.SetBool(Key, value);
-        }
+        protected override void Write(bool value) { Prefs.SetBool(Key, value); }
 
         public static implicit operator bool(PrefBool perfBool) {
             return perfBool != null && perfBool.Value;
@@ -300,30 +276,24 @@ namespace HouraiTeahouse {
 
     [Serializable]
     public sealed class PrefFloat : AbstractPref<float> {
-        public PrefFloat(string key) : base(key) {
-        }
+        public PrefFloat(string key) : base(key) { }
 
-        protected override float Read() {
-            return Prefs.GetFloat(Key);
-        }
+        protected override float Read() { return Prefs.GetFloat(Key); }
 
         protected override void Write(float value) {
             Prefs.SetFloat(Key, value);
         }
 
         public static implicit operator float(PrefFloat prefFloat) {
-            return prefFloat == null ? 0f: prefFloat.Value;
+            return prefFloat == null ? 0f : prefFloat.Value;
         }
     }
 
     [Serializable]
     public sealed class PrefString : AbstractPref<string> {
-        public PrefString(string key) : base(key) {
-        }
+        public PrefString(string key) : base(key) { }
 
-        protected override string Read() {
-            return Prefs.GetString(Key);
-        }
+        protected override string Read() { return Prefs.GetString(Key); }
 
         protected override void Write(string value) {
             Prefs.SetString(Key, value);

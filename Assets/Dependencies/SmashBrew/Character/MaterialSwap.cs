@@ -1,65 +1,82 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    /// <summary>
-    /// The pallete swap behaviour for changing out the 
-    /// </summary>
+    /// <summary> The pallete swap behaviour for changing out the </summary>
     [RequiredCharacterComponent]
     [DisallowMultipleComponent]
-    [RequireComponent(typeof (PlayerController))]
+    [RequireComponent(typeof(PlayerController))]
     public class MaterialSwap : MonoBehaviour {
-
         [Serializable]
-        private class Swap {
-            
+        class Swap {
             [Serializable]
-            private class MaterialSet {
-
-                [SerializeField, Resource(typeof (Material))]
+            class MaterialSet {
+                [SerializeField]
+                [Resource(typeof(Material))]
                 [Tooltip("The materials to apply to the renderers")]
-                private string[] _materials;
+                string[] _materials;
 
                 public void Set(Renderer[] targets) {
                     if (targets == null)
                         return;
-                    Material[] loadedMaterials = new Material[_materials.Length];
+                    var loadedMaterials = new Material[_materials.Length];
                     for (var i = 0; i < loadedMaterials.Length; i++)
-                        loadedMaterials[i] = Resources.Load<Material>(_materials[i]);
+                        loadedMaterials[i] =
+                            Resources.Load<Material>(_materials[i]);
                     foreach (Renderer renderer in targets)
                         if (renderer)
                             renderer.sharedMaterials = loadedMaterials;
                 }
-
             }
 
-            [SerializeField, Tooltip("The set of materials to swap to")]
-            private MaterialSet[] MaterialSets;
+            [SerializeField]
+            [Tooltip("The set of materials to swap to")]
+            MaterialSet[] MaterialSets;
 
-            [SerializeField, Tooltip("The set of renderers to apply the materials to")]
-            private Renderer[] TargetRenderers;
+            [SerializeField]
+            [Tooltip("The set of renderers to apply the materials to")]
+            Renderer[] TargetRenderers;
+
+            public int SetCount {
+                get { return MaterialSets.Length; }
+            }
 
             public void Set(int palleteSwap) {
                 if (palleteSwap < 0 || palleteSwap >= MaterialSets.Length)
                     return;
                 MaterialSets[palleteSwap].Set(TargetRenderers);
             }
-
-            public int SetCount {
-                get { return MaterialSets.Length; }
-            }
         }
 
+        int _color;
+
         [SerializeField]
-        private Swap[] _swaps;
+        Swap[] _swaps;
 
-        private int _color;
-
-        /// <summary>
-        /// Gets the number of pallete swaps are available
-        /// </summary>
+        /// <summary> Gets the number of pallete swaps are available </summary>
         public int PalleteCount {
             get { return _swaps.Max(swap => swap.SetCount); }
         }

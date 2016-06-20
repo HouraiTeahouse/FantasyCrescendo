@@ -6,9 +6,9 @@ namespace HouraiTeahouse.Editor {
 
     [InitializeOnLoad]
     public class QuickToggle {
-        private const string PrefKeyShowToggle = "UnityToolbag.QuickToggle.Visible";
+        const string PrefKeyShowToggle = "UnityToolbag.QuickToggle.Visible";
 
-        private static GUIStyle styleLock, styleLockUnselected, styleVisible;
+        static GUIStyle styleLock, styleLockUnselected, styleVisible;
 
         static QuickToggle() {
             if (EditorPrefs.HasKey(PrefKeyShowToggle) == false) 
@@ -18,7 +18,7 @@ namespace HouraiTeahouse.Editor {
             EditorApplication.RepaintHierarchyWindow();
         }
 
-        private static void DrawHierarchyItem(int instanceId, Rect selectionRect) {
+        static void DrawHierarchyItem(int instanceId, Rect selectionRect) {
             BuildStyles();
             var target = EditorUtility.InstanceIDToObject(instanceId) as GameObject;
             if (target == null)
@@ -51,7 +51,7 @@ namespace HouraiTeahouse.Editor {
             }
         }
 
-        private static Object[] GatherObjects(GameObject root) {
+        static Object[] GatherObjects(GameObject root) {
             var objects = new List<Object>();
             var recurseStack = new Stack<GameObject>(new GameObject[] { root });
 
@@ -65,7 +65,7 @@ namespace HouraiTeahouse.Editor {
             return objects.ToArray();
         }
 
-        private static void SetLockObject(GameObject target, bool isLocked) {
+        static void SetLockObject(GameObject target, bool isLocked) {
             Object[] objects = GatherObjects(target);
             string undoString = string.Format("{0} {1}", isLocked ? "Lock" : "Unlock", target.name);
             Undo.RecordObjects(objects, undoString);
@@ -97,7 +97,7 @@ namespace HouraiTeahouse.Editor {
             }
         }
 
-        private static void SetVisible(GameObject target, bool isActive) {
+        static void SetVisible(GameObject target, bool isActive) {
             string undoString = string.Format("{0} {1}",
                                         isActive ? "Show" : "Hide",
                                         target.name);
@@ -107,7 +107,7 @@ namespace HouraiTeahouse.Editor {
             EditorUtility.SetDirty(target);
         }
 
-        private static void BuildStyles() {
+        static void BuildStyles() {
             // All of the styles have been built, don't do anything
             if (styleLock != null &&
                 styleLockUnselected != null &&

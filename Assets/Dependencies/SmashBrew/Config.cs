@@ -1,36 +1,42 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-
     [CreateAssetMenu(fileName = "New Config", menuName = "SmashBrew/Config")]
     public sealed class Config : ScriptableObject {
-        #region Serialized Fields
-        [SerializeField]
-        private GameModeConfig _gameModes;
+        static Config _instance;
 
-        [SerializeField]
-        private PhysicsConfig _physics;
-
-        [SerializeField]
-        private PlayerConfig _player;
-
-        [SerializeField]
-        private DebugConfig _debug;
-        #endregion
-        private static Config _instance;
-
-        /// <summary>
-        /// The singleton instance of the game's config
-        /// </summary>
+        /// <summary> The singleton instance of the game's config </summary>
         static Config Instance {
             get {
                 if (_instance)
                     return _instance;
                 _instance = Resources.Load<Config>("Config");
-                if(!_instance)
+                if (!_instance)
                     _instance = CreateInstance<Config>();
-                return _instance; 
+                return _instance;
             }
         }
 
@@ -50,29 +56,43 @@ namespace HouraiTeahouse.SmashBrew {
             get { return Instance._debug; }
         }
 
-        /// <summary>
-        /// Unity callback. Called on load.
-        /// </summary>
+        /// <summary> Unity callback. Called on load. </summary>
         void OnEnable() {
             //TODO: Generalize
             GameMode.Current = _gameModes.StandardVersus;
         }
+
+        #region Serialized Fields
+
+        [SerializeField]
+        GameModeConfig _gameModes;
+
+        [SerializeField]
+        PhysicsConfig _physics;
+
+        [SerializeField]
+        PlayerConfig _player;
+
+        [SerializeField]
+        DebugConfig _debug;
+
+        #endregion
     }
 
     [Serializable]
     public class DebugConfig {
         [SerializeField]
-        private Color DamageableHitboxColor = Color.yellow;
+        Color DamageableHitboxColor = Color.yellow;
 
         [SerializeField]
-        private Color IntangibleHitboxColor = Color.blue;
+        Color IntangibleHitboxColor = Color.blue;
 
         [SerializeField]
-        private Color InvincibleHitboxColor = Color.green;
+        Color InvincibleHitboxColor = Color.green;
 
         [SerializeField]
-        private Color OffensiveHitboxColor = Color.red;
-        
+        Color OffensiveHitboxColor = Color.red;
+
         public Color GetHitboxColor(Hitbox.Type type) {
             switch (type) {
                 case Hitbox.Type.Offensive:
@@ -92,16 +112,16 @@ namespace HouraiTeahouse.SmashBrew {
     [Serializable]
     public class GameModeConfig {
         [SerializeField]
-        private SerializedGameMode _standardVersus;
+        SerializedGameMode _allStar;
 
         [SerializeField]
-        private SerializedGameMode _training;
+        SerializedGameMode _arcade;
 
         [SerializeField]
-        private SerializedGameMode _arcade;
+        SerializedGameMode _standardVersus;
 
         [SerializeField]
-        private SerializedGameMode _allStar;
+        SerializedGameMode _training;
 
         public GameMode StandardVersus {
             get { return _standardVersus; }
@@ -123,40 +143,42 @@ namespace HouraiTeahouse.SmashBrew {
     [Serializable]
     public class PlayerConfig {
         [SerializeField]
-        private Color[] _playerColors = {
-            Color.red, Color.blue, Color.green, Color.yellow,
-            new Color(1, 0.5f, 0), Color.cyan, Color.magenta, new Color(0.25f, 0.25f, 0.25f)
+        Color _cpuColor = new Color(0.75f, 0.75f, 0.75f);
+
+        [SerializeField]
+        Color[] _playerColors = {
+            Color.red,
+            Color.blue,
+            Color.green,
+            Color.yellow,
+            new Color(1, 0.5f, 0),
+            Color.cyan,
+            Color.magenta,
+            new Color(0.25f, 0.25f, 0.25f)
         };
 
         [SerializeField]
-        private Color _cpuColor = new Color(0.75f, 0.75f, 0.75f);
+        float _tapPersistence = 1 / 12f;
 
         [SerializeField]
-        private float _tapPersistence = 1 / 12f;
-
-        [SerializeField]
-        private float _tapTreshold = 0.3f;
+        float _tapTreshold = 0.3f;
 
         public Color CPUColor {
             get { return _cpuColor; }
         }
 
-        /// <summary>
-        /// How long a tap persists before it is no longer valid
-        /// </summary>
+        /// <summary> How long a tap persists before it is no longer valid </summary>
         public float TapPersistence {
             get { return _tapPersistence; }
         }
 
-        /// <summary>
-        /// Minimum acceleration (normalized controller units/second) for a tap to be considered a tap
-        /// </summary>
+        /// <summary> Minimum acceleration (normalized controller units/second) for a tap to be considered a tap </summary>
         public float TapTreshold {
             get { return _tapTreshold; }
         }
 
         public Color GetColor(int playerNumber, bool isCPU = false) {
-            if(isCPU)
+            if (isCPU)
                 return _cpuColor;
             return _playerColors[playerNumber % _playerColors.Length];
         }
@@ -165,7 +187,7 @@ namespace HouraiTeahouse.SmashBrew {
     [Serializable]
     public class PhysicsConfig {
         [SerializeField]
-        private float _tangibleSpeedCap = 3f;
+        float _tangibleSpeedCap = 3f;
 
         public float TangibleSpeedCap {
             get { return _tangibleSpeedCap; }

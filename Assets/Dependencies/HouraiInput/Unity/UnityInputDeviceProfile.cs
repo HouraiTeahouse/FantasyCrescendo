@@ -1,10 +1,30 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-
 
 namespace HouraiTeahouse.HouraiInput {
     public sealed class AutoDiscover : Attribute {
@@ -12,22 +32,16 @@ namespace HouraiTeahouse.HouraiInput {
 
 
     public class UnityInputDeviceProfile {
-        public string Name { get; protected set; }
-        public string Meta { get; protected set; }
-
-        public InputMapping[] AnalogMappings { get; protected set; }
-        public InputMapping[] ButtonMappings { get; protected set; }
-
-        protected string[] SupportedPlatforms;
+        static readonly HashSet<Type> HiddenTypes = new HashSet<Type>();
         protected string[] JoystickNames;
         protected string[] JoystickRegex;
 
         protected string LastResortRegex;
-
-        private static readonly HashSet<Type> HiddenTypes = new HashSet<Type>();
+        float lowerDeadZone;
 
         float sensitivity;
-        float lowerDeadZone;
+
+        protected string[] SupportedPlatforms;
         float upperDeadZone;
 
 
@@ -42,6 +56,12 @@ namespace HouraiTeahouse.HouraiInput {
             AnalogMappings = new InputMapping[0];
             ButtonMappings = new InputMapping[0];
         }
+
+        public string Name { get; protected set; }
+        public string Meta { get; protected set; }
+
+        public InputMapping[] AnalogMappings { get; protected set; }
+        public InputMapping[] ButtonMappings { get; protected set; }
 
         public float Sensitivity {
             get { return sensitivity; }
@@ -62,39 +82,18 @@ namespace HouraiTeahouse.HouraiInput {
             get {
                 if (SupportedPlatforms == null || SupportedPlatforms.Length == 0)
                     return true;
-                return SupportedPlatforms.Any(platform => HInput.Platform.Contains(platform.ToUpper()));
+                return
+                    SupportedPlatforms.Any(
+                        platform => HInput.Platform.Contains(platform.ToUpper()));
             }
         }
 
         public bool IsJoystick {
             get {
-                return (LastResortRegex != null) ||
-                       !JoystickNames.IsNullOrEmpty() ||
-                       !JoystickRegex.IsNullOrEmpty();
+                return (LastResortRegex != null)
+                    || !JoystickNames.IsNullOrEmpty()
+                    || !JoystickRegex.IsNullOrEmpty();
             }
-        }
-
-        public bool HasJoystickName(string joystickName) {
-            if (!IsJoystick)
-                return false;
-            if (JoystickNames != null && JoystickNames.Contains(joystickName, StringComparer.OrdinalIgnoreCase)) 
-                return true;
-            return JoystickRegex != null && JoystickRegex.Any(t => Regex.IsMatch(joystickName, t, RegexOptions.IgnoreCase));
-        }
-
-
-        public bool HasLastResortRegex(string joystickName) {
-            if (!IsJoystick)
-                return false;
-            return LastResortRegex != null && Regex.IsMatch(joystickName, LastResortRegex, RegexOptions.IgnoreCase);
-        }
-
-        public bool HasJoystickOrRegexName(string joystickName) {
-            return HasJoystickName(joystickName) || HasLastResortRegex(joystickName);
-        }
-
-        public static void Hide(Type type) {
-            HiddenTypes.Add(type);
         }
 
         public bool IsHidden {
@@ -112,6 +111,36 @@ namespace HouraiTeahouse.HouraiInput {
         public int ButtonCount {
             get { return ButtonMappings.Length; }
         }
+
+        public bool HasJoystickName(string joystickName) {
+            if (!IsJoystick)
+                return false;
+            if (JoystickNames != null
+                && JoystickNames.Contains(joystickName,
+                    StringComparer.OrdinalIgnoreCase))
+                return true;
+            return JoystickRegex != null
+                && JoystickRegex.Any(
+                    t => Regex.IsMatch(joystickName, t, RegexOptions.IgnoreCase));
+        }
+
+
+        public bool HasLastResortRegex(string joystickName) {
+            if (!IsJoystick)
+                return false;
+            return LastResortRegex != null
+                && Regex.IsMatch(joystickName,
+                    LastResortRegex,
+                    RegexOptions.IgnoreCase);
+        }
+
+        public bool HasJoystickOrRegexName(string joystickName) {
+            return HasJoystickName(joystickName)
+                || HasLastResortRegex(joystickName);
+        }
+
+        public static void Hide(Type type) { HiddenTypes.Add(type); }
+
         #region InputSource Helpers
 
         protected static InputSource Button(int index) {
@@ -126,11 +155,13 @@ namespace HouraiTeahouse.HouraiInput {
             return new UnityKeyCodeSource(keyCodeList);
         }
 
-        protected static InputSource KeyCodeComboButton(params KeyCode[] keyCodeList) {
+        protected static InputSource KeyCodeComboButton(
+            params KeyCode[] keyCodeList) {
             return new UnityKeyCodeComboSource(keyCodeList);
         }
 
-        protected static InputSource KeyCodeAxis(KeyCode negativeKeyCode, KeyCode positiveKeyCode) {
+        protected static InputSource KeyCodeAxis(KeyCode negativeKeyCode,
+                                                 KeyCode positiveKeyCode) {
             return new UnityKeyCodeAxisSource(negativeKeyCode, positiveKeyCode);
         }
 
@@ -182,7 +213,9 @@ namespace HouraiTeahouse.HouraiInput {
 
         protected static InputSource MouseXAxis = new UnityMouseAxisSource("x");
         protected static InputSource MouseYAxis = new UnityMouseAxisSource("y");
-        protected static InputSource MouseScrollWheel = new UnityMouseAxisSource("z");
+
+        protected static InputSource MouseScrollWheel =
+            new UnityMouseAxisSource("z");
 
         #endregion
     }

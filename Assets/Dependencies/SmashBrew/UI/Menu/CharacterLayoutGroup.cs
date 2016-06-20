@@ -1,21 +1,60 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-    /// <summary>
-    /// A custom layout group created for controlling the layout of the
-    /// individual character select squares on the character select screen
-    /// </summary>
+    /// <summary> A custom layout group created for controlling the layout of the individual character select squares on the
+    /// character select screen </summary>
     public class CharacterLayoutGroup : LayoutGroup, ILayoutSelfController {
-        [SerializeField, Tooltip("The spacing between child elements, in pixels")] private Vector2 _spacing;
+        [SerializeField]
+        [Tooltip("The target aspect ratio for the individual children")]
+        float _childAspectRatio;
 
-        [SerializeField, Tooltip("The target aspect ratio for the overall layout")] private float _selfAspectRatio;
+        [SerializeField]
+        [Tooltip("The target aspect ratio for the overall layout")]
+        float _selfAspectRatio;
 
-        [SerializeField, Tooltip("The target aspect ratio for the individual children")] private float _childAspectRatio;
-
+        [SerializeField]
+        [Tooltip("The spacing between child elements, in pixels")]
+        Vector2 _spacing;
 
         /// <summary>
-        /// <see cref="LayoutGroup.CalculateLayoutInputHorizontal"/>
+        ///     <see cref="LayoutGroup.SetLayoutHorizontal" />
+        /// </summary>
+        public override void SetLayoutHorizontal() {
+            SetLayout(true);
+        }
+
+        /// <summary>
+        ///     <see cref="LayoutGroup.SetLayoutVertical" />
+        /// </summary>
+        public override void SetLayoutVertical() {
+            SetLayout(false);
+        }
+
+        /// <summary>
+        ///     <see cref="LayoutGroup.CalculateLayoutInputHorizontal" />
         /// </summary>
         public override void CalculateLayoutInputHorizontal() {
             base.CalculateLayoutInputHorizontal();
@@ -23,30 +62,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        /// <see cref="LayoutGroup.CalculateLayoutInputVertical"/>
+        ///     <see cref="LayoutGroup.CalculateLayoutInputVertical" />
         /// </summary>
         public override void CalculateLayoutInputVertical() {
             SetLayoutInputForAxis(padding.vertical, padding.vertical, -1, 1);
         }
 
-        /// <summary>
-        /// <see cref="LayoutGroup.SetLayoutHorizontal"/>
-        /// </summary>
-        public override void SetLayoutHorizontal() {
-            SetLayout(true);
-        }
-
-        /// <summary>
-        /// <see cref="LayoutGroup.SetLayoutVertical"/>
-        /// </summary>
-        public override void SetLayoutVertical() {
-            SetLayout(false);
-        }
-
-        /// <summary>
-        /// Builds the full layout of all children along one axis.
-        /// </summary>
-        /// <param name="axis">which axis to build on, true if vertical, false if horizontal</param>
+        /// <summary> Builds the full layout of all children along one axis. </summary>
+        /// <param name="axis"> which axis to build on, true if vertical, false if horizontal </param>
         void SetLayout(bool axis) {
             // Givens
             // Child Aspect Ratio
@@ -58,8 +81,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
             }
 
             // Calculated
-            int bestRows = 1;
-            int bestCols = 1;
+            var bestRows = 1;
+            var bestCols = 1;
             Vector2 itemSize = Vector2.zero;
             bool isPrime = count <= 3;
             int effectiveCount = count;
@@ -75,11 +98,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
                         continue;
                     isPrime |= rows != 1 && rows != effectiveCount;
                     int cols = effectiveCount / rows;
-                    Vector2 effectiveSpace = availableSpace -
-                                             new Vector2(Mathf.Max(0, cols - 1) * _spacing.x,
-                                                 Mathf.Max(0, rows - 1) * _spacing.y);
-                    Vector2 size = new Vector2(effectiveSpace.x / cols, effectiveSpace.y / rows);
-                    float area = Mathf.Abs(rows * size.x - cols * size.y * _childAspectRatio);
+                    Vector2 effectiveSpace = availableSpace
+                        - new Vector2(Mathf.Max(0, cols - 1) * _spacing.x,
+                            Mathf.Max(0, rows - 1) * _spacing.y);
+                    var size = new Vector2(effectiveSpace.x / cols,
+                        effectiveSpace.y / rows);
+                    float area =
+                        Mathf.Abs(rows * size.x
+                            - cols * size.y * _childAspectRatio);
                     if (area >= maxArea)
                         continue;
                     maxArea = area;
@@ -88,20 +114,22 @@ namespace HouraiTeahouse.SmashBrew.UI {
                     itemSize = size;
                 }
                 effectiveCount++;
-            } while (!isPrime);
+            }
+            while (!isPrime);
 
             Vector2 delta = itemSize + _spacing;
 
             // Only set the sizes when invoked for horizontal axis, not the positions.
 
             if (axis) {
-                for (int i = 0; i < rectChildren.Count; i++) {
+                for (var i = 0; i < rectChildren.Count; i++) {
                     RectTransform rect = rectChildren[i];
 
-                    m_Tracker.Add(this, rect,
-                        DrivenTransformProperties.Anchors |
-                        DrivenTransformProperties.AnchoredPosition |
-                        DrivenTransformProperties.SizeDelta);
+                    m_Tracker.Add(this,
+                        rect,
+                        DrivenTransformProperties.Anchors
+                            | DrivenTransformProperties.AnchoredPosition
+                            | DrivenTransformProperties.SizeDelta);
 
                     rect.anchorMin = Vector2.up;
                     rect.anchorMax = Vector2.up;
@@ -111,8 +139,12 @@ namespace HouraiTeahouse.SmashBrew.UI {
             }
 
             Vector2 center = rectTransform.rect.size / 2;
-            Vector2 extents = 0.5f * new Vector2(bestCols * itemSize.x + Mathf.Max(0, bestCols - 1) * _spacing.x,
-                bestRows * itemSize.y + Mathf.Max(0, bestRows - 1) * _spacing.y);
+            Vector2 extents = 0.5f
+                * new Vector2(
+                    bestCols * itemSize.x
+                        + Mathf.Max(0, bestCols - 1) * _spacing.x,
+                    bestRows * itemSize.y
+                        + Mathf.Max(0, bestRows - 1) * _spacing.y);
             Vector2 start = center - extents;
 
             for (var i = 0; i < bestRows; i++) {
@@ -126,7 +158,10 @@ namespace HouraiTeahouse.SmashBrew.UI {
                     if (index >= count)
                         break;
 
-                    SetChildAlongAxis(rectChildren[index], 0, x + j * delta.x, itemSize.x);
+                    SetChildAlongAxis(rectChildren[index],
+                        0,
+                        x + j * delta.x,
+                        itemSize.x);
                     SetChildAlongAxis(rectChildren[index], 1, y, itemSize.y);
                 }
             }

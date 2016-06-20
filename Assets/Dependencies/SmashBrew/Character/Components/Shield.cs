@@ -1,3 +1,25 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -8,31 +30,34 @@ namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
     [RequiredCharacterComponent]
     public sealed class Shield : HouraiBehaviour, IDamageable {
+        //[SerializeField]
+        //float _maxHP = 100f;
+
+        //[SerializeField]
+        //float _regenerationRate = 10f;
+
+        //[SerializeField]
+        //float _depletionRate = 25f;
+
+        //[SerializeField]
+        //float _resetHP = 30f;
+
+        //[SerializeField]
+        //float _shieldSize = 1.5f;
+
+        //float _currentHP;
+
+        Character _character;
+        PlayerController _playerController;
         //TODO: properly implement
 
-        [SerializeField] private Material _shieldMaterial;
+        [SerializeField]
+        Material _shieldMaterial;
 
-        //[SerializeField]
-        //private float _maxHP = 100f;
+        GameObject _shieldObj;
+        Transform _shieldTransform;
 
-        //[SerializeField]
-        //private float _regenerationRate = 10f;
-
-        //[SerializeField]
-        //private float _depletionRate = 25f;
-
-        //[SerializeField]
-        //private float _resetHP = 30f;
-
-        //[SerializeField]
-        //private float _shieldSize = 1.5f;
-
-        //private float _currentHP;
-
-        private Character _character;
-        private GameObject _shieldObj;
-        private Transform _shieldTransform;
-        private PlayerController _playerController;
+        public void Damage(object source, float damage) { }
 
         protected override void Awake() {
             base.Awake();
@@ -90,9 +115,6 @@ namespace HouraiTeahouse.SmashBrew {
         void ShieldBreak() {
             _character.Events.Publish(new PlayerShieldBreakEvent());
             //_currentHP = _resetHP;
-        }
-
-        public void Damage(object source, float damage) {
         }
     }
 }

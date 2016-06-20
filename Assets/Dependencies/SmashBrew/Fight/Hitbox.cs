@@ -1,22 +1,117 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using System;
 using UnityConstants;
 using UnityEngine;
 #if UNITY_EDITOR
-using UnityEditor;
+
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
-    [RequireComponent(typeof (Collider))]
+    [RequireComponent(typeof(Collider))]
     public sealed class Hitbox : MonoBehaviour {
-        private static Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;
+        public enum Type {
+            // The values here are used as priority mulitpliers
+            Offensive = 1,
+            Damageable = 2,
+            Invincible = 3,
+            Intangible = 4,
+            Shield = 10000,
+            Absorb = 20000,
+            Reflective = 30000
+        }
 
-        static Action<Hitbox, Hitbox> ExecuteInterface<T>(Predicate<Hitbox> check, Action<T, object> action) {
+        static Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;
+
+        [SerializeField]
+        [HideInInspector]
+        Mesh _capsule;
+
+        //TODO: Add triggers for on hit effects and SFX
+        //ParticleSystem _effect;
+        //AudioSource _soundEffect;
+        Collider[] _colliders;
+
+        [SerializeField]
+        [HideInInspector]
+        Mesh _cube;
+
+        IDamageable _damageable;
+        IKnockbackable _knockbackable;
+
+        [SerializeField]
+        [HideInInspector]
+        Material _material;
+
+        [SerializeField]
+        [HideInInspector]
+        Mesh _sphere;
+
+        static Hitbox() {
+            ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
+            ReactionMatrix[Type.Offensive, Type.Damageable] =
+                delegate(Hitbox src, Hitbox dst) {
+                    if (dst.Damageable != null)
+                        dst.Damageable.Damage(src, src.BaseDamage);
+                    if (dst.Knockbackable != null)
+                        //TODO : FIX
+                        dst.Knockbackable.Knockback(src, Vector2.one);
+                    DrawEffect(src, dst);
+                };
+            ReactionMatrix[Type.Offensive, Type.Absorb] =
+                ExecuteInterface<IAbsorbable>(h => h.Absorbable,
+                    (a, o) => a.Absorb(o));
+            ReactionMatrix[Type.Offensive, Type.Reflective] =
+                ExecuteInterface<IReflectable>(h => h.Reflectable,
+                    (a, o) => a.Reflect(o));
+            ReactionMatrix[Type.Offensive, Type.Invincible] = DrawEffect;
+        }
+
+        /// <summary> Whether hitboxes should be drawn or not. </summary>
+        public static bool DrawHitboxes { get; set; }
+
+        // Represents the source Character that owns this Hitbox
+        // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
+        // If this is a Damageable type Hitbox (AKA a Hurtbox) this is the character that the damage and knockback is applied to.
+        public Character Source { get; set; }
+
+        public IDamageable Damageable {
+            get { return _damageable; }
+        }
+
+        public IKnockbackable Knockbackable {
+            get { return _knockbackable; }
+        }
+
+        static Action<Hitbox, Hitbox> ExecuteInterface<T>(
+            Predicate<Hitbox> check,
+            Action<T, object> action) {
             return delegate(Hitbox src, Hitbox dst) {
                 if (!check(src))
                     return;
                 T[] components = src.GetComponents<T>();
-                for(var i = 0; i < components.Length; i++)
+                for (var i = 0; i < components.Length; i++)
                     action(components[i], dst);
             };
         }
@@ -29,81 +124,9 @@ namespace HouraiTeahouse.SmashBrew {
             ReactionMatrix[src.CurrentType, dst.CurrentType](src, dst);
         }
 
-        static Hitbox() {
-            ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
-            ReactionMatrix[Type.Offensive, Type.Damageable] = delegate(Hitbox src, Hitbox dst) {
-                if (dst.Damageable != null)
-                    dst.Damageable.Damage(src, src.BaseDamage);
-                if (dst.Knockbackable != null)
-                    //TODO : FIX
-                    dst.Knockbackable.Knockback(src, Vector2.one);
-                DrawEffect(src, dst);
-            };
-            ReactionMatrix[Type.Offensive, Type.Absorb] = ExecuteInterface<IAbsorbable>(h => h.Absorbable,
-                (a, o) => a.Absorb(o));
-            ReactionMatrix[Type.Offensive, Type.Reflective] = ExecuteInterface<IReflectable>(h => h.Reflectable,
-                (a, o) => a.Reflect(o));
-            ReactionMatrix[Type.Offensive, Type.Invincible] = DrawEffect;
-        }
-
-        /// <summary>
-        /// Whether hitboxes should be drawn or not.
-        /// </summary>
-        public static bool DrawHitboxes { get; set; }
-
-        public enum Type {
-            // The values here are used as priority mulitpliers
-            Offensive = 1,
-            Damageable = 2,
-            Invincible = 3,
-            Intangible = 4,
-            Shield = 10000,
-            Absorb = 20000,
-            Reflective = 30000
-        }
-
-        [SerializeField]
-        [HideInInspector]
-        private Mesh _sphere;
-
-        [SerializeField]
-        [HideInInspector]
-        private Mesh _cube;
-
-        [SerializeField]
-        [HideInInspector]
-        private Mesh _capsule;
-
-        [SerializeField]
-        [HideInInspector]
-        private Material _material;
-
-        //TODO: Add triggers for on hit effects and SFX
-        //private ParticleSystem _effect;
-        //private AudioSource _soundEffect;
-        private Collider[] _colliders;
-
-        // Represents the source Character that owns this Hitbox
-        // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
-        // If this is a Damageable type Hitbox (AKA a Hurtbox) this is the character that the damage and knockback is applied to.
-        public Character Source { get; set; }
-
-        private IDamageable _damageable;
-        private IKnockbackable _knockbackable;
-
-        public IDamageable Damageable {
-            get { return _damageable; }
-        }
-
-        public IKnockbackable Knockbackable {
-            get { return _knockbackable; }
-        }
-
         #region Unity Callbacks
 
-        /// <summary>
-        /// Unity callback. Called on object instantiation.
-        /// </summary>
+        /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
             Source = GetComponentInParent<Character>();
             _damageable = GetComponentInParent<IDamageable>();
@@ -128,7 +151,8 @@ namespace HouraiTeahouse.SmashBrew {
 
 #if UNITY_EDITOR
         void OnDrawGizmos() {
-            GizmoUtil.DrawColliders(GetComponents<Collider>(), Config.Debug.GetHitboxColor(type));
+            GizmoUtil.DrawColliders(GetComponents<Collider>(),
+                Config.Debug.GetHitboxColor(type));
         }
 #endif
 
@@ -138,7 +162,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (_colliders == null)
                 _colliders = GetComponents<Collider>();
             Color color = Config.Debug.GetHitboxColor(type);
-            foreach (var col in _colliders)
+            foreach (Collider col in _colliders)
                 DrawCollider(col, color);
             //GL.wireframe = true;
             //foreach (var col in _colliders)
@@ -167,7 +191,8 @@ namespace HouraiTeahouse.SmashBrew {
                 mesh = _sphere;
                 position = sphereCol.center;
                 scale = sphereCol.radius * Vector3.one;
-                localToWorld = Matrix4x4.TRS(transform.position, transform.rotation,
+                localToWorld = Matrix4x4.TRS(transform.position,
+                    transform.rotation,
                     Vector3.one * transform.lossyScale.Max());
             }
             else if (capsuleCol != null) {
@@ -190,14 +215,16 @@ namespace HouraiTeahouse.SmashBrew {
             }
             _material.SetColor("_Color", color);
             _material.SetPass(0);
-            Graphics.DrawMeshNow(mesh, localToWorld * Matrix4x4.TRS(position, rotation, scale));
+            Graphics.DrawMeshNow(mesh,
+                localToWorld * Matrix4x4.TRS(position, rotation, scale));
         }
 
         void OnTriggerEnter(Collider other) {
             if (!other.CompareTag(Tags.Hitbox))
                 return;
             var otherHitbox = other.GetComponent<Hitbox>();
-            if (otherHitbox == null || !ReactionMatrix.ContainsKey(type, otherHitbox.type))
+            if (otherHitbox == null
+                || !ReactionMatrix.ContainsKey(type, otherHitbox.type))
                 return;
             HitboxResolver.AddCollision(this, otherHitbox);
         }
@@ -206,21 +233,29 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Serializable Fields
 
-        [SerializeField] private Type type;
+        [SerializeField]
+        Type type;
 
-        [SerializeField] private int _priority = 100;
+        [SerializeField]
+        int _priority = 100;
 
-        [SerializeField] private float _damage = 5f;
+        [SerializeField]
+        float _damage = 5f;
 
-        [SerializeField] private float _angle = 45f;
+        [SerializeField]
+        float _angle = 45f;
 
-        [SerializeField] private float _baseKnockback;
+        [SerializeField]
+        float _baseKnockback;
 
-        [SerializeField] private float _knockbackScaling;
+        [SerializeField]
+        float _knockbackScaling;
 
-        [SerializeField] private bool _reflectable;
+        [SerializeField]
+        bool _reflectable;
 
-        [SerializeField] private bool _absorbable;
+        [SerializeField]
+        bool _absorbable;
 
         #endregion
 
@@ -267,7 +302,11 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public float BaseDamage {
-            get { return Source == null ? _damage : Source.GetComponent<PlayerDamage>().ModifyDamage(_damage); }
+            get {
+                return Source == null
+                    ? _damage
+                    : Source.GetComponent<PlayerDamage>().ModifyDamage(_damage);
+            }
         }
 
         public bool FlipDirection {

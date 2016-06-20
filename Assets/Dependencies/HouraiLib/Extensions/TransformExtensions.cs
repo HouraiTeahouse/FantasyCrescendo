@@ -1,28 +1,54 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2016 Hourai Teahouse
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse {
     public static class TransformExtensions {
-        public static void SetX(this Transform transform, float x, bool local = false) {
+        public static void SetX(this Transform transform,
+                                float x,
+                                bool local = false) {
             transform.SetPositionLocation(0, x, local);
         }
 
-        public static void SetY(this Transform transform, float y, bool local = false) {
+        public static void SetY(this Transform transform,
+                                float y,
+                                bool local = false) {
             transform.SetPositionLocation(1, y, local);
         }
 
-        public static void SetZ(this Transform transform, float z, bool local = false) {
+        public static void SetZ(this Transform transform,
+                                float z,
+                                bool local = false) {
             transform.SetPositionLocation(2, z, local);
         }
 
-        /// <summary>
-        /// Copys the position and rotation of another transform onto one.
-        /// </summary>
-        /// <param name="transform"></param>
-        /// <param name="target"></param>
-        /// <exception cref="ArgumentNullException"><paramref name="transform"/>
-        ///  or <paramref name="target"/> are null</exception>
+        /// <summary> Copys the position and rotation of another transform onto one. </summary>
+        /// <param name="transform"> </param>
+        /// <param name="target"> </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transform" />
+        /// or <paramref name="target" /> are null </exception>
         public static void Copy(this Transform transform, Transform target) {
             Check.NotNull("transform", transform);
             Check.NotNull("target", target);
@@ -30,14 +56,13 @@ namespace HouraiTeahouse {
             transform.rotation = target.rotation;
         }
 
-        /// <summary>
-        /// Finds the lowest common ancestor between two Transforms.
-        /// Returns null if either are null or both are not part of the same Transform hiearchy.
-        /// </summary>
-        /// <param name="transform">the first transform</param>
-        /// <param name="other">the second transform</param>
-        /// <returns>the lowest common ancestor between the two transforms</returns>
-        public static Transform FindCommonAncestor(this Transform transform, Transform other) {
+        /// <summary> Finds the lowest common ancestor between two Transforms. Returns null if either are null or both are not part
+        /// of the same Transform hiearchy. </summary>
+        /// <param name="transform"> the first transform </param>
+        /// <param name="other"> the second transform </param>
+        /// <returns> the lowest common ancestor between the two transforms </returns>
+        public static Transform FindCommonAncestor(this Transform transform,
+                                                   Transform other) {
             if (!transform || !other || transform.root != other.root)
                 return null;
             var s1 = new HashSet<Transform>();
@@ -61,9 +86,14 @@ namespace HouraiTeahouse {
             return null;
         }
 
-        static void SetPositionLocation(this Transform transform, int component, float value, bool local) {
+        static void SetPositionLocation(this Transform transform,
+                                        int component,
+                                        float value,
+                                        bool local) {
             Check.NotNull("transform", transform);
-            Vector3 position = local ? transform.localPosition : transform.position;
+            Vector3 position = local
+                ? transform.localPosition
+                : transform.position;
             position[component] = value;
             if (local)
                 transform.localPosition = position;
