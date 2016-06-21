@@ -33,7 +33,7 @@ namespace HouraiTeahouse {
         /// <returns> </returns>
         public static IEnumerable<GameObject> GetGameObject<T>(
             this IEnumerable<T> components) where T : Component {
-            Check.NotNull("components", components);
+            Check.NotNull(components);
             return from component in components.IgnoreNulls()
                    select component.gameObject;
         }
@@ -45,7 +45,7 @@ namespace HouraiTeahouse {
         /// <returns> the retrieved Component </returns>
         public static T GetOrAddComponent<T>(this Component component)
             where T : Component {
-            Check.NotNull("component", component);
+            Check.NotNull(component);
             GameObject gameObject = component.gameObject;
             var attempt = gameObject.GetComponent<T>();
             return attempt ? attempt : gameObject.AddComponent<T>();
@@ -59,7 +59,7 @@ namespace HouraiTeahouse {
         /// <returns> the retrieved Component </returns>
         public static T SafeGetComponent<T>(this Component component)
             where T : class {
-            Check.NotNull("component", component);
+            Check.NotNull(component);
             GameObject gameObject = component.gameObject;
             var attempt = gameObject.GetComponent<T>();
             if (attempt != null)

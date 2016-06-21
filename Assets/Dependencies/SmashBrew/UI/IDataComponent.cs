@@ -42,7 +42,7 @@ namespace HouraiTeahouse.SmashBrew {
             this IEnumerable<IDataComponent<T>> enumeration,
             T data) {
             foreach (IDataComponent<T> dataComponent in
-                Check.NotNull("enumeration", enumeration).IgnoreNulls())
+                Check.NotNull(enumeration).IgnoreNulls())
                 dataComponent.SetData(data);
         }
     }

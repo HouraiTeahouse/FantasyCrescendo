@@ -187,7 +187,7 @@ namespace HouraiTeahouse.Localization {
         /// supported. </exception>
         /// <returns> the localization language </returns>
         public Language LoadLanguage(string identifier) {
-            Check.NotNull("identifier", identifier);
+            Check.NotNull(identifier);
             if (!_languages.Contains(identifier))
                 throw new InvalidOperationException(
                     "Language with identifier of {0} is not supported.".With(

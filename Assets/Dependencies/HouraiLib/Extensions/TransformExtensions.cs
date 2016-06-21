@@ -50,8 +50,8 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="transform" />
         /// or <paramref name="target" /> are null </exception>
         public static void Copy(this Transform transform, Transform target) {
-            Check.NotNull("transform", transform);
-            Check.NotNull("target", target);
+            Check.NotNull(transform);
+            Check.NotNull(target);
             transform.position = target.position;
             transform.rotation = target.rotation;
         }
@@ -90,7 +90,7 @@ namespace HouraiTeahouse {
                                         int component,
                                         float value,
                                         bool local) {
-            Check.NotNull("transform", transform);
+            Check.NotNull(transform);
             Vector3 position = local
                 ? transform.localPosition
                 : transform.position;

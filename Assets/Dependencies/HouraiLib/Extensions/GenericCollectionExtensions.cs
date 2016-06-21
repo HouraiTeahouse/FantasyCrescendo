@@ -43,7 +43,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="enumeration" /> is null </exception>
         /// <returns> true if <paramref name="enumeration" /> is empty, false otherwise </returns>
         public static bool IsEmpty(this IEnumerable enumeration) {
-            Check.NotNull("enumeration", enumeration);
+            Check.NotNull(enumeration);
             var collection = enumeration as ICollection;
             if (collection != null)
                 return collection.Count <= 0;
@@ -98,7 +98,7 @@ namespace HouraiTeahouse {
         /// <returns> the key of the maximum value </returns>
         public static K ArgMax<K, V>(this IEnumerable<KeyValuePair<K, V>> values)
             where V : IComparable<V> {
-            return FindArg(Check.NotNull("values", values),
+            return FindArg(Check.NotNull(values),
                 (v1, v2) => v1.CompareTo(v2) > 0);
         }
 
@@ -111,7 +111,7 @@ namespace HouraiTeahouse {
         /// <returns> the key of the minimum value </returns>
         public static K ArgMin<K, V>(this IEnumerable<KeyValuePair<K, V>> values)
             where V : IComparable<V> {
-            return FindArg(Check.NotNull("values", values),
+            return FindArg(Check.NotNull(values),
                 (v1, v2) => v1.CompareTo(v2) < 0);
         }
 
@@ -139,7 +139,7 @@ namespace HouraiTeahouse {
         /// <returns> the index of the maximum value </returns>
         public static int ArgMax<T>(this IEnumerable<T> values)
             where T : IComparable<T> {
-            return FindIndex(Check.NotNull("values", values),
+            return FindIndex(Check.NotNull(values),
                 (v1, v2) => v1.CompareTo(v2) > 0);
         }
 
@@ -151,7 +151,7 @@ namespace HouraiTeahouse {
         /// <returns> the index of the minimum value </returns>
         public static int ArgMin<T>(this IEnumerable<T> values)
             where T : IComparable<T> {
-            return FindIndex(Check.NotNull("values", values),
+            return FindIndex(Check.NotNull(values),
                 (v1, v2) => v1.CompareTo(v2) < 0);
         }
 
@@ -179,7 +179,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="list" /> is null </exception>
         /// <returns> a random element from the list </returns>
         public static T Random<T>(this IList<T> list) {
-            Check.NotNull("list", list);
+            Check.NotNull(list);
             return list.Random(0, list.Count);
         }
 
@@ -191,7 +191,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="list" /> is null </exception>
         /// <returns> a random element from the list selected from the range </returns>
         public static T Random<T>(this IList<T> list, int start, int end) {
-            Check.NotNull("list", list);
+            Check.NotNull(list);
             start = Mathf.Clamp(start, 0, list.Count);
             end = Mathf.Clamp(end, 0, list.Count);
             return list[UnityEngine.Random.Range(start, end)];

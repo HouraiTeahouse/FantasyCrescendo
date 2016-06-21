@@ -248,7 +248,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         internal Character Spawn(Transform transform, bool direction) {
-            return Spawn(Check.NotNull("transform", transform).position,
+            return Spawn(Check.NotNull(transform).position,
                 direction);
         }
 

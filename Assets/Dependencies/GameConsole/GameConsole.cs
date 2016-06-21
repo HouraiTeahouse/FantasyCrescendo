@@ -95,8 +95,8 @@ namespace HouraiTeahouse.Console {
         /// <param name="callback"> the handler that is to be registered </param>
         public static void RegisterCommand(string command,
                                            ConsoleCommand callback) {
-            Check.NotNull("callback", callback);
-            Check.NotNull("command", command);
+            Check.NotNull(callback);
+            Check.NotNull(command);
             if (!_commands.ContainsKey(command))
                 _commands[command] = callback;
             else

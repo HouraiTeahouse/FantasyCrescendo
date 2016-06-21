@@ -53,7 +53,10 @@ namespace HouraiTeahouse.SmashBrew {
             return Apply<T>(target.gameObject, duration);
         }
 
-        protected virtual void Start() { enabled = false; }
+        protected override void Start() {
+            base.Start();
+            enabled = false;
+        }
 
         protected virtual float GetDeltaTime() { return DeltaTime; }
 

@@ -25,7 +25,7 @@ using UnityEngine;
 namespace HouraiTeahouse {
     public static class TextureExtensions {
         public static float AspectRatio(this Texture texture) {
-            Check.NotNull("texture", texture);
+            Check.NotNull(texture);
             if (texture.height == 0)
                 return float.NaN;
             return (float) texture.width / texture.height;
@@ -36,17 +36,17 @@ namespace HouraiTeahouse {
         }
 
         public static Vector2 Size(this Texture texture) {
-            Check.NotNull("texture", texture);
+            Check.NotNull(texture);
             return new Vector2(texture.width, texture.height);
         }
 
         public static Rect PixelRect(this Texture texture) {
-            Check.NotNull("texture", texture);
+            Check.NotNull(texture);
             return new Rect(0, 0, texture.width, texture.height);
         }
 
         public static Rect UVToPixelRect(this Texture texture, Rect uvRect) {
-            Check.NotNull("texture", texture);
+            Check.NotNull(texture);
             return new Rect(texture.width * uvRect.x,
                 texture.height * uvRect.y,
                 texture.width * uvRect.width,
@@ -54,7 +54,7 @@ namespace HouraiTeahouse {
         }
 
         public static Rect PixelToUVRect(this Texture texture, Rect pixelRect) {
-            Check.NotNull("texture", texture);
+            Check.NotNull(texture);
             var uvRect = new Rect();
             if (texture.width != 0) {
                 uvRect.x = pixelRect.x / texture.width;

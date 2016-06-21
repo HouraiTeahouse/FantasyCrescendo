@@ -79,7 +79,7 @@ namespace HouraiTeahouse {
         /// <returns> the IDisposable object for working with Gizmos </returns>
         public static IDisposable With(Transform transform) {
             return new GizmoDisposable(null,
-                Check.NotNull("transform", transform).localToWorldMatrix);
+                Check.NotNull(transform).localToWorldMatrix);
         }
 
         /// <summary> Creates an IDisposable object for drawing Gizmos within certain transformation and color. </summary>
@@ -88,7 +88,7 @@ namespace HouraiTeahouse {
         /// <returns> the IDisposable object for working with Gizmos </returns>
         public static IDisposable With(Color color, Transform transform) {
             return new GizmoDisposable(color,
-                Check.NotNull("transform", transform).localToWorldMatrix);
+                Check.NotNull(transform).localToWorldMatrix);
         }
 
         /// <summary> Draws a Gizmo that matches the shape and size of a given 3D collider </summary>

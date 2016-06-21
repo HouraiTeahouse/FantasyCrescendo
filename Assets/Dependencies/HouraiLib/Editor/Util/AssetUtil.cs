@@ -57,7 +57,7 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static string GetAssetFolderPath(Object asset) {
-            return Regex.Replace(AssetDatabase.GetAssetPath(Check.NotNull("asset", asset)), "(Assets)+/(.*)/.*?\\..*", "$2");
+            return Regex.Replace(AssetDatabase.GetAssetPath(Check.NotNull(asset)), "(Assets)+/(.*)/.*?\\..*", "$2");
         }
         
         public static bool IsAsset(this Object obj) {
@@ -65,7 +65,7 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static string CreateAssetPath(params string[] folderNames) {
-            Check.NotNull("folderNames", folderNames);
+            Check.NotNull(folderNames);
             if (folderNames.Length <= 0)
                 return string.Empty;
 
@@ -83,8 +83,8 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static void CreateAsset(string folder, Object obj, string suffix = null) {
-            Check.NotNull("folder", folder);
-            Check.NotNull("obj", obj);
+            Check.NotNull(folder);
+            Check.NotNull(obj);
             if (string.IsNullOrEmpty(suffix))
                 suffix = "asset";
             if (obj.IsAsset())
@@ -95,8 +95,8 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static void MoveAsset(string targetFolder, Object asset) {
-            Check.NotNull("targetFolder", targetFolder);
-            Check.NotNull("asset", asset);
+            Check.NotNull(targetFolder);
+            Check.NotNull(asset);
             if (!asset.IsAsset()) {
                 var gameObject = asset as GameObject;
                 var component = asset as Component;
@@ -162,7 +162,7 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static void CreateFolder(string path) {
-            Check.NotNull("path", path);
+            Check.NotNull(path);
             if (IsValidFolder(path))
                 return;
 

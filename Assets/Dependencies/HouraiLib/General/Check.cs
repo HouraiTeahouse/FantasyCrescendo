@@ -32,9 +32,9 @@ namespace HouraiTeahouse {
         /// <param name="argument"> the argument itself </param>
         /// <returns> the argument, if it isn't null </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="argument" /> is null </exception>
-        public static T NotNull<T>(string name, T argument) {
+        public static T NotNull<T>(T argument) {
             if (argument == null)
-                throw new ArgumentNullException(name);
+                throw new ArgumentNullException();
             return argument;
         }
 
@@ -62,7 +62,7 @@ namespace HouraiTeahouse {
         /// <returns> whether or not it's in range </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="list" /> </exception>
         public static bool Range<T>(int val, IList<T> list) {
-            return Range(val, NotNull("list", list).Count);
+            return Range(val, NotNull(list).Count);
         }
 
         /// <summary> Checks if <paramref name="val" /> is in range [<paramref name="a" />, <paramref name="b" />) </summary>

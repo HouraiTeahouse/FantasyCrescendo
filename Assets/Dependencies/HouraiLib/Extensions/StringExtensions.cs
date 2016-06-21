@@ -34,7 +34,7 @@ namespace HouraiTeahouse {
             where T : struct, IComparable, IFormattable, IConvertible {
             Check.Argument(str.IsNullOrEmpty());
             return
-                (T) Enum.Parse(typeof(T), Check.NotNull("str", str), ignoreCase);
+                (T) Enum.Parse(typeof(T), Check.NotNull(str), ignoreCase);
         }
 
         /// <summary> Shorthand for string.With. </summary>
@@ -43,8 +43,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="str" /> or <paramref name="objs" /> is null </exception>
         /// <returns> the formatted string </returns>
         public static string With(this string str, params object[] objs) {
-            return string.Format(Check.NotNull("str", str),
-                Check.NotNull("objs", objs));
+            return string.Format(Check.NotNull(str), objs);
         }
 
         public static string EmptyIfNull(this string str) {

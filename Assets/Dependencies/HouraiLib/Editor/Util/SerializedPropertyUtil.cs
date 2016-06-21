@@ -16,10 +16,10 @@ namespace HouraiTeahouse.Editor {
         /// <param name="source">the source collection to read values from</param>
         public static void SetArray<T>(this SerializedProperty property, IEnumerable<T> source, int start = 0) 
             where T : Object {
-            Check.NotNull("property", property);
-            Check.Argument("property", property.isArray);
+            Check.NotNull(property);
+            Check.Argument(property.isArray);
             var i = start;
-            foreach (var obj in Check.NotNull("source", source)) {
+            foreach (var obj in Check.NotNull(source)) {
                 if (i >= property.arraySize)
                     property.InsertArrayElementAtIndex(i);
                 property.GetArrayElementAtIndex(i).objectReferenceValue = obj;
@@ -36,7 +36,7 @@ namespace HouraiTeahouse.Editor {
         /// <param name="source">the source collection to read values from</param>
         public static void AppendArray<T>(this SerializedProperty property, IEnumerable<T> source)
             where T : Object {
-            Check.NotNull("property", property).SetArray(source, property.arraySize);
+            Check.NotNull(property).SetArray(source, property.arraySize);
         }
 
     }

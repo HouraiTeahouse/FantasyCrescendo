@@ -7,13 +7,12 @@ namespace HouraiTeahouse {
 
         [Test]
         public void CheckArgumentNullTest() {
-            var name = "test";
             Assert.Catch<ArgumentNullException>(delegate {
                 object obj = null;
-                Assert.Null(Check.NotNull(name, obj));
+                Assert.Null(Check.NotNull(obj));
             });
             Assert.DoesNotThrow(delegate {
-                Assert.NotNull(Check.NotNull(name, new object()));
+                Assert.NotNull(Check.NotNull(new object()));
             });
         }
 
