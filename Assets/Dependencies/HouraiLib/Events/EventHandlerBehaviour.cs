@@ -53,7 +53,7 @@ namespace HouraiTeahouse.Events {
         }
 
         /// <summary> Events callback. </summary>
-        /// <param name="EventArgs"> event arguments </param>
-        protected abstract void OnEvent(T EventArgs);
+        /// <param name="eventArgs"> event arguments </param>
+        protected abstract void OnEvent(T eventArgs);
     }
 }

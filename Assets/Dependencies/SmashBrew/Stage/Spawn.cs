@@ -41,8 +41,8 @@ namespace HouraiTeahouse.SmashBrew {
         SpawnPoint[] _spawnPoints;
 
         /// <summary> Spawns players when the match begins. </summary>
-        /// <param name="startEventArgs"> </param>
-        protected override void OnEvent(MatchStartEvent startEventArgs) {
+        /// <param name="eventArgs"> </param>
+        protected override void OnEvent(MatchStartEvent eventArgs) {
             var i = 0;
             IEnumerator<Player> activePlayers =
                 Player.ActivePlayers.GetEnumerator();
