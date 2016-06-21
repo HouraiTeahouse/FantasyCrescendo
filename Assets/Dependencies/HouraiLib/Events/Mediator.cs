@@ -23,7 +23,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace HouraiTeahouse.Events {
+namespace HouraiTeahouse {
+
     /// <summary> A generalized object that encapsulates the interactions between multiple objects. Meant to be used as either
     /// local or global event managers. </summary>
     public class Mediator {
@@ -39,6 +40,13 @@ namespace HouraiTeahouse.Events {
         /// </summary>
         public Mediator() {
             _subscribers = new Dictionary<Type, Delegate>();
+            _typeCache = new Dictionary<Type, Type[]>();
+        }
+
+        // Internal only, for testing
+        internal Mediator(Dictionary<Type, Delegate> subscribers) {
+            Check.NotNull("subscribers", subscribers);
+            _subscribers = new Dictionary<Type, Delegate>(subscribers);
             _typeCache = new Dictionary<Type, Type[]>();
         }
 
