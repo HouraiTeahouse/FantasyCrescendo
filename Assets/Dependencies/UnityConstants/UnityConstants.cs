@@ -1,27 +1,9 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// This file is auto-generated. Modifications are not saved.
 
-namespace UnityConstants {
-    public static class Tags {
+namespace UnityConstants
+{
+    public static class Tags
+    {
         public const string Untagged = "Untagged";
         public const string Respawn = "Respawn";
         public const string Finish = "Finish";
@@ -35,12 +17,14 @@ namespace UnityConstants {
         public const string Spawn = "Spawn";
     }
 
-    public static class SortingLayers {
+    public static class SortingLayers
+    {
         public const int Default = 0;
         public const int VFX = 0;
     }
 
-    public static class Layers {
+    public static class Layers
+    {
         public const int Default = 0;
         public const int TransparentFX = 1;
         public const int Ignore_Raycast = 2;
@@ -66,7 +50,8 @@ namespace UnityConstants {
         public const int Blast_ZoneMask = 1 << 31;
     }
 
-    public static class Scenes {
+    public static class Scenes
+    {
         public const int Splash_Screen = 0;
         public const int Stage_Bootstrap = 1;
         public const int Main_Menu = 2;
@@ -75,7 +60,8 @@ namespace UnityConstants {
         public const int Stage_Select = 5;
     }
 
-    public static class Axes {
+    public static class Axes
+    {
         public const string joystick_1_analog_0 = "joystick 1 analog 0";
         public const string joystick_1_analog_1 = "joystick 1 analog 1";
         public const string joystick_1_analog_2 = "joystick 1 analog 2";
@@ -285,3 +271,4 @@ namespace UnityConstants {
         public const string cancel = "cancel";
     }
 }
+

@@ -34,6 +34,9 @@ namespace HouraiTeahouse {
         [SerializeField]
         Text _text;
 
+        /// <summary>
+        /// The string value to display on the text.
+        /// </summary>
         protected virtual string DisplayedText {
             get { return _displayedText; }
             set {
@@ -47,6 +50,9 @@ namespace HouraiTeahouse {
             }
         }
 
+        /// <summary>
+        ///   <para>See MonoBehaviour.Awake.</para>
+        /// </summary>
         protected override void Awake() {
             base.Awake();
             if (!_text)

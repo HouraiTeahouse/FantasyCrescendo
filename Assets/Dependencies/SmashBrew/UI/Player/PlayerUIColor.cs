@@ -110,6 +110,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 Component.color = AdjustedColor;
         }
 
+        /// <summary>
+        ///     <see cref="IDataComponent{T}.SetData" />
+        /// </summary>
         public override void SetData(CharacterData data) {
             base.SetData(data);
             if (Component)
