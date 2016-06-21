@@ -138,18 +138,16 @@ namespace HouraiTeahouse.Localization {
             _languages = new HashSet<string>(languages.Select(lang => lang.name));
             _keySet = new HashSet<string>(_keys);
 
-            string currentLang;
-            if (!_langPlayerPref.HasKey()) {
-                currentLang = Application.systemLanguage.ToString();
-                if (!_languages.Contains(currentLang)
-                    || Application.systemLanguage == SystemLanguage.Unknown)
-                    currentLang =
-                        Resources.Load<StringSet>(_defaultLanguage).name;
-                _langPlayerPref.Value = currentLang;
+            SystemLanguage systemLang = Application.systemLanguage;
+            string currentLang = _langPlayerPref.HasKey() ? _langPlayerPref : systemLang.ToString();
+            if (!_languages.Contains(currentLang)
+                || systemLang == SystemLanguage.Unknown) {
+                string oldLang = currentLang;
+                currentLang =
+                    Resources.Load<StringSet>(_defaultLanguage).name;
+                Log.Info("No language data for \"{0}\" found. Loading default language: {1}", oldLang, currentLang);
             }
-            else {
-                currentLang = _langPlayerPref;
-            }
+            _langPlayerPref.Value = currentLang;
 
             foreach (StringSet lang in languages) {
                 if (lang.name == currentLang)
@@ -182,10 +180,10 @@ namespace HouraiTeahouse.Localization {
 
         /// <summary> Loads a new language given the Microsoft language identifier. </summary>
         /// <param name="identifier"> the Microsoft identifier for a lanuguage </param>
-        /// <exception cref="ArgumentNullException"> throw if <paramref name="identifier" /> is null. </exception>
+        /// <returns> the localization language </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="identifier" /> is null. </exception>
         /// <exception cref="InvalidOperationException"> the language specified by <paramref name="identifier" /> is not currently
         /// supported. </exception>
-        /// <returns> the localization language </returns>
         public Language LoadLanguage(string identifier) {
             Check.NotNull(identifier);
             if (!_languages.Contains(identifier))

@@ -104,17 +104,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings:
-    TimeFormat: MM-dd-yy HH:mm:ss
-    Info:
-      Enabled: 1
-      StackTrace: 0
     Debug:
       Enabled: 1
       StackTrace: 1
-    Warning:
+    Error:
       Enabled: 1
       StackTrace: 1
-    Error:
+    Info:
+      Enabled: 1
+      StackTrace: 0
+    TimeFormat: MM-dd-yy HH:mm:ss
+    Warning:
       Enabled: 1
       StackTrace: 1
 --- !u!114 &11460476
@@ -128,32 +128,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aeccad45bf1ee04ba984b518bbb903c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mixer: {fileID: 24100000, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
   _audioChannels:
-  - _name: Master Volume
-    _volume:
-      _key: masterVol
-      _defaultValue: 1
-    _associatedParams:
+  - _associatedParams:
     - Main Volume
-  - _name: Music Volume
+    _name: Master Volume
     _volume:
-      _key: musicVol
       _defaultValue: 1
-    _associatedParams:
+      _key: masterVol
+  - _associatedParams:
     - Music Volume
-  - _name: SFX Volume
+    _name: Music Volume
     _volume:
-      _key: sfxVol
       _defaultValue: 1
-    _associatedParams:
+      _key: musicVol
+  - _associatedParams:
     - SFX Volume
-  - _name: Voice Acting Volume
+    _name: SFX Volume
     _volume:
-      _key: vaVol
       _defaultValue: 1
-    _associatedParams:
+      _key: sfxVol
+  - _associatedParams:
     - Voice Acting Volume
+    _name: Voice Acting Volume
+    _volume:
+      _defaultValue: 1
+      _key: vaVol
+  _mixer: {fileID: 24100000, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
 --- !u!114 &11463294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,9 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5742b579db1b06b4ab9addfc3c111098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: 293
-  _format: screenshot-{0}
   _dateTimeFormat: MM-dd-yyyy-HHmmss
+  _format: screenshot-{0}
+  _key: 293
 --- !u!114 &11473446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,7 +191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
   _characters:
   - {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
   - {fileID: 11400000, guid: e30df62a022e1444184b24b3d299cd46, type: 2}
@@ -201,6 +200,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b80cef4f7afc64743832c2b0ef22c060, type: 2}
   - {fileID: 11400000, guid: 07a01ef61634ca64598faa7809281798, type: 2}
   - {fileID: 11400000, guid: bbb5dd3a7c08b724db73c8fd56edcd99, type: 2}
+  _dontDestroyOnLoad: 1
   _scenes:
   - {fileID: 11400000, guid: 4fdd220a86869f347a639eb8a61773fa, type: 2}
   - {fileID: 11400000, guid: 8d79fa23890a7e34bb353807cea6c06e, type: 2}
@@ -220,13 +220,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bde28572b02ea4db7c258aa7c2e9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
-  localizaitonResourceDirectory: Lang/
-  _langPlayerPref:
-    _key: lang
-    _defaultValue: english
   _defaultLanguage: Lang/English
+  _dontDestroyOnLoad: 1
   _keys: {fileID: 11400000, guid: 219e2644cb9df084e801b37c423d1655, type: 2}
+  _langPlayerPref:
+    _defaultValue: english
+    _key: lang
+  localizaitonResourceDirectory: Lang/
 --- !u!114 &11482896
 MonoBehaviour:
   m_ObjectHideFlags: 1

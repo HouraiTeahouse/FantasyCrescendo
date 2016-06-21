@@ -69,7 +69,6 @@ namespace HouraiTeahouse.Localization {
         /// <summary> Updates the current Language from two sets of keys and values </summary>
         /// <param name="keys"> the localization keys for the language </param>
         /// <param name="values"> the values of the Language </param>
-        /// >
         public void Update(IEnumerable<string> keys, IEnumerable<string> values) {
             _map.Clear();
             if (keys == null || values == null)

@@ -57,7 +57,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         void Update() {
             DisableCheck();
 
-            if (_stockMatch == null)
+            if (_stockMatch == null || _player == null)
                 return;
 
             int stock = _stockMatch[_player];
