@@ -150,7 +150,7 @@ namespace HouraiTeahouse {
             Check.NotNull(type);
             if (!_typeCache.ContainsKey(type)) {
                 Type currentType = type;
-                var ancestors = new List<Type>();
+                var ancestors = new List<Type>(type.GetInterfaces());
                 while (currentType != null) {
                     ancestors.Add(currentType);
                     currentType = currentType.BaseType;

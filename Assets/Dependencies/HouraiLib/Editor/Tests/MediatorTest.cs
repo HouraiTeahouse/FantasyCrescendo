@@ -6,9 +6,18 @@ namespace HouraiTeahouse {
 
     internal class MediatorTest {
 
+        interface I {
+            int IA { get; set; }
+        }
+
         // Three test event classes
-        class A {
-            public int a;
+        class A : I {
+            public int Ia;
+
+            public int IA {
+                get { return Ia;  }
+                set { Ia = value; }
+            }
         }
 
         class B : A {
@@ -22,19 +31,22 @@ namespace HouraiTeahouse {
         const int aCount = 5;
         const int bCount = 1;
         const int cCount = 10;
+        const int iCount = 5;
 
-        readonly Mediator.Event<A> eA = delegate(A a) { a.a++; };
+        readonly Mediator.Event<A> eA = delegate(A a) { a.Ia++; };
 
         readonly Mediator.Event<B> eB = delegate(B b) {
-            b.a++;
+            b.Ia++;
             b.b++;
         };
 
         readonly Mediator.Event<C> eC = delegate(C c) {
-            c.a++;
+            c.Ia++;
             c.b++;
             c.c++;
         };
+
+        readonly Mediator.Event<I> eI = delegate(I i) { i.IA++; };
 
         Mediator CreateTestMediator() {
             var mediator = new Mediator();
@@ -44,20 +56,23 @@ namespace HouraiTeahouse {
                 mediator.Subscribe(eB);
             for(var i = 0; i < cCount; i ++)
                 mediator.Subscribe(eC);
+            for(var i = 0; i < iCount; i ++)
+                mediator.Subscribe(eI);
             return mediator;
         }
 
-        void ExecuteTest(Mediator mediator, int a, int b, int c) {
+        void ExecuteTest(Mediator mediator, int a, int b, int c, int i) {
+            a += i;
             var testA = new A();
             var testB = new B();
             var testC = new C();
             mediator.Publish(testA);
             mediator.Publish(testB);
             mediator.Publish(testC);
-            Assert.AreEqual(a, testA.a);
-            Assert.AreEqual(a + b, testB.a);
+            Assert.AreEqual(a, testA.Ia);
+            Assert.AreEqual(a + b, testB.Ia);
             Assert.AreEqual(b, testB.b);
-            Assert.AreEqual(a + b + c, testC.a);
+            Assert.AreEqual(a + b + c, testC.Ia);
             Assert.AreEqual(b + c, testC.b);
             Assert.AreEqual(c, testC.c);
         }
@@ -109,7 +124,7 @@ namespace HouraiTeahouse {
         [Test]
         public void PublishTest() {
             Mediator mediator = CreateTestMediator();
-            ExecuteTest(mediator, aCount, bCount, cCount);
+            ExecuteTest(mediator, aCount, bCount, cCount, iCount);
             Assert.Catch<ArgumentNullException>(delegate {
                 mediator.Publish(null);
             });
@@ -125,7 +140,7 @@ namespace HouraiTeahouse {
             Assert.AreEqual(aCount + 2, mediator.GetSubscriberCount<A>());
             Assert.AreEqual(bCount + 1, mediator.GetSubscriberCount<B>());
             Assert.AreEqual(cCount + 1, mediator.GetSubscriberCount<C>());
-            ExecuteTest(mediator, aCount + 2, bCount + 1, cCount + 1);
+            ExecuteTest(mediator, aCount + 2, bCount + 1, cCount + 1, iCount);
             Assert.Catch<ArgumentNullException>(delegate {
                 mediator.Subscribe<A>(null);
             });
@@ -141,7 +156,7 @@ namespace HouraiTeahouse {
             Assert.AreEqual(aCount - 2, mediator.GetSubscriberCount<A>());
             Assert.AreEqual(bCount - 1, mediator.GetSubscriberCount<B>());
             Assert.AreEqual(cCount - 1, mediator.GetSubscriberCount<C>());
-            ExecuteTest(mediator, aCount - 2, bCount - 1, cCount - 1);
+            ExecuteTest(mediator, aCount - 2, bCount - 1, cCount - 1, iCount);
             Assert.Catch<ArgumentNullException>(delegate {
                 mediator.Unsubscribe<A>(null);
             });
