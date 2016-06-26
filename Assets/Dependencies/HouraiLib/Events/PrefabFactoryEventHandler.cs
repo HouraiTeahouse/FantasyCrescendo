@@ -22,7 +22,7 @@
 
 using UnityEngine;
 
-namespace HouraiTeahouse.Events {
+namespace HouraiTeahouse {
     /// <summary> An AbstractFactoryEventHandler that creates objects from prefabs in response to events. </summary>
     /// <typeparam name="T"> the type of the object and prefab </typeparam>
     /// <typeparam name="TEvent"> the type of event </typeparam>

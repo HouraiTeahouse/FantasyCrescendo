@@ -25,7 +25,7 @@ using UnityEngine;
 namespace HouraiTeahouse.SmashBrew {
     /// <summary> A Status effect that causes Characters to become uncontrollable for a short period after being hit </summary>
     [DisallowMultipleComponent]
-    [RequiredCharacterComponent]
+    [Required]
     [RequireComponent(typeof(Rigidbody))]
     public class Hitstun : Status {
         Vector3 _oldVelocity;

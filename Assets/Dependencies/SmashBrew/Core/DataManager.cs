@@ -22,7 +22,6 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using HouraiTeahouse.Events;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

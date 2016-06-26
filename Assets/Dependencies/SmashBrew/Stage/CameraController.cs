@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections.Generic;
-using HouraiTeahouse.Events;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -31,6 +29,11 @@ namespace HouraiTeahouse.SmashBrew {
 
         [SerializeField]
         CameraTarget _target;
+
+        public CameraTarget Target {
+            get { return _target; }
+            set { _target = value; }
+        }
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {

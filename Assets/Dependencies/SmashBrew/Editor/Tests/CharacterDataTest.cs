@@ -21,15 +21,23 @@ namespace HouraiTeahouse.SmashBrew{
 
         protected void Check(AssetFunc func) {
             LoadData();
-            foreach(T datum in data)
-                Assert.NotNull(func(datum));
+            foreach (T datum in data) {
+                object result = func(datum);
+                if(result == null) 
+                    Log.Info(datum);
+                Assert.NotNull(result);
+            }
         }
 
         protected void CheckMany(AssetManyFunc func) {
             LoadData();
-            foreach(T datum in data)
-                foreach(object obj in func(datum))
+            foreach(T datum in data) {
+                foreach (object obj in func(datum)) {
+                    if(obj == null)
+                        Log.Info(datum);
                     Assert.NotNull(obj);
+                }
+            }
         }
     }
     
@@ -64,9 +72,9 @@ namespace HouraiTeahouse.SmashBrew{
         public void RequiredCharacterComponentTest() {
             // Checks for all of the component types marked with RequiredCharacterComponent on all of the CharacterData's prefabs
             LoadData();
-            Type[] requiredTypes = Character.GetRequiredComponents();
+            Type[] requiredAttackTypes = Character.GetRequiredComponents();
             foreach (CharacterData character in data)
-                foreach (Type type in requiredTypes) 
+                foreach (Type type in requiredAttackTypes) 
                     Assert.NotNull(character.Prefab.Load().GetComponent(type));
         }
 

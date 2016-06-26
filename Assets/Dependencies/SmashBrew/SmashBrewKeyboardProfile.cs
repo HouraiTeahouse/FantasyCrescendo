@@ -33,7 +33,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             ButtonMappings = new[] {
                 new InputMapping {
-                    Handle = "Attack",
+                    Handle = "CharacterStateEvents",
                     Target = InputTarget.Action1,
                     Source = KeyCodeButton(KeyCode.Z)
                 },

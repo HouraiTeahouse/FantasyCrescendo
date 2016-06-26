@@ -23,7 +23,7 @@
 using System;
 using Object = UnityEngine.Object;
 
-namespace HouraiTeahouse.Events {
+namespace HouraiTeahouse {
     /// <summary> Abstract class for creating objects in response to an event. </summary>
     /// <typeparam name="T"> the object type to spawn </typeparam>
     /// <typeparam name="TEvent"> the event type to respond to </typeparam>

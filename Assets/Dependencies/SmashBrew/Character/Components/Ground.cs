@@ -26,8 +26,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.SmashBrew {
-    [RequiredCharacterComponent]
-    public sealed class Ground : AbstractCharacterComponent {
+    [Required]
+    public sealed class Ground : CharacterComponent {
         readonly HashSet<Collider> _ground = new HashSet<Collider>();
         bool _collided;
 

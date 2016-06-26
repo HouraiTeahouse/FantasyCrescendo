@@ -47,4 +47,5 @@ namespace HouraiTeahouse.Editor {
     [CustomEditor(typeof (ScriptableObject), true, isFallback = true)]
     internal sealed class ScriptableObjectEditor : ScriptlessEditor {
     }
+
 }

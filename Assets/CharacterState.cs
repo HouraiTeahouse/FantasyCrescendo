@@ -1,4 +1,3 @@
-using HouraiTeahouse.Events;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -36,7 +35,8 @@ namespace HouraiTeahouse.SmashBrew {
             get { return Character != null ? Character.Events : null; }
         }
 
-        public abstract void ProcessInput();
+        public virtual void ProcessInput() {
+        }
 
         public override void Initialize(GameObject gameObject) {
             base.Initialize(gameObject);

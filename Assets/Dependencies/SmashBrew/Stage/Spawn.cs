@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using HouraiTeahouse.Events;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {

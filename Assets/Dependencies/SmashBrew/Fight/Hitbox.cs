@@ -23,13 +23,9 @@
 using System;
 using UnityConstants;
 using UnityEngine;
-#if UNITY_EDITOR
-
-#endif
 
 namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(Collider))]
     public sealed class Hitbox : MonoBehaviour {
         public enum Type {
             // The values here are used as priority mulitpliers
@@ -42,7 +38,11 @@ namespace HouraiTeahouse.SmashBrew {
             Reflective = 30000
         }
 
-        static Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;
+        static readonly Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;
+
+        [SerializeField]
+        [ReadOnly]
+        int _id;
 
         [SerializeField]
         [HideInInspector]
@@ -57,8 +57,7 @@ namespace HouraiTeahouse.SmashBrew {
         [HideInInspector]
         Mesh _cube;
 
-        IDamageable _damageable;
-        IKnockbackable _knockbackable;
+        IRegistrar<Hitbox> _registrar;
 
         [SerializeField]
         [HideInInspector]
@@ -96,12 +95,19 @@ namespace HouraiTeahouse.SmashBrew {
         // If this is a Damageable type Hitbox (AKA a Hurtbox) this is the character that the damage and knockback is applied to.
         public Character Source { get; set; }
 
-        public IDamageable Damageable {
-            get { return _damageable; }
-        }
+        public IDamageable Damageable { get; private set; }
 
-        public IKnockbackable Knockbackable {
-            get { return _knockbackable; }
+        public IKnockbackable Knockbackable { get; private set; }
+
+        public IRegistrar<Hitbox> Registrar {
+            get { return _registrar; }
+            set {
+                if (_registrar != null)
+                    _registrar.Unregister(this);
+                _registrar = value;
+                if(value != null)
+                    value.Register(this);
+            }
         }
 
         static Action<Hitbox, Hitbox> ExecuteInterface<T>(
@@ -128,9 +134,10 @@ namespace HouraiTeahouse.SmashBrew {
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
+            Registrar = GetComponentInParent<IRegistrar<Hitbox>>();
             Source = GetComponentInParent<Character>();
-            _damageable = GetComponentInParent<IDamageable>();
-            _knockbackable = GetComponentInParent<IKnockbackable>();
+            Damageable = GetComponentInParent<IDamageable>();
+            Knockbackable = GetComponentInParent<IKnockbackable>();
             //_effect = GetComponent<ParticleSystem>();
             //_soundEffect = GetComponent<AudioSource>();
 
@@ -169,6 +176,8 @@ namespace HouraiTeahouse.SmashBrew {
             //    DrawCollider(col, Color.white);
             //GL.wireframe = false;
         }
+
+        void Reset() { _id = new System.Random().Next(int.MaxValue);}
 
         void DrawCollider(Collider col, Color color) {
             if (col == null)
@@ -260,6 +269,13 @@ namespace HouraiTeahouse.SmashBrew {
         #endregion
 
         #region Public Access Properties
+
+        public int ID {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+        public bool IsActive { get; set; }
 
         public Type CurrentType {
             get { return type; }

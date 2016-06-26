@@ -28,7 +28,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     [DisallowMultipleComponent]
-    [RequiredCharacterComponent]
+    [Required]
     public sealed class Shield : HouraiBehaviour, IDamageable {
         //[SerializeField]
         //float _maxHP = 100f;

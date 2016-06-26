@@ -23,6 +23,8 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
+    [RequireComponent(typeof(Ground), typeof(Rigidbody))]
     public sealed class Gravity : MonoBehaviour {
         [SerializeField]
         [Tooltip("The acceleration downward per second applied")]
@@ -36,6 +38,22 @@ namespace HouraiTeahouse.SmashBrew {
 
         public static implicit operator float(Gravity gravity) {
             return gravity != null ? gravity.Force : 0f;
+        }
+
+        Ground _ground;
+        Rigidbody _rigidbody;
+
+        void Awake() {
+            _ground = GetComponent<Ground>();
+            _rigidbody = GetComponent<Rigidbody>();
+        }
+
+        void FixedUpdate() {
+            float grav = Force;
+            //Simulates ground friction.
+            if (_ground)
+                grav *= 2.5f;
+            _rigidbody.AddForce(-Vector3.up * grav, ForceMode.Acceleration);
         }
     }
 }

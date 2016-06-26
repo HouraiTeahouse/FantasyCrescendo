@@ -26,7 +26,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
     /// <summary> The pallete swap behaviour for changing out the </summary>
-    [RequiredCharacterComponent]
+    [Required]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(PlayerController))]
     public class MaterialSwap : MonoBehaviour {

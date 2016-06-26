@@ -25,7 +25,7 @@ using UnityEngine;
 namespace HouraiTeahouse.SmashBrew {
     /// <summary> A Status effect that prevents players from taking damage while active. </summary>
     [DisallowMultipleComponent]
-    [RequiredCharacterComponent]
+    [Required]
     public sealed class Invincibility : Status {
         PlayerDamage _damage;
         Hitbox[] _hitboxes;

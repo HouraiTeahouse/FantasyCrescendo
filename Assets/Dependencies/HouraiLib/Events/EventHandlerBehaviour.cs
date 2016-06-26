@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace HouraiTeahouse.Events {
+namespace HouraiTeahouse {
     /// <summary> An abstract class for MonoBehaviours that handle events published by Mediators. </summary>
     /// <typeparam name="T"> the event type to subscribe to </typeparam>
     public abstract class EventHandlerBehaviour<T> : HouraiBehaviour {

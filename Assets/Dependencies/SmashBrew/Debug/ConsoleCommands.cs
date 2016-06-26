@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using HouraiTeahouse.Console;
-using HouraiTeahouse.Events;
 using HouraiTeahouse.Localization;
 using UnityEngine;
 

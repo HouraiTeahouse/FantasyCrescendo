@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace HouraiTeahouse.Events {
+namespace HouraiTeahouse {
     /// <summary> Singleton version of the Mediator class. Use Instance to get the singleton object. </summary>
     public class GlobalMediator : Mediator {
         static GlobalMediator _instance;

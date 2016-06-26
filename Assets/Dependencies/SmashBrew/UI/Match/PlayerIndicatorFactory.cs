@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using HouraiTeahouse.Events;
-
 namespace HouraiTeahouse.SmashBrew.UI {
     /// <summary> A PrefabFactoryEventHandler that produces PlayerIndicators in response to Players spawning. </summary>
     public sealed class PlayerIndicatorFactory :

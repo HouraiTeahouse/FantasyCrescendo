@@ -21,35 +21,17 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using HouraiTeahouse.Events;
 using UnityConstants;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
-    public interface IResettable {
-        void OnReset();
-    }
 
-    public abstract class AbstractCharacterComponent : HouraiBehaviour,
-                                                       IResettable {
-        public Character Character { get; set; }
 
-        public Mediator Events {
-            get { return Character.Events; }
-        }
-
-        public virtual void OnReset() { }
-
-        protected virtual void Start() {
-            if (!Character)
-                Character = GetComponentInParent<Character>();
-        }
-    }
 
     /// <summary> General character class for handling the physics and animations of individual characters </summary>
 #if UNITY_EDITOR
@@ -59,36 +41,15 @@ namespace HouraiTeahouse.SmashBrew {
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     [RequireComponent(typeof(PlayerDamage), typeof(PlayerKnockback))]
     [RequireComponent(typeof(Gravity), typeof(Ground))]
-    public sealed class Character : HouraiBehaviour {
+    public sealed class Character : HouraiBehaviour, IHitboxController {
         enum FacingMode {
             Rotation,
             Scale
         }
 
-        #region Public Events
-
-        public event Action<Attack.Type, Attack.Direction, int> OnAttack;
-
-        #endregion
-
-        #region Internal Methods
-
-        internal void Attack(Attack.Type type,
-                             Attack.Direction direction,
-                             int index) {
-            OnAttack.SafeInvoke(type, direction, index);
-        }
-
-        #endregion
-
         #region Public Properties
 
         public Mediator Events { get; private set; }
-
-        /// <summary> Gets how many bones the Character has. </summary>
-        public int BoneCount {
-            get { return _bones.Length; }
-        }
 
         /// <summary> Gets or sets whether the Character is currently fast falling or not </summary>
         public bool IsFastFalling { get; set; }
@@ -120,6 +81,13 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Gets how many remaining jumps the Character currently has. </summary>
         public int JumpCount { get; private set; }
 
+        /// <summary>
+        /// Gets an immutable collection of hitboxes that belong to 
+        /// </summary>
+        public ICollection<Hitbox> Hitboxes {
+            get { return _hitboxMap.Values; }
+        }
+
         /// <summary> Gets the maximum number of jumps the Character can preform. </summary>
         public int MaxJumpCount {
             get { return _jumpHeights == null ? 0 : _jumpHeights.Length; }
@@ -142,17 +110,14 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Runtime Variables
 
-        Transform[] _bones;
         bool _facing;
         float _lastTap;
         bool _jumpQueued;
+        Dictionary<int, Hitbox> _hitboxMap;
 
         #endregion
 
         #region Serialized Variables
-
-        [SerializeField]
-        GameObject _rootBone;
 
         [SerializeField]
         FacingMode _facingMode;
@@ -177,7 +142,37 @@ namespace HouraiTeahouse.SmashBrew {
 
         #endregion
 
-        #region Required Components
+        void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
+            Check.NotNull(hitbox);
+            if(_hitboxMap == null)
+                _hitboxMap = new Dictionary<int, Hitbox>();
+            int id = hitbox.ID;
+            if (_hitboxMap.ContainsKey(hitbox.ID))
+                Log.Error(
+                    "Hitboxes {0} and {1} on {2} have the same id. Ensure that they have different IDs.",
+                    hitbox,
+                    _hitboxMap[id],
+                    gameObject.name);
+            else
+                _hitboxMap.Add(id, hitbox); 
+        }
+
+        bool IRegistrar<Hitbox>.Unregister(Hitbox obj) {
+            return _hitboxMap != null && _hitboxMap.Remove(Check.NotNull(obj).ID);
+        }
+
+        /// <summary>
+        /// Retrieves a hitbox given it's ID.
+        /// </summary>
+        /// <param name="id">the ID to look for</param>
+        /// <returns>the hitbox if found, null otherwise.</returns>
+        public Hitbox GetHitbox(int id) {
+            if (_hitboxMap != null && _hitboxMap.ContainsKey(id))
+                return _hitboxMap[id];
+            return null;
+        }
+
+        #region RequiredAttribute Components
 
         public CapsuleCollider MovementCollider { get; private set; }
         public Gravity Gravity { get; private set; }
@@ -189,12 +184,6 @@ namespace HouraiTeahouse.SmashBrew {
         #endregion
 
         #region Public Action Methods
-
-        public Transform GetBone(int boneIndex) {
-            if (Check.Range(boneIndex, BoneCount))
-                return transform;
-            return _bones[boneIndex];
-        }
 
         public bool Tap(Vector2 direction) {
             if (direction.sqrMagnitude > 0) {
@@ -270,10 +259,10 @@ namespace HouraiTeahouse.SmashBrew {
             GetCharacterComponents();
             Reset();
 
-            GameObject root = gameObject;
-            if (_rootBone)
-                root = _rootBone;
-            _bones = root.GetComponentsInChildren<Transform>();
+            if (Animator != null)
+                Animator.gameObject.GetOrAddComponent<CharacterAnimationEvents>();
+            else
+                Log.Error("Character {0} does not have an Animator component in its hiearchy", name);
 
             MovementCollider = GetComponent<CapsuleCollider>();
 
@@ -304,11 +293,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void FixedUpdate() {
-            float grav = Gravity;
-            //Simulates ground friction.
-            if (Ground)
-                grav *= 2.5f;
-            Rigidbody.AddForce(-Vector3.up * grav, ForceMode.Acceleration);
 
             Vector3 velocity = Rigidbody.velocity;
 
@@ -363,9 +347,9 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Editor only function that gets all of the required component types a Character needs. </summary>
         /// <returns> an array of all of the concrete component types marked with RequiredCharacterComponent </returns>
         public static Type[] GetRequiredComponents() {
-            Type componentType = typeof(Component);
-            Type requiredComponentType =
-                typeof(RequiredCharacterComponentAttribute);
+            Type componentAttackType = typeof(Component);
+            Type requiredComponentAttackType =
+                typeof(RequiredAttribute);
             // Use reflection to find required Components for Characters and statuses
             // Enumerate all concrete Component types
             return
@@ -373,8 +357,8 @@ namespace HouraiTeahouse.SmashBrew {
                  from assemblyType in domainAssembly.GetTypes()
                  where
                      assemblyType != null && !assemblyType.IsAbstract
-                         && componentType.IsAssignableFrom(assemblyType)
-                         && assemblyType.IsDefined(requiredComponentType, true)
+                         && componentAttackType.IsAssignableFrom(assemblyType)
+                         && assemblyType.IsDefined(requiredComponentAttackType, true)
                  select assemblyType).ToArray();
         }
 #endif

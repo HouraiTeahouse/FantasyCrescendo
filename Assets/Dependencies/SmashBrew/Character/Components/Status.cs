@@ -24,7 +24,7 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    public abstract class Status : AbstractCharacterComponent {
+    public abstract class Status : CharacterComponent {
         float _duration = Mathf.Infinity;
 
         public float EllapsedTime { get; private set; }

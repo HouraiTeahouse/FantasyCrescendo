@@ -24,17 +24,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-#if HOURAI_EVENTS
-using HouraiTeahouse.Events;
-
-#endif
 
 namespace HouraiTeahouse.Localization {
-#if HOURAI_EVENTS
     public class LanguageEvent {
         public Language NewLanguage;
     }
-#endif
 
     /// <summary> Singleton MonoBehaviour that manages all of localization system. </summary>
     [HelpURL(
