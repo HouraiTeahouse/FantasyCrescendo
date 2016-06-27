@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Permissions;
 using UnityEngine;
 
 namespace HouraiTeahouse {
@@ -116,14 +117,13 @@ namespace HouraiTeahouse {
             if (colliders == null)
                 return;
 
-            using (With(color, Matrix4x4.identity)) {
+            using (With(color, Gizmos.matrix)) {
                 var asArray = colliders as Collider[];
                 if (asArray != null) {
                     foreach (Collider collider in asArray) {
                         if (collider == null
                             || (filter != null && !filter(collider)))
                             continue;
-                        Gizmos.matrix = collider.transform.localToWorldMatrix;
                         DrawCollider3D_Impl(collider, solid);
                     }
                 }
@@ -132,7 +132,6 @@ namespace HouraiTeahouse {
                         if (collider == null
                             || (filter != null && !filter(collider)))
                             continue;
-                        Gizmos.matrix = collider.transform.localToWorldMatrix;
                         DrawCollider3D_Impl(collider, solid);
                     }
                 }
@@ -143,23 +142,36 @@ namespace HouraiTeahouse {
             var boxCollider = collider as BoxCollider;
             var sphereCollider = collider as SphereCollider;
             var meshCollider = collider as MeshCollider;
+            Transform transform = collider.transform;
             if (solid) {
-                if (boxCollider != null)
-                    Gizmos.DrawCube(boxCollider.center, boxCollider.size);
-                else if (sphereCollider != null)
-                    Gizmos.DrawSphere(sphereCollider.center,
-                        sphereCollider.radius);
-                else if (meshCollider != null)
-                    Gizmos.DrawMesh(meshCollider.sharedMesh, Vector3.zero);
+                if (sphereCollider != null) {
+                    Gizmos.matrix = Matrix4x4.TRS(transform.position,
+                        transform.rotation,
+                        Vector3.one * transform.lossyScale.Max());
+                    Gizmos.DrawSphere(sphereCollider.center, sphereCollider.radius);
+                }
+                else {
+                    Gizmos.matrix = transform.localToWorldMatrix;
+                    if (boxCollider != null)
+                        Gizmos.DrawCube(boxCollider.center, boxCollider.size);
+                    else if (meshCollider != null)
+                        Gizmos.DrawMesh(meshCollider.sharedMesh, Vector3.zero);
+                }
             }
             else {
-                if (boxCollider != null)
-                    Gizmos.DrawWireCube(boxCollider.center, boxCollider.size);
-                else if (sphereCollider != null)
-                    Gizmos.DrawWireSphere(sphereCollider.center,
-                        sphereCollider.radius);
-                else if (meshCollider != null)
-                    Gizmos.DrawWireMesh(meshCollider.sharedMesh, Vector3.zero);
+                if (sphereCollider != null) {
+                    Gizmos.matrix = Matrix4x4.TRS(transform.position,
+                        transform.rotation,
+                        Vector3.one * transform.lossyScale.Max());
+                    Gizmos.DrawWireSphere(sphereCollider.center, sphereCollider.radius);
+                }
+                else {
+                    Gizmos.matrix = transform.localToWorldMatrix;
+                    if (boxCollider != null)
+                        Gizmos.DrawWireCube(boxCollider.center, boxCollider.size);
+                    else if (meshCollider != null)
+                        Gizmos.DrawWireMesh(meshCollider.sharedMesh, Vector3.zero);
+                }
             }
         }
     }

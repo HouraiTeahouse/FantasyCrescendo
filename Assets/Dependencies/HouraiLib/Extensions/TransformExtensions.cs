@@ -44,6 +44,11 @@ namespace HouraiTeahouse {
             transform.SetPositionLocation(2, z, local);
         }
 
+        public static void Reset(this Transform transform) {
+            Check.NotNull(transform).localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+        }
+
         /// <summary> Copys the position and rotation of another transform onto one. </summary>
         /// <param name="transform"> </param>
         /// <param name="target"> </param>

@@ -93,6 +93,10 @@ namespace HouraiTeahouse.SmashBrew {
             base.Initialize(gameObject);
             if (!Target || _initialized)
                 return;
+            if (_clip == null) {
+                Log.Error("Clip for CharacterStateEvents is not assigned. Is not initialized. Ignoring...");
+                return;
+            }
             _clip.events =
                 _data.SelectMany(data => data.Initialize(Target)).Concat(_otherEvents).ToArray();
             _initialized = true;

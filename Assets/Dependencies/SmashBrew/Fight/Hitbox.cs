@@ -30,12 +30,12 @@ namespace HouraiTeahouse.SmashBrew {
         public enum Type {
             // The values here are used as priority mulitpliers
             Offensive = 1,
-            Damageable = 2,
-            Invincible = 3,
-            Intangible = 4,
-            Shield = 10000,
-            Absorb = 20000,
-            Reflective = 30000
+            Damageable = Offensive << 1,
+            Invincible = Damageable << 1,
+            Intangible = Invincible << 1,
+            Shield = Intangible << 1,
+            Absorb = Shield << 1,
+            Reflective = Absorb << 1
         }
 
         static readonly Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;

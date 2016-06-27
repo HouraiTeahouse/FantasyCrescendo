@@ -172,7 +172,7 @@ namespace HouraiTeahouse.SmashBrew {
             return null;
         }
 
-        #region RequiredAttribute Components
+        #region Required Components
 
         public CapsuleCollider MovementCollider { get; private set; }
         public Gravity Gravity { get; private set; }
@@ -213,7 +213,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary> Actually applies the force to jump. </summary>
-        void JumpImpl() {
+        internal void JumpImpl() {
             // Apply upward force to jump
             Vector3 force = Vector3.up
                 * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]);
@@ -293,7 +293,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void FixedUpdate() {
-
             Vector3 velocity = Rigidbody.velocity;
 
             //if (!IsFastFalling && InputSource != null && InputSource.Movement.y < 0)

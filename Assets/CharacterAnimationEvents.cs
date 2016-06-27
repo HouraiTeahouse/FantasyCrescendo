@@ -18,6 +18,11 @@ namespace HouraiTeahouse.SmashBrew {
                 hitbox.IsActive = state >= 0;
         }
 
+        /// <summary> Actually applies the force to jump. </summary>
+        public void Jump() {
+            Character.JumpImpl();
+        }
+
     }
 
 }
