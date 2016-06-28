@@ -12,27 +12,34 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     internal class CharacterStateEventsEditor : UnityEditor.Editor {
 
         SerializedProperty clip;
+        AnimatorState state;
 
         bool Initialized {
-            get { return clip.objectReferenceValue != null; }
+            get { return state == null || clip.objectReferenceValue != state.motion as AnimationClip; }
         }
 
         void OnEnable() {
             clip = serializedObject.FindProperty("_clip");
+            Selection.selectionChanged += CheckInitialize;
+            CheckInitialize();
+        }
+
+        void OnDiable() { Selection.selectionChanged -= CheckInitialize; }
+
+        void CheckInitialize() {
+            state = Selection.objects
+                    .OfType<AnimatorState>()
+                    .FirstOrDefault(s => s.behaviours.Contains(target));
             if (!Initialized)
                 Initialize();
         }
 
         void Initialize() {
-            var state = Selection.objects
-                    .OfType<AnimatorState>()
-                    .FirstOrDefault(s => s.behaviours.Contains(target));
             if (state == null)
                 return;
             clip.objectReferenceValue = state.motion as AnimationClip;
             serializedObject.ApplyModifiedProperties();
             Repaint();
-            Log.Info("Initalize");
         }
 
         public override void OnInspectorGUI() {
