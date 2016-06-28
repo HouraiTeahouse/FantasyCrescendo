@@ -18,6 +18,10 @@ namespace HouraiTeahouse.Editor {
             string _path;
             public readonly GUIContent Content;
 
+            bool Valid {
+                get { return !_path.IsNullOrEmpty(); }
+            }
+
             public Data(SerializedProperty property, GUIContent content) {
                 _path = property.stringValue;
                 _object = Resources.Load(_path);
@@ -27,7 +31,10 @@ namespace HouraiTeahouse.Editor {
 
             public void Draw(Rect position, SerializedProperty property, Type type) {
                 EditorGUI.BeginChangeCheck();
+                Color oldColor = GUI.color;
+                GUI.color = Valid ? GUI.color : Color.red;
                 Object obj = EditorGUI.ObjectField(position, Content, _object, type, false);
+                GUI.color = oldColor;
                 if (!EditorGUI.EndChangeCheck()) return;
                 Update(obj);
                 property.stringValue = _path;
@@ -35,17 +42,15 @@ namespace HouraiTeahouse.Editor {
             }
 
             public void UpdateContent(GUIContent label) {
-                bool validPath = !string.IsNullOrEmpty(_path);
-                Content.text = string.Format("{0} ({1})", label.text, validPath ? "\u2713" : "\u2715");
                 string message;
                 if (!_object)
                     message = "No object specified";
-                else if (!validPath)
+                else if (!Valid)
                     message = "Not in a Resources folder. Will not be saved.";
                 else
                     message = string.Format("Path: {0}", _path);
 
-                if (string.IsNullOrEmpty(label.tooltip))
+                if (label.tooltip.IsNullOrEmpty())
                     Content.tooltip = message;
                 else
                     Content.tooltip = string.Format("{0}\n{1}", label.tooltip, message);

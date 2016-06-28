@@ -31,9 +31,9 @@ namespace HouraiTeahouse.SmashBrew {
     [RequireComponent(typeof(PlayerController))]
     public class MaterialSwap : MonoBehaviour {
         [Serializable]
-        class Swap {
+        public class Swap {
             [Serializable]
-            class MaterialSet {
+            public class MaterialSet {
                 [SerializeField]
                 [Resource(typeof(Material))]
                 [Tooltip("The materials to apply to the renderers")]
@@ -81,7 +81,6 @@ namespace HouraiTeahouse.SmashBrew {
             get { return _swaps.Max(swap => swap.SetCount); }
         }
 
-
         public int Pallete {
             get { return _color; }
             set {
@@ -90,5 +89,16 @@ namespace HouraiTeahouse.SmashBrew {
                     swap.Set(value);
             }
         }
+
+#if UNITY_EDITOR
+
+        // For editor only. To refresh when
+        public void Refesh(int value) {
+            _color = value;
+            foreach (Swap swap in _swaps)
+                swap.Set(value);
+        }
+
+#endif
     }
 }
