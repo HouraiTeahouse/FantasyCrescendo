@@ -11,15 +11,24 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     [CustomEditor(typeof(CharacterStateEvents))]
     internal class CharacterStateEventsEditor : UnityEditor.Editor {
 
-        SerializedProperty clip;
         AnimatorState state;
 
         bool Initialized {
-            get { return state == null || clip.objectReferenceValue != state.motion as AnimationClip; }
+            get { return state != null && 
+                    Clip.objectReferenceValue != null && 
+                    Clip.objectReferenceValue == state.motion as AnimationClip && 
+                    Name.stringValue == state.name; }
+        }
+
+        SerializedProperty Clip {
+            get { return serializedObject.FindProperty("_clip"); }
+        }
+
+        SerializedProperty Name {
+            get { return serializedObject.FindProperty("_stateName"); }
         }
 
         void OnEnable() {
-            clip = serializedObject.FindProperty("_clip");
             Selection.selectionChanged += CheckInitialize;
             CheckInitialize();
         }
@@ -37,7 +46,8 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         void Initialize() {
             if (state == null)
                 return;
-            clip.objectReferenceValue = state.motion as AnimationClip;
+            Clip.objectReferenceValue = state.motion as AnimationClip;
+            Name.stringValue = state.name;
             serializedObject.ApplyModifiedProperties();
             Repaint();
         }
@@ -55,6 +65,5 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             }
         }
     }
-
 }
 

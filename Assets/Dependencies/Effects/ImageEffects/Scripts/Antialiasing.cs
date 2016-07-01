@@ -35,7 +35,6 @@ namespace UnityStandardAssets.ImageEffects {
 
     [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]
-    [ImageEffectAllowedInSceneView]
     [AddComponentMenu("Image Effects/Other/Antialiasing")]
     public class Antialiasing : PostEffectsBase {
         public float blurRadius = 18.0f;

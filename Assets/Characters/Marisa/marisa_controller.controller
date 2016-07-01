@@ -4361,7 +4361,8 @@ AnimatorState:
   - {fileID: 1101000010696568166}
   - {fileID: 1101000010521552514}
   - {fileID: 1101000011142567704}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114000012198068056}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -4753,7 +4754,6 @@ AnimatorState:
   - {fileID: 1101000013143997744}
   m_StateMachineBehaviours:
   - {fileID: 11461212}
-  - {fileID: 114000013359548256}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -4971,6 +4971,7 @@ AnimatorState:
   - {fileID: 1101000013929303150}
   m_StateMachineBehaviours:
   - {fileID: 11449454}
+  - {fileID: 114000011836652676}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -4994,7 +4995,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101000011883261488}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114000012444422874}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -7190,6 +7192,22 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
+--- !u!114 &114000010170794724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Up Aerial
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
 --- !u!114 &114000010385877422
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7203,7 +7221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleIndex: 0
   toggleTime: 0.92
---- !u!114 &114000010492156448
+--- !u!114 &114000010456850044
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -7211,10 +7229,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d94f99faf3b2f2441923fe356f4293bf, type: 3}
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Effect: {fileID: 0}
+  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Forward Aerial
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
 --- !u!114 &114000010587449038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7226,8 +7248,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clip: {fileID: 0}
-  _data: []
+  _clip: {fileID: 7400016, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Neutral 3
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
+--- !u!114 &114000010831832858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400020, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Up Smash
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
+--- !u!114 &114000011350591922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Down Tilt
+  _ids: 
+  _keyframes: []
   _otherEvents: []
 --- !u!114 &114000011410192748
 MonoBehaviour:
@@ -7242,6 +7298,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 1
   weapon: 0
+--- !u!114 &114000011417169614
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Back Aerial
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
+--- !u!114 &114000011483104670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400004, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Dash Attack
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
 --- !u!114 &114000011506220248
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7266,8 +7354,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clip: {fileID: 0}
-  _data: []
+  _clip: {fileID: 7400014, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Neutral 2
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
+--- !u!114 &114000011725553394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Up Tilt
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
+--- !u!114 &114000011836652676
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400020, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Side Smash
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
+--- !u!114 &114000012145004968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400020, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Down Smash
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
+--- !u!114 &114000012198068056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400000, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Idle
+  _ids: 7090c743d93e3d6faaa4621bc9dc4f3ad4a4d13fb9e86748c45e9b6b536fbb409212f02a991e5f72ec343244
+  _keyframes:
+  - _time: 0.139
+    _states: 0101010101010101010101
+  - _time: 0.407
+    _states: 0000000000000000000000
+  - _time: 0.422
+    _states: 0000000000000000000000
+  - _time: 0.703
+    _states: 0101010101010101010101
   _otherEvents: []
 --- !u!114 &114000012340364190
 MonoBehaviour:
@@ -7280,10 +7442,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clip: {fileID: 0}
-  _data: []
+  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Down Aerial
+  _ids: 
+  _keyframes: []
   _otherEvents: []
---- !u!114 &114000012365439356
+--- !u!114 &114000012444422874
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -7291,9 +7455,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c333854b51d2154a9158142109fefab, type: 3}
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Side Tilt
+  _ids: 
+  _keyframes: []
+  _otherEvents: []
 --- !u!114 &114000012650452166
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7346,7 +7515,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 1
   weapon: 0
---- !u!114 &114000013359548256
+--- !u!114 &114000013941128530
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -7357,17 +7526,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clip: {fileID: 0}
-  _data:
-  - _id: 0
-    _baseState: 0
-    _togglePoints: []
-  - _id: 0
-    _baseState: 0
-    _togglePoints: []
-  - _id: 0
-    _baseState: 0
-    _togglePoints: []
+  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Neutral Aerial
+  _ids: 
+  _keyframes: []
   _otherEvents: []
 --- !u!114 &114000014179332312
 MonoBehaviour:
@@ -8735,7 +8897,8 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101000011974723440}
   - {fileID: 1101000013022139822}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114000013941128530}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -8760,7 +8923,8 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101000011269656198}
   - {fileID: 1101000013509760526}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114000010456850044}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -8811,7 +8975,8 @@ AnimatorState:
   m_Transitions:
   - {fileID: 1101000012884183362}
   - {fileID: 1101000010103921812}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114000011417169614}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -8835,7 +9000,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101000012553711392}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114000011350591922}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -8887,6 +9053,7 @@ AnimatorState:
   - {fileID: 1101000012434046554}
   m_StateMachineBehaviours:
   - {fileID: 114000010385877422}
+  - {fileID: 114000010170794724}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -9013,6 +9180,7 @@ AnimatorState:
   - {fileID: 1101000013587266244}
   m_StateMachineBehaviours:
   - {fileID: 114000013022855946}
+  - {fileID: 114000010831832858}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -9038,9 +9206,7 @@ AnimatorState:
   - {fileID: 1101000010779057326}
   - {fileID: 1101000010451924998}
   m_StateMachineBehaviours:
-  - {fileID: 114000012365439356}
   - {fileID: 114000012340364190}
-  - {fileID: 114000010492156448}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -9093,6 +9259,7 @@ AnimatorState:
   - {fileID: 1101000013786102280}
   m_StateMachineBehaviours:
   - {fileID: 114000014179332312}
+  - {fileID: 114000011725553394}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -9116,7 +9283,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101000010902219982}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114000011483104670}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -9124,7 +9292,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: 7400004, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -9142,6 +9310,7 @@ AnimatorState:
   - {fileID: 1101000011871668872}
   m_StateMachineBehaviours:
   - {fileID: 114000011506220248}
+  - {fileID: 114000012145004968}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -9220,7 +9389,7 @@ AnimatorStateMachine:
   m_AnyStatePosition: {x: 48, y: 24, z: 0}
   m_EntryPosition: {x: 264, y: 180, z: 0}
   m_ExitPosition: {x: 552, y: 24, z: 0}
-  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_ParentStateMachinePosition: {x: 24, y: -24, z: 0}
   m_DefaultState: {fileID: 110281228}
 --- !u!1107 &1107000010682992320
 AnimatorStateMachine:
@@ -9347,7 +9516,7 @@ AnimatorStateMachine:
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_EntryPosition: {x: 48, y: 84, z: 0}
   m_ExitPosition: {x: 744, y: 84, z: 0}
-  m_ParentStateMachinePosition: {x: 696, y: -12, z: 0}
+  m_ParentStateMachinePosition: {x: 720, y: 24, z: 0}
   m_DefaultState: {fileID: 110287456}
 --- !u!1107 &1107000013698905648
 AnimatorStateMachine:
@@ -9435,7 +9604,7 @@ AnimatorTransition:
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102000010743114644}
   m_Solo: 0
-  m_Mute: 0
+  m_Mute: 1
   m_IsExit: 0
   serializedVersion: 1
 --- !u!1109 &1109000010506472810
@@ -9554,7 +9723,7 @@ AnimatorTransition:
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102000011616503036}
   m_Solo: 0
-  m_Mute: 0
+  m_Mute: 1
   m_IsExit: 0
   serializedVersion: 1
 --- !u!1109 &1109000011120005446
@@ -9670,7 +9839,7 @@ AnimatorTransition:
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102000013100482590}
   m_Solo: 0
-  m_Mute: 0
+  m_Mute: 1
   m_IsExit: 0
   serializedVersion: 1
 --- !u!1109 &1109000011888503774
@@ -9750,7 +9919,7 @@ AnimatorTransition:
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102000010332419558}
   m_Solo: 0
-  m_Mute: 0
+  m_Mute: 1
   m_IsExit: 0
   serializedVersion: 1
 --- !u!1109 &1109000013260818430

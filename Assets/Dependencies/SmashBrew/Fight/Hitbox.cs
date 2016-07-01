@@ -22,11 +22,14 @@
 
 using System;
 using UnityConstants;
+using UnityEditor;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
     public sealed class Hitbox : MonoBehaviour {
+
+        [Flags]
         public enum Type {
             // The values here are used as priority mulitpliers
             Offensive = 1,
@@ -158,8 +161,9 @@ namespace HouraiTeahouse.SmashBrew {
 
 #if UNITY_EDITOR
         void OnDrawGizmos() {
-            GizmoUtil.DrawColliders(GetComponents<Collider>(),
-                Config.Debug.GetHitboxColor(type));
+            if(!EditorApplication.isPlayingOrWillChangePlaymode || IsActive)
+                GizmoUtil.DrawColliders(GetComponents<Collider>(),
+                    Config.Debug.GetHitboxColor(type));
         }
 #endif
 

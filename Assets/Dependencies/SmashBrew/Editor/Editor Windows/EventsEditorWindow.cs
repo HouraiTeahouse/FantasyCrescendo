@@ -5,84 +5,171 @@ using UnityEngine;
 using HouraiTeahouse.Editor;
 using UnityEditor;
 using UnityEditor.Animations;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
-    public class EventsEditorWindow : LockableEditorWindow {
+    internal class EventsEditorData {
+        
+        AnimatorState _state;
 
-        public AnimatorState State { get; set; }
-        float SeekTime { get; set; }
-        Hitbox.Type _filter;
-        ObjectSelector<CharacterData> _characters;
         Hitbox[] _hitboxes;
-        string error;
 
-        static EventsEditorWindow GetWindow() {
-            return GetWindow<EventsEditorWindow>("Events");
+        public event Action OnObjectUpdate;
+        public event Action OnAssetEdit;
+
+        public ObjectSelector<CharacterData> Characters { get; private set; }
+        public CharacterStateEvents Events { get; private set; }
+        public GameObject Spawn { get; private set; }
+
+        List<int> IDs {
+            get { return Events ? Events.IDs : null; }
         }
 
-        [MenuItem("Window/Animator Events Editor")]
-        static void CreateWindow() {
-            EventsEditorWindow window = GetWindow();
-            window.Show();
-            window.Refresh();
+        List<HitboxKeyframe> Keyframes {
+            get { return Events ? Events.Keyframes : null; }
         }
 
-        [MenuItem("Smash Brew/Add Offensive Hitbox %h")]
-        static void AddOffensiveHitbox() {
-            AddHitbox(Hitbox.Type.Offensive); 
+        public int HitboxCount {
+            get { return IDs != null ? IDs.Count : 0; }
         }
 
-        [MenuItem("Smash Brew/Add Hurtbox %#h")]
-        static void AddHurtbox() {
-            AddHitbox(Hitbox.Type.Damageable);
+        public int KeyframeCount {
+            get { return Keyframes != null ? Keyframes.Count : 0; }
         }
 
-        [MenuItem("Smash Brew/Add Hurtbox %#h", true)]
-        [MenuItem("Smash Brew/Add Offensive Hitbox %h", true)]
-        static bool AddHitboxValidate() {
-            return Selection.gameObjects.Length > 0;
-        }
-
-        static void AddHitbox(Hitbox.Type type) {
-            var hitboxes = new List<Hitbox>();
-            var rootMap = new Dictionary<GameObject, List<Hitbox>>();
-            var idGen = new System.Random();
-            Undo.IncrementCurrentGroup();
-            foreach (GameObject go in Selection.gameObjects) {
-                var hbGo = new GameObject();
-                Undo.RegisterCreatedObjectUndo(hbGo, "Create Hitbox GameObject");
-                var collider = Undo.AddComponent<SphereCollider>(hbGo);
-                var hb = Undo.AddComponent<Hitbox>(hbGo);
-                hb.CurrentType = type;
-                hb.ID = idGen.Next();
-                hitboxes.Add(hb);
-                Undo.SetTransformParent(hb.transform, go.transform, "Parent Hitbox");
-                hb.transform.Reset();
-                Undo.RecordObject(collider, "Edit Collider Size");
-                collider.radius = 1f /
-                    ((Vector3) (hb.transform.localToWorldMatrix * Vector3.one))
-                        .Max();
-                var character = hbGo.GetComponentInParent<Character>();
-                GameObject rootGo = character != null
-                    ? character.gameObject
-                    : hb.transform.root.gameObject;
-                if(!rootMap.ContainsKey(rootGo))
-                    rootMap[rootGo] = new List<Hitbox>();
-                rootMap[rootGo].Add(hb);
+        public IEnumerable<Hitbox> Hitboxes {
+            get {
+                return
+                    _hitboxes.EmptyIfNull().Where(
+                        h => h == null || (h.CurrentType & Filter) != 0);
             }
-            foreach (var set in rootMap) {
-                Hitbox[] allHitboxes = set.Key.GetComponentsInChildren<Hitbox>();
-                int i = allHitboxes.Length - set.Value.Count;
-                Undo.RecordObjects(set.Value.ToArray(), "Name Changes");
-                foreach (Hitbox hitbox in set.Value) {
-                    hitbox.name = string.Format("{0}_hb_{1}_{2}", set.Key.name, type, i).ToLower();
-                    i++;
-                }
+        }
+
+        public void AddKeyframe(float time) {
+            if(Keyframes == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(time, 0f, 1f));
+            var keyframe = new HitboxKeyframe();
+            keyframe.Time = time;
+            keyframe.States = new List<bool>();
+            for (var i = 0; i < HitboxCount; i++)
+                keyframe.States.Add(false);
+            Keyframes.Add(keyframe);
+            OnEdit();
+        }
+
+        void OnEdit() {
+            if (Events == null)
+                return;
+            Keyframes.Sort((k1, k2) => k1.Time.CompareTo(k2.Time));
+            EditorUtility.SetDirty(Events);
+            OnAssetEdit.SafeInvoke();
+        }
+
+        /// <summary>
+        /// Adds a Hitbox to the set.
+        /// </summary>
+        /// <param name="hitbox">the Hitbox to add.</param>
+        /// <returns>whether the element was added or not</returns>
+        /// <exception cref="InvalidOperationException">instance does not point to a CharacterStateEvents instance</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="hitbox"/> is null</exception>
+        public bool AddHitbox(Hitbox hitbox) {
+            return AddID(Check.NotNull(hitbox).ID);
+        }
+
+        /// <summary>
+        /// Adds an ID to the set.
+        /// </summary>
+        /// <param name="id">the ID to add.</param>
+        /// <returns>whether the element was added or not</returns>
+        /// <exception cref="InvalidOperationException">instance does not point to a CharacterStateEvents instance</exception>
+        public bool AddID(int id) {
+            if(IDs == null)
+                throw new InvalidOperationException();
+            if (IDs.Contains(id))
+                return false;
+            IDs.Add(id);
+            foreach (HitboxKeyframe hitboxKeyframe in Keyframes) {
+                hitboxKeyframe.States.Add(false);
             }
-            Selection.objects = hitboxes.GetGameObject().ToArray();
-            Undo.SetCurrentGroupName(string.Format("Generate {0} Hitbox{1}", type, hitboxes.Count > 0 ? "es" : string.Empty));
-            GetWindow().Refresh();
+            OnEdit();
+            return true;
+        }
+
+        public IEnumerable<KeyValuePair<float, bool>> GetProgression(int index) {
+            if(Keyframes == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(index, HitboxCount));
+            foreach (HitboxKeyframe hitboxKeyframe in Keyframes) {
+                yield return new KeyValuePair<float, bool>(hitboxKeyframe.Time, 
+                    hitboxKeyframe.States[index]);
+            }
+        }
+
+        public void SetState(int index, int keyframe, bool value) {
+            if(IDs == null || Keyframes == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(index, HitboxCount));
+            Check.Argument(Check.Range(keyframe, KeyframeCount));
+            Keyframes[keyframe].States[index] = value;
+            OnEdit();
+        }
+
+        public int GetID(int index) {
+            if(IDs == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(index, HitboxCount));
+            return IDs[index];
+        }
+
+        public bool ToggleState(int index, int keyframe) {
+            if (IDs == null || Keyframes == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(index, HitboxCount));
+            Check.Argument(Check.Range(keyframe, KeyframeCount));
+            var states = Keyframes[keyframe].States;
+            states[index] = !states[index];
+            OnEdit();
+            return states[index];
+        }
+
+        public void DeleteKeyframe(int keyframe) {
+            if(Keyframes == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(keyframe, KeyframeCount));
+            Keyframes.RemoveAt(keyframe);
+            OnEdit();
+        }
+
+        public void DeleteHitbox(int index) {
+            if(IDs == null || Keyframes == null)
+                throw new InvalidOperationException();
+            Check.NotNull(Check.Range(index, HitboxCount));
+            IDs.RemoveAt(index);
+            foreach (HitboxKeyframe hitboxKeyframe in Keyframes)
+                hitboxKeyframe.States.RemoveAt(index);
+            OnEdit();
+        }
+
+        public AnimatorState State {
+            get { return _state; }
+            set {
+                _state = value;
+                Events = _state
+                    ? _state.GetBehaviour<CharacterStateEvents>()
+                    : null;
+                OnEdit();
+                OnObjectUpdate.SafeInvoke();
+            }
+        }
+
+        public Hitbox.Type Filter { get; set; }
+
+        public EventsEditorData() {
+            Characters = new ObjectSelector<CharacterData>();
+            Characters.OnSelectedChange += UpdateCharacter;
+            Refresh();
         }
 
         // Loads all of the Characters from Resources.
@@ -94,6 +181,11 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             if (character == null || character.Prefab.Load() == null)
                 return null;
             return character.Prefab.Load().GetComponentsInChildren<Hitbox>();
+        }
+
+        public void Refresh() {
+            Characters.Selections = LoadAllCharacters();
+            UpdateCharacter(Characters.Selected);
         }
 
         static CharacterData FindBestHitboxMatch(IEnumerable<int> ids,
@@ -113,77 +205,210 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             return bestMatch;
         }
 
+        public void UpdateCharacter(CharacterData data) {
+            if (Spawn != null) {
+                GameObject newInstance = SpawnPrefab();
+                newInstance.transform.Copy(Spawn.transform);
+                Undo.DestroyObjectImmediate(Spawn);
+                Spawn = newInstance;
+            }
+            _hitboxes = GetHitboxes(data);
+            if(_hitboxes != null)
+                Array.Sort(_hitboxes, (h1, h2) => string.Compare(h1.name, h2.name, StringComparison.Ordinal));
+        }
+
+        public void ToggleSpawn(bool toggle) {
+            if(!toggle && Spawn)
+                Undo.DestroyObjectImmediate(Spawn);
+            if (toggle && !Spawn)
+                Spawn = SpawnPrefab();
+        }
+
+        GameObject SpawnPrefab() {
+            GameObject prefab = Characters.Selected.Prefab.Load();
+
+            var instance = (GameObject) PrefabUtility.InstantiatePrefab(prefab);
+            Undo.RegisterCreatedObjectUndo(instance, string.Format("Spawn {0}", prefab.name));
+            return instance;
+        }
+    }
+
+    public class EventsEditorWindow : LockableEditorWindow {
+
+        EventsEditorData Data; 
+
+        ObjectSelector<CharacterData> Characters {
+            get {
+                if(Data == null)
+                    Data = new EventsEditorData();
+                return Data.Characters;
+            }
+        }
+
+        float SeekTime { get; set; }
+        bool state;
+
+        static readonly string filterPref = "eventEditorFilter";
+
+        public static EventsEditorWindow GetWindow() {
+            return GetWindow<EventsEditorWindow>("Events");
+        }
+
+        [MenuItem("Window/Animator Events Editor")]
+        static void CreateWindow() {
+            EventsEditorWindow window = GetWindow();
+            window.Show();
+            window.Repaint();
+        }
+
         /// <summary>
         /// Unity callback. Called when the EditorWindow is created.
         /// </summary>
         void OnEnable() {
-            _characters = new ObjectSelector<CharacterData>(LoadAllCharacters());
-            _characters.OnSelectedChange += UpdateHitboxSet;
-            _filter = ~Hitbox.Type.Damageable;
+            Data = new EventsEditorData();
+            if (EditorPrefs.HasKey(filterPref))
+                Data.Filter = (Hitbox.Type) EditorPrefs.GetInt(filterPref);
+            else {
+                Data.Filter = (Hitbox.Type) ~0;
+                EditorPrefs.SetInt(filterPref, (int) Data.Filter);
+            }
+            Data.OnAssetEdit += Repaint;
+        }
+
+        void OnDestroy() {
+            EditorPrefs.SetInt(filterPref, (int) Data.Filter);
         }
 
         void OnSelectionChange() {
-            if (IsLocked)
+            if (IsLocked || Data == null)
                 return;
             var newState = Selection.activeObject as AnimatorState;
-            if (newState == State)
+            if (newState == null || newState == Data.State)
                 return;
-            State = Selection.activeObject as AnimatorState;
+            Data.State = newState;
             SeekTime = 0f;
             Repaint();
         }
 
-        void Refresh() {
-            _characters.Selections = LoadAllCharacters();
-            UpdateHitboxSet(_characters.Selected);
+        void OnHierarchyChange() {
             Repaint();
         }
 
-        void UpdateHitboxSet(CharacterData data) {
-            _hitboxes = GetHitboxes(data);
-            Array.Sort(_hitboxes, (h1, h2) => string.Compare(h1.name, h2.name, StringComparison.Ordinal));
+        void SpawnButton() {
+            GUI.enabled = Characters.Selected != null &&
+                    Characters.Selected.Prefab.Load() != null;
+            Data.ToggleSpawn(GUILayout.Toggle(Data.Spawn, "Spawn", EditorStyles.toolbarButton, GUILayout.Width(40)));
+            GUI.enabled = true;
         }
 
         void ToolbarGUI() {
+            SpawnButton();
             GUILayout.FlexibleSpace();
-            _characters.Draw(GUIContent.none, EditorStyles.toolbarPopup, GUILayout.Width(100));
+            Characters.Draw(GUIContent.none, EditorStyles.toolbarPopup, GUILayout.Width(100));
             if (GUILayout.Button("Refresh", EditorStyles.toolbarButton)) {
-                Refresh();
+                Data.Refresh();
+                Repaint();
             }
-            _filter = (Hitbox.Type) EditorGUILayout.EnumMaskField(_filter, EditorStyles.toolbarPopup, GUILayout.Width(90));
+            Data.Filter = (Hitbox.Type) EditorGUILayout.EnumMaskField(Data.Filter, EditorStyles.toolbarPopup, GUILayout.Width(90));
         }
 
-        void HitboxGUI(Hitbox hitbox) {
-            if (hitbox == null)
-                return;
-            GUI.color = Config.Debug.GetHitboxColor(hitbox.CurrentType);
-            using (new EditorGUILayout.HorizontalScope()) {
-                EditorGUILayout.LabelField(hitbox.name);
-                GUI.color = Color.red;
-                Rect rect = EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+        IEnumerable<Hitbox> GetObjectHitboxes(IEnumerable<Object> objects) {
+            return objects.OfType<GameObject>().GetComponents<Hitbox>();
+        }
 
+        void HandleEvents(Rect rect) {
+            Event currentEvent = Event.current;
+            switch (currentEvent.type) {
+                case EventType.DragUpdated:
+                case EventType.DragPerform:
+                case EventType.DragExited:
+                    if (!rect.Contains(currentEvent.mousePosition))
+                        return;
+                    break;
+            }
+            switch (currentEvent.type) {
+                case EventType.DragUpdated:
+                    DragAndDrop.visualMode = Data.Events && GetObjectHitboxes(DragAndDrop.objectReferences).Any() ? 
+                        DragAndDropVisualMode.Generic : DragAndDropVisualMode.None;
+                    break;
+                case EventType.DragExited:
+                case EventType.DragPerform:
+                    DragAndDrop.AcceptDrag();
+                    foreach (Hitbox hb in GetObjectHitboxes(DragAndDrop.objectReferences)) 
+                        Data.AddHitbox(hb);
+                    break;
+            }
+        }
+
+        void DrawHitboxGUI (int index) {
+            using (new EditorGUILayout.HorizontalScope()) {
+                EditorGUILayout.LabelField(Data.GetID(index).ToString(), GUILayout.Width(100));
+                Color oldColor = GUI.color;
+                GUI.color = Color.black;
+                Rect area = EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+                float width = area.width;
+                float start = area.x;
+                var lastKeyframe = 0f;
+                if(Event.current.type != EventType.Layout) {
+                    float delta, time;
+                    Rect stateRect;
+                    int i = 0;
+                    foreach (var data in Data.GetProgression(index)) {
+                        time = data.Key;
+                        delta = time - lastKeyframe;
+                        stateRect = new Rect(area);
+                        stateRect.x += lastKeyframe * width;
+                        stateRect.width = delta * width;
+                        GUI.color = data.Value ? Color.green : Color.red;
+                        GUI.Box(stateRect, GUIContent.none, EditorStyles.toolbar);
+                        EditorGUI.DrawRect(new Rect(stateRect.x - 1, stateRect.y, 2, stateRect.height), Color.black);
+                        Event evt = Event.current;
+                        if (stateRect.Contains(evt.mousePosition)) {
+                            switch (evt.type) {
+                                case EventType.MouseDown:
+                                    state = Data.ToggleState(index, i);
+                                    break;
+                                case EventType.MouseDrag:
+                                    Data.SetState(index, i, state);
+                                    break;
+                            }
+                        }
+                        lastKeyframe = time;
+                        i++;
+                    }
+                    delta = 1 - lastKeyframe;
+                    stateRect = new Rect(area);
+                    stateRect.x += lastKeyframe * width;
+                    stateRect.width = delta * width;
+                    GUI.color = Color.red;
+                    EditorGUI.DrawRect(new Rect(stateRect.x - 1, stateRect.y, 2, stateRect.height), Color.black);
+                    GUI.Box(stateRect, GUIContent.none, EditorStyles.toolbar);
+                }
                 GUILayout.FlexibleSpace();
                 EditorGUILayout.EndHorizontal();
+                GUI.color = oldColor;
             }
         }
+
+        float insert;
 
         void OnGUI() {
             using(new EditorGUILayout.HorizontalScope(EditorStyles.toolbar)) {
                 ToolbarGUI();
             }
-            using (new EditorGUILayout.VerticalScope()) {
-                if(_hitboxes != null) {
-                    foreach (Hitbox hitbox in _hitboxes) {
-                       if((hitbox.CurrentType & _filter) != 0)
-                           HitboxGUI(hitbox); 
-                    }
-                }
+            Rect area;
+            using(new EditorGUILayout.HorizontalScope()) {
+                insert = EditorGUILayout.Slider(insert, 0, 1);
+                if(GUILayout.Button("Add"))
+                    Data.AddKeyframe(insert);
             }
-            if (State == null)
-                return;
-            SeekTime = EditorGUILayout.Slider(GUIContent.none, SeekTime, 0f, 1f);
-            foreach(StateMachineBehaviour behaviour in State.behaviours)
-                EditorGUILayout.LabelField(behaviour.ToString());
+            using (var scope = new EditorGUILayout.VerticalScope()) {
+                area = scope.rect;
+                for(var i = 0; i < Data.HitboxCount; i++) 
+                    DrawHitboxGUI(i);
+                GUILayout.FlexibleSpace();
+            }
+            HandleEvents(area);
         }
 
     }

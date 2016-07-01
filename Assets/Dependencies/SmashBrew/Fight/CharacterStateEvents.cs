@@ -24,89 +24,90 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HouraiTeahouse.SmashBrew {
+    [Serializable]
+    public class HitboxKeyframe {
+        [SerializeField]
+        float _time;
+
+        [SerializeField]
+        List<bool> _states;
+
+        public float Time {
+            get { return _time; }
+            set { _time = value; }
+        }
+
+        public List<bool> States {
+            get { return _states; }
+            set { _states = value; }
+        }
+    }
+
     [SharedBetweenAnimators]
     public sealed class CharacterStateEvents : BaseAnimationBehaviour<Character> {
 
-        [Serializable]
-        public class HitboxData {
-            [SerializeField]
-            int _id;
-
-            [SerializeField]
-            bool _baseState;
-
-            [SerializeField]
-            List<float> _togglePoints;
-
-            public int ID {
-                get { return _id; }
-                set { _id = value; }
-            }
-
-            public List<float> TogglePoints {
-                get { return _togglePoints; }
-                set { _togglePoints = value; }
-            }
-
-            public IEnumerable<AnimationEvent> Initialize(Character character) {
-                Assert.IsNotNull(character.GetHitbox(_id));
-                bool state = !_baseState;
-                _togglePoints.Sort();
-                foreach (float togglePoint in TogglePoints) {
-                    yield return CreateHitboxAnimationEvent(togglePoint, state);
-                    state = !state;
-                }
-            }
-
-            public void Start(Character character) {
-                Assert.IsNotNull(character);
-                character.GetHitbox(_id).IsActive = _baseState;
-            }
-
-            AnimationEvent CreateHitboxAnimationEvent(float time, bool state) {
-               return new AnimationEvent {
-                    functionName = CharacterAnimationEvents.HitboxFunc,
-                    time = time,
-                    intParameter = StateToInt(state)
-               };
-            }
-
-            int StateToInt(bool state) { return _id * (state ? 1 : -1); }
-        }
-
-        [ReadOnly]
         [SerializeField]
         AnimationClip _clip;
 
         [SerializeField]
-        HitboxData[] _data;
+        string _stateName;
+
+        [SerializeField]
+        List<int> _ids;
+
+        [SerializeField]
+        List<HitboxKeyframe> _keyframes;
 
         [SerializeField]
         AnimationEvent[] _otherEvents;
 
         bool _initialized;
 
-        public override void Initialize(GameObject gameObject) {
-            base.Initialize(gameObject);
-            if (!Target || _initialized)
-                return;
-            if (_clip == null) {
-                Log.Error("Clip for CharacterStateEvents is not assigned. Is not initialized. Ignoring...");
-                return;
-            }
-            _clip.events =
-                _data.SelectMany(data => data.Initialize(Target)).Concat(_otherEvents).ToArray();
-            _initialized = true;
+        public List<int> IDs {
+            get { return _ids; }
         }
 
-        public override void OnStateEnter(Animator animator,
-                                          AnimatorStateInfo stateInfo,
-                                          int layerIndex) {
-            for (var i = 0; i < _data.Length; i++)
-                _data[i].Start(Target);
+        public List<HitboxKeyframe> Keyframes {
+            get { return _keyframes; }
+        }
+
+        public bool CheckSizes() {
+            int size = _ids.Count;
+            return _keyframes.All(frame => size == frame.States.Count);
+        }
+
+        public HitboxKeyframe GetKeyframe(int frame) {
+            if(!Check.Range(frame, _keyframes))
+                throw new ArgumentException();
+            return _keyframes[frame];
+        }
+
+        public IEnumerable<AnimationEvent> GetEvents() {
+            for (var i = 0; i < _keyframes.Count; i++)
+                yield return new AnimationEvent {
+                    functionName = CharacterAnimationEvents.HitboxFunc,
+                    time = _keyframes[i].Time,
+                    intParameter = i,
+                    objectReferenceParameter = this
+                };
+            for (var i = 0; i < _otherEvents.Length; i++)
+                yield return _otherEvents[i];
+        }
+
+        public override void Initialize(GameObject gameObject) {
+            base.Initialize(gameObject);
+            if (_clip == null) {
+                Log.Error("State {0} does not have a clip. Is it initialized?", _stateName);
+                return;
+            }
+            _clip.events = GetEvents().ToArray();
+            Debug.Log(_clip.events.Length);
+            _initialized = true;
         }
 
     }
