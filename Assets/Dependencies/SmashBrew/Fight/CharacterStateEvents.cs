@@ -106,7 +106,6 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             }
             _clip.events = GetEvents().ToArray();
-            Debug.Log(_clip.events.Length);
             _initialized = true;
         }
 

@@ -104,7 +104,7 @@ namespace HouraiTeahouse.Editor {
                     gameObject = component.gameObject;
                 if (gameObject != null) {
                     // Assign asset to the object's prefab
-                    Debug.Log("Is a GameObject, extracting Prefab...");
+                    Log.Info("Is a GameObject, extracting Prefab...");
                     asset = asset.GetPrefab();
                 }
             }

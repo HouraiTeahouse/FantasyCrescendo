@@ -22,6 +22,7 @@
 
 using HouraiTeahouse.HouraiInput;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.SmashBrew {
     /// <summary> Handler MonoBehaviour that listens for button presses and pauses the game as needed. </summary>
@@ -30,18 +31,16 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         InputTarget _pauseButton = InputTarget.Start;
 
-        /// <summary> The player that paused the game. </summary>
-        Player _pausedPlayer;
-
         /// <summary> Unity callback. Called once every frame. </summary>
         void Update() {
             if (TimeManager.Paused) {
-                if (_pausedPlayer != null
-                    && !_pausedPlayer.Controller.GetControl(_pauseButton)
+                Assert.IsNotNull(SmashTimeManager.PausedPlayer);
+                var player = SmashTimeManager.PausedPlayer;
+                if (player != null
+                    && !player.Controller.GetControl(_pauseButton)
                         .WasPressed)
                     return;
-                _pausedPlayer = null;
-                TimeManager.Paused = false;
+                SmashTimeManager.PausedPlayer = null;
             }
             else {
                 foreach (Player player in Player.ActivePlayers) {
@@ -49,8 +48,7 @@ namespace HouraiTeahouse.SmashBrew {
                         || !player.Controller.GetControl(_pauseButton)
                             .WasPressed)
                         continue;
-                    _pausedPlayer = player;
-                    TimeManager.Paused = true;
+                    SmashTimeManager.PausedPlayer = player;
                     break;
                 }
             }

@@ -5,7 +5,7 @@ namespace HouraiTeahouse.Editor {
     /// <summary>
     /// Custom Inspector for TimeManager.
     /// </summary>
-    [CustomEditor(typeof(TimeManager))]
+    [CustomEditor(typeof(TimeManager), true)]
     public class TimeManagerEditor : ScriptlessEditor {
 
         /// <summary>
