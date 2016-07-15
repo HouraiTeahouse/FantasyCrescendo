@@ -12,33 +12,34 @@ MonoBehaviour:
   m_Name: Config
   m_EditorClassIdentifier: 
   _gameModes:
-    _standardVersus:
-      _minimumPlayers: 1
-      _maximumPlayers: 4
-      _cpusAllowed: 1
-      _excludedCharacters: []
-      _excludedStages: []
-    _training:
-      _minimumPlayers: 1
-      _maximumPlayers: 4
-      _cpusAllowed: 1
-      _excludedCharacters: []
-      _excludedStages: []
-    _arcade:
-      _minimumPlayers: 1
-      _maximumPlayers: 4
-      _cpusAllowed: 1
-      _excludedCharacters: []
-      _excludedStages: []
     _allStar:
-      _minimumPlayers: 1
-      _maximumPlayers: 4
       _cpusAllowed: 1
       _excludedCharacters: []
       _excludedStages: []
+      _maximumPlayers: 4
+      _minimumPlayers: 1
+    _arcade:
+      _cpusAllowed: 1
+      _excludedCharacters: []
+      _excludedStages: []
+      _maximumPlayers: 4
+      _minimumPlayers: 1
+    _standardVersus:
+      _cpusAllowed: 1
+      _excludedCharacters: []
+      _excludedStages: []
+      _maximumPlayers: 4
+      _minimumPlayers: 1
+    _training:
+      _cpusAllowed: 1
+      _excludedCharacters: []
+      _excludedStages: []
+      _maximumPlayers: 4
+      _minimumPlayers: 1
   _physics:
     _tangibleSpeedCap: 3
   _player:
+    _cpuColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
     _playerColors:
     - {r: 1, g: 0, b: 0, a: 1}
     - {r: 0, g: 0, b: 1, a: 1}
@@ -48,11 +49,14 @@ MonoBehaviour:
     - {r: 0, g: 1, b: 1, a: 1}
     - {r: 1, g: 0, b: 1, a: 1}
     - {r: 0.25, g: 0.25, b: 0.25, a: 1}
-    _cpuColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
     _tapPersistence: 0.083333336
     _tapTreshold: 0.3
   _debug:
-    DamageableHitboxColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    IntangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}
-    InvincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
-    OffensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}
+    _inactiveHitboxColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    _offensiveHitboxColor: {r: 1, g: 0, b: 0, a: 1}
+    _damageableHitboxColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    _intangibleHitboxColor: {r: 0, g: 0, b: 1, a: 1}
+    _invincibleHitboxColor: {r: 0, g: 1, b: 0, a: 1}
+    _shieldHitboxColor: {r: 1, g: 0, b: 1, a: 1}
+    _absorbHitboxColor: {r: 0, g: 1, b: 1, a: 1}
+    ReflectHitboxColor: {r: 0, g: 0.25, b: 0.5, a: 1}

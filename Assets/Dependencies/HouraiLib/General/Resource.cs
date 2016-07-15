@@ -75,6 +75,7 @@ namespace HouraiTeahouse {
 
         /// <summary> Unloads the asset from memory. Asset will be null after this. </summary>
         public void Unload() {
+            Asset = null;
             // Logs error if trying to unload a GameObject as a whole
             if (!IsLoaded || Asset is GameObject)
                 return;
@@ -83,7 +84,6 @@ namespace HouraiTeahouse {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
                 Log.Info("Unloaded {0}", _path);
-            Asset = null;
         }
 
         /// <summary> Loads the asset in an asynchronous manner. If no AsyncManager is currently availble, </summary>

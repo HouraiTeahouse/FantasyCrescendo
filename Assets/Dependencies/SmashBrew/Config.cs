@@ -80,32 +80,50 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     [Serializable]
-    public class DebugConfig {
+    public class DebugConfig : ISerializationCallbackReceiver {
         [SerializeField]
-        Color DamageableHitboxColor = Color.yellow;
+        Color _inactiveHitboxColor = Color.black;
 
         [SerializeField]
-        Color IntangibleHitboxColor = Color.blue;
+        Color _offensiveHitboxColor = Color.red;
 
         [SerializeField]
-        Color InvincibleHitboxColor = Color.green;
+        Color _damageableHitboxColor = Color.yellow;
 
         [SerializeField]
-        Color OffensiveHitboxColor = Color.red;
+        Color _intangibleHitboxColor = Color.blue;
+
+        [SerializeField]
+        Color _invincibleHitboxColor = Color.green;
+
+        [SerializeField]
+        Color _shieldHitboxColor = Color.magenta;
+
+        [SerializeField]
+        Color _absorbHitboxColor = Color.cyan;
+
+        [SerializeField]
+        Color ReflectHitboxColor = new Color(0, 0.25f, 0.5f, 1);
+
+        EnumMap<Hitbox.Type, Color> _colorMap;
 
         public Color GetHitboxColor(Hitbox.Type type) {
-            switch (type) {
-                case Hitbox.Type.Offensive:
-                    return OffensiveHitboxColor;
-                case Hitbox.Type.Damageable:
-                    return DamageableHitboxColor;
-                case Hitbox.Type.Invincible:
-                    return IntangibleHitboxColor;
-                case Hitbox.Type.Intangible:
-                    return InvincibleHitboxColor;
-                default:
-                    return Color.magenta;
-            }
+            return _colorMap[type];
+        }
+
+        public void OnBeforeSerialize() {
+        }
+
+        public void OnAfterDeserialize() {
+            _colorMap = new EnumMap<Hitbox.Type, Color>();
+            _colorMap[Hitbox.Type.Inactive] = _inactiveHitboxColor;
+            _colorMap[Hitbox.Type.Offensive] = _offensiveHitboxColor;
+            _colorMap[Hitbox.Type.Damageable] = _damageableHitboxColor;
+            _colorMap[Hitbox.Type.Invincible] = _invincibleHitboxColor;
+            _colorMap[Hitbox.Type.Intangible] = _intangibleHitboxColor;
+            _colorMap[Hitbox.Type.Absorb] = _absorbHitboxColor;
+            _colorMap[Hitbox.Type.Shield] = _shieldHitboxColor;
+            _colorMap[Hitbox.Type.Reflective] = ReflectHitboxColor;
         }
     }
 

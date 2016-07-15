@@ -35,14 +35,14 @@ namespace HouraiTeahouse.SmashBrew {
         float _time;
 
         [SerializeField]
-        List<bool> _states;
+        List<Hitbox.Type> _states;
 
         public float Time {
             get { return _time; }
             set { _time = value; }
         }
 
-        public List<bool> States {
+        public List<Hitbox.Type> States {
             get { return _states; }
             set { _states = value; }
         }
@@ -81,10 +81,103 @@ namespace HouraiTeahouse.SmashBrew {
             return _keyframes.All(frame => size == frame.States.Count);
         }
 
-        public HitboxKeyframe GetKeyframe(int frame) {
-            if(!Check.Range(frame, _keyframes))
-                throw new ArgumentException();
-            return _keyframes[frame];
+        public HitboxKeyframe this[int frame] {
+            get {
+                if(!Check.Range(frame, _keyframes))
+                    throw new ArgumentException();
+                return _keyframes[frame];
+            }
+        }
+
+        public void AddKeyframe(float time) {
+            if(Keyframes == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(time, 0f, 1f));
+            var keyframe = new HitboxKeyframe();
+            keyframe.Time = time;
+            keyframe.States = new List<Hitbox.Type>();
+            for (var i = 0; i < IDs.Count; i++)
+                keyframe.States.Add(Hitbox.Type.Inactive);
+            Keyframes.Add(keyframe);
+            OnChange();
+        }
+
+        void OnChange() {
+            Keyframes.Sort((k1, k2) => k1.Time.CompareTo(k2.Time));
+        }
+
+        /// <summary>
+        /// Adds a Hitbox to the set.
+        /// </summary>
+        /// <param name="hitbox">the Hitbox to add.</param>
+        /// <returns>whether the element was added or not</returns>
+        /// <exception cref="InvalidOperationException">instance does not point to a CharacterStateEvents instance</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="hitbox"/> is null</exception>
+        public bool AddHitbox(Hitbox hitbox) {
+            return AddID(Check.NotNull(hitbox).ID);
+        }
+
+        /// <summary>
+        /// Adds an ID to the set.
+        /// </summary>
+        /// <param name="id">the ID to add.</param>
+        /// <returns>whether the element was added or not</returns>
+        /// <exception cref="InvalidOperationException">instance does not point to a CharacterStateEvents instance</exception>
+        public bool AddID(int id) {
+            if(IDs == null)
+                throw new InvalidOperationException();
+            if (IDs.Contains(id))
+                return false;
+            IDs.Add(id);
+            foreach (HitboxKeyframe hitboxKeyframe in Keyframes) {
+                hitboxKeyframe.States.Add(Hitbox.Type.Inactive);
+            }
+            OnChange();
+            return true;
+        }
+
+        public void SetState(int index, int keyframe, Hitbox.Type value) {
+            if(IDs == null || Keyframes == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(index, IDs));
+            Check.Argument(Check.Range(keyframe, Keyframes));
+            Keyframes[keyframe].States[index] = value;
+            OnChange();
+        }
+
+        public void DeleteKeyframe(int keyframe) {
+            if(Keyframes == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(keyframe, Keyframes));
+            Keyframes.RemoveAt(keyframe);
+            OnChange();
+        }
+
+        public void DeleteHitbox(int index) {
+            if(IDs == null || Keyframes == null)
+                throw new InvalidOperationException();
+            Check.NotNull(Check.Range(index, IDs));
+            IDs.RemoveAt(index);
+            foreach (HitboxKeyframe hitboxKeyframe in Keyframes)
+                hitboxKeyframe.States.RemoveAt(index);
+            OnChange();
+        }
+
+        public IEnumerable<KeyValuePair<float, Hitbox.Type>> GetProgression(int index) {
+            if(Keyframes == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(index, IDs));
+            foreach (HitboxKeyframe hitboxKeyframe in Keyframes) {
+                yield return new KeyValuePair<float, Hitbox.Type>(hitboxKeyframe.Time, 
+                    hitboxKeyframe.States[index]);
+            }
+        }
+
+        public int GetID(int index) {
+            if(IDs == null)
+                throw new InvalidOperationException();
+            Check.Argument(Check.Range(index, IDs));
+            return IDs[index];
         }
 
         public IEnumerable<AnimationEvent> GetEvents() {

@@ -11,22 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
   m_Name: reimu_hakurei
   m_EditorClassIdentifier: 
-  _sourceGame: 5
-  _sourceStage: 5
-  _prefab: Characters/001_Marisa/Marisa
+  _announcerClip: Characters/002_Reimu/Audio/reimu_announcer
+  _backgroundColor: {r: 1, g: 0, b: 0, a: 1}
+  _cropPositon: {x: 0.5, y: 0.8}
+  _cropSize: 0.22
+  _fullNameKey: fullname.reimu
   _homeStage: Stages/Forest of Magic
+  _icon: Icons/reimu_icon
   _isSelectable: 0
   _isVisible: 1
-  _shortNameKey: name.reimu
-  _fullNameKey: fullname.reimu
   _portraits:
   - Characters/002_Reimu/Portraits/reimu_portrait_1
   - Characters/002_Reimu/Portraits/reimu_portrait_2
   - Characters/002_Reimu/Portraits/reimu_portrait_3
   - Characters/002_Reimu/Portraits/reimu_portrait_4
-  _backgroundColor: {r: 1, g: 0, b: 0, a: 1}
-  _cropPositon: {x: 0.5, y: 0.8}
-  _cropSize: 0.22
-  _icon: Icons/reimu_icon
-  _announcerClip: Characters/002_Reimu/Audio/reimu_announcer
+  _prefab: Characters/001_Marisa/Marisa
+  _shortNameKey: name.reimu
+  _sourceGame: 5
+  _sourceStage: 5
   _victoryTheme: Characters/002_Reimu/Audio/reimu_announcer

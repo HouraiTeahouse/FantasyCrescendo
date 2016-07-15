@@ -23,6 +23,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace HouraiTeahouse {
     /// <summary> Map between the values of a Enum and the values of another type. Essentially works as a dictionary

@@ -77,6 +77,12 @@ namespace HouraiTeahouse.Localization {
                     _localizationKey);
         }
 
+        protected virtual void OnDestroy() {
+            var languageManager = LanguageManager.Instance;
+            if(languageManager != null)
+                languageManager.OnChangeLanguage -= OnChangeLanguage;
+        }
+
         /// <summary> Events callback for when the system wide language is changed. </summary>
         /// <param name="language"> the language set that was changed to. </param>
         void OnChangeLanguage(Language language) {

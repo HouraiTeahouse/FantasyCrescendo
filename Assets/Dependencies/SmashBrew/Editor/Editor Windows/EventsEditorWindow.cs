@@ -12,15 +12,56 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     internal class EventsEditorData {
         
         AnimatorState _state;
+        List<Hitbox> _hitboxes;
+        CharacterStateEvents _events;
+        float _seekTime;
 
-        Hitbox[] _hitboxes;
+        public float SeekTime {
+            get { return _seekTime; }
+            set {
+                if (_seekTime == value || State == null || Animator == null)
+                    return;
+                _seekTime = value;
+                // TODO: Figure out a layer-agnostic way to do this
+                Animator.Play(State.nameHash, 0, _seekTime);
+                Animator.Update(0f);
+            }
+        }
+
+        public Animator Animator {
+            get {
+                if (Spawn == null)
+                    return null;
+                return Spawn.GetComponentInChildren<Animator>();
+            }
+        }
 
         public event Action OnObjectUpdate;
         public event Action OnAssetEdit;
 
         public ObjectSelector<CharacterData> Characters { get; private set; }
-        public CharacterStateEvents Events { get; private set; }
+
+        public CharacterStateEvents Events {
+            get { return _events; }
+            private set {
+                bool changed = _events != value;
+                _events = value;
+                if (changed)
+                    Characters.SetSelected(FindBestHitboxMatch(IDs,
+                        Characters.Selections));
+            }
+        }
+
         public GameObject Spawn { get; private set; }
+
+        public GameObject Target {
+            get {
+                GameObject target = Spawn;
+                if (target == null && Characters.Selected && Characters.Selected.Prefab.Load())
+                    return Characters.Selected.Prefab.Load();
+                return null;
+            }
+        }
 
         List<int> IDs {
             get { return Events ? Events.IDs : null; }
@@ -46,15 +87,23 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             }
         }
 
+        public Hitbox GetHitbox(int id) {
+            if (_hitboxes == null)
+                return null;
+            return _hitboxes.Find(h => h.ID == id);
+        }
+
         public void AddKeyframe(float time) {
             if(Keyframes == null)
                 throw new InvalidOperationException();
             Check.Argument(Check.Range(time, 0f, 1f));
-            var keyframe = new HitboxKeyframe();
-            keyframe.Time = time;
-            keyframe.States = new List<bool>();
+            Undo.RecordObject(Events, "Add Keyframe");
+            var keyframe = new HitboxKeyframe {
+                Time = time,
+                States = new List<Hitbox.Type>()
+            };
             for (var i = 0; i < HitboxCount; i++)
-                keyframe.States.Add(false);
+                keyframe.States.Add(Hitbox.Type.Inactive);
             Keyframes.Add(keyframe);
             OnEdit();
         }
@@ -63,7 +112,6 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             if (Events == null)
                 return;
             Keyframes.Sort((k1, k2) => k1.Time.CompareTo(k2.Time));
-            EditorUtility.SetDirty(Events);
             OnAssetEdit.SafeInvoke();
         }
 
@@ -91,27 +139,28 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 return false;
             IDs.Add(id);
             foreach (HitboxKeyframe hitboxKeyframe in Keyframes) {
-                hitboxKeyframe.States.Add(false);
+                hitboxKeyframe.States.Add(Hitbox.Type.Inactive);
             }
             OnEdit();
             return true;
         }
 
-        public IEnumerable<KeyValuePair<float, bool>> GetProgression(int index) {
+        public IEnumerable<KeyValuePair<float, Hitbox.Type>> GetProgression(int index) {
             if(Keyframes == null)
                 throw new InvalidOperationException();
             Check.Argument(Check.Range(index, HitboxCount));
             foreach (HitboxKeyframe hitboxKeyframe in Keyframes) {
-                yield return new KeyValuePair<float, bool>(hitboxKeyframe.Time, 
+                yield return new KeyValuePair<float, Hitbox.Type>(hitboxKeyframe.Time, 
                     hitboxKeyframe.States[index]);
             }
         }
 
-        public void SetState(int index, int keyframe, bool value) {
+        public void SetState(int index, int keyframe, Hitbox.Type value) {
             if(IDs == null || Keyframes == null)
                 throw new InvalidOperationException();
             Check.Argument(Check.Range(index, HitboxCount));
             Check.Argument(Check.Range(keyframe, KeyframeCount));
+            Undo.RecordObject(Events, "Change Hitbox State");
             Keyframes[keyframe].States[index] = value;
             OnEdit();
         }
@@ -123,21 +172,11 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             return IDs[index];
         }
 
-        public bool ToggleState(int index, int keyframe) {
-            if (IDs == null || Keyframes == null)
-                throw new InvalidOperationException();
-            Check.Argument(Check.Range(index, HitboxCount));
-            Check.Argument(Check.Range(keyframe, KeyframeCount));
-            var states = Keyframes[keyframe].States;
-            states[index] = !states[index];
-            OnEdit();
-            return states[index];
-        }
-
         public void DeleteKeyframe(int keyframe) {
             if(Keyframes == null)
                 throw new InvalidOperationException();
             Check.Argument(Check.Range(keyframe, KeyframeCount));
+            Undo.RecordObject(Events, "Delete Keyframe");
             Keyframes.RemoveAt(keyframe);
             OnEdit();
         }
@@ -146,6 +185,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             if(IDs == null || Keyframes == null)
                 throw new InvalidOperationException();
             Check.NotNull(Check.Range(index, HitboxCount));
+            Undo.RecordObject(Events, "Delete Hitbox");
             IDs.RemoveAt(index);
             foreach (HitboxKeyframe hitboxKeyframe in Keyframes)
                 hitboxKeyframe.States.RemoveAt(index);
@@ -184,8 +224,9 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         }
 
         public void Refresh() {
+            var selected = Characters.Selected;
             Characters.Selections = LoadAllCharacters();
-            UpdateCharacter(Characters.Selected);
+            UpdateCharacter(selected, Characters.Selected);
         }
 
         static CharacterData FindBestHitboxMatch(IEnumerable<int> ids,
@@ -205,16 +246,17 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             return bestMatch;
         }
 
-        public void UpdateCharacter(CharacterData data) {
+        public void UpdateCharacter(CharacterData oldCharacter, CharacterData data) {
+            if(oldCharacter != null)
+                oldCharacter.Prefab.Unload();
             if (Spawn != null) {
                 GameObject newInstance = SpawnPrefab();
                 newInstance.transform.Copy(Spawn.transform);
                 Undo.DestroyObjectImmediate(Spawn);
                 Spawn = newInstance;
             }
-            _hitboxes = GetHitboxes(data);
-            if(_hitboxes != null)
-                Array.Sort(_hitboxes, (h1, h2) => string.Compare(h1.name, h2.name, StringComparison.Ordinal));
+            _hitboxes = new List<Hitbox>(GetHitboxes(data).EmptyIfNull());
+            _hitboxes.Sort((h1, h2) => string.Compare(h1.name, h2.name, StringComparison.Ordinal));
         }
 
         public void ToggleSpawn(bool toggle) {
@@ -235,7 +277,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
 
     public class EventsEditorWindow : LockableEditorWindow {
 
-        EventsEditorData Data; 
+        EventsEditorData Data;
 
         ObjectSelector<CharacterData> Characters {
             get {
@@ -245,8 +287,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             }
         }
 
-        float SeekTime { get; set; }
-        bool state;
+        Hitbox.Type state = Hitbox.Type.Offensive;
 
         static readonly string filterPref = "eventEditorFilter";
 
@@ -282,11 +323,11 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         void OnSelectionChange() {
             if (IsLocked || Data == null)
                 return;
-            var newState = Selection.activeObject as AnimatorState;
+            var newState = Selection.objects.OfType<AnimatorState>().FirstOrDefault();
             if (newState == null || newState == Data.State)
                 return;
             Data.State = newState;
-            SeekTime = 0f;
+            Data.SeekTime = 0f;
             Repaint();
         }
 
@@ -309,7 +350,17 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 Data.Refresh();
                 Repaint();
             }
-            Data.Filter = (Hitbox.Type) EditorGUILayout.EnumMaskField(Data.Filter, EditorStyles.toolbarPopup, GUILayout.Width(90));
+
+            var oldColor = GUI.color;
+            GUI.color = Config.Debug.GetHitboxColor(state);
+            state =
+                (Hitbox.Type)
+                    EditorGUILayout.EnumPopup(
+                        state,
+                        EditorStyles.toolbarPopup,
+                        GUILayout.Width(100));
+            GUI.color = oldColor;
+            Data.Filter = (Hitbox.Type) EditorGUILayout.EnumMaskField(Data.Filter, EditorStyles.toolbarPopup, GUILayout.Width(100));
         }
 
         IEnumerable<Hitbox> GetObjectHitboxes(IEnumerable<Object> objects) {
@@ -342,32 +393,37 @@ namespace HouraiTeahouse.SmashBrew.Editor {
 
         void DrawHitboxGUI (int index) {
             using (new EditorGUILayout.HorizontalScope()) {
-                EditorGUILayout.LabelField(Data.GetID(index).ToString(), GUILayout.Width(100));
+                int id = Data.GetID(index);
+                var hitbox = Data.GetHitbox(id);
+                string display = "<color=red>{0}</color>".With(id);
+                if (hitbox != null)
+                    display = hitbox.name;
+                var style = GUI.skin.label;
+                style.richText = true;
+                style.alignment = TextAnchor.MiddleLeft;
+                EditorGUILayout.LabelField(display, style, GUILayout.MaxWidth(150));
                 Color oldColor = GUI.color;
                 GUI.color = Color.black;
                 Rect area = EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
                 float width = area.width;
-                float start = area.x;
                 var lastKeyframe = 0f;
                 if(Event.current.type != EventType.Layout) {
-                    float delta, time;
+                    float delta;
                     Rect stateRect;
                     int i = 0;
                     foreach (var data in Data.GetProgression(index)) {
-                        time = data.Key;
+                        float time = data.Key;
                         delta = time - lastKeyframe;
                         stateRect = new Rect(area);
                         stateRect.x += lastKeyframe * width;
                         stateRect.width = delta * width;
-                        GUI.color = data.Value ? Color.green : Color.red;
+                        GUI.color = Config.Debug.GetHitboxColor(data.Value);
                         GUI.Box(stateRect, GUIContent.none, EditorStyles.toolbar);
                         EditorGUI.DrawRect(new Rect(stateRect.x - 1, stateRect.y, 2, stateRect.height), Color.black);
                         Event evt = Event.current;
                         if (stateRect.Contains(evt.mousePosition)) {
                             switch (evt.type) {
                                 case EventType.MouseDown:
-                                    state = Data.ToggleState(index, i);
-                                    break;
                                 case EventType.MouseDrag:
                                     Data.SetState(index, i, state);
                                     break;
@@ -390,23 +446,37 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             }
         }
 
-        float insert;
-
         void OnGUI() {
             using(new EditorGUILayout.HorizontalScope(EditorStyles.toolbar)) {
                 ToolbarGUI();
             }
             Rect area;
             using(new EditorGUILayout.HorizontalScope()) {
-                insert = EditorGUILayout.Slider(insert, 0, 1);
+                Data.SeekTime = EditorGUILayout.Slider(Data.SeekTime, 0, 1);
                 if(GUILayout.Button("Add"))
-                    Data.AddKeyframe(insert);
+                    Data.AddKeyframe(Data.SeekTime);
             }
             using (var scope = new EditorGUILayout.VerticalScope()) {
                 area = scope.rect;
-                for(var i = 0; i < Data.HitboxCount; i++) 
-                    DrawHitboxGUI(i);
-                GUILayout.FlexibleSpace();
+                string error = null;
+                if(Data.Events == null) {
+                    error = "No selected event. Select an event.";
+                } else if (Data.Events.IDs.Count <= 0) {
+                    error =
+                        "No Hitboxes on {0}. Drag Character hitboxes here.".With
+                            (Data.State.name);
+                }
+                if (!error.IsNullOrEmpty()) {
+                    var style = GUI.skin.label;
+                    style.alignment = TextAnchor.MiddleCenter;
+                    GUILayout.FlexibleSpace();
+                    EditorGUILayout.LabelField(error, style);
+                    GUILayout.FlexibleSpace();
+                } else {
+                    for(var i = 0; i < Data.HitboxCount; i++) 
+                        DrawHitboxGUI(i);
+                    GUILayout.FlexibleSpace();
+                }
             }
             HandleEvents(area);
         }

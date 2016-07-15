@@ -32,7 +32,8 @@ namespace HouraiTeahouse.SmashBrew {
         [Flags]
         public enum Type {
             // The values here are used as priority mulitpliers
-            Offensive = 1,
+            Inactive = 1,
+            Offensive = Inactive << 1,
             Damageable = Offensive << 1,
             Invincible = Damageable << 1,
             Intangible = Invincible << 1,
@@ -247,7 +248,7 @@ namespace HouraiTeahouse.SmashBrew {
         #region Serializable Fields
 
         [SerializeField]
-        Type type;
+        Type type = Type.Offensive;
 
         [SerializeField]
         int _priority = 100;

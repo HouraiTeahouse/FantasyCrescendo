@@ -18,8 +18,9 @@ namespace HouraiTeahouse.Editor {
 
         /// <summary>
         /// Fired every time the selected object changes to a new value.
+        /// First argument is old value, new argument is new value.
         /// </summary>
-        public event Action<T> OnSelectedChange;
+        public event Action<T, T> OnSelectedChange;
 
         /// <summary>
         /// Initializes an instance of ObjectSelector.
@@ -73,9 +74,10 @@ namespace HouraiTeahouse.Editor {
             get { return _selected; }
             private set {
                 bool changed = value != Selected;
+                var oldValue = Selected;
                 _selected = value;
                 if(OnSelectedChange != null && changed)
-                    OnSelectedChange(value);
+                    OnSelectedChange(oldValue, value);
             }
         }
 
