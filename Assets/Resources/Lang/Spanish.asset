@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Name: Spanish
   m_EditorClassIdentifier: 
   _strings:
-  - Spanish
+  - "Espa\xF1ol"
   - Fantasy Crescendo
-  - 'This game is best expirenced with one or more gamepad controllers.
-
-    Got a controller? Plug it in!'
-  - "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
-    may contain story, character personalities, and settings different from  the original
-    works.\nIf you feel unconfortable with this, please proceed with caution."
+  - "Este juego se experimenta mejor con uno o mas mandos de videojuegos.\n\xBFTienes
+    un mando? \xA1Conectarlo!"
+  - "\xA1Aviso!\n\nEste juego es un derivado de \"Touhou Project (\u6771\u65B9Project)\".\nQuiz\xE1s
+    pueda contener historia, personalidades de los personajes, y escenarios diferentes
+    de los trabajos originales.\nSi te sientes inc\xF3modo con esto, por favor proceda
+    con precauci\xF3n."
   - Reimu
   - Reimu Hakurei
   - Marisa
@@ -41,7 +41,7 @@ MonoBehaviour:
   - Makai
   - "Mansi\xF3n del Demonio Escarlata"
   - Aleatorio
-  - Player {0}
+  - Jugador {0}
   - Multijugador
   - Un solo jugador
   - "Est\xE1ndard"
@@ -54,13 +54,13 @@ MonoBehaviour:
   - Salir del Juego
   - Entrenamiento
   - "M\xFAsica"
-  - Volumen Efectos de Sonido
-  - "Volumen M\xFAsica"
-  - Voice Volume
-  - Language
-  - '"Full of magic and greenery, hence the name."'
-  - '"Home to quite a few revels. Tenshi not welcome."'
-  - Yes
+  - Volumen de los efectos de sonido
+  - "Volumen de la m\xFAsica"
+  - Volumen de las voces
+  - Idioma
+  - "\"Lleno de magia y vegetaci\xF3n, de ah\xED su nombre.\""
+  - "\"Hogar de un bastante n\xFAmero de fiestas. Tenshi no es bienvenida.\""
+  - "S\xED"
   - No
   - OK
-  - We have set your language to {0}, is this OK?
+  - "Hemos puesto tu idioma al {0}, \xBFesto est\xE1 bien?"
