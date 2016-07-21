@@ -49,8 +49,8 @@ namespace HouraiTeahouse.SmashBrew {
             if (_hitboxes == null)
                 _hitboxes = GetComponentsInChildren<Hitbox>();
             foreach (Hitbox hitbox in _hitboxes)
-                if (hitbox.CurrentType == Hitbox.Type.Damageable)
-                    hitbox.CurrentType = Hitbox.Type.Invincible;
+                if (hitbox.DefaultType == Hitbox.Type.Damageable)
+                    hitbox.DefaultType = Hitbox.Type.Invincible;
         }
 
         /// <summary> Unity callback. Called when component is disabled. </summary>
@@ -58,8 +58,8 @@ namespace HouraiTeahouse.SmashBrew {
             if (_hitboxes == null)
                 _hitboxes = GetComponentsInChildren<Hitbox>();
             foreach (Hitbox hitbox in _hitboxes)
-                if (hitbox.CurrentType == Hitbox.Type.Invincible)
-                    hitbox.CurrentType = Hitbox.Type.Damageable;
+                if (hitbox.DefaultType == Hitbox.Type.Invincible)
+                    hitbox.DefaultType = Hitbox.Type.Damageable;
         }
 
         /// <summary> Invincibilty modifier. Negates all damage while active. </summary>

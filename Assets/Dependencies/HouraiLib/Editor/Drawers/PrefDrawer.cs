@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,7 +16,7 @@ namespace HouraiTeahouse.Editor {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             SerializedProperty key = GetKey(property);
             SerializedProperty defaultValue = GetDefaultValue(property);
-            using(EditorUtil.Property(label, position, GetKey(property))) {
+            using(hGUI.Property(label, position, GetKey(property))) {
                 position.width /= 2;
                 EditorGUI.PropertyField(position, key, label);
                 position.x += position.width;

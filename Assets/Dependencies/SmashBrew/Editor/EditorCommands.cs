@@ -33,7 +33,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 Undo.RegisterCreatedObjectUndo(hbGo, "Create Hitbox GameObject");
                 var collider = Undo.AddComponent<SphereCollider>(hbGo);
                 var hb = Undo.AddComponent<Hitbox>(hbGo);
-                hb.CurrentType = type;
+                hb.DefaultType = type;
                 hb.ID = idGen.Next();
                 hitboxes.Add(hb);
                 Undo.SetTransformParent(hb.transform, go.transform, "Parent Hitbox");

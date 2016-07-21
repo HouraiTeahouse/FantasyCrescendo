@@ -29,6 +29,7 @@ using UnityEngine;
 namespace HouraiTeahouse {
     /// <summary> Set of extension methods for collections and enumerations of any type. </summary>
     public static class GenericCollectionExtensions {
+
         /// <summary> Checks if the enumeration is null or empty. </summary>
         /// <param name="enumeration"> the enumeration of values </param>
         /// <returns> true if <paramref name="enumeration" /> is null or empty. </returns>

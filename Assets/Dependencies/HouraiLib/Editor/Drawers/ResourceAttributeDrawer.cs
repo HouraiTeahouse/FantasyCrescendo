@@ -81,7 +81,7 @@ namespace HouraiTeahouse.Editor {
             bool changed = !_data.ContainsKey(propertyPath);
             Data data = changed ? new Data(property, label) : _data[propertyPath];
 
-            using (EditorUtil.Property(data.Content, position, property)) {
+            using (hGUI.Property(data.Content, position, property)) {
                 data.UpdateContent(label);
                 data.Draw(position, property, attribute.TypeRestriction);
                 _data[propertyPath] = data;

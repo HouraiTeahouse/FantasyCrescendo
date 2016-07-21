@@ -8,7 +8,7 @@ namespace HouraiTeahouse.Editor {
     public class QuickToggle {
         const string PrefKeyShowToggle = "UnityToolbag.QuickToggle.Visible";
 
-        static GUIStyle styleLock, styleLockUnselected, styleVisible;
+        static GUIStyle styleLock, styleVisible;
 
         static QuickToggle() {
             if (EditorPrefs.HasKey(PrefKeyShowToggle) == false) 
@@ -44,8 +44,7 @@ namespace HouraiTeahouse.Editor {
             bool isLocked = (target.hideFlags & HideFlags.NotEditable) > 0;
             // Decide which GUIStyle to use for the button
             // If this item is currently selected, show the visible lock style, if not, invisible lock style
-            GUIStyle lockStyle = (Selection.activeInstanceID == instanceId) ? styleLock : styleLockUnselected;
-            if (isLocked != GUI.Toggle(lockRect, isLocked, GUIContent.none, lockStyle)) {
+            if (isLocked != GUI.Toggle(lockRect, isLocked, GUIContent.none, styleLock)) {
                 SetLockObject(target, !isLocked);
                 EditorApplication.RepaintHierarchyWindow();
             }
@@ -53,7 +52,7 @@ namespace HouraiTeahouse.Editor {
 
         static Object[] GatherObjects(GameObject root) {
             var objects = new List<Object>();
-            var recurseStack = new Stack<GameObject>(new GameObject[] { root });
+            var recurseStack = new Stack<GameObject>(new[] { root });
 
             while (recurseStack.Count > 0) {
                 GameObject obj = recurseStack.Pop();
@@ -110,65 +109,15 @@ namespace HouraiTeahouse.Editor {
         static void BuildStyles() {
             // All of the styles have been built, don't do anything
             if (styleLock != null &&
-                styleLockUnselected != null &&
                 styleVisible != null) {
                 return;
-            }
-
-            // First, get the textures for the GUIStyles
-            Texture2D icnLockOn = null,
-                    icnLockOnActive = null;
-            var normalPassed = false;
-            var activePassed = false;
-
-            // Resource name of icon images
-            const string resLockActive = "IN LockButton on";
-            const string resLockOn = "IN LockButton on act";
-
-            // Loop through all of the icons inside Resources
-            // which contains editor UI textures
-            Texture2D[] resTextures = Resources.FindObjectsOfTypeAll<Texture2D>();
-            foreach (Texture2D resTexture in resTextures) {
-                // Regular icon
-                if (resTexture.name.Equals(resLockOn)) {
-                    // if not using pro skin, use the first 'IN LockButton on'
-                    // that is passed when iterating
-                    if (!EditorGUIUtility.isProSkin && !normalPassed)
-                        icnLockOn = resTexture;
-                    else
-                        icnLockOn = resTexture;
-                    normalPassed = true;
-                }
-
-                // active icon
-                if (!resTexture.name.Equals(resLockActive)) continue;
-                if (!EditorGUIUtility.isProSkin && !activePassed)
-                    icnLockOnActive = resTexture;
-                else
-                    icnLockOnActive = resTexture;
-                activePassed = true;
             }
 
             // Now build the GUI styles
             // Using icons different from regular lock button so that
             // it would look darker
-            styleLock = new GUIStyle(GUI.skin.FindStyle("IN LockButton")) {
-                onNormal = new GUIStyleState() { background = icnLockOn },
-                onHover = new GUIStyleState() { background = icnLockOn },
-                onFocused = new GUIStyleState() { background = icnLockOn },
-                onActive = new GUIStyleState() { background = icnLockOnActive },
-            };
-
-            // Unselected just makes the normal states have no lock images
-            GUIStyle tempStyle = GUI.skin.FindStyle("OL Toggle");
-            styleLockUnselected = new GUIStyle(styleLock) {
-                normal = tempStyle.normal,
-                active = tempStyle.active,
-                hover = tempStyle.hover,
-                focused = tempStyle.focused
-            };
-
-            styleVisible = new GUIStyle(GUI.skin.FindStyle("VisibilityToggle"));
+            styleLock = GUI.skin.FindStyle("IN LockButton");
+            styleVisible = GUI.skin.FindStyle("VisibilityToggle");
         }
     }
 }

@@ -70,14 +70,37 @@ namespace HouraiTeahouse.SmashBrew {
         menuName = "SmashBrew/Character Data")]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
     public class CharacterData : ScriptableObject, IGameData {
-        [Header("Audio Data")]
+
+        [Header("General Data")]
         [SerializeField]
-        [Resource(typeof(AudioClip))]
-        [Tooltip("The audio clip played for the Character's announer")]
-        string _announcerClip;
+        TouhouGame _sourceGame = TouhouGame.Other;
 
         [SerializeField]
-        Color _backgroundColor = Color.white;
+        TouhouStage _sourceStage = TouhouStage.Other;
+
+        [SerializeField]
+        [Tooltip(
+            " Is the Character selectable from the character select screen?")]
+        bool _isSelectable;
+
+        [SerializeField]
+        [Tooltip("Is the Character viewable in the character select screen?")]
+        bool _isVisible;
+
+        [SerializeField]
+        [Resource(typeof(SceneData))]
+        [Tooltip("The Character's associated stage.")]
+        string _homeStage;
+
+        [Header("2D Art Data")]
+        [SerializeField]
+        [Resource(typeof(Sprite))]
+        [Tooltip("The icon used to represent the character.")]
+        string _icon;
+
+        [SerializeField, Resource(typeof(Sprite))]
+        string[] _portraits;
+        Resource<Sprite>[] _portraitResources;
 
         [SerializeField]
         [Tooltip("The center of the crop for smaller cropped views")]
@@ -89,33 +112,7 @@ namespace HouraiTeahouse.SmashBrew {
         float _cropSize;
 
         [SerializeField]
-        [Tooltip("The localization key used for the character's full name.")]
-        string _fullNameKey;
-
-        [SerializeField]
-        [Resource(typeof(SceneData))]
-        [Tooltip("The Character's associated stage.")]
-        string _homeStage;
-
-        [SerializeField]
-        [Resource(typeof(Sprite))]
-        [Tooltip("The icon used to represent the character.")]
-        string _icon;
-
-        [SerializeField]
-        [Tooltip(
-            " Is the Character selectable from the character select screen?")]
-        bool _isSelectable;
-
-        [SerializeField]
-        [Tooltip("Is the Character viewable in the character select screen?")]
-        bool _isVisible;
-
-        Resource<Sprite>[] _portraitResources;
-
-        [Header("2D Art Data")]
-        [SerializeField, Resource(typeof(Sprite))]
-        string[] _portraits;
+        Color _backgroundColor = Color.white;
 
         [SerializeField]
         [Resource(typeof(GameObject))]
@@ -124,16 +121,18 @@ namespace HouraiTeahouse.SmashBrew {
 
         [Header("Localization Data")]
         [SerializeField]
-        [Tooltip("The localization key used for the character's shortened name")
-        ]
+        [Tooltip("The localization key used for the character's shortened name")]
         string _shortNameKey;
 
-        [Header("General Data")]
         [SerializeField]
-        TouhouGame _sourceGame = TouhouGame.Other;
+        [Tooltip("The localization key used for the character's full name.")]
+        string _fullNameKey;
 
+        [Header("Audio Data")]
         [SerializeField]
-        TouhouStage _sourceStage = TouhouStage.Other;
+        [Resource(typeof(AudioClip))]
+        [Tooltip("The audio clip played for the Character's announer")]
+        string _announcerClip;
 
         [SerializeField]
         [Resource(typeof(AudioClip))]

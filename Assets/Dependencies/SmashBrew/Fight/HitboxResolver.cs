@@ -57,7 +57,7 @@ namespace HouraiTeahouse.SmashBrew {
             // The priority on the collision is the product of the priority on both hitboxes and their 
             _collisions.Add(
                 new HitboxCollision {Destination = dst, Source = src},
-                (int) src.CurrentType * (int) dst.CurrentType * src.Priority
+                (int) src.DefaultType * (int) dst.DefaultType * src.Priority
                     * dst.Priority);
         }
 

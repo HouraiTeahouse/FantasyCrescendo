@@ -52,7 +52,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             var data = target as CharacterData;
             if (data == null || data.PalleteCount < 1)
                 return;
-            using (EditorUtil.Horizontal()) {
+            using (hGUI.Horizontal()) {
                 GUILayout.FlexibleSpace();
                 if (GUILayout.Button("\u25c4", EditorStyles.miniButton))
                     _previewSelect++;

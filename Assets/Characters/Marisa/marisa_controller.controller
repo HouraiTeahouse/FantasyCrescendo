@@ -5328,6 +5328,11 @@ AnimatorStateMachine:
       first: {fileID: 110714198}
       second: []
     data:
+      first: {fileID: 1107000010155749792}
+      second:
+      - {fileID: 1109000010267874700}
+      - {fileID: 1109000011769432416}
+    data:
       first: {fileID: 110758416}
       second:
       - {fileID: 1109000010587906782}
@@ -5342,11 +5347,6 @@ AnimatorStateMachine:
       - {fileID: 1109000010616236862}
       - {fileID: 1109000011668339844}
       - {fileID: 1109000010506472810}
-    data:
-      first: {fileID: 1107000010155749792}
-      second:
-      - {fileID: 1109000010267874700}
-      - {fileID: 1109000011769432416}
     data:
       first: {fileID: 110745354}
       second: []
@@ -7221,22 +7221,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleIndex: 0
   toggleTime: 0.92
---- !u!114 &114000010456850044
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
-  _stateName: Forward Aerial
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
 --- !u!114 &114000010587449038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7252,6 +7236,24 @@ MonoBehaviour:
   _stateName: Neutral 3
   _ids: 
   _keyframes: []
+  _otherEvents: []
+--- !u!114 &114000010675827964
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _stateName: Forward Aerial
+  _ids: 7090c743d93e3d6faaa4621bc9dc4f3ad4a4d13fb9e86748c45e9b6b536fbb409212f02a991e5f72ec343244
+  _keyframes:
+  - _time: 0.21418637
+    _states: 0400000004000000040000000400000004000000040000000400000004000000040000000400000004000000
   _otherEvents: []
 --- !u!114 &114000010831832858
 MonoBehaviour:
@@ -7526,10 +7528,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd8a4ba0f655244d99450c1de474600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  _clip: {fileID: 7400014, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Neutral Aerial
-  _ids: 7090c743d93e3d6faaa4621bc9dc4f3ad4a4d13fb9e86748c45e9b6b536fbb409212f02a991e5f72ec343244
-  _keyframes: []
+  _ids: 9212f02aec343244c45e9b6b
+  _keyframes:
+  - _time: 0.27399164
+    _states: 080000000800000008000000
+  - _time: 0.3532684
+    _states: 080000000800000008000000
+  - _time: 0.488178
+    _states: 080000000800000008000000
+  - _time: 0.59805286
+    _states: 080000000800000008000000
+  - _time: 0.68428373
+    _states: 040000000400000004000000
   _otherEvents: []
 --- !u!114 &114000014179332312
 MonoBehaviour:
@@ -8906,7 +8918,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
+  m_Motion: {fileID: 7400014, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -8924,7 +8936,7 @@ AnimatorState:
   - {fileID: 1101000011269656198}
   - {fileID: 1101000013509760526}
   m_StateMachineBehaviours:
-  - {fileID: 114000010456850044}
+  - {fileID: 114000010675827964}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

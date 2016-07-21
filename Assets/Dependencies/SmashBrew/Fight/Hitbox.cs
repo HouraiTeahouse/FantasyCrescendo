@@ -131,13 +131,14 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public static void Resolve(Hitbox src, Hitbox dst) {
-            ReactionMatrix[src.CurrentType, dst.CurrentType](src, dst);
+            ReactionMatrix[src.DefaultType, dst.DefaultType](src, dst);
         }
 
         #region Unity Callbacks
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
+            CurrentType = DefaultType;
             Registrar = GetComponentInParent<IRegistrar<Hitbox>>();
             Source = GetComponentInParent<Character>();
             Damageable = GetComponentInParent<IDamageable>();
@@ -146,7 +147,7 @@ namespace HouraiTeahouse.SmashBrew {
             //_soundEffect = GetComponent<AudioSource>();
 
             gameObject.tag = Tags.Hitbox;
-            switch (type) {
+            switch (CurrentType) {
                 case Type.Damageable:
                 case Type.Shield:
                     gameObject.layer = Layers.Hurtbox;
@@ -161,10 +162,15 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
 #if UNITY_EDITOR
+        bool gizmoInitialized;
         void OnDrawGizmos() {
-            if(!EditorApplication.isPlayingOrWillChangePlaymode || IsActive)
+            if (!gizmoInitialized) {
+                CurrentType = DefaultType;
+                gizmoInitialized = true;
+            }
+            if(IsActive)
                 GizmoUtil.DrawColliders(GetComponents<Collider>(),
-                    Config.Debug.GetHitboxColor(type));
+                    Config.Debug.GetHitboxColor(CurrentType));
         }
 #endif
 
@@ -173,7 +179,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             if (_colliders == null)
                 _colliders = GetComponents<Collider>();
-            Color color = Config.Debug.GetHitboxColor(type);
+            Color color = Config.Debug.GetHitboxColor(CurrentType);
             foreach (Collider col in _colliders)
                 DrawCollider(col, color);
             //GL.wireframe = true;
@@ -238,7 +244,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             var otherHitbox = other.GetComponent<Hitbox>();
             if (otherHitbox == null
-                || !ReactionMatrix.ContainsKey(type, otherHitbox.type))
+                || !ReactionMatrix.ContainsKey(CurrentType, otherHitbox.CurrentType))
                 return;
             HitboxResolver.AddCollision(this, otherHitbox);
         }
@@ -246,6 +252,8 @@ namespace HouraiTeahouse.SmashBrew {
         #endregion
 
         #region Serializable Fields
+
+        Type currentType;
 
         [SerializeField]
         Type type = Type.Offensive;
@@ -280,12 +288,16 @@ namespace HouraiTeahouse.SmashBrew {
             set { _id = value; }
         }
 
-        public bool IsActive { get; set; }
+        public bool IsActive {
+            get { return CurrentType != Type.Inactive; }
+        }
 
-        public Type CurrentType {
+        public Type DefaultType {
             get { return type; }
             set { type = value; }
         }
+
+        public Type CurrentType { get; set; }
 
         public int Priority {
             get { return _priority; }
