@@ -7205,9 +7205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Up Aerial
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000010385877422
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7234,9 +7232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400016, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Neutral 3
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000010675827964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7250,11 +7246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Forward Aerial
-  _ids: 7090c743d93e3d6faaa4621bc9dc4f3ad4a4d13fb9e86748c45e9b6b536fbb409212f02a991e5f72ec343244
-  _keyframes:
-  - _time: 0.21418637
-    _states: 0400000004000000040000000400000004000000040000000400000004000000040000000400000004000000
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000010831832858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7268,9 +7260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400020, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Up Smash
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000011350591922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7284,9 +7274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Down Tilt
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000011410192748
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7313,9 +7301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Back Aerial
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000011483104670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7329,9 +7315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400004, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Dash Attack
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000011506220248
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7358,9 +7342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400014, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Neutral 2
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000011725553394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7374,9 +7356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Up Tilt
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000011836652676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7390,9 +7370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400020, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Side Smash
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000012145004968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7406,9 +7384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400020, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Down Smash
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000012198068056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7422,17 +7398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400000, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Idle
-  _ids: 7090c743d93e3d6faaa4621bc9dc4f3ad4a4d13fb9e86748c45e9b6b536fbb409212f02a991e5f72ec343244
-  _keyframes:
-  - _time: 0.139
-    _states: 0100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-  - _time: 0.407
-    _states: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  - _time: 0.422
-    _states: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  - _time: 0.703
-    _states: 0100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000012340364190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7446,9 +7412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Down Aerial
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000012444422874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7462,9 +7426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400032, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Side Tilt
-  _ids: 
-  _keyframes: []
-  _otherEvents: []
+  _eventData: {fileID: 0}
 --- !u!114 &114000012650452166
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -7530,19 +7492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clip: {fileID: 7400014, guid: 75c106242f241fc4fa9ce3098b3d3f8f, type: 3}
   _stateName: Neutral Aerial
-  _ids: 9212f02aec343244c45e9b6b
-  _keyframes:
-  - _time: 0.27399164
-    _states: 080000000800000008000000
-  - _time: 0.3532684
-    _states: 080000000800000008000000
-  - _time: 0.488178
-    _states: 080000000800000008000000
-  - _time: 0.59805286
-    _states: 080000000800000008000000
-  - _time: 0.68428373
-    _states: 040000000400000004000000
-  _otherEvents: []
+  _eventData: {fileID: 11400000, guid: d81b2fe2a728ece40b51cacb697188a9, type: 2}
 --- !u!114 &114000014179332312
 MonoBehaviour:
   m_ObjectHideFlags: 3

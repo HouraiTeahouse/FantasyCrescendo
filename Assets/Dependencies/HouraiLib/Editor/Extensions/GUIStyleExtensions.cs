@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEditor;
 using System;
 using System.Collections.Generic;
 
@@ -15,8 +14,8 @@ namespace HouraiTeahouse.Editor {
         public void EventCheck() {
             Event evt = Event.current;
             var type = evt.type;
-            if (responses.ContainsKey(type) && responses[type] != null)
-                responses[type](evt);
+            if (responses.ContainsKey(type))
+                responses[type].SafeInvoke(evt);
         }
 
         public void EventCheck(Rect rect) {
@@ -25,30 +24,36 @@ namespace HouraiTeahouse.Editor {
             EventCheck();
         }
 
-        public void AddListener(EventType type, Action<Event> action) {
+        public EventListener AddListener(EventType type, Action<Event> action) {
             if (!responses.ContainsKey(type))
                 responses[type] = action;
             else
                 responses[type] += action;
+            return this;
         }
 
-        public void AddListeners(IEnumerable<EventType> types, Action<Event> action) {
+        public EventListener AddListeners(IEnumerable<EventType> types, Action<Event> action) {
             foreach (var type in types.EmptyIfNull())
                 AddListener(type, action);
+            return this;
         }
 
-        public void RemoveListener(EventType type, Action<Event> action) {
+        public EventListener RemoveListener(EventType type, Action<Event> action) {
             if (!responses.ContainsKey(type))
-                return;
+                return this;
             responses[type] -= action;
             if (responses[type] == null)
                 responses.Remove(type);
+            return this;
         }
 
-        public void RemoveListeners(IEnumerable<EventType> types, Action<Event> action) {
+        public EventListener RemoveListeners(IEnumerable<EventType> types, Action<Event> action) {
             foreach (var type in types.EmptyIfNull())
                 RemoveListener(type, action);
+            return this;
         }
+
+        public void ClearType(EventType type) { responses.Remove(type); }
 
         public void Clear() {
             responses.Clear();
@@ -56,55 +61,27 @@ namespace HouraiTeahouse.Editor {
 
         public event Action<Event> MouseDragged {
             add { AddListener(EventType.MouseDrag, value); }
-            remove { AddListener(EventType.MouseDrag, value); }
+            remove { RemoveListener(EventType.MouseDrag, value); }
         }
 
         public event Action<Event> MouseDown {
             add { AddListener(EventType.MouseDown, value); }
-            remove { AddListener(EventType.MouseDown, value); }
+            remove { RemoveListener(EventType.MouseDown, value); }
         }
 
         public event Action<Event> DragPerform {
             add { AddListener(EventType.DragPerform, value); }
-            remove { AddListener(EventType.DragPerform, value); }
+            remove { RemoveListener(EventType.DragPerform, value); }
         }
 
         public event Action<Event> DragUpdated {
             add { AddListener(EventType.DragUpdated, value); }
-            remove { AddListener(EventType.DragUpdated, value); }
+            remove { RemoveListener(EventType.DragUpdated, value); }
         }
 
         public event Action<Event> DragExited {
             add { AddListener(EventType.DragExited, value); }
-            remove { AddListener(EventType.DragExited, value); }
-        }
-
-    }
-
-    public static class Style {
-
-        public static GUIStyle AnimationEventBackground {
-            get { return new GUIStyle("AnimationEventBackground"); }
-        }
-
-        public static GUIStyle Minus {
-            get { return new GUIStyle("OL Minus"); }
-        }
-
-        public static GUIStyle Plus {
-            get { return new GUIStyle("OL Plus"); }
-        }
-
-        public static GUIStyle ToolbarPopup {
-            get { return EditorStyles.toolbarPopup; }
-        }
-
-        public static GUIStyle Toolbar {
-            get { return EditorStyles.toolbar; }
-        }
-
-        public static GUIStyle ToolbarButton {
-            get { return EditorStyles.toolbarButton; }
+            remove { RemoveListener(EventType.DragExited, value); }
         }
 
     }

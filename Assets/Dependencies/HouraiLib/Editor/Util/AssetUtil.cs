@@ -49,10 +49,12 @@ namespace HouraiTeahouse.Editor {
         /// escape key when asset is initially being named.
         /// </summary>
         /// <typeparam name="T">AttackType of scriptable object.</typeparam>
-        public static T CreateAssetInProjectWindow<T>(T asset = null) where T : ScriptableObject {
+        public static T CreateAssetInProjectWindow<T>(T asset = null, string name = null) where T : ScriptableObject {
             if(asset == null)
                 asset = ScriptableObject.CreateInstance<T>();
-            ProjectWindowUtil.CreateAsset(asset, string.Format("New {0}.asset", typeof(T).Name));
+            if (name.IsNullOrEmpty())
+                name = string.Format("New {0}.asset", typeof(T).Name);
+            ProjectWindowUtil.CreateAsset(asset, name);
             return asset;
         }
 
@@ -162,7 +164,6 @@ namespace HouraiTeahouse.Editor {
         }
 
         public static void CreateFolder(string path) {
-            Check.NotNull(path);
             if (IsValidFolder(path))
                 return;
 

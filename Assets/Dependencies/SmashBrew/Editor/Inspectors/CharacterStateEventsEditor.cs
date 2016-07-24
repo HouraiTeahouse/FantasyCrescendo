@@ -1,4 +1,5 @@
 using System.Linq;
+using HouraiTeahouse.Editor;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -26,6 +27,10 @@ namespace HouraiTeahouse.SmashBrew.Editor {
 
         SerializedProperty Name {
             get { return serializedObject.FindProperty("_stateName"); }
+        }
+
+        SerializedProperty EventData {
+            get { return serializedObject.FindProperty("_eventData"); }
         }
 
         void OnEnable() {
@@ -57,11 +62,24 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 EditorGUILayout.HelpBox("No animation clip found. Please supply state with an AnimationClip and initialize.", MessageType.Error);
                 if(GUILayout.Button("Initialize"))
                     Initialize();
-            } else {
-                if (!GUILayout.Button("Open Events Editor")) {
-                    var window = EditorWindow.GetWindow<EventsEditorWindow>();
-                    window.Show();
+                return;
+            }
+            EditorGUILayout.PropertyField(EventData);
+            if (EventData.objectReferenceValue == null) {
+                if(GUILayout.Button("Create Event Data")) {
+                    var eventData = CreateInstance<EventData>();
+                    eventData.name = state == null
+                        ? "New Event Data"
+                        : state.name;
+                    AssetUtil.CreateAsset(string.Empty, eventData);
+                    EventData.objectReferenceValue = eventData;
+                    serializedObject.ApplyModifiedProperties();
                 }
+                return;
+            }
+            if (GUILayout.Button("Open Behaviour Editor")) {
+                var window = EditorWindow.GetWindow<EventsEditorWindow>();
+                window.Show();
             }
         }
     }

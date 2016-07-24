@@ -22,8 +22,8 @@ namespace HouraiTeahouse.Editor {
             set { locked = value; }
         }
 
-        void IHasCustomMenu.AddItemsToMenu(GenericMenu menu) {
-            menu.AddItem(new GUIContent("Lock"), locked, () => { locked = !locked; });
+        public virtual void AddItemsToMenu(GenericMenu menu) {
+            //menu.AddItem(new GUIContent("Lock"), locked, () => { locked = !locked; });
         }
 
         void ShowButton(Rect position) {

@@ -72,6 +72,15 @@ namespace HouraiTeahouse {
             }
         }
 
+        public static IEnumerable<KeyValuePair<TKey, TValue>> Zip<TKey, TValue>(this IEnumerable<TKey> keys, IEnumerable<TValue> value) {
+            var keyEnumerator = keys.EmptyIfNull().GetEnumerator();
+            var valueEnumerator = value.EmptyIfNull().GetEnumerator();
+            keyEnumerator.MoveNext();
+            valueEnumerator.MoveNext();
+            while(keyEnumerator.MoveNext() && valueEnumerator.MoveNext())
+                yield return new KeyValuePair<TKey, TValue>(keyEnumerator.Current, valueEnumerator.Current);
+        }
+
         /// <summary> Creates an empty enumeration if the provided one is null. Used to avoid NullReferenceExceptions. </summary>
         /// <typeparam name="T"> the type of values being enumerated </typeparam>
         /// <param name="enumeration"> the enumeration of values </param>

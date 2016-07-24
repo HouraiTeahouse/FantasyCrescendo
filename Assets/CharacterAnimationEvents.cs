@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,18 +12,18 @@ namespace HouraiTeahouse.SmashBrew {
         public static string HitboxFunc = "Hitbox";
 
         public void Hitbox(AnimationEvent animationEvent) {
-            var state = animationEvent.objectReferenceParameter as CharacterStateEvents;
+            var eventData = animationEvent.objectReferenceParameter as EventData;
             if (Character == null) {
                 Log.Error("A Character script for corresponding to {0} cannot be found.", name);
                 return;
             }
-            if (state == null) {
-                Log.Error("Hitbox was called without a CharacterAnimationEvents state as a parameter");
+            if (eventData == null) {
+                Log.Error("Hitbox was called without a EventData state as a parameter");
                 return;
             }
-            HitboxKeyframe keyframe = state[animationEvent.intParameter];
-            var ids = state.IDs;
-            var states = keyframe.States;
+            HitboxKeyframe keyframe = eventData[animationEvent.intParameter];
+            List<int> ids = eventData.IDs;
+            List<Hitbox.Type> states = keyframe.States;
             Assert.AreEqual(ids.Count, states.Count);
             for (var i = 0; i < ids.Count; i++) {
                 Hitbox hitbox = Character.GetHitbox(ids[i]);

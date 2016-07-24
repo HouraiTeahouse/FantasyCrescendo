@@ -30,6 +30,17 @@ namespace HouraiTeahouse.Editor {
             public void Dispose() { GUI.color = color; }
         }
 
+        class BackgroundColorDisposable : IDisposable {
+            readonly Color color;
+
+            public BackgroundColorDisposable(Color newColor) {
+                color = GUI.backgroundColor;
+                GUI.backgroundColor = newColor;
+            }
+
+            public void Dispose() { GUI.backgroundColor = color; }
+        }
+
         class EnabledDisposable : IDisposable {
             readonly bool state;
 
@@ -86,6 +97,10 @@ namespace HouraiTeahouse.Editor {
 
         public static IDisposable Color(Color color) {
             return new ColorDisposable(color);
+        }
+
+        public static IDisposable BackgroundColor(Color color) {
+            return new BackgroundColorDisposable(color);
         }
 
         public static EditorGUILayout.HorizontalScope Horizontal(GUIStyle style,
