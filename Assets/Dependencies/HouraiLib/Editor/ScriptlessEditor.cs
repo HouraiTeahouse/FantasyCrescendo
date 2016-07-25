@@ -32,6 +32,14 @@ namespace HouraiTeahouse.Editor {
 
     }
 
+    public abstract class BaseEditor<T> : ScriptlessEditor where T : Object {
+        
+        protected T Target {
+            get { return target as T; }
+        }
+
+    }
+
     /// <summary>
     /// Creates a global fallback editor for all MonoBehaviour derived types that removes the extra "Script" field.
     /// </summary>

@@ -81,6 +81,8 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 var window = EditorWindow.GetWindow<EventsEditorWindow>();
                 window.Show();
             }
+            if (GUI.changed)
+                serializedObject.ApplyModifiedProperties();
         }
     }
 }

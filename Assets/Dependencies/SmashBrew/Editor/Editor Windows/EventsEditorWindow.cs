@@ -162,7 +162,8 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         }
 
         void OnEdit() {
-            Keyframes.Sort((k1, k2) => k1.Time.CompareTo(k2.Time));
+            if(Keyframes != null)
+                Keyframes.Sort((k1, k2) => k1.Time.CompareTo(k2.Time));
             OnAssetEdit.SafeInvoke();
         }
 
@@ -344,12 +345,10 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         }
 
         void OnSelectionChange() {
-            if (IsLocked) {
+            if (!IsLocked) {
                 var newState = Selection.objects.OfType<AnimatorState>().FirstOrDefault();
-                if (newState == null || newState == State) {
+                if (newState != null && newState != State)
                     State = newState;
-                    SeekTime = 0f;
-                }
             }
             Repaint();
         }
@@ -362,7 +361,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             if (!play || State == null || !(State.motion is AnimationClip))
                 return;
             var clip = (AnimationClip) State.motion;
-            float time = SeekTime + 1 / (200 * clip.length);
+            float time = SeekTime + 1 / (200 * clip.length) * State.speed;
             if (time > 1f)
                 time = 0f;
             SeekTime = time;
@@ -549,17 +548,19 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             using (var seekScope = hGUI.Horizontal("AnimationEventBackground", GUILayout.Height(18))) {
                 seekArea = seekScope.rect;
                 SeekListener.EventCheck(seekArea);
-                for(keyframeIndex = 0; keyframeIndex < Keyframes.Count; keyframeIndex++) {
-                    HitboxKeyframe keyframe = Keyframes[keyframeIndex];
-                    float time = Keyframes[keyframeIndex].Time;
-                    using(hGUI.Color(keyframe == selectedKeyframe ? Color.red: GUI.color)) {
-                        EditorGUI.LabelField(GetSlicedRect(seekArea, time, 0), GUIContent.none, "TL Playhead");
+                if(Events != null) {
+                    for(keyframeIndex = 0; keyframeIndex < Keyframes.Count; keyframeIndex++) {
+                        HitboxKeyframe keyframe = Keyframes[keyframeIndex];
+                        float time = Keyframes[keyframeIndex].Time;
+                        using(hGUI.Color(keyframe == selectedKeyframe ? Color.red: GUI.color)) {
+                            EditorGUI.LabelField(GetSlicedRect(seekArea, time, 0), GUIContent.none, "TL Playhead");
+                        }
+                        var checkRect = GetSlicedRect(seekArea, time, 12);
+                        KeyframeListener.EventCheck(checkRect);
                     }
-                    var checkRect = GetSlicedRect(seekArea, time, 12);
-                    KeyframeListener.EventCheck(checkRect);
+                    foreach (AnimationEvent evt in OtherEvents)
+                        GUI.DrawTexture(GetSlicedRect(seekArea, evt.time, 5), EditorGUIUtility.FindTexture("Animation.EventMarker"));
                 }
-                foreach (AnimationEvent evt in OtherEvents)
-                    GUI.DrawTexture(GetSlicedRect(seekArea, evt.time, 5), EditorGUIUtility.FindTexture("Animation.EventMarker"));
                 hGUI.Space();
             }
         }

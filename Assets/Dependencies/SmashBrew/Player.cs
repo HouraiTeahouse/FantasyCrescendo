@@ -265,7 +265,6 @@ namespace HouraiTeahouse.SmashBrew {
             GameObject prefab = SpawnedCharacter.Prefab.Load();
             if (prefab == null)
                 return null;
-            Log.Info(prefab.GetComponent<Character>());
             PlayerObject = prefab.Duplicate(pos).GetComponent<Character>();
             PlayerObject.Direction = direction;
             var controller =

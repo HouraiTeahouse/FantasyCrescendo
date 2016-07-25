@@ -22,14 +22,15 @@
 
 using System;
 using UnityConstants;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
     public sealed class Hitbox : MonoBehaviour {
 
-        [Flags]
         public enum Type {
             // The values here are used as priority mulitpliers
             Inactive = 1,
@@ -164,8 +165,8 @@ namespace HouraiTeahouse.SmashBrew {
 #if UNITY_EDITOR
         bool gizmoInitialized;
         void OnDrawGizmos() {
-            if (!gizmoInitialized) {
-                CurrentType = DefaultType;
+            if (!EditorApplication.isPlayingOrWillChangePlaymode && !gizmoInitialized) {
+                ResetType();
                 gizmoInitialized = true;
             }
             if(IsActive)
@@ -194,49 +195,19 @@ namespace HouraiTeahouse.SmashBrew {
             if (col == null)
                 return;
             Mesh mesh = null;
-            var boxCol = col as BoxCollider;
-            var sphereCol = col as SphereCollider;
-            var capsuleCol = col as CapsuleCollider;
-            Vector3 position = Vector3.zero;
-            Quaternion rotation = Quaternion.identity;
-            Vector3 scale = Vector3.one;
-            Matrix4x4 localToWorld;
-            if (boxCol != null) {
-                mesh = _cube;
-                position = boxCol.center;
-                scale = boxCol.size;
-                localToWorld = transform.localToWorldMatrix;
-            }
-            else if (sphereCol != null) {
+            if (col is SphereCollider)
                 mesh = _sphere;
-                position = sphereCol.center;
-                scale = sphereCol.radius * Vector3.one;
-                localToWorld = Matrix4x4.TRS(transform.position,
-                    transform.rotation,
-                    Vector3.one * transform.lossyScale.Max());
-            }
-            else if (capsuleCol != null) {
+            else if (col is BoxCollider)
+                mesh = _cube;
+            else if (col is CapsuleCollider)
                 mesh = _capsule;
-                position = capsuleCol.center;
-                scale = Vector3.one * capsuleCol.radius * 2;
-                scale[capsuleCol.direction] = capsuleCol.height / 2;
-                switch (capsuleCol.direction) {
-                    case 1:
-                        rotation = Quaternion.Euler(0, 90, 0);
-                        break;
-                    case 2:
-                        rotation = Quaternion.Euler(90, 0, 0);
-                        break;
-                }
-                localToWorld = transform.localToWorldMatrix;
-            }
-            else {
-                localToWorld = transform.localToWorldMatrix;
-            }
+            else if (col is MeshCollider)
+                mesh = ((MeshCollider) col).sharedMesh;
+            if (mesh == null)
+                return;
             _material.SetColor("_Color", color);
             _material.SetPass(0);
-            Graphics.DrawMeshNow(mesh,
-                localToWorld * Matrix4x4.TRS(position, rotation, scale));
+            Graphics.DrawMeshNow(mesh, GizmoUtil.GetColliderMatrix(col));
         }
 
         void OnTriggerEnter(Collider other) {
@@ -247,6 +218,12 @@ namespace HouraiTeahouse.SmashBrew {
                 || !ReactionMatrix.ContainsKey(CurrentType, otherHitbox.CurrentType))
                 return;
             HitboxResolver.AddCollision(this, otherHitbox);
+        }
+
+        public bool ResetType() {
+            bool val = CurrentType != DefaultType;
+            CurrentType = DefaultType;
+            return val;
         }
 
         #endregion

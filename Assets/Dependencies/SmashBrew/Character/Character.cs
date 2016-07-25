@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityConstants;
@@ -172,6 +173,13 @@ namespace HouraiTeahouse.SmashBrew {
             return null;
         }
 
+        public void ResetAllHitboxes() {
+            foreach (Hitbox hitbox in Hitboxes.IgnoreNulls()) {
+                if(hitbox.ResetType())
+                    Log.Info("{0} {1}", this, hitbox);
+            }
+        }
+
         #region Required Components
 
         public CapsuleCollider MovementCollider { get; private set; }
@@ -278,7 +286,11 @@ namespace HouraiTeahouse.SmashBrew {
                     weapon.enabled = false;
             }
 
-            // Initialize all animation behaviours
+            StartCoroutine(InitializeAnimator());
+        }
+
+        IEnumerator InitializeAnimator() {
+            yield return null;
             BaseAnimationBehaviour.InitializeAll(Animator);
         }
 
