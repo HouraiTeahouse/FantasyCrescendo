@@ -55,6 +55,12 @@ namespace HouraiTeahouse {
             }
         }
 
+        protected virtual void OnDisable() {
+            foreach (BGMData bgmData in backgroundMusicData) {
+                bgmData.Finish(Name);
+            }
+        }
+
         public BGMData GetRandom() { return _selection.Select(); }
 
 #if UNITY_EDITOR
@@ -98,7 +104,7 @@ namespace HouraiTeahouse {
         [Tooltip("The name of the BGM.")]
         string _name;
 
-        PrefFloat _weight;
+        float _weight;
 
         public BGMData(string path, float weight) {
             _bgm = path;
@@ -121,14 +127,27 @@ namespace HouraiTeahouse {
             get { return _loopEnd; }
         }
 
+        string GetKey(string stageName) {
+            return string.Format("{0}{1}{2}_{3}",  
+                  stageName,
+                  delimiter,
+                  _bgm,
+                  suffix);
+        }
+
         public void Initialize(string stageName) {
             _bgmResource = new Resource<AudioClip>(_bgm);
-            _weight =
-                new PrefFloat(string.Format("{0}{1}{2}_{3}",
-                    stageName,
-                    delimiter,
-                    _bgm,
-                    suffix));
+            var key = GetKey(stageName);
+            if (Prefs.HasKey(key))
+                _weight = Prefs.GetFloat(key);
+            else {
+                _weight = _baseWeight;
+                Prefs.SetFloat(key, _weight);
+            }
+        }
+
+        public void Finish(string stageName) {
+            Prefs.SetFloat(GetKey(stageName), _weight);
         }
 
         public override string ToString() {
