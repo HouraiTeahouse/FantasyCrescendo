@@ -2,8 +2,10 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine.Assertions;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HouraiTeahouse.SmashBrew {
     [Serializable]

@@ -13,17 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sourceGame: 13
   _sourceStage: 3
-  _prefab: Characters/001_Marisa/Marisa
-  _homeStage: Stages/Forest of Magic
   _isSelectable: 0
   _isVisible: 1
-  _shortNameKey: name.yuugi
-  _fullNameKey: fullname.yuugi
+  _homeStage: Stages/Forest of Magic
+  _icon: Icons/marisa_icon
   _portraits:
   - Characters/007_Yuugi/Portraits/yuugi_portrait_1
+  _cropPositon: {x: 0.45, y: 0.9}
+  _cropSize: 0.22
   _backgroundColor: {r: 0, g: 0, b: 0.553, a: 1}
-  _cropPositon: {x: 0.5, y: 0.9}
-  _cropSize: 0.25
-  _icon: Icons/marisa_icon
+  _prefab: Characters/001_Marisa/Marisa
+  _shortNameKey: name.yuugi
+  _fullNameKey: fullname.yuugi
   _announcerClip: Characters/001_Marisa/Audio/marisa_announcer
   _victoryTheme: Characters/001_Marisa/Audio/marisa_announcer

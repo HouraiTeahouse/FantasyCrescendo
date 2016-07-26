@@ -13,17 +13,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sourceGame: 8
   _sourceStage: 1
-  _prefab: Characters/001_Marisa/Marisa
-  _homeStage: Stages/Forest of Magic
   _isSelectable: 0
   _isVisible: 1
-  _shortNameKey: name.wriggle
-  _fullNameKey: fullname.wriggle
+  _homeStage: Stages/Forest of Magic
+  _icon: Icons/wriggle_icon
   _portraits:
   - Characters/003_Wriggle/Portraits/wriggle_portrait_1
-  _backgroundColor: {r: 0.39949295, g: 0.5735294, b: 0, a: 1}
+  - Characters/003_Wriggle/Portraits/wriggle_portrait_2
+  - Characters/003_Wriggle/Portraits/wriggle_portrait_3
+  - Characters/003_Wriggle/Portraits/wriggle_portrait_4
   _cropPositon: {x: 0.5, y: 0.85}
-  _cropSize: 0.26
-  _icon: Icons/wriggle_icon
+  _cropSize: 0.24
+  _backgroundColor: {r: 0.39949295, g: 0.5735294, b: 0, a: 1}
+  _prefab: Characters/001_Marisa/Marisa
+  _shortNameKey: name.wriggle
+  _fullNameKey: fullname.wriggle
   _announcerClip: Characters/003_Wriggle/Audio/wriggle_announcer
   _victoryTheme: Characters/003_Wriggle/Audio/wriggle_announcer

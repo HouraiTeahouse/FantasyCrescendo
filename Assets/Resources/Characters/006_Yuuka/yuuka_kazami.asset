@@ -13,20 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sourceGame: 3
   _sourceStage: 5
-  _prefab: Characters/001_Marisa/Marisa
-  _homeStage: Stages/Forest of Magic
   _isSelectable: 0
   _isVisible: 1
-  _shortNameKey: name.yuuka
-  _fullNameKey: fullname.yuuka
+  _homeStage: Stages/Forest of Magic
+  _icon: Icons/marisa_icon
   _portraits:
   - Characters/006_Yuuka/Portaits/yuuka_portrait_1
-  - Characters/006_Yuuka/Portaits/yuuka_portrait_1
-  - Characters/006_Yuuka/Portaits/yuuka_portrait_1
-  - Characters/006_Yuuka/Portaits/yuuka_portrait_1
+  _cropPositon: {x: 0.5, y: 0.9}
+  _cropSize: 0.2
   _backgroundColor: {r: 0, g: 0.39705884, b: 0, a: 1}
-  _cropPositon: {x: 0.5, y: 0.875}
-  _cropSize: 0.18
-  _icon: Icons/marisa_icon
+  _prefab: Characters/001_Marisa/Marisa
+  _shortNameKey: name.yuuka
+  _fullNameKey: fullname.yuuka
   _announcerClip: Characters/001_Marisa/Audio/marisa_announcer
   _victoryTheme: Characters/001_Marisa/Audio/marisa_announcer

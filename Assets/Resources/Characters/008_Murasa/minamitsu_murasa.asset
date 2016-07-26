@@ -13,17 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sourceGame: 14
   _sourceStage: 3
-  _prefab: Characters/001_Marisa/Marisa
-  _homeStage: Stages/Forest of Magic
   _isSelectable: 0
   _isVisible: 1
-  _shortNameKey: name.murasa
-  _fullNameKey: fullname.murasa
+  _homeStage: Stages/Forest of Magic
+  _icon: Icons/marisa_icon
   _portraits:
   - Characters/008_Murasa/Portraits/murasa_portrait_1
+  _cropPositon: {x: 0.435, y: 0.85}
+  _cropSize: 0.2
   _backgroundColor: {r: 0, g: 0.53615606, b: 0.71323526, a: 1}
-  _cropPositon: {x: 0.45, y: 0.9}
-  _cropSize: 0.23
-  _icon: Icons/marisa_icon
+  _prefab: Characters/001_Marisa/Marisa
+  _shortNameKey: name.murasa
+  _fullNameKey: fullname.murasa
   _announcerClip: Characters/001_Marisa/Audio/marisa_announcer
   _victoryTheme: Characters/001_Marisa/Audio/marisa_announcer
