@@ -79,30 +79,29 @@ namespace HouraiTeahouse {
         const string suffix = "weight";
 
         [SerializeField]
+        [Tooltip("The name of the BGM.")]
+        string _name;
+
+        [SerializeField]
         [Tooltip("The artist who created this piece of music")]
         string _artist;
+
+        Resource<AudioClip> _bgmResource;
+        [SerializeField]
+        [Resource(typeof(AudioClip))]
+        string _bgm;
 
         [SerializeField]
         [Range(0f, 1f)]
         float _baseWeight = 1f;
 
         [SerializeField]
-        [Resource(typeof(AudioClip))]
-        string _bgm;
-
-        Resource<AudioClip> _bgmResource;
-
-        [SerializeField]
-        [Tooltip("The sample number of the end point the loop.")]
-        int _loopEnd;
-
-        [SerializeField]
         [Tooltip("The sample number of the start point the loop.")]
         int _loopStart;
 
         [SerializeField]
-        [Tooltip("The name of the BGM.")]
-        string _name;
+        [Tooltip("The sample number of the end point the loop.")]
+        int _loopEnd;
 
         float _weight;
 

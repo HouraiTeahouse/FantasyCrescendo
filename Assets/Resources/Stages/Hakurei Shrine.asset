@@ -25,9 +25,15 @@ MonoBehaviour:
     _baseWeight: 1
     _loopStart: 288000
     _loopEnd: 4281600
-  _sceneName: Stages/Hakurei Shrine/Hakurei Shrine Stage
-  _isVisible: 1
+  - _name: Dichromatic Lotus Butterfly
+    _artist: sladjfk
+    _bgm: Audio/BGM/Hakurei Shrine/dichromatic lotus butterfly
+    _baseWeight: 1
+    _loopStart: 76464
+    _loopEnd: 1732032
+  _icon: Icons/reimu_icon
   _isSelectable: 1
   _isStage: 1
+  _isVisible: 1
   _previewImage: Icons/marisa_icon
-  _icon: Icons/reimu_icon
+  _sceneName: Stages/Hakurei Shrine/Hakurei Shrine Stage
