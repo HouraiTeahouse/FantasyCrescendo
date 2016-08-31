@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Japanese
   m_EditorClassIdentifier: 
   _strings:
-  - Japanese
+  - "\u65E5\u672C\u8A9E"
   - "\uFF8C\uFF67\uFF9D\uFF80\uFF7C\uFF9E\uFF70\uFF78\uFF9A\uFF6F\uFF7C\uFF6A\uFF9D\uFF84\uFF9E\u3000\uFF5E\u3000\u9CF4\u52D5\u5922\u5408\u594F"
   - 'This game is best expirenced with one or more gamepad controllers.
 
@@ -41,11 +41,11 @@ MonoBehaviour:
   - "\u9B54\u754C"
   - "\u7D05\u9B54\u9928"
   - "\u30E9\u30F3\u30C0\u30E0"
-  - Player {0}
-  - Multiplayer
-  - Single Player
-  - Standard
-  - Special
+  - "\u30D7\u30EC\u30FC\u30E4\u30FC {0}"
+  - "\u30DE\u30EB\u30C1\u30D7\u30EC\u30A4"
+  - "\u30B7\u30F3\u30B0\u30EB\u30D7\u30EC\u30A4"
+  - "\u57FA\u672C"
+  - "\u7279\u5225"
   - "\u53E4\u5178\u30E2\u30FC\u30C9"
   - "\u5168\u660E\u661F\u30E2\u30FC\u30C9"
   - "\u8A71\u30E2\u30FC\u30C9"
@@ -60,7 +60,7 @@ MonoBehaviour:
   - "\u8A00\u8A9E"
   - '"Full of magic and greenery, hence the name."'
   - '"Home to quite a few revels. Tenshi not welcome."'
-  - Yes
-  - No
+  - "\u306F\u3044"
+  - "\u3044\u3044\u3048"
   - OK
   - We have set your language to {0}, is this OK?

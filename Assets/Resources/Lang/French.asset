@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: French
   m_EditorClassIdentifier: 
   _strings:
-  - French
+  - "Fran\xE7ais"
   - Fantasy Crescendo
   - "Une ou plusieurs manettes sont recommand\xE9es pour une meilleure exp\xE9rience
     de jeu.\nVous avez une manette ? Branchez-la !"
@@ -41,7 +41,7 @@ MonoBehaviour:
   - Makai
   - "Manoir du D\xE9mon \xC9carlate"
   - "Al\xE9atoire"
-  - Player {0}
+  - Joueur {0}
   - Multijoueur
   - Solo
   - Standard
@@ -58,9 +58,9 @@ MonoBehaviour:
   - Volume de la Musique
   - Volume des Voix
   - Langue
-  - 
-  - 
-  - Yes
-  - No
+  - '"Full of magic and greenery, hence the name."'
+  - '"Home to quite a few revels. Tenshi not welcome."'
+  - Oui
+  - Non
   - OK
   - We have set your language to {0}, is this OK?

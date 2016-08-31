@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227dee6326711f745a6c16d591c85acb, type: 3}
+  m_Name: italian
+  m_EditorClassIdentifier: 
+  _strings:
+  - Italiano
+  - Fantasy Crescendo
+  - "Questo gioco offre una migliore esperienza con uno o pi\xF9 controller gamepad.
+    Hai un controller? Connettilo!"
+  - "Attenzione! Questo gioco \xE8 un prodotto derivativo di Touhou Project (\u6771\u65B9Project).
+    Potrebbe contenere storie, personalit\xE0 di personaggi e ambientazioni differenti
+    dal prodotto originale. Se non sei a tuo agio con tutto ci\xF2, procedi con cauzione."
+  - Reimu
+  - Reimu Hakurei
+  - Marisa
+  - Marisa Kirisame
+  - Wriggle
+  - Wriggle Nightbug
+  - Yuuka
+  - Yuuka Kazami
+  - Yuugi
+  - Yuugi Hoshiguma
+  - Murasa
+  - Minamitsu Murasa
+  - Sakuya
+  - Sakuya Izayoi
+  - Youmu
+  - Youmu Konpaku
+  - Santuario Hakurei
+  - 'Foresta della Magia '
+  - Makai
+  - Magione del Diavolo Scarlatto
+  - Casuale
+  - Giocatore {0}
+  - "Pi\xF9 Giocatori"
+  - Giocatore Singolo
+  - Standard
+  - Speciale
+  - "Modalit\xE0 Classica"
+  - "Modalit\xE0 All-Star"
+  - "Modalit\xE0 Storia"
+  - Opzioni
+  - Indietro
+  - Esci
+  - Allenamento
+  - Audio
+  - Volume Effetti Sonori
+  - Volume Musica
+  - Volume Voci
+  - Lingua
+  - '"Piena di magia e vegetazione, da qui il nome."'
+  - "\"Luogo di molte baldorie. Tenshi non \xE8 benvenuta.\""
+  - Si
+  - No
+  - OK
+  - "La lingua \xE8 impostata su {0}, va bene cos\xEC?"
