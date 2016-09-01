@@ -24,7 +24,9 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.HouraiInput {
+
     public class InputControl {
+
         public static readonly InputControl Null =
             new InputControl("NullInputControl");
 
@@ -39,14 +41,12 @@ namespace HouraiTeahouse.HouraiInput {
 
         ulong zeroTick;
 
-
         InputControl(string handle) {
             Handle = handle;
             Sensitivity = 1.0f;
             LowerDeadZone = 0.0f;
             UpperDeadZone = 1.0f;
         }
-
 
         public InputControl(string handle, InputTarget target) {
             Handle = handle;
@@ -70,11 +70,9 @@ namespace HouraiTeahouse.HouraiInput {
         /// <summary> Is this control a button? </summary>
         public bool IsButton { get; protected set; }
 
-
         internal bool IsOnZeroTick {
             get { return UpdateTick == zeroTick; }
         }
-
 
         public bool State {
             get { return thisState.State; }
@@ -133,7 +131,6 @@ namespace HouraiTeahouse.HouraiInput {
             }
         }
 
-
         public void UpdateWithState(bool state, ulong updateTick) {
             if (IsNull) {
                 throw new InvalidOperationException(
@@ -148,23 +145,16 @@ namespace HouraiTeahouse.HouraiInput {
             tempState.Set(state || tempState.State);
         }
 
-
         public void UpdateWithValue(float value, ulong updateTick) {
-            if (IsNull) {
-                throw new InvalidOperationException(
-                    "A null control cannot be updated.");
-            }
+            if (IsNull)
+                throw new InvalidOperationException("A null control cannot be updated.");
 
-            if (UpdateTick > updateTick) {
-                throw new InvalidOperationException(
-                    "A control cannot be updated with an earlier tick.");
-            }
+            if (UpdateTick > updateTick)
+                throw new InvalidOperationException("A control cannot be updated with an earlier tick.");
 
-            if (Mathf.Abs(value) > Mathf.Abs(tempState.Value)) {
+            if (Mathf.Abs(value) > Mathf.Abs(tempState.Value))
                 tempState.Set(value);
-            }
         }
-
 
         internal void PreUpdate(ulong updateTick) {
             RawValue = null;
@@ -174,14 +164,11 @@ namespace HouraiTeahouse.HouraiInput {
             tempState.Reset();
         }
 
-
         internal void PostUpdate(ulong updateTick) {
             thisState = tempState;
-            if (thisState != lastState) {
+            if (thisState != lastState)
                 UpdateTick = updateTick;
-            }
         }
-
 
         internal void SetZeroTick() { zeroTick = UpdateTick; }
 
@@ -196,5 +183,6 @@ namespace HouraiTeahouse.HouraiInput {
         public static implicit operator float(InputControl control) {
             return control.Value;
         }
+
     }
 }

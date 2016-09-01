@@ -27,16 +27,18 @@ using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
     [Serializable]
     public sealed class PlayerControlMapping {
-        static readonly Func<InputControl, float> val = c => c.Value;
-        static readonly Func<InputControl, bool> pressed = c => c.WasPressed;
+        static readonly Func<InputControl, float> Val = c => c.Value;
+        static readonly Func<InputControl, bool> Pressed = c => c.WasPressed;
 
         public InputTarget[] AltStickHorizontalTargets = {
             InputTarget.RightStickX
         };
 
         public InputTarget[] AltStickVerticalTargets = {InputTarget.RightStickY};
+
         public InputTarget[] AttackTargets = {InputTarget.Action1};
 
         public InputTarget[] JumpTargets = {
@@ -55,18 +57,18 @@ namespace HouraiTeahouse.SmashBrew {
         public InputTarget[] StickVerticalTargets = {InputTarget.LeftStickY};
 
         static bool Check(InputDevice device, IEnumerable<InputTarget> targets) {
-            return device != null && device.GetControls(targets).Any(pressed);
+            return device != null && device.GetControls(targets).Any(Pressed);
         }
 
         static Vector2 Direction(InputDevice device,
                                  IEnumerable<InputTarget> targetsX,
                                  IEnumerable<InputTarget> targetsY) {
-            var area = new Vector2();
             if (device == null)
-                return area;
-            area.x = device.GetControls(targetsX).Average(val);
-            area.y = device.GetControls(targetsY).Average(val);
-            return area;
+                return new Vector2();
+            return new Vector2 {
+                x = device.GetControls(targetsX).Average(Val),
+                y = device.GetControls(targetsY).Average(Val)
+            };
         }
 
         public bool Attack(InputDevice device) {
@@ -96,5 +98,7 @@ namespace HouraiTeahouse.SmashBrew {
                 AltStickHorizontalTargets,
                 AltStickVerticalTargets);
         }
+
     }
+
 }

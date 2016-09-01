@@ -104,8 +104,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 #endif
 
-        protected override void OnPlayerChange() {
-            base.OnPlayerChange();
+        protected override void PlayerChange() {
+            base.PlayerChange();
             if (Component)
                 Component.color = AdjustedColor;
         }

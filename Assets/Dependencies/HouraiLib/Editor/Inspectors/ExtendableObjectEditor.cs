@@ -15,11 +15,11 @@ namespace HouraiTeahouse.Editor {
             public ExtensionAttribute Attribute;
         }
 
-        static readonly Dictionary<Type, ExtensionType[]> _matches;
+        static readonly Dictionary<Type, ExtensionType[]> Matches;
         ObjectSelector<ExtensionType> Selector;
 
         static ExtendableObjectEditor() {
-            _matches = ReflectionUtilty.AllTypes
+            Matches = ReflectionUtilty.AllTypes
                             .ConcreteClasses()
                             .IsAssignableFrom(typeof(ScriptableObject))
                             .WithAttribute<ExtensionAttribute>()
@@ -31,15 +31,15 @@ namespace HouraiTeahouse.Editor {
         IEnumerable<ExtensionType> GetTypes(bool required) {
             var type = target.GetType();
             foreach (Type interfaceType in type.GetInterfaces()) {
-                if (!_matches.ContainsKey(interfaceType))
+                if (!Matches.ContainsKey(interfaceType))
                     continue;
-                foreach (ExtensionType extensionType in _matches[interfaceType])
+                foreach (ExtensionType extensionType in Matches[interfaceType])
                     if(required == extensionType.Attribute.Required)
                         yield return extensionType;
             }
             while(type != null) {
-                if (_matches.ContainsKey(type)) {
-                    foreach (ExtensionType extensionType in _matches[type])
+                if (Matches.ContainsKey(type)) {
+                    foreach (ExtensionType extensionType in Matches[type])
                         if(required == extensionType.Attribute.Required)
                             yield return extensionType;
                 }

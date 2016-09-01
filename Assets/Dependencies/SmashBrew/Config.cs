@@ -24,8 +24,9 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
     [CreateAssetMenu(fileName = "New Config", menuName = "SmashBrew/Config")]
-    public sealed class Config : ScriptableObject {
+    public sealed class Config : ExtendableObject {
         static Config _instance;
 
         /// <summary> The singleton instance of the game's config </summary>

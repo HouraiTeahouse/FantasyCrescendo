@@ -20,7 +20,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             base.OnInspectorGUI();
             string message;
             MessageType type;
-            if (!AssetUtil.IsResource(target)) {
+            if (!Assets.IsResource(target)) {
                 message =
                     "This game cannot find this Character Data if it is not in a Resources folder. Please move it to a Resources (sub)folder.";
                 type = MessageType.Error;

@@ -25,9 +25,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace HouraiTeahouse.Console {
+
     /// <summary> A fixed size FIFO (First In First Out) Queue. Will dequeue elements until within a defined limit. </summary>
     /// <typeparam name="T"> the type of the elements contained by the queue </typeparam>
     public class FixedSizeQueue<T> : IEnumerable<T> {
+
         public const int DefaultSize = 100;
 
         // The underlying queue backing FixedQueue objects
@@ -117,5 +119,6 @@ namespace HouraiTeahouse.Console {
         IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
 
         #endregion
+
     }
 }

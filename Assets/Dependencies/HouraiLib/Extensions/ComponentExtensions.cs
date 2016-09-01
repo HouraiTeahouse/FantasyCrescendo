@@ -25,15 +25,16 @@ using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse {
+
     /// <summary> A set of extention methods for all components. </summary>
     public static class ComponentExtensions {
+
         /// <summary> Gets the GameObjects of all </summary>
         /// <typeparam name="T"> </typeparam>
         /// <param name="components"> </param>
         /// <returns> </returns>
         public static IEnumerable<GameObject> GetGameObject<T>(
             this IEnumerable<T> components) where T : Component {
-            Check.NotNull(components);
             return from component in components.IgnoreNulls()
                    select component.gameObject;
         }
@@ -44,9 +45,8 @@ namespace HouraiTeahouse {
         /// <param name="component"> the Component attached to the GameObject to retrieve the Component </param>
         /// <returns> the retrieved Component </returns>
         public static T GetOrAddComponent<T>(this Component component)
-            where T : Component {
-            Check.NotNull(component);
-            GameObject gameObject = component.gameObject;
+                                             where T : Component {
+            GameObject gameObject = Check.NotNull(component).gameObject;
             var attempt = gameObject.GetComponent<T>();
             return attempt ? attempt : gameObject.AddComponent<T>();
         }
@@ -58,15 +58,13 @@ namespace HouraiTeahouse {
         /// <param name="component"> the GameObject to retrieve the Component </param>
         /// <returns> the retrieved Component </returns>
         public static T SafeGetComponent<T>(this Component component)
-            where T : class {
-            Check.NotNull(component);
-            GameObject gameObject = component.gameObject;
+                                            where T : class {
+            GameObject gameObject = Check.NotNull(component).gameObject;
             var attempt = gameObject.GetComponent<T>();
             if (attempt != null)
-                Log.Warning(
-                    "Attempted to find a component of type {0}, but did not find one.",
-                    typeof(T));
+                Log.Warning("Attempted to find a component of type {0}, but did not find one.", typeof(T));
             return attempt;
         }
+
     }
 }

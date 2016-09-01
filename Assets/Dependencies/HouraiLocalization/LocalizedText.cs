@@ -24,8 +24,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.Localization {
+
     /// <summary> An abstract MonoBehaviour class that localizes the strings displayed on UI Text objects. </summary>
     public abstract class AbstractLocalizedText : MonoBehaviour {
+
         string _localizationKey;
 
         [SerializeField]

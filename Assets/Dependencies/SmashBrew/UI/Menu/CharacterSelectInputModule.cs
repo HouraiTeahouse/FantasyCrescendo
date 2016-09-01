@@ -125,12 +125,13 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         void CharacterChange(Player player, InputDevice controller) {
-            if (!player.SelectedCharacter)
+            var selection = player.Selection;
+            if (!selection.Character)
                 return;
             if (controller[_changeRight].WasPressed)
-                player.Pallete--;
-            if (controller[_changeRight].WasPressed)
-                player.Pallete++;
+                selection.Pallete--;
+            if (controller[_changeLeft].WasPressed)
+                selection.Pallete++;
             if (controller[_cancel].WasPressed) {
             }
         }

@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -69,6 +70,9 @@ namespace HouraiTeahouse.SmashBrew {
                 DontDestroyOnLoad(this);
 
             Mediator = GlobalMediator.Instance;
+
+            _characters = _characters.Where(c => c != null).ToList();
+            _scenes = _scenes.Where(s => s != null).ToList();
 
             _characterCollection =
                 new ReadOnlyCollection<CharacterData>(_characters);

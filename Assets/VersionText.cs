@@ -25,7 +25,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse {
+
     public abstract class UITextBehaviour : UIBehaviour {
+
         string _displayedText;
 
         [SerializeField]
@@ -41,12 +43,10 @@ namespace HouraiTeahouse {
             get { return _displayedText; }
             set {
                 _displayedText = value;
-                if (!_text)
-                    return;
-                if (!string.IsNullOrEmpty(_format))
-                    _text.text = string.Format(_format, value);
-                else
-                    _text.text = value;
+                if (_text)
+                    _text.text = !_format.IsNullOrEmpty()
+                        ? _format.With(value)
+                        : value;
             }
         }
 

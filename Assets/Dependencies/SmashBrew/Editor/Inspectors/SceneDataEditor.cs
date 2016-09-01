@@ -17,9 +17,8 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             DrawDefaultInspector();
             string message;
             MessageType type;
-            if (!AssetUtil.IsResource(target)) {
-                message =
-                    "This game cannot find this Scene Data if it is not in a Resources folder. Please move it to a Resources (sub)folder.";
+            if (!Assets.IsResource(target)) {
+                message = "This game cannot find this Scene Data if it is not in a Resources folder. Please move it to a Resources (sub)folder.";
                 type = MessageType.Error;
             } else {
                 message = "This Scene Data is correctly placed. The game can find it.";

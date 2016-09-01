@@ -30,12 +30,40 @@ namespace HouraiTeahouse {
     /// <summary> Set of extension methods for collections and enumerations of any type. </summary>
     public static class GenericCollectionExtensions {
 
+        // Tries to get a value from a dictionary. Returns the default value if the dictionary or
+        public static T GetOrDefault<TKey, T>(this IDictionary<TKey, T> dictionary, TKey key) {
+            return dictionary != null && dictionary.ContainsKey(key)
+                ? dictionary[key]
+                : default(T);
+        }
+
+        // Tries to get a value from a dictionary, and adds one if it doesn't exist.
+        // Throws an ArgumentNullException if $dictionary is null.
+        public static T GetOrAdd<TKey, T>(this IDictionary<TKey, T> dictionary, TKey key) where T : new() {
+            Check.NotNull(dictionary);
+            if(!dictionary.ContainsKey(key))
+                dictionary[key] = new T();
+            return dictionary[key];
+        }
+        // Gets only the keys from a KVP set.
+        public static IEnumerable<TKey> Keys<TKey, TValue>(
+            this IEnumerable<KeyValuePair<TKey, TValue>> enumerable) {
+            return enumerable.Select(k => k.Key);
+        }
+
+        // Gets only the values from a KVP set.
+        public static IEnumerable<TValue> Values<TKey, TValue>(
+            this IEnumerable<KeyValuePair<TKey, TValue>> enumerable) {
+            return enumerable.Select(k => k.Value);
+        }
+
         /// <summary> Checks if the enumeration is null or empty. </summary>
         /// <param name="enumeration"> the enumeration of values </param>
         /// <returns> true if <paramref name="enumeration" /> is null or empty. </returns>
         public static bool IsNullOrEmpty(this IEnumerable enumeration) {
-            if (enumeration is string)
-                return string.IsNullOrEmpty(enumeration as string);
+            var s = enumeration as string;
+            if (s != null)
+                return string.IsNullOrEmpty(s);
             return enumeration == null || IsEmpty(enumeration);
         }
 
@@ -44,8 +72,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="enumeration" /> is null </exception>
         /// <returns> true if <paramref name="enumeration" /> is empty, false otherwise </returns>
         public static bool IsEmpty(this IEnumerable enumeration) {
-            Check.NotNull(enumeration);
-            var collection = enumeration as ICollection;
+            var collection = Check.NotNull(enumeration) as ICollection;
             if (collection != null)
                 return collection.Count <= 0;
             return !enumeration.Cast<object>().Any();

@@ -21,12 +21,13 @@
 // THE SOFTWARE.
 
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
+
     /// <summary> A CharacterUIComponent that displays the portrait of a character on a RawImage object </summary>
     public sealed class PortraitDisplay : CharacterUIComponent<RawImage> {
+        
         [SerializeField]
         [Tooltip("Should the character's portrait be cropped?")]
         bool _cropped;
@@ -52,9 +53,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             _defaultColor = Component.color;
         }
 
-        /// <summary>
-        ///     <see cref="UIBehaviour.OnRectTransformDimensionsChange" />
-        /// </summary>
+        // See UIBehaviour.OnRectTransformDimensionsChange
         protected override void OnRectTransformDimensionsChange() {
             SetRect();
         }
@@ -77,14 +76,11 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Component.uvRect = texture.PixelToUVRect(imageRect);
         }
 
-        /// <summary>
-        ///     <see cref="IDataComponent{T}.SetData" />
-        /// </summary>
         public override void SetData(CharacterData data) {
             base.SetData(data);
             if (Component == null || data == null || data.PalleteCount <= 0)
                 return;
-            int portrait = Player != null ? Player.Pallete : 0;
+            int portrait = Player != null ? Player.Selection.Pallete : 0;
             data.GetPortrait(portrait).LoadAsync(delegate(Sprite sprite) {
                 if (!sprite)
                     return;
@@ -92,8 +88,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 _cropRect = _cropped
                     ? data.CropRect(texture)
                     : texture.PixelRect();
-                _cropRect.x += _rectBias.x * texture.width;
-                _cropRect.y += _rectBias.y * texture.height;
+                _cropRect.position += _rectBias.Mult(texture.Size());
                 Component.texture = texture;
                 Component.color = data.IsSelectable
                     ? _defaultColor
@@ -101,5 +96,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 SetRect();
             });
         }
+
     }
 }

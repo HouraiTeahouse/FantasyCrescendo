@@ -32,8 +32,6 @@ using UnityEditor;
 
 namespace HouraiTeahouse.SmashBrew {
 
-
-
     /// <summary> General character class for handling the physics and animations of individual characters </summary>
 #if UNITY_EDITOR
     [InitializeOnLoad]
@@ -100,11 +98,8 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void ResetCharacter() {
-            for (var i = 0; i < _resetableComponents.Length; i++) {
-                IResettable resetable = _resetableComponents[i];
-                if (resetable != null)
-                    resetable.OnReset();
-            }
+            foreach (var resetable in GetComponentsInChildren<IResettable>().IgnoreNulls())
+                resetable.OnReset();
         }
 
         #endregion
@@ -168,9 +163,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <param name="id">the ID to look for</param>
         /// <returns>the hitbox if found, null otherwise.</returns>
         public Hitbox GetHitbox(int id) {
-            if (_hitboxMap != null && _hitboxMap.ContainsKey(id))
-                return _hitboxMap[id];
-            return null;
+            return _hitboxMap.GetOrDefault(id);
         }
 
         public void ResetAllHitboxes() {
@@ -186,8 +179,6 @@ namespace HouraiTeahouse.SmashBrew {
         public Gravity Gravity { get; private set; }
         public Ground Ground { get; private set; }
         public PlayerDamage Damage { get; private set; }
-
-        IResettable[] _resetableComponents;
 
         #endregion
 
@@ -223,8 +214,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Actually applies the force to jump. </summary>
         internal void JumpImpl() {
             // Apply upward force to jump
-            Vector3 force = Vector3.up
-                * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]);
+            Vector3 force = Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]);
             force.y -= Rigidbody.velocity.y;
             Rigidbody.AddForce(force, ForceMode.VelocityChange);
 
@@ -256,8 +246,6 @@ namespace HouraiTeahouse.SmashBrew {
             Ground = GetComponent<Ground>();
             Gravity = GetComponent<Gravity>();
             Damage = GetComponent<PlayerDamage>();
-
-            _resetableComponents = GetComponentsInChildren<IResettable>();
         }
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
@@ -274,17 +262,11 @@ namespace HouraiTeahouse.SmashBrew {
 
             MovementCollider = GetComponent<CapsuleCollider>();
 
-            for (var i = 0; i < _particles.Length; i++) {
-                ParticleSystem particle = _particles[i];
-                if (particle != null)
-                    particle.Stop();
-            }
+            foreach (ParticleSystem particle in _particles.IgnoreNulls())
+                particle.Stop();
 
-            for (var i = 0; i < _weapons.Length; i++) {
-                Renderer weapon = _weapons[i];
-                if (weapon != null)
-                    weapon.enabled = false;
-            }
+            foreach (Renderer weapon in _weapons.IgnoreNulls())
+                weapon.enabled = false;
 
             StartCoroutine(InitializeAnimator());
         }
@@ -332,10 +314,9 @@ namespace HouraiTeahouse.SmashBrew {
             gameObject.tag = Tags.Player;
             gameObject.layer = Layers.Character;
 
-            Rigidbody.constraints = RigidbodyConstraints.FreezeRotation
-                | RigidbodyConstraints.FreezePositionZ;
-            Rigidbody.collisionDetectionMode =
-                CollisionDetectionMode.ContinuousDynamic;
+            Rigidbody.constraints = RigidbodyConstraints.FreezePositionZ
+                | RigidbodyConstraints.FreezeRotation;
+            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             Rigidbody.isKinematic = false;
             Rigidbody.useGravity = false;
 
@@ -345,8 +326,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
 
             Type[] requiredComponents = GetRequiredComponents();
-            for (var i = 0; i < requiredComponents.Length; i++) {
-                Type component = requiredComponents[i];
+            foreach (Type component in requiredComponents) {
                 if (!gameObject.GetComponent(component))
                     gameObject.AddComponent(component);
             }
@@ -358,19 +338,14 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Editor only function that gets all of the required component types a Character needs. </summary>
         /// <returns> an array of all of the concrete component types marked with RequiredCharacterComponent </returns>
         public static Type[] GetRequiredComponents() {
-            Type componentAttackType = typeof(Component);
-            Type requiredComponentAttackType =
-                typeof(RequiredAttribute);
+            Type component = typeof(Component);
             // Use reflection to find required Components for Characters and statuses
             // Enumerate all concrete Component types
-            return
-                (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                 from assemblyType in domainAssembly.GetTypes()
-                 where
-                     assemblyType != null && !assemblyType.IsAbstract
-                         && componentAttackType.IsAssignableFrom(assemblyType)
-                         && assemblyType.IsDefined(requiredComponentAttackType, true)
-                 select assemblyType).ToArray();
+            return ReflectionUtilty.AllTypes.ConcreteClasses()
+                    .IsAssignableFrom(component)
+                    .WithAttribute<RequiredAttribute>()
+                    .Keys()
+                    .ToArray();
         }
 #endif
 

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace UnityStandardAssets.ImageEffects
@@ -35,8 +34,8 @@ namespace UnityStandardAssets.ImageEffects
             BackgroundAndForeground = 0x3,
         }
 
-        static private int SMOOTH_DOWNSAMPLE_PASS = 6;
-        static private float BOKEH_EXTRA_BLUR = 2.0f;
+        static int SMOOTH_DOWNSAMPLE_PASS = 6;
+        static float BOKEH_EXTRA_BLUR = 2.0f;
 
         public Dof34QualitySetting quality = Dof34QualitySetting.OnlyBackground;
         public DofResolution resolution  = DofResolution.Low;

@@ -69,7 +69,7 @@ namespace HouraiTeahouse {
         /// <param name="rect"> the Rect to get the aspect ratio of </param>
         /// <returns> the aspect ratio of the Rect </returns>
         public static float AspectRatio(this Rect rect) {
-            if (rect.height == 0f)
+            if (Mathf.Approximately(rect.height, 0f))
                 return float.NaN;
             return rect.width / rect.height;
         }
@@ -89,7 +89,6 @@ namespace HouraiTeahouse {
 
         /// <summary> Restricts a Rect to to a certain size. Retains the center. Optionally can enforce an aspect ratio. </summary>
         /// <param name="rect"> the source Rect </param>
-        /// >
         /// <param name="size"> the maximum dimensions of the new Rect </param>
         /// <param name="aspect"> the aspect ratio to enforce, will not enforce one if null </param>
         /// <returns> the edited Rect </returns>
@@ -105,6 +104,7 @@ namespace HouraiTeahouse {
         /// <param name="height"> the maximum height of the new Rect </param>
         /// <param name="aspect"> the aspect ratio to enforce, will not enforce one if null </param>
         /// <returns> the edited Rect </returns>
+        /// <exception cref="ArgumentException"><paramref name="height"/> is zero</exception>
         public static Rect Restrict(this Rect rect,
                                     float width,
                                     float height,
@@ -115,7 +115,7 @@ namespace HouraiTeahouse {
                 rect.height = Mathf.Min(rect.height, height);
             }
             else {
-                if (height == 0)
+                if (Mathf.Approximately(height, 0))
                     throw new ArgumentException();
                 float enclosingAspectRatio = width / height;
                 float aspectRatio = aspect.Value;

@@ -24,6 +24,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace HouraiTeahouse.SmashBrew.UI {
+
     /// <summary> A UI Component that depends on data assigned from a Player object </summary>
     public abstract class PlayerUIComponent : UIBehaviour,
                                               IDataComponent<Player> {
@@ -41,22 +42,22 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <param name="data"> the data to set </param>
         public virtual void SetData(Player data) {
             if (_player != null)
-                _player.OnChanged -= OnPlayerChange;
+                _player.Changed -= PlayerChange;
             _player = data;
             if (_player != null)
-                _player.OnChanged += OnPlayerChange;
-            OnPlayerChange();
+                _player.Changed += PlayerChange;
+            PlayerChange();
         }
 
         /// <summary> Unity callback. Called on object destruction. </summary>
         protected override void OnDestroy() {
             base.OnDestroy();
             if (_player != null)
-                _player.OnChanged -= OnPlayerChange;
+                _player.Changed -= PlayerChange;
         }
 
         /// <summary> Events callback. Called whenever <see cref="Player" />'s state changes </summary>
-        protected virtual void OnPlayerChange() {
+        protected virtual void PlayerChange() {
         }
     }
 
@@ -143,11 +144,12 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        ///     <see cref="PlayerUIComponent{T}.OnPlayerChange" />
+        ///     <see cref="PlayerUIComponent.PlayerChange" />
         /// </summary>
-        protected override void OnPlayerChange() {
-            SetData(Player == null ? null : Player.SelectedCharacter);
+        protected override void PlayerChange() {
+            SetData(Player == null ? null : Player.Selection.Character);
         }
+
     }
 
     /// <summary> An abstract UI behaviour class for handling a Player's current state </summary>
@@ -169,14 +171,15 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (!_component)
                 _component = GetComponent<T>();
         }
+
     }
 
     /// <summary> An abstract UI behaviour class for handling a Character's data </summary>
     /// <typeparam name="T"> the type of component the CharacterUIComponent manipulates </typeparam>
     public abstract class CharacterUIComponent<T> : PlayerUIComponent<T>,
-                                                    IDataComponent
-                                                        <CharacterData>
-        where T : Component {
+                                                    IDataComponent<CharacterData>
+                                                    where T : Component {
+
         [SerializeField]
         [Tooltip("The character whose data is to be displayed")]
         CharacterData _character;
@@ -201,10 +204,11 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        ///     <see cref="PlayerUIComponent{T}.OnPlayerChange" />
+        ///     <see cref="PlayerUIComponent.PlayerChange" />
         /// </summary>
-        protected override void OnPlayerChange() {
-            SetData(Player == null ? null : Player.SelectedCharacter);
+        protected override void PlayerChange() {
+            SetData(Player != null ? Player.Selection.Character : null);
         }
+
     }
 }

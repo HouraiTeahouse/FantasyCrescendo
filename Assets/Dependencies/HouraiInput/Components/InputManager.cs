@@ -25,7 +25,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse.HouraiInput {
+
     public class InputManager : MonoBehaviour {
+
         [SerializeField]
         bool _invertYAxis = false;
 

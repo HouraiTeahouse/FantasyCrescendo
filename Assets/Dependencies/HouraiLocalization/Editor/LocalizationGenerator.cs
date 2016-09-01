@@ -11,12 +11,11 @@ namespace HouraiTeahouse.Localization.Editor {
     /// A Editor-Only ScriptableObject for pulling localization data from Google Spreadsheets
     /// and creating the approriate Langauge assets.
     /// </summary>
-    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localization_Generator")]
     public class LocalizationGenerator : ScriptableObject {
 
         [MenuItem("Hourai/Localization/Generate")]
         static void Create() {
-            var generator = AssetUtil.LoadFirstOrCreate<LocalizationGenerator>();
+            var generator = Assets.LoadOrCreate<LocalizationGenerator>();
             Assert.IsNotNull(generator);
             if (generator)
                 generator.Generate();

@@ -69,8 +69,8 @@ namespace HouraiTeahouse {
                 Destroy(_currentPointer.gameObject);
         }
 
-        protected override void OnPlayerChange() {
-            base.OnPlayerChange();
+        protected override void PlayerChange() {
+            base.PlayerChange();
             if (_currentPointer)
                 _currentPointer.GetComponentsInChildren<IDataComponent<Player>>()
                     .SetData(Player);

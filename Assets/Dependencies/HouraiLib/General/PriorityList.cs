@@ -26,19 +26,20 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace HouraiTeahouse {
+
     /// <summary> An generic iterable priority queue. </summary>
     /// <typeparam name="T"> the type of elements contained by the PriorityList </typeparam>
     public class PriorityList<T> : ICollection<T> {
+
         // The actual collection. Maps a priority to a bucket of items at that priority.
         // This is a solution to the fact that SortedList does not support duplicate keys
         readonly SortedList<int, List<T>> _items;
 
         // The priority cache. In exchange for using a bit more memory. This allows for faster checks
-        // like in Contains, which would otherwise involve iterating through every priority cpuLevel and running
+        // like in Contains, which would otherwise involve iterating through every priority level and running
         // Contains on every bucket
         readonly Dictionary<T, int> _priorities;
 
-        /// <summary> Creates an empty PriorityList instance </summary>
         public PriorityList() {
             _items = new SortedList<int, List<T>>();
             _priorities = new Dictionary<T, int>();
@@ -49,8 +50,7 @@ namespace HouraiTeahouse {
         /// <param name="collection"> </param>
         /// <exception cref="ArgumentNullException"> collection is null </exception>
         public PriorityList(IEnumerable<T> collection) : this() {
-            Check.NotNull(collection);
-            List<T> colList = collection.ToList();
+            List<T> colList = Check.NotNull(collection).ToList();
             _items.Add(0, colList);
             foreach (T element in colList)
                 _priorities[element] = 0;
@@ -63,7 +63,7 @@ namespace HouraiTeahouse {
             Check.NotNull(priorities);
             _priorities = new Dictionary<T, int>(priorities);
             foreach (KeyValuePair<T, int> priority in priorities)
-                GetOrCreateBucket(priority.Value).Add(priority.Key);
+                _items.GetOrAdd(priority.Value).Add(priority.Key);
         }
 
         /// <summary> Gets the priority of an item stored within the PriorityList. </summary>
@@ -88,7 +88,7 @@ namespace HouraiTeahouse {
                 return;
 
             List<T> currentBucket = _items[current];
-            List<T> newBucket = GetOrCreateBucket(priority);
+            List<T> newBucket = _items.GetOrAdd(priority);
 
             // Remove from the old bucket
             currentBucket.Remove(item);
@@ -123,9 +123,8 @@ namespace HouraiTeahouse {
         /// <paramref name="minPriority" /> is equal to <paramref name="maxPriority" />, then this function acts the same way
         /// RemoveAllByPriority(priority) does. </remarks>
         /// <param name="minPriority"> the minimum priority that should be removed </param>
-        /// <param name="maxPriority"> the maximum priority that should be removed </param
+        /// <param name="maxPriority"> the maximum priority that should be removed </param>
         /// <returns> whether elements have been removed or not </returns>
-        /// >
         public bool RemoveAllByPriority(int minPriority, int maxPriority) {
             if (minPriority > maxPriority) {
                 int temp = minPriority;
@@ -134,21 +133,8 @@ namespace HouraiTeahouse {
             }
             if (minPriority == maxPriority)
                 return RemoveAllByPriority(minPriority);
-            int[] toRemove =
-                _items.Keys.Where(p => p >= minPriority && p <= maxPriority)
-                    .ToArray();
+            int[] toRemove = _items.Keys.Where(p => p >= minPriority && p <= maxPriority).ToArray();
             return toRemove.Any(RemoveAllByPriority);
-        }
-
-        List<T> GetOrCreateBucket(int priority) {
-            List<T> bucket;
-            if (_items.ContainsKey(priority))
-                bucket = _items[priority];
-            else {
-                bucket = new List<T>();
-                _items.Add(priority, bucket);
-            }
-            return bucket;
         }
 
         #region ICollection Implementation
@@ -169,7 +155,7 @@ namespace HouraiTeahouse {
         /// <param name="item"> the element to add </param>
         /// <param name="priority"> </param>
         public void Add(T item, int priority) {
-            List<T> bucket = GetOrCreateBucket(priority);
+            List<T> bucket = _items.GetOrAdd(priority);
             bucket.Add(item);
             _priorities[item] = priority;
         }

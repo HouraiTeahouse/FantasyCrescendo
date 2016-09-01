@@ -24,9 +24,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
+
     /// <summary> UI element that shows where players are </summary>
     [RequireComponent(typeof(Text), typeof(PlayerUIColor))]
     public sealed class PlayerIndicator : PlayerUIComponent {
+
         CapsuleCollider _collider;
         // the canvas's RectTransform
         RectTransform _cTransform;
@@ -67,11 +69,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
             //0,0 for the canvas is at the center of the screen, whereas WorldToViewPortPoint treats the lower left corner as 0,0. Because of this,
             // you need to subtract the height / width of the canvas * 0.5 to get the correct position.
 
-            Vector2 ViewportPosition =
-                Camera.main.WorldToViewportPoint(worldPosition);
+            Vector2 viewportPosition = Camera.main.WorldToViewportPoint(worldPosition);
             //now you can set the position of the ui element
-            _rTransform.anchoredPosition =
-                ViewportPosition.Mult(_cTransform.sizeDelta)
+            _rTransform.anchoredPosition = viewportPosition.Mult(_cTransform.sizeDelta)
                     - 0.5f * _cTransform.sizeDelta;
         }
 

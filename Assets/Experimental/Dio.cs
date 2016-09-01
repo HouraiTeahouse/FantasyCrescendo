@@ -50,7 +50,7 @@ namespace HouraiTeahouse {
                 _mat = new Material(_shader);
             }
 
-            float aspectRatio = Screen.width / Screen.height;
+            float aspectRatio = Screen.width / (float) Screen.height;
 
             _mat.SetVector("_Aspect", new Vector4(aspectRatio, 1, 1, 1));
             _mat.SetVector("_Center",

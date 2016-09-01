@@ -72,9 +72,9 @@ namespace HouraiTeahouse.SmashBrew{
         public void RequiredCharacterComponentTest() {
             // Checks for all of the component types marked with RequiredCharacterComponent on all of the CharacterData's prefabs
             LoadData();
-            Type[] requiredAttackTypes = Character.GetRequiredComponents();
+            Type[] requiredTypes = Character.GetRequiredComponents();
             foreach (CharacterData character in data)
-                foreach (Type type in requiredAttackTypes) 
+                foreach (Type type in requiredTypes) 
                     Assert.NotNull(character.Prefab.Load().GetComponent(type));
         }
 

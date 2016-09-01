@@ -235,7 +235,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             GameObject prefab = Characters.Selected.Prefab.Load();
 
             var instance = (GameObject) PrefabUtility.InstantiatePrefab(prefab);
-            Undo.RegisterCreatedObjectUndo(instance, string.Format("Spawn {0}", prefab.name));
+            Undo.RegisterCreatedObjectUndo(instance, "Spawn {0}".With(prefab.name));
             return instance;
         }
 

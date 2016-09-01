@@ -20,19 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse {
+
     /// <summary> Extension methods for the UnityEngine Vector structs. </summary>
     public static class VectorExtensions {
+
         /// <summary> Computes the Hadamard product between two 2D vectors. </summary>
         /// <param name="a"> the first vector </param>
         /// <param name="b"> the second vector </param>
         /// <returns> the Hadamard product of the two vectors </returns>
         public static Vector2 Mult(this Vector2 a, params Vector2[] b) {
-            for (var i = 0; i < b.Length; i++)
-                a = Vector2.Scale(a, b[i]);
-            return a;
+            return b.Aggregate(a, Vector2.Scale);
         }
 
         /// <summary> Computes the Hadamard product between two 3D vectors. </summary>
@@ -40,9 +41,7 @@ namespace HouraiTeahouse {
         /// <param name="b"> the second vector </param>
         /// <returns> the Hadamard product of the two vectors </returns>
         public static Vector3 Mult(this Vector3 a, params Vector3[] b) {
-            for (var i = 0; i < b.Length; i++)
-                a = Vector3.Scale(a, b[i]);
-            return a;
+            return b.Aggregate(a, Vector3.Scale);
         }
 
         /// <summary> Computes the Hadamard product between two 4D vectors. </summary>
@@ -50,9 +49,7 @@ namespace HouraiTeahouse {
         /// <param name="b"> the second vector </param>
         /// <returns> the Hadamard product of the two vectors </returns>
         public static Vector4 Mult(this Vector4 a, params Vector4[] b) {
-            for (var i = 0; i < b.Length; i++)
-                a = Vector4.Scale(a, b[i]);
-            return a;
+            return b.Aggregate(a, Vector4.Scale);
         }
 
         /// <summary> Computes the largest component of a 2D vector. </summary>

@@ -4,7 +4,7 @@ using UnityObject = UnityEngine.Object;
 
 namespace HouraiTeahouse.Editor {
 
-    public static class PrefabUtil {
+    public static class Prefab {
 
         public static bool IsPrefab(this UnityObject obj) {
             if (obj == null)
@@ -52,7 +52,7 @@ namespace HouraiTeahouse.Editor {
                                                GameObject obj = null,
                                                ReplacePrefabOptions options = ReplacePrefabOptions.ConnectToPrefab) {
             //Create Folder if it doesn't already exist
-            AssetUtil.CreateFolder(folderPath);
+            Assets.CreateFolder(folderPath);
 
             folderPath = "Assets/" + folderPath;
 

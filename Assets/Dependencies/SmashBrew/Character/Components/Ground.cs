@@ -29,7 +29,6 @@ namespace HouraiTeahouse.SmashBrew {
     [Required]
     public sealed class Ground : CharacterComponent {
         readonly HashSet<Collider> _ground = new HashSet<Collider>();
-        bool _collided;
 
         /// <summary> Gets whether the Character is currently on solid Ground. Assumed to be in the air when false. </summary>
         public bool IsGrounded {
@@ -41,7 +40,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         public override void OnReset() {
             _ground.Clear();
-            _collided = false;
         }
 
         public static implicit operator bool(Ground ground) {
@@ -50,17 +48,14 @@ namespace HouraiTeahouse.SmashBrew {
 
         void OnCollisionEnter(Collision col) {
             GroundCheck(col);
-            _collided = true;
         }
 
         void OnCollisionStay(Collision col) {
             GroundCheck(col);
-            _collided = true;
         }
 
         void OnCollisionExit(Collision col) {
             _ground.Remove(col.collider);
-            _collided = false;
         }
 
         void GroundCheck(Collision collison) {

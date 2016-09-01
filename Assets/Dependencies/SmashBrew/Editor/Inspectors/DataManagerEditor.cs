@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using HouraiTeahouse.Editor;
 using UnityEditor;
 using UnityEditorInternal;
@@ -18,9 +16,6 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         ReorderableList characterList;
         ReorderableList sceneList;
 
-        /// <summary>
-        /// <see cref="UnityEditor.Editor.OnEnable"/>
-        /// </summary>
         void OnEnable() {
             characters = serializedObject.FindProperty("_characters");
             scenes = serializedObject.FindProperty("_scenes");

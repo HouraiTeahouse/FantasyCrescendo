@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (c) 2016 Hourai Teahouse
 // 
@@ -24,7 +24,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     public class PlayerCharacterChange : CharacterUIComponent, IPlayerClickable {
         public void Click(Player player) {
             if (Character && Character.IsSelectable)
-                player.SelectedCharacter = Character;
+                player.Selection.Character = Character;
         }
     }
 }

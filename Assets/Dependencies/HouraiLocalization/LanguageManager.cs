@@ -31,16 +31,11 @@ namespace HouraiTeahouse.Localization {
     }
 
     /// <summary> Singleton MonoBehaviour that manages all of localization system. </summary>
-    [HelpURL(
-        "http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Manager"
-        )]
     public sealed class LanguageManager : Singleton<LanguageManager> {
         Language _currentLanguage;
 
         [SerializeField]
-        [Tooltip(
-            "The default language to use if the Player's current language is not supported"
-            )]
+        [Tooltip("The default language to use if the Player's current language is not supported")]
         [Resource(typeof(StringSet))]
         string _defaultLanguage;
 

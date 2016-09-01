@@ -77,17 +77,82 @@ namespace HouraiTeahouse.SmashBrew {
         public override string ToString() { return Name; }
     }
 
+    [Serializable]
+    public class PlayerSelection {
+        [SerializeField]
+        CharacterData _character;
+
+        [SerializeField]
+        int _pallete;
+
+        public event Action Changed;
+
+        /// <summary> The Player's selected Character. If null, a random Character will be spawned when the match starts. </summary>
+        public CharacterData Character {
+            get { return _character; }
+            set {
+                if (_character == value)
+                    return;
+                _character = value;
+                Changed.SafeInvoke();
+            }
+        }
+
+        /// <summary>
+        /// The Player's selected 
+        /// </summary>
+        public int Pallete {
+            get { return _pallete; }
+            set {
+                if (_pallete == value)
+                    return;
+                if (_character) {
+                    int count = _character.PalleteCount;
+                    if (count > 0)
+                        // This is
+                        _pallete = value - count * Mathf.FloorToInt(value / (float) count);
+                } else {
+                    _pallete = value;
+                }
+                Changed.SafeInvoke();
+            }
+        }
+
+        public void Copy(PlayerSelection selection) {
+            if (this == selection)
+                return;
+            Check.NotNull(selection);
+            Pallete = selection.Pallete;
+            Character = selection.Character;
+        }
+
+        public static bool operator ==(PlayerSelection s1, PlayerSelection s2) {
+            bool n1 = ReferenceEquals(s1, null);
+            bool n2 = ReferenceEquals(s2, null);
+            return n1 ^ n2 || (!n1 && s1.Character == s2.Character && s1.Pallete == s2.Pallete);
+        }
+
+        public static bool operator !=(PlayerSelection s1, PlayerSelection s2) { return !(s1 == s2); }
+
+        public override bool Equals(object obj) {
+            return this == obj as PlayerSelection;
+        }
+
+        public override int GetHashCode() {
+            unchecked {
+                return ((_character != null ? _character.GetHashCode() : 0) * 397) ^ _pallete;
+            }
+        }
+    }
+
     public sealed class Player {
 
         //TODO: Make this more dynamic
         static readonly Player[] _players;
         static readonly ReadOnlyCollection<Player> _playerCollection;
         int _level;
-        int _pallete;
-
-        CharacterData _selectedCharacter;
-
         PlayerType _type;
+        readonly PlayerSelection _selection;
 
         static Player() {
             _players = new Player[GameMode.Current.MaxPlayers];
@@ -96,12 +161,16 @@ namespace HouraiTeahouse.SmashBrew {
             _playerCollection = new ReadOnlyCollection<Player>(_players);
         }
 
-        public PlayerSelection Selection { get; private set; }
+        public PlayerSelection Selection {
+            get { return _selection; }
+            set { _selection.Copy(value); }
+        }
 
         internal Player(int number) {
             ID = number;
             Type = PlayerType.Types[0];
-            Selection = new PlayerSelection();
+            _selection = new PlayerSelection();
+            Selection.Changed += () => Changed.SafeInvoke();
             Level = 3;
         }
 
@@ -114,7 +183,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <see cref="AllPlayers" />
         /// </summary>
         public static IEnumerable<Player> ActivePlayers {
-            get { return _players.Where(player => player.IsActive); }
+            get { return _players.Where(player => player.Type.IsActive); }
         }
 
         /// <summary> Gets the maximum number of players allowed in one match. </summary>
@@ -129,28 +198,8 @@ namespace HouraiTeahouse.SmashBrew {
 
         public int ID { get; private set; }
 
-        public bool IsActive {
-            get { return Type.IsActive; }
-        }
-
-        /// <summary> Gets whether the Player is a CPU or not. True if the player is AI controlled, false if human controlled. </summary>
-        public bool IsCPU {
-            get { return Type.IsCPU; }
-        }
-
-        /// <summary> The Player's selected Character. If null, a random Character will be spawned when the match starts. </summary>
-        public CharacterData SelectedCharacter {
-            get { return _selectedCharacter; }
-            set {
-                if (_selectedCharacter == value)
-                    return;
-                _selectedCharacter = value;
-                OnChanged.SafeInvoke();
-            }
-        }
-
         /// <summary> Gets the CharacterData specifying the actual character spawned for the Player. May be different from
-        /// <see cref="SelectedCharacter" />, particularly if the Character was randomly selected. </summary>
+        /// <see cref="Selection" />'s selected character, particularly if the Character was randomly selected. </summary>
         public CharacterData SpawnedCharacter { get; private set; }
 
         /// <summary> The AI level </summary>
@@ -160,27 +209,7 @@ namespace HouraiTeahouse.SmashBrew {
                 if (_level == value)
                     return;
                 _level = value;
-                OnChanged.SafeInvoke();
-            }
-        }
-
-        /// <summary>
-        /// The Player's selected 
-        /// </summary>
-        public int Pallete {
-            get { return _pallete; }
-            set {
-                if (_pallete == value)
-                    return;
-                if (SelectedCharacter) {
-                    int count = SelectedCharacter.PalleteCount;
-                    if (count > 0)
-                        _pallete = value - count * Mathf.FloorToInt(value / (float) count);
-                }
-                else {
-                    _pallete = value;
-                }
-                OnChanged.SafeInvoke();
+                Changed.SafeInvoke();
             }
         }
 
@@ -191,15 +220,16 @@ namespace HouraiTeahouse.SmashBrew {
 
         public InputDevice Controller {
             get {
-                if (ID < 0 || ID >= HInput.Devices.Count)
-                    return null;
-                return HInput.Devices[ID];
+                return Check.Range(ID, HInput.Devices.Count)
+                    ? HInput.Devices[ID]
+                    : null;
             }
         }
 
         /// <summary> The actual spawned GameObject of the Player. </summary>
         public Character PlayerObject { get; private set; }
 
+        // The represnetative color of this player. Used in UI.
         public Color Color {
             get { return Type.Color ?? Config.Player.GetColor(ID); }
         }
@@ -216,30 +246,30 @@ namespace HouraiTeahouse.SmashBrew {
             return _players[id];
         }
 
-        public event Action OnChanged;
+        public event Action Changed;
 
-        public static Player GetPlayer(GameObject go) {
+        public static Player Get(GameObject go) {
             if (!go)
                 return null;
             var controller = go.GetComponentInParent<PlayerController>();
             return !controller ? null : controller.PlayerData;
         }
 
-        public static Player GetPlayer(Component comp) {
-            return !comp ? null : GetPlayer(comp.gameObject);
+        public static Player Get(Component comp) {
+            return !comp ? null : Get(comp.gameObject);
         }
 
         public static bool IsPlayer(GameObject go) {
-            return GetPlayer(go) != null;
+            return Get(go) != null;
         }
 
         public static bool IsPlayer(Component comp) {
-            return GetPlayer(comp) != null;
+            return Get(comp) != null;
         }
 
         public void CycleType() {
             Type = Type.Next;
-            OnChanged.SafeInvoke();
+            Changed.SafeInvoke();
         }
 
         internal Character Spawn(Transform transform, bool direction) {
@@ -247,12 +277,13 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         internal Character Spawn(Vector3 pos, bool direction) {
-            SpawnedCharacter = SelectedCharacter;
+            SpawnedCharacter = Selection.Character;
+            var color = Selection.Pallete;
 
             // If the character is null, randomly select a character and pallete
             if (SpawnedCharacter == null) {
                 SpawnedCharacter = DataManager.Instance.Characters.Random();
-                Pallete = Random.Range(0, SpawnedCharacter.PalleteCount);
+                color = Random.Range(0, SpawnedCharacter.PalleteCount);
             }
 
             //TODO: Make the loading of characters asynchronous 
@@ -268,7 +299,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (controller)
                 controller.PlayerData = this;
             if (materialSwap)
-                materialSwap.Pallete = Pallete;
+                materialSwap.Pallete = color;
             return PlayerObject;
         }
 
@@ -293,8 +324,6 @@ namespace HouraiTeahouse.SmashBrew {
             return !(nullCheck1 ^ nullCheck2) && (nullCheck1 || p1.ID == p2.ID);
         }
 
-        public static bool operator !=(Player p1, Player p2) {
-            return !(p1 == p2);
-        }
+        public static bool operator !=(Player p1, Player p2) { return !(p1 == p2); }
     }
 }

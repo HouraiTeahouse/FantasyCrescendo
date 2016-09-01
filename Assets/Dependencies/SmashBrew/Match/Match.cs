@@ -70,6 +70,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (InMatch)
                 return;
             _eventManager.Publish(new MatchStartEvent());
+            InMatch = true;
         }
     }
 }

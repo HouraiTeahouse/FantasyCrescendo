@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace UnityStandardAssets.ImageEffects
@@ -28,8 +27,8 @@ namespace UnityStandardAssets.ImageEffects
 
         // To maintain adaptation levels over time, we need two 1x1 render textures
         // and ping-pong between them.
-        private RenderTexture[] adaptRenderTex = new RenderTexture[2];
-        private int curAdaptIndex = 0;
+        readonly RenderTexture[] adaptRenderTex = new RenderTexture[2];
+        int curAdaptIndex = 0;
 
 
         // Computes scene luminance (grayscale) image
@@ -38,8 +37,9 @@ namespace UnityStandardAssets.ImageEffects
         protected Material materialLum {
             get {
                 if ( m_materialLum == null ) {
-                    m_materialLum = new Material(shaderLum);
-                    m_materialLum.hideFlags = HideFlags.HideAndDontSave;
+                    m_materialLum = new Material(shaderLum) {
+                        hideFlags = HideFlags.HideAndDontSave
+                    };
                 }
                 return m_materialLum;
             }

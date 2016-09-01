@@ -77,45 +77,36 @@ namespace HouraiTeahouse {
     /// <summary> A singleton wrapper for the master AudioMixer to provide easier programmatic control over defined audio
     /// channels </summary>
     public sealed class AudioManager : Singleton<AudioManager> {
+
         [SerializeField]
         [Tooltip("The controllable defined channels1")]
         AudioChannel[] _audioChannels;
-
-        Dictionary<string, AudioChannel> _channelByName;
-
-        ReadOnlyCollection<AudioChannel> _channelCollection;
 
         [SerializeField]
         [Tooltip("The editable audio mixer")]
         AudioMixer _mixer;
 
+        Dictionary<string, AudioChannel> _channelByName;
+
         /// <summary> A collection of the Channels defined in the editor. </summary>
-        public ReadOnlyCollection<AudioChannel> Channels {
-            get { return _channelCollection; }
-        }
-
-        public AudioChannel[] AudioChannels {
-            get { return _audioChannels; }
-
-            set { _audioChannels = value; }
-        }
+        public ReadOnlyCollection<AudioChannel> Channels { get; private set; }
 
         /// <summary> Indexer to get the channel corresponding to it's name. </summary>
-        /// <param name="name"> the name of the channel </param>
+        /// <param name="channelName"> the name of the channel </param>
         /// <returns> the corresponding audio channel </returns>
-        public AudioChannel this[string name] {
-            get { return _channelByName[name]; }
+        public AudioChannel this[string channelName] {
+            get { return _channelByName[channelName]; }
         }
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
-            _channelCollection =
-                new ReadOnlyCollection<AudioChannel>(AudioChannels);
+            Channels =
+                new ReadOnlyCollection<AudioChannel>(_audioChannels);
             _channelByName = new Dictionary<string, AudioChannel>();
-            if (AudioChannels == null || _mixer == null)
+            if (_audioChannels == null || _mixer == null)
                 return;
-            foreach (AudioChannel channel in AudioChannels) {
+            foreach (AudioChannel channel in _audioChannels) {
                 if (channel == null)
                     continue;
                 channel.Initialize(_mixer);

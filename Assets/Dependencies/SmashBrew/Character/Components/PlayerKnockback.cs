@@ -20,14 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using HouraiTeahouse.SmashBrew.Util;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
     /// <summary> A MonoBehaviour that handles the knockback dealt to a Player </summary>
     public sealed class PlayerKnockback : CharacterComponent,
                                           IKnockbackable {
+
         ModifierList<Vector2> _defensiveModifiers;
 
         public ModifierGroup<Vector2> KnockbackModifiers { get; private set; }
@@ -41,6 +42,5 @@ namespace HouraiTeahouse.SmashBrew {
             //    knockback = _defensiveModifiers.Modifiy(knockback);
         }
 
-        public event Action<Vector2> OnKnockback;
     }
 }

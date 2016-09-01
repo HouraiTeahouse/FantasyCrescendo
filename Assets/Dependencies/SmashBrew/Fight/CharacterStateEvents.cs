@@ -65,8 +65,8 @@ namespace HouraiTeahouse.SmashBrew {
 
         public override void Initialize(GameObject gameObject) {
             base.Initialize(gameObject);
-            //if (initalized)
-            //    return;
+            if (initalized)
+                return;
             if (_clip == null || _eventData == null) {
                 Log.Error("State {0} does not have a clip. Is it initialized?", _stateName);
                 return;

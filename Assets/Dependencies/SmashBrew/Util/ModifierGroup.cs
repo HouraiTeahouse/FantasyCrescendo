@@ -20,8 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace HouraiTeahouse.SmashBrew.Util {
+namespace HouraiTeahouse.SmashBrew {
+
     public sealed class ModifierGroup<T> {
+
         public ModifierGroup() {
             In = new ModifierList<T>();
             Out = new ModifierList<T>();
@@ -29,5 +31,7 @@ namespace HouraiTeahouse.SmashBrew.Util {
 
         public ModifierList<T> In { get; private set; }
         public ModifierList<T> Out { get; private set; }
+
     }
+
 }

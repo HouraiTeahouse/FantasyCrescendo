@@ -30,7 +30,6 @@ namespace HouraiTeahouse {
 
         /// <summary> Checks if an argument is null or not. </summary>
         /// <typeparam name="T"> the type of the argument to check </typeparam>
-        /// <param name="name"> the name of the argument for the exception </param>
         /// <param name="argument"> the argument itself </param>
         /// <returns> the argument, if it isn't null </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="argument" /> is null </exception>

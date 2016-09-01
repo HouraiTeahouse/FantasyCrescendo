@@ -23,7 +23,9 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
     public class ComboAttack : StateMachineBehaviour {
+
         [SerializeField]
         bool resetOnExit;
 

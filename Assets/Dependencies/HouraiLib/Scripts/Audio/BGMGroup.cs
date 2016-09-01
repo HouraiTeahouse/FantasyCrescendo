@@ -75,8 +75,8 @@ namespace HouraiTeahouse {
 
     [Serializable]
     public class BGMData {
-        const string delimiter = "/";
-        const string suffix = "weight";
+        const string Delimiter = "/";
+        const string Suffix = "weight";
 
         [SerializeField]
         [Tooltip("The name of the BGM.")]
@@ -86,7 +86,6 @@ namespace HouraiTeahouse {
         [Tooltip("The artist who created this piece of music")]
         string _artist;
 
-        Resource<AudioClip> _bgmResource;
         [SerializeField]
         [Resource(typeof(AudioClip))]
         string _bgm;
@@ -103,20 +102,13 @@ namespace HouraiTeahouse {
         [Tooltip("The sample number of the end point the loop.")]
         int _loopEnd;
 
-        float _weight;
-
         public BGMData(string path, float weight) {
             _bgm = path;
             _baseWeight = weight;
         }
 
-        public Resource<AudioClip> BGM {
-            get { return _bgmResource; }
-        }
-
-        public float Weight {
-            get { return _weight; }
-        }
+        public Resource<AudioClip> BGM { get; private set; }
+        public float Weight { get; private set; }
 
         public int LoopStart {
             get { return _loopStart; }
@@ -129,24 +121,24 @@ namespace HouraiTeahouse {
         string GetKey(string stageName) {
             return string.Format("{0}{1}{2}_{3}",  
                   stageName,
-                  delimiter,
+                  Delimiter,
                   _bgm,
-                  suffix);
+                  Suffix);
         }
 
         public void Initialize(string stageName) {
-            _bgmResource = new Resource<AudioClip>(_bgm);
+            BGM = new Resource<AudioClip>(_bgm);
             var key = GetKey(stageName);
-            if (Prefs.HasKey(key))
-                _weight = Prefs.GetFloat(key);
+            if (Prefs.Exists(key))
+                Weight = Prefs.GetFloat(key);
             else {
-                _weight = _baseWeight;
-                Prefs.SetFloat(key, _weight);
+                Weight = _baseWeight;
+                Prefs.SetFloat(key, Weight);
             }
         }
 
         public void Finish(string stageName) {
-            Prefs.SetFloat(GetKey(stageName), _weight);
+            Prefs.SetFloat(GetKey(stageName), Weight);
         }
 
         public override string ToString() {

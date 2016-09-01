@@ -25,8 +25,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse {
+
     [RequireComponent(typeof(Text))]
     public sealed class FPSCounter : MonoBehaviour {
+
         Text Counter;
         float deltaTime;
         float fps;
@@ -50,5 +52,6 @@ namespace HouraiTeahouse {
                 Counter.text = "{0:0.0} ms ({1:0.} fps)".With(msec, fps);
             }
         }
+
     }
 }

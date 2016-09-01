@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -87,7 +88,6 @@ namespace HouraiTeahouse.SmashBrew {
     /// <seealso cref="SceneData" />
     [CreateAssetMenu(fileName = "New Character",
         menuName = "SmashBrew/Character Data")]
-    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
     public class CharacterData : ExtendableObject, IGameData {
 
         [Header("General Data")]
@@ -253,9 +253,8 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void RegeneratePortraits() {
-            _portraitResources = new Resource<Sprite>[_portraits.Length];
-            for (var i = 0; i < _portraits.Length; i++)
-                _portraitResources[i] = new Resource<Sprite>(_portraits[i]);
+            _portraitResources =
+                _portraits.Select(s => new Resource<Sprite>(s)).ToArray();
         }
     }
 }

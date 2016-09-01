@@ -46,7 +46,7 @@ namespace HouraiTeahouse {
         public float Number {
             get { return _number; }
             set {
-                bool changed = _number == value;
+                bool changed = !Mathf.Approximately(_number, value);
                 _number = value;
                 if (!changed)
                     return;
@@ -54,7 +54,6 @@ namespace HouraiTeahouse {
                 UpdateText();
             }
         }
-
 
         /// <summary> The string format used to display the number. </summary>
         public string Format {

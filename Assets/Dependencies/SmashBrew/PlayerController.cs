@@ -88,12 +88,12 @@ namespace HouraiTeahouse.SmashBrew {
 
         public TapDetector(float deadZone) { _deadZone = deadZone; }
 
-        float Sign(float x) {
+        int Sign(float x) {
             if (x > 0)
-                return 1f;
+                return 1;
             if (x < 0)
-                return -1f;
-            return 0f;
+                return -1;
+            return 0;
         }
 
         Vector2 DeadZone(Vector2 v) {

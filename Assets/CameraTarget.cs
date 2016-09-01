@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 namespace HouraiTeahouse {
 
@@ -12,6 +11,7 @@ namespace HouraiTeahouse {
             get { return _fov; }
             set { _fov = value; }
         }
+
     }
     
 }

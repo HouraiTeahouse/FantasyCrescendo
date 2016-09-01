@@ -23,7 +23,13 @@
 using System;
 
 namespace HouraiTeahouse {
+
     public static class StringExtensions {
+
+        public static string OptionalFormat(this string format, params object[] parameters) {
+            return !string.IsNullOrEmpty(format) ? string.Format(format, parameters) : format;
+        }
+
         /// <summary> Generic function that will parse a string into an enum value. </summary>
         /// <typeparam name="T"> the type of enum to parse into </typeparam>
         /// <param name="str"> the string to parse </param>
@@ -49,5 +55,6 @@ namespace HouraiTeahouse {
         public static string EmptyIfNull(this string str) {
             return str ?? string.Empty;
         }
+
     }
 }

@@ -42,7 +42,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <param name="other"> the other collider that entered the c </param>
         void OnTriggerExit(Collider other) {
             // Filter only for player characters
-            Player player = Player.GetPlayer(other);
+            Player player = Player.Get(other);
             if (player == null)
                 return;
 

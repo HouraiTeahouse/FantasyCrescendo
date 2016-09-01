@@ -64,7 +64,7 @@ namespace HouraiTeahouse {
                 _end = temp;
             }
 
-            float point = _start == _end
+            float point = Mathf.Approximately(_start, _end)
                 ? 0f
                 : Mathf.Clamp01((Number - _start) / (_end - _start));
 

@@ -48,17 +48,16 @@ namespace HouraiTeahouse.Editor {
                 else if (!Valid)
                     message = "Not in a Resources folder. Will not be saved.";
                 else
-                    message = string.Format("Path: {0}", _path);
+                    message = "Path: {0}".With(_path);
 
-                if (label.tooltip.IsNullOrEmpty())
-                    Content.tooltip = message;
-                else
-                    Content.tooltip = string.Format("{0}\n{1}", label.tooltip, message);
+                Content.tooltip = label.tooltip.IsNullOrEmpty() 
+                    ? message 
+                    : "{0}\n{1}".With(label.tooltip, message);
             }
 
            void Update(Object obj) {
                 _object = obj;
-                _path = AssetUtil.GetResourcePath(_object);
+                _path = Assets.GetResourcePath(_object);
             }
         }
 

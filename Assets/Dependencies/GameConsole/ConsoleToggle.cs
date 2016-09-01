@@ -26,16 +26,13 @@ using UnityEngine.EventSystems;
 namespace HouraiTeahouse.Console {
     /// <summary> UI Element to toggle the appearance of the GameConsole UI. </summary>
     public class ConsoleToggle : MonoBehaviour {
+
         [SerializeField]
-        [Tooltip(
-            "The KeyCode for the key that toggles the appearance of the GameConsole UI."
-            )]
+        [Tooltip("The KeyCode for the key that toggles the appearance of the GameConsole UI.")]
         KeyCode _key = KeyCode.F5;
 
         [SerializeField]
-        [Tooltip(
-            "GameObjects to activate and deactivate when toggling the GameConsole UI."
-            )]
+        [Tooltip("GameObjects to activate and deactivate when toggling the GameConsole UI.")]
         GameObject[] _toggle;
 
         [SerializeField]

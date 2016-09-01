@@ -30,12 +30,11 @@ public class SetPlayerCharacters : MonoBehaviour, ISubmitHandler {
 
     public void OnSubmit(BaseEventData eventData) {
         foreach (Player player in Player.ActivePlayers) {
-            player.SelectedCharacter = character;
-            player.Pallete = 0;
-            if (player.ID < 2)
-                player.Type = PlayerType.HumanPlayer;
-            else
-                player.Type = PlayerType.None;
+            player.Selection = new PlayerSelection {
+                Character = character,
+                Pallete = 0
+            };
+            player.Type = player.ID < 2 ? PlayerType.HumanPlayer : PlayerType.None;
         }
     }
 }

@@ -71,7 +71,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                     eventData.name = state == null
                         ? "New Event Data"
                         : state.name;
-                    AssetUtil.CreateAsset(string.Empty, eventData);
+                    Assets.CreateAsset("Assets", eventData);
                     EventData.objectReferenceValue = eventData;
                     serializedObject.ApplyModifiedProperties();
                 }

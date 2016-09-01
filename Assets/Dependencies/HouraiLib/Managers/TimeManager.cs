@@ -51,7 +51,7 @@ namespace HouraiTeahouse {
         public static float TimeScale {
             get { return _timeScale; }
             set {
-                if (_timeScale == value)
+                if (Mathf.Approximately(_timeScale, value))
                     return;
                 _timeScale = value;
                 if (!Paused)

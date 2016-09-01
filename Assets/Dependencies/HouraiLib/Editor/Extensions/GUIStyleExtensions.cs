@@ -5,17 +5,17 @@ using System.Collections.Generic;
 namespace HouraiTeahouse.Editor {
 
     public class EventListener {
-        readonly Dictionary<EventType, Action<Event>> responses;
+        readonly Dictionary<EventType, Action<Event>> _responses;
 
         public EventListener() {
-            responses = new Dictionary<EventType, Action<Event>>();
+            _responses = new Dictionary<EventType, Action<Event>>();
         }
 
         public void EventCheck() {
             Event evt = Event.current;
             var type = evt.type;
-            if (responses.ContainsKey(type))
-                responses[type].SafeInvoke(evt);
+            if (_responses.ContainsKey(type))
+                _responses[type].SafeInvoke(evt);
         }
 
         public void EventCheck(Rect rect) {
@@ -25,10 +25,10 @@ namespace HouraiTeahouse.Editor {
         }
 
         public EventListener AddListener(EventType type, Action<Event> action) {
-            if (!responses.ContainsKey(type))
-                responses[type] = action;
+            if (!_responses.ContainsKey(type))
+                _responses[type] = action;
             else
-                responses[type] += action;
+                _responses[type] += action;
             return this;
         }
 
@@ -39,11 +39,11 @@ namespace HouraiTeahouse.Editor {
         }
 
         public EventListener RemoveListener(EventType type, Action<Event> action) {
-            if (!responses.ContainsKey(type))
+            if (!_responses.ContainsKey(type))
                 return this;
-            responses[type] -= action;
-            if (responses[type] == null)
-                responses.Remove(type);
+            _responses[type] -= action;
+            if (_responses[type] == null)
+                _responses.Remove(type);
             return this;
         }
 
@@ -53,10 +53,10 @@ namespace HouraiTeahouse.Editor {
             return this;
         }
 
-        public void ClearType(EventType type) { responses.Remove(type); }
+        public void ClearType(EventType type) { _responses.Remove(type); }
 
         public void Clear() {
-            responses.Clear();
+            _responses.Clear();
         }
 
         public event Action<Event> MouseDragged {

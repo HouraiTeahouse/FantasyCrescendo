@@ -28,6 +28,7 @@ using UnityEditor;
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
+
     [DisallowMultipleComponent]
     public sealed class Hitbox : MonoBehaviour {
 

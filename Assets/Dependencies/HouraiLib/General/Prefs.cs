@@ -24,12 +24,13 @@ using System;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace HouraiTeahouse {
+
     /// <summary> A static PlayerPrefs wrapper that provides additional type support. </summary>
     public static class Prefs {
+
         /// <summary> Saves all the changes to disk . </summary>
         public static void Save() {
             PlayerPrefs.Save();
@@ -38,17 +39,17 @@ namespace HouraiTeahouse {
         /// <summary> Check whether a key exists or not. </summary>
         /// <param name="key"> the key to check for </param>
         /// <returns> true, if the key exists, false otherwise </returns>
-        public static bool HasKey(string key) {
+        public static bool Exists(string key) {
             return PlayerPrefs.HasKey(key);
         }
 
         /// <summary> Deletes the key given </summary>
         /// <param name="key"> the key to delete </param>
-        public static void DeleteKey(string key) {
+        public static void Delete(string key) {
             PlayerPrefs.DeleteKey(key);
         }
 
-        static T LogLoad<T>(string key, T value) {
+        static T Load<T>(string key, T value) {
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
@@ -70,7 +71,7 @@ namespace HouraiTeahouse {
         /// <param name="key"> the key the object is saved to </param>
         /// <returns> the deserialized object </returns>
         public static T GetObject<T>(string key) {
-            return LogLoad(key,
+            return Load(key,
                 JsonUtility.FromJson<T>(PlayerPrefs.GetString(key)));
         }
 
@@ -92,7 +93,7 @@ namespace HouraiTeahouse {
         /// <param name="obj"> the object to apply the values to </param>
         public static void ReadObject(string key, object obj) {
             JsonUtility.FromJsonOverwrite(PlayerPrefs.GetString(key), obj);
-            LogLoad(key, obj);
+            Load(key, obj);
         }
 
         #endregion
@@ -105,7 +106,7 @@ namespace HouraiTeahouse {
         /// <param name="key"> the key the boolean value is saved to </param>
         /// <returns> the saved boolean value </returns>
         public static bool GetBool(string key) {
-            return LogLoad(key, PlayerPrefs.GetInt(key) != 0);
+            return Load(key, PlayerPrefs.GetInt(key) != 0);
         }
 
         /// <summary> Sets a boolean value to PlayerPrefs. </summary>
@@ -125,7 +126,7 @@ namespace HouraiTeahouse {
         /// <param name="key"> the key the integer value is saved to </param>
         /// <returns> the saved integer value </returns>
         public static int GetInt(string key) {
-            return LogLoad(key, PlayerPrefs.GetInt(key));
+            return Load(key, PlayerPrefs.GetInt(key));
         }
 
         /// <summary> Sets an integer value to PlayerPrefs. </summary>
@@ -145,7 +146,7 @@ namespace HouraiTeahouse {
         /// <param name="key"> the key the floating point value is saved to </param>
         /// <returns> the saved floating point value </returns>
         public static float GetFloat(string key) {
-            return LogLoad(key, PlayerPrefs.GetFloat(key));
+            return Load(key, PlayerPrefs.GetFloat(key));
         }
 
         /// <summary> Sets a floating point value to PlayerPrefs </summary>
@@ -165,7 +166,7 @@ namespace HouraiTeahouse {
         /// <param name="key"> the key the string value is saved to </param>
         /// <returns> the saved string value </returns>
         public static string GetString(string key) {
-            return LogLoad(key, PlayerPrefs.GetString(key));
+            return Load(key, PlayerPrefs.GetString(key));
         }
 
         /// <summary> Sets a string value to PlayerPrefs. </summary>
@@ -181,6 +182,7 @@ namespace HouraiTeahouse {
 
     [Serializable]
     public abstract class AbstractPref<T> : ISerializationCallbackReceiver {
+
         [SerializeField]
         T _defaultValue = default(T);
 
@@ -230,7 +232,7 @@ namespace HouraiTeahouse {
         }
 
         void Load() {
-            if (Prefs.HasKey(_key))
+            if (Prefs.Exists(_key))
                 _value = Read();
             else {
                 _value = _defaultValue;
@@ -243,9 +245,9 @@ namespace HouraiTeahouse {
             }
         }
 
-        public bool HasKey() { return Prefs.HasKey(_key); }
+        public bool HasKey() { return Prefs.Exists(_key); }
 
-        public void DeleteKey() { Prefs.DeleteKey(_key); }
+        public void DeleteKey() { Prefs.Delete(_key); }
     }
 
     [Serializable]

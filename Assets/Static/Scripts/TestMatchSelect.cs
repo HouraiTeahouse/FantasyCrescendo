@@ -24,24 +24,6 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    [Serializable]
-    public class PlayerSelection {
-        [SerializeField]
-        CharacterData _data;
-
-        [SerializeField]
-        int _pallete;
-
-        public CharacterData Data {
-            get { return _data; }
-            set { _data = value; }
-        }
-
-        public int Pallete {
-            get { return _pallete; }
-            set { _pallete = value; }
-        }
-    }
 
     public class TestMatchSelect : MonoBehaviour {
 
@@ -56,9 +38,8 @@ namespace HouraiTeahouse.SmashBrew {
                     break;
                 if (player == null || testCharacters[index] == null)
                     continue;
-                player.SelectedCharacter = testCharacters[index].Data;
-                player.Pallete = testCharacters[index].Pallete;
-                player.Type = player.SelectedCharacter
+                player.Selection = testCharacters[index];
+                player.Type = player.Selection.Character
                     ? PlayerType.HumanPlayer
                     : PlayerType.None;
                 index++;

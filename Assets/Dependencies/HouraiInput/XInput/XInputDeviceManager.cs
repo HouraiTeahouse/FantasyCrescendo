@@ -27,7 +27,9 @@ using UnityEngine;
 using XInputDotNetPure;
 
 namespace HouraiTeahouse.HouraiInput {
+
     public class XInputDeviceManager : InputDeviceManager {
+
         readonly bool[] _deviceConnected = {false, false, false, false};
 
         public XInputDeviceManager() {

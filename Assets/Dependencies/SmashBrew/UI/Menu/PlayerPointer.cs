@@ -49,10 +49,10 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         public void Move(Vector2 movement) {
-            if (!Player.IsActive && movement != Vector2.zero)
+            if (!Player.Type.IsActive && movement != Vector2.zero)
                 Player.CycleType();
             var bounds = new Bounds(Vector3.zero,
-                (_rectTransform.parent as RectTransform).rect.size
+                ((RectTransform) _rectTransform.parent).rect.size
                     - 0.5f * _rectTransform.sizeDelta);
             _rectTransform.anchoredPosition =
                 bounds.ClosestPoint(_rectTransform.anchoredPosition

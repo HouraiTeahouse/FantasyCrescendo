@@ -24,9 +24,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
+
     /// <summary> The GUI display for the Match timer. </summary>
     [RequireComponent(typeof(Text))]
     public sealed class MatchTimerGUI : MonoBehaviour {
+
         /// <summary> The UI Text object to display the time on. </summary>
         [SerializeField]
         Text _displayText;

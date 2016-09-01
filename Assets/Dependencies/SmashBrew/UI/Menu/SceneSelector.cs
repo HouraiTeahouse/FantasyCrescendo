@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (c) 2016 Hourai Teahouse
 // 
@@ -21,11 +21,13 @@
 // THE SOFTWARE.
 
 namespace HouraiTeahouse.SmashBrew.UI {
+
     public class SceneSelector : SceneUIComponent, IPlayerClickable {
+
         public void Click(Player player) {
-            if (Scene) {
+            if (Scene)
                 Scene.Load();
-            }
         }
+
     }
 }

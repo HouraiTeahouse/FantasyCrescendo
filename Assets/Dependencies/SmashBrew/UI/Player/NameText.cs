@@ -56,11 +56,11 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// </summary>
         public void SetData(Player data) {
             if (_player != null)
-                _player.OnChanged -= OnPlayerChange;
+                _player.Changed -= PlayerChange;
             _player = data;
             if (_player != null)
-                _player.OnChanged += OnPlayerChange;
-            OnPlayerChange();
+                _player.Changed += PlayerChange;
+            PlayerChange();
         }
 
         protected override void Awake() {
@@ -76,8 +76,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary> Events callback. Called whenever the Player changes. </summary>
-        void OnPlayerChange() {
-            SetData(_player == null ? null : _player.SelectedCharacter);
+        void PlayerChange() {
+            SetData(_player == null ? null : _player.Selection.Character);
         }
     }
 }
