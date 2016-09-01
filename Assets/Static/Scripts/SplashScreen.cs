@@ -29,6 +29,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SplashScreen : MonoBehaviour {
+
     [SerializeField]
     InputTarget[] _skipButtons = {InputTarget.Action1, InputTarget.Start};
 
@@ -92,4 +93,5 @@ public class SplashScreen : MonoBehaviour {
         }
         Destroy(gameObject);
     }
+
 }

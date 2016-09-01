@@ -53,8 +53,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             characterList.DoLayoutList();
             sceneList.DoLayoutList();
             if (GUILayout.Button("Refresh")) {
-                int stageCount = Enum.GetValues(typeof (TouhouStage)).Length;
-                characters.SetArray(Resources.LoadAll<CharacterData>("").OrderBy(character => stageCount * (int)character.SourceGame + (int)character.SourceStage));
+                characters.SetArray(Resources.LoadAll<CharacterData>(""));
                 scenes.SetArray(Resources.LoadAll<SceneData>(""));
                 serializedObject.ApplyModifiedProperties();
             }

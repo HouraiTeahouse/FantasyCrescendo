@@ -70,7 +70,7 @@ namespace HouraiTeahouse.Localization.Editor {
                     AssetDatabase.CreateAsset(lang.Value, path);
                 Log.Info("{0} language files for: {1}", method, lang.Key);
             }
-            EditorApplication.SaveAssets();
+            AssetDatabase.SaveAssets();
             AssetDatabase.SaveAssets();
         }
 

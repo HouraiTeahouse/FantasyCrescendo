@@ -63,20 +63,34 @@ namespace HouraiTeahouse.SmashBrew {
         Other
     }
 
+    [Extension(typeof(CharacterData))]
+    public class TouhouCharacterData : ScriptableObject {
+        [SerializeField]
+        TouhouGame _sourceGame = TouhouGame.Other;
+
+        [SerializeField]
+        TouhouStage _sourceStage = TouhouStage.Other;
+
+        /// <summary> The source game the character is from </summary>
+        public TouhouGame SourceGame {
+            get { return _sourceGame; }
+        }
+
+        /// <summary> The source stage the character is from </summary>
+        public TouhouStage SourceStage {
+            get { return _sourceStage; }
+        }
+    }
+
     /// <summary> A ScriptableObject </summary>
     /// <seealso cref="DataManager" />
     /// <seealso cref="SceneData" />
     [CreateAssetMenu(fileName = "New Character",
         menuName = "SmashBrew/Character Data")]
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
-    public class CharacterData : ScriptableObject, IGameData {
+    public class CharacterData : ExtendableObject, IGameData {
 
         [Header("General Data")]
-        [SerializeField]
-        TouhouGame _sourceGame = TouhouGame.Other;
-
-        [SerializeField]
-        TouhouStage _sourceStage = TouhouStage.Other;
 
         [SerializeField]
         [Tooltip(
@@ -140,16 +154,6 @@ namespace HouraiTeahouse.SmashBrew {
             "The theme played on the match results screen when the character wins"
             )]
         string _victoryTheme;
-
-        /// <summary> The source game the character is from </summary>
-        public TouhouGame SourceGame {
-            get { return _sourceGame; }
-        }
-
-        /// <summary> The source stage the character is from </summary>
-        public TouhouStage SourceStage {
-            get { return _sourceStage; }
-        }
 
         /// <summary> The short name of the character. Usually just their first name. </summary>
         public string ShortName {
@@ -226,7 +230,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <returns> </returns>
         public Resource<Sprite> GetPortrait(int pallete) {
             Check.Argument("pallete", Check.Range(pallete, PalleteCount));
-            if (_portraits.Length != _portraitResources.Length)
+            if (_portraitResources == null || _portraits.Length != _portraitResources.Length)
                 RegeneratePortraits();
             return _portraitResources[pallete];
         }

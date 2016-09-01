@@ -107,7 +107,7 @@ namespace HouraiTeahouse.SmashBrew {
                         playerNum,
                         Player.MaxPlayers);
                 else
-                    return Player.GetPlayer(playerNum.Value - 1);
+                    return Player.Get(playerNum.Value - 1);
             }
             else {
                 GameConsole.Log(

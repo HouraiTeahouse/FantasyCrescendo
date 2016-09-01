@@ -13,7 +13,7 @@ namespace UnityStandardAssets.ImageEffects
             serObj = new SerializedObject (target);
         }
 
-        Texture2D tempClutTex2D;
+        private Texture2D tempClutTex2D;
 
 
         public override void OnInspectorGUI () {

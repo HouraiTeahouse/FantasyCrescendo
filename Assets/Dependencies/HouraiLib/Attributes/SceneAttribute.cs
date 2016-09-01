@@ -26,10 +26,10 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace HouraiTeahouse {
+
     /// <summary> PropertyAttribute with a drawer that exposes a SceneAsset object field. MUST be a string field. Saves the
     /// path of the SceneAsset to the field. </summary>
     [AttributeUsage(AttributeTargets.Field)]
@@ -40,6 +40,7 @@ namespace HouraiTeahouse {
     /// <summary> Custom PropertyDrawer for SceneAttribute </summary>
     [CustomPropertyDrawer(typeof(SceneAttribute))]
     internal class SceneAttributeDrawer : PropertyDrawer {
+
         readonly Dictionary<SerializedProperty, SceneAsset> _scenes;
 
         public SceneAttributeDrawer() {
@@ -74,6 +75,8 @@ namespace HouraiTeahouse {
                         "Assets/(.*)\\.unity",
                         "$1");
         }
+
     }
 #endif
+
 }

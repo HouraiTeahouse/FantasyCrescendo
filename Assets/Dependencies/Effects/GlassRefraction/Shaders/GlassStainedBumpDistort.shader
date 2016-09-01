@@ -77,11 +77,19 @@ sampler2D _MainTex;
 
 half4 frag (v2f i) : SV_Target
 {
+	#if UNITY_SINGLE_PASS_STEREO
+	i.uvgrab.xy = TransformStereoScreenSpaceTex(i.uvgrab.xy, i.uvgrab.w);
+	#endif
+
 	// calculate perturbed coordinates
 	half2 bump = UnpackNormal(tex2D( _BumpMap, i.uvbump )).rg; // we could optimize this by just reading the x & y without reconstructing the Z
 	float2 offset = bump * _BumpAmt * _GrabTexture_TexelSize.xy;
-	i.uvgrab.xy = offset * i.uvgrab.z + i.uvgrab.xy;
-	
+	#ifdef UNITY_Z_0_FAR_FROM_CLIPSPACE //to handle recent standard asset package on older version of unity (before 5.5)
+		i.uvgrab.xy = offset * UNITY_Z_0_FAR_FROM_CLIPSPACE(i.uvgrab.z) + i.uvgrab.xy;
+	#else
+		i.uvgrab.xy = offset * i.uvgrab.z + i.uvgrab.xy;
+	#endif
+
 	half4 col = tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(i.uvgrab));
 	half4 tint = tex2D(_MainTex, i.uvmain);
 	col *= tint;

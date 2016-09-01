@@ -105,7 +105,8 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary> Unity callback. Called when ScriptableObject is unloaded. </summary>
-        void OnDisable() {
+        protected override void OnDisable() {
+            base.OnDisable();
             Unload();
         }
     }

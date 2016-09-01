@@ -31,9 +31,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         /// <summary> The current game mode. </summary>
         public static GameMode Current {
-            get {
-                return _current ?? (_current = Config.GameModes.StandardVersus);
-            }
+            get { return _current ?? (_current = Config.GameModes.StandardVersus); }
             set { _current = value ?? Config.GameModes.StandardVersus; }
         }
 
@@ -57,6 +55,7 @@ namespace HouraiTeahouse.SmashBrew {
 
     [Serializable]
     public sealed class SerializedGameMode : GameMode {
+
         [SerializeField]
         bool _cpusAllowed = true;
 
@@ -85,14 +84,13 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public override ReadOnlyCollection<CharacterData> ExcludedCharacters {
-            get {
-                return new ReadOnlyCollection<CharacterData>(_excludedCharacters);
-            }
+            get { return new ReadOnlyCollection<CharacterData>(_excludedCharacters); }
         }
 
         public override ReadOnlyCollection<SceneData> ExcludedStages {
             get { return new ReadOnlyCollection<SceneData>(_excludedStages); }
         }
+
     }
 
     public abstract class MultiMatchGameMode : GameMode {

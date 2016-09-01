@@ -32,10 +32,10 @@ public class SetPlayerCharacters : MonoBehaviour, ISubmitHandler {
         foreach (Player player in Player.ActivePlayers) {
             player.SelectedCharacter = character;
             player.Pallete = 0;
-            if (player.PlayerNumber < 2)
-                player.Type = Player.PlayerType.HumanPlayer;
+            if (player.ID < 2)
+                player.Type = PlayerType.HumanPlayer;
             else
-                player.Type = Player.PlayerType.None;
+                player.Type = PlayerType.None;
         }
     }
 }

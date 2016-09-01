@@ -23,7 +23,8 @@
 using System;
 
 namespace HouraiTeahouse {
-    public delegate float Modifier<T>(T source, float damage);
+
+    public delegate float Modifier<in T>(T source, float damage);
 
     /// <summary> A ordered list of modifiers. </summary>
     public class ModifierList : PriorityList<Func<float, float>> {

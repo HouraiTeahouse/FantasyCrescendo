@@ -70,10 +70,10 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         }
 
         public override void OnInspectorGUI() {
-            if (Check.Range(Swap.Pallete, Swap.PalleteCount))
-                Swap.Pallete = Mathf.Clamp(Swap.Pallete, 0, Swap.PalleteCount);
+            if (Check.Range(Swap.Pallete, Swap.Count))
+                Swap.Pallete = Mathf.Clamp(Swap.Pallete, 0, Swap.Count);
             Swap.Pallete = EditorGUILayout.Popup("Current Color", Swap.Pallete,
-                Enumerable.Range(0, Swap.PalleteCount).Select(i => i.ToString()).ToArray());
+                Enumerable.Range(0, Swap.Count).Select(i => i.ToString()).ToArray());
             EditorGUILayout.LabelField(string.Format("Swap: {0}", Swap.Pallete), EditorStyles.boldLabel);
             for(var i = 0; i < _swaps.arraySize; i++) {
                 SerializedProperty swap = _swaps.GetArrayElementAtIndex(i);

@@ -81,8 +81,11 @@ namespace HouraiTeahouse.SmashBrew {
             Log.Info("Unloading managed data assets");
             foreach (SceneData scene in _scenes)
                 scene.Unload();
-            foreach (CharacterData character in _characters)
-                character.Unload();
+            foreach (CharacterData character in _characters) {
+                Log.Debug(character);
+                if(character != null)
+                    character.Unload();
+            }
         }
     }
 }

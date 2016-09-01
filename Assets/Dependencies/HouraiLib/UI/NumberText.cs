@@ -25,9 +25,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse {
+
     /// <summary> Displays a number to a UnityEngine.UI.Text UI object. </summary>
     [ExecuteInEditMode]
     public class NumberText : MonoBehaviour {
+
         [SerializeField]
         [Tooltip("The sring format used to display")]
         string _format;
@@ -105,5 +107,6 @@ namespace HouraiTeahouse {
         }
 
         protected virtual string ProcessNumber(string number) { return number; }
+
     }
 }

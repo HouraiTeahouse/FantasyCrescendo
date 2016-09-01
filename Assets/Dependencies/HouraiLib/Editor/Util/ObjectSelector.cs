@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Linq;
 using UnityEditor;
 using UnityEngine.Assertions;
-using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.Editor {
 
@@ -11,29 +10,42 @@ namespace HouraiTeahouse.Editor {
     /// Wrapper around EditorGUI.Popup that allows for arbitrary selection of any object.
     /// </summary>
     /// <typeparam name="T">the type of object to be selecting.</typeparam>
-    public class ObjectSelector<T> where T : Object {
+    public class ObjectSelector<T> where T : class {
 
         // The mapping from object value to GUIContent
         readonly Func<T, GUIContent> _contentFunc;
+        readonly Func<T, bool> _filter;
 
         /// <summary>
         /// Fired every time the selected object changes to a new value.
         /// First argument is old value, new argument is new value.
         /// </summary>
-        public event Action<T, T> OnSelectedChange;
+        public event Action<T, T> SelectionChanged;
 
         /// <summary>
         /// Initializes an instance of ObjectSelector.
         /// </summary>
-        public ObjectSelector() { _contentFunc = obj => new GUIContent(obj.name); }
+        public ObjectSelector() : this(o => o.ToString()) {}
+
+        /// <summary>
+        /// Initializes an instance of ObjectSelector.
+        /// </summary>
+        /// <param name="contentFunc">the mapping between object and string for use.</param>
+        /// <param name="filterFunc">a filter for the type of objects selectable</param>
+        /// <exception cref="ArgumentNullException"><paramref name="contentFunc"/> is null</exception>
+        public ObjectSelector(Func<T, string> contentFunc, Func<T, bool> filterFunc = null) 
+            : this(t => new GUIContent(contentFunc(t)), filterFunc) {
+        }
 
         /// <summary>
         /// Initializes an instance of ObjectSelector.
         /// </summary>
         /// <param name="contentFunc">the mapping between object and GUIContent for use.</param>
+        /// <param name="filterFunc">a filter for the type of objects selectable</param>
         /// <exception cref="ArgumentNullException"><paramref name="contentFunc"/> is null</exception>
-        public ObjectSelector(Func<T, GUIContent> contentFunc) {
+        public ObjectSelector(Func<T, GUIContent> contentFunc, Func<T, bool> filterFunc = null) {
             _contentFunc = Check.NotNull(contentFunc);
+            _filter = filterFunc;
         }
 
         /// <summary>
@@ -45,7 +57,6 @@ namespace HouraiTeahouse.Editor {
         }
 
         T[] _selections;
-        int _index;
         T _selected;
 
         /// <summary>
@@ -57,12 +68,10 @@ namespace HouraiTeahouse.Editor {
                 _selections = value;
                 if (IsValid) {
                     Content = Selections.Select(_contentFunc).ToArray();
-                    _index = Array.IndexOf(Selections, Selected);
                 }
                 else {
                     Content = null;
-                    Selected = null;
-                    _index = -1;
+                    Selected = default(T);
                 }
             }
         }
@@ -72,12 +81,12 @@ namespace HouraiTeahouse.Editor {
         /// </summary>
         public T Selected {
             get { return _selected; }
-            private set {
-                bool changed = value != Selected;
+            set {
+                bool changed = _selected != value;
                 var oldValue = Selected;
                 _selected = value;
-                if(OnSelectedChange != null && changed)
-                    OnSelectedChange(oldValue, value);
+                if(changed)
+                    SelectionChanged.SafeInvoke(oldValue, value);
             }
         }
 
@@ -93,7 +102,6 @@ namespace HouraiTeahouse.Editor {
             int index = Array.IndexOf(_selections, obj);
             bool success = index >= 0;
             if (success) {
-                SelectedIndex = index;
                 Assert.AreEqual(Selected, obj);
             }
             return success;
@@ -103,23 +111,6 @@ namespace HouraiTeahouse.Editor {
         /// Gets all of the generated GUIContent.
         /// </summary>
         public GUIContent[] Content { get; private set; }
-
-        /// <summary>
-        /// Gets or sets selected index.
-        /// </summary>
-        public int SelectedIndex {
-            get { return _index; }
-            set {
-                if (IsValid && Check.Range(value, _selections)) {
-                    _index = value;
-                    Selected = _selections[_index];
-                }
-                else {
-                    _index = -1;
-                    Selected = null;
-                }
-            }
-        }
 
         /// <summary>
         /// Checks if the current state of the selector is valid. 
@@ -134,7 +125,7 @@ namespace HouraiTeahouse.Editor {
         /// or the selector is not currently valid, will return null.
         /// </summary>
         public GUIContent SelectedContent {
-            get { return IsValid || Check.Range(SelectedIndex, Content) ? Content[SelectedIndex] : null; }
+            get { return _contentFunc(Selected); }
         }
 
         /// <summary>
@@ -143,11 +134,15 @@ namespace HouraiTeahouse.Editor {
         public T Draw(GUIContent label, GUIStyle style = null, params GUILayoutOption[] options) {
             Check.NotNull(_selections);
             Check.NotNull(Content);
-            SelectedIndex = EditorGUILayout.Popup(label,
-                SelectedIndex,
-                Content,
-                style,
-                options);
+            if (style == null)
+                style = EditorStyles.popup;
+            T[] selections = Selections;
+            if (_filter != null)
+                selections = selections.Where(_filter).ToArray();
+            GUIContent[] content = selections.Select(_contentFunc).ToArray();
+            int index = Array.IndexOf(selections, Selected);
+            index = EditorGUILayout.Popup(label, index, content, style, options);
+            Selected = Check.Range(index, selections) ? selections[index] : default(T);
             return Selected;
         }
     }

@@ -25,17 +25,15 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace HouraiTeahouse {
+
     /// <summary> A simple object that encapsulates the operations on a dynamically loaded asset using UnityEngine.Resources. </summary>
     /// <typeparam name="T"> the type of the asset encapsulated by the Resouce </typeparam>
     [Serializable]
-    [HelpURL(
-        "http://wiki.houraiteahouse.net/index.php/Dev:Resources#ResourcePathAttribute_and_Resource_Wrapper"
-        )]
     public sealed class Resource<T> where T : Object {
+
         [SerializeField]
         readonly string _path;
 
@@ -117,5 +115,6 @@ namespace HouraiTeahouse {
                 });
             return request;
         }
+
     }
 }

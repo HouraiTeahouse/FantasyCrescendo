@@ -5,24 +5,24 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 404724}
-  - 114: {fileID: 11442866}
-  - 114: {fileID: 11486768}
-  - 114: {fileID: 11479720}
-  - 114: {fileID: 11439252}
-  - 114: {fileID: 11460476}
-  - 114: {fileID: 11478998}
-  - 114: {fileID: 11490834}
-  - 114: {fileID: 11473446}
-  - 114: {fileID: 11463294}
-  - 114: {fileID: 11482896}
-  - 114: {fileID: 11442566}
-  - 114: {fileID: 11458584}
-  - 114: {fileID: 114000013746611068}
+  - component: {fileID: 404724}
+  - component: {fileID: 11442866}
+  - component: {fileID: 11486768}
+  - component: {fileID: 11479720}
+  - component: {fileID: 11439252}
+  - component: {fileID: 11460476}
+  - component: {fileID: 11478998}
+  - component: {fileID: 11490834}
+  - component: {fileID: 11473446}
+  - component: {fileID: 11463294}
+  - component: {fileID: 11482896}
+  - component: {fileID: 11442566}
+  - component: {fileID: 11458584}
+  - component: {fileID: 114000013746611068}
   m_Layer: 0
-  m_Name: Static Managers
+  m_Name: Game Controller
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,12 +181,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characters:
+  - {fileID: 11400000, guid: c5c502acdb11a8349a2d99bcf7579352, type: 2}
+  - {fileID: 11400000, guid: dba6f2f1f07c479428a359a00c5c6c86, type: 2}
   - {fileID: 11400000, guid: 909122be91dfc3f488344cb130b405b3, type: 2}
-  - {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
-  - {fileID: 11400000, guid: e30df62a022e1444184b24b3d299cd46, type: 2}
-  - {fileID: 11400000, guid: bbb5dd3a7c08b724db73c8fd56edcd99, type: 2}
-  - {fileID: 11400000, guid: 08f598346f8cc9a47a9c4b6862537c30, type: 2}
   - {fileID: 11400000, guid: 32bc70f9f255d3c4aaffc13450ffe9e1, type: 2}
+  - {fileID: 11400000, guid: 08f598346f8cc9a47a9c4b6862537c30, type: 2}
+  - {fileID: 11400000, guid: bbb5dd3a7c08b724db73c8fd56edcd99, type: 2}
+  - {fileID: 11400000, guid: e30df62a022e1444184b24b3d299cd46, type: 2}
   - {fileID: 11400000, guid: b80cef4f7afc64743832c2b0ef22c060, type: 2}
   - {fileID: 11400000, guid: 07a01ef61634ca64598faa7809281798, type: 2}
   _dontDestroyOnLoad: 1
@@ -274,6 +275,7 @@ MonoBehaviour:
     m_MaxSentMessageQueueSize: 128
     m_IsAcksLong: 0
     m_UsePlatformSpecificProtocols: 0
+    m_WebSocketReceiveBufferMaxSize: 0
     m_Channels: []
   m_GlobalConfig:
     m_ThreadAwakeTimeout: 1

@@ -24,6 +24,7 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
     public abstract class Status : CharacterComponent {
         float _duration = Mathf.Infinity;
 
@@ -32,25 +33,19 @@ namespace HouraiTeahouse.SmashBrew {
         public float Duration {
             get { return _duration; }
             set {
-                _duration = value;
+                _duration = Math.Abs(value);
                 enabled = EllapsedTime < Duration;
             }
         }
 
-        public static T Apply<T>(GameObject target, float duration = -1f)
-            where T : Status {
-            if (!target)
-                throw new ArgumentNullException("target");
-            var instance = target.GetOrAddComponent<T>();
+        public static T Apply<T>(GameObject target, float duration = -1f) where T : Status {
+            var instance = Check.NotNull(target).GetOrAddComponent<T>();
             instance.StartStatus(duration);
             return instance;
         }
 
-        public static T Apply<T>(Component target, float duration = -1f)
-            where T : Status {
-            if (!target)
-                throw new ArgumentNullException("target");
-            return Apply<T>(target.gameObject, duration);
+        public static T Apply<T>(Component target, float duration = -1f) where T : Status {
+            return Apply<T>(Check.NotNull(target).gameObject, duration);
         }
 
         protected override void Start() {

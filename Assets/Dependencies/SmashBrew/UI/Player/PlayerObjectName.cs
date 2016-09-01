@@ -28,7 +28,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         string _format;
 
         protected override void OnPlayerChange() {
-            name = _format.With(Player.PlayerNumber + 1);
+            name = _format.With(Player.ID + 1);
         }
     }
 }

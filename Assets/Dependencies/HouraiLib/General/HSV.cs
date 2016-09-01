@@ -27,43 +27,43 @@ namespace HouraiTeahouse {
     /// <summary> HSV (Hue/Saturation/Value) color struct. </summary>
     [Serializable]
     public struct HSV {
-        public static HSV white {
+        public static HSV White {
             get { return new HSV(Color.white); }
         }
 
-        public static HSV black {
+        public static HSV Black {
             get { return new HSV(Color.black); }
         }
 
-        public static HSV clear {
+        public static HSV Clear {
             get { return new HSV(Color.clear); }
         }
 
-        public static HSV red {
+        public static HSV Red {
             get { return new HSV(Color.red); }
         }
 
-        public static HSV green {
+        public static HSV Green {
             get { return new HSV(Color.green); }
         }
 
-        public static HSV blue {
+        public static HSV Blue {
             get { return new HSV(Color.blue); }
         }
 
-        public static HSV cyan {
+        public static HSV Cyan {
             get { return new HSV(Color.cyan); }
         }
 
-        public static HSV magenta {
+        public static HSV Magenta {
             get { return new HSV(Color.magenta); }
         }
 
-        public static HSV yellow {
+        public static HSV Yellow {
             get { return new HSV(Color.yellow); }
         }
 
-        public static HSV grey {
+        public static HSV Grey {
             get { return new HSV(Color.grey); }
         }
 
@@ -138,5 +138,6 @@ namespace HouraiTeahouse {
         public override string ToString() {
             return "(H:{0}, S:{1}, V:{2}, A:{3})".With(h, s, v, a);
         }
+
     }
 }

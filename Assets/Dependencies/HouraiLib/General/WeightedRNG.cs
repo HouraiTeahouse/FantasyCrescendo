@@ -26,9 +26,11 @@ using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
 namespace HouraiTeahouse {
+
     /// <summary> A collection of objects/values </summary>
     /// <typeparam name="T"> </typeparam>
     public class WeightedRNG<T> : ICollection<T> {
+
         // The backing dictionary
         readonly Dictionary<T, float> _weights;
 

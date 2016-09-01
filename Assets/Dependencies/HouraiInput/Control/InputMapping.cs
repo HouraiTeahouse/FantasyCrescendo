@@ -23,7 +23,9 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.HouraiInput {
+
     public class InputMapping {
+
         public class Range {
             public static Range Complete = new Range {
                 Minimum = -1.0f,
@@ -45,7 +47,7 @@ namespace HouraiTeahouse.HouraiInput {
             public float Minimum;
         }
 
-        string handle;
+        string _handle;
 
         // This is primarily to fix a bug with the wired Xbox controller on Mac.
         public bool IgnoreInitialZeroValue;
@@ -66,14 +68,10 @@ namespace HouraiTeahouse.HouraiInput {
         public InputTarget Target;
         public Range TargetRange = Range.Complete;
 
-
         public string Handle {
-            get {
-                return string.IsNullOrEmpty(handle) ? Target.ToString() : handle;
-            }
-            set { handle = value; }
+            get { return string.IsNullOrEmpty(_handle) ? Target.ToString() : _handle; }
+            set { _handle = value; }
         }
-
 
         bool IsYAxis {
             get {
@@ -82,14 +80,11 @@ namespace HouraiTeahouse.HouraiInput {
             }
         }
 
-
         public float MapValue(float value) {
-            float sourceValue;
             float targetValue;
 
-            if (Raw) {
+            if (Raw)
                 targetValue = value * Scale;
-            }
             else {
                 // Scale value and clamp to a legal range.
                 value = Mathf.Clamp(value * Scale, -1.0f, 1.0f);
@@ -100,7 +95,7 @@ namespace HouraiTeahouse.HouraiInput {
                 }
 
                 // Remap from source range to target range.
-                sourceValue = Mathf.InverseLerp(SourceRange.Minimum,
+                float sourceValue = Mathf.InverseLerp(SourceRange.Minimum,
                     SourceRange.Maximum,
                     value);
                 targetValue = Mathf.Lerp(TargetRange.Minimum,

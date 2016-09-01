@@ -25,7 +25,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace HouraiTeahouse {
+    
     public static class Check {
+
         /// <summary> Checks if an argument is null or not. </summary>
         /// <typeparam name="T"> the type of the argument to check </typeparam>
         /// <param name="name"> the name of the argument for the exception </param>
@@ -119,5 +121,6 @@ namespace HouraiTeahouse {
             if (enumeration.IsNullOrEmpty())
                 throw new T();
         }
+
     }
 }

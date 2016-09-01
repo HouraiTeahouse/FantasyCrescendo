@@ -338,9 +338,9 @@ namespace HouraiTeahouse.SmashBrew.Editor {
 
             OnAssetEdit += Repaint;
 
-            Characters = new ObjectSelector<CharacterData>();
+            Characters = new ObjectSelector<CharacterData>(c => c.name, c => c != null);
 
-            Characters.OnSelectedChange += UpdateCharacter;
+            Characters.SelectionChanged += UpdateCharacter;
             Refresh();
         }
 

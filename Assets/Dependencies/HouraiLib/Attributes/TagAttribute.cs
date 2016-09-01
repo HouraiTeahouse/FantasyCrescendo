@@ -24,10 +24,10 @@ using System;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace HouraiTeahouse {
+
     /// <summary> A propperty attribute that provides a Tag selector for strings. </summary>
     [AttributeUsage(AttributeTargets.Field)]
     public class TagAttribute : PropertyAttribute {
@@ -37,6 +37,7 @@ namespace HouraiTeahouse {
     /// <summary> Custom PropertyDrawer for TagAttribute </summary>
     [CustomPropertyDrawer(typeof(TagAttribute))]
     public class TagAttributeDrawer : PropertyDrawer {
+
         /// <summary>
         ///     <see cref="PropertyDrawer.OnGUI" />
         /// </summary>
@@ -53,6 +54,7 @@ namespace HouraiTeahouse {
                 property.stringValue);
             EditorGUI.EndProperty();
         }
+
     }
 #endif
 }

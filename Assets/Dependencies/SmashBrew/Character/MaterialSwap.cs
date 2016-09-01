@@ -25,13 +25,16 @@ using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
     /// <summary> The pallete swap behaviour for changing out the </summary>
     [Required]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(PlayerController))]
     public class MaterialSwap : MonoBehaviour {
+
         [Serializable]
         public class Swap {
+
             [Serializable]
             public class MaterialSet {
                 [SerializeField]
@@ -44,8 +47,7 @@ namespace HouraiTeahouse.SmashBrew {
                         return;
                     var loadedMaterials = new Material[_materials.Length];
                     for (var i = 0; i < loadedMaterials.Length; i++)
-                        loadedMaterials[i] =
-                            Resources.Load<Material>(_materials[i]);
+                        loadedMaterials[i] = Resources.Load<Material>(_materials[i]);
                     foreach (Renderer renderer in targets)
                         if (renderer)
                             renderer.sharedMaterials = loadedMaterials;
@@ -60,7 +62,7 @@ namespace HouraiTeahouse.SmashBrew {
             [Tooltip("The set of renderers to apply the materials to")]
             Renderer[] TargetRenderers;
 
-            public int SetCount {
+            public int Count {
                 get { return MaterialSets.Length; }
             }
 
@@ -77,8 +79,8 @@ namespace HouraiTeahouse.SmashBrew {
         Swap[] _swaps;
 
         /// <summary> Gets the number of pallete swaps are available </summary>
-        public int PalleteCount {
-            get { return _swaps.Max(swap => swap.SetCount); }
+        public int Count {
+            get { return _swaps.Max(swap => swap.Count); }
         }
 
         public int Pallete {
@@ -91,14 +93,13 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
 #if UNITY_EDITOR
-
-        // For editor only. To refresh when
+        // For editor only.
         public void Refesh(int value) {
             _color = value;
             foreach (Swap swap in _swaps)
                 swap.Set(value);
         }
-
 #endif
+
     }
 }

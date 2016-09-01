@@ -84,7 +84,7 @@ namespace HouraiTeahouse.SmashBrew{
             LoadData();
             foreach (CharacterData character in data) {
                 MaterialSwap swap = character.Prefab.Load().GetComponent<MaterialSwap>();
-                Assert.AreEqual(swap.PalleteCount, character.PalleteCount);
+                Assert.AreEqual(swap.Count, character.PalleteCount);
             }
         }
 

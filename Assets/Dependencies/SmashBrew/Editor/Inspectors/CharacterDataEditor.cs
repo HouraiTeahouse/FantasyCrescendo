@@ -8,7 +8,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     /// A custom Editor for CharacterData
     /// </summary>
     [CustomEditor(typeof(CharacterData))]
-    internal class CharacterDataEditor : ScriptlessEditor {
+    internal class CharacterDataEditor : ExtendableObjectEditor {
 
         int _previewSelect;
         bool _crop;
@@ -17,7 +17,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         /// <see cref="Editor.OnInspectorGUI"/>
         /// </summary>
         public override void OnInspectorGUI() {
-            DrawDefaultInspector();
+            base.OnInspectorGUI();
             string message;
             MessageType type;
             if (!AssetUtil.IsResource(target)) {

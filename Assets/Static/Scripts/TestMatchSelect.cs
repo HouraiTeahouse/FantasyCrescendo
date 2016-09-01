@@ -24,17 +24,29 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    public class TestMatchSelect : MonoBehaviour {
-        [Serializable]
-        class Selection {
-#pragma warning disable 0649
-            public CharacterData Data;
-            public int Pallete;
-#pragma warning restore 0649
-        }
+    [Serializable]
+    public class PlayerSelection {
+        [SerializeField]
+        CharacterData _data;
 
         [SerializeField]
-        Selection[] testCharacters;
+        int _pallete;
+
+        public CharacterData Data {
+            get { return _data; }
+            set { _data = value; }
+        }
+
+        public int Pallete {
+            get { return _pallete; }
+            set { _pallete = value; }
+        }
+    }
+
+    public class TestMatchSelect : MonoBehaviour {
+
+        [SerializeField]
+        PlayerSelection[] testCharacters;
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
@@ -47,8 +59,8 @@ namespace HouraiTeahouse.SmashBrew {
                 player.SelectedCharacter = testCharacters[index].Data;
                 player.Pallete = testCharacters[index].Pallete;
                 player.Type = player.SelectedCharacter
-                    ? Player.PlayerType.HumanPlayer
-                    : Player.PlayerType.None;
+                    ? PlayerType.HumanPlayer
+                    : PlayerType.None;
                 index++;
             }
         }
