@@ -50,7 +50,7 @@ namespace HouraiTeahouse {
             if (colliders == null)
                 return;
 
-            Gizmos.DrawColliders(colliders, color, solid);
+            Gizmo.DrawColliders(colliders, color, solid);
         }
 #endif
 

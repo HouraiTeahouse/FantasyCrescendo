@@ -40,7 +40,7 @@ namespace HouraiTeahouse.HouraiInput {
             Vector2 p = circleVertexList[0] * radius + center;
             int c = circleVertexList.Length;
             for (var i = 1; i < c; i++)
-                UnityEngine.Gizmos.DrawLine(p, p = circleVertexList[i] * radius + center);
+                Gizmos.DrawLine(p, p = circleVertexList[i] * radius + center);
         }
 
         public static void DrawOvalGizmo(Vector2 center, Vector2 size) {
@@ -48,7 +48,7 @@ namespace HouraiTeahouse.HouraiInput {
             Vector2 p = circleVertexList[0].Mult(r) + center;
             int c = circleVertexList.Length;
             for (var i = 1; i < c; i++)
-                UnityEngine.Gizmos.DrawLine(p, p = circleVertexList[i].Mult(r) + center);
+                Gizmos.DrawLine(p, p = circleVertexList[i].Mult(r) + center);
         }
 
         public static void DrawRectGizmo(Rect rect) {
@@ -56,10 +56,10 @@ namespace HouraiTeahouse.HouraiInput {
             var p1 = new Vector3(rect.xMax, rect.yMin);
             Vector2 p2 = rect.max;
             var p3 = new Vector3(rect.xMin, rect.yMax);
-            UnityEngine.Gizmos.DrawLine(p0, p1);
-            UnityEngine.Gizmos.DrawLine(p1, p2);
-            UnityEngine.Gizmos.DrawLine(p2, p3);
-            UnityEngine.Gizmos.DrawLine(p3, p0);
+            Gizmos.DrawLine(p0, p1);
+            Gizmos.DrawLine(p1, p2);
+            Gizmos.DrawLine(p2, p3);
+            Gizmos.DrawLine(p3, p0);
         }
 
         public static void DrawRectGizmo(Vector2 center, Vector2 size) {

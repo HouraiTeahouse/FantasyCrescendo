@@ -37,7 +37,7 @@ namespace HouraiTeahouse {
 
         /// <summary> Unity callback. Called in the editor to draw gizmos in the scene view. </summary>
         void OnDrawGizmos() {
-            using (Gizmos.With(Color.white, transform)) {
+            using (Gizmo.With(Color.white, transform)) {
                 UnityEngine.Gizmos.DrawWireCube(_bounds.center, _bounds.size);
             }
         }

@@ -52,7 +52,7 @@ namespace HouraiTeahouse {
 
 
     /// <summary> A static utlity class of functions for helping draw Gizmos </summary>
-    public static class Gizmos {
+    public static class Gizmo {
         /// <summary> Creates an IDisposable object for drawing Gizmos of a certain color. </summary>
         /// <example> using(GizmoUtil.With(Color.white) { // Draw a white cube Gizmos.DrawCube(center, size); } </example>
         /// <param name="color"> the color to set the Gizmos color to </param>
