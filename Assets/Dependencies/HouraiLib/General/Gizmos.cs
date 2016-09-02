@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Permissions;
 using UnityEngine;
 
 namespace HouraiTeahouse {
@@ -34,26 +33,26 @@ namespace HouraiTeahouse {
             _oldColor = null;
             _oldTransform = null;
             if (color != null) {
-                _oldColor = Gizmos.color;
-                Gizmos.color = color.Value;
+                _oldColor = UnityEngine.Gizmos.color;
+                UnityEngine.Gizmos.color = color.Value;
             }
             if (matrix != null) {
-                _oldTransform = Gizmos.matrix;
-                Gizmos.matrix = matrix.Value;
+                _oldTransform = UnityEngine.Gizmos.matrix;
+                UnityEngine.Gizmos.matrix = matrix.Value;
             }
         }
 
         public void Dispose() {
             if (_oldColor != null)
-                Gizmos.color = (Color) _oldColor;
+                UnityEngine.Gizmos.color = (Color) _oldColor;
             if (_oldTransform != null)
-                Gizmos.matrix = (Matrix4x4) _oldTransform;
+                UnityEngine.Gizmos.matrix = (Matrix4x4) _oldTransform;
         }
     }
 
 
     /// <summary> A static utlity class of functions for helping draw Gizmos </summary>
-    public static class GizmoUtil {
+    public static class Gizmos {
         /// <summary> Creates an IDisposable object for drawing Gizmos of a certain color. </summary>
         /// <example> using(GizmoUtil.With(Color.white) { // Draw a white cube Gizmos.DrawCube(center, size); } </example>
         /// <param name="color"> the color to set the Gizmos color to </param>
@@ -119,7 +118,7 @@ namespace HouraiTeahouse {
             if (colliders == null)
                 return;
 
-            using (With(color, Gizmos.matrix)) {
+            using (With(color, UnityEngine.Gizmos.matrix)) {
                 foreach (Collider collider in colliders) {
                     if (collider == null
                         || (filter != null && !filter(collider)))
@@ -184,22 +183,22 @@ namespace HouraiTeahouse {
             using (With(GetColliderMatrix(collider))) {
                 if (solid) {
                     if (sphereCollider != null)
-                        Gizmos.DrawSphere(Vector3.zero, 1f);
+                        UnityEngine.Gizmos.DrawSphere(Vector3.zero, 1f);
                     else {
                         if (boxCollider != null)
-                            Gizmos.DrawCube(Vector3.zero, Vector3.one);
+                            UnityEngine.Gizmos.DrawCube(Vector3.zero, Vector3.one);
                         else if (meshCollider != null)
-                            Gizmos.DrawMesh(meshCollider.sharedMesh, Vector3.zero);
+                            UnityEngine.Gizmos.DrawMesh(meshCollider.sharedMesh, Vector3.zero);
                     }
                 }
                 else {
                     if (sphereCollider != null)
-                        Gizmos.DrawWireSphere(Vector3.zero, 1f);
+                        UnityEngine.Gizmos.DrawWireSphere(Vector3.zero, 1f);
                     else {
                         if (boxCollider != null)
-                            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+                            UnityEngine.Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
                         else if (meshCollider != null)
-                            Gizmos.DrawWireMesh(meshCollider.sharedMesh, Vector3.zero);
+                            UnityEngine.Gizmos.DrawWireMesh(meshCollider.sharedMesh, Vector3.zero);
                     }
                 }
             }

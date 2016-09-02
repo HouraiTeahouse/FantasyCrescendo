@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace HouraiTeahouse.SmashBrew {
     
     [RequireComponent(typeof(CameraTarget))]
-    public class MatchCameraTarget : EventHandlerBehaviour<PlayerSpawnEvent> {
+    public class MatchCameraTarget : EventBehaviour<PlayerSpawnEvent> {
 
         [SerializeField]
         float _cameraSpeed = 1f;

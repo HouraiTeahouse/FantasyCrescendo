@@ -91,7 +91,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         /// <summary> Loads the scene described by the SceneData </summary>
         public void Load() {
-            GlobalMediator.Instance.Publish(new LoadSceneEvent {
+            Mediator.Global.Publish(new LoadSceneEvent {
                 LoadOperation = SceneManager.LoadSceneAsync(_sceneName),
                 Scene = this
             });

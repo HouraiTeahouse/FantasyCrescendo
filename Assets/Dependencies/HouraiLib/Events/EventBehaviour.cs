@@ -23,7 +23,7 @@
 namespace HouraiTeahouse {
     /// <summary> An abstract class for MonoBehaviours that handle events published by Mediators. </summary>
     /// <typeparam name="T"> the event type to subscribe to </typeparam>
-    public abstract class EventHandlerBehaviour<T> : HouraiBehaviour {
+    public abstract class EventBehaviour<T> : HouraiBehaviour {
         Mediator _eventManager;
 
         /// <summary> Gets or sets the event manager the event handler is subscribed to. </summary>
@@ -41,7 +41,7 @@ namespace HouraiTeahouse {
         /// <summary> Unity callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
-            _eventManager = GlobalMediator.Instance;
+            _eventManager = Mediator.Global;
             _eventManager.Subscribe<T>(OnEvent);
         }
 

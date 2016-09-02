@@ -48,7 +48,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
-            _eventManager = GlobalMediator.Instance;
+            _eventManager = Mediator.Global;
             _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawn);
             _eventManager.Subscribe<PlayerDieEvent>(OnPlayerDie);
             _stocks = new Dictionary<Player, int>();
@@ -70,30 +70,14 @@ namespace HouraiTeahouse.SmashBrew {
         /// player with the maximum number of stocks, no winner will be declared, and this method will return null. </remarks>
         /// <returns> the winning Player, null if it is a tie </returns>
         public override Player GetWinner() {
-            Player winner = null;
-            int maxStocks = int.MinValue;
-            foreach (KeyValuePair<Player, int> playerStock in _stocks) {
-                if (playerStock.Value < maxStocks)
-                    continue;
-                if (playerStock.Value == maxStocks) {
-                    // More than one player has the maximum number of lives
-                    // it is a tie, don't declare a winner
-                    winner = null;
-                }
-                else {
-                    // a new maximum number of lives has been found
-                    // declare them the winner
-                    winner = playerStock.Key;
-                    maxStocks = playerStock.Value;
-                }
-            }
-            return winner;
+            if (_stocks.Count <= 0)
+                return null;
+            return _stocks.ArgMax();
         }
 
         bool RespawnCheck(Player character) {
             if (!isActiveAndEnabled || !_stocks.ContainsKey(character))
                 return false;
-
             return _stocks[character] > 1;
         }
 

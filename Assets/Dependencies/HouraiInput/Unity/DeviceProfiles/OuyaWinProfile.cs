@@ -132,15 +132,15 @@ namespace HouraiTeahouse.HouraiInput {
                     Handle = "Left Trigger",
                     Target = InputTarget.LeftTrigger,
                     Source = Analog2,
-                    SourceRange = InputMapping.Range.Positive,
-                    TargetRange = InputMapping.Range.Positive
+                    SourceRange = InputMapping.Positive,
+                    TargetRange = InputMapping.Positive
                 },
                 new InputMapping {
                     Handle = "Right Trigger",
                     Target = InputTarget.RightTrigger,
                     Source = Analog5,
-                    SourceRange = InputMapping.Range.Positive,
-                    TargetRange = InputMapping.Range.Positive
+                    SourceRange = InputMapping.Positive,
+                    TargetRange = InputMapping.Positive
                 },
                 new InputMapping {
                     Handle = "TouchPad X Axis",

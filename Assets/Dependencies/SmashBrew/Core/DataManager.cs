@@ -69,7 +69,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
 
-            Mediator = GlobalMediator.Instance;
+            Mediator = Mediator.Global;
 
             _characters = _characters.Where(c => c != null).ToList();
             _scenes = _scenes.Where(s => s != null).ToList();

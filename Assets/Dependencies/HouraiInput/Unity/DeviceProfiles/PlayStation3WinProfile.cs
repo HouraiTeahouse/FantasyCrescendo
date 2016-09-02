@@ -128,30 +128,30 @@ namespace HouraiTeahouse.HouraiInput {
                     Handle = "DPad Left",
                     Target = InputTarget.DPadLeft,
                     Source = Analog8,
-                    SourceRange = InputMapping.Range.Negative,
-                    TargetRange = InputMapping.Range.Negative,
+                    SourceRange = InputMapping.Negative,
+                    TargetRange = InputMapping.Negative,
                     Invert = true
                 },
                 new InputMapping {
                     Handle = "DPad Right",
                     Target = InputTarget.DPadRight,
                     Source = Analog8,
-                    SourceRange = InputMapping.Range.Positive,
-                    TargetRange = InputMapping.Range.Positive
+                    SourceRange = InputMapping.Positive,
+                    TargetRange = InputMapping.Positive
                 },
                 new InputMapping {
                     Handle = "DPad Up",
                     Target = InputTarget.DPadUp,
                     Source = Analog9,
-                    SourceRange = InputMapping.Range.Positive,
-                    TargetRange = InputMapping.Range.Positive
+                    SourceRange = InputMapping.Positive,
+                    TargetRange = InputMapping.Positive
                 },
                 new InputMapping {
                     Handle = "DPad Down",
                     Target = InputTarget.DPadDown,
                     Source = Analog9,
-                    SourceRange = InputMapping.Range.Negative,
-                    TargetRange = InputMapping.Range.Negative,
+                    SourceRange = InputMapping.Negative,
+                    TargetRange = InputMapping.Negative,
                     Invert = true
                 },
                 new InputMapping {

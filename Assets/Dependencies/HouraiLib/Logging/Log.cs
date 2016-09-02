@@ -24,6 +24,7 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse {
+
     [Serializable]
     public class LogTypeSettings {
         public bool Enabled;
@@ -32,35 +33,64 @@ namespace HouraiTeahouse {
 
     [Serializable]
     public class LogSettings {
-        public LogTypeSettings Debug = new LogTypeSettings {
+
+        [SerializeField]
+        string _timeFormat = "MM-dd-yy HH:mm:ss";
+
+        [SerializeField]
+        LogTypeSettings _info = new LogTypeSettings {
             Enabled = true,
             StackTrace = StackTraceLogType.None
         };
 
-        public LogTypeSettings Error = new LogTypeSettings {
+        [SerializeField]
+        LogTypeSettings _debug = new LogTypeSettings {
             Enabled = true,
             StackTrace = StackTraceLogType.None
         };
 
-        public LogTypeSettings Info = new LogTypeSettings {
+        [SerializeField]
+        LogTypeSettings _warning = new LogTypeSettings {
             Enabled = true,
             StackTrace = StackTraceLogType.None
         };
 
-        public string TimeFormat = "MM-dd-yy HH:mm:ss";
-
-        public LogTypeSettings Warning = new LogTypeSettings {
+        [SerializeField]
+        LogTypeSettings _error = new LogTypeSettings {
             Enabled = true,
             StackTrace = StackTraceLogType.None
         };
+
+        public LogTypeSettings Info {
+            get { return _info; }
+        }
+
+        public LogTypeSettings Debug {
+            get { return _debug; }
+        }
+
+        public LogTypeSettings Error {
+            get { return _error; }
+        }
+
+        public LogTypeSettings Warning {
+            get { return _warning; }
+        }
+
+        public string TimeFormat {
+            get { return _timeFormat; }
+            set { _timeFormat = value; }
+        }
+        
     }
 
     public static class Log {
-        public static LogSettings _settings = new LogSettings();
+
+        static LogSettings _settings = new LogSettings();
 
         public static LogSettings Settings {
             get { return _settings; }
-            set { _settings = value; }
+            set { _settings = Check.NotNull(value); }
         }
 
         public static void Info(object source, params object[] objs) {

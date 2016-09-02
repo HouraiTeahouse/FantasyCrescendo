@@ -124,14 +124,14 @@ namespace HouraiTeahouse.HouraiInput {
                     Handle = "Left Trigger",
                     Target = InputTarget.LeftTrigger,
                     Source = Analog4,
-                    TargetRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Positive,
                     IgnoreInitialZeroValue = true
                 },
                 new InputMapping {
                     Handle = "Right Trigger",
                     Target = InputTarget.RightTrigger,
                     Source = Analog5,
-                    TargetRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Positive,
                     IgnoreInitialZeroValue = true
                 },
 
@@ -140,30 +140,30 @@ namespace HouraiTeahouse.HouraiInput {
                     Handle = "DPad Left",
                     Target = InputTarget.DPadLeft,
                     Source = Analog10,
-                    SourceRange = InputMapping.Range.Negative,
-                    TargetRange = InputMapping.Range.Negative,
+                    SourceRange = InputMapping.Negative,
+                    TargetRange = InputMapping.Negative,
                     Invert = true
                 },
                 new InputMapping {
                     Handle = "DPad Right",
                     Target = InputTarget.DPadRight,
                     Source = Analog10,
-                    SourceRange = InputMapping.Range.Positive,
-                    TargetRange = InputMapping.Range.Positive
+                    SourceRange = InputMapping.Positive,
+                    TargetRange = InputMapping.Positive
                 },
                 new InputMapping {
                     Handle = "DPad Down",
                     Target = InputTarget.DPadDown,
                     Source = Analog11,
-                    SourceRange = InputMapping.Range.Positive,
-                    TargetRange = InputMapping.Range.Positive
+                    SourceRange = InputMapping.Positive,
+                    TargetRange = InputMapping.Positive
                 },
                 new InputMapping {
                     Handle = "DPad Up",
                     Target = InputTarget.DPadUp,
                     Source = Analog11,
-                    SourceRange = InputMapping.Range.Negative,
-                    TargetRange = InputMapping.Range.Negative,
+                    SourceRange = InputMapping.Negative,
+                    TargetRange = InputMapping.Negative,
                     Invert = true
                 },
 
@@ -172,30 +172,30 @@ namespace HouraiTeahouse.HouraiInput {
                     Handle = "DPad Left",
                     Target = InputTarget.DPadLeft,
                     Source = Analog6,
-                    SourceRange = InputMapping.Range.Negative,
-                    TargetRange = InputMapping.Range.Negative,
+                    SourceRange = InputMapping.Negative,
+                    TargetRange = InputMapping.Negative,
                     Invert = true
                 },
                 new InputMapping {
                     Handle = "DPad Right",
                     Target = InputTarget.DPadRight,
                     Source = Analog6,
-                    SourceRange = InputMapping.Range.Positive,
-                    TargetRange = InputMapping.Range.Positive
+                    SourceRange = InputMapping.Positive,
+                    TargetRange = InputMapping.Positive
                 },
                 new InputMapping {
                     Handle = "DPad Down",
                     Target = InputTarget.DPadDown,
                     Source = Analog7,
-                    SourceRange = InputMapping.Range.Positive,
-                    TargetRange = InputMapping.Range.Positive
+                    SourceRange = InputMapping.Positive,
+                    TargetRange = InputMapping.Positive
                 },
                 new InputMapping {
                     Handle = "DPad Up",
                     Target = InputTarget.DPadUp,
                     Source = Analog7,
-                    SourceRange = InputMapping.Range.Negative,
-                    TargetRange = InputMapping.Range.Negative,
+                    SourceRange = InputMapping.Negative,
+                    TargetRange = InputMapping.Negative,
                     Invert = true
                 },
             };

@@ -21,42 +21,34 @@
 // THE SOFTWARE.
 
 using System;
-using HouraiTeahouse.SmashBrew.Util;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
     public class DamageType {
         public static readonly DamageType Percent = new DamageType {
-            Change = (currentDamage, delta) => currentDamage + delta,
+            _change = (currentDamage, delta) => currentDamage + delta,
             Suffix = "%",
-            MaxDamage = 999f,
-            MinDamage = 0f
+            Range = new Range(0, 999)
         };
 
         public static readonly DamageType Stamina = new DamageType {
-            Change = (currentDamage, delta) => currentDamage + delta,
+            _change = (currentDamage, delta) => currentDamage + delta,
             Suffix = "HP",
-            MaxDamage = 999f,
-            MinDamage = 0f
+            Range = new Range(0, 999)
         };
 
-        Func<float, float, float> Change;
+        Func<float, float, float> _change;
 
         DamageType() { }
         public string Suffix { get; private set; }
-        public float MinDamage { get; private set; }
-        public float MaxDamage { get; private set; }
+        public Range Range { get; private set; }
 
         public float Damage(float currentDamage, float delta) {
-            return Mathf.Clamp(Change(currentDamage, Mathf.Abs(delta)),
-                MinDamage,
-                MaxDamage);
+            return Range.Clamp(_change(currentDamage, Mathf.Abs(delta)));
         }
 
         public float Heal(float currentDamage, float delta) {
-            return Mathf.Clamp(Change(currentDamage, -Mathf.Abs(delta)),
-                MinDamage,
-                MaxDamage);
+            return Range.Clamp(_change(currentDamage, -Mathf.Abs(delta)));
         }
     }
 

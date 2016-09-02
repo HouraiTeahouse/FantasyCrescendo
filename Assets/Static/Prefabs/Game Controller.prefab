@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c39e94dc1cf4341b93934af4ce3d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: a6945f00-1bb3-4c9b-8e5e-1b49badd0348
+  _id: 1587030820
 --- !u!114 &11458584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,19 +93,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings:
-    Debug:
-      Enabled: 1
-      StackTrace: 1
-    Error:
-      Enabled: 1
-      StackTrace: 1
-    Info:
+    _timeFormat: MM-dd-yy HH:mm:ss
+    _info:
       Enabled: 1
       StackTrace: 0
-    TimeFormat: MM-dd-yy HH:mm:ss
-    Warning:
+    _debug:
       Enabled: 1
-      StackTrace: 1
+      StackTrace: 0
+    _warning:
+      Enabled: 1
+      StackTrace: 0
+    _error:
+      Enabled: 1
+      StackTrace: 0
 --- !u!114 &11460476
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -123,7 +123,7 @@ namespace HouraiTeahouse.SmashBrew {
             Player player = GetPlayer(args[0]);
             if (player == null)
                 return;
-            GlobalMediator.Instance.Publish(new PlayerDieEvent {Player = player});
+            Mediator.Global.Publish(new PlayerDieEvent {Player = player});
         }
 
         void DamageCommand(string[] args) {

@@ -31,7 +31,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         void Awake() {
-            _eventManager = GlobalMediator.Instance;
+            _eventManager = Mediator.Global;
             _col = GetComponent<Collider>();
             // Make sure that the colliders are triggers
             foreach (Collider col in gameObject.GetComponents<Collider>())

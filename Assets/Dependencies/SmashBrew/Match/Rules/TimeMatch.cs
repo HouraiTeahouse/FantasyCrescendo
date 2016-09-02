@@ -44,7 +44,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
-            _eventManager = GlobalMediator.Instance;
+            _eventManager = Mediator.Global;
             _eventManager.Subscribe<MatchStartEvent>(OnMatchStart);
         }
 

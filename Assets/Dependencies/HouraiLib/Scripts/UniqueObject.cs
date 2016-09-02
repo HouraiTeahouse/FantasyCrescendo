@@ -20,32 +20,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 namespace HouraiTeahouse {
+
     /// <summary> Component that marks a unique object. Objects instantiated with this attached only allows one to exist.
     /// Trying to create/instantiate more copies will have the object destroyed instantly. </summary>
     [DisallowMultipleComponent]
     public sealed class UniqueObject : MonoBehaviour {
+
         /// <summary> A collection of all of the UniqueObjects currently in the game. </summary>
-        static Dictionary<string, UniqueObject> _allIds;
+        static Dictionary<int, UniqueObject> _allIds;
 
         [SerializeField]
         [ReadOnly]
         [Tooltip("The unique id for this object")]
-        string _id;
+        int _id;
 
         /// <summary> The unique ID of the object. </summary>
-        public string ID {
+        public int ID {
             get { return _id; }
         }
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         void Awake() {
             if (_allIds == null)
-                _allIds = new Dictionary<string, UniqueObject>();
+                _allIds = new Dictionary<int, UniqueObject>();
             if (_allIds.ContainsKey(ID)) {
                 // Destroy only destroys the object after a frame is finished, which still allows
                 // other code in other attached scripts to execute.
@@ -73,7 +75,7 @@ namespace HouraiTeahouse {
 
         /// <summary> Unity callback. Called on editor reset. </summary>
         void Reset() {
-            _id = Guid.NewGuid().ToString();
+            _id = new Random().Next();
         }
     }
 }

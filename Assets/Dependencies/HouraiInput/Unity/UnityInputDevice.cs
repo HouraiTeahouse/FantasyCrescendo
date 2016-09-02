@@ -24,10 +24,10 @@ using UnityEngine;
 
 namespace HouraiTeahouse.HouraiInput {
     public class UnityInputDevice : InputDevice {
+
         public const int MaxDevices = 10;
         public const int MaxButtons = 20;
         public const int MaxAnalogs = 20;
-
 
         public UnityInputDevice(UnityInputDeviceProfile profile, int joystickId)
             : base(profile.Name) {

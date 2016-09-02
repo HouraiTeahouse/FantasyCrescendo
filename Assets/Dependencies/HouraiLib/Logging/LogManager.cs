@@ -23,7 +23,9 @@
 using UnityEngine;
 
 namespace HouraiTeahouse {
+
     public sealed class LogManager : Singleton<LogManager> {
+
         [SerializeField]
         LogSettings _settings;
 
@@ -31,5 +33,6 @@ namespace HouraiTeahouse {
             base.Awake();
             Log.Settings = _settings;
         }
+
     }
 }

@@ -26,7 +26,7 @@ using UnityEngine.UI;
 namespace HouraiTeahouse.SmashBrew.UI {
     /// <summary> A PrefabFactoryEventHandler that creates </summary>
     public sealed class PlayerInfoGUI :
-        PrefabFactoryEventHandler<RectTransform, PlayerSpawnEvent> {
+        PrefabFactoryEventBehaviour<RectTransform, PlayerSpawnEvent> {
         /// <summary> The parent RectTransform to attach the spawned objects to. </summary>
         [SerializeField]
         RectTransform _container;
@@ -58,14 +58,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        ///     <see cref="AbstractFactoryEventHandler{T,TEvent}.ShouldCreate" />
+        ///     <see cref="AbstractFactoryEventBehaviour{T,TEvent}.ShouldCreate" />
         /// </summary>
         protected override bool ShouldCreate(PlayerSpawnEvent eventArgs) {
             return base.ShouldCreate(eventArgs) && eventArgs.Player != null;
         }
 
         /// <summary>
-        ///     <see cref="AbstractFactoryEventHandler{T,TEvent}.Create" />
+        ///     <see cref="AbstractFactoryEventBehaviour{T,TEvent}.Create" />
         /// </summary>
         protected override RectTransform Create(PlayerSpawnEvent eventArgs) {
             Player player = eventArgs.Player;

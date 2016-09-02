@@ -117,7 +117,7 @@ namespace HouraiTeahouse.Localization {
 
             _currentLanguage = new Language();
 #if HOURAI_EVENTS
-            _eventManager = GlobalMediator.Instance;
+            _eventManager = Mediator.Global;
 #endif
 
             var languages =

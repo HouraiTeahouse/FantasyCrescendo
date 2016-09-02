@@ -171,7 +171,7 @@ namespace HouraiTeahouse.SmashBrew {
                 gizmoInitialized = true;
             }
             if(IsActive)
-                GizmoUtil.DrawColliders(GetComponents<Collider>(),
+                Gizmos.DrawColliders(GetComponents<Collider>(),
                     Config.Debug.GetHitboxColor(CurrentType));
         }
 #endif
@@ -208,7 +208,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             _material.SetColor("_Color", color);
             _material.SetPass(0);
-            Graphics.DrawMeshNow(mesh, GizmoUtil.GetColliderMatrix(col));
+            Graphics.DrawMeshNow(mesh, Gizmos.GetColliderMatrix(col));
         }
 
         void OnTriggerEnter(Collider other) {

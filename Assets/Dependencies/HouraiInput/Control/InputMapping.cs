@@ -26,26 +26,9 @@ namespace HouraiTeahouse.HouraiInput {
 
     public class InputMapping {
 
-        public class Range {
-            public static Range Complete = new Range {
-                Minimum = -1.0f,
-                Maximum = 1.0f
-            };
-
-            public static Range Positive = new Range {
-                Minimum = 0.0f,
-                Maximum = 1.0f
-            };
-
-            public static Range Negative = new Range {
-                Minimum = -1.0f,
-                Maximum = 0.0f
-            };
-
-            public float Maximum;
-
-            public float Minimum;
-        }
+        public static readonly Range Complete = new Range(-1, 1);
+        public static readonly Range Positive = new Range(0, 1);
+        public static readonly Range Negative = new Range(-1, 0);
 
         string _handle;
 
@@ -61,12 +44,11 @@ namespace HouraiTeahouse.HouraiInput {
         // Analog values will be multiplied by this number before processing.
         public float Scale = 1.0f;
 
-
         public InputSource Source;
 
-        public Range SourceRange = Range.Complete;
+        public Range SourceRange = Complete;
         public InputTarget Target;
-        public Range TargetRange = Range.Complete;
+        public Range TargetRange = Complete;
 
         public string Handle {
             get { return string.IsNullOrEmpty(_handle) ? Target.ToString() : _handle; }
@@ -90,17 +72,13 @@ namespace HouraiTeahouse.HouraiInput {
                 value = Mathf.Clamp(value * Scale, -1.0f, 1.0f);
 
                 // Values outside of source range are invalid and return zero.
-                if (value < SourceRange.Minimum || value > SourceRange.Maximum) {
+                if (value < SourceRange.Min|| value > SourceRange.Max) {
                     return 0.0f;
                 }
 
                 // Remap from source range to target range.
-                float sourceValue = Mathf.InverseLerp(SourceRange.Minimum,
-                    SourceRange.Maximum,
-                    value);
-                targetValue = Mathf.Lerp(TargetRange.Minimum,
-                    TargetRange.Maximum,
-                    sourceValue);
+                float sourceValue = SourceRange.InverseLerp(value);
+                targetValue = TargetRange.Lerp(sourceValue);
             }
 
             if (Invert ^ (IsYAxis && HInput.InvertYAxis)) {

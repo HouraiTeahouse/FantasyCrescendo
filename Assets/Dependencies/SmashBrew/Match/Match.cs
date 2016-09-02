@@ -31,7 +31,7 @@ namespace HouraiTeahouse.SmashBrew {
         public bool InMatch { get; private set; }
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
-        void Awake() { _eventManager = GlobalMediator.Instance; }
+        void Awake() { _eventManager = Mediator.Global; }
 
         /// <summary> Ends the match. </summary>
         /// <param name="noContest"> is the match ending prematurely? If set to true, no winner will be declared. </param>

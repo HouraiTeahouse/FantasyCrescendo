@@ -29,6 +29,8 @@ namespace HouraiTeahouse {
     /// local or global event managers. </summary>
     public class Mediator {
 
+        public static readonly Mediator Global = new Mediator();
+
         public delegate void Event<in T>(T arg);
 
         // Maps types of events to a set of handlers

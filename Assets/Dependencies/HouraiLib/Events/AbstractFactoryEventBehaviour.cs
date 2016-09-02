@@ -24,11 +24,13 @@ using System;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
+
     /// <summary> Abstract class for creating objects in response to an event. </summary>
     /// <typeparam name="T"> the object type to spawn </typeparam>
     /// <typeparam name="TEvent"> the event type to respond to </typeparam>
-    public abstract class AbstractFactoryEventHandler<T, TEvent> :
-        EventHandlerBehaviour<TEvent> where T : Object {
+    public abstract class AbstractFactoryEventBehaviour<T, TEvent> :
+        EventBehaviour<TEvent> where T : Object {
+
         public event Action<T, TEvent> OnCreate;
 
         /// <summary> Events callback. Called whenever said event is published by the mediator. </summary>
@@ -52,5 +54,6 @@ namespace HouraiTeahouse {
         /// <param name="eventArgs"> the event arguments </param>
         /// <returns> a new instance of <typeparamref name="T" /> </returns>
         protected abstract T Create(TEvent eventArgs);
+
     }
 }

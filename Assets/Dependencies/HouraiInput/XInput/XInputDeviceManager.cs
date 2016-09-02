@@ -39,7 +39,6 @@ namespace HouraiTeahouse.HouraiInput {
             Update(0, 0.0f);
         }
 
-
         public override void Update(ulong updateTick, float deltaTime) {
             for (var deviceIndex = 0; deviceIndex < 4; deviceIndex++) {
                 var device = devices[deviceIndex] as XInputDevice;
@@ -76,7 +75,6 @@ namespace HouraiTeahouse.HouraiInput {
 
             return true;
         }
-
 
         public static void Enable() {
             var errors = new List<string>();

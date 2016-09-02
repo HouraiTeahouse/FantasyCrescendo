@@ -26,7 +26,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
     /// <summary> A EventHandler for spawning characters at the start of the match </summary>
-    public class Spawn : EventHandlerBehaviour<MatchStartEvent> {
+    public class Spawn : EventBehaviour<MatchStartEvent> {
         [Serializable]
         class SpawnPoint {
 #pragma warning disable 0649

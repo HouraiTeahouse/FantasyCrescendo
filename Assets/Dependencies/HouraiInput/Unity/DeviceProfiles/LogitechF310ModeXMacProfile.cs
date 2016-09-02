@@ -135,14 +135,14 @@ namespace HouraiTeahouse.HouraiInput {
                     Handle = "Left Trigger",
                     Target = InputTarget.LeftTrigger,
                     Source = Analog4,
-                    TargetRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Positive,
                     IgnoreInitialZeroValue = true
                 },
                 new InputMapping {
                     Handle = "Right Trigger",
                     Target = InputTarget.RightTrigger,
                     Source = Analog5,
-                    TargetRange = InputMapping.Range.Positive,
+                    TargetRange = InputMapping.Positive,
                     IgnoreInitialZeroValue = true
                 }
             };

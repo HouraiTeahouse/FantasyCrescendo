@@ -23,7 +23,7 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    public class RespawnPlatform : EventHandlerBehaviour<PlayerRespawnEvent> {
+    public class RespawnPlatform : EventBehaviour<PlayerRespawnEvent> {
         Character _character;
 
         [SerializeField]
