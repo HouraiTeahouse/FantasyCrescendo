@@ -1,25 +1,3 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,13 +5,13 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 namespace HouraiTeahouse {
+
     /// <summary> A controllable audio channel </summary>
     [Serializable]
     public sealed class AudioChannel {
+
         [SerializeField]
-        [Tooltip(
-            "The associated exposed parameters on the Audio Mixer that are to be changed."
-            )]
+        [Tooltip("The associated exposed parameters on the Audio Mixer that are to be changed.")]
         string[] _associatedParams;
 
         float _currentVolume;
@@ -41,9 +19,7 @@ namespace HouraiTeahouse {
         AudioMixer _mixer;
 
         [SerializeField]
-        [Tooltip(
-            "The viewable name for the channel. May be used for in-game UI elements."
-            )]
+        [Tooltip("The viewable name for the channel. May be used for in-game UI elements.")]
         string _name;
 
         [SerializeField]
@@ -69,9 +45,8 @@ namespace HouraiTeahouse {
         /// <summary> Initializes the AudioChannel. Retrieves volume data from PlayerPrefs or sets it to a default value if it
         /// doesn't exist. </summary>
         /// <param name="mixer"> the main Audio mixer for the game </param>
-        internal void Initialize(AudioMixer mixer) {
-            _mixer = mixer;
-        }
+        internal void Initialize(AudioMixer mixer) { _mixer = mixer; }
+
     }
 
     /// <summary> A singleton wrapper for the master AudioMixer to provide easier programmatic control over defined audio
@@ -101,8 +76,7 @@ namespace HouraiTeahouse {
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
-            Channels =
-                new ReadOnlyCollection<AudioChannel>(_audioChannels);
+            Channels = new ReadOnlyCollection<AudioChannel>(_audioChannels);
             _channelByName = new Dictionary<string, AudioChannel>();
             if (_audioChannels == null || _mixer == null)
                 return;
@@ -113,5 +87,7 @@ namespace HouraiTeahouse {
                 _channelByName[channel.Name] = channel;
             }
         }
+
     }
+
 }

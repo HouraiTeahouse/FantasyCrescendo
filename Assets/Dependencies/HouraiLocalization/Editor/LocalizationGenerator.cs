@@ -1,26 +1,18 @@
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using Google.GData.Spreadsheets;
 using HouraiTeahouse.Editor;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.Localization.Editor {
 
-    /// <summary>
-    /// A Editor-Only ScriptableObject for pulling localization data from Google Spreadsheets
-    /// and creating the approriate Langauge assets.
-    /// </summary>
+    /// <summary> A Editor-Only ScriptableObject for pulling localization data from Google Spreadsheets and creating the
+    /// approriate Langauge assets. </summary>
     public class LocalizationGenerator : ScriptableObject {
 
-        [MenuItem("Hourai/Localization/Generate")]
-        static void Create() {
-            var generator = Assets.LoadOrCreate<LocalizationGenerator>();
-            Assert.IsNotNull(generator);
-            if (generator)
-                generator.Generate();
-        }
-        
+        const string DefaultStoragePath = "Assets/Resources/Lang";
+
         [SerializeField]
         [Tooltip("The public Google Spreadsheets link to pull data from")]
         string GoogleLink;
@@ -33,11 +25,15 @@ namespace HouraiTeahouse.Localization.Editor {
         [Tooltip("The folder to save all of the generated assets into.")]
         Object _saveFolder;
 
-        const string DefaultStoragePath = "Assets/Resources/Lang";
+        [MenuItem("Hourai/Localization/Generate")]
+        static void Create() {
+            var generator = Assets.LoadOrCreate<LocalizationGenerator>();
+            Assert.IsNotNull(generator);
+            if (generator)
+                generator.Generate();
+        }
 
-        /// <summary>
-        /// Reads the Google Spreadsheet and generates/updates the StringSet asset files
-        /// </summary>
+        /// <summary> Reads the Google Spreadsheet and generates/updates the StringSet asset files </summary>
         public void Generate() {
             ListFeed test = GDocService.GetSpreadsheet(GoogleLink);
             var languageMap = new Dictionary<string, StringSet>();
@@ -56,7 +52,7 @@ namespace HouraiTeahouse.Localization.Editor {
                 }
             }
             string folderPath = _saveFolder ? AssetDatabase.GetAssetPath(_saveFolder) : DefaultStoragePath;
-            foreach (var lang in languageMap) {
+            foreach (KeyValuePair<string, StringSet> lang in languageMap) {
                 var method = "Generating";
                 string path = string.Format("{0}/{1}.asset", folderPath, lang.Key);
                 var language = AssetDatabase.LoadAssetAtPath<StringSet>(path);
@@ -64,7 +60,7 @@ namespace HouraiTeahouse.Localization.Editor {
                     method = "Updating";
                     language.Copy(lang.Value);
                     EditorUtility.SetDirty(language);
-               }
+                }
                 else
                     AssetDatabase.CreateAsset(lang.Value, path);
                 Log.Info("{0} language files for: {1}", method, lang.Key);

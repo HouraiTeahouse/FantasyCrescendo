@@ -1,12 +1,11 @@
-using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects
-{
-    [CustomEditor(typeof (Antialiasing))]
-    public class AntialiasingEditor : Editor
-    {
+namespace UnityStandardAssets.ImageEffects {
+
+    [CustomEditor(typeof(Antialiasing))]
+    public class AntialiasingEditor : Editor {
+
         private SerializedObject serObj;
 
         private SerializedProperty mode;
@@ -20,9 +19,7 @@ namespace UnityStandardAssets.ImageEffects
         private SerializedProperty edgeThreshold;
         private SerializedProperty edgeSharpness;
 
-
-        private void OnEnable()
-        {
+        private void OnEnable() {
             serObj = new SerializedObject(target);
 
             mode = serObj.FindProperty("mode");
@@ -37,9 +34,7 @@ namespace UnityStandardAssets.ImageEffects
             edgeSharpness = serObj.FindProperty("edgeSharpness");
         }
 
-
-        public override void OnInspectorGUI()
-        {
+        public override void OnInspectorGUI() {
             serObj.Update();
 
             GUILayout.Label("Luminance based fullscreen antialiasing", EditorStyles.miniBoldLabel);
@@ -47,23 +42,21 @@ namespace UnityStandardAssets.ImageEffects
             EditorGUILayout.PropertyField(mode, new GUIContent("Technique"));
 
             Material mat = (target as Antialiasing).CurrentAAMaterial();
-            if (null == mat && (target as Antialiasing).enabled)
-            {
-                EditorGUILayout.HelpBox("This AA technique is currently not supported. Choose a different technique or disable the effect and use MSAA instead.", MessageType.Warning);
+            if (null == mat && (target as Antialiasing).enabled) {
+                EditorGUILayout.HelpBox(
+                    "This AA technique is currently not supported. Choose a different technique or disable the effect and use MSAA instead.",
+                    MessageType.Warning);
             }
 
-            if (mode.enumValueIndex == (int) AAMode.NFAA)
-            {
+            if (mode.enumValueIndex == (int) AAMode.NFAA) {
                 EditorGUILayout.PropertyField(offsetScale, new GUIContent("Edge Detect Ofs"));
                 EditorGUILayout.PropertyField(blurRadius, new GUIContent("Blur Radius"));
                 EditorGUILayout.PropertyField(showGeneratedNormals, new GUIContent("Show Normals"));
             }
-            else if (mode.enumValueIndex == (int) AAMode.DLAA)
-            {
+            else if (mode.enumValueIndex == (int) AAMode.DLAA) {
                 EditorGUILayout.PropertyField(dlaaSharp, new GUIContent("Sharp"));
             }
-            else if (mode.enumValueIndex == (int) AAMode.FXAA3Console)
-            {
+            else if (mode.enumValueIndex == (int) AAMode.FXAA3Console) {
                 EditorGUILayout.PropertyField(edgeThresholdMin, new GUIContent("Edge Min Threshhold"));
                 EditorGUILayout.PropertyField(edgeThreshold, new GUIContent("Edge Threshhold"));
                 EditorGUILayout.PropertyField(edgeSharpness, new GUIContent("Edge Sharpness"));
@@ -71,5 +64,7 @@ namespace UnityStandardAssets.ImageEffects
 
             serObj.ApplyModifiedProperties();
         }
+
     }
+
 }

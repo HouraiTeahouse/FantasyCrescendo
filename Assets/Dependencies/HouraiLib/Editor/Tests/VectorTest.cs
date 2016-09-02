@@ -1,15 +1,15 @@
-using UnityEngine;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace HouraiTeahouse {
 
-    public class VectorTest { 
+    public class VectorTest {
 
         [Test]
         public void MultTest() {
             Assert.AreEqual(20 * Vector2.up, (5 * Vector2.one).Mult(4 * Vector2.up));
             Assert.AreEqual(Vector3.zero, (5 * Vector3.up).Mult(4 * Vector3.forward));
-            Assert.AreEqual(new Vector4(0,0,3,0), new Vector4(1, 3, 2, 5).Mult(new Vector4(0,0,1.5f,0)));
+            Assert.AreEqual(new Vector4(0, 0, 3, 0), new Vector4(1, 3, 2, 5).Mult(new Vector4(0, 0, 1.5f, 0)));
         }
 
         [Test]
@@ -27,6 +27,5 @@ namespace HouraiTeahouse {
         }
 
     }
-    
-}
 
+}

@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
 
@@ -22,6 +22,7 @@ namespace HouraiTeahouse.SmashBrew {
             Assert.AreEqual(Vector2.right, Direction.Forward.ToVector());
             Assert.AreEqual(Vector2.left, Direction.Backward.ToVector());
         }
-    }
-}
 
+    }
+
+}

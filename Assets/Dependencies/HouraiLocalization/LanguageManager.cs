@@ -1,37 +1,19 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.Localization {
+
     public class LanguageEvent {
+
         public Language NewLanguage;
+
     }
 
     /// <summary> Singleton MonoBehaviour that manages all of localization system. </summary>
     public sealed class LanguageManager : Singleton<LanguageManager> {
+
         Language _currentLanguage;
 
         [SerializeField]
@@ -95,9 +77,7 @@ namespace HouraiTeahouse.Localization {
         /// <summary> Is the provided key localizable? </summary>
         /// <param name="key"> the key to check </param>
         /// <returns> True if the key will return a localized string, false otherwise. </returns>
-        public bool HasKey(string key) {
-            return _keySet.Contains(key);
-        }
+        public bool HasKey(string key) { return _keySet.Contains(key); }
 
         void SetLanguage(string name, StringSet set) {
             if (_currentLanguage.Name == name)
@@ -106,9 +86,7 @@ namespace HouraiTeahouse.Localization {
             _currentLanguage.Name = set.name;
             OnChangeLanguage.SafeInvoke(_currentLanguage);
 #if HOURAI_EVENTS
-            _eventManager.Publish(new LanguageEvent {
-                NewLanguage = _currentLanguage
-            });
+            _eventManager.Publish(new LanguageEvent {NewLanguage = _currentLanguage});
 #endif
         }
 
@@ -120,20 +98,16 @@ namespace HouraiTeahouse.Localization {
             _eventManager = Mediator.Global;
 #endif
 
-            var languages =
-                new List<StringSet>(
-                    Resources.LoadAll<StringSet>(localizaitonResourceDirectory));
+            var languages = new List<StringSet>(Resources.LoadAll<StringSet>(localizaitonResourceDirectory));
             languages.Remove(_keys);
             _languages = new HashSet<string>(languages.Select(lang => lang.name));
             _keySet = new HashSet<string>(_keys);
 
             SystemLanguage systemLang = Application.systemLanguage;
             string currentLang = _langPlayerPref.HasKey() ? _langPlayerPref : systemLang.ToString();
-            if (!_languages.Contains(currentLang)
-                || systemLang == SystemLanguage.Unknown) {
+            if (!_languages.Contains(currentLang) || systemLang == SystemLanguage.Unknown) {
                 string oldLang = currentLang;
-                currentLang =
-                    Resources.Load<StringSet>(_defaultLanguage).name;
+                currentLang = Resources.Load<StringSet>(_defaultLanguage).name;
                 Log.Info("No language data for \"{0}\" found. Loading default language: {1}", oldLang, currentLang);
             }
             _langPlayerPref.Value = currentLang;
@@ -150,14 +124,10 @@ namespace HouraiTeahouse.Localization {
         }
 
         /// <summary> Unity Callback. Called on object destruction. </summary>
-        void OnDestroy() {
-            Save();
-        }
+        void OnDestroy() { Save(); }
 
         /// <summary> Unity Callback. Called when entire application exits. </summary>
-        void OnApplicationQuit() {
-            Save();
-        }
+        void OnApplicationQuit() { Save(); }
 
         /// <summary> Saves the current language preferences to PlayerPrefs to keep it persistent. </summary>
         void Save() {
@@ -176,15 +146,13 @@ namespace HouraiTeahouse.Localization {
         public Language LoadLanguage(string identifier) {
             Check.NotNull(identifier);
             if (!_languages.Contains(identifier))
-                throw new InvalidOperationException(
-                    "Language with identifier of {0} is not supported.".With(
-                        identifier));
-            var languageValues =
-                Resources.Load<StringSet>(localizaitonResourceDirectory
-                    + identifier);
+                throw new InvalidOperationException("Language with identifier of {0} is not supported.".With(identifier));
+            var languageValues = Resources.Load<StringSet>(localizaitonResourceDirectory + identifier);
             SetLanguage(languageValues.name, languageValues);
             Resources.UnloadAsset(languageValues);
             return CurrentLangauge;
         }
+
     }
+
 }

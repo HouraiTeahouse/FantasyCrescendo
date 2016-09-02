@@ -11,20 +11,14 @@ namespace HouraiTeahouse {
                 object obj = null;
                 Assert.Null(Check.NotNull(obj));
             });
-            Assert.DoesNotThrow(delegate {
-                Assert.NotNull(Check.NotNull(new object()));
-            });
+            Assert.DoesNotThrow(delegate { Assert.NotNull(Check.NotNull(new object())); });
         }
 
         [Test]
         public void CheckArgumentTest() {
             var name = "test";
-            Assert.Catch<ArgumentException>(delegate {
-                Check.Argument(name, 3 > 5);
-            });
-            Assert.DoesNotThrow(delegate {
-                Check.Argument(name, 5 > 3);
-            });
+            Assert.Catch<ArgumentException>(delegate { Check.Argument(name, 3 > 5); });
+            Assert.DoesNotThrow(delegate { Check.Argument(name, 5 > 3); });
         }
 
         [Test]
@@ -38,17 +32,13 @@ namespace HouraiTeahouse {
 
         [Test]
         public void CheckNotEmptyTest() {
-            Assert.DoesNotThrow(delegate {
-                Check.NotEmpty(new[] {0});
-            });
-            Assert.Catch<InvalidOperationException>(delegate {
-                Check.NotEmpty<int[]>(null);
-            });
-            Assert.Catch<InvalidOperationException>(delegate {
-                Check.NotEmpty(new object[] {});
-            });
+            Assert.DoesNotThrow(delegate { Check.NotEmpty(new[] {0}); });
+            Assert.Catch<InvalidOperationException>(delegate { Check.NotEmpty<int[]>(null); });
+            Assert.Catch<InvalidOperationException>(delegate { Check.NotEmpty(new object[] {}); });
             int[] test = {1, 2, 3};
             Assert.AreEqual(test, Check.NotEmpty(test));
         }
+
     }
+
 }

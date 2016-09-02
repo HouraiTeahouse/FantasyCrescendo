@@ -1,31 +1,11 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
     public enum TouhouGame {
+
         HighlyResponsiveToPrayers = 0,
         StoryOfEasternWonderland,
         PhantasmagoriaOfDimDream,
@@ -50,9 +30,11 @@ namespace HouraiTeahouse.SmashBrew {
         UrbanLegendInLimbo,
         LegacyOfLunaticKingdom,
         Other
+
     }
 
     public enum TouhouStage {
+
         PlayableCharacter = 0,
         Stage1,
         Stage2,
@@ -62,10 +44,12 @@ namespace HouraiTeahouse.SmashBrew {
         Stage6,
         Extra,
         Other
+
     }
 
     [Extension(typeof(CharacterData))]
     public class TouhouCharacterData : ScriptableObject {
+
         [SerializeField]
         TouhouGame _sourceGame = TouhouGame.Other;
 
@@ -81,20 +65,18 @@ namespace HouraiTeahouse.SmashBrew {
         public TouhouStage SourceStage {
             get { return _sourceStage; }
         }
+
     }
 
     /// <summary> A ScriptableObject </summary>
     /// <seealso cref="DataManager" />
     /// <seealso cref="SceneData" />
-    [CreateAssetMenu(fileName = "New Character",
-        menuName = "SmashBrew/Character Data")]
+    [CreateAssetMenu(fileName = "New Character", menuName = "SmashBrew/Character Data")]
     public class CharacterData : ExtendableObject, IGameData {
 
         [Header("General Data")]
-
         [SerializeField]
-        [Tooltip(
-            " Is the Character selectable from the character select screen?")]
+        [Tooltip(" Is the Character selectable from the character select screen?")]
         bool _isSelectable;
 
         [SerializeField]
@@ -114,6 +96,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         [SerializeField, Resource(typeof(Sprite))]
         string[] _portraits;
+
         Resource<Sprite>[] _portraitResources;
 
         [SerializeField]
@@ -150,9 +133,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         [SerializeField]
         [Resource(typeof(AudioClip))]
-        [Tooltip(
-            "The theme played on the match results screen when the character wins"
-            )]
+        [Tooltip("The theme played on the match results screen when the character wins")]
         string _victoryTheme;
 
         /// <summary> The short name of the character. Usually just their first name. </summary>
@@ -217,10 +198,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return new Rect(0, 0, 1, 1);
             float extents = _cropSize / 2;
             return
-                texture.UVToPixelRect(new Rect(_cropPositon.x - extents,
-                    _cropPositon.y - extents,
-                    _cropSize,
-                    _cropSize));
+                texture.UVToPixelRect(new Rect(_cropPositon.x - extents, _cropPositon.y - extents, _cropSize, _cropSize));
         }
 
         /// <summary> Gets the resource for the sprite portrait for a certain pallete. </summary>
@@ -252,9 +230,8 @@ namespace HouraiTeahouse.SmashBrew {
             Unload();
         }
 
-        void RegeneratePortraits() {
-            _portraitResources =
-                _portraits.Select(s => new Resource<Sprite>(s)).ToArray();
-        }
+        void RegeneratePortraits() { _portraitResources = _portraits.Select(s => new Resource<Sprite>(s)).ToArray(); }
+
     }
+
 }

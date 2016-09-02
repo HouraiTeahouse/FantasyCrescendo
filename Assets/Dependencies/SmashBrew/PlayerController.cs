@@ -1,31 +1,11 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
     [DisallowMultipleComponent]
     public class PlayerController : HouraiBehaviour {
+
         TapDetector _altTap;
 
         Character _character;
@@ -45,8 +25,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void Update() {
-            if (PlayerData == null || PlayerData.Controller == null
-                || _character == null)
+            if (PlayerData == null || PlayerData.Controller == null || _character == null)
                 return;
 
             InputDevice input = PlayerData.Controller;
@@ -62,25 +41,23 @@ namespace HouraiTeahouse.SmashBrew {
                 stick += altStick;
 
             //Ensure that the character is walking in the right direction
-            if (!TimeManager.Paused && stick.x > 0 && _character.Direction
-                || (stick.x < 0 && !_character.Direction))
+            if (!TimeManager.Paused && stick.x > 0 && _character.Direction || (stick.x < 0 && !_character.Direction))
                 _character.Direction = !_character.Direction;
 
             Animator.SetFloat(CharacterAnim.HorizontalInput, stick.x);
             Animator.SetFloat(CharacterAnim.VerticalInput, stick.y);
-            Animator.SetBool(CharacterAnim.AttackInput,
-                altTap.sqrMagnitude > 0 || _controlMapping.Attack(input));
-            Animator.SetBool(CharacterAnim.SpecialInput,
-                _controlMapping.Special(input));
-            Animator.SetBool(CharacterAnim.ShieldInput,
-                _controlMapping.Shield(input));
+            Animator.SetBool(CharacterAnim.AttackInput, altTap.sqrMagnitude > 0 || _controlMapping.Attack(input));
+            Animator.SetBool(CharacterAnim.SpecialInput, _controlMapping.Special(input));
+            Animator.SetBool(CharacterAnim.ShieldInput, _controlMapping.Shield(input));
 
             if (_controlMapping.Jump(input))
                 _character.Jump();
         }
+
     }
 
     public class TapDetector {
+
         readonly float _deadZone;
         Vector2 _acceleration;
         Vector2 _value;
@@ -129,5 +106,7 @@ namespace HouraiTeahouse.SmashBrew {
             _value = input;
             return MaxComponent(Snap(input, _acceleration));
         }
+
     }
+
 }

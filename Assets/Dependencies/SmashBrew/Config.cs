@@ -1,25 +1,3 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using UnityEngine;
 
@@ -27,6 +5,7 @@ namespace HouraiTeahouse.SmashBrew {
 
     [CreateAssetMenu(fileName = "New Config", menuName = "SmashBrew/Config")]
     public sealed class Config : ExtendableObject {
+
         static Config _instance;
 
         /// <summary> The singleton instance of the game's config </summary>
@@ -82,6 +61,7 @@ namespace HouraiTeahouse.SmashBrew {
 
     [Serializable]
     public class DebugConfig : ISerializationCallbackReceiver {
+
         [SerializeField]
         Color _inactiveHitboxColor = Color.black;
 
@@ -108,12 +88,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         EnumMap<Hitbox.Type, Color> _colorMap;
 
-        public Color GetHitboxColor(Hitbox.Type type) {
-            return _colorMap[type];
-        }
-
-        public void OnBeforeSerialize() {
-        }
+        public void OnBeforeSerialize() { }
 
         public void OnAfterDeserialize() {
             _colorMap = new EnumMap<Hitbox.Type, Color>();
@@ -126,10 +101,14 @@ namespace HouraiTeahouse.SmashBrew {
             _colorMap[Hitbox.Type.Shield] = _shieldHitboxColor;
             _colorMap[Hitbox.Type.Reflective] = ReflectHitboxColor;
         }
+
+        public Color GetHitboxColor(Hitbox.Type type) { return _colorMap[type]; }
+
     }
 
     [Serializable]
     public class GameModeConfig {
+
         [SerializeField]
         SerializedGameMode _allStar;
 
@@ -157,10 +136,12 @@ namespace HouraiTeahouse.SmashBrew {
         public GameMode AllStar {
             get { return _allStar; }
         }
+
     }
 
     [Serializable]
     public class PlayerConfig {
+
         [SerializeField]
         Color _cpuColor = new Color(0.75f, 0.75f, 0.75f);
 
@@ -201,15 +182,19 @@ namespace HouraiTeahouse.SmashBrew {
                 return _cpuColor;
             return _playerColors[playerNumber % _playerColors.Length];
         }
+
     }
 
     [Serializable]
     public class PhysicsConfig {
+
         [SerializeField]
         float _tangibleSpeedCap = 3f;
 
         public float TangibleSpeedCap {
             get { return _tangibleSpeedCap; }
         }
+
     }
+
 }

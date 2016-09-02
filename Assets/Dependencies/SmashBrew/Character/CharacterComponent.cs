@@ -1,6 +1,7 @@
 namespace HouraiTeahouse.SmashBrew {
-    public abstract class CharacterComponent : HouraiBehaviour,
-                                                       IResettable {
+
+    public abstract class CharacterComponent : HouraiBehaviour, IResettable {
+
         public Character Character { get; set; }
 
         public Mediator Events {
@@ -13,5 +14,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (!Character)
                 Character = GetComponentInParent<Character>();
         }
+
     }
+
 }

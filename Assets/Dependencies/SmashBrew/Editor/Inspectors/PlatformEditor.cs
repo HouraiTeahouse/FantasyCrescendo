@@ -4,15 +4,13 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
-    /// <summary>
-    /// A custom Editor for Platfoorms
-    /// </summary>
+    /// <summary> A custom Editor for Platfoorms </summary>
     [CanEditMultipleObjects]
-    [CustomEditor(typeof (Platform), true, isFallback = true)]
+    [CustomEditor(typeof(Platform), true, isFallback = true)]
     internal sealed class StageBasedEditor : ScriptlessEditor {
 
         /// <summary>
-        /// <see cref="ScriptlessEditor.OnInspectorGUI"/>
+        ///     <see cref="ScriptlessEditor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
@@ -30,7 +28,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             if (boxCol != null)
                 return new Bounds(boxCol.center, boxCol.size);
             if (sphereCol != null)
-                return new Bounds(sphereCol.center, Vector3.one*sphereCol.radius);
+                return new Bounds(sphereCol.center, Vector3.one * sphereCol.radius);
             return new Bounds();
         }
 
@@ -44,7 +42,8 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 if (!platform)
                     continue;
                 foreach (Collider collider in platform.GetComponents<Collider>()) {
-                    if (collider.isTrigger) continue;
+                    if (collider.isTrigger)
+                        continue;
                     if (!found) {
                         found = true;
                         bounds = GetBounds(collider);

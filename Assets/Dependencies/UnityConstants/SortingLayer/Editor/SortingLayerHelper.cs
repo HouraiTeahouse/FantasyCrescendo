@@ -1,18 +1,21 @@
-using UnityEditor;
 using System;
 using System.Linq;
 using System.Reflection;
+using UnityEditor;
 
 namespace HouraiTeahouse {
+
     // Helpers used by the different sorting layer classes.
     [InitializeOnLoad]
     public static class SortingLayerHelper {
+
         static readonly PropertyInfo SortingLayerNamesProperty;
         static readonly MethodInfo GetSortingLayerIdMethod;
 
         static SortingLayerHelper() {
             Type utilityType = Type.GetType("UnityEditorInternal.InternalEditorUtility, UnityEditor");
-            SortingLayerNamesProperty = utilityType.GetProperty("sortingLayerNames", BindingFlags.Static | BindingFlags.NonPublic);
+            SortingLayerNamesProperty = utilityType.GetProperty("sortingLayerNames",
+                BindingFlags.Static | BindingFlags.NonPublic);
 
             // Unity 5.0 calls this "GetSortingLayerUniqueID" but in 4.x it was "GetSortingLayerUserID".
             GetSortingLayerIdMethod = utilityType.GetMethod("GetSortingLayerUserID",
@@ -47,7 +50,9 @@ namespace HouraiTeahouse {
         public static int GetSortingLayerIDForIndex(int index) {
             if (GetSortingLayerIdMethod == null)
                 return 0;
-            return (int)GetSortingLayerIdMethod.Invoke(null, new object[] { index });
+            return (int) GetSortingLayerIdMethod.Invoke(null, new object[] {index});
         }
+
     }
+
 }

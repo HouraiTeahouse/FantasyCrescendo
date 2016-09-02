@@ -1,24 +1,24 @@
 using System;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace HouraiTeahouse
-{
+namespace HouraiTeahouse {
+
     [CustomEditor(typeof(SortingLayerExposed))]
-    public class SortingLayerExposedEditor : UnityEditor.Editor
-    {
-        public override void OnInspectorGUI()
-        {
+    public class SortingLayerExposedEditor : UnityEditor.Editor {
+
+        public override void OnInspectorGUI() {
             // Get the renderer from the target object
             var renderer = (target as SortingLayerExposed).gameObject.GetComponent<Renderer>();
 
             // If there is no renderer, we can't do anything
             if (!renderer) {
-                EditorGUILayout.HelpBox("SortingLayerExposed must be added to a game object that has a renderer.", MessageType.Error);
+                EditorGUILayout.HelpBox("SortingLayerExposed must be added to a game object that has a renderer.",
+                    MessageType.Error);
                 return;
             }
 
-            var sortingLayerNames = SortingLayerHelper.SortingLayerNames;
+            string[] sortingLayerNames = SortingLayerHelper.SortingLayerNames;
 
             // If we have the sorting layers array, we can make a nice dropdown. For stability's sake, if the array is null
             // we just use our old logic. This makes sure the script works in some fashion even if Unity changes the name of
@@ -66,5 +66,7 @@ namespace HouraiTeahouse
                 EditorUtility.SetDirty(renderer);
             }
         }
+
     }
+
 }

@@ -1,32 +1,12 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
+
     /// <summary> A CharacterUIComponent that displays the portrait of a character on a RawImage object </summary>
     public sealed class MapDisplay : SceneUIComponent<RawImage> {
+
         [SerializeField]
         [Tooltip("Should the map's portrait be cropped?")]
         bool _cropped;
@@ -55,23 +35,17 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <summary>
         ///     <see cref="UIBehaviour.OnRectTransformDimensionsChange" />
         /// </summary>
-        protected override void OnRectTransformDimensionsChange() {
-            SetRect();
-        }
+        protected override void OnRectTransformDimensionsChange() { SetRect(); }
 
         void SetRect() {
-            if (_rectTransform == null || Component == null
-                || Component.texture == null)
+            if (_rectTransform == null || Component == null || Component.texture == null)
                 return;
             Vector2 size = _rectTransform.rect.size;
             float aspect = size.x / size.y;
             Texture texture = Component.texture;
             Rect imageRect = _cropRect.EnforceAspect(aspect);
-            if (imageRect.width > texture.width
-                || imageRect.height > texture.height) {
-                imageRect = imageRect.Restrict(texture.width,
-                    texture.height,
-                    aspect);
+            if (imageRect.width > texture.width || imageRect.height > texture.height) {
+                imageRect = imageRect.Restrict(texture.width, texture.height, aspect);
                 imageRect.center = texture.Center();
             }
 
@@ -97,5 +71,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
             SetRect();
         }
+
     }
+
 }

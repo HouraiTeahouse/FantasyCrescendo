@@ -4,9 +4,7 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    /// <summary>
-    /// AnimationEvent callbacks for SmashBrew Characters
-    /// </summary>
+    /// <summary> AnimationEvent callbacks for SmashBrew Characters </summary>
     public class CharacterAnimationEvents : CharacterComponent {
 
         public static string HitboxFunc = "Hitbox";
@@ -28,7 +26,7 @@ namespace HouraiTeahouse.SmashBrew {
             Assert.AreEqual(ids.Count, states.Count);
             for (var i = 0; i < ids.Count; i++) {
                 Hitbox hitbox = Character.GetHitbox(ids[i]);
-                if(hitbox == null) {
+                if (hitbox == null) {
                     Log.Error("No Hitbox on {0} with ID {1} cannot be found.", Character, ids[i]);
                     continue;
                 }
@@ -38,11 +36,8 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary> Actually applies the force to jump. </summary>
-        public void Jump() {
-            Character.JumpImpl();
-        }
+        public void Jump() { Character.JumpImpl(); }
 
     }
 
 }
-

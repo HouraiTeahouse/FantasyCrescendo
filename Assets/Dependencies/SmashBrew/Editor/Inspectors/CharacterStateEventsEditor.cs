@@ -1,24 +1,22 @@
 using System.Linq;
 using HouraiTeahouse.Editor;
-using UnityEngine;
 using UnityEditor;
 using UnityEditor.Animations;
+using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
-    /// <summary>
-    /// Custom Editor for CharacterStateEvents
-    /// </summary>
+    /// <summary> Custom Editor for CharacterStateEvents </summary>
     [CustomEditor(typeof(CharacterStateEvents))]
     internal class CharacterStateEventsEditor : UnityEditor.Editor {
 
         AnimatorState state;
 
         bool Initialized {
-            get { return state != null && 
-                    Clip.objectReferenceValue != null && 
-                    Clip.objectReferenceValue == state.motion as AnimationClip && 
-                    Name.stringValue == state.name; }
+            get {
+                return state != null && Clip.objectReferenceValue != null
+                    && Clip.objectReferenceValue == state.motion as AnimationClip && Name.stringValue == state.name;
+            }
         }
 
         SerializedProperty Clip {
@@ -41,9 +39,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         void OnDiable() { Selection.selectionChanged -= CheckInitialize; }
 
         void CheckInitialize() {
-            state = Selection.objects
-                    .OfType<AnimatorState>()
-                    .FirstOrDefault(s => s.behaviours.Contains(target));
+            state = Selection.objects.OfType<AnimatorState>().FirstOrDefault(s => s.behaviours.Contains(target));
             if (!Initialized)
                 Initialize();
         }
@@ -59,18 +55,18 @@ namespace HouraiTeahouse.SmashBrew.Editor {
 
         public override void OnInspectorGUI() {
             if (!Initialized) {
-                EditorGUILayout.HelpBox("No animation clip found. Please supply state with an AnimationClip and initialize.", MessageType.Error);
-                if(GUILayout.Button("Initialize"))
+                EditorGUILayout.HelpBox(
+                    "No animation clip found. Please supply state with an AnimationClip and initialize.",
+                    MessageType.Error);
+                if (GUILayout.Button("Initialize"))
                     Initialize();
                 return;
             }
             EditorGUILayout.PropertyField(EventData);
             if (EventData.objectReferenceValue == null) {
-                if(GUILayout.Button("Create Event Data")) {
+                if (GUILayout.Button("Create Event Data")) {
                     var eventData = CreateInstance<EventData>();
-                    eventData.name = state == null
-                        ? "New Event Data"
-                        : state.name;
+                    eventData.name = state == null ? "New Event Data" : state.name;
                     Assets.CreateAsset("Assets", eventData);
                     EventData.objectReferenceValue = eventData;
                     serializedObject.ApplyModifiedProperties();
@@ -84,6 +80,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             if (GUI.changed)
                 serializedObject.ApplyModifiedProperties();
         }
-    }
-}
 
+    }
+
+}

@@ -3,14 +3,10 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
-    /// <summary>
-    /// Removes the extra "Script" field on any editor derived from this.
-    /// </summary>
+    /// <summary> Removes the extra "Script" field on any editor derived from this. </summary>
     public abstract class ScriptlessEditor : UnityEditor.Editor {
 
-        /// <summary>
-        /// A replacement to the old DrawDefaultInspector that does not include the Script field.
-        /// </summary>
+        /// <summary> A replacement to the old DrawDefaultInspector that does not include the Script field. </summary>
         public new void DrawDefaultInspector() {
             SerializedProperty iterator = serializedObject.GetIterator();
             iterator.Next(true);
@@ -23,37 +19,32 @@ namespace HouraiTeahouse.Editor {
                 serializedObject.ApplyModifiedProperties();
         }
 
-        /// <summary>
-        /// Unity Callback. Called to draw the Editor's UI every GUI update.
-        /// </summary>
-        public override void OnInspectorGUI() {
-            DrawDefaultInspector();
-        }
+        /// <summary> Unity Callback. Called to draw the Editor's UI every GUI update. </summary>
+        public override void OnInspectorGUI() { DrawDefaultInspector(); }
 
     }
 
     public abstract class BaseEditor<T> : ScriptlessEditor where T : Object {
-        
+
         protected T Target {
             get { return target as T; }
         }
 
     }
 
-    /// <summary>
-    /// Creates a global fallback editor for all MonoBehaviour derived types that removes the extra "Script" field.
-    /// </summary>
+    /// <summary> Creates a global fallback editor for all MonoBehaviour derived types that removes the extra "Script" field. </summary>
     [CanEditMultipleObjects]
-    [CustomEditor(typeof (MonoBehaviour), true, isFallback = true)]
+    [CustomEditor(typeof(MonoBehaviour), true, isFallback = true)]
     internal sealed class MonoBehaviourEditor : ScriptlessEditor {
+
     }
-    
-    /// <summary>
-    /// Creates a global fallback editor for all ScriptableObject derived types that removes the extra "Script" field.
-    /// </summary>
+
+    /// <summary> Creates a global fallback editor for all ScriptableObject derived types that removes the extra "Script"
+    /// field. </summary>
     [CanEditMultipleObjects]
-    [CustomEditor(typeof (ScriptableObject), true, isFallback = true)]
+    [CustomEditor(typeof(ScriptableObject), true, isFallback = true)]
     internal sealed class ScriptableObjectEditor : ScriptlessEditor {
+
     }
 
 }

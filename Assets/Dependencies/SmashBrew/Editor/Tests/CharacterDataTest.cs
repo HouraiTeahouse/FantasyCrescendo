@@ -2,13 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using NUnit.Framework;
+using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew{
+namespace HouraiTeahouse.SmashBrew {
 
     internal class AbstractDataTest<T> where T : ScriptableObject, IGameData {
-        
+
+        protected delegate object AssetFunc(T data);
+
+        protected delegate IEnumerable AssetManyFunc(T data);
+
         protected static IEnumerable<T> data;
 
         protected void LoadData() {
@@ -16,14 +20,11 @@ namespace HouraiTeahouse.SmashBrew{
                 data = Resources.LoadAll<T>(string.Empty).Where(d => d != null && d.IsSelectable && d.IsVisible);
         }
 
-        protected delegate object AssetFunc(T data);
-        protected delegate IEnumerable AssetManyFunc(T data);
-
         protected void Check(AssetFunc func) {
             LoadData();
             foreach (T datum in data) {
                 object result = func(datum);
-                if(result == null) 
+                if (result == null)
                     Log.Info(datum);
                 Assert.NotNull(result);
             }
@@ -31,19 +32,18 @@ namespace HouraiTeahouse.SmashBrew{
 
         protected void CheckMany(AssetManyFunc func) {
             LoadData();
-            foreach(T datum in data) {
+            foreach (T datum in data) {
                 foreach (object obj in func(datum)) {
-                    if(obj == null)
+                    if (obj == null)
                         Log.Info(datum);
                     Assert.NotNull(obj);
                 }
             }
         }
+
     }
-    
-    /// <summary>
-    /// Tests for CharacterData instances
-    /// </summary>
+
+    /// <summary> Tests for CharacterData instances </summary>
     internal class CharacterDataTest : AbstractDataTest<CharacterData> {
 
         [Test]
@@ -57,7 +57,7 @@ namespace HouraiTeahouse.SmashBrew{
             LoadData();
             foreach (CharacterData character in data) {
                 Assert.NotNull(character.Prefab.Load());
-                foreach(Status status in character.Prefab.Load().GetComponentsInChildren<Status>())
+                foreach (Status status in character.Prefab.Load().GetComponentsInChildren<Status>())
                     Assert.False(status.enabled);
             }
         }
@@ -74,7 +74,7 @@ namespace HouraiTeahouse.SmashBrew{
             LoadData();
             Type[] requiredTypes = Character.GetRequiredComponents();
             foreach (CharacterData character in data)
-                foreach (Type type in requiredTypes) 
+                foreach (Type type in requiredTypes)
                     Assert.NotNull(character.Prefab.Load().GetComponent(type));
         }
 
@@ -83,7 +83,7 @@ namespace HouraiTeahouse.SmashBrew{
             // Checks that the pallete count is the same between MaterialSwap and CharacterData
             LoadData();
             foreach (CharacterData character in data) {
-                MaterialSwap swap = character.Prefab.Load().GetComponent<MaterialSwap>();
+                var swap = character.Prefab.Load().GetComponent<MaterialSwap>();
                 Assert.AreEqual(swap.Count, character.PalleteCount);
             }
         }
@@ -93,7 +93,7 @@ namespace HouraiTeahouse.SmashBrew{
             // Checks that all of the portraits for each of the character is not null
             LoadData();
             foreach (CharacterData character in data)
-                for(var i = 0; i < character.PalleteCount; i++)
+                for (var i = 0; i < character.PalleteCount; i++)
                     Assert.NotNull(character.GetPortrait(i).Load());
         }
 

@@ -87,8 +87,10 @@ namespace HouraiTeahouse.Console {
             queue.Clear();
             Assert.AreEqual(queue.Limit, 10);
             Assert.AreEqual(queue.Count, 0);
-            if(!queue.IsNullOrEmpty())
+            if (!queue.IsNullOrEmpty())
                 Assert.Fail();
         }
+
     }
+
 }

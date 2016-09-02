@@ -7,19 +7,14 @@ using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
 
-    /// <summary>
-    /// An EditorWindow that is based on the current selection.
-    /// 
-    /// The selection can be locked via the padlock in the top right of the window.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> An EditorWindow that is based on the current selection. The selection can be locked via the padlock in the
+    /// top right of the window. </summary>
+    /// <typeparam name="T"> </typeparam>
     public abstract class SelectableEditorWindow<T> : LockableEditorWindow where T : Object {
 
         T[] _selection;
 
-        /// <summary>
-        /// A list of selected objects.
-        /// </summary>
+        /// <summary> A list of selected objects. </summary>
         protected IEnumerable<T> Selection {
             get {
                 if (_selection == null)
@@ -28,27 +23,19 @@ namespace HouraiTeahouse {
             }
         }
 
-        /// <summary>
-        /// Provides a filter on the selection's objects.
-        /// </summary>
+        /// <summary> Provides a filter on the selection's objects. </summary>
         protected SelectionMode SelectionMode { get; set; }
 
-        /// <summary>
-        /// Provides a filter for what kinds of selected objects are used.
-        /// 
-        /// If null, the selection is unfiltered.
-        /// </summary>
+        /// <summary> Provides a filter for what kinds of selected objects are used. If null, the selection is unfiltered. </summary>
         protected Predicate<T> Filter { get; set; }
 
-        /// <summary>
-        /// Updates the Selection as needed.
-        /// </summary>
+        /// <summary> Updates the Selection as needed. </summary>
         protected virtual void OnSelectionChange() {
             if (IsLocked)
                 return;
 
             _selection =
-                UnityEditor.Selection.GetFiltered(typeof (T), SelectionMode).Select(selected => selected as T).ToArray();
+                UnityEditor.Selection.GetFiltered(typeof(T), SelectionMode).Select(selected => selected as T).ToArray();
         }
 
     }

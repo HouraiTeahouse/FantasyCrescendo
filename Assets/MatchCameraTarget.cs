@@ -1,8 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    
+
     [RequireComponent(typeof(CameraTarget))]
     public class MatchCameraTarget : EventBehaviour<PlayerSpawnEvent> {
 
@@ -50,22 +50,17 @@ namespace HouraiTeahouse.SmashBrew {
                 max = Vector3.Max(max, target.position);
             }
 
-            Vector3 targetPosition = _targetPositionBias
-                + (count <= 0 ? Vector3.zero : sum / count);
+            Vector3 targetPosition = _targetPositionBias + (count <= 0 ? Vector3.zero : sum / count);
             Vector2 size = (Vector2) max - (Vector2) min;
 
             // Calculate the actual padding to use
-            var actualPadding = new Vector2(1 + 2 * _padding.x,
-                1 + 2 * _padding.y);
+            var actualPadding = new Vector2(1 + 2 * _padding.x, 1 + 2 * _padding.y);
 
             // Compute Hadamard product between size and inverse padding to add the padding desired.
-            size = new Vector2(size.x * actualPadding.x,
-                size.y * actualPadding.y);
+            size = new Vector2(size.x * actualPadding.x, size.y * actualPadding.y);
 
             // Calculate the target field of view for the proper cpuLevel of zoom
-            float targetFOV = 2f
-                * Mathf.Atan(size.x * 0.5f
-                    / Mathf.Abs(transform.position.z - targetPosition.z))
+            float targetFOV = 2f * Mathf.Atan(size.x * 0.5f / Mathf.Abs(transform.position.z - targetPosition.z))
                 * Mathf.Rad2Deg;
 
             // Clamp the FOV so it isn't too small or too big.
@@ -75,13 +70,10 @@ namespace HouraiTeahouse.SmashBrew {
             targetPosition.z = transform.position.z;
 
             // Lerp both the FOV and the position at the desired speeds
-            _target.FOV = Mathf.Lerp(_target.FOV,
-                targetFOV,
-                dt * _cameraSpeed);
-            transform.position = Vector3.Lerp(transform.position,
-                targetPosition,
-                dt * _cameraSpeed);
+            _target.FOV = Mathf.Lerp(_target.FOV, targetFOV, dt * _cameraSpeed);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, dt * _cameraSpeed);
         }
-    }
-}
 
+    }
+
+}

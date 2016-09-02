@@ -1,25 +1,3 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -75,17 +53,17 @@ namespace HouraiTeahouse.SmashBrew {
         public PlayerType Next { get; private set; }
 
         public override string ToString() { return Name; }
+
     }
 
     [Serializable]
     public class PlayerSelection {
+
         [SerializeField]
         CharacterData _character;
 
         [SerializeField]
         int _pallete;
-
-        public event Action Changed;
 
         /// <summary> The Player's selected Character. If null, a random Character will be spawned when the match starts. </summary>
         public CharacterData Character {
@@ -98,9 +76,7 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        /// <summary>
-        /// The Player's selected 
-        /// </summary>
+        /// <summary> The Player's selected </summary>
         public int Pallete {
             get { return _pallete; }
             set {
@@ -111,12 +87,15 @@ namespace HouraiTeahouse.SmashBrew {
                     if (count > 0)
                         // This is
                         _pallete = value - count * Mathf.FloorToInt(value / (float) count);
-                } else {
+                }
+                else {
                     _pallete = value;
                 }
                 Changed.SafeInvoke();
             }
         }
+
+        public event Action Changed;
 
         public void Copy(PlayerSelection selection) {
             if (this == selection)
@@ -134,15 +113,14 @@ namespace HouraiTeahouse.SmashBrew {
 
         public static bool operator !=(PlayerSelection s1, PlayerSelection s2) { return !(s1 == s2); }
 
-        public override bool Equals(object obj) {
-            return this == obj as PlayerSelection;
-        }
+        public override bool Equals(object obj) { return this == obj as PlayerSelection; }
 
         public override int GetHashCode() {
             unchecked {
                 return ((_character != null ? _character.GetHashCode() : 0) * 397) ^ _pallete;
             }
         }
+
     }
 
     public sealed class Player {
@@ -161,17 +139,17 @@ namespace HouraiTeahouse.SmashBrew {
             _playerCollection = new ReadOnlyCollection<Player>(_players);
         }
 
-        public PlayerSelection Selection {
-            get { return _selection; }
-            set { _selection.Copy(value); }
-        }
-
         internal Player(int number) {
             ID = number;
             Type = PlayerType.Types[0];
             _selection = new PlayerSelection();
             Selection.Changed += () => Changed.SafeInvoke();
             Level = 3;
+        }
+
+        public PlayerSelection Selection {
+            get { return _selection; }
+            set { _selection.Copy(value); }
         }
 
         /// <summary> Gets an enumeration of all Player. Note this includes all inactive players as well. </summary>
@@ -219,11 +197,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public InputDevice Controller {
-            get {
-                return Check.Range(ID, HInput.Devices.Count)
-                    ? HInput.Devices[ID]
-                    : null;
-            }
+            get { return Check.Range(ID, HInput.Devices.Count) ? HInput.Devices[ID] : null; }
         }
 
         /// <summary> The actual spawned GameObject of the Player. </summary>
@@ -255,17 +229,11 @@ namespace HouraiTeahouse.SmashBrew {
             return !controller ? null : controller.PlayerData;
         }
 
-        public static Player Get(Component comp) {
-            return !comp ? null : Get(comp.gameObject);
-        }
+        public static Player Get(Component comp) { return !comp ? null : Get(comp.gameObject); }
 
-        public static bool IsPlayer(GameObject go) {
-            return Get(go) != null;
-        }
+        public static bool IsPlayer(GameObject go) { return Get(go) != null; }
 
-        public static bool IsPlayer(Component comp) {
-            return Get(comp) != null;
-        }
+        public static bool IsPlayer(Component comp) { return Get(comp) != null; }
 
         public void CycleType() {
             Type = Type.Next;
@@ -278,7 +246,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         internal Character Spawn(Vector3 pos, bool direction) {
             SpawnedCharacter = Selection.Character;
-            var color = Selection.Pallete;
+            int color = Selection.Pallete;
 
             // If the character is null, randomly select a character and pallete
             if (SpawnedCharacter == null) {
@@ -292,10 +260,8 @@ namespace HouraiTeahouse.SmashBrew {
                 return null;
             PlayerObject = prefab.Duplicate(pos).GetComponent<Character>();
             PlayerObject.Direction = direction;
-            var controller =
-                PlayerObject.GetComponentInChildren<PlayerController>();
-            var materialSwap =
-                PlayerObject.GetComponentInChildren<MaterialSwap>();
+            var controller = PlayerObject.GetComponentInChildren<PlayerController>();
+            var materialSwap = PlayerObject.GetComponentInChildren<MaterialSwap>();
             if (controller)
                 controller.PlayerData = this;
             if (materialSwap)
@@ -325,5 +291,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public static bool operator !=(Player p1, Player p2) { return !(p1 == p2); }
+
     }
+
 }

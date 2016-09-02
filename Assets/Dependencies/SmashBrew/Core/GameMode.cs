@@ -1,32 +1,12 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
+
     /// <summary> An abstract class for controlling the global status of the game while under a certain game mode. </summary>
     public abstract class GameMode {
+
         static GameMode _current;
 
         /// <summary> The current game mode. </summary>
@@ -46,11 +26,11 @@ namespace HouraiTeahouse.SmashBrew {
         public abstract bool CPUsAllowed { get; }
 
         /// <summary> All of the characters that cannot be selected for this </summary>
-        public abstract ReadOnlyCollection<CharacterData> ExcludedCharacters {
-            get; }
+        public abstract ReadOnlyCollection<CharacterData> ExcludedCharacters { get; }
 
         /// <summary> All of the stages that cannot be selected for the game mode </summary>
         public abstract ReadOnlyCollection<SceneData> ExcludedStages { get; }
+
     }
 
     [Serializable]
@@ -94,5 +74,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     public abstract class MultiMatchGameMode : GameMode {
+
     }
+
 }

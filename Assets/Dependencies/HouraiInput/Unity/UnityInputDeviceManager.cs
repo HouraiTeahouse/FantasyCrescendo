@@ -1,36 +1,15 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.HouraiInput {
+
     public class UnityInputDeviceManager : InputDeviceManager {
+
         const float DeviceRefreshInterval = 1.0f;
 
-        readonly List<UnityInputDeviceProfile> _deviceProfiles =
-            new List<UnityInputDeviceProfile>();
+        readonly List<UnityInputDeviceProfile> _deviceProfiles = new List<UnityInputDeviceProfile>();
 
         float _deviceRefreshTimer;
         string _joystickHash = "";
@@ -45,23 +24,19 @@ namespace HouraiTeahouse.HouraiInput {
         static string JoystickHash {
             get {
                 string[] joystickNames = Input.GetJoystickNames();
-                return joystickNames.Length + ":"
-                    + string.Join(",", joystickNames);
+                return joystickNames.Length + ":" + string.Join(",", joystickNames);
             }
         }
 
         public override void Update(ulong updateTick, float deltaTime) {
             _deviceRefreshTimer += deltaTime;
-            if (!string.IsNullOrEmpty(_joystickHash)
-                && !(_deviceRefreshTimer >= DeviceRefreshInterval))
+            if (!string.IsNullOrEmpty(_joystickHash) && !(_deviceRefreshTimer >= DeviceRefreshInterval))
                 return;
             _deviceRefreshTimer = 0.0f;
 
-            if (_joystickHash.Equals(JoystickHash,
-                StringComparison.OrdinalIgnoreCase))
+            if (_joystickHash.Equals(JoystickHash, StringComparison.OrdinalIgnoreCase))
                 return;
-            Log.Info(
-                "Change in Unity attached joysticks detected; refreshing device list.");
+            Log.Info("Change in Unity attached joysticks detected; refreshing device list.");
             RefreshDevices();
         }
 
@@ -79,8 +54,7 @@ namespace HouraiTeahouse.HouraiInput {
 
         void AttachKeyboardDevices() {
             foreach (UnityInputDeviceProfile deviceProfile in _deviceProfiles)
-                if (!deviceProfile.IsJoystick
-                    && deviceProfile.IsSupportedOnThisPlatform)
+                if (!deviceProfile.IsJoystick && deviceProfile.IsSupportedOnThisPlatform)
                     AttachKeyboardDeviceWithConfig(deviceProfile);
         }
 
@@ -105,31 +79,25 @@ namespace HouraiTeahouse.HouraiInput {
             }
         }
 
-        void DetectAttachedJoystickDevice(int unityJoystickId,
-                                          string unityJoystickName) {
-            if (unityJoystickName == "WIRED CONTROLLER"
-                || unityJoystickName == " WIRED CONTROLLER") {
+        void DetectAttachedJoystickDevice(int unityJoystickId, string unityJoystickName) {
+            if (unityJoystickName == "WIRED CONTROLLER" || unityJoystickName == " WIRED CONTROLLER") {
                 // Ignore Steam controller for now.
                 return;
             }
 
-            if (unityJoystickName.IndexOf("webcam",
-                StringComparison.OrdinalIgnoreCase) != -1) {
+            if (unityJoystickName.IndexOf("webcam", StringComparison.OrdinalIgnoreCase) != -1) {
                 // Unity thinks some webcams are joysticks. >_<
                 return;
             }
 
             // As of Unity 4.6.3p1, empty strings on windows represent disconnected devices.
             if ((Application.platform == RuntimePlatform.WindowsEditor
-                || Application.platform == RuntimePlatform.WindowsPlayer)
-                && string.IsNullOrEmpty(unityJoystickName))
+                || Application.platform == RuntimePlatform.WindowsPlayer) && string.IsNullOrEmpty(unityJoystickName))
                 return;
 
             UnityInputDeviceProfile matchedDeviceProfile =
-                _deviceProfiles.Find(
-                    config => config.HasJoystickName(unityJoystickName))
-                    ?? _deviceProfiles.Find(
-                        config => config.HasLastResortRegex(unityJoystickName));
+                _deviceProfiles.Find(config => config.HasJoystickName(unityJoystickName))
+                    ?? _deviceProfiles.Find(config => config.HasLastResortRegex(unityJoystickName));
 
             UnityInputDeviceProfile deviceProfile = null;
 
@@ -143,24 +111,17 @@ namespace HouraiTeahouse.HouraiInput {
 
             if (
                 devices.OfType<UnityInputDevice>()
-                    .Any(
-                        unityDevice =>
-                            unityDevice.IsConfiguredWith(deviceProfile,
-                                unityJoystickId))) {
-                Log.Info("Device \"{0}\" is already configured with {1}",
-                    unityJoystickName,
-                    deviceProfile.Name);
+                    .Any(unityDevice => unityDevice.IsConfiguredWith(deviceProfile, unityJoystickId))) {
+                Log.Info("Device \"{0}\" is already configured with {1}", unityJoystickName, deviceProfile.Name);
                 return;
             }
 
             if (!deviceProfile.IsHidden) {
-                var joystickDevice = new UnityInputDevice(deviceProfile,
-                    unityJoystickId);
+                var joystickDevice = new UnityInputDevice(deviceProfile, unityJoystickId);
                 AttachDevice(joystickDevice);
 
                 if (matchedDeviceProfile == null)
-                    Log.Warning(
-                        "Device {0} with name \"{1}\" does not match any known profiles.",
+                    Log.Warning("Device {0} with name \"{1}\" does not match any known profiles.",
                         unityJoystickId,
                         unityJoystickName);
                 else
@@ -170,8 +131,7 @@ namespace HouraiTeahouse.HouraiInput {
                         deviceProfile.Name);
             }
             else {
-                Log.Info(
-                    "Device {0} matching profile {1} ({2}) is hidden and will not be attached.",
+                Log.Info("Device {0} matching profile {1} ({2}) is hidden and will not be attached.",
                     unityJoystickId,
                     deviceProfile.GetType().Name,
                     deviceProfile.Name);
@@ -186,8 +146,7 @@ namespace HouraiTeahouse.HouraiInput {
                 if (inputDevice == null || !inputDevice.Profile.IsJoystick)
                     continue;
                 if (joystickNames.Length >= inputDevice.JoystickId
-                    && inputDevice.Profile.HasJoystickOrRegexName(
-                        joystickNames[inputDevice.JoystickId - 1]))
+                    && inputDevice.Profile.HasJoystickOrRegexName(joystickNames[inputDevice.JoystickId - 1]))
                     continue;
                 devices.Remove(inputDevice);
                 HInput.DetachDevice(inputDevice);
@@ -200,12 +159,12 @@ namespace HouraiTeahouse.HouraiInput {
                 Type type = Type.GetType(typeName);
                 if (type == null)
                     continue;
-                var deviceProfile =
-                    Activator.CreateInstance(type) as UnityInputDeviceProfile;
-                if (deviceProfile != null
-                    && deviceProfile.IsSupportedOnThisPlatform)
+                var deviceProfile = Activator.CreateInstance(type) as UnityInputDeviceProfile;
+                if (deviceProfile != null && deviceProfile.IsSupportedOnThisPlatform)
                     _deviceProfiles.Add(deviceProfile);
             }
         }
+
     }
+
 }

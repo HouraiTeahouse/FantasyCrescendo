@@ -1,32 +1,12 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
+
     /// <summary> A custom layout group created for controlling the layout of the individual character select squares on the
     /// character select screen </summary>
     public class CharacterLayoutGroup : LayoutGroup, ILayoutSelfController {
+
         [SerializeField]
         [Tooltip("The target aspect ratio for the individual children")]
         float _childAspectRatio;
@@ -99,13 +79,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
                     isPrime |= rows != 1 && rows != effectiveCount;
                     int cols = effectiveCount / rows;
                     Vector2 effectiveSpace = availableSpace
-                        - new Vector2(Mathf.Max(0, cols - 1) * _spacing.x,
-                            Mathf.Max(0, rows - 1) * _spacing.y);
-                    var size = new Vector2(effectiveSpace.x / cols,
-                        effectiveSpace.y / rows);
-                    float area =
-                        Mathf.Abs(rows * size.x
-                            - cols * size.y * _childAspectRatio);
+                        - new Vector2(Mathf.Max(0, cols - 1) * _spacing.x, Mathf.Max(0, rows - 1) * _spacing.y);
+                    var size = new Vector2(effectiveSpace.x / cols, effectiveSpace.y / rows);
+                    float area = Mathf.Abs(rows * size.x - cols * size.y * _childAspectRatio);
                     if (area >= maxArea)
                         continue;
                     maxArea = area;
@@ -127,8 +103,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
                     m_Tracker.Add(this,
                         rect,
-                        DrivenTransformProperties.Anchors
-                            | DrivenTransformProperties.AnchoredPosition
+                        DrivenTransformProperties.Anchors | DrivenTransformProperties.AnchoredPosition
                             | DrivenTransformProperties.SizeDelta);
 
                     rect.anchorMin = Vector2.up;
@@ -140,11 +115,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
             Vector2 center = rectTransform.rect.size / 2;
             Vector2 extents = 0.5f
-                * new Vector2(
-                    bestCols * itemSize.x
-                        + Mathf.Max(0, bestCols - 1) * _spacing.x,
-                    bestRows * itemSize.y
-                        + Mathf.Max(0, bestRows - 1) * _spacing.y);
+                * new Vector2(bestCols * itemSize.x + Mathf.Max(0, bestCols - 1) * _spacing.x,
+                    bestRows * itemSize.y + Mathf.Max(0, bestRows - 1) * _spacing.y);
             Vector2 start = center - extents;
 
             for (var i = 0; i < bestRows; i++) {
@@ -158,13 +130,12 @@ namespace HouraiTeahouse.SmashBrew.UI {
                     if (index >= count)
                         break;
 
-                    SetChildAlongAxis(rectChildren[index],
-                        0,
-                        x + j * delta.x,
-                        itemSize.x);
+                    SetChildAlongAxis(rectChildren[index], 0, x + j * delta.x, itemSize.x);
                     SetChildAlongAxis(rectChildren[index], 1, y, itemSize.y);
                 }
             }
         }
+
     }
+
 }

@@ -1,31 +1,38 @@
 using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace HouraiTeahouse {
 
     internal class MediatorTest {
 
-        interface I {
-            int IA { get; set; }
-        }
-
         // Three test event classes
         class A : I {
+
             public int Ia;
 
             public int IA {
-                get { return Ia;  }
+                get { return Ia; }
                 set { Ia = value; }
             }
+
         }
 
         class B : A {
+
             public int b;
+
         }
 
         class C : B {
+
             public int c;
+
+        }
+
+        interface I {
+
+            int IA { get; set; }
+
         }
 
         const int aCount = 5;
@@ -50,13 +57,13 @@ namespace HouraiTeahouse {
 
         Mediator CreateTestMediator() {
             var mediator = new Mediator();
-            for(var i = 0; i < aCount; i ++)
+            for (var i = 0; i < aCount; i ++)
                 mediator.Subscribe(eA);
-            for(var i = 0; i < bCount; i ++)
+            for (var i = 0; i < bCount; i ++)
                 mediator.Subscribe(eB);
-            for(var i = 0; i < cCount; i ++)
+            for (var i = 0; i < cCount; i ++)
                 mediator.Subscribe(eC);
-            for(var i = 0; i < iCount; i ++)
+            for (var i = 0; i < iCount; i ++)
                 mediator.Subscribe(eI);
             return mediator;
         }
@@ -86,9 +93,7 @@ namespace HouraiTeahouse {
             Assert.AreEqual(aCount, mediator.GetSubscriberCount<A>());
             Assert.AreEqual(bCount, mediator.GetSubscriberCount<B>());
             Assert.AreEqual(cCount, mediator.GetSubscriberCount<C>());
-            Assert.Catch<ArgumentNullException>(delegate {
-                mediator.GetSubscriberCount(null);
-            });
+            Assert.Catch<ArgumentNullException>(delegate { mediator.GetSubscriberCount(null); });
         }
 
         [Test]
@@ -107,9 +112,7 @@ namespace HouraiTeahouse {
             Assert.AreEqual(0, mediator.GetSubscriberCount<A>());
             Assert.AreEqual(0, mediator.GetSubscriberCount<B>());
             Assert.AreEqual(0, mediator.GetSubscriberCount<C>());
-            Assert.Catch<ArgumentNullException>(delegate {
-                mediator.Reset(null);
-            });
+            Assert.Catch<ArgumentNullException>(delegate { mediator.Reset(null); });
         }
 
         [Test]
@@ -125,9 +128,7 @@ namespace HouraiTeahouse {
         public void PublishTest() {
             Mediator mediator = CreateTestMediator();
             ExecuteTest(mediator, aCount, bCount, cCount, iCount);
-            Assert.Catch<ArgumentNullException>(delegate {
-                mediator.Publish(null);
-            });
+            Assert.Catch<ArgumentNullException>(delegate { mediator.Publish(null); });
         }
 
         [Test]
@@ -141,9 +142,7 @@ namespace HouraiTeahouse {
             Assert.AreEqual(bCount + 1, mediator.GetSubscriberCount<B>());
             Assert.AreEqual(cCount + 1, mediator.GetSubscriberCount<C>());
             ExecuteTest(mediator, aCount + 2, bCount + 1, cCount + 1, iCount);
-            Assert.Catch<ArgumentNullException>(delegate {
-                mediator.Subscribe<A>(null);
-            });
+            Assert.Catch<ArgumentNullException>(delegate { mediator.Subscribe<A>(null); });
         }
 
         [Test]
@@ -157,10 +156,9 @@ namespace HouraiTeahouse {
             Assert.AreEqual(bCount - 1, mediator.GetSubscriberCount<B>());
             Assert.AreEqual(cCount - 1, mediator.GetSubscriberCount<C>());
             ExecuteTest(mediator, aCount - 2, bCount - 1, cCount - 1, iCount);
-            Assert.Catch<ArgumentNullException>(delegate {
-                mediator.Unsubscribe<A>(null);
-            });
+            Assert.Catch<ArgumentNullException>(delegate { mediator.Unsubscribe<A>(null); });
         }
-    }
-}
 
+    }
+
+}

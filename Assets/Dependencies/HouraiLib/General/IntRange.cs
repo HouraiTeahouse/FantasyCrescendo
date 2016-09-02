@@ -1,25 +1,3 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using UnityEngine;
 
@@ -122,7 +100,10 @@ namespace HouraiTeahouse {
 
         public static implicit operator IntRange(float i) { return new IntRange(Mathf.FloorToInt(i)); }
         public static implicit operator IntRange(int i) { return new IntRange(i); }
-        public static implicit operator IntRange(Range r) { return new IntRange(Mathf.FloorToInt(r.Min), Mathf.FloorToInt(r.Max));}
+
+        public static implicit operator IntRange(Range r) {
+            return new IntRange(Mathf.FloorToInt(r.Min), Mathf.FloorToInt(r.Max));
+        }
 
         public static IntRange operator +(IntRange r1, IntRange r2) {
             return new IntRange(r1.Min + r2.Min, r1.Max + r2.Max);
@@ -132,17 +113,11 @@ namespace HouraiTeahouse {
             return new IntRange(r1.Min - r2.Min, r1.Max - r2.Max);
         }
 
-        public static IntRange operator *(int f, IntRange r) {
-            return new IntRange(f * r.Min, f * r.Max);
-        }
+        public static IntRange operator *(int f, IntRange r) { return new IntRange(f * r.Min, f * r.Max); }
 
-        public static IntRange operator *(IntRange r, int f) {
-            return new IntRange(f * r.Min, f * r.Max);
-        }
+        public static IntRange operator *(IntRange r, int f) { return new IntRange(f * r.Min, f * r.Max); }
 
-        public static IntRange operator /(IntRange r, int f) {
-            return new IntRange(r.Min / f, r.Max / f);
-        }
+        public static IntRange operator /(IntRange r, int f) { return new IntRange(r.Min / f, r.Max / f); }
 
     }
 
@@ -200,11 +175,11 @@ namespace HouraiTeahouse {
         }
 
         public static Range Positives {
-            get { return new Range(0f, float.PositiveInfinity);}
+            get { return new Range(0f, float.PositiveInfinity); }
         }
 
         public static Range Negatives {
-            get { return new Range(float.NegativeInfinity, 0f);}
+            get { return new Range(float.NegativeInfinity, 0f); }
         }
 
         /// <summary> Creates an instance of Range. </summary>
@@ -242,9 +217,7 @@ namespace HouraiTeahouse {
             return UnityEngine.Random.Range(Min, Max);
         }
 
-        public float InverseLerp(float val) {
-            return Mathf.InverseLerp(Min, Max, Clamp(val));
-        }
+        public float InverseLerp(float val) { return Mathf.InverseLerp(Min, Max, Clamp(val)); }
 
         /// <summary> Linearly interpolates between the two extremes of the range. If val = 1, returns Max. If val = 0, returns
         /// Min. If betweeen, the returned value is linearly proportional to the width of the Range. </summary>
@@ -258,25 +231,15 @@ namespace HouraiTeahouse {
         public static implicit operator Range(int f) { return new Range(f); }
         public static implicit operator Range(IntRange r) { return new Range(r.Min, r.Max); }
 
-        public static Range operator +(Range r1, Range r2) {
-            return new Range(r1.Min + r2.Min, r1.Max + r2.Max);
-        }
+        public static Range operator +(Range r1, Range r2) { return new Range(r1.Min + r2.Min, r1.Max + r2.Max); }
 
-        public static Range operator -(Range r1, Range r2) {
-            return new Range(r1.Min - r2.Min, r1.Max - r2.Max);
-        }
+        public static Range operator -(Range r1, Range r2) { return new Range(r1.Min - r2.Min, r1.Max - r2.Max); }
 
-        public static Range operator *(float f, Range r) {
-            return new Range(f * r.Min, f * r.Max);
-        }
+        public static Range operator *(float f, Range r) { return new Range(f * r.Min, f * r.Max); }
 
-        public static Range operator *(Range r, float f) {
-            return new Range(f * r.Min, f * r.Max);
-        }
+        public static Range operator *(Range r, float f) { return new Range(f * r.Min, f * r.Max); }
 
-        public static Range operator /(Range r, float f) {
-            return new Range(r.Min / f, r.Max / f);
-        }
+        public static Range operator /(Range r, float f) { return new Range(r.Min / f, r.Max / f); }
 
     }
 

@@ -1,17 +1,18 @@
-using UnityEngine;
-using UnityEditor;
 using System;
+using UnityEditor;
+using UnityEngine;
 
-namespace HouraiTeahouse
-{
+namespace HouraiTeahouse {
+
     [CustomPropertyDrawer(typeof(SortingLayerAttribute))]
-    public class SortingLayerDrawer : PropertyDrawer
-    {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            var sortingLayerNames = SortingLayerHelper.SortingLayerNames;
+    public class SortingLayerDrawer : PropertyDrawer {
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+            string[] sortingLayerNames = SortingLayerHelper.SortingLayerNames;
             if (property.propertyType != SerializedPropertyType.Integer) {
-                EditorGUI.HelpBox(position, string.Format("{0} is not an integer but has [SortingLayer].", property.name), MessageType.Error);
+                EditorGUI.HelpBox(position,
+                    string.Format("{0} is not an integer but has [SortingLayer].", property.name),
+                    MessageType.Error);
             }
             else if (sortingLayerNames != null) {
                 EditorGUI.BeginProperty(position, label, property);
@@ -41,5 +42,7 @@ namespace HouraiTeahouse
                 EditorGUI.EndProperty();
             }
         }
+
     }
+
 }

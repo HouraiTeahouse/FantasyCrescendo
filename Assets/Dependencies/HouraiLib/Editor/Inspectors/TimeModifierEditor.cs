@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
-    /// <summary>
-    /// Custom Editor for TimeModifier.
-    /// </summary>
+    /// <summary> Custom Editor for TimeModifier. </summary>
     [CustomEditor(typeof(TimeModifier))]
     internal class TimeModifierEditor : ScriptlessEditor {
 
         /// <summary>
-        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
+        ///     <see cref="UnityEditor.Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
@@ -22,4 +20,5 @@ namespace HouraiTeahouse.Editor {
         }
 
     }
+
 }

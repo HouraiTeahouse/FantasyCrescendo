@@ -1,34 +1,14 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System.Collections.Generic;
 using System.Linq;
 
 namespace HouraiTeahouse {
+
     /// <summary> A 2D HashTable. One that requires two keys to access the value. </summary>
     /// <typeparam name="K1"> the type of the first key </typeparam>
     /// <typeparam name="K2"> the type of the second key </typeparam>
     /// <typeparam name="V"> the type of the values stored </typeparam>
     public class Table2D<K1, K2, V> : Dictionary<K1, Dictionary<K2, V>> {
+
         /// <summary> Gets or sets the value associated with the specified pair of keys. </summary>
         /// <param name="key1"> the first key </param>
         /// <param name="key2"> the second key </param>
@@ -80,12 +60,14 @@ namespace HouraiTeahouse {
         public int Remove(K2 key2) {
             return Values.Count(row => row.Remove(key2));
         }
+
     }
 
     /// <summary> A Table2D with identical first and second key types. </summary>
     /// <typeparam name="K"> the type of the keys </typeparam>
     /// <typeparam name="V"> the value stored by the table </typeparam>
     public class Table2D<K, V> : Table2D<K, K, V> {
+
     }
 
     /// <summary> A mirrored Table2D. The keysets are mirroed. If the keyset (a, b) exists, then the keyset (b, a) also exists,
@@ -93,6 +75,7 @@ namespace HouraiTeahouse {
     /// <typeparam name="K"> the type of the keys </typeparam>
     /// <typeparam name="V"> the value stored by the table </typeparam>
     public class MirroredTable2D<K, V> : Table2D<K, V> {
+
         /// <summary> Gets or sets the value associated with the specified pair of keys. If (a, b) does not exist, then (b, a) is
         /// gotten/set. </summary>
         /// <exception cref="KeyNotFoundException"> both (key1, key2) and (key2, key1) do not exist when using the getter. </exception>
@@ -133,5 +116,7 @@ namespace HouraiTeahouse {
         public override bool ContainsKey(K key1, K key2) {
             return base.ContainsKey(key1, key2) || base.ContainsKey(key2, key1);
         }
+
     }
+
 }

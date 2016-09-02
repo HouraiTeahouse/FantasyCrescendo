@@ -8,5 +8,7 @@ namespace HouraiTeahouse.Editor {
         public new T attribute {
             get { return base.attribute as T; }
         }
+
     }
+
 }

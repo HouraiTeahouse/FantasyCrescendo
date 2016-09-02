@@ -1,23 +1,21 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
+using Object = UnityEngine.Object;
 
 public class BuiltInResourcesWindow : EditorWindow {
-    [MenuItem("Window/Built-in styles and icons")]
-    public static void ShowWindow() {
-        BuiltInResourcesWindow w = (BuiltInResourcesWindow) EditorWindow.GetWindow<BuiltInResourcesWindow>();
-        w.Show();
-    }
 
     struct Drawing {
+
         public Rect Rect;
         public Action Draw;
+
     }
 
     List<Drawing> Drawings;
 
-    List<UnityEngine.Object> _objects;
+    List<Object> _objects;
     float _scrollPos;
     float _maxY;
     Rect _oldPosition;
@@ -26,6 +24,12 @@ public class BuiltInResourcesWindow : EditorWindow {
     bool _showingIcons;
 
     string _search = "";
+
+    [MenuItem("Window/Built-in styles and icons")]
+    public static void ShowWindow() {
+        var w = (BuiltInResourcesWindow) GetWindow<BuiltInResourcesWindow>();
+        w.Show();
+    }
 
     void OnGUI() {
         if (position.width != _oldPosition.width && Event.current.type == EventType.Layout) {
@@ -62,11 +66,11 @@ public class BuiltInResourcesWindow : EditorWindow {
 
             Drawings = new List<Drawing>();
 
-            GUIContent inactiveText = new GUIContent("inactive");
-            GUIContent activeText = new GUIContent("active");
+            var inactiveText = new GUIContent("inactive");
+            var activeText = new GUIContent("active");
 
-            float x = 5.0f;
-            float y = 5.0f;
+            var x = 5.0f;
+            var y = 5.0f;
 
             if (_showingStyles) {
                 foreach (GUIStyle ss in GUI.skin.customStyles) {
@@ -75,15 +79,13 @@ public class BuiltInResourcesWindow : EditorWindow {
 
                     GUIStyle thisStyle = ss;
 
-                    Drawing draw = new Drawing();
+                    var draw = new Drawing();
 
-                    float width = Mathf.Max(
-                        100.0f,
+                    float width = Mathf.Max(100.0f,
                         GUI.skin.button.CalcSize(new GUIContent(ss.name)).x,
-                        ss.CalcSize(inactiveText).x + ss.CalcSize(activeText).x
-                                      ) + 16.0f;
+                        ss.CalcSize(inactiveText).x + ss.CalcSize(activeText).x) + 16.0f;
 
-                    float height = 60.0f;
+                    var height = 60.0f;
 
                     if (x + width > position.width - 32 && x > 5.0f) {
                         x = 5.0f;
@@ -108,16 +110,17 @@ public class BuiltInResourcesWindow : EditorWindow {
 
                     Drawings.Add(draw);
                 }
-            } else if (_showingIcons) {
+            }
+            else if (_showingIcons) {
                 if (_objects == null) {
-                    _objects = new List<UnityEngine.Object>(Resources.FindObjectsOfTypeAll(typeof(Texture)));
-                    _objects.Sort((pA, pB) => System.String.Compare(pA.name, pB.name, System.StringComparison.OrdinalIgnoreCase));
+                    _objects = new List<Object>(Resources.FindObjectsOfTypeAll(typeof(Texture)));
+                    _objects.Sort((pA, pB) => string.Compare(pA.name, pB.name, StringComparison.OrdinalIgnoreCase));
                 }
 
-                float rowHeight = 0.0f;
+                var rowHeight = 0.0f;
 
-                foreach (UnityEngine.Object oo in _objects) {
-                    Texture texture = (Texture) oo;
+                foreach (Object oo in _objects) {
+                    var texture = (Texture) oo;
 
                     if (texture.name == "")
                         continue;
@@ -125,12 +128,10 @@ public class BuiltInResourcesWindow : EditorWindow {
                     if (lowerSearch != "" && !texture.name.ToLower().Contains(lowerSearch))
                         continue;
 
-                    Drawing draw = new Drawing();
+                    var draw = new Drawing();
 
-                    float width = Mathf.Max(
-                        GUI.skin.button.CalcSize(new GUIContent(texture.name)).x,
-                        texture.width
-                    ) + 8.0f;
+                    float width = Mathf.Max(GUI.skin.button.CalcSize(new GUIContent(texture.name)).x, texture.width)
+                        + 8.0f;
 
                     float height = texture.height + GUI.skin.button.CalcSize(new GUIContent(texture.name)).y + 8.0f;
 
@@ -150,7 +151,12 @@ public class BuiltInResourcesWindow : EditorWindow {
                         if (GUILayout.Button(texture.name, GUILayout.Width(width)))
                             CopyText("EditorGUIUtility.FindTexture( \"" + texture.name + "\" )");
 
-                        Rect textureRect = GUILayoutUtility.GetRect(texture.width, texture.width, texture.height, texture.height, GUILayout.ExpandHeight(false), GUILayout.ExpandWidth(false));
+                        Rect textureRect = GUILayoutUtility.GetRect(texture.width,
+                            texture.width,
+                            texture.height,
+                            texture.height,
+                            GUILayout.ExpandHeight(false),
+                            GUILayout.ExpandWidth(false));
                         EditorGUI.DrawTextureTransparent(textureRect, texture);
                     };
 
@@ -172,10 +178,10 @@ public class BuiltInResourcesWindow : EditorWindow {
         float areaHeight = position.height - top;
         _scrollPos = GUI.VerticalScrollbar(r, _scrollPos, areaHeight, 0.0f, _maxY);
 
-        Rect area = new Rect(0, top, position.width - 16.0f, areaHeight);
+        var area = new Rect(0, top, position.width - 16.0f, areaHeight);
         GUILayout.BeginArea(area);
 
-        int count = 0;
+        var count = 0;
         foreach (Drawing draw in Drawings) {
             Rect newRect = draw.Rect;
             newRect.y -= _scrollPos;
@@ -193,7 +199,7 @@ public class BuiltInResourcesWindow : EditorWindow {
     }
 
     void CopyText(string pText) {
-        TextEditor editor = new TextEditor();
+        var editor = new TextEditor();
 
         //editor.content = new GUIContent(pText); // Unity 4.x code
         editor.text = pText; // Unity 5.x code
@@ -201,4 +207,5 @@ public class BuiltInResourcesWindow : EditorWindow {
         editor.SelectAll();
         editor.Copy();
     }
+
 }

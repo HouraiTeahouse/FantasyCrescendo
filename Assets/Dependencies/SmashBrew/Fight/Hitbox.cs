@@ -1,30 +1,10 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using UnityConstants;
 using UnityEngine;
+using Random = System.Random;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
@@ -33,6 +13,7 @@ namespace HouraiTeahouse.SmashBrew {
     public sealed class Hitbox : MonoBehaviour {
 
         public enum Type {
+
             // The values here are used as priority mulitpliers
             Inactive = 1,
             Offensive = Inactive << 1,
@@ -42,6 +23,7 @@ namespace HouraiTeahouse.SmashBrew {
             Shield = Intangible << 1,
             Absorb = Shield << 1,
             Reflective = Absorb << 1
+
         }
 
         static readonly Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;
@@ -75,21 +57,18 @@ namespace HouraiTeahouse.SmashBrew {
 
         static Hitbox() {
             ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
-            ReactionMatrix[Type.Offensive, Type.Damageable] =
-                delegate(Hitbox src, Hitbox dst) {
-                    if (dst.Damageable != null)
-                        dst.Damageable.Damage(src, src.BaseDamage);
-                    if (dst.Knockbackable != null)
-                        //TODO : FIX
-                        dst.Knockbackable.Knockback(src, Vector2.one);
-                    DrawEffect(src, dst);
-                };
-            ReactionMatrix[Type.Offensive, Type.Absorb] =
-                ExecuteInterface<IAbsorbable>(h => h.Absorbable,
-                    (a, o) => a.Absorb(o));
-            ReactionMatrix[Type.Offensive, Type.Reflective] =
-                ExecuteInterface<IReflectable>(h => h.Reflectable,
-                    (a, o) => a.Reflect(o));
+            ReactionMatrix[Type.Offensive, Type.Damageable] = delegate(Hitbox src, Hitbox dst) {
+                if (dst.Damageable != null)
+                    dst.Damageable.Damage(src, src.BaseDamage);
+                if (dst.Knockbackable != null)
+                    //TODO : FIX
+                    dst.Knockbackable.Knockback(src, Vector2.one);
+                DrawEffect(src, dst);
+            };
+            ReactionMatrix[Type.Offensive, Type.Absorb] = ExecuteInterface<IAbsorbable>(h => h.Absorbable,
+                (a, o) => a.Absorb(o));
+            ReactionMatrix[Type.Offensive, Type.Reflective] = ExecuteInterface<IReflectable>(h => h.Reflectable,
+                (a, o) => a.Reflect(o));
             ReactionMatrix[Type.Offensive, Type.Invincible] = DrawEffect;
         }
 
@@ -111,14 +90,12 @@ namespace HouraiTeahouse.SmashBrew {
                 if (_registrar != null)
                     _registrar.Unregister(this);
                 _registrar = value;
-                if(value != null)
+                if (value != null)
                     value.Register(this);
             }
         }
 
-        static Action<Hitbox, Hitbox> ExecuteInterface<T>(
-            Predicate<Hitbox> check,
-            Action<T, object> action) {
+        static Action<Hitbox, Hitbox> ExecuteInterface<T>(Predicate<Hitbox> check, Action<T, object> action) {
             return delegate(Hitbox src, Hitbox dst) {
                 if (!check(src))
                     return;
@@ -128,9 +105,7 @@ namespace HouraiTeahouse.SmashBrew {
             };
         }
 
-        static void DrawEffect(Hitbox src, Hitbox dst) {
-            throw new NotImplementedException();
-        }
+        static void DrawEffect(Hitbox src, Hitbox dst) { throw new NotImplementedException(); }
 
         public static void Resolve(Hitbox src, Hitbox dst) {
             ReactionMatrix[src.DefaultType, dst.DefaultType](src, dst);
@@ -165,14 +140,14 @@ namespace HouraiTeahouse.SmashBrew {
 
 #if UNITY_EDITOR
         bool gizmoInitialized;
+
         void OnDrawGizmos() {
             if (!EditorApplication.isPlayingOrWillChangePlaymode && !gizmoInitialized) {
                 ResetType();
                 gizmoInitialized = true;
             }
-            if(IsActive)
-                Gizmo.DrawColliders(GetComponents<Collider>(),
-                    Config.Debug.GetHitboxColor(CurrentType));
+            if (IsActive)
+                Gizmo.DrawColliders(GetComponents<Collider>(), Config.Debug.GetHitboxColor(CurrentType));
         }
 #endif
 
@@ -190,7 +165,7 @@ namespace HouraiTeahouse.SmashBrew {
             //GL.wireframe = false;
         }
 
-        void Reset() { _id = new System.Random().Next(int.MaxValue);}
+        void Reset() { _id = new Random().Next(int.MaxValue); }
 
         void DrawCollider(Collider col, Color color) {
             if (col == null)
@@ -215,8 +190,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (!other.CompareTag(Tags.Hitbox))
                 return;
             var otherHitbox = other.GetComponent<Hitbox>();
-            if (otherHitbox == null
-                || !ReactionMatrix.ContainsKey(CurrentType, otherHitbox.CurrentType))
+            if (otherHitbox == null || !ReactionMatrix.ContainsKey(CurrentType, otherHitbox.CurrentType))
                 return;
             HitboxResolver.AddCollision(this, otherHitbox);
         }
@@ -313,11 +287,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public float BaseDamage {
-            get {
-                return Source == null
-                    ? _damage
-                    : Source.GetComponent<PlayerDamage>().ModifyDamage(_damage);
-            }
+            get { return Source == null ? _damage : Source.GetComponent<PlayerDamage>().ModifyDamage(_damage); }
         }
 
         public bool FlipDirection {
@@ -329,4 +299,5 @@ namespace HouraiTeahouse.SmashBrew {
 
         #endregion
     }
+
 }

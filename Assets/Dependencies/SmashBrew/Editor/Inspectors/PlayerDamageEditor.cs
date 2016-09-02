@@ -4,14 +4,12 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
-    /// <summary>
-    /// A custom Editor for Character
-    /// </summary>
+    /// <summary> A custom Editor for Character </summary>
     [CustomEditor(typeof(PlayerDamage))]
     internal class PlayerDamageEditor : ScriptlessEditor {
 
         /// <summary>
-        /// <see cref="Editor.OnInspectorGUI"/>
+        ///     <see cref="Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
@@ -23,4 +21,5 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         }
 
     }
+
 }

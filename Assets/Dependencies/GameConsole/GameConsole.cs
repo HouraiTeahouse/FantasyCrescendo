@@ -1,31 +1,10 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.Console {
+
     /// <summary> Delegate type for commands executable by GameConsole </summary>
     /// <param name="args"> the Console arguments. Does not include command name </param>
     public delegate void ConsoleCommand(string[] args);
@@ -33,13 +12,13 @@ namespace HouraiTeahouse.Console {
     /// <summary> A globally accessible commandline-like debug console accessible in both the Unity Editor and in builds.
     /// Allows registering bash-like commands. Useful for creating cheat modes and debug views in builds. </summary>
     public static class GameConsole {
+
         /// <summary> Built-in GameConsole commands </summary>
         public static class Commands {
+
             /// <summary> Console Comand for clearing the GameConsole history. </summary>
             /// <param name="args"> Console arguments </param>
-            public static void Clear(string[] args) {
-                GameConsole.Clear();
-            }
+            public static void Clear(string[] args) { GameConsole.Clear(); }
 
             /// <summary> Console command for echoing back the argument values. </summary>
             /// <param name="args"> Console arguments </param>
@@ -47,6 +26,7 @@ namespace HouraiTeahouse.Console {
                 foreach (string arg in args)
                     Log(arg);
             }
+
         }
 
         static Dictionary<string, ConsoleCommand> _commands;
@@ -70,8 +50,7 @@ namespace HouraiTeahouse.Console {
         /// <summary> Called every time the Console is updated. </summary>
         public static event Action OnConsoleUpdate;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad
-            )]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Init() {
             if (_init)
                 return;
@@ -79,8 +58,7 @@ namespace HouraiTeahouse.Console {
             _history = new FixedSizeQueue<string>(100);
 
             // Divert Debug LogCreation messages to the GameConsole as well.
-            Application.logMessageReceived +=
-                (log, stackTrace, type) => Log(log);
+            Application.logMessageReceived += (log, stackTrace, type) => Log(log);
 
             RegisterCommand("echo", Commands.Echo);
             RegisterCommand("clear", Commands.Clear);
@@ -93,8 +71,7 @@ namespace HouraiTeahouse.Console {
         /// <exception cref="ArgumentNullException"> <paramref name="command" /> or <paramref name="callback" /> is null. </exception>
         /// <param name="command"> the command string to use </param>
         /// <param name="callback"> the handler that is to be registered </param>
-        public static void RegisterCommand(string command,
-                                           ConsoleCommand callback) {
+        public static void RegisterCommand(string command, ConsoleCommand callback) {
             Check.NotNull(callback);
             Check.NotNull(command);
             if (!_commands.ContainsKey(command))
@@ -109,8 +86,7 @@ namespace HouraiTeahouse.Console {
         /// <param name="callback"> the handler that is to be registered </param>
         /// >
         /// <returns> whether the command was successfully unregistered or not </returns>
-        public static bool UnregisterCommand(string command,
-                                             ConsoleCommand callback) {
+        public static bool UnregisterCommand(string command, ConsoleCommand callback) {
             if (!_commands.ContainsKey(command))
                 return false;
             ConsoleCommand allCallbacks = _commands[command];
@@ -156,5 +132,7 @@ namespace HouraiTeahouse.Console {
                 Log("An error has occured.");
             }
         }
+
     }
+
 }

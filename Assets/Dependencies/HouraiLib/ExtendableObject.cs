@@ -2,22 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HouraiTeahouse {
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class ExtensionAttribute : Attribute {
-        public Type TargetType { get; set; }
-        public bool Required { get; set; }
-        public bool DisallowMultiple { get; set; }
 
         public ExtensionAttribute(Type type, bool required = false, bool disallowMultiple = false) {
             TargetType = type;
             Required = required;
             DisallowMultiple = disallowMultiple;
         }
+
+        public Type TargetType { get; set; }
+        public bool Required { get; set; }
+        public bool DisallowMultiple { get; set; }
 
     }
 
@@ -30,9 +33,10 @@ namespace HouraiTeahouse {
         List<ScriptableObject> _extensions;
 
         ReadOnlyCollection<ScriptableObject> _readOnlyExtensions;
+
         public ReadOnlyCollection<ScriptableObject> Extensions {
             get {
-                if(_readOnlyExtensions == null)
+                if (_readOnlyExtensions == null)
                     _readOnlyExtensions = new ReadOnlyCollection<ScriptableObject>(_extensions);
                 return _readOnlyExtensions;
             }
@@ -42,11 +46,9 @@ namespace HouraiTeahouse {
         public ScriptableObject GetExtension(Type type) {
             return _extensions.Find(Check.NotNull(type).IsInstanceOfType);
         }
-        
+
         // Generic overload for GetExtension
-        public T GetExtension<T>() {
-            return GetExtensions<T>().FirstOrDefault();
-        }
+        public T GetExtension<T>() { return GetExtensions<T>().FirstOrDefault(); }
 
         // Gets all instances of a given type
         public List<ScriptableObject> GetExtensions(Type type) {
@@ -54,14 +56,10 @@ namespace HouraiTeahouse {
         }
 
         // Generic overload for GetExtensions
-        public IEnumerable<T> GetExtensions<T>() {
-            return _extensions.OfType<T>();
-        }
+        public IEnumerable<T> GetExtensions<T>() { return _extensions.OfType<T>(); }
 
         // Checks whether an extension of a given type is added.
-        public bool HasExtension(Type type) {
-            return GetExtension(type) != null;
-        }
+        public bool HasExtension(Type type) { return GetExtension(type) != null; }
 
         // Generic overload for HasExtetnsion
         public bool HasExtension<T>() { return GetExtensions<T>().Any(); }
@@ -71,7 +69,7 @@ namespace HouraiTeahouse {
             ScriptableObject extension = CreateInstance(type);
             extension.hideFlags = HideFlags.HideInHierarchy;
 #if UNITY_EDITOR
-            if(!EditorApplication.isPlayingOrWillChangePlaymode) {
+            if (!EditorApplication.isPlayingOrWillChangePlaymode) {
                 AssetDatabase.AddObjectToAsset(extension, this);
                 AssetDatabase.SaveAssets();
             }
@@ -86,7 +84,7 @@ namespace HouraiTeahouse {
             var extension = CreateInstance<T>();
             extension.hideFlags = HideFlags.HideInHierarchy;
 #if UNITY_EDITOR
-            if(!EditorApplication.isPlayingOrWillChangePlaymode) {
+            if (!EditorApplication.isPlayingOrWillChangePlaymode) {
                 AssetDatabase.AddObjectToAsset(extension, this);
                 AssetDatabase.SaveAssets();
             }
@@ -100,7 +98,7 @@ namespace HouraiTeahouse {
             if (!_extensions.Remove(extension))
                 return false;
 #if UNITY_EDITOR
-            if(!EditorApplication.isPlayingOrWillChangePlaymode) {
+            if (!EditorApplication.isPlayingOrWillChangePlaymode) {
                 DestroyImmediate(extension, true);
                 AssetDatabase.SaveAssets();
             }

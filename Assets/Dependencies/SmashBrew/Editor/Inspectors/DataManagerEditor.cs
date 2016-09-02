@@ -5,9 +5,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
-    /// <summary>
-    /// A custom Editor for DataManager
-    /// </summary>
+    /// <summary> A custom Editor for DataManager </summary>
     [CustomEditor(typeof(DataManager))]
     public class DataManagerEditor : ScriptlessEditor {
 
@@ -29,11 +27,12 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             list.drawElementCallback = delegate(Rect rect, int index, bool active, bool focused) {
                 rect.y += 2;
                 rect.height -= 4;
-                EditorGUI.PropertyField(rect, list.serializedProperty.GetArrayElementAtIndex(index), new GUIContent(string.Format("ID: {0}", index.ToString("D3"))));
+                EditorGUI.PropertyField(rect,
+                    list.serializedProperty.GetArrayElementAtIndex(index),
+                    new GUIContent(string.Format("ID: {0}", index.ToString("D3"))));
             };
-            list.drawHeaderCallback = delegate(Rect rect) {
-                EditorGUI.LabelField(rect, list.serializedProperty.displayName);
-            };
+            list.drawHeaderCallback =
+                delegate(Rect rect) { EditorGUI.LabelField(rect, list.serializedProperty.displayName); };
             list.onAddCallback = delegate(ReorderableList reorderableList) {
                 SerializedProperty property = reorderableList.serializedProperty;
                 property.InsertArrayElementAtIndex(property.arraySize);
@@ -41,7 +40,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         }
 
         /// <summary>
-        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
+        ///     <see cref="UnityEditor.Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_dontDestroyOnLoad"));
@@ -53,5 +52,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 serializedObject.ApplyModifiedProperties();
             }
         }
+
     }
+
 }

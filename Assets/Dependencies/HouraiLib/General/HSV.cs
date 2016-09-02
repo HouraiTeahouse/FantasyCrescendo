@@ -1,32 +1,12 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using UnityEngine;
 
 namespace HouraiTeahouse {
+
     /// <summary> HSV (Hue/Saturation/Value) color struct. </summary>
     [Serializable]
     public struct HSV {
+
         public static HSV White {
             get { return new HSV(Color.white); }
         }
@@ -111,13 +91,11 @@ namespace HouraiTeahouse {
 
         /// <summary> Initializes an instance of HSV from another instance of HSV. </summary>
         /// <param name="src"> the source HSV instance </param>
-        public HSV(HSV src) : this(src.h, src.s, src.v, src.a) {
-        }
+        public HSV(HSV src) : this(src.h, src.s, src.v, src.a) { }
 
         /// <summary> Initalizes an instance of HSV from a Vector3. </summary>
         /// <param name="src"> the source vector </param>
-        public HSV(Vector3 src) : this(src.x, src.y, src.z) {
-        }
+        public HSV(Vector3 src) : this(src.x, src.y, src.z) { }
 
         /// <summary> Converts the HSVA representatio to a RGBA representation. </summary>
         /// <returns> the RGBA color representation </returns>
@@ -131,13 +109,10 @@ namespace HouraiTeahouse {
         public static implicit operator Color(HSV hsv) { return hsv.ToColor(); }
 
         // implicit converter between HSV and color
-        public static implicit operator HSV(Color color) {
-            return new HSV(color);
-        }
+        public static implicit operator HSV(Color color) { return new HSV(color); }
 
-        public override string ToString() {
-            return "(H:{0}, S:{1}, V:{2}, A:{3})".With(h, s, v, a);
-        }
+        public override string ToString() { return "(H:{0}, S:{1}, V:{2}, A:{3})".With(h, s, v, a); }
 
     }
+
 }

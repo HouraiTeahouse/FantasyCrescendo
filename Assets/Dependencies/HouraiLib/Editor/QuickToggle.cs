@@ -1,17 +1,19 @@
-using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
     [InitializeOnLoad]
     public class QuickToggle {
+
         const string PrefKeyShowToggle = "UnityToolbag.QuickToggle.Visible";
 
-        static GUIStyle styleLock, styleVisible;
+        static GUIStyle styleLock,
+                        styleVisible;
 
         static QuickToggle() {
-            if (EditorPrefs.HasKey(PrefKeyShowToggle) == false) 
+            if (EditorPrefs.HasKey(PrefKeyShowToggle) == false)
                 EditorPrefs.SetBool(PrefKeyShowToggle, false);
 
             EditorApplication.hierarchyWindowItemOnGUI += DrawHierarchyItem;
@@ -26,12 +28,10 @@ namespace HouraiTeahouse.Editor {
 
             // Reserve the draw rects
             var visRect = new Rect(selectionRect) {
-                xMin = selectionRect.xMax - (selectionRect.height * 2.1f),
+                xMin = selectionRect.xMax - selectionRect.height * 2.1f,
                 xMax = selectionRect.xMax - selectionRect.height
             };
-            var lockRect = new Rect(selectionRect) {
-                xMin = selectionRect.xMax - selectionRect.height
-            };
+            var lockRect = new Rect(selectionRect) {xMin = selectionRect.xMax - selectionRect.height};
 
             // Draw the visibility toggle
             bool isActive = target.activeSelf;
@@ -52,7 +52,7 @@ namespace HouraiTeahouse.Editor {
 
         static Object[] GatherObjects(GameObject root) {
             var objects = new List<Object>();
-            var recurseStack = new Stack<GameObject>(new[] { root });
+            var recurseStack = new Stack<GameObject>(new[] {root});
 
             while (recurseStack.Count > 0) {
                 GameObject obj = recurseStack.Pop();
@@ -86,7 +86,8 @@ namespace HouraiTeahouse.Editor {
                     if (isLocked) {
                         comp.hideFlags |= HideFlags.NotEditable;
                         comp.hideFlags |= HideFlags.HideInHierarchy;
-                    } else {
+                    }
+                    else {
                         comp.hideFlags &= ~HideFlags.NotEditable;
                         comp.hideFlags &= ~HideFlags.HideInHierarchy;
                     }
@@ -97,9 +98,7 @@ namespace HouraiTeahouse.Editor {
         }
 
         static void SetVisible(GameObject target, bool isActive) {
-            string undoString = string.Format("{0} {1}",
-                                        isActive ? "Show" : "Hide",
-                                        target.name);
+            string undoString = string.Format("{0} {1}", isActive ? "Show" : "Hide", target.name);
             Undo.RecordObject(target, undoString);
 
             target.SetActive(isActive);
@@ -108,8 +107,7 @@ namespace HouraiTeahouse.Editor {
 
         static void BuildStyles() {
             // All of the styles have been built, don't do anything
-            if (styleLock != null &&
-                styleVisible != null) {
+            if (styleLock != null && styleVisible != null) {
                 return;
             }
 
@@ -119,5 +117,7 @@ namespace HouraiTeahouse.Editor {
             styleLock = GUI.skin.FindStyle("IN LockButton");
             styleVisible = GUI.skin.FindStyle("VisibilityToggle");
         }
+
     }
+
 }

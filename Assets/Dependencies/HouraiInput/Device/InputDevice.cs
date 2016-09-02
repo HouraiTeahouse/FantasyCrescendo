@@ -1,35 +1,13 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.HouraiInput {
-    public class InputDevice {
-        public static readonly InputDevice Null =
-            new InputDevice("NullInputDevice");
 
-        static readonly int ControlCount =
-            Enum.GetValues(typeof(InputTarget)).Length;
+    public class InputDevice {
+
+        public static readonly InputDevice Null = new InputDevice("NullInputDevice");
+
+        static readonly int ControlCount = Enum.GetValues(typeof(InputTarget)).Length;
 
         internal int SortOrder = int.MaxValue;
 
@@ -81,12 +59,9 @@ namespace HouraiTeahouse.HouraiInput {
 
         public bool MenuWasPressed {
             get {
-                return GetControl(InputTarget.Back).WasPressed
-                    || GetControl(InputTarget.Start).WasPressed
-                    || GetControl(InputTarget.Select).WasPressed
-                    || GetControl(InputTarget.System).WasPressed
-                    || GetControl(InputTarget.Pause).WasPressed
-                    || GetControl(InputTarget.Menu).WasPressed;
+                return GetControl(InputTarget.Back).WasPressed || GetControl(InputTarget.Start).WasPressed
+                    || GetControl(InputTarget.Select).WasPressed || GetControl(InputTarget.System).WasPressed
+                    || GetControl(InputTarget.Pause).WasPressed || GetControl(InputTarget.Menu).WasPressed;
             }
         }
 
@@ -182,9 +157,7 @@ namespace HouraiTeahouse.HouraiInput {
         }
 
         public TwoAxisInputControl Direction {
-            get {
-                return DPad.UpdateTick > LeftStick.UpdateTick ? DPad : LeftStick;
-            }
+            get { return DPad.UpdateTick > LeftStick.UpdateTick ? DPad : LeftStick; }
         }
 
         public InputControl GetControl(InputTarget inputTarget) {
@@ -192,14 +165,10 @@ namespace HouraiTeahouse.HouraiInput {
         }
 
         // Warning: this is not efficient. Don't use it unless you have to, m'kay?
-        public static InputTarget GetTarget(string inputControlName) {
-            return inputControlName.ToEnum<InputTarget>();
-        }
+        public static InputTarget GetTarget(string inputControlName) { return inputControlName.ToEnum<InputTarget>(); }
 
         // Warning: this is not efficient. Don't use it unless you have to, m'kay?
-        public InputControl GetControl(string inputControlName) {
-            return GetControl(GetTarget(inputControlName));
-        }
+        public InputControl GetControl(string inputControlName) { return GetControl(GetTarget(inputControlName)); }
 
         public InputControl AddControl(InputTarget inputTarget, string handle) {
             var inputControl = new InputControl(handle, inputTarget);
@@ -207,15 +176,11 @@ namespace HouraiTeahouse.HouraiInput {
             return inputControl;
         }
 
-        public void UpdateWithState(InputTarget inputTarget,
-                                    bool state,
-                                    ulong updateTick) {
+        public void UpdateWithState(InputTarget inputTarget, bool state, ulong updateTick) {
             GetControl(inputTarget).UpdateWithState(state, updateTick);
         }
 
-        public void UpdateWithValue(InputTarget inputTarget,
-                                    float value,
-                                    ulong updateTick) {
+        public void UpdateWithValue(InputTarget inputTarget, float value, ulong updateTick) {
             GetControl(inputTarget).UpdateWithValue(value, updateTick);
         }
 
@@ -241,9 +206,7 @@ namespace HouraiTeahouse.HouraiInput {
                 if (control.RawValue != null)
                     control.UpdateWithValue(control.RawValue.Value, updateTick);
                 else if (control.PreValue != null)
-                    control.UpdateWithValue(
-                        ProcessAnalogControlValue(control, deltaTime),
-                        updateTick);
+                    control.UpdateWithValue(ProcessAnalogControlValue(control, deltaTime), updateTick);
 
                 control.PostUpdate(updateTick);
 
@@ -272,46 +235,27 @@ namespace HouraiTeahouse.HouraiInput {
                         control.UpperDeadZone);
                 }
                 else {
-                    analogValue = ApplyDeadZone(analogValue,
-                        control.LowerDeadZone,
-                        control.UpperDeadZone);
+                    analogValue = ApplyDeadZone(analogValue, control.LowerDeadZone, control.UpperDeadZone);
                 }
             }
             else {
-                analogValue = ApplyDeadZone(analogValue,
-                    control.LowerDeadZone,
-                    control.UpperDeadZone);
+                analogValue = ApplyDeadZone(analogValue, control.LowerDeadZone, control.UpperDeadZone);
             }
 
-            return ApplySmoothing(analogValue,
-                control.LastValue,
-                deltaTime,
-                control.Sensitivity);
+            return ApplySmoothing(analogValue, control.LastValue, deltaTime, control.Sensitivity);
         }
 
-        static float ApplyDeadZone(float value,
-                                   float lowerDeadZone,
-                                   float upperDeadZone) {
-            return Mathf.InverseLerp(lowerDeadZone,
-                upperDeadZone,
-                Mathf.Abs(value)) * Mathf.Sign(value);
+        static float ApplyDeadZone(float value, float lowerDeadZone, float upperDeadZone) {
+            return Mathf.InverseLerp(lowerDeadZone, upperDeadZone, Mathf.Abs(value)) * Mathf.Sign(value);
         }
 
-        static float ApplyCircularDeadZone(float axisValue1,
-                                           float axisValue2,
-                                           float lowerDeadZone,
-                                           float upperDeadZone) {
+        static float ApplyCircularDeadZone(float axisValue1, float axisValue2, float lowerDeadZone, float upperDeadZone) {
             var axisVector = new Vector2(axisValue1, axisValue2);
-            float magnitude = Mathf.InverseLerp(lowerDeadZone,
-                upperDeadZone,
-                axisVector.magnitude);
+            float magnitude = Mathf.InverseLerp(lowerDeadZone, upperDeadZone, axisVector.magnitude);
             return (axisVector.normalized * magnitude).x;
         }
 
-        static float ApplySmoothing(float thisValue,
-                                    float lastValue,
-                                    float deltaTime,
-                                    float sensitivity) {
+        static float ApplySmoothing(float thisValue, float lastValue, float deltaTime, float sensitivity) {
             // 1.0f and above is instant (no smoothing).
             if (Mathf.Approximately(sensitivity, 1.0f))
                 return thisValue;
@@ -326,12 +270,12 @@ namespace HouraiTeahouse.HouraiInput {
             return Mathf.MoveTowards(lastValue, thisValue, maxDelta);
         }
 
-        public bool LastChangedAfter(InputDevice otherDevice) {
-            return LastChangeTick > otherDevice.LastChangeTick;
-        }
+        public bool LastChangedAfter(InputDevice otherDevice) { return LastChangeTick > otherDevice.LastChangeTick; }
 
         public virtual void Vibrate(float leftMotor, float rightMotor) { }
 
         public void Vibrate(float intensity) { Vibrate(intensity, intensity); }
+
     }
+
 }

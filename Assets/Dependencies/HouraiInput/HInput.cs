@@ -1,25 +1,3 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,9 +5,10 @@ using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.HouraiInput {
+
     public static class HInput {
-        static readonly List<InputDeviceManager> DeviceManagers =
-            new List<InputDeviceManager>();
+
+        static readonly List<InputDeviceManager> DeviceManagers = new List<InputDeviceManager>();
 
         static InputDevice _activeDevice = InputDevice.Null;
         static readonly List<InputDevice> devices = new List<InputDevice>();
@@ -66,9 +45,7 @@ namespace HouraiTeahouse.HouraiInput {
             if (_isSetup)
                 return;
 
-            Platform =
-                "{0} {1}".With(SystemInfo.operatingSystem,
-                    SystemInfo.deviceModel).ToUpper();
+            Platform = "{0} {1}".With(SystemInfo.operatingSystem, SystemInfo.deviceModel).ToUpper();
 
             _initialTime = 0.0f;
             _currentTime = 0.0f;
@@ -155,8 +132,7 @@ namespace HouraiTeahouse.HouraiInput {
             InputDevice lastActiveDevice = ActiveDevice;
             for (var i = 0; i < devices.Count; i++) {
                 InputDevice device = devices[i];
-                if (ActiveDevice == InputDevice.Null
-                    || device.LastChangedAfter(ActiveDevice)) {
+                if (ActiveDevice == InputDevice.Null || device.LastChangedAfter(ActiveDevice)) {
                     ActiveDevice = device;
                 }
             }
@@ -166,17 +142,14 @@ namespace HouraiTeahouse.HouraiInput {
             OnActiveDeviceChanged.SafeInvoke(ActiveDevice);
         }
 
-        public static void AddDeviceManager(
-            InputDeviceManager inputDeviceManager) {
+        public static void AddDeviceManager(InputDeviceManager inputDeviceManager) {
             AssertIsSetup();
 
             DeviceManagers.Add(inputDeviceManager);
-            inputDeviceManager.Update(_currentTick,
-                _currentTime - _lastUpdateTime);
+            inputDeviceManager.Update(_currentTick, _currentTime - _lastUpdateTime);
         }
 
-        public static void AddDeviceManager<T>()
-            where T : InputDeviceManager, new() {
+        public static void AddDeviceManager<T>() where T : InputDeviceManager, new() {
             if (!HasDeviceManager<T>())
                 AddDeviceManager(new T());
         }
@@ -190,8 +163,7 @@ namespace HouraiTeahouse.HouraiInput {
             if (_initialTime < float.Epsilon)
                 _initialTime = Time.realtimeSinceStartup;
 
-            _currentTime = Mathf.Max(0.0f,
-                Time.realtimeSinceStartup - _initialTime);
+            _currentTime = Mathf.Max(0.0f, Time.realtimeSinceStartup - _initialTime);
         }
 
         static void UpdateDeviceManagers(float deltaTime) {
@@ -253,5 +225,7 @@ namespace HouraiTeahouse.HouraiInput {
 #endif
                 UnityInputDeviceProfile.Hide(type);
         }
+
     }
+
 }

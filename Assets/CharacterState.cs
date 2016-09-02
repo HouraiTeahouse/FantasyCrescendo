@@ -3,30 +3,33 @@ using UnityEngine;
 namespace HouraiTeahouse.SmashBrew {
 
     public abstract class StateEvent<T> {
+
         public readonly T State;
         protected StateEvent(T state) { State = state; }
+
     }
 
     public class StateInit<T> : StateEvent<T> {
-        public StateInit(T state) : base(state) {
-        }
+
+        public StateInit(T state) : base(state) { }
+
     }
 
     public class StateEnter<T> : StateEvent<T> {
-        public StateEnter(T state) : base(state) {
-        }
+
+        public StateEnter(T state) : base(state) { }
+
     }
 
     public class StateExit<T> : StateEvent<T> {
-        public StateExit(T state) : base(state) {
-        }
+
+        public StateExit(T state) : base(state) { }
+
     }
 
     public abstract class CharacterState<T> : BaseAnimationBehaviour<Character> where T : CharacterState<T> {
 
-        /// <summary>
-        /// Same as Target, renamed for clarity.
-        /// </summary>
+        /// <summary> Same as Target, renamed for clarity. </summary>
         public Character Character {
             get { return Target; }
         }
@@ -35,8 +38,7 @@ namespace HouraiTeahouse.SmashBrew {
             get { return Character != null ? Character.Events : null; }
         }
 
-        public virtual void ProcessInput() {
-        }
+        public virtual void ProcessInput() { }
 
         public override void Initialize(GameObject gameObject) {
             base.Initialize(gameObject);
@@ -54,11 +56,10 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void Dispatch(object evnt) {
-            if(CharacterEvents != null)
+            if (CharacterEvents != null)
                 CharacterEvents.Publish(evnt);
         }
 
     }
-    
-}
 
+}

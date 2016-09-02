@@ -1,33 +1,13 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
+
     /// <summary> An abstract for poolable objects </summary>
     /// <typeparam name="T"> </typeparam>
     public abstract class AbstractPool<T> {
+
         readonly Queue<T> _pool;
 
         /// <summary> Initializes an instance of AbstractPool </summary>
@@ -54,9 +34,7 @@ namespace HouraiTeahouse {
         /// <summary> Returns an object to the pool. </summary>
         /// <param name="obj"> the object to return </param>
         /// <exception cref="ArgumentException"> <paramref name="obj" /> is null </exception>
-        public virtual void Return(T obj) {
-            _pool.Enqueue(Check.NotNull(obj));
-        }
+        public virtual void Return(T obj) { _pool.Enqueue(Check.NotNull(obj)); }
 
         /// <summary> Spawns a specifed number of instances and adds them to the pool. Does nothing if <paramref name="count" /> is
         /// zero or negative. </summary>
@@ -69,11 +47,13 @@ namespace HouraiTeahouse {
         /// <summary> Factory method. Creates a single instance of <typeparamref name="T" /> to add to the pool. </summary>
         /// <returns> the new instance </returns>
         protected abstract T Create();
+
     }
 
     /// <summary> A pool of UnityEngine Objects created from a provided prefab. </summary>
     /// <typeparam name="T"> the type of object to create and pool </typeparam>
     public class PrefabPool<T> : AbstractPool<T> where T : Object {
+
         readonly T _source;
 
         /// <summary> Initializes an instance of PrefabPool </summary>
@@ -82,8 +62,7 @@ namespace HouraiTeahouse {
         /// <param name="initialCount"> the number of objects to initially spawn </param>
         /// >
         /// <exception cref="ArgumentNullException"> <paramref name="source" /> is null </exception>
-        public PrefabPool(T source, int spawnCount, int initialCount = 0)
-            : base(spawnCount, 0) {
+        public PrefabPool(T source, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
             _source = Check.NotNull(source);
             Spawn(initialCount);
         }
@@ -98,11 +77,13 @@ namespace HouraiTeahouse {
                 throw new InvalidOperationException();
             return Object.Instantiate(_source);
         }
+
     }
 
     /// <summary> A pool that creates objects with a provided creation callback. </summary>
     /// <typeparam name="T"> the type of object to create and pool </typeparam>
     public class EventBasedPool<T> : AbstractPool<T> {
+
         readonly Func<T> _creatFunc;
 
         /// <summary> Initializes an instance of EventBasedPool. </summary>
@@ -110,9 +91,7 @@ namespace HouraiTeahouse {
         /// <param name="spawnCount"> the number of objects to spawn when the pool is empty </param>
         /// <param name="initialCount"> the number of objects to initially spawn </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createFunc" /> is null. </exception>
-        public EventBasedPool(Func<T> createFunc,
-                              int spawnCount,
-                              int initialCount = 0) : base(spawnCount, 0) {
+        public EventBasedPool(Func<T> createFunc, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
             _creatFunc = Check.NotNull(createFunc);
             Spawn(initialCount);
         }
@@ -124,23 +103,23 @@ namespace HouraiTeahouse {
             // Should never be null due to check on constructors.
             return _creatFunc();
         }
+
     }
 
     /// <summary> A pool that creates new objects with the </summary>
     /// <typeparam name="T"> </typeparam>
     public class Pool<T> : AbstractPool<T> where T : new() {
+
         /// <summary> Initializes an instance of Pool. </summary>
         /// <param name="spawnCount"> the number of objects to spawn when the pool is empty </param>
         /// <param name="initialCount"> the number of objects to initially spawn </param>
-        public Pool(int spawnCount, int initialCount = 0)
-            : base(spawnCount, initialCount) {
-        }
+        public Pool(int spawnCount, int initialCount = 0) : base(spawnCount, initialCount) { }
 
         /// <summary> Creates an object using the parameterless constructor
         /// <see cref="AbstractPool{T}.Create" />
         /// </summary>
-        protected override T Create() {
-            return new T();
-        }
+        protected override T Create() { return new T(); }
+
     }
+
 }

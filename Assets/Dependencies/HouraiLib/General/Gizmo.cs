@@ -1,31 +1,11 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse {
+
     internal struct GizmoDisposable : IDisposable {
+
         readonly Color? _oldColor;
         readonly Matrix4x4? _oldTransform;
 
@@ -33,26 +13,27 @@ namespace HouraiTeahouse {
             _oldColor = null;
             _oldTransform = null;
             if (color != null) {
-                _oldColor = UnityEngine.Gizmos.color;
-                UnityEngine.Gizmos.color = color.Value;
+                _oldColor = Gizmos.color;
+                Gizmos.color = color.Value;
             }
             if (matrix != null) {
-                _oldTransform = UnityEngine.Gizmos.matrix;
-                UnityEngine.Gizmos.matrix = matrix.Value;
+                _oldTransform = Gizmos.matrix;
+                Gizmos.matrix = matrix.Value;
             }
         }
 
         public void Dispose() {
             if (_oldColor != null)
-                UnityEngine.Gizmos.color = (Color) _oldColor;
+                Gizmos.color = (Color) _oldColor;
             if (_oldTransform != null)
-                UnityEngine.Gizmos.matrix = (Matrix4x4) _oldTransform;
+                Gizmos.matrix = (Matrix4x4) _oldTransform;
         }
-    }
 
+    }
 
     /// <summary> A static utlity class of functions for helping draw Gizmos </summary>
     public static class Gizmo {
+
         /// <summary> Creates an IDisposable object for drawing Gizmos of a certain color. </summary>
         /// <example> using(GizmoUtil.With(Color.white) { // Draw a white cube Gizmos.DrawCube(center, size); } </example>
         /// <param name="color"> the color to set the Gizmos color to </param>
@@ -80,8 +61,7 @@ namespace HouraiTeahouse {
         /// <param name="transform"> the transformation matrix to use when drawing Gizmos </param>
         /// <returns> the IDisposable object for working with Gizmos </returns>
         public static IDisposable With(Transform transform) {
-            return new GizmoDisposable(null,
-                Check.NotNull(transform).localToWorldMatrix);
+            return new GizmoDisposable(null, Check.NotNull(transform).localToWorldMatrix);
         }
 
         /// <summary> Creates an IDisposable object for drawing Gizmos within certain transformation and color. </summary>
@@ -89,17 +69,14 @@ namespace HouraiTeahouse {
         /// <param name="transform"> the transformation matrix to use when drawing Gizmos </param>
         /// <returns> the IDisposable object for working with Gizmos </returns>
         public static IDisposable With(Color color, Transform transform) {
-            return new GizmoDisposable(color,
-                Check.NotNull(transform).localToWorldMatrix);
+            return new GizmoDisposable(color, Check.NotNull(transform).localToWorldMatrix);
         }
 
         /// <summary> Draws a Gizmo that matches the shape and size of a given 3D col </summary>
         /// <param name="collider"> the col to draw </param>
         /// <param name="color"> the color to draw the col in </param>
         /// <param name="solid"> if true, draws a a solid gizmo, otherwise draws it as a wire mesh </param>
-        public static void DrawCollider(Collider collider,
-                                        Color color,
-                                        bool solid = false) {
+        public static void DrawCollider(Collider collider, Color color, bool solid = false) {
             if (collider == null)
                 return;
             using (With(color, collider.transform))
@@ -118,10 +95,9 @@ namespace HouraiTeahouse {
             if (colliders == null)
                 return;
 
-            using (With(color, UnityEngine.Gizmos.matrix)) {
+            using (With(color, Gizmos.matrix)) {
                 foreach (Collider collider in colliders) {
-                    if (collider == null
-                        || (filter != null && !filter(collider)))
+                    if (collider == null || (filter != null && !filter(collider)))
                         continue;
                     DrawCollider3D_Impl(collider, solid);
                 }
@@ -183,25 +159,27 @@ namespace HouraiTeahouse {
             using (With(GetColliderMatrix(collider))) {
                 if (solid) {
                     if (sphereCollider != null)
-                        UnityEngine.Gizmos.DrawSphere(Vector3.zero, 1f);
+                        Gizmos.DrawSphere(Vector3.zero, 1f);
                     else {
                         if (boxCollider != null)
-                            UnityEngine.Gizmos.DrawCube(Vector3.zero, Vector3.one);
+                            Gizmos.DrawCube(Vector3.zero, Vector3.one);
                         else if (meshCollider != null)
-                            UnityEngine.Gizmos.DrawMesh(meshCollider.sharedMesh, Vector3.zero);
+                            Gizmos.DrawMesh(meshCollider.sharedMesh, Vector3.zero);
                     }
                 }
                 else {
                     if (sphereCollider != null)
-                        UnityEngine.Gizmos.DrawWireSphere(Vector3.zero, 1f);
+                        Gizmos.DrawWireSphere(Vector3.zero, 1f);
                     else {
                         if (boxCollider != null)
-                            UnityEngine.Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+                            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
                         else if (meshCollider != null)
-                            UnityEngine.Gizmos.DrawWireMesh(meshCollider.sharedMesh, Vector3.zero);
+                            Gizmos.DrawWireMesh(meshCollider.sharedMesh, Vector3.zero);
                     }
                 }
             }
         }
+
     }
+
 }

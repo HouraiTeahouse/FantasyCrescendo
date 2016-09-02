@@ -1,30 +1,10 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 
 namespace HouraiTeahouse {
+
     public static class DelegateExtensions {
+
         /// <summary> Safely invokes a delegate. If it is null, it will not be invoked. </summary>
         /// <param name="action"> the delegate to invoke </param>
         public static void SafeInvoke(this Action action) {
@@ -47,9 +27,7 @@ namespace HouraiTeahouse {
         /// <param name="action"> the delegate to invoke </param>
         /// <param name="arg1"> the first paramter </param>
         /// <param name="arg2"> the second parameter </param>
-        public static void SafeInvoke<T1, T2>(this Action<T1, T2> action,
-                                              T1 arg1,
-                                              T2 arg2) {
+        public static void SafeInvoke<T1, T2>(this Action<T1, T2> action, T1 arg1, T2 arg2) {
             if (action != null)
                 action(arg1, arg2);
         }
@@ -62,11 +40,7 @@ namespace HouraiTeahouse {
         /// <param name="arg1"> the first paramter </param>
         /// <param name="arg2"> the second parameter </param>
         /// <param name="arg3"> the third parameter </param>
-        public static void SafeInvoke<T1, T2, T3>(
-            this Action<T1, T2, T3> action,
-            T1 arg1,
-            T2 arg2,
-            T3 arg3) {
+        public static void SafeInvoke<T1, T2, T3>(this Action<T1, T2, T3> action, T1 arg1, T2 arg2, T3 arg3) {
             if (action != null)
                 action(arg1, arg2, arg3);
         }
@@ -81,12 +55,11 @@ namespace HouraiTeahouse {
         /// <param name="arg2"> the second parameter </param>
         /// <param name="arg3"> the third parameter </param>
         /// <param name="arg4"> the fourth parameter </param>
-        public static void SafeInvoke<T1, T2, T3, T4>(
-            this Action<T1, T2, T3, T4> action,
-            T1 arg1,
-            T2 arg2,
-            T3 arg3,
-            T4 arg4) {
+        public static void SafeInvoke<T1, T2, T3, T4>(this Action<T1, T2, T3, T4> action,
+                                                      T1 arg1,
+                                                      T2 arg2,
+                                                      T3 arg3,
+                                                      T4 arg4) {
             if (action != null)
                 action(arg1, arg2, arg3, arg4);
         }
@@ -116,8 +89,7 @@ namespace HouraiTeahouse {
         /// <param name="func"> the function to memoize </param>
         /// <exception cref="ArgumentNullException"> <paramref name="func" /> is null </exception>
         /// <returns> the memoized function </returns>
-        public static Func<T, TResult> Memoize<T, TResult>(
-            this Func<T, TResult> func) {
+        public static Func<T, TResult> Memoize<T, TResult>(this Func<T, TResult> func) {
             Check.NotNull(func);
             var cache = new Dictionary<T, TResult>();
             return delegate(T val) {
@@ -136,8 +108,7 @@ namespace HouraiTeahouse {
         /// <param name="func"> the function to memoize </param>
         /// <exception cref="ArgumentNullException"> <paramref name="func" /> is null </exception>
         /// <returns> the memoized function </returns>
-        public static Func<T1, T2, TResult> Memoize<T1, T2, TResult>(
-            this Func<T1, T2, TResult> func) {
+        public static Func<T1, T2, TResult> Memoize<T1, T2, TResult>(this Func<T1, T2, TResult> func) {
             Check.NotNull(func);
             var cache = new Table2D<T1, T2, TResult>();
             return delegate(T1 arg1, T2 arg2) {
@@ -146,5 +117,7 @@ namespace HouraiTeahouse {
                 return cache[arg1, arg2];
             };
         }
+
     }
+
 }

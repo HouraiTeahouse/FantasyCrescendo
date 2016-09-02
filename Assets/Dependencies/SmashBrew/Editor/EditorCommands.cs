@@ -1,7 +1,8 @@
-using UnityEditor;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
+using Random = System.Random;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
@@ -9,7 +10,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
 
         [MenuItem("Smash Brew/Add Offensive Hitbox %h")]
         static void AddOffensiveHitbox() {
-            AddHitbox(Hitbox.Type.Offensive); 
+            AddHitbox(Hitbox.Type.Offensive);
         }
 
         [MenuItem("Smash Brew/Add Hurtbox %#h")]
@@ -26,7 +27,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         static void AddHitbox(Hitbox.Type type) {
             var hitboxes = new List<Hitbox>();
             var rootMap = new Dictionary<GameObject, List<Hitbox>>();
-            var idGen = new System.Random();
+            var idGen = new Random();
             Undo.IncrementCurrentGroup();
             foreach (GameObject go in Selection.gameObjects) {
                 var hbGo = new GameObject();
@@ -39,18 +40,14 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 Undo.SetTransformParent(hb.transform, go.transform, "Parent Hitbox");
                 hb.transform.Reset();
                 Undo.RecordObject(collider, "Edit Collider Size");
-                collider.radius = 1f /
-                    ((Vector3) (hb.transform.localToWorldMatrix * Vector3.one))
-                        .Max();
+                collider.radius = 1f / ((Vector3) (hb.transform.localToWorldMatrix * Vector3.one)).Max();
                 var character = hbGo.GetComponentInParent<Character>();
-                GameObject rootGo = character != null
-                    ? character.gameObject
-                    : hb.transform.root.gameObject;
-                if(!rootMap.ContainsKey(rootGo))
+                GameObject rootGo = character != null ? character.gameObject : hb.transform.root.gameObject;
+                if (!rootMap.ContainsKey(rootGo))
                     rootMap[rootGo] = new List<Hitbox>();
                 rootMap[rootGo].Add(hb);
             }
-            foreach (var set in rootMap) {
+            foreach (KeyValuePair<GameObject, List<Hitbox>> set in rootMap) {
                 Hitbox[] allHitboxes = set.Key.GetComponentsInChildren<Hitbox>();
                 int i = allHitboxes.Length - set.Value.Count;
                 Undo.RecordObjects(set.Value.ToArray(), "Name Changes");
@@ -60,9 +57,12 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 }
             }
             Selection.objects = hitboxes.GetGameObject().ToArray();
-            Undo.SetCurrentGroupName(string.Format("Generate {0} Hitbox{1}", type, hitboxes.Count > 0 ? "es" : string.Empty));
+            Undo.SetCurrentGroupName(string.Format("Generate {0} Hitbox{1}",
+                type,
+                hitboxes.Count > 0 ? "es" : string.Empty));
             EventsEditorWindow.GetWindow().Repaint();
         }
-    }
-}
 
+    }
+
+}

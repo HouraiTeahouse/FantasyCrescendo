@@ -1,19 +1,18 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
     public class EventListener {
+
         readonly Dictionary<EventType, Action<Event>> _responses;
 
-        public EventListener() {
-            _responses = new Dictionary<EventType, Action<Event>>();
-        }
+        public EventListener() { _responses = new Dictionary<EventType, Action<Event>>(); }
 
         public void EventCheck() {
             Event evt = Event.current;
-            var type = evt.type;
+            EventType type = evt.type;
             if (_responses.ContainsKey(type))
                 _responses[type].SafeInvoke(evt);
         }
@@ -33,7 +32,7 @@ namespace HouraiTeahouse.Editor {
         }
 
         public EventListener AddListeners(IEnumerable<EventType> types, Action<Event> action) {
-            foreach (var type in types.EmptyIfNull())
+            foreach (EventType type in types.EmptyIfNull())
                 AddListener(type, action);
             return this;
         }
@@ -48,16 +47,14 @@ namespace HouraiTeahouse.Editor {
         }
 
         public EventListener RemoveListeners(IEnumerable<EventType> types, Action<Event> action) {
-            foreach (var type in types.EmptyIfNull())
+            foreach (EventType type in types.EmptyIfNull())
                 RemoveListener(type, action);
             return this;
         }
 
         public void ClearType(EventType type) { _responses.Remove(type); }
 
-        public void Clear() {
-            _responses.Clear();
-        }
+        public void Clear() { _responses.Clear(); }
 
         public event Action<Event> MouseDragged {
             add { AddListener(EventType.MouseDrag, value); }
@@ -89,44 +86,29 @@ namespace HouraiTeahouse.Editor {
     public static class GUIStyleExtensions {
 
         public static GUIStyle WithPadding(this GUIStyle style, RectOffset padding) {
-            return new GUIStyle(Check.NotNull(style)) {
-                padding = Check.NotNull(padding) 
-            };
+            return new GUIStyle(Check.NotNull(style)) {padding = Check.NotNull(padding)};
         }
 
         public static GUIStyle WithMargins(this GUIStyle style, RectOffset margin) {
-            return new GUIStyle(Check.NotNull(style)) {
-                margin = Check.NotNull(margin) 
-            };
+            return new GUIStyle(Check.NotNull(style)) {margin = Check.NotNull(margin)};
         }
 
-        public static GUIStyle WithoutPadding(this GUIStyle style) {
-            return style.WithPadding(new RectOffset());
-        }
+        public static GUIStyle WithoutPadding(this GUIStyle style) { return style.WithPadding(new RectOffset()); }
 
-        public static GUIStyle WithoutMargins(this GUIStyle style) {
-            return style.WithMargins(new RectOffset());
-        }
+        public static GUIStyle WithoutMargins(this GUIStyle style) { return style.WithMargins(new RectOffset()); }
 
         public static GUIStyle WithRichText(this GUIStyle style) {
-            return new GUIStyle(Check.NotNull(style)) {
-                richText = true
-            };
+            return new GUIStyle(Check.NotNull(style)) {richText = true};
         }
 
         public static GUIStyle WithoutRichText(this GUIStyle style) {
-            return new GUIStyle(Check.NotNull(style)) {
-                richText = false 
-            };
+            return new GUIStyle(Check.NotNull(style)) {richText = false};
         }
 
         public static GUIStyle WithAlignment(this GUIStyle style, TextAnchor alignment) {
-            return new GUIStyle(Check.NotNull(style)) {
-                alignment = alignment
-            };
+            return new GUIStyle(Check.NotNull(style)) {alignment = alignment};
         }
 
     }
 
 }
-

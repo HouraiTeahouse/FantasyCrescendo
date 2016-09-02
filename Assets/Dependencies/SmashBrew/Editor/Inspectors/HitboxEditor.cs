@@ -1,5 +1,5 @@
-using UnityEditor;
 using HouraiTeahouse.Editor;
+using UnityEditor;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
@@ -12,6 +12,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         }
 
         public override bool RequiresConstantRepaint() { return true; }
-    }
-}
 
+    }
+
+}

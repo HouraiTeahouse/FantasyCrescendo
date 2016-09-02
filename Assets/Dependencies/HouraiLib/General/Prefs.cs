@@ -1,29 +1,8 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace HouraiTeahouse {
@@ -53,10 +32,7 @@ namespace HouraiTeahouse {
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                Log.Info("Loaded value from PlayerPrefs: \"{0}\" : {1} ({2})",
-                    key,
-                    value,
-                    typeof(T).Name);
+                Log.Info("Loaded value from PlayerPrefs: \"{0}\" : {1} ({2})", key, value, typeof(T).Name);
             return value;
         }
 
@@ -71,8 +47,7 @@ namespace HouraiTeahouse {
         /// <param name="key"> the key the object is saved to </param>
         /// <returns> the deserialized object </returns>
         public static T GetObject<T>(string key) {
-            return Load(key,
-                JsonUtility.FromJson<T>(PlayerPrefs.GetString(key)));
+            return Load(key, JsonUtility.FromJson<T>(PlayerPrefs.GetString(key)));
         }
 
         /// <summary> Serializes an object to JSON format and saves it to PlayerPrefs. </summary>
@@ -212,9 +187,7 @@ namespace HouraiTeahouse {
 
         void ISerializationCallbackReceiver.OnBeforeSerialize() { }
 
-        void ISerializationCallbackReceiver.OnAfterDeserialize() {
-            QueueLoad();
-        }
+        void ISerializationCallbackReceiver.OnAfterDeserialize() { QueueLoad(); }
 
         /// <summary> Reads the value stored in </summary>
         /// <returns> </returns>
@@ -237,72 +210,68 @@ namespace HouraiTeahouse {
             else {
                 _value = _defaultValue;
                 Write(_defaultValue);
-                Log.Info(
-                    "Perf key \"{0}\" not found. Default value of {1} ({2}) loaded.",
-                    _key,
-                    _value,
-                    typeof(T).Name);
+                Log.Info("Perf key \"{0}\" not found. Default value of {1} ({2}) loaded.", _key, _value, typeof(T).Name);
             }
         }
 
         public bool HasKey() { return Prefs.Exists(_key); }
 
         public void DeleteKey() { Prefs.Delete(_key); }
+
     }
 
     [Serializable]
     public sealed class PrefInt : AbstractPref<int> {
+
         public PrefInt(string key) : base(key) { }
 
         protected override int Read() { return Prefs.GetInt(Key); }
 
         protected override void Write(int value) { Prefs.SetInt(Key, value); }
 
-        public static implicit operator int(PrefInt prefInt) {
-            return prefInt == null ? 0 : prefInt.Value;
-        }
+        public static implicit operator int(PrefInt prefInt) { return prefInt == null ? 0 : prefInt.Value; }
+
     }
 
     [Serializable]
     public sealed class PrefBool : AbstractPref<bool> {
+
         public PrefBool(string key) : base(key) { }
 
         protected override bool Read() { return Prefs.GetBool(Key); }
 
         protected override void Write(bool value) { Prefs.SetBool(Key, value); }
 
-        public static implicit operator bool(PrefBool perfBool) {
-            return perfBool != null && perfBool.Value;
-        }
+        public static implicit operator bool(PrefBool perfBool) { return perfBool != null && perfBool.Value; }
+
     }
 
     [Serializable]
     public sealed class PrefFloat : AbstractPref<float> {
+
         public PrefFloat(string key) : base(key) { }
 
         protected override float Read() { return Prefs.GetFloat(Key); }
 
-        protected override void Write(float value) {
-            Prefs.SetFloat(Key, value);
-        }
+        protected override void Write(float value) { Prefs.SetFloat(Key, value); }
 
-        public static implicit operator float(PrefFloat prefFloat) {
-            return prefFloat == null ? 0f : prefFloat.Value;
-        }
+        public static implicit operator float(PrefFloat prefFloat) { return prefFloat == null ? 0f : prefFloat.Value; }
+
     }
 
     [Serializable]
     public sealed class PrefString : AbstractPref<string> {
+
         public PrefString(string key) : base(key) { }
 
         protected override string Read() { return Prefs.GetString(Key); }
 
-        protected override void Write(string value) {
-            Prefs.SetString(Key, value);
-        }
+        protected override void Write(string value) { Prefs.SetString(Key, value); }
 
         public static implicit operator string(PrefString prefString) {
             return prefString == null ? string.Empty : prefString.Value;
         }
+
     }
+
 }

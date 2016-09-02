@@ -1,25 +1,3 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +6,7 @@ using UnityConstants;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
@@ -41,9 +20,44 @@ namespace HouraiTeahouse.SmashBrew {
     [RequireComponent(typeof(PlayerDamage), typeof(PlayerKnockback))]
     [RequireComponent(typeof(Gravity), typeof(Ground))]
     public sealed class Character : HouraiBehaviour, IHitboxController {
+
         enum FacingMode {
+
             Rotation,
             Scale
+
+        }
+
+        void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
+            Check.NotNull(hitbox);
+            if (_hitboxMap == null)
+                _hitboxMap = new Dictionary<int, Hitbox>();
+            int id = hitbox.ID;
+            if (_hitboxMap.ContainsKey(hitbox.ID))
+                Log.Error("Hitboxes {0} and {1} on {2} have the same id. Ensure that they have different IDs.",
+                    hitbox,
+                    _hitboxMap[id],
+                    gameObject.name);
+            else
+                _hitboxMap.Add(id, hitbox);
+        }
+
+        bool IRegistrar<Hitbox>.Unregister(Hitbox obj) {
+            return _hitboxMap != null && _hitboxMap.Remove(Check.NotNull(obj).ID);
+        }
+
+        /// <summary> Retrieves a hitbox given it's ID. </summary>
+        /// <param name="id"> the ID to look for </param>
+        /// <returns> the hitbox if found, null otherwise. </returns>
+        public Hitbox GetHitbox(int id) {
+            return _hitboxMap.GetOrDefault(id);
+        }
+
+        public void ResetAllHitboxes() {
+            foreach (Hitbox hitbox in Hitboxes.IgnoreNulls()) {
+                if (hitbox.ResetType())
+                    Log.Info("{0} {1}", this, hitbox);
+            }
         }
 
         #region Public Properties
@@ -80,9 +94,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Gets how many remaining jumps the Character currently has. </summary>
         public int JumpCount { get; private set; }
 
-        /// <summary>
-        /// Gets an immutable collection of hitboxes that belong to 
-        /// </summary>
+        /// <summary> Gets an immutable collection of hitboxes that belong to </summary>
         public ICollection<Hitbox> Hitboxes {
             get { return _hitboxMap.Values; }
         }
@@ -98,7 +110,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void ResetCharacter() {
-            foreach (var resetable in GetComponentsInChildren<IResettable>().IgnoreNulls())
+            foreach (IResettable resetable in GetComponentsInChildren<IResettable>().IgnoreNulls())
                 resetable.OnReset();
         }
 
@@ -137,41 +149,6 @@ namespace HouraiTeahouse.SmashBrew {
         ParticleSystem[] _particles;
 
         #endregion
-
-        void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
-            Check.NotNull(hitbox);
-            if(_hitboxMap == null)
-                _hitboxMap = new Dictionary<int, Hitbox>();
-            int id = hitbox.ID;
-            if (_hitboxMap.ContainsKey(hitbox.ID))
-                Log.Error(
-                    "Hitboxes {0} and {1} on {2} have the same id. Ensure that they have different IDs.",
-                    hitbox,
-                    _hitboxMap[id],
-                    gameObject.name);
-            else
-                _hitboxMap.Add(id, hitbox); 
-        }
-
-        bool IRegistrar<Hitbox>.Unregister(Hitbox obj) {
-            return _hitboxMap != null && _hitboxMap.Remove(Check.NotNull(obj).ID);
-        }
-
-        /// <summary>
-        /// Retrieves a hitbox given it's ID.
-        /// </summary>
-        /// <param name="id">the ID to look for</param>
-        /// <returns>the hitbox if found, null otherwise.</returns>
-        public Hitbox GetHitbox(int id) {
-            return _hitboxMap.GetOrDefault(id);
-        }
-
-        public void ResetAllHitboxes() {
-            foreach (Hitbox hitbox in Hitboxes.IgnoreNulls()) {
-                if(hitbox.ResetType())
-                    Log.Info("{0} {1}", this, hitbox);
-            }
-        }
 
         #region Required Components
 
@@ -220,10 +197,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             JumpCount++;
 
-            Events.Publish(new PlayerJumpEvent {
-                Ground = Ground,
-                RemainingJumps = MaxJumpCount - JumpCount
-            });
+            Events.Publish(new PlayerJumpEvent {Ground = Ground, RemainingJumps = MaxJumpCount - JumpCount});
         }
 
         public void SetWeaponVisibilty(int weapon, bool state) {
@@ -279,9 +253,7 @@ namespace HouraiTeahouse.SmashBrew {
         void AnimationUpdate() {
             Animator.SetBool(CharacterAnim.Grounded, Ground);
             Animator.SetBool(CharacterAnim.Jump, _jumpQueued);
-            Animator.SetBool(CharacterAnim.Tap,
-                Time.realtimeSinceStartup - _lastTap
-                    > Config.Player.TapPersistence);
+            Animator.SetBool(CharacterAnim.Tap, Time.realtimeSinceStartup - _lastTap > Config.Player.TapPersistence);
 
             _jumpQueued = false;
         }
@@ -299,8 +271,7 @@ namespace HouraiTeahouse.SmashBrew {
                 JumpCount = 0;
             }
             Rigidbody.velocity = velocity;
-            gameObject.layer = velocity.magnitude
-                > Config.Physics.TangibleSpeedCap
+            gameObject.layer = velocity.magnitude > Config.Physics.TangibleSpeedCap
                 ? Layers.Intangible
                 : Layers.Character;
 
@@ -314,8 +285,7 @@ namespace HouraiTeahouse.SmashBrew {
             gameObject.tag = Tags.Player;
             gameObject.layer = Layers.Character;
 
-            Rigidbody.constraints = RigidbodyConstraints.FreezePositionZ
-                | RigidbodyConstraints.FreezeRotation;
+            Rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
             Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             Rigidbody.isKinematic = false;
             Rigidbody.useGravity = false;
@@ -341,7 +311,8 @@ namespace HouraiTeahouse.SmashBrew {
             Type component = typeof(Component);
             // Use reflection to find required Components for Characters and statuses
             // Enumerate all concrete Component types
-            return ReflectionUtilty.AllTypes.ConcreteClasses()
+            return
+                ReflectionUtilty.AllTypes.ConcreteClasses()
                     .IsAssignableFrom(component)
                     .WithAttribute<RequiredAttribute>()
                     .Keys()
@@ -356,4 +327,5 @@ namespace HouraiTeahouse.SmashBrew {
 
         #endregion
     }
+
 }

@@ -9,7 +9,7 @@ namespace HouraiTeahouse {
 
         [MenuItem("Debug/Print Selection %#v")]
         public static void PrintSelection() {
-            foreach(Object obj in Selection.objects)
+            foreach (Object obj in Selection.objects)
                 Log.Info("{0} ({1})", obj.name, obj.GetType());
         }
 
@@ -20,7 +20,7 @@ namespace HouraiTeahouse {
 
         [MenuItem("Animator/Zero Transition %#t")]
         public static void ZeroTransition() {
-            foreach (var transition in Selection.objects.OfType<AnimatorStateTransition>()) {
+            foreach (AnimatorStateTransition transition in Selection.objects.OfType<AnimatorStateTransition>()) {
                 transition.exitTime = 1;
                 transition.duration = 0;
                 transition.offset = 0;
@@ -29,6 +29,5 @@ namespace HouraiTeahouse {
         }
 
     }
-    
-}
 
+}

@@ -1,25 +1,3 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,9 +28,7 @@ namespace HouraiTeahouse.Localization {
                 if (languageManager.HasKey(_localizationKey))
                     _text.text = Process(languageManager[_localizationKey]);
                 else
-                    Log.Warning(
-                        "Tried to localize key {0}, but LanguageManager has no such key",
-                        LocalizationKey);
+                    Log.Warning("Tried to localize key {0}, but LanguageManager has no such key", LocalizationKey);
             }
         }
 
@@ -74,14 +50,12 @@ namespace HouraiTeahouse.Localization {
             if (languageManager.HasKey(_localizationKey))
                 _text.text = Process(languageManager[_localizationKey]);
             else
-                Log.Warning(
-                    "Tried to localize key {0}, but LanguageManager has no such key",
-                    _localizationKey);
+                Log.Warning("Tried to localize key {0}, but LanguageManager has no such key", _localizationKey);
         }
 
         protected virtual void OnDestroy() {
-            var languageManager = LanguageManager.Instance;
-            if(languageManager != null)
+            LanguageManager languageManager = LanguageManager.Instance;
+            if (languageManager != null)
                 languageManager.OnChangeLanguage -= OnChangeLanguage;
         }
 
@@ -93,25 +67,20 @@ namespace HouraiTeahouse.Localization {
             if (language.ContainsKey(_localizationKey))
                 _text.text = Process(language[_localizationKey]);
             else
-                Log.Warning(
-                    "Tried to localize key {0}, but langauge {1} has no such key",
-                    _localizationKey,
-                    language);
+                Log.Warning("Tried to localize key {0}, but langauge {1} has no such key", _localizationKey, language);
         }
 
         /// <summary> Post-Processing on the retrieved localized string. </summary>
         /// <param name="val"> the pre-processed localized string </param>
         /// <returns> the post-processed localized string </returns>
-        protected virtual string Process(string val) {
-            return val;
-        }
+        protected virtual string Process(string val) { return val; }
+
     }
 
     /// <summary> An AbstractLocalizedText where the localization key is defined via serializaiton </summary>
-    [HelpURL(
-        "http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localized_Text"
-        )]
+    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localized_Text")]
     public sealed class LocalizedText : AbstractLocalizedText {
+
         /// <summary> The format for the localization string to be displayed in. </summary>
         /// <see cref="string.Format" />
         [SerializeField]
@@ -136,8 +105,8 @@ namespace HouraiTeahouse.Localization {
         /// <summary>
         ///     <see cref="AbstractLocalizedText" />
         /// </summary>
-        protected override string Process(string val) {
-            return _format.IsNullOrEmpty() ? val : _format.With(val);
-        }
+        protected override string Process(string val) { return _format.IsNullOrEmpty() ? val : _format.With(val); }
+
     }
+
 }

@@ -7,9 +7,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Localization.Editor {
 
-    /// <summary>
-    /// A custom Editor for LanguageManager.
-    /// </summary>
+    /// <summary> A custom Editor for LanguageManager. </summary>
     [CustomEditor(typeof(LanguageManager))]
     internal class LanguageManagerEditor : ScriptlessEditor {
 
@@ -19,12 +17,10 @@ namespace HouraiTeahouse.Localization.Editor {
 
         Regex _splitCamelCase;
 
-        void OnEnable() {
-            _splitCamelCase = new Regex(".([A-Z])");
-        }
+        void OnEnable() { _splitCamelCase = new Regex(".([A-Z])"); }
 
         /// <summary>
-        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
+        ///     <see cref="UnityEditor.Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
@@ -34,7 +30,7 @@ namespace HouraiTeahouse.Localization.Editor {
                 availableLanguages = langManager.AvailableLanguages.ToArray();
                 display = availableLanguages.Select(lang => _splitCamelCase.Replace(lang, " $1")).ToArray();
                 Language language = langManager.CurrentLangauge;
-                if(language != null)
+                if (language != null)
                     _index = Array.LastIndexOf(availableLanguages, langManager.CurrentLangauge.Name);
             }
 

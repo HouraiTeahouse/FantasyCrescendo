@@ -1,25 +1,3 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2016 Hourai Teahouse
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -53,8 +31,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             base.Awake();
             _rTransform = GetComponent<RectTransform>();
             _rTransform.localScale = Vector3.one;
-            _cTransform =
-                GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+            _cTransform = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         }
 
         /// <summary> Unity callback. Called once every frame, after all Update calls are processed. </summary>
@@ -62,8 +39,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (Target == null)
                 return;
             Bounds bounds = _collider.bounds;
-            Vector3 worldPosition = bounds.center
-                + new Vector3(0f, bounds.extents.y, 0f) + _positionBias;
+            Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + _positionBias;
 
             //then you calculate the position of the UI element
             //0,0 for the canvas is at the center of the screen, whereas WorldToViewPortPoint treats the lower left corner as 0,0. Because of this,
@@ -71,8 +47,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
             Vector2 viewportPosition = Camera.main.WorldToViewportPoint(worldPosition);
             //now you can set the position of the ui element
-            _rTransform.anchoredPosition = viewportPosition.Mult(_cTransform.sizeDelta)
-                    - 0.5f * _cTransform.sizeDelta;
+            _rTransform.anchoredPosition = viewportPosition.Mult(_cTransform.sizeDelta) - 0.5f * _cTransform.sizeDelta;
         }
 
         /// <summary>
@@ -81,9 +56,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
         public override void SetData(Player data) {
             base.SetData(data);
             _target = data;
-            _collider = _target != null
-                ? _target.PlayerObject.MovementCollider
-                : null;
+            _collider = _target != null ? _target.PlayerObject.MovementCollider : null;
         }
+
     }
+
 }
