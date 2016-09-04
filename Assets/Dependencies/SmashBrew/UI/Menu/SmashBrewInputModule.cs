@@ -1,3 +1,4 @@
+using System.Linq;
 using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -42,14 +43,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         void SendMessage<T>(InputTarget targetControl, GameObject target, ExecuteEvents.EventFunction<T> handler)
             where T : IEventSystemHandler {
-            int count = HInput.Devices.Count;
-            for (var i = 0; i < count; i++) {
-                InputDevice device = HInput.Devices[i];
-                if (!device[targetControl].WasPressed)
-                    continue;
+            if (HInput.Devices.Any(device => device[targetControl].WasPressed))
                 ExecuteEvents.Execute(target, GetBaseEventData(), handler);
-                return;
-            }
         }
 
         /// <summary> Called once every frame while InputModule is active. </summary>
@@ -66,9 +61,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 return;
 
             Vector2 axis = Vector2.zero;
-            int count = HInput.Devices.Count;
-            for (var i = 0; i < count; i++) {
-                InputDevice device = HInput.Devices[i];
+            foreach (InputDevice device in HInput.Devices) {
                 axis.x += device[_horizontal];
                 axis.y += device[_vertical];
             }

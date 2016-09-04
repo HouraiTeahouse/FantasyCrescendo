@@ -15,12 +15,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="state" /> is null </exception>
         public static T GetBehaviour<T>(this AnimatorState state) where T : StateMachineBehaviour {
             StateMachineBehaviour[] behaviours = Argument.NotNull(state).behaviours;
-            for (var i = 0; i < behaviours.Length; i++) {
-                var test = behaviours[i] as T;
-                if (test != null)
-                    return test;
-            }
-            return null;
+            return behaviours.OfType<T>().FirstOrDefault();
         }
 
         /// <summary> Like GetComponent, except for AnimatorStates. </summary>
@@ -31,10 +26,7 @@ namespace HouraiTeahouse {
         public static StateMachineBehaviour GetComponent(this AnimatorState state, Type type) {
             Argument.NotNull(type);
             StateMachineBehaviour[] behaviours = Argument.NotNull(state).behaviours;
-            for (var i = 0; i < behaviours.Length; i++)
-                if (type.IsInstanceOfType(behaviours[i]))
-                    return behaviours[i];
-            return null;
+            return behaviours.FirstOrDefault(type.IsInstanceOfType);
         }
 
         /// <summary> Gets all StateMachineBehaviour that are of a specified type </summary>

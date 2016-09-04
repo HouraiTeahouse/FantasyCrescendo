@@ -17,11 +17,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <summary> Unity Callback. Called once every frame. </summary>
         void Update() {
             Vector2 distortion = Vector2.zero;
-            int count = HInput.Devices.Count;
-            for (var i = 0; i < count; i++) {
-                InputDevice device = HInput.Devices[i];
-                if (device == null)
-                    continue;
+            foreach (InputDevice device in HInput.Devices.IgnoreNulls()) {
                 float x = device[_verticalAxis];
                 float y = device[_horizontalAxis];
                 if (Mathf.Abs(distortion.x) < Mathf.Abs(x))

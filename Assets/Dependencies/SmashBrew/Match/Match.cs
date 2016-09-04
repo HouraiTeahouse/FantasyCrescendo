@@ -13,6 +13,15 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         void Awake() { _eventManager = Mediator.Global; }
 
+        /// <summary> Unity Callback. Called before the object's first frame. </summary>
+        void Start() {
+            // Don't restart a match if it is still in progress
+            if (InMatch)
+                return;
+            _eventManager.Publish(new MatchStartEvent());
+            InMatch = true;
+        }
+
         /// <summary> Ends the match. </summary>
         /// <param name="noContest"> is the match ending prematurely? If set to true, no winner will be declared. </param>
         public void FinishMatch(bool noContest = false) {
@@ -42,15 +51,6 @@ namespace HouraiTeahouse.SmashBrew {
                 winner = null;
             }
             _eventManager.Publish(new MatchEndEvent(result, winner));
-        }
-
-        /// <summary> Unity Callback. Called before the object's first frame. </summary>
-        void Start() {
-            // Don't restart a match if it is still in progress
-            if (InMatch)
-                return;
-            _eventManager.Publish(new MatchStartEvent());
-            InMatch = true;
         }
 
     }

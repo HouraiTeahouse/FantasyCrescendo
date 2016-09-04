@@ -36,13 +36,13 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void OnEnable() {
-            for (var i = 0; i < commands.Length; i++)
-                commands[i].Register();
+            foreach (Command command in commands)
+                command.Register();
         }
 
         void OnDisable() {
-            for (var i = 0; i < commands.Length; i++)
-                commands[i].Unregister();
+            foreach (Command command in commands)
+                command.Unregister();
         }
 
         void ChangeHitboxes(bool state) {

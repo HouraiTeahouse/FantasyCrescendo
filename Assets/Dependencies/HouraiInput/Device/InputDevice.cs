@@ -67,9 +67,8 @@ namespace HouraiTeahouse.HouraiInput {
 
         public InputControl AnyButton {
             get {
-                for (var i = 0; i < Controls.Length; i++) {
-                    InputControl control = Controls[i];
-                    if (control != null && control.IsButton && control.IsPressed)
+                foreach (InputControl control in Controls.IgnoreNulls()) {
+                    if (control.IsButton && control.IsPressed)
                         return control;
                 }
                 return InputControl.Null;
@@ -185,12 +184,8 @@ namespace HouraiTeahouse.HouraiInput {
         }
 
         public void PreUpdate(ulong updateTick, float deltaTime) {
-            for (var i = 0; i < Controls.Length; i++) {
-                InputControl control = Controls[i];
-                if (control == null)
-                    continue;
+            foreach (InputControl control in Controls.IgnoreNulls())
                 control.PreUpdate(updateTick);
-            }
         }
 
         public virtual void Update(ulong updateTick, float deltaTime) {
@@ -199,10 +194,7 @@ namespace HouraiTeahouse.HouraiInput {
 
         public void PostUpdate(ulong updateTick, float deltaTime) {
             // Apply post-processing to controls.
-            for (var i = 0; i < Controls.Length; i++) {
-                InputControl control = Controls[i];
-                if (control == null)
-                    continue;
+            foreach (InputControl control in Controls.IgnoreNulls()) {
                 if (control.RawValue != null)
                     control.UpdateWithValue(control.RawValue.Value, updateTick);
                 else if (control.PreValue != null)

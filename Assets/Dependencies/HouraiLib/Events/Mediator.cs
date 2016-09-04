@@ -67,10 +67,12 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="evnt" /> is null </exception>
         public void Publish(object evnt) {
             Argument.NotNull(evnt);
-            Type[] typeSet = GetEventTypes(evnt.GetType());
-            for (var i = 0; i < typeSet.Length; i++)
-                if (_subscribers.ContainsKey(typeSet[i]))
-                    _subscribers[typeSet[i]].DynamicInvoke(evnt);
+            Type eventType = evnt.GetType();
+            Type[] typeSet = GetEventTypes(eventType);
+            Log.Info("Event Published: " + eventType.Name);
+            foreach (Type type in typeSet)
+                if (_subscribers.ContainsKey(type))
+                    _subscribers[type].DynamicInvoke(evnt);
         }
 
         /// <summary> Gets the count of subscribers to certain type of event. </summary>

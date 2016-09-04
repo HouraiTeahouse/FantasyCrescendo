@@ -135,8 +135,8 @@ namespace HouraiTeahouse.SmashBrew {
                         intParameter = i,
                         objectReferenceParameter = this
                     };
-            for (var i = 0; i < _otherEvents.Count; i++)
-                yield return _otherEvents[i];
+            foreach (AnimationEvent evt in _otherEvents)
+                yield return evt;
         }
 
         /// <summary> Gets the state at a given index and keyframe. </summary>

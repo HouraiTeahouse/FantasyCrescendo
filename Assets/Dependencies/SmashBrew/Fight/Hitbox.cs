@@ -99,9 +99,8 @@ namespace HouraiTeahouse.SmashBrew {
             return delegate(Hitbox src, Hitbox dst) {
                 if (!check(src))
                     return;
-                T[] components = src.GetComponents<T>();
-                for (var i = 0; i < components.Length; i++)
-                    action(components[i], dst);
+                foreach (T component in src.GetComponents<T>())
+                    action(component, dst);
             };
         }
 

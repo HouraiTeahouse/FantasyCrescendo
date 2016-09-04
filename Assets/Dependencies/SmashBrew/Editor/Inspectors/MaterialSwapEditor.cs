@@ -70,7 +70,6 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             for (var i = 0; i < _swaps.arraySize; i++) {
                 SerializedProperty swap = _swaps.GetArrayElementAtIndex(i);
                 using (new EditorGUILayout.HorizontalScope()) {
-                    ;
                     using (new EditorGUILayout.VerticalScope()) {
                         DrawArraySet(swap.FindPropertyRelative("TargetRenderers"));
                     }

@@ -98,9 +98,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             // Only set the sizes when invoked for horizontal axis, not the positions.
 
             if (axis) {
-                for (var i = 0; i < rectChildren.Count; i++) {
-                    RectTransform rect = rectChildren[i];
-
+                foreach (RectTransform rect in rectChildren) {
                     m_Tracker.Add(this,
                         rect,
                         DrivenTransformProperties.Anchors | DrivenTransformProperties.AnchoredPosition

@@ -118,14 +118,14 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 190264, guid: 0ba914c4c7fc6a6438577914877a7c38, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 1439043700}
-  - 114: {fileID: 268162961}
-  - 114: {fileID: 268162960}
-  - 114: {fileID: 268162963}
-  - 114: {fileID: 268162959}
-  - 114: {fileID: 268162958}
+  - component: {fileID: 1439043700}
+  - component: {fileID: 268162961}
+  - component: {fileID: 268162960}
+  - component: {fileID: 268162963}
+  - component: {fileID: 268162959}
+  - component: {fileID: 268162958}
   m_Layer: 0
   m_Name: Match
   m_TagString: Untagged
@@ -203,10 +203,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 180214, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 286019993}
-  - 114: {fileID: 286019994}
+  - component: {fileID: 286019993}
+  - component: {fileID: 286019994}
   m_Layer: 5
   m_Name: Player Info Display
   m_TagString: Untagged
@@ -259,10 +259,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 155018, guid: 0345ff633a23aca4486c4d480f88db65, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 677365846}
-  - 114: {fileID: 321557486}
+  - component: {fileID: 677365846}
+  - component: {fileID: 321557486}
   m_Layer: 0
   m_Name: Test Match Start
   m_TagString: EditorOnly
@@ -283,21 +283,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testCharacters:
-  - Data: {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
-    Pallete: 0
-  - Data: {fileID: 11400000, guid: 45d080091dc932446a7b38796769198a, type: 2}
-    Pallete: 1
+  - _character: {fileID: 11400000, guid: c5c502acdb11a8349a2d99bcf7579352, type: 2}
+    _pallete: 0
+  - _character: {fileID: 11400000, guid: c5c502acdb11a8349a2d99bcf7579352, type: 2}
+    _pallete: 1
 --- !u!1 &396439430
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 144482, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 396439431}
-  - 222: {fileID: 396439434}
-  - 114: {fileID: 396439433}
-  - 114: {fileID: 396439432}
+  - component: {fileID: 396439431}
+  - component: {fileID: 396439434}
+  - component: {fileID: 396439433}
+  - component: {fileID: 396439432}
   m_Layer: 5
   m_Name: FPS Counter
   m_TagString: Untagged
@@ -382,13 +382,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 127326, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 610117697}
-  - 222: {fileID: 610117701}
-  - 114: {fileID: 610117700}
-  - 114: {fileID: 610117698}
-  - 114: {fileID: 610117699}
+  - component: {fileID: 610117697}
+  - component: {fileID: 610117701}
+  - component: {fileID: 610117700}
+  - component: {fileID: 610117698}
+  - component: {fileID: 610117699}
   m_Layer: 5
   m_Name: Match Timer
   m_TagString: Untagged
@@ -491,12 +491,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 110626, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 647235577}
-  - 222: {fileID: 647235580}
-  - 114: {fileID: 647235579}
-  - 114: {fileID: 647235578}
+  - component: {fileID: 647235577}
+  - component: {fileID: 647235580}
+  - component: {fileID: 647235579}
+  - component: {fileID: 647235578}
   m_Layer: 5
   m_Name: Tint
   m_TagString: Untagged
@@ -629,6 +629,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 189600, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 13dfa57d19714bd4c9391966df89c554, type: 2}
   m_IsPrefabParent: 0
@@ -637,9 +641,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 167958, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 750982853}
+  - component: {fileID: 750982853}
   m_Layer: 5
   m_Name: Sliding Area
   m_TagString: Untagged
@@ -672,9 +676,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 163088, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 799000651}
+  - component: {fileID: 799000651}
   m_Layer: 5
   m_Name: Console
   m_TagString: Untagged
@@ -709,15 +713,15 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 132628, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 227133648}
-  - 223: {fileID: 1177385125}
-  - 114: {fileID: 1177385124}
-  - 114: {fileID: 1177385123}
-  - 114: {fileID: 1177385126}
-  - 114: {fileID: 1177385122}
-  - 114: {fileID: 1177385121}
+  - component: {fileID: 227133648}
+  - component: {fileID: 1177385125}
+  - component: {fileID: 1177385124}
+  - component: {fileID: 1177385123}
+  - component: {fileID: 1177385126}
+  - component: {fileID: 1177385122}
+  - component: {fileID: 1177385121}
   m_Layer: 5
   m_Name: Stage GUI
   m_TagString: GUI
@@ -827,12 +831,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 192140, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 1202604363}
-  - 114: {fileID: 1202604366}
-  - 222: {fileID: 1202604365}
-  - 114: {fileID: 1202604364}
+  - component: {fileID: 1202604363}
+  - component: {fileID: 1202604366}
+  - component: {fileID: 1202604365}
+  - component: {fileID: 1202604364}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -937,12 +941,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 164576, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 1628403057}
-  - 222: {fileID: 1628403060}
-  - 114: {fileID: 1628403059}
-  - 114: {fileID: 1628403058}
+  - component: {fileID: 1628403057}
+  - component: {fileID: 1628403060}
+  - component: {fileID: 1628403059}
+  - component: {fileID: 1628403058}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1027,12 +1031,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 124200, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 1806785867}
-  - 222: {fileID: 1806785870}
-  - 114: {fileID: 1806785869}
-  - 114: {fileID: 1806785868}
+  - component: {fileID: 1806785867}
+  - component: {fileID: 1806785870}
+  - component: {fileID: 1806785869}
+  - component: {fileID: 1806785868}
   m_Layer: 5
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
@@ -1147,13 +1151,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 141668, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 1905201594}
-  - 222: {fileID: 1905201598}
-  - 114: {fileID: 1905201597}
-  - 114: {fileID: 1905201596}
-  - 114: {fileID: 1905201595}
+  - component: {fileID: 1905201594}
+  - component: {fileID: 1905201598}
+  - component: {fileID: 1905201597}
+  - component: {fileID: 1905201596}
+  - component: {fileID: 1905201595}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1257,10 +1261,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 185424, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 1945048262}
-  - 222: {fileID: 1945048263}
+  - component: {fileID: 1945048262}
+  - component: {fileID: 1945048263}
   m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
@@ -1300,11 +1304,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 117414, guid: f06c7255f886daa4eafe4c20271e2464, type: 2}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 2091895205}
-  - 222: {fileID: 2091895207}
-  - 114: {fileID: 2091895206}
+  - component: {fileID: 2091895205}
+  - component: {fileID: 2091895207}
+  - component: {fileID: 2091895206}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged

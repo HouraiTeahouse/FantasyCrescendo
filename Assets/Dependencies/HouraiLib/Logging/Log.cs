@@ -18,16 +18,16 @@ namespace HouraiTeahouse {
         string _timeFormat = "MM-dd-yy HH:mm:ss";
 
         [SerializeField]
-        LogTypeSettings _info = new LogTypeSettings {Enabled = true, StackTrace = Application.GetStackTraceLogType(LogType.Log)};
+        LogTypeSettings _info = new LogTypeSettings {Enabled = true, StackTrace = StackTraceLogType.None};
 
         [SerializeField]
-        LogTypeSettings _debug = new LogTypeSettings {Enabled = true, StackTrace = Application.GetStackTraceLogType(LogType.Assert)};
+        LogTypeSettings _debug = new LogTypeSettings {Enabled = true, StackTrace = StackTraceLogType.ScriptOnly};
 
         [SerializeField]
-        LogTypeSettings _warning = new LogTypeSettings {Enabled = true, StackTrace = Application.GetStackTraceLogType(LogType.Warning)};
+        LogTypeSettings _warning = new LogTypeSettings {Enabled = true, StackTrace = StackTraceLogType.ScriptOnly};
 
         [SerializeField]
-        LogTypeSettings _error = new LogTypeSettings {Enabled = true, StackTrace = Application.GetStackTraceLogType(LogType.Error)};
+        LogTypeSettings _error = new LogTypeSettings {Enabled = true, StackTrace = StackTraceLogType.ScriptOnly};
 
         public LogTypeSettings Info {
             get { return _info; }

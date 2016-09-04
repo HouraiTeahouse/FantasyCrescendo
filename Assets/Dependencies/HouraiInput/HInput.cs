@@ -118,24 +118,17 @@ namespace HouraiTeahouse.HouraiInput {
         internal static void OnApplicationFocus(bool focusState) {
             if (focusState)
                 return;
-            for (var i = 0; i < devices.Count; i++) {
-                InputDevice device = devices[i];
-                for (var j = 0; j < device.Controls.Length; j++) {
-                    InputControl control = device.Controls[j];
-                    if (control != null)
-                        control.SetZeroTick();
-                }
+            foreach (InputDevice device in devices) {
+                foreach (InputControl control in device.Controls.IgnoreNulls())
+                    control.SetZeroTick();
             }
         }
 
         static void UpdateActiveDevice() {
             InputDevice lastActiveDevice = ActiveDevice;
-            for (var i = 0; i < devices.Count; i++) {
-                InputDevice device = devices[i];
-                if (ActiveDevice == InputDevice.Null || device.LastChangedAfter(ActiveDevice)) {
+            foreach (InputDevice device in devices)
+                if (ActiveDevice == InputDevice.Null || device.LastChangedAfter(ActiveDevice))
                     ActiveDevice = device;
-                }
-            }
 
             if (lastActiveDevice == ActiveDevice)
                 return;
@@ -167,28 +160,24 @@ namespace HouraiTeahouse.HouraiInput {
         }
 
         static void UpdateDeviceManagers(float deltaTime) {
-            int count = DeviceManagers.Count;
-            for (var i = 0; i < count; i++)
-                DeviceManagers[i].Update(_currentTick, deltaTime);
+            foreach (var manager in DeviceManagers)
+                manager.Update(_currentTick, deltaTime);
         }
 
         static void PreUpdateDevices(float deltaTime) {
-            int count = devices.Count;
-            for (var i = 0; i < count; i++)
-                devices[i].PreUpdate(_currentTick, deltaTime);
+            foreach (var device in devices)
+                device.PreUpdate(_currentTick, deltaTime);
         }
 
         static void UpdateDevices(float deltaTime) {
-            int count = devices.Count;
-            for (var i = 0; i < count; i++)
-                devices[i].Update(_currentTick, deltaTime);
+            foreach (var device in devices)
+                device.Update(_currentTick, deltaTime);
             OnUpdate.SafeInvoke(_currentTick, deltaTime);
         }
 
         static void PostUpdateDevices(float deltaTime) {
-            int count = devices.Count;
-            for (var i = 0; i < count; i++)
-                devices[i].PostUpdate(_currentTick, deltaTime);
+            foreach (var device in devices)
+                device.PostUpdate(_currentTick, deltaTime);
         }
 
         public static void AttachDevice(InputDevice inputDevice) {
