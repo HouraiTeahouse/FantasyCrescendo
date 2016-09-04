@@ -53,7 +53,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (Component == null || data == null || data.PalleteCount <= 0)
                 return;
             int portrait = Player != null ? Player.Selection.Pallete : 0;
-            data.GetPortrait(portrait).LoadAsync(delegate(Sprite sprite) {
+            data.GetPortrait(portrait).LoadAsync().Then(sprite => {
                 if (!sprite)
                     return;
                 Texture2D texture = data.GetPortrait(portrait).Asset.texture;
@@ -62,7 +62,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 Component.texture = texture;
                 Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
                 SetRect();
-            });
+            }).Done();
         }
 
     }

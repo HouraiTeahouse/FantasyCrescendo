@@ -21,7 +21,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <exception cref="ArgumentNullException"> <paramref name="enumeration" /> is null </exception>
         /// <param name="data"> the data to be set </param>
         public static void SetData<T>(this IEnumerable<IDataComponent<T>> enumeration, T data) {
-            foreach (IDataComponent<T> dataComponent in Check.NotNull(enumeration).IgnoreNulls())
+            foreach (IDataComponent<T> dataComponent in Argument.NotNull(enumeration).IgnoreNulls())
                 dataComponent.SetData(data);
         }
 

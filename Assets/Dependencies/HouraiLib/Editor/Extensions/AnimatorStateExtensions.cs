@@ -14,7 +14,7 @@ namespace HouraiTeahouse {
         /// <returns> the behaviour that was retrieved, or null if none were found </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="state" /> is null </exception>
         public static T GetBehaviour<T>(this AnimatorState state) where T : StateMachineBehaviour {
-            StateMachineBehaviour[] behaviours = Check.NotNull(state).behaviours;
+            StateMachineBehaviour[] behaviours = Argument.NotNull(state).behaviours;
             for (var i = 0; i < behaviours.Length; i++) {
                 var test = behaviours[i] as T;
                 if (test != null)
@@ -29,8 +29,8 @@ namespace HouraiTeahouse {
         /// <returns> the behaviour that was retrieved, or null if none where fun </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="state" /> or <paramref name="type" /> are null </exception>
         public static StateMachineBehaviour GetComponent(this AnimatorState state, Type type) {
-            Check.NotNull(type);
-            StateMachineBehaviour[] behaviours = Check.NotNull(state).behaviours;
+            Argument.NotNull(type);
+            StateMachineBehaviour[] behaviours = Argument.NotNull(state).behaviours;
             for (var i = 0; i < behaviours.Length; i++)
                 if (type.IsInstanceOfType(behaviours[i]))
                     return behaviours[i];

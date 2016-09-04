@@ -25,7 +25,7 @@ namespace HouraiTeahouse.SmashBrew {
             foreach (T datum in data) {
                 object result = func(datum);
                 if (result == null)
-                    Log.Info(datum);
+                    Log.Error(datum);
                 Assert.NotNull(result);
             }
         }
@@ -35,7 +35,7 @@ namespace HouraiTeahouse.SmashBrew {
             foreach (T datum in data) {
                 foreach (object obj in func(datum)) {
                     if (obj == null)
-                        Log.Info(datum);
+                        Log.Error(datum);
                     Assert.NotNull(obj);
                 }
             }

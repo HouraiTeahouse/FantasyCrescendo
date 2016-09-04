@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -207,7 +206,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <see cref="PalleteCount" /> </exception>
         /// <returns> </returns>
         public Resource<Sprite> GetPortrait(int pallete) {
-            Check.Argument("pallete", Check.Range(pallete, PalleteCount));
+            Argument.Check("pallete", Check.Range(pallete, PalleteCount));
             if (_portraitResources == null || _portraits.Length != _portraitResources.Length)
                 RegeneratePortraits();
             return _portraitResources[pallete];

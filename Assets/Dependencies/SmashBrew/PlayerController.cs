@@ -4,7 +4,7 @@ using UnityEngine;
 namespace HouraiTeahouse.SmashBrew {
 
     [DisallowMultipleComponent]
-    public class PlayerController : HouraiBehaviour {
+    public class PlayerController : BaseBehaviour {
 
         TapDetector _altTap;
 

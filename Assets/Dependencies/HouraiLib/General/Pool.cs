@@ -34,7 +34,7 @@ namespace HouraiTeahouse {
         /// <summary> Returns an object to the pool. </summary>
         /// <param name="obj"> the object to return </param>
         /// <exception cref="ArgumentException"> <paramref name="obj" /> is null </exception>
-        public virtual void Return(T obj) { _pool.Enqueue(Check.NotNull(obj)); }
+        public virtual void Return(T obj) { _pool.Enqueue(Argument.NotNull(obj)); }
 
         /// <summary> Spawns a specifed number of instances and adds them to the pool. Does nothing if <paramref name="count" /> is
         /// zero or negative. </summary>
@@ -60,17 +60,15 @@ namespace HouraiTeahouse {
         /// <param name="source"> the source prefab to copy </param>
         /// <param name="spawnCount"> the number of objects to spawn when the pool is empty </param>
         /// <param name="initialCount"> the number of objects to initially spawn </param>
-        /// >
         /// <exception cref="ArgumentNullException"> <paramref name="source" /> is null </exception>
         public PrefabPool(T source, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
-            _source = Check.NotNull(source);
+            _source = Argument.NotNull(source);
             Spawn(initialCount);
         }
 
         /// <summary> Creates an object by instaniating th
         /// <see cref="AbstractPool{T}.Create" />
         /// </summary>
-        /// <returns> </returns>
         /// <exception cref="InvalidOperationException"> the source prefab has been destroyed </exception>
         protected override T Create() {
             if (!_source)
@@ -92,7 +90,7 @@ namespace HouraiTeahouse {
         /// <param name="initialCount"> the number of objects to initially spawn </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createFunc" /> is null. </exception>
         public EventBasedPool(Func<T> createFunc, int spawnCount, int initialCount = 0) : base(spawnCount, 0) {
-            _creatFunc = Check.NotNull(createFunc);
+            _creatFunc = Argument.NotNull(createFunc);
             Spawn(initialCount);
         }
 

@@ -2,7 +2,7 @@ namespace HouraiTeahouse {
 
     /// <summary> An abstract class for MonoBehaviours that handle events published by Mediators. </summary>
     /// <typeparam name="T"> the event type to subscribe to </typeparam>
-    public abstract class EventBehaviour<T> : HouraiBehaviour {
+    public abstract class EventBehaviour<T> : BaseBehaviour {
 
         Mediator _eventManager;
 

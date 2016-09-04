@@ -7,7 +7,7 @@ namespace HouraiTeahouse {
     /// <summary> Component that marks a unique object. Objects instantiated with this attached only allows one to exist.
     /// Trying to create/instantiate more copies will have the object destroyed instantly. </summary>
     [DisallowMultipleComponent]
-    public sealed class UniqueObject : MonoBehaviour {
+    public sealed class UniqueObject : MonoBehaviour, IUniqueEntity<int> {
 
         /// <summary> A collection of all of the UniqueObjects currently in the game. </summary>
         static Dictionary<int, UniqueObject> _allIds;

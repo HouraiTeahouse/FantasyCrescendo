@@ -18,13 +18,13 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public static T Apply<T>(GameObject target, float duration = -1f) where T : Status {
-            var instance = Check.NotNull(target).GetOrAddComponent<T>();
+            var instance = Argument.NotNull(target).GetOrAddComponent<T>();
             instance.StartStatus(duration);
             return instance;
         }
 
         public static T Apply<T>(Component target, float duration = -1f) where T : Status {
-            return Apply<T>(Check.NotNull(target).gameObject, duration);
+            return Apply<T>(Argument.NotNull(target).gameObject, duration);
         }
 
         protected override void Start() {

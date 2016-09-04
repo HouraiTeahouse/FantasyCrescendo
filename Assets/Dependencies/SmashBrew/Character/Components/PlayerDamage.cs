@@ -34,7 +34,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     /// <summary> A MonoBehaviour that handles all of the damage dealt and recieved by a character. </summary>
-    public sealed class PlayerDamage : HouraiBehaviour, IResettable {
+    public sealed class PlayerDamage : BaseBehaviour, IResettable {
 
         /// <summary> The current internal damage value. Used for knockback calculations. </summary>
         public float CurrentDamage { get; set; }

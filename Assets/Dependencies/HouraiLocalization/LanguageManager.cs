@@ -144,7 +144,7 @@ namespace HouraiTeahouse.Localization {
         /// <exception cref="InvalidOperationException"> the language specified by <paramref name="identifier" /> is not currently
         /// supported. </exception>
         public Language LoadLanguage(string identifier) {
-            Check.NotNull(identifier);
+            Argument.NotNull(identifier);
             if (!_languages.Contains(identifier))
                 throw new InvalidOperationException("Language with identifier of {0} is not supported.".With(identifier));
             var languageValues = Resources.Load<StringSet>(localizaitonResourceDirectory + identifier);

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace HouraiTeahouse {
 
     /// <summary> A utility base behaviour for Hourai Teahouse game elements. </summary>
-    public abstract class HouraiBehaviour : MonoBehaviour, ITimeObject {
+    public abstract class BaseBehaviour : MonoBehaviour, ITimeObject {
 
         Animator _animator;
 
@@ -51,16 +51,8 @@ namespace HouraiTeahouse {
         /// <summary> The Rigidbody that controls the GameObject the HouraiBehaviour is attached to. </summary>
         public Rigidbody Rigidbody {
             get {
-                if (!_rigidbody) {
-#if UNITY_EDITOR
-                    if (Application.isPlaying)
-                        _rigidbody = GetComponentInParent<Rigidbody>();
-                    else
-                        _rigidbody = GetComponent<Rigidbody>();
-#else
+                if (!_rigidbody)
                     _rigidbody = GetComponentInParent<Rigidbody>();
-#endif
-                }
                 return _rigidbody;
             }
         }
@@ -69,14 +61,7 @@ namespace HouraiTeahouse {
         public Animator Animator {
             get {
                 if (!_animator)
-#if UNITY_EDITOR
-                    if (Application.isPlaying)
-                        _animator = GetComponentInChildren<Animator>();
-                    else
-                        _animator = GetComponent<Animator>();
-#else
-                    _animator = GetComponentInParent<Animator>();
-#endif
+                    _animator = GetComponentInChildren<Animator>();
                 return _animator;
             }
         }

@@ -87,31 +87,31 @@ namespace HouraiTeahouse {
         [Test]
         public void GetSubscriberCountTest() {
             Mediator mediator = CreateTestMediator();
-            Assert.AreEqual(aCount, mediator.GetSubscriberCount(typeof(A)));
-            Assert.AreEqual(bCount, mediator.GetSubscriberCount(typeof(B)));
-            Assert.AreEqual(cCount, mediator.GetSubscriberCount(typeof(C)));
-            Assert.AreEqual(aCount, mediator.GetSubscriberCount<A>());
-            Assert.AreEqual(bCount, mediator.GetSubscriberCount<B>());
-            Assert.AreEqual(cCount, mediator.GetSubscriberCount<C>());
-            Assert.Catch<ArgumentNullException>(delegate { mediator.GetSubscriberCount(null); });
+            Assert.AreEqual(aCount, mediator.GetCount(typeof(A)));
+            Assert.AreEqual(bCount, mediator.GetCount(typeof(B)));
+            Assert.AreEqual(cCount, mediator.GetCount(typeof(C)));
+            Assert.AreEqual(aCount, mediator.GetCount<A>());
+            Assert.AreEqual(bCount, mediator.GetCount<B>());
+            Assert.AreEqual(cCount, mediator.GetCount<C>());
+            Assert.Catch<ArgumentNullException>(delegate { mediator.GetCount(null); });
         }
 
         [Test]
         public void ResetTest() {
             Mediator mediator = CreateTestMediator();
-            Assert.AreNotEqual(0, mediator.GetSubscriberCount<A>());
+            Assert.AreNotEqual(0, mediator.GetCount<A>());
             mediator.Reset<A>();
-            Assert.AreEqual(0, mediator.GetSubscriberCount<A>());
-            Assert.AreNotEqual(0, mediator.GetSubscriberCount<B>());
-            Assert.AreNotEqual(0, mediator.GetSubscriberCount<C>());
+            Assert.AreEqual(0, mediator.GetCount<A>());
+            Assert.AreNotEqual(0, mediator.GetCount<B>());
+            Assert.AreNotEqual(0, mediator.GetCount<C>());
             mediator.Reset<B>();
-            Assert.AreEqual(0, mediator.GetSubscriberCount<A>());
-            Assert.AreEqual(0, mediator.GetSubscriberCount<B>());
-            Assert.AreNotEqual(0, mediator.GetSubscriberCount<C>());
+            Assert.AreEqual(0, mediator.GetCount<A>());
+            Assert.AreEqual(0, mediator.GetCount<B>());
+            Assert.AreNotEqual(0, mediator.GetCount<C>());
             mediator.Reset<C>();
-            Assert.AreEqual(0, mediator.GetSubscriberCount<A>());
-            Assert.AreEqual(0, mediator.GetSubscriberCount<B>());
-            Assert.AreEqual(0, mediator.GetSubscriberCount<C>());
+            Assert.AreEqual(0, mediator.GetCount<A>());
+            Assert.AreEqual(0, mediator.GetCount<B>());
+            Assert.AreEqual(0, mediator.GetCount<C>());
             Assert.Catch<ArgumentNullException>(delegate { mediator.Reset(null); });
         }
 
@@ -119,9 +119,9 @@ namespace HouraiTeahouse {
         public void ResetAllTest() {
             Mediator mediator = CreateTestMediator();
             mediator.ResetAll();
-            Assert.AreEqual(0, mediator.GetSubscriberCount<A>());
-            Assert.AreEqual(0, mediator.GetSubscriberCount<B>());
-            Assert.AreEqual(0, mediator.GetSubscriberCount<C>());
+            Assert.AreEqual(0, mediator.GetCount<A>());
+            Assert.AreEqual(0, mediator.GetCount<B>());
+            Assert.AreEqual(0, mediator.GetCount<C>());
         }
 
         [Test]
@@ -138,9 +138,9 @@ namespace HouraiTeahouse {
             mediator.Subscribe(eA);
             mediator.Subscribe(eB);
             mediator.Subscribe(eC);
-            Assert.AreEqual(aCount + 2, mediator.GetSubscriberCount<A>());
-            Assert.AreEqual(bCount + 1, mediator.GetSubscriberCount<B>());
-            Assert.AreEqual(cCount + 1, mediator.GetSubscriberCount<C>());
+            Assert.AreEqual(aCount + 2, mediator.GetCount<A>());
+            Assert.AreEqual(bCount + 1, mediator.GetCount<B>());
+            Assert.AreEqual(cCount + 1, mediator.GetCount<C>());
             ExecuteTest(mediator, aCount + 2, bCount + 1, cCount + 1, iCount);
             Assert.Catch<ArgumentNullException>(delegate { mediator.Subscribe<A>(null); });
         }
@@ -152,9 +152,9 @@ namespace HouraiTeahouse {
             mediator.Unsubscribe(eA);
             mediator.Unsubscribe(eB);
             mediator.Unsubscribe(eC);
-            Assert.AreEqual(aCount - 2, mediator.GetSubscriberCount<A>());
-            Assert.AreEqual(bCount - 1, mediator.GetSubscriberCount<B>());
-            Assert.AreEqual(cCount - 1, mediator.GetSubscriberCount<C>());
+            Assert.AreEqual(aCount - 2, mediator.GetCount<A>());
+            Assert.AreEqual(bCount - 1, mediator.GetCount<B>());
+            Assert.AreEqual(cCount - 1, mediator.GetCount<C>());
             ExecuteTest(mediator, aCount - 2, bCount - 1, cCount - 1, iCount);
             Assert.Catch<ArgumentNullException>(delegate { mediator.Unsubscribe<A>(null); });
         }

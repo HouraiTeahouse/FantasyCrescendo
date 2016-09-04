@@ -15,10 +15,10 @@ namespace HouraiTeahouse.SmashBrew {
             return this;
         }
 
-        public static Counter operator ++(Counter counter) { return Check.NotNull(counter).Increment(); }
+        public static Counter operator ++(Counter counter) { return Argument.NotNull(counter).Increment(); }
 
         public static Counter operator +(Counter counter, float value) {
-            return Check.NotNull(counter).Increment(value);
+            return Argument.NotNull(counter).Increment(value);
         }
 
     }

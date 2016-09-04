@@ -187,7 +187,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         public IEnumerable<KeyValuePair<float, Hitbox.Type>> GetProgression(int index) {
             if (Keyframes == null)
                 throw new InvalidOperationException();
-            Check.Argument(Check.Range(index, IDs));
+            Argument.Check(Check.Range(index, IDs));
             Hitbox.Type type = GetTypeOrDefault(index);
             foreach (HitboxKeyframe hitboxKeyframe in Keyframes) {
                 yield return new KeyValuePair<float, Hitbox.Type>(hitboxKeyframe.Time, type);

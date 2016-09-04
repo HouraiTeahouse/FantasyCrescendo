@@ -33,8 +33,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// <param name="dst"> the target hitbox </param>
         /// <exception cref="ArgumentNullException"> <paramref name="src" /> or <paramref name="dst" /> are null </exception>
         public static void AddCollision(Hitbox src, Hitbox dst) {
-            Check.NotNull(src);
-            Check.NotNull(dst);
+            Argument.NotNull(src);
+            Argument.NotNull(dst);
             // The priority on the collision is the product of the priority on both hitboxes and their 
             _collisions.Add(new HitboxCollision {Destination = dst, Source = src},
                 (int) src.DefaultType * (int) dst.DefaultType * src.Priority * dst.Priority);

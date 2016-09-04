@@ -37,16 +37,15 @@ namespace HouraiTeahouse {
 
         /// <summary> Loads the asset specifed by the Resource into memory. </summary>
         /// <returns> the loaded asset </returns>
-        public T Load(Action<T> callback = null) {
-            if (!IsLoaded) {
-                var loadedObject = Resources.Load<T>(_path);
+        public T Load() {
+            if (IsLoaded)
+                return Asset;
+            var loadedObject = Resources.Load<T>(_path);
 #if UNITY_EDITOR
-                if (EditorApplication.isPlayingOrWillChangePlaymode)
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                    Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
-                Asset = loadedObject;
-            }
-            callback.SafeInvoke(Asset);
+                Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
+            Asset = loadedObject;
             return Asset;
         }
 
@@ -67,14 +66,10 @@ namespace HouraiTeahouse {
         /// <param name="callback"> optional parameter, if not null, will execute with the loaded asset as the parameter </param>
         /// <param name="priority"> optional parameter, the priority of the resource request </param>
         /// <returns> the ResourceRequest associated with the load. Null if </returns>
-        public ResourceRequest LoadAsync(Action<T> callback = null, int priority = 0) {
-            // Check if asset is already loaded.
-            AsyncManager manager = AsyncManager.Instance;
+        public ITask<T> LoadAsync(int priority = 0) {
             // If no AsyncManager is available, load the assets synchrounously.
-            if (manager == null || IsLoaded) {
-                Load(callback);
-                return null;
-            }
+            if (AsyncManager.Instance == null || IsLoaded)
+                return Task.FromResult(Load());
             ResourceRequest request = Resources.LoadAsync<T>(_path);
             request.priority = priority;
             string typeName = typeof(T).Name;
@@ -82,16 +77,15 @@ namespace HouraiTeahouse {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
                 Log.Info("Requesting load of {0} from {1}", typeName, _path);
-            manager.AddOpreation(request,
-                delegate(T obj) {
+            var task = request.ToTask<T>();
+            task.Then(asset => {
 #if UNITY_EDITOR
-                    if (EditorApplication.isPlayingOrWillChangePlaymode)
+                if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                        Log.Info("Loaded {0} from {1}", typeName, _path);
-                    Asset = obj;
-                    callback.SafeInvoke(obj);
-                });
-            return request;
+                    Log.Info("Loaded {0} from {1}", typeName, _path);
+                Asset = asset;
+            });
+            return task;
         }
 
     }

@@ -61,7 +61,7 @@ namespace HouraiTeahouse {
         /// <param name="transform"> the transformation matrix to use when drawing Gizmos </param>
         /// <returns> the IDisposable object for working with Gizmos </returns>
         public static IDisposable With(Transform transform) {
-            return new GizmoDisposable(null, Check.NotNull(transform).localToWorldMatrix);
+            return new GizmoDisposable(null, Argument.NotNull(transform).localToWorldMatrix);
         }
 
         /// <summary> Creates an IDisposable object for drawing Gizmos within certain transformation and color. </summary>
@@ -69,7 +69,7 @@ namespace HouraiTeahouse {
         /// <param name="transform"> the transformation matrix to use when drawing Gizmos </param>
         /// <returns> the IDisposable object for working with Gizmos </returns>
         public static IDisposable With(Color color, Transform transform) {
-            return new GizmoDisposable(color, Check.NotNull(transform).localToWorldMatrix);
+            return new GizmoDisposable(color, Argument.NotNull(transform).localToWorldMatrix);
         }
 
         /// <summary> Draws a Gizmo that matches the shape and size of a given 3D col </summary>
@@ -105,7 +105,7 @@ namespace HouraiTeahouse {
         }
 
         public static Matrix4x4 GetColliderMatrix(Collider col) {
-            //Check.NotNull(col);
+            //Argument.NotNull(col);
             //var sphereCollider = col as SphereCollider;
             //Transform transform = col.transform;
             //if (sphereCollider != null)

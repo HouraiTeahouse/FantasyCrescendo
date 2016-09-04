@@ -49,14 +49,16 @@ namespace HouraiTeahouse {
         /// <summary> Plays a BGM </summary>
         /// <param name="bgm"> </param>
         public void Play(BGMData bgm) {
-            bgm.BGM.LoadAsync(delegate(AudioClip clip) {
-                if (_currentBGM != null && _currentBGM.BGM.IsLoaded)
-                    _currentBGM.BGM.Unload();
-                _musicSource.Stop();
-                _musicSource.clip = clip;
-                _musicSource.Play();
-                _currentBGM = bgm;
-            });
+            bgm.BGM.LoadAsync()
+                .Then(clip => {
+                    if (_currentBGM != null && _currentBGM.BGM.IsLoaded)
+                        _currentBGM.BGM.Unload();
+                    _musicSource.Stop();
+                    _musicSource.clip = clip;
+                    _musicSource.Play();
+                    _currentBGM = bgm;
+                })
+                .Done();
         }
 
         /// <summary> Unity callback. Called repeatedly at a fixed timestep. </summary>

@@ -44,7 +44,7 @@ namespace HouraiTeahouse {
 
         // Gets the first instance of the given 
         public ScriptableObject GetExtension(Type type) {
-            return _extensions.Find(Check.NotNull(type).IsInstanceOfType);
+            return _extensions.Find(Argument.NotNull(type).IsInstanceOfType);
         }
 
         // Generic overload for GetExtension
@@ -52,7 +52,7 @@ namespace HouraiTeahouse {
 
         // Gets all instances of a given type
         public List<ScriptableObject> GetExtensions(Type type) {
-            return _extensions.FindAll(Check.NotNull(type).IsInstanceOfType);
+            return _extensions.FindAll(Argument.NotNull(type).IsInstanceOfType);
         }
 
         // Generic overload for GetExtensions

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace HouraiTeahouse {
 
-    public static class Check {
+    public static class Argument {
 
         /// <summary> Checks if an argument is null or not. </summary>
         /// <typeparam name="T"> the type of the argument to check </typeparam>
@@ -20,7 +20,7 @@ namespace HouraiTeahouse {
         /// <summary> Performs a check on an argument, and throws a ArgumentException if it fails. </summary>
         /// <param name="check"> the check's result </param>
         /// <exception cref="ArgumentException"> <paramref name="check" /> is false </exception>
-        public static void Argument(bool check) {
+        public static void Check(bool check) {
             if (!check)
                 throw new ArgumentException();
         }
@@ -29,10 +29,39 @@ namespace HouraiTeahouse {
         /// <param name="name"> the name of the parameter </param>
         /// <param name="check"> the check's result </param>
         /// <exception cref="ArgumentException"> <paramref name="check" /> is false </exception>
-        public static void Argument(string name, bool check) {
+        public static void Check(string name, bool check) {
             if (!check)
                 throw new ArgumentException(name);
         }
+
+        public static void IsGreater<T>(T a, T b) where T : IComparable<T> {
+            Check(a.CompareTo(b) > 0);
+        }
+
+        public static void IsGE<T>(T a, T b) where T : IComparable<T> {
+            Check(a.CompareTo(b) >= 0);
+        }
+
+        public static void IsLesser<T>(T a, T b) where T : IComparable<T> {
+            Check(a.CompareTo(b) < 0);
+        }
+
+        public static void IsLE<T>(T a, T b) where T : IComparable<T> {
+            Check(a.CompareTo(b) <= 0);
+        }
+
+        public static void InRange<T>(T value, T a, T b) where T : IComparable<T> {
+            Check(HouraiTeahouse.Check.Range(value, a, b));
+        }
+
+        public static T NotEmpty<T>(T enumeration) where T : IEnumerable {
+            Check(!enumeration.IsNullOrEmpty());
+            return enumeration;
+        }
+
+    }
+
+    public static class Check {
 
         /// <summary> Checks if an index is valid on a list. </summary>
         /// <typeparam name="T"> the type of trhe list </typeparam>
@@ -40,21 +69,16 @@ namespace HouraiTeahouse {
         /// <param name="list"> the list to check on </param>
         /// <returns> whether or not it's in range </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="list" /> </exception>
-        public static bool Range<T>(int val, IList<T> list) { return Range(val, NotNull(list).Count); }
+        public static bool Range<T>(int val, IList<T> list) { return Range(val, Argument.NotNull(list).Count); }
 
         /// <summary> Checks if <paramref name="val" /> is in range [<paramref name="a" />, <paramref name="b" />) </summary>
         /// <param name="val"> the value </param>
         /// <param name="a"> the lower limit, inclusive </param>
         /// <param name="b"> the upper limit, exclusive </param>
         /// <returns> whether or not it's in range </returns>
-        public static bool Range(int val, int a, int b) { return val >= a && val < b; }
-
-        /// <summary> Checks if <paramref name="val" /> is in range [<paramref name="a" />, <paramref name="b" />) </summary>
-        /// <param name="val"> the value </param>
-        /// <param name="a"> the lower limit, inclusive </param>
-        /// <param name="b"> the upper limit, exclusive </param>
-        /// <returns> whether or not it's in range </returns>
-        public static bool Range(float val, float a, float b) { return val >= a && val < b; }
+        public static bool Range<T>(T val, T a, T b) where T : IComparable<T> {
+            return val.CompareTo(a) >= 0 && val.CompareTo(b) < 0;
+        }
 
         /// <summary> Checks if <paramref name="val" /> is in range [0, <paramref name="a" />) </summary>
         /// <param name="val"> the value </param>
@@ -67,26 +91,6 @@ namespace HouraiTeahouse {
         /// <param name="a"> the upper limit, exclusive </param>
         /// <returns> whether or not it's in range </returns>
         public static bool Range(float val, float a) { return Range(val, 0f, a); }
-
-        /// <summary> Check if an enumeration is empty, null, or not. Throws an InvalidOperationException if it is. </summary>
-        /// <typeparam name="T"> the enumeration to check </typeparam>
-        /// <param name="enumeration"> the enumeration to check </param>
-        /// <exception cref="InvalidOperationException"> <paramref name="enumeration" /> is empty </exception>
-        /// <returns> the enumeration, if it isn't empty </returns>
-        public static T NotEmpty<T>(T enumeration) where T : IEnumerable {
-            if (enumeration.IsNullOrEmpty())
-                throw new InvalidOperationException();
-            return enumeration;
-        }
-
-        /// <summary> Generic version of NotEmpty. Throws an exception of a certain type if <paramref name="enumeration" />
-        /// is empty or null. </summary>
-        /// <typeparam name="T"> the type of exception to throw </typeparam>
-        /// <param name="enumeration"> the enumeration to check </param>
-        public static void NotEmpty<T>(IEnumerable enumeration) where T : Exception, new() {
-            if (enumeration.IsNullOrEmpty())
-                throw new T();
-        }
 
     }
 

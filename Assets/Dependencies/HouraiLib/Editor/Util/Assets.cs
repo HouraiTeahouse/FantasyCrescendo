@@ -33,8 +33,8 @@ namespace HouraiTeahouse.Editor {
         public static void CreateAsset(string folder, Object obj, string suffix = null) {
             if (obj.IsAsset())
                 return;
-            Check.NotNull(folder);
-            Check.NotNull(obj);
+            Argument.NotNull(folder);
+            Argument.NotNull(obj);
             suffix = suffix ?? "asset";
             // Create folder if it doesn't already exist
             CreateFolder(folder);

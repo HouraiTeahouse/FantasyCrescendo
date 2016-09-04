@@ -91,7 +91,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <returns> whether the element was added or not </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="hitbox" /> is null </exception>
         public bool AddHitbox(Hitbox hitbox) {
-            Check.NotNull(hitbox);
+            Argument.NotNull(hitbox);
             return AddID(hitbox.ID, hitbox.DefaultType);
         }
 
@@ -120,7 +120,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <returns> the ID at a given index </returns>
         /// <exception cref="ArgumentException"> <paramref name="index" /> is out of bounds. </exception>
         public int GetID(int index) {
-            Check.Argument(Check.Range(index, IDs));
+            Argument.Check(Check.Range(index, IDs));
             return IDs[index];
         }
 
@@ -146,8 +146,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// <exception cref="ArgumentNullException"> <paramref name="index" /> or
         /// <paramref name="keyframe" /> are out of bounds. </exception>
         public Hitbox.Type GetState(int index, int keyframe) {
-            Check.Argument(Check.Range(index, IDs));
-            Check.Argument(Check.Range(keyframe, Keyframes));
+            Argument.Check(Check.Range(index, IDs));
+            Argument.Check(Check.Range(keyframe, Keyframes));
             return Keyframes[keyframe].States[index];
         }
 
@@ -158,8 +158,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// <exception cref="ArgumentNullException"> <paramref name="index" /> or
         /// <paramref name="keyframe" /> are out of bounds. </exception>
         public void SetState(int index, int keyframe, Hitbox.Type value) {
-            Check.Argument(Check.Range(index, IDs));
-            Check.Argument(Check.Range(keyframe, Keyframes));
+            Argument.Check(Check.Range(index, IDs));
+            Argument.Check(Check.Range(keyframe, Keyframes));
 #if UNITY_EDITOR
             Undo.RecordObject(this, "Change Hitbox State");
 #endif
@@ -171,7 +171,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <param name="index"> the index to remove the ID at </param>
         /// <exception cref="ArgumentException"> <paramref name="index" /> is out of bounds. </exception>
         public void DeleteIdAt(int index) {
-            Check.Argument(Check.Range(index, IDs));
+            Argument.Check(Check.Range(index, IDs));
 #if UNITY_EDITOR
             Undo.RecordObject(this, "Delete Hitbox");
 #endif
@@ -197,7 +197,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <returns> whether the hitbox was successfully removed or not </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="hitbox" /> is null </exception>
         public bool DeleteHitbox(Hitbox hitbox) {
-            return DeleteID(Check.NotNull(hitbox).ID);
+            return DeleteID(Argument.NotNull(hitbox).ID);
         }
 
         /// <summary> Adds a new HitboxKeyfram at the a specified time. </summary>
@@ -224,7 +224,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Removes a keyframe at a given index. </summary>
         /// <param name="keyframe"> </param>
         public void DeleteKeyframe(int keyframe) {
-            Check.Argument(Check.Range(keyframe, Keyframes));
+            Argument.Check(Check.Range(keyframe, Keyframes));
 #if UNITY_EDITOR
             Undo.RecordObject(this, "Delete Keyframe");
 #endif
@@ -274,7 +274,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <returns> the first keyframe after said time. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="keyframe" /> is null </exception>
         public HitboxKeyframe NextKeyframe(HitboxKeyframe keyframe) {
-            return NextKeyframe(Check.NotNull(keyframe).Time);
+            return NextKeyframe(Argument.NotNull(keyframe).Time);
         }
 
         /// <summary> Gets the previous keyframe before a certain time. Returns null if no such keyframe exists. </summary>
@@ -289,7 +289,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <returns> the first keyframe before said time. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="keyframe" /> is null </exception>
         public HitboxKeyframe PrevKeyframe(HitboxKeyframe keyframe) {
-            return PrevKeyframe(Check.NotNull(keyframe).Time);
+            return PrevKeyframe(Argument.NotNull(keyframe).Time);
         }
 
         bool CheckSizes() {

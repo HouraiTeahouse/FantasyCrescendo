@@ -86,11 +86,11 @@ namespace HouraiTeahouse.Editor {
     public static class GUIStyleExtensions {
 
         public static GUIStyle WithPadding(this GUIStyle style, RectOffset padding) {
-            return new GUIStyle(Check.NotNull(style)) {padding = Check.NotNull(padding)};
+            return new GUIStyle(Argument.NotNull(style)) {padding = Argument.NotNull(padding)};
         }
 
         public static GUIStyle WithMargins(this GUIStyle style, RectOffset margin) {
-            return new GUIStyle(Check.NotNull(style)) {margin = Check.NotNull(margin)};
+            return new GUIStyle(Argument.NotNull(style)) {margin = Argument.NotNull(margin)};
         }
 
         public static GUIStyle WithoutPadding(this GUIStyle style) { return style.WithPadding(new RectOffset()); }
@@ -98,15 +98,15 @@ namespace HouraiTeahouse.Editor {
         public static GUIStyle WithoutMargins(this GUIStyle style) { return style.WithMargins(new RectOffset()); }
 
         public static GUIStyle WithRichText(this GUIStyle style) {
-            return new GUIStyle(Check.NotNull(style)) {richText = true};
+            return new GUIStyle(Argument.NotNull(style)) {richText = true};
         }
 
         public static GUIStyle WithoutRichText(this GUIStyle style) {
-            return new GUIStyle(Check.NotNull(style)) {richText = false};
+            return new GUIStyle(Argument.NotNull(style)) {richText = false};
         }
 
         public static GUIStyle WithAlignment(this GUIStyle style, TextAnchor alignment) {
-            return new GUIStyle(Check.NotNull(style)) {alignment = alignment};
+            return new GUIStyle(Argument.NotNull(style)) {alignment = alignment};
         }
 
     }

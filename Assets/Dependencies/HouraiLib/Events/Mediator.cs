@@ -23,7 +23,7 @@ namespace HouraiTeahouse {
 
         // Internal only, for testing
         internal Mediator(Dictionary<Type, Delegate> subscribers) {
-            Check.NotNull(subscribers);
+            Argument.NotNull(subscribers);
             _subscribers = new Dictionary<Type, Delegate>(subscribers);
             _typeCache = new Dictionary<Type, Type[]>();
         }
@@ -35,7 +35,7 @@ namespace HouraiTeahouse {
         /// <param name="callback"> the handler to call when an event of type <typeparamref name="T" /> is published. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callback" /> is null </exception>
         public void Subscribe<T>(Event<T> callback) {
-            Check.NotNull(callback);
+            Argument.NotNull(callback);
             Type tp = typeof(T);
             if (_subscribers.ContainsKey(tp))
                 _subscribers[tp] = Delegate.Combine(_subscribers[tp], callback);
@@ -48,7 +48,7 @@ namespace HouraiTeahouse {
         /// <param name="callback"> the handler to remove </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callback" /> is null </exception>
         public void Unsubscribe<T>(Event<T> callback) {
-            Check.NotNull(callback);
+            Argument.NotNull(callback);
             Type eventType = typeof(T);
             if (!_subscribers.ContainsKey(eventType))
                 return;
@@ -66,7 +66,7 @@ namespace HouraiTeahouse {
         /// <param name="evnt"> the event object </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evnt" /> is null </exception>
         public void Publish(object evnt) {
-            Check.NotNull(evnt);
+            Argument.NotNull(evnt);
             Type[] typeSet = GetEventTypes(evnt.GetType());
             for (var i = 0; i < typeSet.Length; i++)
                 if (_subscribers.ContainsKey(typeSet[i]))
@@ -76,13 +76,13 @@ namespace HouraiTeahouse {
         /// <summary> Gets the count of subscribers to certain type of event. </summary>
         /// <typeparam name="T"> the type of event to check for. </typeparam>
         /// <returns> how many subscribers said event has. </returns>
-        public int GetSubscriberCount<T>() { return GetSubscriberCount(typeof(T)); }
+        public int GetCount<T>() { return GetCount(typeof(T)); }
 
         /// <summary> Gets the count of subscribers to certain type of event. </summary>
         /// <param name="type"> the type of event to check for. </param>
         /// <returns> how many subscribers said event has </returns>
-        public int GetSubscriberCount(Type type) {
-            Check.NotNull(type);
+        public int GetCount(Type type) {
+            Argument.NotNull(type);
             return _subscribers.ContainsKey(type) ? _subscribers[type].GetInvocationList().Length : 0;
         }
 
@@ -95,7 +95,7 @@ namespace HouraiTeahouse {
         /// <param name="type"> the type of event to remove </param>
         /// <returns> whether it was removed or not </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="type" /> is null </exception>
-        public bool Reset(Type type) { return _subscribers.Remove(Check.NotNull(type)); }
+        public bool Reset(Type type) { return _subscribers.Remove(Argument.NotNull(type)); }
 
         /// <summary> Removes all subscribers from all events. </summary>
         /// <returns> whether any events were removed </returns>
@@ -106,7 +106,7 @@ namespace HouraiTeahouse {
         }
 
         Type[] GetEventTypes(Type type) {
-            Check.NotNull(type);
+            Argument.NotNull(type);
             if (!_typeCache.ContainsKey(type)) {
                 Type currentType = type;
                 var ancestors = new List<Type>(type.GetInterfaces());

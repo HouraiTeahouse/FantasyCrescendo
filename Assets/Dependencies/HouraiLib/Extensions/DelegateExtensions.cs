@@ -72,7 +72,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="func" /> is null </exception>
         /// <returns> the memoized function </returns>
         public static Func<T> Memoize<T>(this Func<T> func) {
-            Check.NotNull(func);
+            Argument.NotNull(func);
             object cache = null;
             return delegate {
                 if (cache == null)
@@ -90,7 +90,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="func" /> is null </exception>
         /// <returns> the memoized function </returns>
         public static Func<T, TResult> Memoize<T, TResult>(this Func<T, TResult> func) {
-            Check.NotNull(func);
+            Argument.NotNull(func);
             var cache = new Dictionary<T, TResult>();
             return delegate(T val) {
                 if (!cache.ContainsKey(val))
@@ -109,7 +109,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="func" /> is null </exception>
         /// <returns> the memoized function </returns>
         public static Func<T1, T2, TResult> Memoize<T1, T2, TResult>(this Func<T1, T2, TResult> func) {
-            Check.NotNull(func);
+            Argument.NotNull(func);
             var cache = new Table2D<T1, T2, TResult>();
             return delegate(T1 arg1, T2 arg2) {
                 if (!cache.ContainsKey(arg1, arg2))

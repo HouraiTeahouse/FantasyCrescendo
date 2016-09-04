@@ -14,7 +14,7 @@ namespace HouraiTeahouse {
         /// <returns> the retrieved Component </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="gameObject" /> is null </exception>
         public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component {
-            Check.NotNull(gameObject);
+            Argument.NotNull(gameObject);
             var attempt = gameObject.GetComponent<T>();
             return attempt ? attempt : gameObject.AddComponent<T>();
         }
@@ -26,7 +26,7 @@ namespace HouraiTeahouse {
         /// <returns> the retrieved Component </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="gameObject" /> is null </exception>
         public static T SafeGetComponent<T>(this GameObject gameObject) where T : class {
-            Check.NotNull(gameObject);
+            Argument.NotNull(gameObject);
             var attempt = gameObject.GetComponent<T>();
             if (attempt != null)
                 Log.Warning("Attempted to find a component of type {0}, but did not find one.", typeof(T));
@@ -39,7 +39,7 @@ namespace HouraiTeahouse {
         /// <returns> an enumeration of all components of the type attached to the GameObjects </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="gameObjects" /> is null </exception>
         public static IEnumerable<T> GetComponents<T>(this IEnumerable<GameObject> gameObjects) where T : class {
-            return Check.NotNull(gameObjects).IgnoreNulls().SelectMany(gameObject => gameObject.GetComponents<T>());
+            return Argument.NotNull(gameObjects).IgnoreNulls().SelectMany(gameObject => gameObject.GetComponents<T>());
         }
 
         /// <summary> Checks if a GameObject's layer is in a LayerMask or not. </summary>
@@ -48,7 +48,7 @@ namespace HouraiTeahouse {
         /// <returns> whether <paramref name="gameObject" /> fits the layer described </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="gameObject" /> is null </exception>
         public static bool LayerCheck(this GameObject gameObject, LayerMask mask) {
-            return ((1 << Check.NotNull(gameObject).layer) & mask) != 0;
+            return ((1 << Argument.NotNull(gameObject).layer) & mask) != 0;
         }
 
     }

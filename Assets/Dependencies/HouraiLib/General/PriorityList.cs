@@ -28,7 +28,7 @@ namespace HouraiTeahouse {
         /// <param name="collection"> </param>
         /// <exception cref="ArgumentNullException"> collection is null </exception>
         public PriorityList(IEnumerable<T> collection) : this() {
-            List<T> colList = Check.NotNull(collection).ToList();
+            List<T> colList = Argument.NotNull(collection).ToList();
             _items.Add(0, colList);
             foreach (T element in colList)
                 _priorities[element] = 0;
@@ -38,7 +38,7 @@ namespace HouraiTeahouse {
         /// properly mapped to their priority. </summary>
         /// <param name="priorities"> </param>
         public PriorityList(IDictionary<T, int> priorities) {
-            Check.NotNull(priorities);
+            Argument.NotNull(priorities);
             _priorities = new Dictionary<T, int>(priorities);
             foreach (KeyValuePair<T, int> priority in priorities)
                 _items.GetOrAdd(priority.Value).Add(priority.Key);
@@ -49,7 +49,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentException"> the PriorityList does not contain this item </exception>
         /// <returns> the priority of the item within the list </returns>
         public int GetPriority(T item) {
-            Check.Argument("item", Contains(item));
+            Argument.Check("item", Contains(item));
             return _priorities[item];
         }
 
@@ -59,7 +59,7 @@ namespace HouraiTeahouse {
         /// <param name="item"> the item to edit the </param>
         /// <param name="priority"> the new priority </param>
         public void SetPriority(T item, int priority) {
-            Check.Argument("item", Contains(item));
+            Argument.Check("item", Contains(item));
             int current = _priorities[item];
 
             if (priority == current)

@@ -30,7 +30,6 @@ namespace HouraiTeahouse.SmashBrew {
                     Log.Error("No Hitbox on {0} with ID {1} cannot be found.", Character, ids[i]);
                     continue;
                 }
-                Log.Debug("{0} {1} {2}", i, hitbox, states[i]);
                 hitbox.CurrentType = states[i];
             }
         }

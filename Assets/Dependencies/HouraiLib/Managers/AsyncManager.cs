@@ -27,25 +27,25 @@ namespace HouraiTeahouse {
 
         /// <summary> Add a async operation to manage. Can optionally provide a callback to be called once the operation is
         /// finished. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="operation" /> is null </exception>
         /// <param name="operation"> the operation to manage </param>
-        /// <param name="callback"> optional parameter, if not null, will be called after finish executing </param>
-        public void AddOperation(AsyncOperation operation, Action callback = null) {
-            Check.NotNull(operation);
+        /// <param name="resolvable"> optional parameter, if not null, will be called after finish executing </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operation" /> is null </exception>
+        public void AddOperation(AsyncOperation operation, IResolvable resolvable = null) {
+            Argument.NotNull(operation);
             _operations.Add(operation);
-            StartCoroutine(WaitForOperation(operation, callback));
+            StartCoroutine(WaitForOperation(operation, resolvable));
         }
 
         /// <summary> Adds a resource request to manage. Can optionally provide a callback to be called once the operation is
         /// finished. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="request" /> is null </exception>
         /// <typeparam name="T"> the type of object loaded by </typeparam>
         /// <param name="request"> the ResourceRequest to manage </param>
-        /// <param name="callback"> optional parameter, if not null, will be called after finish executing </param>
-        public void AddOpreation<T>(ResourceRequest request, Action<T> callback = null) where T : Object {
-            Check.NotNull(request);
+        /// <param name="resolvable"> optional parameter, if not null, will be called after finish executing </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request" /> is null </exception>
+        public void AddOpreation<T>(ResourceRequest request, IResolvable<T> resolvable = null) where T : Object {
+            Argument.NotNull(request);
             _operations.Add(request);
-            StartCoroutine(WaitForResource(request, callback));
+            StartCoroutine(WaitForResource(request, resolvable));
         }
 
         public static void AddSynchronousAction(Action action) { WaitingSynchronousActions += action; }
@@ -66,20 +66,19 @@ namespace HouraiTeahouse {
             WaitingSynchronousActions = null;
         }
 
-        IEnumerator WaitForOperation(AsyncOperation operation, Action callback) {
+        IEnumerator WaitForOperation(AsyncOperation operation, IResolvable task) {
             yield return operation;
             _operations.Remove(operation);
-            if (callback != null)
-                callback();
+            if (task != null)
+                task.Resolve();
         }
 
-        IEnumerator WaitForResource<T>(ResourceRequest request, Action<T> callback) where T : Object {
+        IEnumerator WaitForResource<T>(ResourceRequest request, IResolvable<T> task) where T : Object {
             yield return request;
             _operations.Remove(request);
-            if (callback == null)
+            if (task == null)
                 yield break;
-            var obj = request.asset as T;
-            callback(obj);
+            task.Resolve(request.asset as T);
         }
 
     }

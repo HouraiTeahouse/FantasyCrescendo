@@ -15,11 +15,7 @@ namespace HouraiTeahouse {
         /// <returns> the value associated with the pair of keys </returns>
         public virtual V this[K1 key1, K2 key2] {
             get { return this[key1][key2]; }
-            set {
-                if (!ContainsKey(key1))
-                    this[key1] = new Dictionary<K2, V>();
-                this[key1][key2] = value;
-            }
+            set { this.GetOrAdd(key1)[key2] = value; }
         }
 
         /// <summary> Adds a key, key, value triplet to the table. </summary>
@@ -28,7 +24,7 @@ namespace HouraiTeahouse {
         /// <param name="key2"> the first key </param>
         /// <param name="value"> the associated value </param>
         public virtual void Add(K1 key1, K2 key2, V value) {
-            Check.Argument(ContainsKey(key1, key2));
+            Argument.Check(ContainsKey(key1, key2));
             this[key1, key2] = value;
         }
 
@@ -67,7 +63,6 @@ namespace HouraiTeahouse {
     /// <typeparam name="K"> the type of the keys </typeparam>
     /// <typeparam name="V"> the value stored by the table </typeparam>
     public class Table2D<K, V> : Table2D<K, K, V> {
-
     }
 
     /// <summary> A mirrored Table2D. The keysets are mirroed. If the keyset (a, b) exists, then the keyset (b, a) also exists,

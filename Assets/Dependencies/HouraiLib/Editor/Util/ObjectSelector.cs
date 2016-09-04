@@ -34,7 +34,7 @@ namespace HouraiTeahouse.Editor {
         /// <param name="filterFunc"> a filter for the type of objects selectable </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentFunc" /> is null </exception>
         public ObjectSelector(Func<T, GUIContent> contentFunc, Func<T, bool> filterFunc = null) {
-            _contentFunc = Check.NotNull(contentFunc);
+            _contentFunc = Argument.NotNull(contentFunc);
             _filter = filterFunc;
         }
 
@@ -107,8 +107,8 @@ namespace HouraiTeahouse.Editor {
 
         /// <summary> Draws a EditorGUI Popup to select one of the items in Selections </summary>
         public T Draw(GUIContent label, GUIStyle style = null, params GUILayoutOption[] options) {
-            Check.NotNull(_selections);
-            Check.NotNull(Content);
+            Argument.NotNull(_selections);
+            Argument.NotNull(Content);
             if (style == null)
                 style = EditorStyles.popup;
             T[] selections = Selections;

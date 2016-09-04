@@ -24,11 +24,11 @@ GameObject:
   - 114: {fileID: 114000014049512914}
   m_Layer: 9
   m_Name: Marisa
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &467004
 Transform:
   m_ObjectHideFlags: 1
@@ -38,11 +38,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000012152064254}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &5439124
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -88,7 +88,7 @@ MonoBehaviour:
       - Characters/001_Marisa/Materials/1/marisa_eye_1
       - Characters/001_Marisa/Materials/4/marisa_clothes_4
     TargetRenderers:
-    - {fileID: 137000013446993194}
+    - {fileID: 1067548832}
   - MaterialSets:
     - _materials:
       - Characters/001_Marisa/Materials/1/marisa_clothes_1
@@ -99,7 +99,7 @@ MonoBehaviour:
     - _materials:
       - Characters/001_Marisa/Materials/4/marisa_clothes_4
     TargetRenderers:
-    - {fileID: 137000010307471820}
+    - {fileID: 1069892768}
 --- !u!114 &11437798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,16 +122,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _rigidbody: {fileID: 5439124}
+  _timeMod: {fileID: 0}
+  <IsFastFalling>k__BackingField: 0
+  <JumpCount>k__BackingField: 0
+  _facing: 0
+  _lastTap: 0
+  _jumpQueued: 0
   _facingMode: 0
   _maxFallSpeed: 5
   _fastFallSpeed: 9
   _jumpHeights:
   - 1.5
   - 1.5
-  _weapons:
-  - {fileID: 0}
-  _particles:
-  - {fileID: 0}
+  _weapons: []
+  _particles: []
+  <MovementCollider>k__BackingField: {fileID: 13603780}
+  <Gravity>k__BackingField: {fileID: 0}
+  <Ground>k__BackingField: {fileID: 0}
+  <Damage>k__BackingField: {fileID: 0}
 --- !u!114 &11451206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -232,12 +242,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011495202108}
   m_Layer: 0
-  m_Name: Ctrl_Headgear
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000010272973054
 GameObject:
   m_ObjectHideFlags: 1
@@ -249,12 +259,12 @@ GameObject:
   - 135: {fileID: 135000013459521352}
   - 114: {fileID: 114000011908293936}
   m_Layer: 0
-  m_Name: marisa_hb_offensive_14
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000010399937538
 GameObject:
   m_ObjectHideFlags: 1
@@ -264,12 +274,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013602649998}
   m_Layer: 0
-  m_Name: Ctrl_Hips
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000010440720062
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,12 +290,12 @@ GameObject:
   - 4: {fileID: 4000012152064254}
   - 95: {fileID: 95000010505271220}
   m_Layer: 0
-  m_Name: Marisa_Mesh
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000010641608528
 GameObject:
   m_ObjectHideFlags: 1
@@ -295,12 +305,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000014104744404}
   m_Layer: 0
-  m_Name: B_Arm_Left_Forearm
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000010835484376
 GameObject:
   m_ObjectHideFlags: 1
@@ -310,12 +320,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012898828222}
   m_Layer: 0
-  m_Name: B_Hand_Left
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000010837475542
 GameObject:
   m_ObjectHideFlags: 1
@@ -327,12 +337,12 @@ GameObject:
   - 135: {fileID: 135000011768665718}
   - 114: {fileID: 114000011633745550}
   m_Layer: 0
-  m_Name: marisa_hurtbox_1
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000010857939258
 GameObject:
   m_ObjectHideFlags: 1
@@ -344,12 +354,12 @@ GameObject:
   - 135: {fileID: 135000011881823204}
   - 114: {fileID: 114000010113824598}
   m_Layer: 0
-  m_Name: marisa_hb_offensive_13
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000011385281406
 GameObject:
   m_ObjectHideFlags: 1
@@ -361,12 +371,12 @@ GameObject:
   - 135: {fileID: 135000010298279274}
   - 114: {fileID: 114000012516194862}
   m_Layer: 0
-  m_Name: marisa_hurtbox_6
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000011397062068
 GameObject:
   m_ObjectHideFlags: 1
@@ -376,12 +386,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010303996314}
   m_Layer: 0
-  m_Name: Ctrl_Hakkero
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000011665460974
 GameObject:
   m_ObjectHideFlags: 1
@@ -391,12 +401,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013823507158}
   m_Layer: 0
-  m_Name: Ctrl_Chest
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000011938444124
 GameObject:
   m_ObjectHideFlags: 1
@@ -408,12 +418,12 @@ GameObject:
   - 135: {fileID: 135000012913002142}
   - 114: {fileID: 114000012758933874}
   m_Layer: 0
-  m_Name: marisa_hurtbox_2
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012004147238
 GameObject:
   m_ObjectHideFlags: 1
@@ -423,12 +433,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012954609610}
   m_Layer: 0
-  m_Name: B_Arm_Right_Forearm
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012049564988
 GameObject:
   m_ObjectHideFlags: 1
@@ -438,12 +448,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013720116928}
   m_Layer: 0
-  m_Name: Ctrl_Broom
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012221030820
 GameObject:
   m_ObjectHideFlags: 1
@@ -454,12 +464,12 @@ GameObject:
   - 4: {fileID: 4000011294575698}
   - 137: {fileID: 137000010307471820}
   m_Layer: 0
-  m_Name: Mesh_Marisa_Hat
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012479491558
 GameObject:
   m_ObjectHideFlags: 1
@@ -470,12 +480,12 @@ GameObject:
   - 4: {fileID: 4000010174523592}
   - 137: {fileID: 137000010240972646}
   m_Layer: 0
-  m_Name: Mesh_Broom
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012628537360
 GameObject:
   m_ObjectHideFlags: 1
@@ -486,12 +496,12 @@ GameObject:
   - 4: {fileID: 4000011394027308}
   - 137: {fileID: 137000013547864048}
   m_Layer: 0
-  m_Name: Mesh_hakkero
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012633499500
 GameObject:
   m_ObjectHideFlags: 1
@@ -503,12 +513,12 @@ GameObject:
   - 135: {fileID: 135000010161131824}
   - 114: {fileID: 114000010162675210}
   m_Layer: 0
-  m_Name: marisa_hurtbox_10
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012686274378
 GameObject:
   m_ObjectHideFlags: 1
@@ -518,12 +528,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011933220062}
   m_Layer: 0
-  m_Name: B_Leg_Right_Foot
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013018824908
 GameObject:
   m_ObjectHideFlags: 1
@@ -533,12 +543,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010891668404}
   m_Layer: 0
-  m_Name: B_Arm_Left_Shoulder
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013092949450
 GameObject:
   m_ObjectHideFlags: 1
@@ -548,12 +558,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013158033412}
   m_Layer: 0
-  m_Name: B_Hand_Right
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013169921768
 GameObject:
   m_ObjectHideFlags: 1
@@ -563,12 +573,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010857813938}
   m_Layer: 0
-  m_Name: B_Arm_Right_Shoulder
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013181312468
 GameObject:
   m_ObjectHideFlags: 1
@@ -580,12 +590,12 @@ GameObject:
   - 135: {fileID: 135000010136661636}
   - 114: {fileID: 114000011117217566}
   m_Layer: 0
-  m_Name: marisa_hb_offensive_12
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013321658322
 GameObject:
   m_ObjectHideFlags: 1
@@ -597,12 +607,12 @@ GameObject:
   - 135: {fileID: 135000011098358680}
   - 114: {fileID: 114000014053374776}
   m_Layer: 0
-  m_Name: marisa_hurtbox_5
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013340549470
 GameObject:
   m_ObjectHideFlags: 1
@@ -614,12 +624,12 @@ GameObject:
   - 135: {fileID: 135000013432608918}
   - 114: {fileID: 114000013498481902}
   m_Layer: 0
-  m_Name: marisa_hurtbox_8
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013382382032
 GameObject:
   m_ObjectHideFlags: 1
@@ -631,12 +641,12 @@ GameObject:
   - 135: {fileID: 135000011088502210}
   - 114: {fileID: 114000011784083748}
   m_Layer: 0
-  m_Name: marisa_hb_offensive_11
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013487230166
 GameObject:
   m_ObjectHideFlags: 1
@@ -648,12 +658,12 @@ GameObject:
   - 135: {fileID: 135000012258811048}
   - 114: {fileID: 114000013664215610}
   m_Layer: 0
-  m_Name: marisa_hurtbox_11
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013597722652
 GameObject:
   m_ObjectHideFlags: 1
@@ -665,12 +675,12 @@ GameObject:
   - 135: {fileID: 135000011297882136}
   - 114: {fileID: 114000012630182694}
   m_Layer: 0
-  m_Name: marisa_hurtbox_9
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013602587800
 GameObject:
   m_ObjectHideFlags: 1
@@ -681,12 +691,12 @@ GameObject:
   - 4: {fileID: 4000011226066954}
   - 137: {fileID: 137000013446993194}
   m_Layer: 0
-  m_Name: Mesh_Marisa_Body
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013769832768
 GameObject:
   m_ObjectHideFlags: 1
@@ -696,12 +706,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012107445848}
   m_Layer: 0
-  m_Name: Ctrl_Head
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013907283420
 GameObject:
   m_ObjectHideFlags: 1
@@ -711,12 +721,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013012249480}
   m_Layer: 0
-  m_Name: B_Leg_Right_Shin
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013974282630
 GameObject:
   m_ObjectHideFlags: 1
@@ -728,12 +738,12 @@ GameObject:
   - 135: {fileID: 135000010897488096}
   - 114: {fileID: 114000013999559510}
   m_Layer: 0
-  m_Name: marisa_hurtbox_7
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000014090701048
 GameObject:
   m_ObjectHideFlags: 1
@@ -743,12 +753,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012136448284}
   m_Layer: 0
-  m_Name: B_Leg_Left_Foot
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000014125123242
 GameObject:
   m_ObjectHideFlags: 1
@@ -758,12 +768,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013962906892}
   m_Layer: 0
-  m_Name: B_Leg_Left_Shin
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000014153896320
 GameObject:
   m_ObjectHideFlags: 1
@@ -775,12 +785,12 @@ GameObject:
   - 135: {fileID: 135000013816831452}
   - 114: {fileID: 114000012050670052}
   m_Layer: 0
-  m_Name: marisa_hurtbox_4
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000014176941556
 GameObject:
   m_ObjectHideFlags: 1
@@ -792,12 +802,12 @@ GameObject:
   - 135: {fileID: 135000010570421180}
   - 114: {fileID: 114000011643749446}
   m_Layer: 0
-  m_Name: marisa_hurtbox_3
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4000010170459936
 Transform:
   m_ObjectHideFlags: 1
@@ -807,10 +817,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.70327836, y: 0.7032784, z: 0.70327866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013602649998}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010174523592
 Transform:
   m_ObjectHideFlags: 1
@@ -820,10 +830,10 @@ Transform:
   m_LocalRotation: {x: 0.5150153, y: 0.5105224, z: 0.49263588, w: 0.4810781}
   m_LocalPosition: {x: -0.83315367, y: 0.57027715, z: 0.036198642}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010207529486
 Transform:
   m_ObjectHideFlags: 1
@@ -833,10 +843,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0061775, y: 1.0089176, z: -1.0073267}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012136448284}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010303996314
 Transform:
   m_ObjectHideFlags: 1
@@ -846,10 +856,10 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: -0.70710677}
   m_LocalPosition: {x: -0.6027193, y: 0.0024200678, z: -0.081945896}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010795913406
 Transform:
   m_ObjectHideFlags: 1
@@ -859,10 +869,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.70867217, y: 0.70867395, z: 0.70867294}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013823507158}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010857813938
 Transform:
   m_ObjectHideFlags: 1
@@ -872,10 +882,10 @@ Transform:
   m_LocalRotation: {x: 0.6012102, y: 0.17523159, z: 0.6421214, w: 0.4421769}
   m_LocalPosition: {x: 0.018889608, y: 1.1206591, z: -0.053762726}
   m_LocalScale: {x: 0.99962103, y: 0.9995622, z: 0.9998913}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010891668404
 Transform:
   m_ObjectHideFlags: 1
@@ -885,10 +895,10 @@ Transform:
   m_LocalRotation: {x: 0.6993462, y: 0.13491823, z: -0.47706488, w: -0.51489925}
   m_LocalPosition: {x: -0.029163802, y: 1.1028819, z: 0.11113747}
   m_LocalScale: {x: 0.9998743, y: 0.9996743, z: -0.999648}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011197180628
 Transform:
   m_ObjectHideFlags: 1
@@ -898,10 +908,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.055, y: 0, z: 0}
   m_LocalScale: {x: -0.9993298, y: -0.99506724, z: -1.005628}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012136448284}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011226066954
 Transform:
   m_ObjectHideFlags: 1
@@ -911,10 +921,10 @@ Transform:
   m_LocalRotation: {x: -0.36302727, y: 0.40829787, z: -0.5751983, w: 0.60881114}
   m_LocalPosition: {x: 0.017660033, y: 0.6968089, z: -0.016280718}
   m_LocalScale: {x: 0.046456695, y: 0.046456695, z: 0.046456695}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 18
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011268571234
 Transform:
   m_ObjectHideFlags: 1
@@ -924,10 +934,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.11, y: 0, z: 0}
   m_LocalScale: {x: 1.0768855, y: 1.8492095, z: 2.925529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013158033412}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011294575698
 Transform:
   m_ObjectHideFlags: 1
@@ -937,10 +947,10 @@ Transform:
   m_LocalRotation: {x: -0.5685903, y: 0.6605393, z: -0.32325917, w: 0.36864144}
   m_LocalPosition: {x: 0.059434876, y: 1.3225522, z: 0.07585329}
   m_LocalScale: {x: 0.046456695, y: 0.046456695, z: 0.046456695}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 19
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011394027308
 Transform:
   m_ObjectHideFlags: 1
@@ -950,10 +960,10 @@ Transform:
   m_LocalRotation: {x: -0.49172583, y: 0.5081396, z: -0.49172577, w: 0.5081395}
   m_LocalPosition: {x: -0.6027193, y: 0.0024200678, z: -0.081945896}
   m_LocalScale: {x: 0.6505911, y: 0.6505911, z: 0.6505911}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011495202108
 Transform:
   m_ObjectHideFlags: 1
@@ -963,10 +973,10 @@ Transform:
   m_LocalRotation: {x: -0.5685903, y: 0.6605393, z: -0.32325917, w: 0.36864144}
   m_LocalPosition: {x: 0.059434876, y: 1.3225522, z: 0.07585329}
   m_LocalScale: {x: 1.6340518, y: 1.6342869, z: 1.6336112}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011933220062
 Transform:
   m_ObjectHideFlags: 1
@@ -976,11 +986,11 @@ Transform:
   m_LocalRotation: {x: 0.0056592706, y: 0.65999633, z: 0.72300494, w: 0.20405096}
   m_LocalPosition: {x: 0.011990724, y: 0.049633086, z: -0.1497457}
   m_LocalScale: {x: 0.9984867, y: 0.99226344, z: 1.0030951}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000013239927030}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012000793552
 Transform:
   m_ObjectHideFlags: 1
@@ -990,10 +1000,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.11, y: 0, z: 0}
   m_LocalScale: {x: -1.082553, y: -1.8543315, z: -2.9632812}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012898828222}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012105494290
 Transform:
   m_ObjectHideFlags: 1
@@ -1003,10 +1013,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.12, y: 0, z: 0}
   m_LocalScale: {x: 1.0000048, y: 1.0000007, z: 0.99998933}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012107445848}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012107445848
 Transform:
   m_ObjectHideFlags: 1
@@ -1016,11 +1026,11 @@ Transform:
   m_LocalRotation: {x: 0.06398634, y: -0.3978687, z: 0.6981626, w: -0.59175617}
   m_LocalPosition: {x: 0.047089867, y: 1.2054477, z: 0.065907806}
   m_LocalScale: {x: 0.99997616, y: 0.9998591, z: 0.999882}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000012105494290}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012136448284
 Transform:
   m_ObjectHideFlags: 1
@@ -1030,13 +1040,13 @@ Transform:
   m_LocalRotation: {x: -0.14146787, y: 0.55152696, z: 0.67155343, w: 0.47415274}
   m_LocalPosition: {x: -0.046128534, y: 0.06845564, z: 0.1276754}
   m_LocalScale: {x: 0.99824417, y: 0.99253726, z: -1.0038667}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011197180628}
   - {fileID: 4000010207529486}
   - {fileID: 4000012152815452}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012152064254
 Transform:
   m_ObjectHideFlags: 1
@@ -1046,6 +1056,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_Children:
   - {fileID: 4000012107445848}
   - {fileID: 4000011495202108}
@@ -1069,7 +1080,6 @@ Transform:
   - {fileID: 4000011294575698}
   m_Father: {fileID: 467004}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4000012152815452
 Transform:
   m_ObjectHideFlags: 1
@@ -1079,10 +1089,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9992405, y: 1.0067681, z: -0.9998187}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012136448284}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012431221162
 Transform:
   m_ObjectHideFlags: 1
@@ -1092,10 +1102,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.028, y: -0, z: 0}
   m_LocalScale: {x: 0.9999098, y: 0.9944088, z: 0.99999535}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013012249480}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012898828222
 Transform:
   m_ObjectHideFlags: 1
@@ -1105,12 +1115,12 @@ Transform:
   m_LocalRotation: {x: 0.21066678, y: 0.73572785, z: -0.60707796, w: -0.21396382}
   m_LocalPosition: {x: -0.007126561, y: 0.8334847, z: 0.2387175}
   m_LocalScale: {x: 0.333785, y: 0.5361824, z: -0.99750686}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000012000793552}
   - {fileID: 4000012959020382}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012954609610
 Transform:
   m_ObjectHideFlags: 1
@@ -1120,11 +1130,11 @@ Transform:
   m_LocalRotation: {x: -0.12589207, y: 0.31653288, z: 0.92657447, w: 0.15943028}
   m_LocalPosition: {x: -0.009046254, y: 0.929784, z: -0.20506069}
   m_LocalScale: {x: 1.0161483, y: 0.9995539, z: 0.9984381}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000014204835672}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012959020382
 Transform:
   m_ObjectHideFlags: 1
@@ -1134,10 +1144,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.4392757, y: 1.1570444, z: -2.286592}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012898828222}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013012249480
 Transform:
   m_ObjectHideFlags: 1
@@ -1147,11 +1157,11 @@ Transform:
   m_LocalRotation: {x: 0.458064, y: 0.1637034, z: 0.5406814, w: 0.6863252}
   m_LocalPosition: {x: 0.16305289, y: 0.42220193, z: -0.036728863}
   m_LocalScale: {x: 1.0037308, y: 0.9971832, z: 0.998769}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000012431221162}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013085320326
 Transform:
   m_ObjectHideFlags: 1
@@ -1161,10 +1171,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -0.9997554, y: -0.999991, z: -0.9831092}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000014104744404}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013158033412
 Transform:
   m_ObjectHideFlags: 1
@@ -1174,11 +1184,11 @@ Transform:
   m_LocalRotation: {x: -0.018721405, y: 0.357385, z: 0.9159078, w: 0.18176478}
   m_LocalPosition: {x: 0.1552884, y: 0.89108676, z: -0.14519238}
   m_LocalScale: {x: 0.33339754, y: 0.53658026, z: 0.99804443}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011268571234}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013239927030
 Transform:
   m_ObjectHideFlags: 1
@@ -1188,10 +1198,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.055, y: -0.005, z: -0}
   m_LocalScale: {x: 0.99938613, y: 0.9950282, z: 1.0056082}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000011933220062}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013405663532
 Transform:
   m_ObjectHideFlags: 1
@@ -1201,10 +1211,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.028, y: -0.002, z: -0}
   m_LocalScale: {x: -0.99991214, y: -0.9944107, z: -0.9999924}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013962906892}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013602649998
 Transform:
   m_ObjectHideFlags: 1
@@ -1214,12 +1224,12 @@ Transform:
   m_LocalRotation: {x: -0.58195114, y: 0.36097845, z: 0.40950626, w: 0.6027703}
   m_LocalPosition: {x: 0.017660016, y: 0.696809, z: -0.01628077}
   m_LocalScale: {x: 1.4217685, y: 1.4217687, z: 1.4219109}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000010170459936}
   - {fileID: 4000014103757924}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013720116928
 Transform:
   m_ObjectHideFlags: 1
@@ -1229,10 +1239,10 @@ Transform:
   m_LocalRotation: {x: 0.5121117, y: 0.51352537, z: 0.48975512, w: 0.48391458}
   m_LocalPosition: {x: -0.8333864, y: 0.5669008, z: 0.031036865}
   m_LocalScale: {x: 1.0000005, y: 1.0000007, z: 1.0000004}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013823507158
 Transform:
   m_ObjectHideFlags: 1
@@ -1242,11 +1252,11 @@ Transform:
   m_LocalRotation: {x: -0.47469425, y: 0.4427577, z: 0.4065299, w: 0.6429343}
   m_LocalPosition: {x: 0.004172614, y: 0.98687655, z: 0.018920586}
   m_LocalScale: {x: 1.4109277, y: 1.4109356, z: 1.4110677}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000010795913406}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013962906892
 Transform:
   m_ObjectHideFlags: 1
@@ -1256,11 +1266,11 @@ Transform:
   m_LocalRotation: {x: 0.7187883, y: 0.6159652, z: -0.07014668, w: -0.31465822}
   m_LocalPosition: {x: 0.050536904, y: 0.45691603, z: 0.24751586}
   m_LocalScale: {x: 1.0043272, y: 0.99777764, z: -0.9985053}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000013405663532}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000014103757924
 Transform:
   m_ObjectHideFlags: 1
@@ -1270,10 +1280,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.70327973, y: 0.70327866, z: 0.7032799}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013602649998}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000014104744404
 Transform:
   m_ObjectHideFlags: 1
@@ -1283,11 +1293,11 @@ Transform:
   m_LocalRotation: {x: -0.10280832, y: -0.34344757, z: 0.8897755, w: 0.28244242}
   m_LocalPosition: {x: -0.15383914, y: 0.9361314, z: 0.24069668}
   m_LocalScale: {x: 1.0157548, y: 0.9997171, z: -0.99851066}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000013085320326}
   m_Father: {fileID: 4000012152064254}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000014204835672
 Transform:
   m_ObjectHideFlags: 1
@@ -1297,10 +1307,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9998168, y: 0.9999952, z: 0.9830442}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012954609610}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &95000010505271220
 Animator:
   serializedVersion: 3
@@ -1330,8 +1340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1774618721
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 1
@@ -1354,8 +1364,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1918836377
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1378,8 +1388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1816207590
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 1
@@ -1402,8 +1412,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1137152112
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1426,8 +1436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 459449514
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1450,8 +1460,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1148626615
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 1
@@ -1474,8 +1484,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 311854026
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 1
@@ -1498,8 +1508,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 978312393
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1533,8 +1543,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1214769337
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1557,8 +1567,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 720376466
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1581,8 +1591,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1866284761
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1605,8 +1615,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1086025555
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1629,8 +1639,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1144141036
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1653,8 +1663,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1805344452
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
@@ -1689,8 +1699,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1070703828
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
+  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4

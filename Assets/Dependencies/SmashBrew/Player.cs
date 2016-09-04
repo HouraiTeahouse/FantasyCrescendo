@@ -100,7 +100,7 @@ namespace HouraiTeahouse.SmashBrew {
         public void Copy(PlayerSelection selection) {
             if (this == selection)
                 return;
-            Check.NotNull(selection);
+            Argument.NotNull(selection);
             Pallete = selection.Pallete;
             Character = selection.Character;
         }
@@ -193,7 +193,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         public PlayerType Type {
             get { return _type; }
-            set { _type = Check.NotNull(value); }
+            set { _type = Argument.NotNull(value); }
         }
 
         public InputDevice Controller {
@@ -216,7 +216,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// </exception>
         /// <returns> the corresponding Player object </returns>
         public static Player Get(int id) {
-            Check.Argument("playerNumber", Check.Range(id, _players));
+            Argument.Check("playerNumber", Check.Range(id, _players));
             return _players[id];
         }
 
@@ -241,7 +241,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         internal Character Spawn(Transform transform, bool direction) {
-            return Spawn(Check.NotNull(transform).position, direction);
+            return Spawn(Argument.NotNull(transform).position, direction);
         }
 
         internal Character Spawn(Vector3 pos, bool direction) {

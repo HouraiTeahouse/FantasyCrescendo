@@ -12,7 +12,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             base.SetData(data);
             if (Component == null || data == null)
                 return;
-            data.Icon.LoadAsync(icon => Component.sprite = icon);
+            data.Icon.LoadAsync().Then(icon => Component.sprite = icon).Done();
         }
 
     }

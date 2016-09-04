@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace HouraiTeahouse.Console {
+namespace HouraiTeahouse {
 
     internal class FixedSizeQueueTest {
 

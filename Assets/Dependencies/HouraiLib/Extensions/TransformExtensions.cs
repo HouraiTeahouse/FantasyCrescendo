@@ -19,7 +19,7 @@ namespace HouraiTeahouse {
         }
 
         public static void Reset(this Transform transform) {
-            Check.NotNull(transform).localPosition = Vector3.zero;
+            Argument.NotNull(transform).localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
         }
 
@@ -29,8 +29,8 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentNullException"> <paramref name="transform" />
         /// or <paramref name="target" /> are null </exception>
         public static void Copy(this Transform transform, Transform target) {
-            Check.NotNull(transform);
-            Check.NotNull(target);
+            Argument.NotNull(transform);
+            Argument.NotNull(target);
             transform.position = target.position;
             transform.rotation = target.rotation;
         }
@@ -65,7 +65,7 @@ namespace HouraiTeahouse {
         }
 
         static void SetPositionLocation(this Transform transform, int component, float value, bool local) {
-            Check.NotNull(transform);
+            Argument.NotNull(transform);
             Vector3 position = local ? transform.localPosition : transform.position;
             position[component] = value;
             if (local)

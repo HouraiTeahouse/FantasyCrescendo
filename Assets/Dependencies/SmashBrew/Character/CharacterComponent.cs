@@ -1,6 +1,6 @@
 namespace HouraiTeahouse.SmashBrew {
 
-    public abstract class CharacterComponent : HouraiBehaviour, IResettable {
+    public abstract class CharacterComponent : BaseBehaviour, IResettable {
 
         public Character Character { get; set; }
 

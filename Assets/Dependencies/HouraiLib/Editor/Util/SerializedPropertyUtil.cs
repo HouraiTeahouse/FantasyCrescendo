@@ -13,8 +13,8 @@ namespace HouraiTeahouse.Editor {
         /// <exception cref="ArgumentNullException"> <paramref name="property" /> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="property" /> is not an array property </exception>
         public static IEnumerable<SerializedProperty> AsArrayEnumerable(this SerializedProperty property) {
-            Check.NotNull(property);
-            Check.Argument(property.isArray);
+            Argument.NotNull(property);
+            Argument.Check(property.isArray);
             for (var i = 0; i < property.arraySize; i++)
                 yield return property.GetArrayElementAtIndex(i);
         }
@@ -27,9 +27,9 @@ namespace HouraiTeahouse.Editor {
         /// <exception cref="ArgumentException"> <paramref name="property" /> is not an array property or <paramref name="index" />
         /// is out of bounds </exception>
         public static SerializedProperty AddElementAtIndex(this SerializedProperty property, int index) {
-            Check.NotNull(property);
-            Check.NotNull(property.isArray);
-            Check.Argument(Check.Range(index, property.arraySize + 1));
+            Argument.NotNull(property);
+            Argument.NotNull(property.isArray);
+            Argument.Check(Check.Range(index, property.arraySize + 1));
             property.InsertArrayElementAtIndex(index);
             return property.GetArrayElementAtIndex(index);
         }
@@ -60,10 +60,10 @@ namespace HouraiTeahouse.Editor {
         /// <exception cref="ArgumentException"> <paramref name="property" /> is not an array property </exception>
         public static void SetArray<T>(this SerializedProperty property, IEnumerable<T> source, int start = 0)
             where T : Object {
-            Check.NotNull(property);
-            Check.Argument(property.isArray);
+            Argument.NotNull(property);
+            Argument.Check(property.isArray);
             int i = start;
-            foreach (T obj in Check.NotNull(source)) {
+            foreach (T obj in Argument.NotNull(source)) {
                 if (i >= property.arraySize)
                     property.InsertArrayElementAtIndex(i);
                 property.GetArrayElementAtIndex(i).objectReferenceValue = obj;
@@ -79,7 +79,7 @@ namespace HouraiTeahouse.Editor {
         /// <exception cref="ArgumentNullException"> <paramref name="property" /> is null </exception>
         /// <exception cref="ArgumentException"> <paramref name="property" /> is not an array property </exception>
         public static void AppendArray<T>(this SerializedProperty property, IEnumerable<T> source) where T : Object {
-            Check.NotNull(property).SetArray(source, property.arraySize);
+            Argument.NotNull(property).SetArray(source, property.arraySize);
         }
 
     }

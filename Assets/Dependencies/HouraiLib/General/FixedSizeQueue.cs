@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace HouraiTeahouse.Console {
+namespace HouraiTeahouse {
 
     /// <summary> A fixed size FIFO (First In First Out) Queue. Will dequeue elements until within a defined limit. </summary>
     /// <typeparam name="T"> the type of the elements contained by the queue </typeparam>
@@ -24,7 +24,7 @@ namespace HouraiTeahouse.Console {
         /// <exception cref="ArgumentException"> <paramref name="size" /> is negative. </exception>
         /// <param name="size"> the limit on the size of the instance </param>
         public FixedSizeQueue(int size) {
-            Check.Argument("size", size >= 0);
+            Argument.Check("size", size >= 0);
             _limit = size;
             _queue = new Queue<T>();
         }
@@ -36,7 +36,7 @@ namespace HouraiTeahouse.Console {
         /// <param name="collection"> the source collection/enumerable to include. </param>
         /// <exception cref="ArgumentException"> <paramref name="size" /> is negative. </exception>
         public FixedSizeQueue(int size, IEnumerable<T> collection) {
-            Check.Argument("size", size >= 0);
+            Argument.Check("size", size >= 0);
             _limit = size;
             _queue = new Queue<T>();
             if (collection == null)
@@ -68,13 +68,12 @@ namespace HouraiTeahouse.Console {
         /// <summary> Removes and returns object from the beginning of the FixedQueue{T}. </summary>
         /// <returns> The object that is removed from the beginning of the FixedQueue{T} </returns>
         /// <exception cref="InvalidOperationException"> the FixedQueue{T} is empty </exception>
-        public T Dequeue() { return Check.NotEmpty(_queue).Dequeue(); }
+        public T Dequeue() { return _queue.Dequeue(); }
 
         /// <summary> Returns the object at the beginning of the FixedQueue{T} without removing it. </summary
         /// <returns> the object at the beginning of the FixedQueue{T} </returns>
         /// <exception cref="InvalidOperationException"> the FixedQueue{T} is empty </exception>
-        /// >
-        public T Peek() { return Check.NotEmpty(_queue).Peek(); }
+        public T Peek() { return _queue.Peek(); }
 
         /// <summary> Removes all objects from the FixedQueue{T}. </summary>
         public void Clear() { _queue.Clear(); }

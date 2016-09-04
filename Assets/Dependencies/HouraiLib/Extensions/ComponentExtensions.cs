@@ -21,7 +21,7 @@ namespace HouraiTeahouse {
         /// <param name="component"> the Component attached to the GameObject to retrieve the Component </param>
         /// <returns> the retrieved Component </returns>
         public static T GetOrAddComponent<T>(this Component component) where T : Component {
-            GameObject gameObject = Check.NotNull(component).gameObject;
+            GameObject gameObject = Argument.NotNull(component).gameObject;
             var attempt = gameObject.GetComponent<T>();
             return attempt ? attempt : gameObject.AddComponent<T>();
         }
@@ -33,7 +33,7 @@ namespace HouraiTeahouse {
         /// <param name="component"> the GameObject to retrieve the Component </param>
         /// <returns> the retrieved Component </returns>
         public static T SafeGetComponent<T>(this Component component) where T : class {
-            GameObject gameObject = Check.NotNull(component).gameObject;
+            GameObject gameObject = Argument.NotNull(component).gameObject;
             var attempt = gameObject.GetComponent<T>();
             if (attempt != null)
                 Log.Warning("Attempted to find a component of type {0}, but did not find one.", typeof(T));

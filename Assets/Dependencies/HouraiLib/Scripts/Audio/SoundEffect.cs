@@ -3,7 +3,7 @@ using UnityEngine;
 namespace HouraiTeahouse {
 
     [RequireComponent(typeof(AudioSource))]
-    public sealed class SoundEffect : HouraiBehaviour {
+    public sealed class SoundEffect : BaseBehaviour {
 
         AudioSource _audio;
 
