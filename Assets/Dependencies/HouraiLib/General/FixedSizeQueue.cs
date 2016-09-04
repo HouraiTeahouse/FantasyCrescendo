@@ -24,7 +24,7 @@ namespace HouraiTeahouse {
         /// <exception cref="ArgumentException"> <paramref name="size" /> is negative. </exception>
         /// <param name="size"> the limit on the size of the instance </param>
         public FixedSizeQueue(int size) {
-            Argument.Check("size", size >= 0);
+            Argument.IsGE(size, 0);
             _limit = size;
             _queue = new Queue<T>();
         }
@@ -36,7 +36,7 @@ namespace HouraiTeahouse {
         /// <param name="collection"> the source collection/enumerable to include. </param>
         /// <exception cref="ArgumentException"> <paramref name="size" /> is negative. </exception>
         public FixedSizeQueue(int size, IEnumerable<T> collection) {
-            Argument.Check("size", size >= 0);
+            Argument.IsGE(size, 0);
             _limit = size;
             _queue = new Queue<T>();
             if (collection == null)

@@ -444,7 +444,6 @@ namespace HouraiTeahouse {
                     }).Then(t => {
                         results[i] = t;
                         count--;
-                        Log.Debug(count);
                         if (count <= 0)
                             task.Resolve(results);
                     });
@@ -552,10 +551,8 @@ namespace HouraiTeahouse {
         protected void ActionHandlers(ITask task, Action<T> resolveHandler, Action<Exception> rejectHandler = null) {
             if (rejectHandler == null)
                 rejectHandler = task.Reject;
-            if (State == TaskState.Success) {
-                Log.Debug("SUCCESS");
+            if (State == TaskState.Success) 
                 InvokeResolve(resolveHandler, task);
-            }
             else if(State == TaskState.Error)
                 InvokeReject(rejectHandler, Exception, this);
             else {

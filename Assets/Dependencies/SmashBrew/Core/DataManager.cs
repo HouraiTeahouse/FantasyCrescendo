@@ -51,8 +51,8 @@ namespace HouraiTeahouse.SmashBrew {
 
             Mediator = Mediator.Global;
 
-            _characters = _characters.Where(c => c != null).ToList();
-            _scenes = _scenes.Where(s => s != null).ToList();
+            _characters = _characters.IgnoreNulls().ToList();
+            _scenes = _scenes.IgnoreNulls().ToList();
 
             _characterCollection = new ReadOnlyCollection<CharacterData>(_characters);
             _sceneCollection = new ReadOnlyCollection<SceneData>(_scenes);
@@ -64,11 +64,8 @@ namespace HouraiTeahouse.SmashBrew {
             Log.Info("Unloading managed data assets");
             foreach (SceneData scene in _scenes)
                 scene.Unload();
-            foreach (CharacterData character in _characters) {
-                Log.Debug(character);
-                if (character != null)
-                    character.Unload();
-            }
+            foreach (CharacterData character in _characters)
+                character.Unload();
         }
 
     }

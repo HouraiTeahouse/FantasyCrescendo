@@ -3,7 +3,8 @@ using NUnit.Framework;
 
 namespace HouraiTeahouse {
 
-    internal class MediatorTest {
+    //TODO: More thoroughly test this class
+    public class MediatorTest {
 
         // Three test event classes
         class A : I {
@@ -85,7 +86,7 @@ namespace HouraiTeahouse {
         }
 
         [Test]
-        public void GetSubscriberCountTest() {
+        public void get_count() {
             Mediator mediator = CreateTestMediator();
             Assert.AreEqual(aCount, mediator.GetCount(typeof(A)));
             Assert.AreEqual(bCount, mediator.GetCount(typeof(B)));
@@ -97,7 +98,7 @@ namespace HouraiTeahouse {
         }
 
         [Test]
-        public void ResetTest() {
+        public void reset() {
             Mediator mediator = CreateTestMediator();
             Assert.AreNotEqual(0, mediator.GetCount<A>());
             mediator.Reset<A>();
@@ -116,7 +117,7 @@ namespace HouraiTeahouse {
         }
 
         [Test]
-        public void ResetAllTest() {
+        public void reset_all() {
             Mediator mediator = CreateTestMediator();
             mediator.ResetAll();
             Assert.AreEqual(0, mediator.GetCount<A>());
@@ -125,14 +126,14 @@ namespace HouraiTeahouse {
         }
 
         [Test]
-        public void PublishTest() {
+        public void publish() {
             Mediator mediator = CreateTestMediator();
             ExecuteTest(mediator, aCount, bCount, cCount, iCount);
             Assert.Catch<ArgumentNullException>(delegate { mediator.Publish(null); });
         }
 
         [Test]
-        public void SubscribeTest() {
+        public void subscribe() {
             Mediator mediator = CreateTestMediator();
             mediator.Subscribe(eA);
             mediator.Subscribe(eA);
@@ -146,7 +147,7 @@ namespace HouraiTeahouse {
         }
 
         [Test]
-        public void UnsubscribeTest() {
+        public void unsubscribe() {
             Mediator mediator = CreateTestMediator();
             mediator.Unsubscribe(eA);
             mediator.Unsubscribe(eA);

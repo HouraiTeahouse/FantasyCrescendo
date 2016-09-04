@@ -3,23 +3,34 @@ using NUnit.Framework;
 
 namespace HouraiTeahouse {
 
-    internal class CheckTests {
+    public class ArgumentTests {
 
         [Test]
-        public void CheckArgumentNullTest() {
+        public void not_null_throws_on_null() {
             Assert.Catch<ArgumentNullException>(delegate {
                 object obj = null;
                 Assert.Null(Argument.NotNull(obj));
             });
+        }
+
+        [Test]
+        public void not_null_doesnt_throw_on_non_null() {
             Assert.DoesNotThrow(delegate { Assert.NotNull(Argument.NotNull(new object())); });
         }
 
         [Test]
-        public void CheckArgumentTest() {
-            var name = "test";
-            Assert.Catch<ArgumentException>(delegate { Argument.Check(name, 3 > 5); });
-            Assert.DoesNotThrow(delegate { Argument.Check(name, 5 > 3); });
+        public void check_throws_on_false() {
+            Assert.Catch<ArgumentException>(delegate { Argument.Check("test", false); });
         }
+
+        [Test]
+        public void check_doesnt_throw_on_true() {
+            Assert.DoesNotThrow(delegate { Argument.Check("test", true); });
+        }
+
+    }
+
+    public class CheckTest {
 
         [Test]
         public void CheckRangeListTest() {

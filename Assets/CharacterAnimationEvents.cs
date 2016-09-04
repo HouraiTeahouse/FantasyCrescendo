@@ -11,7 +11,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         public void Hitbox(AnimationEvent animationEvent) {
             var eventData = animationEvent.objectReferenceParameter as EventData;
-            Log.Debug("{0} {1} {2}", eventData, gameObject, animationEvent.intParameter);
             if (Character == null) {
                 Log.Error("A Character script for corresponding to {0} cannot be found.", name);
                 return;
