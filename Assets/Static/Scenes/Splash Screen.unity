@@ -13,7 +13,7 @@ SceneSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 6
+  serializedVersion: 7
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -37,12 +37,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 6
+  serializedVersion: 7
   m_GIWorkflowMode: 0
-  m_LightmapsMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -53,17 +53,22 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 3
+    serializedVersion: 4
     m_Resolution: 2
     m_BakeResolution: 40
     m_TextureWidth: 1024
     m_TextureHeight: 1024
+    m_AO: 0
     m_AOMaxDistance: 1
-    m_Padding: 2
     m_CompAOExponent: 0
+    m_CompAOExponentDirect: 0
+    m_Padding: 2
     m_LightmapParameters: {fileID: 0}
+    m_LightmapsBakeMode: 1
     m_TextureCompression: 1
+    m_DirectLightInLightProbes: 1
     m_FinalGather: 0
+    m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
   m_LightingDataAsset: {fileID: 0}
@@ -94,11 +99,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 23215535}
-  - 222: {fileID: 23215536}
-  - 114: {fileID: 23215534}
+  - component: {fileID: 23215535}
+  - component: {fileID: 23215536}
+  - component: {fileID: 23215534}
   m_Layer: 5
   m_Name: Hourai Teahouse Logo
   m_TagString: Untagged
@@ -145,6 +150,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1389028398}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2, y: 0}
   m_AnchorMax: {x: 0.8, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.000018119812}
@@ -161,10 +167,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 191772275}
-  - 114: {fileID: 191772274}
+  - component: {fileID: 191772275}
+  - component: {fileID: 191772274}
   m_Layer: 0
   m_Name: Splash Screen
   m_TagString: Untagged
@@ -183,25 +189,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94788b0036fe7fc41be4c65deceea27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skipButtons: 0b00000014000000
+  _skipSpeed: 4
   alphaOverTime:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 1
       outSlope: 1
-      tangentMode: 10
-    - time: 1
+      tangentMode: 34
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 1
       outSlope: -0
-      tangentMode: 21
-    - time: 2
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 2
       value: 1
       inSlope: 0
       outSlope: -1
-      tangentMode: 21
-    - time: 3
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 3
       value: 0
       inSlope: -1
       outSlope: 0.020405078
@@ -218,8 +230,6 @@ MonoBehaviour:
   - {fileID: 23215534}
   - {fileID: 1641091659}
   targetSceneName: Main Menu
-  _skipButtons: 0b00000014000000
-  _skipSpeed: 4
 --- !u!4 &191772275
 Transform:
   m_ObjectHideFlags: 0
@@ -234,16 +244,17 @@ Transform:
   - {fileID: 1389028398}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &308871603
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 308871608}
-  - 20: {fileID: 308871607}
-  - 81: {fileID: 308871604}
+  - component: {fileID: 308871608}
+  - component: {fileID: 308871607}
+  - component: {fileID: 308871604}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -304,17 +315,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 191772275}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &316118994
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 316118995}
-  - 222: {fileID: 316118998}
-  - 114: {fileID: 316118997}
-  - 114: {fileID: 316118996}
+  - component: {fileID: 316118995}
+  - component: {fileID: 316118998}
+  - component: {fileID: 316118997}
+  - component: {fileID: 316118996}
   m_Layer: 5
   m_Name: Derivative Disclaimer
   m_TagString: Untagged
@@ -334,6 +346,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1389028398}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.000011444092, y: -0.000017166138}
@@ -351,8 +364,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 316118997}
-  _key: derivativeDisclaimer
   _format: 
+  _key: derivativeDisclaimer
 --- !u!114 &316118997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,12 +410,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 365797372}
-  - 222: {fileID: 365797374}
-  - 114: {fileID: 365797375}
-  - 114: {fileID: 365797373}
+  - component: {fileID: 365797372}
+  - component: {fileID: 365797374}
+  - component: {fileID: 365797375}
+  - component: {fileID: 365797373}
   m_Layer: 5
   m_Name: Controller Warning
   m_TagString: Untagged
@@ -422,6 +435,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1389028398}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00006866455, y: -0.00004196167}
@@ -439,8 +453,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 365797375}
-  _key: controllerNotice
   _format: 
+  _key: controllerNotice
 --- !u!222 &365797374
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -536,11 +550,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 1641091661}
-  - 222: {fileID: 1641091660}
-  - 114: {fileID: 1641091659}
+  - component: {fileID: 1641091661}
+  - component: {fileID: 1641091660}
+  - component: {fileID: 1641091659}
   m_Layer: 5
   m_Name: Logo
   m_TagString: Untagged
@@ -593,6 +607,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1389028398}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2, y: 0.2}
   m_AnchorMax: {x: 0.8, y: 1}
   m_AnchoredPosition: {x: 0, y: -107.99997}
