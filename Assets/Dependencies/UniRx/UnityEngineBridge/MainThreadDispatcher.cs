@@ -6,7 +6,10 @@ using System;
 using System.Collections;
 using System.Reflection;
 using UniRx.InternalUtil;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace UniRx {
