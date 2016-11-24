@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: youmu_body_2
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: youmu_eye_1
+  m_Shader: {fileID: 4800000, guid: 765578c94c4f882489d828be93d8cbe0, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -15,6 +15,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
+    - first:
+        name: _Back
+      second:
+        m_Texture: {fileID: 2800000, guid: 5c12528ebe1421c428f5caa1cfe9474d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - first:
         name: _BumpMap
       second:
@@ -48,7 +54,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9357823f2a01c854dbb97b75a5091785, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -69,6 +75,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - first:
+        name: _SpecGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: _BumpScale
@@ -83,11 +95,14 @@ Material:
         name: _DstBlend
       second: 0
     - first:
+        name: _Emission
+      second: 0.05
+    - first:
         name: _GlossMapScale
       second: 1
     - first:
         name: _Glossiness
-      second: 0.5
+      second: 0
     - first:
         name: _GlossyReflections
       second: 1
@@ -120,8 +135,20 @@ Material:
       second: 1
     m_Colors:
     - first:
-        name: _Color
+        name: _BackTint
       second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _Bottom
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _Color
+      second: {r: 0, g: 0.4044118, b: 0.2036004, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - first:
+        name: _Top
+      second: {r: 1, g: 1, b: 1, a: 1}
