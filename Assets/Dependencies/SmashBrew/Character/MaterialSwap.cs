@@ -58,7 +58,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         /// <summary> Gets the number of pallete swaps are available </summary>
         public int Count {
-            get { return _swaps.Max(swap => swap.Count); }
+            get { return !_swaps.IsNullOrEmpty() ? _swaps.Max(s => s.Count) : 0; }
         }
 
         public int Pallete {

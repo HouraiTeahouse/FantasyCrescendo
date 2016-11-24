@@ -65,7 +65,9 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 Swap.Pallete = Mathf.Clamp(Swap.Pallete, 0, Swap.Count);
             Swap.Pallete = EditorGUILayout.Popup("Current Color",
                 Swap.Pallete,
-                Enumerable.Range(0, Swap.Count).Select(i => i.ToString()).ToArray());
+                Enumerable.Range(0, Swap.Count)
+                    .Select(i => i.ToString())
+                    .ToArray());
             EditorGUILayout.LabelField(string.Format("Swap: {0}", Swap.Pallete), EditorStyles.boldLabel);
             for (var i = 0; i < _swaps.arraySize; i++) {
                 SerializedProperty swap = _swaps.GetArrayElementAtIndex(i);
@@ -75,6 +77,8 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                     }
                     using (new EditorGUILayout.VerticalScope()) {
                         SerializedProperty sets = swap.FindPropertyRelative("MaterialSets");
+                        if(sets.arraySize == 0)
+                            Add(sets);
                         DrawArraySet(sets.GetArrayElementAtIndex(Swap.Pallete).FindPropertyRelative("_materials"), sets);
                     }
                     if (RemoveButton)
