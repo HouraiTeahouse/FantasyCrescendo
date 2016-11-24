@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: afc58f853e624a54f9791c08060a1f28
-timeCreated: 1480022310
+guid: 189a0391f7d41544aaac6c29f562dd28
+timeCreated: 1480029902
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -32,7 +32,7 @@ ModelImporter:
     100048: L_middle2
     100050: L_middle3
     100052: L_palm
-    100054: l_pinkie1
+    100054: L_pinkie1
     100056: L_pinkie2
     100058: L_pinkie3
     100060: L_ring1
@@ -145,7 +145,7 @@ ModelImporter:
     400048: L_middle2
     400050: L_middle3
     400052: L_palm
-    400054: l_pinkie1
+    400054: L_pinkie1
     400056: L_pinkie2
     400058: L_pinkie3
     400060: L_ring1
@@ -231,14 +231,13 @@ ModelImporter:
     400220: YoumuMesh_Body
     400222: YoumuMesh_PrimarySword
     400224: YoumuMesh_SecondarySword
-    2300000: YoumuMesh_Body
-    3300000: YoumuMesh_Body
     4300000: YoumuMesh_SecondarySword
     4300002: YoumuMesh_PrimarySword
     4300004: YoumuMesh_Body
     9500000: //RootNode
-    13700000: YoumuMesh_PrimarySword
-    13700002: YoumuMesh_SecondarySword
+    13700000: YoumuMesh_Body
+    13700002: YoumuMesh_PrimarySword
+    13700004: YoumuMesh_SecondarySword
   materials:
     importMaterials: 0
     materialName: 0
