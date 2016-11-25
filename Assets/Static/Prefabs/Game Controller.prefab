@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 11439252}
   - component: {fileID: 11460476}
   - component: {fileID: 11478998}
-  - component: {fileID: 11490834}
   - component: {fileID: 11473446}
   - component: {fileID: 11463294}
   - component: {fileID: 11482896}
@@ -293,17 +292,6 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
---- !u!114 &11490834
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b92734b04fc241cbb7cb574a9e27aa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
