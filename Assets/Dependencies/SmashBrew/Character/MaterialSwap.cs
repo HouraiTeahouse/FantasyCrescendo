@@ -39,6 +39,9 @@ namespace HouraiTeahouse.SmashBrew {
             [Tooltip("The set of renderers to apply the materials to")]
             Renderer[] TargetRenderers;
 
+            /// <summary>
+            /// The count of available swaps for this material swap set
+            /// </summary>
             public int Count {
                 get { return MaterialSets.Length; }
             }
@@ -65,6 +68,8 @@ namespace HouraiTeahouse.SmashBrew {
             get { return _color; }
             set {
                 _color = value;
+                if (_swaps == null)
+                    return;
                 foreach (Swap swap in _swaps)
                     swap.Set(value);
             }

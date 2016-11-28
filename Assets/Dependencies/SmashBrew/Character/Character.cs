@@ -18,7 +18,18 @@ namespace HouraiTeahouse.SmashBrew {
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     [RequireComponent(typeof(PlayerDamage), typeof(PlayerKnockback))]
     [RequireComponent(typeof(Gravity), typeof(Ground))]
-    public sealed class Character : BaseBehaviour, IHitboxController {
+    public class Character : BaseBehaviour, IHitboxController {
+
+        public SmashCharacterController Controller { get; private set; }
+
+        protected virtual void BuildController(SmashCharacterControllerBuildder builder) {
+            BuildDefaultController(builder);
+        }
+
+        protected void BuildDefaultController(SmashCharacterControllerBuildder builder) {
+            //TODO(james7312): Implement
+            throw new NotImplementedException();
+        }
 
         enum FacingMode {
 
@@ -242,6 +253,10 @@ namespace HouraiTeahouse.SmashBrew {
                 weapon.enabled = false;
 
             StartCoroutine(InitializeAnimator());
+
+            var builder = new SmashCharacterControllerBuildder();
+            BuildDefaultController(builder);
+            Controller = builder.Build();
         }
 
         IEnumerator InitializeAnimator() {
