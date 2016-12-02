@@ -1,12 +1,13 @@
+using System;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects {
-
+namespace UnityStandardAssets.ImageEffects
+{
     [CustomEditor(typeof(DepthOfField))]
-    class DepthOfFieldEditor : Editor {
-
+    class DepthOfFieldEditor : Editor
+    {
         SerializedObject serObj;
 
         SerializedProperty visualizeFocus;
@@ -34,23 +35,14 @@ namespace UnityStandardAssets.ImageEffects {
         AnimBool showDX11BlurSettings = new AnimBool();
         AnimBool showNearBlurOverlapSize = new AnimBool();
 
-        bool useFocalDistance {
-            get { return focalTransform.objectReferenceValue == null; }
-        }
+        bool useFocalDistance { get { return focalTransform.objectReferenceValue == null; } }
+        bool useDiscBlur { get { return blurType.enumValueIndex < 1; } }
+        bool useDX11Blur { get { return blurType.enumValueIndex > 0; } }
+        bool useNearBlur { get { return nearBlur.boolValue; } }
 
-        bool useDiscBlur {
-            get { return blurType.enumValueIndex < 1; }
-        }
 
-        bool useDX11Blur {
-            get { return blurType.enumValueIndex > 0; }
-        }
-
-        bool useNearBlur {
-            get { return nearBlur.boolValue; }
-        }
-
-        void OnEnable() {
+        void OnEnable()
+        {
             serObj = new SerializedObject(target);
 
             visualizeFocus = serObj.FindProperty("visualizeFocus");
@@ -77,7 +69,8 @@ namespace UnityStandardAssets.ImageEffects {
             InitializedAnimBools();
         }
 
-        void InitializedAnimBools() {
+        void InitializedAnimBools()
+        {
             showFocalDistance.valueChanged.AddListener(Repaint);
             showFocalDistance.value = useFocalDistance;
 
@@ -91,14 +84,18 @@ namespace UnityStandardAssets.ImageEffects {
             showNearBlurOverlapSize.value = useNearBlur;
         }
 
-        void UpdateAnimBoolTargets() {
+
+        void UpdateAnimBoolTargets()
+        {
             showFocalDistance.target = useFocalDistance;
             showDiscBlurSettings.target = useDiscBlur;
             showDX11BlurSettings.target = useDX11Blur;
             showNearBlurOverlapSize.target = useNearBlur;
         }
 
-        public override void OnInspectorGUI() {
+
+        public override void OnInspectorGUI()
+        {
             serObj.Update();
 
             UpdateAnimBoolTargets();
@@ -109,7 +106,8 @@ namespace UnityStandardAssets.ImageEffects {
             EditorGUILayout.PropertyField(visualizeFocus, new GUIContent(" Visualize"));
             EditorGUILayout.PropertyField(focalTransform, new GUIContent(" Focus on Transform"));
 
-            if (EditorGUILayout.BeginFadeGroup(showFocalDistance.faded)) {
+            if (EditorGUILayout.BeginFadeGroup(showFocalDistance.faded))
+            {
                 EditorGUILayout.PropertyField(focalLength, new GUIContent(" Focal Distance"));
             }
             EditorGUILayout.EndFadeGroup();
@@ -121,11 +119,13 @@ namespace UnityStandardAssets.ImageEffects {
 
             EditorGUILayout.PropertyField(blurType, new GUIContent("Defocus Type"));
 
-            if (!(target as DepthOfField).Dx11Support() && blurType.enumValueIndex > 0) {
+            if (!(target as DepthOfField).Dx11Support() && blurType.enumValueIndex > 0)
+            {
                 EditorGUILayout.HelpBox("DX11 mode not supported (need shader model 5)", MessageType.Info);
             }
 
-            if (EditorGUILayout.BeginFadeGroup(showDiscBlurSettings.faded)) {
+            if (EditorGUILayout.BeginFadeGroup(showDiscBlurSettings.faded))
+            {
                 EditorGUILayout.PropertyField(blurSampleCount, new GUIContent(" Sample Count"));
             }
             EditorGUILayout.EndFadeGroup();
@@ -136,14 +136,16 @@ namespace UnityStandardAssets.ImageEffects {
             EditorGUILayout.Separator();
 
             EditorGUILayout.PropertyField(nearBlur, new GUIContent("Near Blur"));
-            if (EditorGUILayout.BeginFadeGroup(showNearBlurOverlapSize.faded)) {
+            if (EditorGUILayout.BeginFadeGroup(showNearBlurOverlapSize.faded))
+            {
                 EditorGUILayout.Slider(foregroundOverlap, 0.1f, 2.0f, new GUIContent("  Overlap Size"));
             }
             EditorGUILayout.EndFadeGroup();
 
             EditorGUILayout.Separator();
 
-            if (EditorGUILayout.BeginFadeGroup(showDX11BlurSettings.faded)) {
+            if (EditorGUILayout.BeginFadeGroup(showDX11BlurSettings.faded))
+            {
                 GUILayout.Label("DX11 Bokeh Settings");
                 EditorGUILayout.PropertyField(dx11BokehTexture, new GUIContent(" Bokeh Texture"));
                 EditorGUILayout.Slider(dx11BokehScale, 0.0f, 50.0f, new GUIContent(" Bokeh Scale"));
@@ -155,7 +157,5 @@ namespace UnityStandardAssets.ImageEffects {
 
             serObj.ApplyModifiedProperties();
         }
-
     }
-
 }
