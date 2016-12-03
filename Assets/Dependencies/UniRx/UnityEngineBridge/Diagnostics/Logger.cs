@@ -1,31 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace UniRx.Diagnostics {
-
-    public partial class Logger {
-
+namespace UniRx.Diagnostics
+{
+    public partial class Logger
+    {
         static bool isInitialized = false;
         static bool isDebugBuild = false;
-        protected readonly Action<LogEntry> logPublisher;
-
-        public Logger(string loggerName) {
-            Name = loggerName;
-            logPublisher = ObservableLogger.RegisterLogger(this);
-        }
 
         public string Name { get; private set; }
+        protected readonly Action<LogEntry> logPublisher;
 
-        /// <summary> Output LogType.Log but only enables isDebugBuild </summary>
-        public virtual void Debug(object message, Object context = null) {
-            if (!isInitialized) {
+        public Logger(string loggerName)
+        {
+            this.Name = loggerName;
+            this.logPublisher = ObservableLogger.RegisterLogger(this);
+        }
+
+        /// <summary>Output LogType.Log but only enables isDebugBuild</summary>
+        public virtual void Debug(object message, UnityEngine.Object context = null)
+        {
+            if (!isInitialized)
+            {
                 isInitialized = true;
                 isDebugBuild = UnityEngine.Debug.isDebugBuild;
             }
 
-            if (isDebugBuild) {
-                logPublisher(new LogEntry(message: message != null ? message.ToString() : "",
+            if (isDebugBuild)
+            {
+                logPublisher(new LogEntry(
+                    message: (message != null) ? message.ToString() : "",
                     logType: LogType.Log,
                     timestamp: DateTime.Now,
                     loggerName: Name,
@@ -33,15 +39,19 @@ namespace UniRx.Diagnostics {
             }
         }
 
-        /// <summary> Output LogType.Log but only enables isDebugBuild </summary>
-        public virtual void DebugFormat(string format, params object[] args) {
-            if (!isInitialized) {
+        /// <summary>Output LogType.Log but only enables isDebugBuild</summary>
+        public virtual void DebugFormat(string format, params object[] args)
+        {
+            if (!isInitialized)
+            {
                 isInitialized = true;
                 isDebugBuild = UnityEngine.Debug.isDebugBuild;
             }
 
-            if (isDebugBuild) {
-                logPublisher(new LogEntry(message: format != null ? string.Format(format, args) : "",
+            if (isDebugBuild)
+            {
+                logPublisher(new LogEntry(
+                    message: (format != null) ? string.Format(format, args) : "",
                     logType: LogType.Log,
                     timestamp: DateTime.Now,
                     loggerName: Name,
@@ -49,56 +59,70 @@ namespace UniRx.Diagnostics {
             }
         }
 
-        public virtual void Log(object message, Object context = null) {
-            logPublisher(new LogEntry(message: message != null ? message.ToString() : "",
+        public virtual void Log(object message, UnityEngine.Object context = null)
+        {
+            logPublisher(new LogEntry(
+                message: (message != null) ? message.ToString() : "",
                 logType: LogType.Log,
                 timestamp: DateTime.Now,
                 loggerName: Name,
                 context: context));
         }
 
-        public virtual void LogFormat(string format, params object[] args) {
-            logPublisher(new LogEntry(message: format != null ? string.Format(format, args) : "",
+        public virtual void LogFormat(string format, params object[] args)
+        {
+            logPublisher(new LogEntry(
+                message: (format != null) ? string.Format(format, args) : "",
                 logType: LogType.Log,
                 timestamp: DateTime.Now,
                 loggerName: Name,
                 context: null));
         }
 
-        public virtual void Warning(object message, Object context = null) {
-            logPublisher(new LogEntry(message: message != null ? message.ToString() : "",
+        public virtual void Warning(object message, UnityEngine.Object context = null)
+        {
+            logPublisher(new LogEntry(
+                message: (message != null) ? message.ToString() : "",
                 logType: LogType.Warning,
                 timestamp: DateTime.Now,
                 loggerName: Name,
                 context: context));
         }
 
-        public virtual void WarningFormat(string format, params object[] args) {
-            logPublisher(new LogEntry(message: format != null ? string.Format(format, args) : "",
+        public virtual void WarningFormat(string format, params object[] args)
+        {
+            logPublisher(new LogEntry(
+                message: (format != null) ? string.Format(format, args) : "",
                 logType: LogType.Warning,
                 timestamp: DateTime.Now,
                 loggerName: Name,
                 context: null));
         }
 
-        public virtual void Error(object message, Object context = null) {
-            logPublisher(new LogEntry(message: message != null ? message.ToString() : "",
+        public virtual void Error(object message, UnityEngine.Object context = null)
+        {
+            logPublisher(new LogEntry(
+                message: (message != null) ? message.ToString() : "",
                 logType: LogType.Error,
                 timestamp: DateTime.Now,
                 loggerName: Name,
                 context: context));
         }
 
-        public virtual void ErrorFormat(string format, params object[] args) {
-            logPublisher(new LogEntry(message: format != null ? string.Format(format, args) : "",
+        public virtual void ErrorFormat(string format, params object[] args)
+        {
+            logPublisher(new LogEntry(
+                message: (format != null) ? string.Format(format, args) : "",
                 logType: LogType.Error,
                 timestamp: DateTime.Now,
                 loggerName: Name,
                 context: null));
         }
 
-        public virtual void Exception(Exception exception, Object context = null) {
-            logPublisher(new LogEntry(message: exception != null ? exception.ToString() : "",
+        public virtual void Exception(Exception exception, UnityEngine.Object context = null)
+        {
+            logPublisher(new LogEntry(
+                message: (exception != null) ? exception.ToString() : "",
                 exception: exception,
                 logType: LogType.Exception,
                 timestamp: DateTime.Now,
@@ -106,11 +130,10 @@ namespace UniRx.Diagnostics {
                 context: context));
         }
 
-        /// <summary> Publish raw LogEntry. </summary>
-        public virtual void Raw(LogEntry logEntry) {
+        /// <summary>Publish raw LogEntry.</summary>
+        public virtual void Raw(LogEntry logEntry)
+        {
             logPublisher(logEntry);
         }
-
     }
-
 }

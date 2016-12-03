@@ -1,46 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace UniRx.Operators {
-
-    internal class DelaySubscriptionObservable<T> : OperatorObservableBase<T> {
-
+namespace UniRx.Operators
+{
+    internal class DelaySubscriptionObservable<T> : OperatorObservableBase<T>
+    {
         readonly IObservable<T> source;
         readonly IScheduler scheduler;
         readonly TimeSpan? dueTimeT;
         readonly DateTimeOffset? dueTimeD;
 
-        public DelaySubscriptionObservable(IObservable<T> source, TimeSpan dueTime, IScheduler scheduler)
-            : base(scheduler == Scheduler.CurrentThread || source.IsRequiredSubscribeOnCurrentThread()) {
+        public DelaySubscriptionObservable(IObservable<T> source,TimeSpan dueTime, IScheduler scheduler)
+            : base(scheduler == Scheduler.CurrentThread || source.IsRequiredSubscribeOnCurrentThread())
+        {
             this.source = source;
             this.scheduler = scheduler;
-            dueTimeT = dueTime;
+            this.dueTimeT = dueTime;
         }
 
         public DelaySubscriptionObservable(IObservable<T> source, DateTimeOffset dueTime, IScheduler scheduler)
-            : base(scheduler == Scheduler.CurrentThread || source.IsRequiredSubscribeOnCurrentThread()) {
+            : base(scheduler == Scheduler.CurrentThread || source.IsRequiredSubscribeOnCurrentThread())
+        {
             this.source = source;
             this.scheduler = scheduler;
-            dueTimeD = dueTime;
+            this.dueTimeD = dueTime;
         }
 
-        protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel) {
-            if (dueTimeT != null) {
+        protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel)
+        {
+            if (dueTimeT != null)
+            {
                 var d = new MultipleAssignmentDisposable();
-                TimeSpan dt = Scheduler.Normalize(dueTimeT.Value);
+                var dt = Scheduler.Normalize(dueTimeT.Value);
 
-                d.Disposable = scheduler.Schedule(dt, () => { d.Disposable = source.Subscribe(observer); });
+                d.Disposable = scheduler.Schedule(dt, () =>
+                {
+                    d.Disposable = source.Subscribe(observer);
+                });
 
                 return d;
             }
-            else {
+            else
+            {
                 var d = new MultipleAssignmentDisposable();
 
-                d.Disposable = scheduler.Schedule(dueTimeD.Value, () => { d.Disposable = source.Subscribe(observer); });
+                d.Disposable = scheduler.Schedule(dueTimeD.Value, () =>
+                {
+                    d.Disposable = source.Subscribe(observer);
+                });
 
                 return d;
             }
         }
-
     }
-
 }

@@ -1,14 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UniRx.Operators {
-
+namespace UniRx.Operators
+{
     // needs to more improvement
 
-    internal class ConcatObservable<T> : OperatorObservableBase<T> {
+    internal class ConcatObservable<T> : OperatorObservableBase<T>
+    {
+        readonly IEnumerable<IObservable<T>> sources;
 
-        class Concat : OperatorObserverBase<T, T> {
+        public ConcatObservable(IEnumerable<IObservable<T>> sources)
+            : base(true)
+        {
+            this.sources = sources;
+        }
 
+        public IObservable<T> Combine(IEnumerable<IObservable<T>> combineSources)
+        {
+            return new ConcatObservable<T>(CombineSources(this.sources, combineSources));
+        }
+
+        static IEnumerable<IObservable<T>> CombineSources(IEnumerable<IObservable<T>> first, IEnumerable<IObservable<T>> second)
+        {
+            foreach (var item in first)
+            {
+                yield return item;
+            }
+            foreach (var item in second)
+            {
+                yield return item;
+            }
+        }
+
+        protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel)
+        {
+            return new Concat(this, observer, cancel).Run();
+        }
+
+        class Concat : OperatorObserverBase<T, T>
+        {
             readonly ConcatObservable<T> parent;
             readonly object gate = new object();
 
@@ -18,113 +48,95 @@ namespace UniRx.Operators {
             Action nextSelf;
 
             public Concat(ConcatObservable<T> parent, IObserver<T> observer, IDisposable cancel)
-                : base(observer, cancel) {
+                : base(observer, cancel)
+            {
                 this.parent = parent;
             }
 
-            public IDisposable Run() {
+            public IDisposable Run()
+            {
                 isDisposed = false;
                 e = parent.sources.GetEnumerator();
                 subscription = new SerialDisposable();
 
-                IDisposable schedule = Scheduler.DefaultSchedulers.TailRecursion.Schedule(RecursiveRun);
+                var schedule = Scheduler.DefaultSchedulers.TailRecursion.Schedule(RecursiveRun);
 
-                return StableCompositeDisposable.Create(schedule,
-                    subscription,
-                    Disposable.Create(() => {
-                        lock (gate) {
-                            isDisposed = true;
-                            e.Dispose();
-                        }
-                    }));
+                return StableCompositeDisposable.Create(schedule, subscription, Disposable.Create(() =>
+               {
+                   lock (gate)
+                   {
+                       this.isDisposed = true;
+                       this.e.Dispose();
+                   }
+               }));
             }
 
-            void RecursiveRun(Action self) {
-                lock (gate) {
-                    nextSelf = self;
-                    if (isDisposed)
-                        return;
+            void RecursiveRun(Action self)
+            {
+                lock (gate)
+                {
+                    this.nextSelf = self;
+                    if (isDisposed) return;
 
-                    IObservable<T> current = default(IObservable<T>);
+                    var current = default(IObservable<T>);
                     var hasNext = false;
-                    Exception ex = default(Exception);
+                    var ex = default(Exception);
 
-                    try {
+                    try
+                    {
                         hasNext = e.MoveNext();
-                        if (hasNext) {
+                        if (hasNext)
+                        {
                             current = e.Current;
-                            if (current == null)
-                                throw new InvalidOperationException("sequence is null.");
+                            if (current == null) throw new InvalidOperationException("sequence is null.");
                         }
-                        else {
+                        else
+                        {
                             e.Dispose();
                         }
-                    } catch (Exception exception) {
+                    }
+                    catch (Exception exception)
+                    {
                         ex = exception;
                         e.Dispose();
                     }
 
-                    if (ex != null) {
-                        try {
-                            observer.OnError(ex);
-                        } finally {
-                            Dispose();
-                        }
+                    if (ex != null)
+                    {
+                        try { observer.OnError(ex); }
+                        finally { Dispose(); }
                         return;
                     }
 
-                    if (!hasNext) {
-                        try {
-                            observer.OnCompleted();
-                        } finally {
-                            Dispose();
-                        }
+                    if (!hasNext)
+                    {
+                        try { observer.OnCompleted(); }
+                        finally { Dispose(); }
                         return;
                     }
 
-                    IObservable<T> source = current;
+                    var source = current;
                     var d = new SingleAssignmentDisposable();
                     subscription.Disposable = d;
                     d.Disposable = source.Subscribe(this);
                 }
             }
 
-            public override void OnNext(T value) { observer.OnNext(value); }
-
-            public override void OnError(Exception error) {
-                try {
-                    observer.OnError(error);
-                } finally {
-                    Dispose();
-                }
+            public override void OnNext(T value)
+            {
+                base.observer.OnNext(value);
             }
 
-            public override void OnCompleted() { nextSelf(); }
-
-        }
-
-        readonly IEnumerable<IObservable<T>> sources;
-
-        public ConcatObservable(IEnumerable<IObservable<T>> sources) : base(true) { this.sources = sources; }
-
-        public IObservable<T> Combine(IEnumerable<IObservable<T>> combineSources) {
-            return new ConcatObservable<T>(CombineSources(sources, combineSources));
-        }
-
-        static IEnumerable<IObservable<T>> CombineSources(IEnumerable<IObservable<T>> first,
-                                                          IEnumerable<IObservable<T>> second) {
-            foreach (IObservable<T> item in first) {
-                yield return item;
+            public override void OnError(Exception error)
+            {
+                try { observer.OnError(error); }
+                finally { Dispose(); }
             }
-            foreach (IObservable<T> item in second) {
-                yield return item;
+
+            public override void OnCompleted()
+            {
+                this.nextSelf();
             }
         }
-
-        protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel) {
-            return new Concat(this, observer, cancel).Run();
-        }
-
     }
-
 }

@@ -1,7 +1,10 @@
-﻿namespace UniRx {
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-    public static partial class Observable {
-
+namespace UniRx
+{
+    public static partial class Observable
+    {
     }
-
 }

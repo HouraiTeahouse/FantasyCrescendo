@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace UniRx.InternalUtil {
-
-    public class ThreadSafeQueueWorker {
-
+namespace UniRx.InternalUtil
+{
+    public class ThreadSafeQueueWorker
+    {
         const int MaxArrayLength = 0X7FEFFFFF;
         const int InitialSize = 16;
 
@@ -18,14 +18,17 @@ namespace UniRx.InternalUtil {
         Action<object>[] waitingList = new Action<object>[InitialSize];
         object[] waitingStates = new object[InitialSize];
 
-        public void Enqueue(Action<object> action, object state) {
-            lock (gate) {
-                if (dequing) {
+        public void Enqueue(Action<object> action, object state)
+        {
+            lock (gate)
+            {
+                if (dequing)
+                {
                     // Ensure Capacity
-                    if (waitingList.Length == waitingListCount) {
-                        int newLength = waitingListCount * 2;
-                        if ((uint) newLength > MaxArrayLength)
-                            newLength = MaxArrayLength;
+                    if (waitingList.Length == waitingListCount)
+                    {
+                        var newLength = waitingListCount * 2;
+                        if ((uint)newLength > MaxArrayLength) newLength = MaxArrayLength;
 
                         var newArray = new Action<object>[newLength];
                         var newArrayState = new object[newLength];
@@ -38,12 +41,13 @@ namespace UniRx.InternalUtil {
                     waitingStates[waitingListCount] = state;
                     waitingListCount++;
                 }
-                else {
+                else
+                {
                     // Ensure Capacity
-                    if (actionList.Length == actionListCount) {
-                        int newLength = actionListCount * 2;
-                        if ((uint) newLength > MaxArrayLength)
-                            newLength = MaxArrayLength;
+                    if (actionList.Length == actionListCount)
+                    {
+                        var newLength = actionListCount * 2;
+                        if ((uint)newLength > MaxArrayLength) newLength = MaxArrayLength;
 
                         var newArray = new Action<object>[newLength];
                         var newArrayState = new object[newLength];
@@ -59,33 +63,41 @@ namespace UniRx.InternalUtil {
             }
         }
 
-        public void ExecuteAll(Action<Exception> unhandledExceptionCallback) {
-            lock (gate) {
-                if (actionListCount == 0)
-                    return;
+        public void ExecuteAll(Action<Exception> unhandledExceptionCallback)
+        {
+            lock (gate)
+            {
+                if (actionListCount == 0) return;
 
                 dequing = true;
             }
 
-            for (var i = 0; i < actionListCount; i++) {
-                Action<object> action = actionList[i];
-                object state = actionStates[i];
-                try {
+            for (int i = 0; i < actionListCount; i++)
+            {
+                var action = actionList[i];
+                var state = actionStates[i];
+                try
+                {
                     action(state);
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     unhandledExceptionCallback(ex);
-                } finally {
+                }
+                finally
+                {
                     // Clear
                     actionList[i] = null;
                     actionStates[i] = null;
                 }
             }
 
-            lock (gate) {
+            lock (gate)
+            {
                 dequing = false;
 
-                Action<object>[] swapTempActionList = actionList;
-                object[] swapTempActionStates = actionStates;
+                var swapTempActionList = actionList;
+                var swapTempActionStates = actionStates;
 
                 actionListCount = waitingListCount;
                 actionList = waitingList;
@@ -96,7 +108,5 @@ namespace UniRx.InternalUtil {
                 waitingStates = swapTempActionStates;
             }
         }
-
     }
-
 }

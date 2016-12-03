@@ -1,16 +1,24 @@
 ﻿using System;
 using UnityEngine;
 
-namespace UniRx {
+/*
+PresenterBase works enough, but too complex.
+You can use simple Initialize method and call parent to child, it works for most scenario.
+So I don't recommend using PresenterBase, sorry.
+*/
 
+namespace UniRx
+{
     // InEditor : Construct Children Dependency
     // Awake : Construct Parent Dependency
     // Start(Capture phase)  : Parent to Child, pass argument
     // Start(Bubbling phase) : Child to Parent, initialize(like constructor)
 
-    /// <summary> Infrastructure interface for PresenterBase`T </summary>
-    public interface IPresenter {
-
+    /// <summary>
+    /// [Obsolete]Infrastructure interface for PresenterBase`T
+    /// </summary>
+    public interface IPresenter
+    {
         IPresenter Parent { get; }
         GameObject gameObject { get; }
         void RegisterParent(IPresenter parent);
@@ -18,30 +26,47 @@ namespace UniRx {
         void StartCapturePhase();
         void Awake();
         void ForceInitialize(object argument);
-
     }
 
-    /// <summary> PresenterBase can control dependency of presenter's hierarchy. </summary>
-    public abstract class PresenterBase : PresenterBase<Unit> {
+    /// <summary>
+    /// [Obsolete]PresenterBase can control dependency of presenter's hierarchy.
+    /// </summary>
+    public abstract class PresenterBase : PresenterBase<Unit>
+    {
+        protected sealed override void BeforeInitialize(Unit argument)
+        {
+            BeforeInitialize();
+        }
 
-        protected sealed override void BeforeInitialize(Unit argument) { BeforeInitialize(); }
-
-        /// <summary> Same as Start but called before children initialized, it's chance for propagate argument to children. </summary>
+        /// <summary>
+        /// Same as Start but called before children initialized, it's chance for propagate argument to children.
+        /// </summary>
         protected abstract void BeforeInitialize();
 
-        protected override void Initialize(Unit argument) { Initialize(); }
+        protected override void Initialize(Unit argument)
+        {
+            Initialize();
+        }
 
-        /// <summary> Force Start BeforeInitialize/Initialize. If you create presenter dynamically, maybe useful. </summary>
-        public void ForceInitialize() { ForceInitialize(Unit.Default); }
+        /// <summary>
+        /// Force Start BeforeInitialize/Initialize. If you create presenter dynamically, maybe useful.
+        /// </summary>
+        public void ForceInitialize()
+        {
+            ForceInitialize(Unit.Default);
+        }
 
-        /// <summary> Same as Start but called after all children are initialized. </summary>
+        /// <summary>
+        /// Same as Start but called after all children are initialized.
+        /// </summary>
         protected abstract void Initialize();
-
     }
 
-    /// <summary> PresenterBase can control dependency of presenter's hierarchy. </summary>
-    public abstract class PresenterBase<T> : MonoBehaviour, IPresenter {
-
+    /// <summary>
+    /// [Obsolete]PresenterBase can control dependency of presenter's hierarchy.
+    /// </summary>
+    public abstract class PresenterBase<T> : MonoBehaviour, IPresenter
+    {
         protected static readonly IPresenter[] EmptyChildren = new IPresenter[0];
 
         int childrenCount = 0;
@@ -55,117 +80,104 @@ namespace UniRx {
         IPresenter parent = null;
         T argument = default(T);
 
-        /// <summary> Dependency on hierarchy of this presenter. If Children is empty, you can return this.EmptyChildren. </summary>
-        protected abstract IPresenter[] Children { get; }
-
-        public IPresenter Parent {
-            get { return parent; }
+        public IPresenter Parent
+        {
+            get
+            {
+                return parent;
+            }
         }
 
-        void IPresenter.ForceInitialize(object argument) { ForceInitialize((T) argument); }
+        /// <summary>
+        /// Observable sequence called after initialize completed.
+        /// </summary>
+        public IObservable<Unit> InitializeAsObservable()
+        {
+            if (isInitialized) return Observable.Return(Unit.Default);
+            return initializeSubject ?? (initializeSubject = new Subject<Unit>());
+        }
 
-        void IPresenter.Awake() {
-            if (isAwaken)
-                return;
+        /// <summary>
+        /// Propagate(Set) argument.
+        /// </summary>
+        public void PropagateArgument(T argument)
+        {
+            this.argument = argument;
+        }
+
+        /// <summary>
+        /// Dependency on hierarchy of this presenter. If Children is empty, you can return this.EmptyChildren.
+        /// </summary>
+        protected abstract IPresenter[] Children { get; }
+
+        /// <summary>
+        /// Same as Start but called before children initialized, it's chance for propagate argument to children.
+        /// </summary>
+        protected abstract void BeforeInitialize(T argument);
+
+        /// <summary>
+        /// Same as Start but called after all children are initialized.
+        /// </summary>
+        protected abstract void Initialize(T argument);
+
+        /// <summary>
+        /// Force Start BeforeInitialize/Initialize. If you create presenter dynamically, maybe useful.
+        /// </summary>
+        public virtual void ForceInitialize(T argument)
+        {
+            Awake();
+            PropagateArgument(argument);
+            Start();
+        }
+
+        void IPresenter.ForceInitialize(object argument)
+        {
+            ForceInitialize((T)argument);
+        }
+
+        void IPresenter.Awake()
+        {
+            if (isAwaken) return;
             isAwaken = true;
 
             children = Children;
             childrenCount = children.Length;
 
-            for (var i = 0; i < children.Length; i++) {
-                IPresenter child = children[i];
+            for (int i = 0; i < children.Length; i++)
+            {
+                var child = children[i];
                 child.RegisterParent(this);
                 child.Awake(); // call Awake directly
             }
             OnAwake();
         }
 
-        void IPresenter.StartCapturePhase() {
-            isStartedCapturePhase = true;
-            BeforeInitialize(argument);
-
-            for (var i = 0; i < children.Length; i++) {
-                IPresenter child = children[i];
-                child.StartCapturePhase();
-            }
-
-            // Start Bubbling phase
-            if (children.Length == 0) {
-                Initialize(argument);
-                isInitialized = true;
-                if (initializeSubject != null) {
-                    initializeSubject.OnNext(Unit.Default);
-                    initializeSubject.OnCompleted();
-                }
-                if (parent != null) {
-                    parent.InitializeCore();
-                }
-            }
+        /// <summary>Infrastructure method called by UnityEngine. If you needs override Awake, override OnAwake.</summary>
+        protected void Awake()
+        {
+            (this as IPresenter).Awake();
         }
 
-        void IPresenter.RegisterParent(IPresenter parent) {
-            if (this.parent != null)
-                throw new InvalidOperationException("PresenterBase can't register multiple parent. Name:" + name);
-
-            this.parent = parent;
+        /// <summary>An alternative of Awake.</summary>
+        protected virtual void OnAwake()
+        {
         }
 
-        void IPresenter.InitializeCore() {
-            currentCalledCount += 1;
-            if (childrenCount == currentCalledCount) {
-                Initialize(argument);
-                isInitialized = true;
-                if (initializeSubject != null) {
-                    initializeSubject.OnNext(Unit.Default);
-                    initializeSubject.OnCompleted();
-                }
-                if (parent != null) {
-                    parent.InitializeCore();
-                }
-            }
-        }
-
-        /// <summary> Observable sequence called after initialize completed. </summary>
-        public IObservable<Unit> InitializeAsObservable() {
-            if (isInitialized)
-                return Observable.Return(Unit.Default);
-            return initializeSubject ?? (initializeSubject = new Subject<Unit>());
-        }
-
-        /// <summary> Propagate(Set) argument. </summary>
-        public void PropagateArgument(T argument) { this.argument = argument; }
-
-        /// <summary> Same as Start but called before children initialized, it's chance for propagate argument to children. </summary>
-        protected abstract void BeforeInitialize(T argument);
-
-        /// <summary> Same as Start but called after all children are initialized. </summary>
-        protected abstract void Initialize(T argument);
-
-        /// <summary> Force Start BeforeInitialize/Initialize. If you create presenter dynamically, maybe useful. </summary>
-        public virtual void ForceInitialize(T argument) {
-            Awake();
-            PropagateArgument(argument);
-            Start();
-        }
-
-        /// <summary> Infrastructure method called by UnityEngine. If you needs override Awake, override OnAwake. </summary>
-        protected void Awake() { (this as IPresenter).Awake(); }
-
-        /// <summary> An alternative of Awake. </summary>
-        protected virtual void OnAwake() { }
-
-        /// <summary> Infrastructure method called by UnityEngine. don't call directly, don't override, don't hide! </summary>
-        protected void Start() {
-            if (isStartedCapturePhase)
-                return;
-            IPresenter root = parent;
+        /// <summary>Infrastructure method called by UnityEngine. don't call directly, don't override, don't hide!</summary>
+        protected void Start()
+        {
+            if (isStartedCapturePhase) return;
+            var root = parent;
 
             // Search root object
-            if (root == null) {
+            if (root == null)
+            {
                 root = this;
             }
-            else {
-                while (root.Parent != null) {
+            else
+            {
+                while (root.Parent != null)
+                {
                     root = root.Parent;
                 }
             }
@@ -173,6 +185,50 @@ namespace UniRx {
             root.StartCapturePhase();
         }
 
-    }
+        void IPresenter.StartCapturePhase()
+        {
+            isStartedCapturePhase = true;
+            BeforeInitialize(argument);
 
+            for (int i = 0; i < children.Length; i++)
+            {
+                var child = children[i];
+                child.StartCapturePhase();
+            }
+
+            // Start Bubbling phase
+            if (children.Length == 0)
+            {
+                Initialize(argument);
+                isInitialized = true;
+                if (initializeSubject != null) { initializeSubject.OnNext(Unit.Default); initializeSubject.OnCompleted(); }
+                if (parent != null)
+                {
+                    parent.InitializeCore();
+                }
+            }
+        }
+
+        void IPresenter.RegisterParent(IPresenter parent)
+        {
+            if (this.parent != null) throw new InvalidOperationException("PresenterBase can't register multiple parent. Name:" + this.name);
+
+            this.parent = parent;
+        }
+
+        void IPresenter.InitializeCore()
+        {
+            currentCalledCount += 1;
+            if (childrenCount == currentCalledCount)
+            {
+                Initialize(argument);
+                isInitialized = true;
+                if (initializeSubject != null) { initializeSubject.OnNext(Unit.Default); initializeSubject.OnCompleted(); }
+                if (parent != null)
+                {
+                    parent.InitializeCore();
+                }
+            }
+        }
+    }
 }

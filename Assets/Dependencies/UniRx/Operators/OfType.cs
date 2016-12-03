@@ -1,48 +1,47 @@
 ﻿using System;
 
-namespace UniRx.Operators {
+namespace UniRx.Operators
+{
+    internal class OfTypeObservable<TSource, TResult> : OperatorObservableBase<TResult>
+    {
+        readonly IObservable<TSource> source;
 
-    internal class OfTypeObservable<TSource, TResult> : OperatorObservableBase<TResult> {
+        public OfTypeObservable(IObservable<TSource> source)
+            : base(source.IsRequiredSubscribeOnCurrentThread())
+        {
+            this.source = source;
+        }
 
-        class OfType : OperatorObserverBase<TSource, TResult> {
+        protected override IDisposable SubscribeCore(IObserver<TResult> observer, IDisposable cancel)
+        {
+            return source.Subscribe(new OfType(observer, cancel));
+        }
 
-            public OfType(IObserver<TResult> observer, IDisposable cancel) : base(observer, cancel) { }
+        class OfType : OperatorObserverBase<TSource, TResult>
+        {
+            public OfType(IObserver<TResult> observer, IDisposable cancel)
+                : base(observer, cancel)
+            {
+            }
 
-            public override void OnNext(TSource value) {
-                if (value is TResult) {
-                    var castValue = (TResult) (object) value;
+            public override void OnNext(TSource value)
+            {
+                if (value is TResult)
+                {
+                    var castValue = (TResult)(object)value;
                     observer.OnNext(castValue);
                 }
             }
 
-            public override void OnError(Exception error) {
-                try {
-                    observer.OnError(error);
-                } finally {
-                    Dispose();
-                }
+            public override void OnError(Exception error)
+            {
+                try { observer.OnError(error); } finally { Dispose(); }
             }
 
-            public override void OnCompleted() {
-                try {
-                    observer.OnCompleted();
-                } finally {
-                    Dispose();
-                }
+            public override void OnCompleted()
+            {
+                try { observer.OnCompleted(); } finally { Dispose(); }
             }
-
         }
-
-        readonly IObservable<TSource> source;
-
-        public OfTypeObservable(IObservable<TSource> source) : base(source.IsRequiredSubscribeOnCurrentThread()) {
-            this.source = source;
-        }
-
-        protected override IDisposable SubscribeCore(IObserver<TResult> observer, IDisposable cancel) {
-            return source.Subscribe(new OfType(observer, cancel));
-        }
-
     }
-
 }

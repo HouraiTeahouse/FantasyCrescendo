@@ -1,38 +1,59 @@
 ﻿using System;
 
-namespace UniRx.Operators {
+namespace UniRx.Operators
+{
+    internal class ThrottleFirstObservable<T> : OperatorObservableBase<T>
+    {
+        readonly IObservable<T> source;
+        readonly TimeSpan dueTime;
+        readonly IScheduler scheduler;
 
-    internal class ThrottleFirstObservable<T> : OperatorObservableBase<T> {
+        public ThrottleFirstObservable(IObservable<T> source, TimeSpan dueTime, IScheduler scheduler) 
+            : base(scheduler == Scheduler.CurrentThread || source.IsRequiredSubscribeOnCurrentThread())
+        {
+            this.source = source;
+            this.dueTime = dueTime;
+            this.scheduler = scheduler;
+        }
 
-        class ThrottleFirst : OperatorObserverBase<T, T> {
+        protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel)
+        {
+            return new ThrottleFirst(this, observer, cancel).Run();
+        }
 
+        class ThrottleFirst : OperatorObserverBase<T, T>
+        {
             readonly ThrottleFirstObservable<T> parent;
             readonly object gate = new object();
             bool open = true;
             SerialDisposable cancelable;
 
-            public ThrottleFirst(ThrottleFirstObservable<T> parent, IObserver<T> observer, IDisposable cancel)
-                : base(observer, cancel) {
+            public ThrottleFirst(ThrottleFirstObservable<T> parent, IObserver<T> observer, IDisposable cancel) : base(observer, cancel)
+            {
                 this.parent = parent;
             }
 
-            public IDisposable Run() {
+            public IDisposable Run()
+            {
                 cancelable = new SerialDisposable();
-                IDisposable subscription = parent.source.Subscribe(this);
+                var subscription = parent.source.Subscribe(this);
 
                 return StableCompositeDisposable.Create(cancelable, subscription);
             }
 
-            void OnNext() {
-                lock (gate) {
+            void OnNext()
+            {
+                lock (gate)
+                {
                     open = true;
                 }
             }
 
-            public override void OnNext(T value) {
-                lock (gate) {
-                    if (!open)
-                        return;
+            public override void OnNext(T value)
+            {
+                lock (gate)
+                {
+                    if (!open) return;
                     observer.OnNext(value);
                     open = false;
                 }
@@ -42,47 +63,25 @@ namespace UniRx.Operators {
                 d.Disposable = parent.scheduler.Schedule(parent.dueTime, OnNext);
             }
 
-            public override void OnError(Exception error) {
+            public override void OnError(Exception error)
+            {
                 cancelable.Dispose();
 
-                lock (gate) {
-                    try {
-                        observer.OnError(error);
-                    } finally {
-                        Dispose();
-                    }
+                lock (gate)
+                {
+                    try { observer.OnError(error); } finally { Dispose(); }
                 }
             }
 
-            public override void OnCompleted() {
+            public override void OnCompleted()
+            {
                 cancelable.Dispose();
 
-                lock (gate) {
-                    try {
-                        observer.OnCompleted();
-                    } finally {
-                        Dispose();
-                    }
+                lock (gate)
+                {
+                    try { observer.OnCompleted(); } finally { Dispose(); }
                 }
             }
-
         }
-
-        readonly IObservable<T> source;
-        readonly TimeSpan dueTime;
-        readonly IScheduler scheduler;
-
-        public ThrottleFirstObservable(IObservable<T> source, TimeSpan dueTime, IScheduler scheduler)
-            : base(scheduler == Scheduler.CurrentThread || source.IsRequiredSubscribeOnCurrentThread()) {
-            this.source = source;
-            this.dueTime = dueTime;
-            this.scheduler = scheduler;
-        }
-
-        protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel) {
-            return new ThrottleFirst(this, observer, cancel).Run();
-        }
-
     }
-
 }

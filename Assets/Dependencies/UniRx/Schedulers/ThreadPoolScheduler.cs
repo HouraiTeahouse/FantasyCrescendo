@@ -1,59 +1,73 @@
 ﻿#if !UNITY_METRO
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
+using System.Text;
 using UniRx.InternalUtil;
 
-namespace UniRx {
+namespace UniRx
+{
+    public static partial class Scheduler
+    {
+        public static readonly IScheduler ThreadPool = new ThreadPoolScheduler();
 
-    public static partial class Scheduler {
+        class ThreadPoolScheduler : IScheduler, ISchedulerPeriodic, ISchedulerQueueing
+        {
+            public ThreadPoolScheduler()
+            {
+            }
 
-        class ThreadPoolScheduler : IScheduler, ISchedulerPeriodic, ISchedulerQueueing {
+            public DateTimeOffset Now
+            {
+                get { return Scheduler.Now; }
+            }
 
-            sealed class PeriodicTimer : IDisposable {
+            public IDisposable Schedule(Action action)
+            {
+                var d = new BooleanDisposable();
 
-                static readonly HashSet<System.Threading.Timer> s_timers = new HashSet<System.Threading.Timer>();
-
-                private Action _action;
-                private System.Threading.Timer _timer;
-                private readonly AsyncLock _gate;
-
-                public PeriodicTimer(TimeSpan period, Action action) {
-                    _action = action;
-                    _timer = new System.Threading.Timer(Tick, null, period, period);
-                    _gate = new AsyncLock();
-
-                    lock (s_timers) {
-                        s_timers.Add(_timer);
+                System.Threading.ThreadPool.QueueUserWorkItem(_ =>
+                {
+                    if (!d.IsDisposed)
+                    {
+                        action();
                     }
-                }
+                });
 
-                public void Dispose() {
-                    System.Threading.Timer timer = default(System.Threading.Timer);
+                return d;
+            }
 
-                    lock (s_timers) {
-                        timer = _timer;
-                        _timer = null;
+            public IDisposable Schedule(DateTimeOffset dueTime, Action action)
+            {
+                return Schedule(dueTime - Now, action);
+            }
 
-                        if (timer != null)
-                            s_timers.Remove(timer);
+            public IDisposable Schedule(TimeSpan dueTime, Action action)
+            {
+                return new Timer(dueTime, action);
+            }
+
+            public IDisposable SchedulePeriodic(TimeSpan period, Action action)
+            {
+                return new PeriodicTimer(period, action);
+            }
+
+            public void ScheduleQueueing<T>(ICancelable cancel, T state, Action<T> action)
+            {
+                System.Threading.ThreadPool.QueueUserWorkItem(callBackState =>
+                {
+                    if (!cancel.IsDisposed)
+                    {
+                        action((T)callBackState);
                     }
-
-                    if (timer != null) {
-                        timer.Dispose();
-                        _action = Stubs.Nop;
-                    }
-                }
-
-                private void Tick(object state) { _gate.Wait(() => { _action(); }); }
-
+                }, state);
             }
 
             // timer was borrwed from Rx Official
 
-            sealed class Timer : IDisposable {
-
+            sealed class Timer : IDisposable
+            {
                 static readonly HashSet<System.Threading.Timer> s_timers = new HashSet<System.Threading.Timer>();
 
                 private readonly SingleAssignmentDisposable _disposable;
@@ -64,15 +78,18 @@ namespace UniRx {
                 private bool _hasAdded;
                 private bool _hasRemoved;
 
-                public Timer(TimeSpan dueTime, Action action) {
+                public Timer(TimeSpan dueTime, Action action)
+                {
                     _disposable = new SingleAssignmentDisposable();
                     _disposable.Disposable = Disposable.Create(Unroot);
 
                     _action = action;
-                    _timer = new System.Threading.Timer(Tick, null, dueTime, TimeSpan.FromMilliseconds(Timeout.Infinite));
+                    _timer = new System.Threading.Timer(Tick, null, dueTime, TimeSpan.FromMilliseconds(System.Threading.Timeout.Infinite));
 
-                    lock (s_timers) {
-                        if (!_hasRemoved) {
+                    lock (s_timers)
+                    {
+                        if (!_hasRemoved)
+                        {
                             s_timers.Add(_timer);
 
                             _hasAdded = true;
@@ -80,25 +97,31 @@ namespace UniRx {
                     }
                 }
 
-                public void Dispose() { _disposable.Dispose(); }
-
-                private void Tick(object state) {
-                    try {
-                        if (!_disposable.IsDisposed) {
+                private void Tick(object state)
+                {
+                    try
+                    {
+                        if (!_disposable.IsDisposed)
+                        {
                             _action();
                         }
-                    } finally {
+                    }
+                    finally
+                    {
                         Unroot();
                     }
                 }
 
-                private void Unroot() {
+                private void Unroot()
+                {
                     _action = Stubs.Nop;
 
-                    System.Threading.Timer timer = default(System.Threading.Timer);
+                    var timer = default(System.Threading.Timer);
 
-                    lock (s_timers) {
-                        if (!_hasRemoved) {
+                    lock (s_timers)
+                    {
+                        if (!_hasRemoved)
+                        {
                             timer = _timer;
                             _timer = null;
 
@@ -113,51 +136,62 @@ namespace UniRx {
                         timer.Dispose();
                 }
 
+                public void Dispose()
+                {
+                    _disposable.Dispose();
+                }
             }
 
-            public ThreadPoolScheduler() { }
+            sealed class PeriodicTimer : IDisposable
+            {
+                static readonly HashSet<System.Threading.Timer> s_timers = new HashSet<System.Threading.Timer>();
 
-            public DateTimeOffset Now {
-                get { return Scheduler.Now; }
-            }
+                private Action _action;
+                private System.Threading.Timer _timer;
+                private readonly AsyncLock _gate;
 
-            public IDisposable Schedule(Action action) {
-                var d = new BooleanDisposable();
+                public PeriodicTimer(TimeSpan period, Action action)
+                {
+                    this._action = action;
+                    this._timer = new System.Threading.Timer(Tick, null, period, period);
+                    this._gate = new AsyncLock();
 
-                System.Threading.ThreadPool.QueueUserWorkItem(_ => {
-                    if (!d.IsDisposed) {
-                        action();
+                    lock (s_timers)
+                    {
+                        s_timers.Add(_timer);
                     }
-                });
+                }
 
-                return d;
-            }
+                private void Tick(object state)
+                {
+                    _gate.Wait(() =>
+                    {
+                        _action();
+                    });
+                }
 
-            public IDisposable Schedule(TimeSpan dueTime, Action action) { return new Timer(dueTime, action); }
+                public void Dispose()
+                {
+                    var timer = default(System.Threading.Timer);
 
-            public IDisposable SchedulePeriodic(TimeSpan period, Action action) {
-                return new PeriodicTimer(period, action);
-            }
+                    lock (s_timers)
+                    {
+                        timer = _timer;
+                        _timer = null;
 
-            public void ScheduleQueueing<T>(ICancelable cancel, T state, Action<T> action) {
-                System.Threading.ThreadPool.QueueUserWorkItem(callBackState => {
-                    if (!cancel.IsDisposed) {
-                        action((T) callBackState);
+                        if (timer != null)
+                            s_timers.Remove(timer);
                     }
-                },
-                    state);
-            }
 
-            public IDisposable Schedule(DateTimeOffset dueTime, Action action) {
-                return Schedule(dueTime - Now, action);
+                    if (timer != null)
+                    {
+                        timer.Dispose();
+                        _action = Stubs.Nop;
+                    }
+                }
             }
-
         }
-
-        public static readonly IScheduler ThreadPool = new ThreadPoolScheduler();
-
     }
-
 }
 
 #endif

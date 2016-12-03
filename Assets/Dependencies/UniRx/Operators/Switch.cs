@@ -1,50 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace UniRx.Operators {
+namespace UniRx.Operators
+{
+    internal class SwitchObservable<T> : OperatorObservableBase<T>
+    {
+        readonly IObservable<IObservable<T>> sources;
 
-    internal class SwitchObservable<T> : OperatorObservableBase<T> {
+        public SwitchObservable(IObservable<IObservable<T>> sources)
+            : base(true)
+        {
+            this.sources = sources;
+        }
 
-        class SwitchObserver : OperatorObserverBase<IObservable<T>, T> {
+        protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel)
+        {
+            return new SwitchObserver(this, observer, cancel).Run();
+        }
 
-            class Switch : IObserver<T> {
-
-                readonly SwitchObserver parent;
-                readonly ulong id;
-
-                public Switch(SwitchObserver observer, ulong id) {
-                    parent = observer;
-                    this.id = id;
-                }
-
-                public void OnNext(T value) {
-                    lock (parent.gate) {
-                        if (parent.latest == id) {
-                            parent.observer.OnNext(value);
-                        }
-                    }
-                }
-
-                public void OnError(Exception error) {
-                    lock (parent.gate) {
-                        if (parent.latest == id) {
-                            parent.observer.OnError(error);
-                        }
-                    }
-                }
-
-                public void OnCompleted() {
-                    lock (parent.gate) {
-                        if (parent.latest == id) {
-                            parent.hasLatest = false;
-                            if (parent.isStopped) {
-                                parent.observer.OnCompleted();
-                            }
-                        }
-                    }
-                }
-
-            }
-
+        class SwitchObserver : OperatorObserverBase<IObservable<T>, T>
+        {
             readonly SwitchObservable<T> parent;
 
             readonly object gate = new object();
@@ -53,19 +30,22 @@ namespace UniRx.Operators {
             ulong latest = 0UL;
             bool hasLatest = false;
 
-            public SwitchObserver(SwitchObservable<T> parent, IObserver<T> observer, IDisposable cancel)
-                : base(observer, cancel) {
+            public SwitchObserver(SwitchObservable<T> parent, IObserver<T> observer, IDisposable cancel) : base(observer, cancel)
+            {
                 this.parent = parent;
             }
 
-            public IDisposable Run() {
-                IDisposable subscription = parent.sources.Subscribe(this);
+            public IDisposable Run()
+            {
+                var subscription = parent.sources.Subscribe(this);
                 return StableCompositeDisposable.Create(subscription, innerSubscription);
             }
 
-            public override void OnNext(IObservable<T> value) {
-                ulong id = default(ulong);
-                lock (gate) {
+            public override void OnNext(IObservable<T> value)
+            {
+                var id = default(ulong);
+                lock (gate)
+                {
                     id = unchecked(++latest);
                     hasLatest = true;
                 }
@@ -75,39 +55,76 @@ namespace UniRx.Operators {
                 d.Disposable = value.Subscribe(new Switch(this, id));
             }
 
-            public override void OnError(Exception error) {
-                lock (gate) {
-                    try {
-                        observer.OnError(error);
-                    } finally {
-                        Dispose();
+            public override void OnError(Exception error)
+            {
+                lock (gate)
+                {
+                    try { observer.OnError(error); }
+                    finally { Dispose(); }
+                }
+            }
+
+            public override void OnCompleted()
+            {
+                lock (gate)
+                {
+                    isStopped = true;
+                    if (!hasLatest)
+                    {
+                        try { observer.OnCompleted(); }
+                        finally { Dispose(); }
                     }
                 }
             }
 
-            public override void OnCompleted() {
-                lock (gate) {
-                    isStopped = true;
-                    if (!hasLatest) {
-                        try {
-                            observer.OnCompleted();
-                        } finally {
-                            Dispose();
+            class Switch : IObserver<T>
+            {
+                readonly SwitchObserver parent;
+                readonly ulong id;
+
+                public Switch(SwitchObserver observer, ulong id)
+                {
+                    this.parent = observer;
+                    this.id = id;
+                }
+
+                public void OnNext(T value)
+                {
+                    lock (parent.gate)
+                    {
+                        if (parent.latest == id)
+                        {
+                            parent.observer.OnNext(value);
+                        }
+                    }
+                }
+
+                public void OnError(Exception error)
+                {
+                    lock (parent.gate)
+                    {
+                        if (parent.latest == id)
+                        {
+                            parent.observer.OnError(error);
+                        }
+                    }
+                }
+
+                public void OnCompleted()
+                {
+                    lock (parent.gate)
+                    {
+                        if (parent.latest == id)
+                        {
+                            parent.hasLatest = false;
+                            if (parent.isStopped)
+                            {
+                                parent.observer.OnCompleted();
+                            }
                         }
                     }
                 }
             }
-
         }
-
-        readonly IObservable<IObservable<T>> sources;
-
-        public SwitchObservable(IObservable<IObservable<T>> sources) : base(true) { this.sources = sources; }
-
-        protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel) {
-            return new SwitchObserver(this, observer, cancel).Run();
-        }
-
     }
-
 }

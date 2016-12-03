@@ -1,268 +1,291 @@
 ﻿using System;
+using System.Reflection;
+using UnityEngine;
+using System.Text.RegularExpressions;
 using System.Collections;
 using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using UnityEngine;
-using Object = UnityEngine.Object;
+
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
-namespace UniRx {
-
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
-    public class InspectorDisplayAttribute : PropertyAttribute {
-
-        public InspectorDisplayAttribute(string fieldName = "value", bool notifyPropertyChanged = true) {
-            FieldName = fieldName;
-            NotifyPropertyChanged = notifyPropertyChanged;
-        }
-
+namespace UniRx
+{
+    [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    public class InspectorDisplayAttribute : PropertyAttribute
+    {
         public string FieldName { get; private set; }
         public bool NotifyPropertyChanged { get; private set; }
 
+        public InspectorDisplayAttribute(string fieldName = "value", bool notifyPropertyChanged = true)
+        {
+            FieldName = fieldName;
+            NotifyPropertyChanged = notifyPropertyChanged;
+        }
     }
 
-    /// <summary> Enables multiline input field for StringReactiveProperty. Default line is 3. </summary>
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
-    public class MultilineReactivePropertyAttribute : PropertyAttribute {
-
-        public MultilineReactivePropertyAttribute() { Lines = 3; }
-
-        public MultilineReactivePropertyAttribute(int lines) { Lines = lines; }
-
+    /// <summary>
+    /// Enables multiline input field for StringReactiveProperty. Default line is 3.
+    /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    public class MultilineReactivePropertyAttribute : PropertyAttribute
+    {
         public int Lines { get; private set; }
 
-    }
-
-    /// <summary> Enables range input field for Int/FloatReactiveProperty. </summary>
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
-    public class RangeReactivePropertyAttribute : PropertyAttribute {
-
-        public RangeReactivePropertyAttribute(float min, float max) {
-            Min = min;
-            Max = max;
+        public MultilineReactivePropertyAttribute()
+        {
+            Lines = 3;
         }
 
+        public MultilineReactivePropertyAttribute(int lines)
+        {
+            this.Lines = lines;
+        }
+    }
+
+    /// <summary>
+    /// Enables range input field for Int/FloatReactiveProperty.
+    /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    public class RangeReactivePropertyAttribute : PropertyAttribute
+    {
         public float Min { get; private set; }
         public float Max { get; private set; }
 
+        public RangeReactivePropertyAttribute(float min, float max)
+        {
+            this.Min = min;
+            this.Max = max;
+        }
     }
 
 #if UNITY_EDITOR
+
 
     // InspectorDisplay and for Specialized ReactiveProperty
     // If you want to customize other specialized ReactiveProperty
     // [UnityEditor.CustomPropertyDrawer(typeof(YourSpecializedReactiveProperty))]
     // public class ExtendInspectorDisplayDrawer : InspectorDisplayDrawer { } 
 
-    [CustomPropertyDrawer(typeof(InspectorDisplayAttribute))]
-    [CustomPropertyDrawer(typeof(IntReactiveProperty))]
-    [CustomPropertyDrawer(typeof(LongReactiveProperty))]
-    [CustomPropertyDrawer(typeof(ByteReactiveProperty))]
-    [CustomPropertyDrawer(typeof(FloatReactiveProperty))]
-    [CustomPropertyDrawer(typeof(DoubleReactiveProperty))]
-    [CustomPropertyDrawer(typeof(StringReactiveProperty))]
-    [CustomPropertyDrawer(typeof(BoolReactiveProperty))]
-    [CustomPropertyDrawer(typeof(Vector2ReactiveProperty))]
-    [CustomPropertyDrawer(typeof(Vector3ReactiveProperty))]
-    [CustomPropertyDrawer(typeof(Vector4ReactiveProperty))]
-    [CustomPropertyDrawer(typeof(ColorReactiveProperty))]
-    [CustomPropertyDrawer(typeof(RectReactiveProperty))]
-    [CustomPropertyDrawer(typeof(AnimationCurveReactiveProperty))]
-    [CustomPropertyDrawer(typeof(BoundsReactiveProperty))]
-    [CustomPropertyDrawer(typeof(QuaternionReactiveProperty))]
-    public class InspectorDisplayDrawer : PropertyDrawer {
-
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+    [UnityEditor.CustomPropertyDrawer(typeof(InspectorDisplayAttribute))]
+    [UnityEditor.CustomPropertyDrawer(typeof(IntReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(LongReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(ByteReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(FloatReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(DoubleReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(StringReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(BoolReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(Vector2ReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(Vector3ReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(Vector4ReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(ColorReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(RectReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(AnimationCurveReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(BoundsReactiveProperty))]
+    [UnityEditor.CustomPropertyDrawer(typeof(QuaternionReactiveProperty))]
+    public class InspectorDisplayDrawer : UnityEditor.PropertyDrawer
+    {
+        public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label)
+        {
             string fieldName;
             bool notifyPropertyChanged;
             {
-                var attr = attribute as InspectorDisplayAttribute;
-                fieldName = attr == null ? "value" : attr.FieldName;
-                notifyPropertyChanged = attr == null ? true : attr.NotifyPropertyChanged;
+                var attr = this.attribute as InspectorDisplayAttribute;
+                fieldName = (attr == null) ? "value" : attr.FieldName;
+                notifyPropertyChanged = (attr == null) ? true : attr.NotifyPropertyChanged;
             }
 
-            if (notifyPropertyChanged) {
+            if (notifyPropertyChanged)
+            {
                 EditorGUI.BeginChangeCheck();
             }
-            SerializedProperty targetSerializedProperty = property.FindPropertyRelative(fieldName);
-            if (targetSerializedProperty == null) {
-                EditorGUI.LabelField(position,
-                    label,
-                    new GUIContent() {text = "InspectorDisplay can't find target:" + fieldName});
-                if (notifyPropertyChanged) {
+            var targetSerializedProperty = property.FindPropertyRelative(fieldName);
+            if (targetSerializedProperty == null)
+            {
+                UnityEditor.EditorGUI.LabelField(position, label, new GUIContent() { text = "InspectorDisplay can't find target:" + fieldName });
+                if (notifyPropertyChanged)
+                {
                     EditorGUI.EndChangeCheck();
                 }
                 return;
             }
-            else {
+            else
+            {
                 EmitPropertyField(position, targetSerializedProperty, label);
             }
 
-            if (notifyPropertyChanged) {
-                if (EditorGUI.EndChangeCheck()) {
+            if (notifyPropertyChanged)
+            {
+                if (EditorGUI.EndChangeCheck())
+                {
                     property.serializedObject.ApplyModifiedProperties(); // deserialize to field
 
-                    string[] paths = property.propertyPath.Split('.'); // X.Y.Z...
-                    Object attachedComponent = property.serializedObject.targetObject;
+                    var paths = property.propertyPath.Split('.'); // X.Y.Z...
+                    var attachedComponent = property.serializedObject.targetObject;
 
-                    object targetProp = paths.Length == 1
+                    var targetProp = (paths.Length == 1)
                         ? fieldInfo.GetValue(attachedComponent)
                         : GetValueRecursive(attachedComponent, 0, paths);
-                    if (targetProp == null)
-                        return;
-                    PropertyInfo propInfo = targetProp.GetType()
-                        .GetProperty(fieldName,
-                            BindingFlags.IgnoreCase | BindingFlags.GetProperty | BindingFlags.Instance
-                                | BindingFlags.Public | BindingFlags.NonPublic);
-                    object modifiedValue = propInfo.GetValue(targetProp, null); // retrieve new value
+                    if (targetProp == null) return;
+                    var propInfo = targetProp.GetType().GetProperty(fieldName, BindingFlags.IgnoreCase | BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    var modifiedValue = propInfo.GetValue(targetProp, null); // retrieve new value
 
-                    MethodInfo methodInfo = targetProp.GetType()
-                        .GetMethod("SetValueAndForceNotify",
-                            BindingFlags.IgnoreCase | BindingFlags.InvokeMethod | BindingFlags.Instance
-                                | BindingFlags.Public | BindingFlags.NonPublic);
-                    if (methodInfo != null) {
-                        methodInfo.Invoke(targetProp, new object[] {modifiedValue});
+                    var methodInfo = targetProp.GetType().GetMethod("SetValueAndForceNotify", BindingFlags.IgnoreCase | BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    if (methodInfo != null)
+                    {
+                        methodInfo.Invoke(targetProp, new object[] { modifiedValue });
                     }
                 }
-                else {
+                else
+                {
                     property.serializedObject.ApplyModifiedProperties();
                 }
             }
         }
 
-        object GetValueRecursive(object obj, int index, string[] paths) {
-            string path = paths[index];
-            FieldInfo fieldInfo = obj.GetType()
-                .GetField(path,
-                    BindingFlags.IgnoreCase | BindingFlags.GetField | BindingFlags.Instance | BindingFlags.Public
-                        | BindingFlags.NonPublic);
+        object GetValueRecursive(object obj, int index, string[] paths)
+        {
+            var path = paths[index];
+            var fieldInfo = obj.GetType().GetField(path, BindingFlags.IgnoreCase | BindingFlags.GetField | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
             // If array, path = Array.data[index]
-            if (fieldInfo == null && path == "Array") {
-                try {
+            if (fieldInfo == null && path == "Array")
+            {
+                try
+                {
                     path = paths[++index];
-                    Match m = Regex.Match(path, @"(.+)\[([0-9]+)*\]");
-                    int arrayIndex = int.Parse(m.Groups[2].Value);
-                    object arrayValue = (obj as IList)[arrayIndex];
-                    if (index < paths.Length - 1) {
+                    var m = Regex.Match(path, @"(.+)\[([0-9]+)*\]");
+                    var arrayIndex = int.Parse(m.Groups[2].Value);
+                    var arrayValue = (obj as System.Collections.IList)[arrayIndex];
+                    if (index < paths.Length - 1)
+                    {
                         return GetValueRecursive(arrayValue, ++index, paths);
                     }
-                    else {
+                    else
+                    {
                         return arrayValue;
                     }
-                } catch {
-                    Debug.Log("InspectorDisplayDrawer Exception, objType:" + obj.GetType().Name + " path:"
-                        + string.Join(", ", paths));
+                }
+                catch
+                {
+                    Debug.Log("InspectorDisplayDrawer Exception, objType:" + obj.GetType().Name + " path:" + string.Join(", ", paths));
                     throw;
                 }
             }
-            else if (fieldInfo == null) {
-                throw new Exception("Can't decode path, please report to UniRx's GitHub issues:"
-                    + string.Join(", ", paths));
+            else if (fieldInfo == null)
+            {
+                throw new Exception("Can't decode path, please report to UniRx's GitHub issues:" + string.Join(", ", paths));
             }
 
-            object v = fieldInfo.GetValue(obj);
-            if (index < paths.Length - 1) {
+            var v = fieldInfo.GetValue(obj);
+            if (index < paths.Length - 1)
+            {
                 return GetValueRecursive(v, ++index, paths);
             }
 
             return v;
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-            var attr = attribute as InspectorDisplayAttribute;
-            string fieldName = attr == null ? "value" : attr.FieldName;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            var attr = this.attribute as InspectorDisplayAttribute;
+            var fieldName = (attr == null) ? "value" : attr.FieldName;
 
-            float height = base.GetPropertyHeight(property, label);
-            SerializedProperty valueProperty = property.FindPropertyRelative(fieldName);
-            if (valueProperty == null) {
+            var height = base.GetPropertyHeight(property, label);
+            var valueProperty = property.FindPropertyRelative(fieldName);
+            if (valueProperty == null)
+            {
                 return height;
             }
 
-            if (valueProperty.propertyType == SerializedPropertyType.Rect) {
+            if (valueProperty.propertyType == SerializedPropertyType.Rect)
+            {
                 return height * 2;
             }
-            if (valueProperty.propertyType == SerializedPropertyType.Bounds) {
+            if (valueProperty.propertyType == SerializedPropertyType.Bounds)
+            {
                 return height * 3;
             }
-            if (valueProperty.propertyType == SerializedPropertyType.String) {
-                MultilineReactivePropertyAttribute multilineAttr = GetMultilineAttribute();
-                if (multilineAttr != null) {
-                    return (!EditorGUIUtility.wideMode ? 16f : 0f) + 16f + (float) ((multilineAttr.Lines - 1) * 13);
-                }
-                ;
+            if (valueProperty.propertyType == SerializedPropertyType.String)
+            {
+                var multilineAttr = GetMultilineAttribute();
+                if (multilineAttr != null)
+                {
+                    return ((!EditorGUIUtility.wideMode) ? 16f : 0f) + 16f + (float)((multilineAttr.Lines - 1) * 13);
+                };
             }
 
-            if (valueProperty.isExpanded) {
+            if (valueProperty.isExpanded)
+            {
                 var count = 0;
-                IEnumerator e = valueProperty.GetEnumerator();
-                while (e.MoveNext())
-                    count++;
-                return (height + 4) * count + 6; // (Line = 20 + Padding) ?
+                var e = valueProperty.GetEnumerator();
+                while (e.MoveNext()) count++;
+                return ((height + 4) * count) + 6; // (Line = 20 + Padding) ?
             }
 
             return height;
         }
 
-        protected virtual void EmitPropertyField(Rect position,
-                                                 SerializedProperty targetSerializedProperty,
-                                                 GUIContent label) {
-            MultilineReactivePropertyAttribute multiline = GetMultilineAttribute();
-            if (multiline == null) {
-                RangeReactivePropertyAttribute range = GetRangeAttribute();
-                if (range == null) {
-                    EditorGUI.PropertyField(position, targetSerializedProperty, label, true);
+        protected virtual void EmitPropertyField(Rect position, UnityEditor.SerializedProperty targetSerializedProperty, GUIContent label)
+        {
+            var multiline = GetMultilineAttribute();
+            if (multiline == null)
+            {
+                var range = GetRangeAttribute();
+                if (range == null)
+                {
+                    UnityEditor.EditorGUI.PropertyField(position, targetSerializedProperty, label, includeChildren: true);
                 }
-                else {
-                    if (targetSerializedProperty.propertyType == SerializedPropertyType.Float) {
+                else
+                {
+                    if (targetSerializedProperty.propertyType == SerializedPropertyType.Float)
+                    {
                         EditorGUI.Slider(position, targetSerializedProperty, range.Min, range.Max, label);
                     }
-                    else if (targetSerializedProperty.propertyType == SerializedPropertyType.Integer) {
-                        EditorGUI.IntSlider(position, targetSerializedProperty, (int) range.Min, (int) range.Max, label);
+                    else if (targetSerializedProperty.propertyType == SerializedPropertyType.Integer)
+                    {
+                        EditorGUI.IntSlider(position, targetSerializedProperty, (int)range.Min, (int)range.Max, label);
                     }
-                    else {
+                    else
+                    {
                         EditorGUI.LabelField(position, label.text, "Use Range with float or int.");
                     }
                 }
             }
-            else {
-                SerializedProperty property = targetSerializedProperty;
+            else
+            {
+                var property = targetSerializedProperty;
 
                 label = EditorGUI.BeginProperty(position, label, property);
-                MethodInfo method = typeof(EditorGUI).GetMethod("MultiFieldPrefixLabel",
-                    BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.NonPublic);
-                position = (Rect) method.Invoke(null, new object[] {position, 0, label, 1});
+                var method = typeof(EditorGUI).GetMethod("MultiFieldPrefixLabel", BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.NonPublic);
+                position = (Rect)method.Invoke(null, new object[] { position, 0, label, 1 });
 
                 EditorGUI.BeginChangeCheck();
                 int indentLevel = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = 0;
-                string stringValue = EditorGUI.TextArea(position, property.stringValue);
+                var stringValue = EditorGUI.TextArea(position, property.stringValue);
                 EditorGUI.indentLevel = indentLevel;
-                if (EditorGUI.EndChangeCheck()) {
+                if (EditorGUI.EndChangeCheck())
+                {
                     property.stringValue = stringValue;
                 }
                 EditorGUI.EndProperty();
             }
         }
 
-        MultilineReactivePropertyAttribute GetMultilineAttribute() {
-            FieldInfo fi = fieldInfo;
-            if (fi == null)
-                return null;
+        MultilineReactivePropertyAttribute GetMultilineAttribute()
+        {
+            var fi = this.fieldInfo;
+            if (fi == null) return null;
             return fi.GetCustomAttributes(false).OfType<MultilineReactivePropertyAttribute>().FirstOrDefault();
         }
 
-        RangeReactivePropertyAttribute GetRangeAttribute() {
-            FieldInfo fi = fieldInfo;
-            if (fi == null)
-                return null;
+        RangeReactivePropertyAttribute GetRangeAttribute()
+        {
+            var fi = this.fieldInfo;
+            if (fi == null) return null;
             return fi.GetCustomAttributes(false).OfType<RangeReactivePropertyAttribute>().FirstOrDefault();
         }
-
     }
 
 #endif

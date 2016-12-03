@@ -1,42 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using UniRx.InternalUtil;
 
-namespace UniRx {
-
-    public sealed class Subject<T> : ISubject<T>, IDisposable, IOptimizedObservable<T> {
-
-        class Subscription : IDisposable {
-
-            readonly object gate = new object();
-            Subject<T> parent;
-            IObserver<T> unsubscribeTarget;
-
-            public Subscription(Subject<T> parent, IObserver<T> unsubscribeTarget) {
-                this.parent = parent;
-                this.unsubscribeTarget = unsubscribeTarget;
-            }
-
-            public void Dispose() {
-                lock (gate) {
-                    if (parent != null) {
-                        lock (parent.observerLock) {
-                            var listObserver = parent.outObserver as ListObserver<T>;
-                            if (listObserver != null) {
-                                parent.outObserver = listObserver.Remove(unsubscribeTarget);
-                            }
-                            else {
-                                parent.outObserver = EmptyObserver<T>.Instance;
-                            }
-
-                            unsubscribeTarget = null;
-                            parent = null;
-                        }
-                    }
-                }
-            }
-
-        }
-
+namespace UniRx
+{
+    public sealed class Subject<T> : ISubject<T>, IDisposable, IOptimizedObservable<T>
+    {
         object observerLock = new object();
 
         bool isStopped;
@@ -44,25 +14,21 @@ namespace UniRx {
         Exception lastError;
         IObserver<T> outObserver = EmptyObserver<T>.Instance;
 
-        public bool HasObservers {
-            get { return !(outObserver is EmptyObserver<T>) && !isStopped && !isDisposed; }
-        }
-
-        public void Dispose() {
-            lock (observerLock) {
-                isDisposed = true;
-                outObserver = DisposedObserver<T>.Instance;
+        public bool HasObservers
+        {
+            get
+            {
+                return !(outObserver is EmptyObserver<T>) && !isStopped && !isDisposed;
             }
         }
 
-        public bool IsRequiredSubscribeOnCurrentThread() { return false; }
-
-        public void OnCompleted() {
+        public void OnCompleted()
+        {
             IObserver<T> old;
-            lock (observerLock) {
+            lock (observerLock)
+            {
                 ThrowIfDisposed();
-                if (isStopped)
-                    return;
+                if (isStopped) return;
 
                 old = outObserver;
                 outObserver = EmptyObserver<T>.Instance;
@@ -72,15 +38,15 @@ namespace UniRx {
             old.OnCompleted();
         }
 
-        public void OnError(Exception error) {
-            if (error == null)
-                throw new ArgumentNullException("error");
+        public void OnError(Exception error)
+        {
+            if (error == null) throw new ArgumentNullException("error");
 
             IObserver<T> old;
-            lock (observerLock) {
+            lock (observerLock)
+            {
                 ThrowIfDisposed();
-                if (isStopped)
-                    return;
+                if (isStopped) return;
 
                 old = outObserver;
                 outObserver = EmptyObserver<T>.Instance;
@@ -91,28 +57,37 @@ namespace UniRx {
             old.OnError(error);
         }
 
-        public void OnNext(T value) { outObserver.OnNext(value); }
+        public void OnNext(T value)
+        {
+            outObserver.OnNext(value);
+        }
 
-        public IDisposable Subscribe(IObserver<T> observer) {
-            if (observer == null)
-                throw new ArgumentNullException("observer");
+        public IDisposable Subscribe(IObserver<T> observer)
+        {
+            if (observer == null) throw new ArgumentNullException("observer");
 
-            Exception ex = default(Exception);
+            var ex = default(Exception);
 
-            lock (observerLock) {
+            lock (observerLock)
+            {
                 ThrowIfDisposed();
-                if (!isStopped) {
+                if (!isStopped)
+                {
                     var listObserver = outObserver as ListObserver<T>;
-                    if (listObserver != null) {
+                    if (listObserver != null)
+                    {
                         outObserver = listObserver.Add(observer);
                     }
-                    else {
-                        IObserver<T> current = outObserver;
-                        if (current is EmptyObserver<T>) {
+                    else
+                    {
+                        var current = outObserver;
+                        if (current is EmptyObserver<T>)
+                        {
                             outObserver = observer;
                         }
-                        else {
-                            outObserver = new ListObserver<T>(new ImmutableList<IObserver<T>>(new[] {current, observer}));
+                        else
+                        {
+                            outObserver = new ListObserver<T>(new ImmutableList<IObserver<T>>(new[] { current, observer }));
                         }
                     }
 
@@ -122,21 +97,73 @@ namespace UniRx {
                 ex = lastError;
             }
 
-            if (ex != null) {
+            if (ex != null)
+            {
                 observer.OnError(ex);
             }
-            else {
+            else
+            {
                 observer.OnCompleted();
             }
 
             return Disposable.Empty;
         }
 
-        void ThrowIfDisposed() {
-            if (isDisposed)
-                throw new ObjectDisposedException("");
+        public void Dispose()
+        {
+            lock (observerLock)
+            {
+                isDisposed = true;
+                outObserver = DisposedObserver<T>.Instance;
+            }
         }
 
-    }
+        void ThrowIfDisposed()
+        {
+            if (isDisposed) throw new ObjectDisposedException("");
+        }
 
+        public bool IsRequiredSubscribeOnCurrentThread()
+        {
+            return false;
+        }
+
+        class Subscription : IDisposable
+        {
+            readonly object gate = new object();
+            Subject<T> parent;
+            IObserver<T> unsubscribeTarget;
+
+            public Subscription(Subject<T> parent, IObserver<T> unsubscribeTarget)
+            {
+                this.parent = parent;
+                this.unsubscribeTarget = unsubscribeTarget;
+            }
+
+            public void Dispose()
+            {
+                lock (gate)
+                {
+                    if (parent != null)
+                    {
+                        lock (parent.observerLock)
+                        {
+                            var listObserver = parent.outObserver as ListObserver<T>;
+                            if (listObserver != null)
+                            {
+                                parent.outObserver = listObserver.Remove(unsubscribeTarget);
+                            }
+                            else
+                            {
+                                parent.outObserver = EmptyObserver<T>.Instance;
+                            }
+
+                            unsubscribeTarget = null;
+                            parent = null;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

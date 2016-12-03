@@ -1,60 +1,56 @@
 ﻿using System;
 
-namespace UniRx.Operators {
-
-    internal class TimeIntervalObservable<T> : OperatorObservableBase<TimeInterval<T>> {
-
-        class TimeInterval : OperatorObserverBase<T, TimeInterval<T>> {
-
-            readonly TimeIntervalObservable<T> parent;
-            DateTimeOffset lastTime;
-
-            public TimeInterval(TimeIntervalObservable<T> parent,
-                                IObserver<TimeInterval<T>> observer,
-                                IDisposable cancel) : base(observer, cancel) {
-                this.parent = parent;
-                lastTime = parent.scheduler.Now;
-            }
-
-            public override void OnNext(T value) {
-                DateTimeOffset now = parent.scheduler.Now;
-                TimeSpan span = now.Subtract(lastTime);
-                lastTime = now;
-
-                observer.OnNext(new TimeInterval<T>(value, span));
-            }
-
-            public override void OnError(Exception error) {
-                try {
-                    observer.OnError(error);
-                } finally {
-                    Dispose();
-                }
-            }
-
-            public override void OnCompleted() {
-                try {
-                    observer.OnCompleted();
-                } finally {
-                    Dispose();
-                }
-            }
-
-        }
-
+namespace UniRx.Operators
+{
+    internal class TimeIntervalObservable<T> : OperatorObservableBase<UniRx.TimeInterval<T>>
+    {
         readonly IObservable<T> source;
         readonly IScheduler scheduler;
 
         public TimeIntervalObservable(IObservable<T> source, IScheduler scheduler)
-            : base(scheduler == Scheduler.CurrentThread || source.IsRequiredSubscribeOnCurrentThread()) {
+            : base(scheduler == Scheduler.CurrentThread || source.IsRequiredSubscribeOnCurrentThread())
+        {
             this.source = source;
             this.scheduler = scheduler;
         }
 
-        protected override IDisposable SubscribeCore(IObserver<TimeInterval<T>> observer, IDisposable cancel) {
+        protected override IDisposable SubscribeCore(IObserver<UniRx.TimeInterval<T>> observer, IDisposable cancel)
+        {
             return source.Subscribe(new TimeInterval(this, observer, cancel));
         }
 
-    }
+        class TimeInterval : OperatorObserverBase<T, UniRx.TimeInterval<T>>
+        {
+            readonly TimeIntervalObservable<T> parent;
+            DateTimeOffset lastTime;
 
+            public TimeInterval(TimeIntervalObservable<T> parent, IObserver<UniRx.TimeInterval<T>> observer, IDisposable cancel)
+                : base(observer, cancel)
+            {
+                this.parent = parent;
+                this.lastTime = parent.scheduler.Now;
+            }
+
+            public override void OnNext(T value)
+            {
+                var now = parent.scheduler.Now;
+                var span = now.Subtract(lastTime);
+                lastTime = now;
+
+                base.observer.OnNext(new UniRx.TimeInterval<T>(value, span));
+            }
+
+            public override void OnError(Exception error)
+            {
+                try { observer.OnError(error); }
+                finally { Dispose(); }
+            }
+
+            public override void OnCompleted()
+            {
+                try { observer.OnCompleted(); }
+                finally { Dispose(); }
+            }
+        }
+    }
 }

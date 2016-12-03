@@ -2,42 +2,10 @@
 using System.Collections.Generic;
 using UniRx.InternalUtil;
 
-namespace UniRx {
-
-    public sealed class ReplaySubject<T> : ISubject<T>, IOptimizedObservable<T>, IDisposable {
-
-        class Subscription : IDisposable {
-
-            readonly object gate = new object();
-            ReplaySubject<T> parent;
-            IObserver<T> unsubscribeTarget;
-
-            public Subscription(ReplaySubject<T> parent, IObserver<T> unsubscribeTarget) {
-                this.parent = parent;
-                this.unsubscribeTarget = unsubscribeTarget;
-            }
-
-            public void Dispose() {
-                lock (gate) {
-                    if (parent != null) {
-                        lock (parent.observerLock) {
-                            var listObserver = parent.outObserver as ListObserver<T>;
-                            if (listObserver != null) {
-                                parent.outObserver = listObserver.Remove(unsubscribeTarget);
-                            }
-                            else {
-                                parent.outObserver = EmptyObserver<T>.Instance;
-                            }
-
-                            unsubscribeTarget = null;
-                            parent = null;
-                        }
-                    }
-                }
-            }
-
-        }
-
+namespace UniRx
+{
+    public sealed class ReplaySubject<T> : ISubject<T>, IOptimizedObservable<T>, IDisposable
+    {
         object observerLock = new object();
 
         bool isStopped;
@@ -51,28 +19,43 @@ namespace UniRx {
         readonly IScheduler scheduler;
         Queue<TimeInterval<T>> queue = new Queue<TimeInterval<T>>();
 
-        public ReplaySubject() : this(int.MaxValue, TimeSpan.MaxValue, Scheduler.DefaultSchedulers.Iteration) { }
 
-        public ReplaySubject(IScheduler scheduler) : this(int.MaxValue, TimeSpan.MaxValue, scheduler) { }
-
-        public ReplaySubject(int bufferSize)
-            : this(bufferSize, TimeSpan.MaxValue, Scheduler.DefaultSchedulers.Iteration) {
+        public ReplaySubject()
+            : this(int.MaxValue, TimeSpan.MaxValue, Scheduler.DefaultSchedulers.Iteration)
+        {
         }
 
-        public ReplaySubject(int bufferSize, IScheduler scheduler) : this(bufferSize, TimeSpan.MaxValue, scheduler) { }
+        public ReplaySubject(IScheduler scheduler)
+            : this(int.MaxValue, TimeSpan.MaxValue, scheduler)
+        {
+        }
 
-        public ReplaySubject(TimeSpan window) : this(int.MaxValue, window, Scheduler.DefaultSchedulers.Iteration) { }
+        public ReplaySubject(int bufferSize)
+            : this(bufferSize, TimeSpan.MaxValue, Scheduler.DefaultSchedulers.Iteration)
+        {
+        }
 
-        public ReplaySubject(TimeSpan window, IScheduler scheduler) : this(int.MaxValue, window, scheduler) { }
+        public ReplaySubject(int bufferSize, IScheduler scheduler)
+            : this(bufferSize, TimeSpan.MaxValue, scheduler)
+        {
+        }
+
+        public ReplaySubject(TimeSpan window)
+            : this(int.MaxValue, window, Scheduler.DefaultSchedulers.Iteration)
+        {
+        }
+
+        public ReplaySubject(TimeSpan window, IScheduler scheduler)
+            : this(int.MaxValue, window, scheduler)
+        {
+        }
 
         // full constructor
-        public ReplaySubject(int bufferSize, TimeSpan window, IScheduler scheduler) {
-            if (bufferSize < 0)
-                throw new ArgumentOutOfRangeException("bufferSize");
-            if (window < TimeSpan.Zero)
-                throw new ArgumentOutOfRangeException("window");
-            if (scheduler == null)
-                throw new ArgumentNullException("scheduler");
+        public ReplaySubject(int bufferSize, TimeSpan window, IScheduler scheduler)
+        {
+            if (bufferSize < 0) throw new ArgumentOutOfRangeException("bufferSize");
+            if (window < TimeSpan.Zero) throw new ArgumentOutOfRangeException("window");
+            if (scheduler == null) throw new ArgumentNullException("scheduler");
 
             this.bufferSize = bufferSize;
             this.window = window;
@@ -80,23 +63,27 @@ namespace UniRx {
             startTime = scheduler.Now;
         }
 
-        public void Dispose() {
-            lock (observerLock) {
-                isDisposed = true;
-                outObserver = DisposedObserver<T>.Instance;
-                lastError = null;
-                queue = null;
+        void Trim()
+        {
+            var elapsedTime = Scheduler.Normalize(scheduler.Now - startTime);
+
+            while (queue.Count > bufferSize)
+            {
+                queue.Dequeue();
+            }
+            while (queue.Count > 0 && elapsedTime.Subtract(queue.Peek().Interval).CompareTo(window) > 0)
+            {
+                queue.Dequeue();
             }
         }
 
-        public bool IsRequiredSubscribeOnCurrentThread() { return false; }
-
-        public void OnCompleted() {
+        public void OnCompleted()
+        {
             IObserver<T> old;
-            lock (observerLock) {
+            lock (observerLock)
+            {
                 ThrowIfDisposed();
-                if (isStopped)
-                    return;
+                if (isStopped) return;
 
                 old = outObserver;
                 outObserver = EmptyObserver<T>.Instance;
@@ -107,15 +94,15 @@ namespace UniRx {
             old.OnCompleted();
         }
 
-        public void OnError(Exception error) {
-            if (error == null)
-                throw new ArgumentNullException("error");
+        public void OnError(Exception error)
+        {
+            if (error == null) throw new ArgumentNullException("error");
 
             IObserver<T> old;
-            lock (observerLock) {
+            lock (observerLock)
+            {
                 ThrowIfDisposed();
-                if (isStopped)
-                    return;
+                if (isStopped) return;
 
                 old = outObserver;
                 outObserver = EmptyObserver<T>.Instance;
@@ -127,12 +114,13 @@ namespace UniRx {
             old.OnError(error);
         }
 
-        public void OnNext(T value) {
+        public void OnNext(T value)
+        {
             IObserver<T> current;
-            lock (observerLock) {
+            lock (observerLock)
+            {
                 ThrowIfDisposed();
-                if (isStopped)
-                    return;
+                if (isStopped) return;
 
                 // enQ
                 queue.Enqueue(new TimeInterval<T>(value, scheduler.Now - startTime));
@@ -144,27 +132,33 @@ namespace UniRx {
             current.OnNext(value);
         }
 
-        public IDisposable Subscribe(IObserver<T> observer) {
-            if (observer == null)
-                throw new ArgumentNullException("observer");
+        public IDisposable Subscribe(IObserver<T> observer)
+        {
+            if (observer == null) throw new ArgumentNullException("observer");
 
-            Exception ex = default(Exception);
-            Subscription subscription = default(Subscription);
+            var ex = default(Exception);
+            var subscription = default(Subscription);
 
-            lock (observerLock) {
+            lock (observerLock)
+            {
                 ThrowIfDisposed();
-                if (!isStopped) {
+                if (!isStopped)
+                {
                     var listObserver = outObserver as ListObserver<T>;
-                    if (listObserver != null) {
+                    if (listObserver != null)
+                    {
                         outObserver = listObserver.Add(observer);
                     }
-                    else {
-                        IObserver<T> current = outObserver;
-                        if (current is EmptyObserver<T>) {
+                    else
+                    {
+                        var current = outObserver;
+                        if (current is EmptyObserver<T>)
+                        {
                             outObserver = observer;
                         }
-                        else {
-                            outObserver = new ListObserver<T>(new ImmutableList<IObserver<T>>(new[] {current, observer}));
+                        else
+                        {
+                            outObserver = new ListObserver<T>(new ImmutableList<IObserver<T>>(new[] { current, observer }));
                         }
                     }
 
@@ -173,40 +167,85 @@ namespace UniRx {
 
                 ex = lastError;
                 Trim();
-                foreach (TimeInterval<T> item in queue) {
+                foreach (var item in queue)
+                {
                     observer.OnNext(item.Value);
                 }
             }
 
-            if (subscription != null) {
+            if (subscription != null)
+            {
                 return subscription;
             }
-            else if (ex != null) {
+            else if (ex != null)
+            {
                 observer.OnError(ex);
             }
-            else {
+            else
+            {
                 observer.OnCompleted();
             }
 
             return Disposable.Empty;
         }
 
-        void Trim() {
-            TimeSpan elapsedTime = Scheduler.Normalize(scheduler.Now - startTime);
-
-            while (queue.Count > bufferSize) {
-                queue.Dequeue();
-            }
-            while (queue.Count > 0 && elapsedTime.Subtract(queue.Peek().Interval).CompareTo(window) > 0) {
-                queue.Dequeue();
+        public void Dispose()
+        {
+            lock (observerLock)
+            {
+                isDisposed = true;
+                outObserver = DisposedObserver<T>.Instance;
+                lastError = null;
+                queue = null;
             }
         }
 
-        void ThrowIfDisposed() {
-            if (isDisposed)
-                throw new ObjectDisposedException("");
+        void ThrowIfDisposed()
+        {
+            if (isDisposed) throw new ObjectDisposedException("");
         }
 
+        public bool IsRequiredSubscribeOnCurrentThread()
+        {
+            return false;
+        }
+
+        class Subscription : IDisposable
+        {
+            readonly object gate = new object();
+            ReplaySubject<T> parent;
+            IObserver<T> unsubscribeTarget;
+
+            public Subscription(ReplaySubject<T> parent, IObserver<T> unsubscribeTarget)
+            {
+                this.parent = parent;
+                this.unsubscribeTarget = unsubscribeTarget;
+            }
+
+            public void Dispose()
+            {
+                lock (gate)
+                {
+                    if (parent != null)
+                    {
+                        lock (parent.observerLock)
+                        {
+                            var listObserver = parent.outObserver as ListObserver<T>;
+                            if (listObserver != null)
+                            {
+                                parent.outObserver = listObserver.Remove(unsubscribeTarget);
+                            }
+                            else
+                            {
+                                parent.outObserver = EmptyObserver<T>.Instance;
+                            }
+
+                            unsubscribeTarget = null;
+                            parent = null;
+                        }
+                    }
+                }
+            }
+        }
     }
-
 }
