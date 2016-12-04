@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using System.Linq;
-
 #endif
 
 namespace HouraiTeahouse {
@@ -20,27 +19,42 @@ namespace HouraiTeahouse {
         [SerializeField]
         BGMData[] backgroundMusicData;
 
+        public bool IsInitialized { get; private set; }
+
         public string Name {
             get { return _name; }
         }
 
         protected virtual void OnEnable() {
             _selection = new WeightedRNG<BGMData>();
-            if (backgroundMusicData == null)
+        }
+
+        protected virtual void OnDisable() {
+            Save();
+        }
+
+        public void Initialize() {
+            if (IsInitialized || backgroundMusicData == null)
                 return;
             foreach (BGMData bgmData in backgroundMusicData) {
                 bgmData.Initialize(Name);
                 _selection[bgmData] = bgmData.Weight;
             }
+            IsInitialized = true;
         }
 
-        protected virtual void OnDisable() {
-            foreach (BGMData bgmData in backgroundMusicData) {
+        public void Save() {
+            if (!IsInitialized)
+                return;
+            foreach (BGMData bgmData in backgroundMusicData)
                 bgmData.Finish(Name);
-            }
         }
 
-        public BGMData GetRandom() { return _selection.Select(); }
+        public BGMData GetRandom() {
+            if(!IsInitialized)
+                Initialize();
+            return _selection.Select();
+        }
 
 #if UNITY_EDITOR
 
