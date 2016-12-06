@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -44,6 +45,11 @@ namespace HouraiTeahouse.SmashBrew {
 
             Characters = new ReadOnlyCollection<CharacterData>(_characters);
             Scenes = new ReadOnlyCollection<SceneData>(_scenes);
+
+            foreach (CharacterData character in Characters) {
+                ClientScene.RegisterPrefab(character.Prefab.Load());
+            }
+            Resources.UnloadUnusedAssets();
 
             SceneManager.sceneLoaded += SceneLoad;
         }

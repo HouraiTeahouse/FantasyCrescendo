@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Localization {
 
-    public class LanguageEvent {
+    public class LanguageChanged {
 
         public Language NewLanguage;
 
@@ -86,7 +86,7 @@ namespace HouraiTeahouse.Localization {
             _currentLanguage.Name = set.name;
             OnChangeLanguage.SafeInvoke(_currentLanguage);
 #if HOURAI_EVENTS
-            _eventManager.Publish(new LanguageEvent {NewLanguage = _currentLanguage});
+            _eventManager.Publish(new LanguageChanged {NewLanguage = _currentLanguage});
 #endif
         }
 

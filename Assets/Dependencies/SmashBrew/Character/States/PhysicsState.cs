@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
+    [RequireComponent(typeof(CharacterController))]
     public class PhysicsState : NetworkBehaviour, ICharacterState {
 
         // Character Constrants
@@ -38,18 +39,22 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         // Character Variables 
         [Header("Variables")]
         [SyncVar, SerializeField, ReadOnly]
-        [Tooltip("How much shield health the character currently has")]
         Vector2 _velocity;
 
         [SyncVar, SerializeField, ReadOnly]
-        [Tooltip("How much shield health the character currently has")]
         Vector2 _acceleration;
+
+        [SyncVar, SerializeField, ReadOnly]
+        bool _grounded;
+
+        [SyncVar, SerializeField, ReadOnly]
+        bool _isFastFalling;
 
         public float Weight {
             get { return _weight; }
         }
 
-        public float Gravity1 {
+        public float Gravity {
             get { return _gravity; }
         }
 
@@ -83,9 +88,36 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             set { _acceleration = value; }
         }
 
+        public bool Grounded {
+            get { return _grounded; }
+        }
+
         public void ResetState() {
             Velocity = Vector2.zero;
             Acceleration = Vector2.zero;
+        }
+
+        public CharacterController CharacterController { get; private set; }
+
+        public bool IsFastFalling {
+            get { return _isFastFalling; }
+        }
+
+        void Awake() { CharacterController = GetComponent<CharacterController>(); }
+
+        void Update() {
+            if (!isLocalPlayer)
+                return;
+            var acceleration = Acceleration + Vector2.down * Gravity;
+            if (!Grounded)
+                acceleration.y = 0;
+            Velocity += acceleration * Time.deltaTime;
+            var velocity = Velocity;
+            if (Input.GetKey(KeyCode.LeftArrow))
+                velocity -= Vector2.right * FastWalkSpeed;
+            if (Input.GetKey(KeyCode.RightArrow))
+                velocity += Vector2.right * FastWalkSpeed;
+            CharacterController.Move(velocity * Time.deltaTime);
         }
 
     }
