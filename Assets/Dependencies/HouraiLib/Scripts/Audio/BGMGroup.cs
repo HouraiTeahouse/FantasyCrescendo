@@ -26,6 +26,7 @@ namespace HouraiTeahouse {
         }
 
         protected virtual void OnEnable() {
+            IsInitialized = false;
             _selection = new WeightedRNG<BGMData>();
         }
 
