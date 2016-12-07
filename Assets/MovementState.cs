@@ -11,6 +11,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         PhysicsState Physics { get; set; }
+        CharacterController CharacterController { get; set; }
 
         [Header("Constants")]
         [SerializeField]
@@ -46,9 +47,18 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [Tooltip("The horizontal speed of the character while in the air")]
         float _airSpeed = 4f;
 
+        [SerializeField]
+        float[] _jumpPower = { 5f, 10f };
+
         [Header("Variables")]
         [SyncVar(hook = "OnChangeDirection"), SerializeField, ReadOnly]
         bool _direction;
+
+        [SyncVar, SerializeField, ReadOnly]
+        int _jumpCount;
+
+        [SyncVar, SerializeField, ReadOnly]
+        bool _isFastFalling;
 
         public float MaxFallSpeed {
             get { return _maxFallSpeed; }
@@ -78,15 +88,34 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _characterFacingMode; }
         }
 
-        void Awake() { Physics = GetComponent<PhysicsState>(); }
+        public int JumpCount {
+            get { return _jumpCount; }
+            private set { _jumpCount = value; }
+        }
+
+        public int MaxJumpCount {
+            get { return _jumpPower != null ? _jumpPower.Length : 0; }
+        }
+
+        public bool IsFastFalling {
+            get { return _isFastFalling; }
+            private set { _isFastFalling = value; }
+        }
 
         void Start() {
+            Physics = this.SafeGetComponent<PhysicsState>();
+            CharacterController = this.SafeGetComponent<CharacterController>();
+            JumpCount = MaxJumpCount;
             OnChangeDirection(_direction);
         }
 
         void Update() {
             if (!isLocalPlayer)
                 return;
+
+            if (JumpCount != MaxJumpCount && CharacterController.isGrounded)
+                CmdGrounded();
+
             float horizontalSpeed = 0;
             bool facing = Direction;
 
@@ -106,15 +135,36 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 facing = true;
             }
 
+            if (JumpCount > 0 && JumpCount <= MaxJumpCount &&
+                (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) {
+                Physics.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
+                JumpCount--;
+                CmdJump();
+            }
+
+            LimitFallSpeed();
+
             Physics.SetHorizontalVelocity(horizontalSpeed);
-            if(Direction != facing)
+            if (Direction != facing)
                 CmdSetDirection(facing);
         }
 
-        [Command]
-        void CmdSetDirection(bool direction) {
-            _direction = direction;
+        void LimitFallSpeed() {
+            var yVel = Physics.Velocity.y;
+            if (IsFastFalling)
+                Physics.SetVerticalVelocity(-FastFallSpeed);
+            else if (yVel < -MaxFallSpeed)
+                Physics.SetVerticalVelocity(-MaxFallSpeed);
         }
+
+        [Command]
+        void CmdJump() { JumpCount--; }
+
+        [Command]
+        void CmdGrounded() { JumpCount--; }
+
+        [Command]
+        void CmdSetDirection(bool direction) { _direction = direction; }
 
         void OnChangeDirection(bool direction) {
             _direction = direction;

@@ -68,7 +68,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             if (!isLocalPlayer)
                 return;
             var acceleration = Acceleration + Vector2.down * Gravity;
-            Log.Debug(acceleration * Time.deltaTime + " " + Time.deltaTime);
             if (CharacterController.isGrounded)
                 acceleration.y = 0;
             Velocity += acceleration * Time.deltaTime;
