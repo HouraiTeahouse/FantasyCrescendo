@@ -21,9 +21,7 @@ namespace HouraiTeahouse {
         /// <param name="component"> the Component attached to the GameObject to retrieve the Component </param>
         /// <returns> the retrieved Component </returns>
         public static T GetOrAddComponent<T>(this Component component) where T : Component {
-            GameObject gameObject = Argument.NotNull(component).gameObject;
-            var attempt = gameObject.GetComponent<T>();
-            return attempt ? attempt : gameObject.AddComponent<T>();
+            return Argument.NotNull(component).gameObject.GetOrAddComponent<T>();
         }
 
         /// <summary> Gets a component of a certain type on a GameObject. Works exactly like the normal GetComponent, but also logs
@@ -33,11 +31,7 @@ namespace HouraiTeahouse {
         /// <param name="component"> the GameObject to retrieve the Component </param>
         /// <returns> the retrieved Component </returns>
         public static T SafeGetComponent<T>(this Component component) where T : class {
-            GameObject gameObject = Argument.NotNull(component).gameObject;
-            var attempt = gameObject.GetComponent<T>();
-            if (attempt != null)
-                Log.Warning("Attempted to find a component of type {0}, but did not find one.", typeof(T));
-            return attempt;
+            return Argument.NotNull(component).gameObject.SafeGetComponent<T>();
         }
 
     }
