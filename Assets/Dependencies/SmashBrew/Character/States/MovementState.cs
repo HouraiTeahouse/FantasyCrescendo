@@ -110,7 +110,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         void Update() {
-            if (!isLocalPlayer)
+            if (!hasAuthority)
                 return;
 
             if (JumpCount != MaxJumpCount && CharacterController.isGrounded)

@@ -65,7 +65,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void Awake() { CharacterController = GetComponent<CharacterController>(); }
 
         void Update() {
-            if (!isLocalPlayer)
+            if (!hasAuthority)
                 return;
             var acceleration = Acceleration + Vector2.down * Gravity;
             if (CharacterController.isGrounded)
