@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114602395146956426}
   - component: {fileID: 114090875164631342}
   - component: {fileID: 114983515620810260}
+  - component: {fileID: 114675539462825158}
   m_Layer: 0
   m_Name: Test_Character_Prefab
   m_TagString: Untagged
@@ -195,12 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weight: 1
-  _gravity: 1.5
-  _maxFallSpeed: 5
-  _fastFallSpeed: 5
-  _slowWalkSpeed: 2
-  _fastWalkSpeed: 4
-  _runSpeed: 4
+  _gravity: 9.86
   _velocity: {x: 0, y: 0}
   _acceleration: {x: 0, y: 0}
   _grounded: 0
@@ -250,6 +246,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_VisualizerPrefab: {fileID: 1647311320284208, guid: 0cc0923cb937b454b96ec79aa0170132,
     type: 2}
+--- !u!114 &114675539462825158
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1735378196659804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb21eeb4b3abb244a4ac8a4ded4ab77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114919771623551946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -281,8 +288,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b1d17349f19e8349963625a468df923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterFacingMode: 1
+  _characterFacingMode: 0
+  _maxFallSpeed: 5
+  _fastFallSpeed: 5
+  _slowWalkSpeed: 2
+  _fastWalkSpeed: 4
+  _runSpeed: 10
+  _airSpeed: 4
+  _jumpPower:
+  - 5
+  - 10
   _direction: 0
+  _jumpCount: 0
+  _isFastFalling: 0
 --- !u!143 &143309471651104906
 CharacterController:
   m_ObjectHideFlags: 1

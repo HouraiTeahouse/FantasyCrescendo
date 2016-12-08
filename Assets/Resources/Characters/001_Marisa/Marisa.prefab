@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114000014129941234}
   - component: {fileID: 114000012196341256}
   - component: {fileID: 114000014049512914}
+  - component: {fileID: 114638214943715564}
   m_Layer: 9
   m_Name: Marisa
   m_TagString: Player
@@ -1712,6 +1713,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb17310a90b3c14f8d64e80c183dc60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114638214943715564
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 125
+    i1: 100
+    i2: 19
+    i3: 234
+    i4: 225
+    i5: 165
+    i6: 124
+    i7: 100
+    i8: 88
+    i9: 58
+    i10: 169
+    i11: 58
+    i12: 79
+    i13: 97
+    i14: 14
+    i15: 204
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!135 &135000010136661636
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -1916,7 +1949,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -1959,7 +1992,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -2004,7 +2037,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -2047,7 +2080,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
