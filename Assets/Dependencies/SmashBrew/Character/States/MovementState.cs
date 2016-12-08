@@ -102,6 +102,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             private set { _isFastFalling = value; }
         }
 
+        public float AirSpeed {
+            get { return _airSpeed; }
+        }
+
         void Start() {
             Physics = this.SafeGetComponent<PhysicsState>();
             CharacterController = this.SafeGetComponent<CharacterController>();
@@ -109,44 +113,72 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             OnChangeDirection(_direction);
         }
 
+        struct MovementInfo {
+            public float horizontalSpeed;
+            public bool facing;
+        }
+
         void Update() {
             if (!hasAuthority)
                 return;
 
-            if (JumpCount != MaxJumpCount && CharacterController.isGrounded)
-                CmdGrounded();
-
-            float horizontalSpeed = 0;
-            bool facing = Direction;
-
-            if (Input.GetKey(KeyCode.A)) {
-                horizontalSpeed = -RunSpeed;
-                facing = false;
-            } else if (Input.GetKey(KeyCode.LeftArrow)) {
-                horizontalSpeed = -FastWalkSpeed;
-                facing = false;
-            }
-
-            if (Input.GetKey(KeyCode.D)) {
-                horizontalSpeed = RunSpeed;
-                facing = true;
-            } else if (Input.GetKey(KeyCode.RightArrow)) {
-                horizontalSpeed = FastWalkSpeed;
-                facing = true;
-            }
+            var movement = new MovementInfo { facing = Direction };
+            if(CharacterController.isGrounded)
+                movement = GroundedMovement(movement);
+            else
+                movement = AerialMovement(movement);
 
             if (JumpCount > 0 && JumpCount <= MaxJumpCount &&
                 (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) {
                 Physics.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
-                JumpCount--;
                 CmdJump();
             }
 
             LimitFallSpeed();
 
-            Physics.SetHorizontalVelocity(horizontalSpeed);
-            if (Direction != facing)
-                CmdSetDirection(facing);
+            Physics.SetHorizontalVelocity(movement.horizontalSpeed);
+            if (Direction != movement.facing)
+                CmdSetDirection(movement.facing);
+        }
+
+        MovementInfo GroundedMovement(MovementInfo info) {
+            IsFastFalling = false;
+            if (Input.GetKey(KeyCode.A)) {
+                info.horizontalSpeed = -RunSpeed;
+                info.facing = false;
+            } else if (Input.GetKey(KeyCode.LeftArrow)) {
+                info.horizontalSpeed = -FastWalkSpeed;
+                info.facing = false;
+            }
+
+            if (Input.GetKey(KeyCode.D)) {
+                info.horizontalSpeed = RunSpeed;
+                info.facing = true;
+            } else if (Input.GetKey(KeyCode.RightArrow)) {
+                info.horizontalSpeed = FastWalkSpeed;
+                info.facing = true;
+            }
+
+            if (JumpCount != MaxJumpCount)
+                CmdGrounded();
+            return info;
+        }
+
+        MovementInfo AerialMovement(MovementInfo info) {
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
+                info.horizontalSpeed = -AirSpeed;
+                info.facing = false;
+            }
+
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
+                info.horizontalSpeed = FastWalkSpeed;
+                info.facing = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                IsFastFalling = true;
+
+            return info;
         }
 
         void LimitFallSpeed() {
@@ -161,7 +193,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void CmdJump() { JumpCount--; }
 
         [Command]
-        void CmdGrounded() { JumpCount--; }
+        void CmdGrounded() { JumpCount = MaxJumpCount; }
 
         [Command]
         void CmdSetDirection(bool direction) { _direction = direction; }
@@ -182,4 +214,3 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     }
 
 }
-
