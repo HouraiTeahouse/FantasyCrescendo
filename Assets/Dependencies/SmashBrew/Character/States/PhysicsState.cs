@@ -74,6 +74,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             CharacterController.Move(Velocity * Time.deltaTime);
         }
 
+        void LateUpdate() {
+            transform.SetZ(0);
+        }
+
     }
 
 }
