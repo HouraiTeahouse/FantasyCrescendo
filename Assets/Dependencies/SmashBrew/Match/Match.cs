@@ -1,30 +1,22 @@
-using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> The Match Singleton. Manages the current state of the match and all of the defined Match rules. </summary>
-    public class Match : MonoBehaviour {
+    public class Match : NetworkBehaviour {
 
         Mediator _eventManager;
-
-        /// <summary> Gets whether there is currently a Match underway. </summary>
-        public bool InMatch { get; private set; }
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         void Awake() { _eventManager = Mediator.Global; }
 
         /// <summary> Unity Callback. Called before the object's first frame. </summary>
-        void Start() {
-            // Don't restart a match if it is still in progress
-            if (InMatch)
-                return;
-            _eventManager.Publish(new MatchStartEvent());
-            InMatch = true;
-        }
+        void Start() { _eventManager.Publish(new MatchStartEvent()); }
 
         /// <summary> Ends the match. </summary>
         /// <param name="noContest"> is the match ending prematurely? If set to true, no winner will be declared. </param>
-        public void FinishMatch(bool noContest = false) {
+        [Command]
+        public void CmdFinishMatch(bool noContest) {
             MatchRule[] rules = FindObjectsOfType<MatchRule>();
 
             var result = MatchResult.HasWinner;

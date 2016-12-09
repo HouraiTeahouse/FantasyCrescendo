@@ -31,13 +31,6 @@ namespace HouraiTeahouse.SmashBrew {
             throw new NotImplementedException();
         }
 
-        enum FacingMode {
-
-            Rotation,
-            Scale
-
-        }
-
         void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
             Argument.NotNull(hitbox);
             if (_hitboxMap == null)
@@ -81,25 +74,25 @@ namespace HouraiTeahouse.SmashBrew {
             get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
         }
 
-        /// <summary> The direction the character is currently facing. If set to true, the character faces the right. If set to
-        /// false, the character faces the left. The method in which the character is flipped depends on what the Facing Mode
-        /// parameter is set to. </summary>
-        public bool Direction {
-            get {
-                if (_facingMode == FacingMode.Rotation)
-                    return transform.eulerAngles.y > 179f;
-                return transform.localScale.x > 0;
-            }
-            set {
-                if (_facing == value)
-                    return;
-                _facing = value;
-                if (_facingMode == FacingMode.Rotation)
-                    transform.Rotate(0f, 180f, 0f);
-                else
-                    transform.localScale *= -1;
-            }
-        }
+        ///// <summary> The direction the character is currently facing. If set to true, the character faces the right. If set to
+        ///// false, the character faces the left. The method in which the character is flipped depends on what the Facing Mode
+        ///// parameter is set to. </summary>
+        //public bool Direction {
+        //    get {
+        //        if (_facingMode == FacingMode.Rotation)
+        //            return transform.eulerAngles.y > 179f;
+        //        return transform.localScale.x > 0;
+        //    }
+        //    set {
+        //        if (_facing == value)
+        //            return;
+        //        _facing = value;
+        //        if (_facingMode == FacingMode.Rotation)
+        //            transform.Rotate(0f, 180f, 0f);
+        //        else
+        //            transform.localScale *= -1;
+        //    }
+        //}
 
         /// <summary> Gets how many remaining jumps the Character currently has. </summary>
         public int JumpCount { get; private set; }
@@ -137,8 +130,8 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Serialized Variables
 
-        [SerializeField]
-        FacingMode _facingMode;
+        //[SerializeField]
+        //FacingMode _facingMode;
 
         [Header("Physics")]
         [SerializeField]
@@ -188,8 +181,8 @@ namespace HouraiTeahouse.SmashBrew {
             Vector3 vel = Rigidbody.velocity;
             vel.x = speed;
 
-            if (Direction)
-                vel.x *= -1;
+            //if (Direction)
+            //    vel.x *= -1;
             Rigidbody.velocity = vel;
         }
 

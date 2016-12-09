@@ -28,7 +28,7 @@ namespace HouraiTeahouse {
         public static T SafeGetComponent<T>(this GameObject gameObject) where T : class {
             Argument.NotNull(gameObject);
             var attempt = gameObject.GetComponent<T>();
-            if (attempt != null)
+            if (attempt == null)
                 Log.Warning("Attempted to find a component of type {0}, but did not find one.", typeof(T));
             return attempt;
         }

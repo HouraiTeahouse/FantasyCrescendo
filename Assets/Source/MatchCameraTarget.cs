@@ -4,7 +4,7 @@ using UnityEngine;
 namespace HouraiTeahouse.SmashBrew {
 
     [RequireComponent(typeof(CameraTarget))]
-    public class MatchCameraTarget : EventBehaviour<PlayerSpawnEvent> {
+    public class MatchCameraTarget : MonoBehaviour {
 
         [SerializeField]
         float _cameraSpeed = 1f;
@@ -18,30 +18,33 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         Vector3 _targetPositionBias;
 
-        CameraTarget _target;
-        HashSet<Transform> _targets;
+        CameraTarget CameraTarget { get; set; }
+        ICollection<Transform> Targets { get; set; }
 
-        protected override void Awake() {
-            base.Awake();
-            _targets = new HashSet<Transform>();
-            _target = GetComponent<CameraTarget>();
+        public Vector2 Padding {
+            get { return _padding; }
+            set { _padding = value; }
         }
 
-        protected override void OnEvent(PlayerSpawnEvent eventArgs) {
-            if (eventArgs == null || !eventArgs.PlayerObject)
-                return;
-            _targets.Add(eventArgs.PlayerObject.transform);
+        public Vector3 TargetPositionBias {
+            get { return _targetPositionBias; }
+            set { _targetPositionBias = value; }
+        }
+
+        void Awake() {
+            Targets = new List<Transform>();
+            CameraTarget = this.SafeGetComponent<CameraTarget>();
         }
 
         void Update() {
             var count = 0;
-            float dt = DeltaTime;
+            float dt = Time.deltaTime;
 
             //Find the Bounds in which
             Vector3 sum = Vector3.zero;
             Vector3 min = Vector3.one * float.PositiveInfinity;
             Vector3 max = Vector3.one * float.NegativeInfinity;
-            foreach (Transform target in _targets) {
+            foreach (Transform target in Targets) {
                 if (target == null || !target.gameObject.activeInHierarchy)
                     continue;
                 count++;
@@ -70,9 +73,12 @@ namespace HouraiTeahouse.SmashBrew {
             targetPosition.z = transform.position.z;
 
             // Lerp both the FOV and the position at the desired speeds
-            _target.FOV = Mathf.Lerp(_target.FOV, targetFOV, dt * _cameraSpeed);
+            CameraTarget.FOV = Mathf.Lerp(CameraTarget.FOV, targetFOV, dt * _cameraSpeed);
             transform.position = Vector3.Lerp(transform.position, targetPosition, dt * _cameraSpeed);
         }
+
+        public void RegisterTarget(Transform target) { Targets.Add(target); }
+        public void UnregisterTarget(Transform target) { Targets.Remove(target); }
 
     }
 

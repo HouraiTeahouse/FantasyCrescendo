@@ -157,28 +157,36 @@ namespace HouraiTeahouse {
             var sphereCollider = collider as SphereCollider;
             var meshCollider = collider as MeshCollider;
             using (With(GetColliderMatrix(collider))) {
-                if (solid) {
-                    if (sphereCollider != null)
-                        Gizmos.DrawSphere(Vector3.zero, 1f);
-                    else {
-                        if (boxCollider != null)
-                            Gizmos.DrawCube(Vector3.zero, Vector3.one);
-                        else if (meshCollider != null)
-                            Gizmos.DrawMesh(meshCollider.sharedMesh, Vector3.zero);
-                    }
-                }
-                else {
-                    if (sphereCollider != null)
-                        Gizmos.DrawWireSphere(Vector3.zero, 1f);
-                    else {
-                        if (boxCollider != null)
-                            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
-                        else if (meshCollider != null)
-                            Gizmos.DrawWireMesh(meshCollider.sharedMesh, Vector3.zero);
-                    }
-                }
+                if (sphereCollider != null)
+                    DrawSphere(solid);
+                else if (boxCollider != null)
+                    DrawBox(solid);
+                else if (meshCollider != null)
+                    DrawMesh(meshCollider.sharedMesh, solid);
             }
         }
+
+        static void DrawSphere(bool solid) {
+            if (solid)
+                Gizmos.DrawSphere(Vector3.zero, 1f);
+            else
+                Gizmos.DrawWireSphere(Vector3.zero, 1f);
+        }
+
+        static void DrawBox(bool solid) {
+            if(solid)
+                Gizmos.DrawCube(Vector3.zero, Vector3.one);
+            else
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+        }
+
+        static void DrawMesh(Mesh mesh, bool solid) {
+            if(solid)
+                Gizmos.DrawMesh(mesh, Vector3.zero);
+            else
+                Gizmos.DrawWireMesh(mesh, Vector3.zero);
+        }
+
 
     }
 

@@ -3,7 +3,6 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace HouraiTeahouse {
@@ -63,7 +62,6 @@ namespace HouraiTeahouse {
         }
 
         /// <summary> Loads the asset in an asynchronous manner. If no AsyncManager is currently availble, </summary>
-        /// <param name="callback"> optional parameter, if not null, will execute with the loaded asset as the parameter </param>
         /// <param name="priority"> optional parameter, the priority of the resource request </param>
         /// <returns> the ResourceRequest associated with the load. Null if </returns>
         public ITask<T> LoadAsync(int priority = 0) {

@@ -36,7 +36,7 @@ namespace HouraiTeahouse.SmashBrew {
             _character = eventArgs.Player.PlayerObject;
             _character.Rigidbody.velocity = Vector3.zero;
             _character.transform.position = transform.position;
-            _character.Direction = _facing;
+            //_character.Direction = _facing;
             _character.ResetCharacter();
             _invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
             _timer = 0f;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew {
 
@@ -11,8 +12,17 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         float _time = 180f;
 
+        [SyncVar, SerializeField, ReadOnly]
+        float _currentTime;
+
         /// <summary> The amount of time remaining in the Match, in seconds. </summary>
-        public float CurrentTime { get; private set; }
+        public float CurrentTime {
+            get { return _currentTime; }
+            private set {
+                if(hasAuthority)
+                    _currentTime = value;
+            }
+        }
 
         /// <summary> Gets the winner of the Match. Null if the rule does not declare one. </summary>
         /// <remarks> TimeMatch doesn't determine winners, so this will always be null. </remarks>
@@ -20,8 +30,8 @@ namespace HouraiTeahouse.SmashBrew {
         public override Player GetWinner() { return null; }
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
-        protected override void Awake() {
-            base.Awake();
+        protected override void Start() {
+            base.Start();
             _eventManager = Mediator.Global;
             _eventManager.Subscribe<MatchStartEvent>(OnMatchStart);
         }
@@ -34,7 +44,7 @@ namespace HouraiTeahouse.SmashBrew {
         void Update() {
             CurrentTime -= Time.unscaledDeltaTime;
             if (CurrentTime <= 0)
-                Match.FinishMatch();
+                Match.CmdFinishMatch(false);
         }
 
     }

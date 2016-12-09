@@ -1446,6 +1446,7 @@ GameObject:
   - component: {fileID: 114539745083670102}
   - component: {fileID: 114119301787368720}
   - component: {fileID: 114006836745877248}
+  - component: {fileID: 114573300359137698}
   m_Layer: 9
   m_Name: Youmu Konpaku
   m_TagString: Player
@@ -3471,6 +3472,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb45326c828c3e84bac989f7c425dba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114573300359137698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1832341731906930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 146
+    i1: 63
+    i2: 77
+    i3: 118
+    i4: 207
+    i5: 188
+    i6: 176
+    i7: 244
+    i8: 58
+    i9: 23
+    i10: 221
+    i11: 10
+    i12: 245
+    i13: 68
+    i14: 209
+    i15: 21
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114827186698753264
 MonoBehaviour:
   m_ObjectHideFlags: 1

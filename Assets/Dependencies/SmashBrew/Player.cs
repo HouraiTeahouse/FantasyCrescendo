@@ -105,6 +105,12 @@ namespace HouraiTeahouse.SmashBrew {
             Character = selection.Character;
         }
 
+        public override string ToString() {
+            if (Character == null)
+                return "None";
+            return "{0}:{1}".With(Character.name, Pallete);
+        }
+
         public static bool operator ==(PlayerSelection s1, PlayerSelection s2) {
             bool n1 = ReferenceEquals(s1, null);
             bool n2 = ReferenceEquals(s2, null);
@@ -149,7 +155,10 @@ namespace HouraiTeahouse.SmashBrew {
 
         public PlayerSelection Selection {
             get { return _selection; }
-            set { _selection.Copy(value); }
+            set {
+                _selection.Copy(value);
+                Log.Info("Set Player {0}'s selection to {1}".With(ID, _selection));
+            }
         }
 
         /// <summary> Gets an enumeration of all Player. Note this includes all inactive players as well. </summary>
@@ -259,7 +268,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (prefab == null)
                 return null;
             PlayerObject = prefab.Duplicate(pos).GetComponent<Character>();
-            PlayerObject.Direction = direction;
+            //PlayerObject.Direction = direction;
             var controller = PlayerObject.GetComponentInChildren<PlayerController>();
             var materialSwap = PlayerObject.GetComponentInChildren<MaterialSwap>();
             if (controller)

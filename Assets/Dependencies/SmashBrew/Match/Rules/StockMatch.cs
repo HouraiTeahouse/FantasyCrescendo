@@ -29,18 +29,25 @@ namespace HouraiTeahouse.SmashBrew {
         protected override void Awake() {
             base.Awake();
             _eventManager = Mediator.Global;
-            _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawn);
-            _eventManager.Subscribe<PlayerDieEvent>(OnPlayerDie);
             _stocks = new Dictionary<Player, int>();
         }
 
+        protected override void Start() {
+            base.Start();
+            _eventManager.Subscribe<PlayerSpawnEvent>(OnSpawn);
+            _eventManager.Subscribe<PlayerDieEvent>(OnPlayerDie);
+        }
+
         /// <summary> Unity Callback. Called on object destruction. </summary>
-        void OnDestroy() { _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawn); }
+        void OnDestroy() {
+            _eventManager.Unsubscribe<PlayerSpawnEvent>(OnSpawn);
+            _eventManager.Unsubscribe<PlayerDieEvent>(OnPlayerDie);
+        }
 
         /// <summary> Unity Callback. Called once every frame. </summary>
         void Update() {
-            if (_stocks.Values.Count(lives => lives > 0) <= 1)
-                Match.FinishMatch();
+            if (hasAuthority && _stocks.Values.Count(lives => lives > 0) <= 1)
+                Match.CmdFinishMatch(false);
         }
 
         /// <summary> Gets the winner of the match. </summary>

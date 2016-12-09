@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> An abstract class  to define a Match Rule. These instances are searched for before the start of a Match to
     /// define the rules of a match. They run as normal MonoBehaviours, but are regularly polled for </summary>
     [RequireComponent(typeof(Match))]
-    public abstract class MatchRule : MonoBehaviour {
+    public abstract class MatchRule : NetworkBehaviour {
 
         /// <summary> The PlayerPrefs key to check for whether the rule is used or not. Stored as an integer. If 0, the rule is
         /// disabled. If any other number, it is enabled. If the key does not exist. The rule remains in whatever state it was left
@@ -17,6 +18,10 @@ namespace HouraiTeahouse.SmashBrew {
         protected static Match Match { get; private set; }
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
+        protected virtual void Start() {
+            Log.Info("Match rule enabled: {0}".With(ToString()));
+        }
+
         protected virtual void Awake() {
             if (Match == null)
                 Match = FindObjectOfType<Match>();
