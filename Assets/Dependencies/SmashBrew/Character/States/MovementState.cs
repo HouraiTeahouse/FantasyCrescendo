@@ -50,7 +50,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [SerializeField]
         float[] _jumpPower = { 5f, 10f };
 
+        [SerializeField]
+        Transform _ledgeTarget;
+
         [Header("Variables")]
+        [SerializeField, ReadOnly]
+        Transform _currentLedge;
+
         [SyncVar(hook = "OnChangeDirection"), SerializeField, ReadOnly]
         bool _direction;
 
@@ -82,6 +88,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public bool Direction {
             get { return _direction; }
+            set {
+                if(_direction != value)
+                    CmdSetDirection(value);
+            }
         }
 
         public CharacterFacingMode FacingMode {
@@ -106,11 +116,22 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _airSpeed; }
         }
 
+        public Transform LedgeTarget {
+            get { return _ledgeTarget; }
+        }
+
+        public Transform CurrentLedge {
+            get { return _currentLedge; }
+            set { _currentLedge = value; }
+        }
+
         void Start() {
             Physics = this.SafeGetComponent<PhysicsState>();
             CharacterController = this.SafeGetComponent<CharacterController>();
             JumpCount = MaxJumpCount;
             OnChangeDirection(_direction);
+            if (_ledgeTarget == null)
+                _ledgeTarget = transform;
         }
 
         struct MovementInfo {
@@ -123,14 +144,23 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 return;
 
             var movement = new MovementInfo { facing = Direction };
-            if(CharacterController.isGrounded)
-                movement = GroundedMovement(movement);
-            else
-                movement = AerialMovement(movement);
+            // If currently hanging from a edge
+            if (CurrentLedge != null) {
+                var offset = LedgeTarget.position - transform.position;
+                transform.position = CurrentLedge.position - offset;
+                if (JumpCount != MaxJumpCount)
+                    CmdResetJumps();
+            } else {
+                if(CharacterController.isGrounded)
+                    movement = GroundedMovement(movement);
+                else
+                    movement = AerialMovement(movement);
+            }
 
             if (JumpCount > 0 && JumpCount <= MaxJumpCount &&
                 (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) {
                 Physics.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
+                CurrentLedge = null;
                 CmdJump();
             }
 
@@ -160,7 +190,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             }
 
             if (JumpCount != MaxJumpCount)
-                CmdGrounded();
+                CmdResetJumps();
             return info;
         }
 
@@ -193,7 +223,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void CmdJump() { JumpCount--; }
 
         [Command]
-        void CmdGrounded() { JumpCount = MaxJumpCount; }
+        void CmdResetJumps() { JumpCount = MaxJumpCount; }
 
         [Command]
         void CmdSetDirection(bool direction) { _direction = direction; }
