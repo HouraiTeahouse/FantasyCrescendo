@@ -11,8 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
   m_Name: wriggle_nightbug
   m_EditorClassIdentifier: 
-  _sourceGame: 8
-  _sourceStage: 1
+  _extensions: []
   _isSelectable: 0
   _isVisible: 1
   _homeStage: Stages/Forest of Magic
@@ -26,7 +25,7 @@ MonoBehaviour:
   _cropSize: 0.24
   _backgroundColor: {r: 0.39949295, g: 0.5735294, b: 0, a: 1}
   _prefab: Characters/001_Marisa/Marisa
-  _shortNameKey: name.wriggle
-  _fullNameKey: fullname.wriggle
+  _shortName: Wriggle
+  _fullName: Wriggle Nightbug
   _announcerClip: Characters/003_Wriggle/Audio/wriggle_announcer
   _victoryTheme: Characters/003_Wriggle/Audio/wriggle_announcer

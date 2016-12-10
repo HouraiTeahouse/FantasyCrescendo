@@ -27,7 +27,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             if (data == null)
                 Text.text = string.Empty;
             else
-                LocalizationKey = shortName ? data.ShortName : data.FullName;
+                NativeText = shortName ? data.ShortName : data.FullName;
         }
 
         /// <summary>

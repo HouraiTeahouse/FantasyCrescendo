@@ -18,8 +18,7 @@ namespace HouraiTeahouse.Localization {
 
         [SerializeField]
         [Tooltip("The default language to use if the Player's current language is not supported")]
-        [Resource(typeof(StringSet))]
-        string _defaultLanguage;
+        StringSet _defaultLanguage;
 
         [SerializeField]
         [Tooltip("Destroy this object on scene changes?")]
@@ -28,10 +27,6 @@ namespace HouraiTeahouse.Localization {
 #if HOURAI_EVENTS
         Mediator _eventManager;
 #endif
-
-        [SerializeField]
-        [Tooltip("The set of keys to use")]
-        StringSet _keys;
 
         HashSet<string> _keySet;
 
@@ -74,15 +69,10 @@ namespace HouraiTeahouse.Localization {
         /// <summary> An event that is called every time the language is changed. </summary>
         public event Action<Language> OnChangeLanguage;
 
-        /// <summary> Is the provided key localizable? </summary>
-        /// <param name="key"> the key to check </param>
-        /// <returns> True if the key will return a localized string, false otherwise. </returns>
-        public bool HasKey(string key) { return _keySet.Contains(key); }
-
         void SetLanguage(string name, StringSet set) {
             if (_currentLanguage.Name == name)
                 return;
-            _currentLanguage.Update(_keys, set);
+            _currentLanguage.Update(_defaultLanguage, set);
             _currentLanguage.Name = set.name;
             OnChangeLanguage.SafeInvoke(_currentLanguage);
 #if HOURAI_EVENTS
@@ -99,16 +89,13 @@ namespace HouraiTeahouse.Localization {
 #endif
 
             var languages = new List<StringSet>(Resources.LoadAll<StringSet>(localizaitonResourceDirectory));
-            languages.Remove(_keys);
             _languages = new HashSet<string>(languages.Select(lang => lang.name));
-            _keySet = new HashSet<string>(_keys);
 
             SystemLanguage systemLang = Application.systemLanguage;
             string currentLang = _langPlayerPref.HasKey() ? _langPlayerPref : systemLang.ToString();
             if (!_languages.Contains(currentLang) || systemLang == SystemLanguage.Unknown) {
-                string oldLang = currentLang;
-                currentLang = Resources.Load<StringSet>(_defaultLanguage).name;
-                Log.Info("No language data for \"{0}\" found. Loading default language: {1}", oldLang, currentLang);
+                Log.Info("No language data for \"{0}\" found. Loading default language: {1}", _defaultLanguage.name, currentLang);
+                currentLang = _defaultLanguage.name;
             }
             _langPlayerPref.Value = currentLang;
 

@@ -25,14 +25,13 @@ namespace HouraiTeahouse.Localization {
             get { return _map.Keys; }
         }
 
-        /// <summary> Gets a localized string for a specific localization key. </summary>
-        /// <exception cref="KeyNotFoundException"> the Language does not support the localization key </exception>
-        /// <param name="key"> the localization key to retrieve </param>
+        /// <summary> Gets a localized string for a specific localization key. If the key does not exist, the raw key is returned </summary>
+        /// <param name="key"> the localization key to retrieve. </param>
         /// <returns> the localized string </returns>
         public string this[string key] {
             get {
                 if (!_map.ContainsKey(key))
-                    throw new KeyNotFoundException(key);
+                    return key;
                 return _map[key];
             }
         }

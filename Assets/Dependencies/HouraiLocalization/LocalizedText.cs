@@ -6,10 +6,10 @@ namespace HouraiTeahouse.Localization {
     /// <summary> An abstract MonoBehaviour class that localizes the strings displayed on UI Text objects. </summary>
     public abstract class AbstractLocalizedText : MonoBehaviour {
 
-        string _localizationKey;
-
         [SerializeField]
         Text _text;
+
+        string _nativeText;
 
         /// <summary> The UI Text object to display the localized string onto </summary>
         public Text Text {
@@ -18,24 +18,21 @@ namespace HouraiTeahouse.Localization {
         }
 
         /// <summary> The localization key used to lookup the localized string. </summary>
-        protected string LocalizationKey {
-            get { return _localizationKey; }
+        protected string NativeText {
+            get { return _nativeText; }
             set {
-                if (_localizationKey == value || value == null || !_text)
+                if (_nativeText == value || value == null || !_text)
                     return;
-                _localizationKey = value;
+                _nativeText = value;
                 LanguageManager languageManager = LanguageManager.Instance;
-                if (languageManager.HasKey(_localizationKey))
-                    _text.text = Process(languageManager[_localizationKey]);
-                else
-                    Log.Warning("Tried to localize key {0}, but LanguageManager has no such key", LocalizationKey);
+                _text.text = Process(languageManager[_nativeText]);
             }
         }
 
         /// <summary> Unity Callback. Called once upon object instantiation. </summary>
         protected virtual void Awake() {
             if (!_text)
-                _text = GetComponent<Text>();
+                _text = this.SafeGetComponent<Text>();
             enabled = _text;
         }
 
@@ -45,12 +42,9 @@ namespace HouraiTeahouse.Localization {
             if (languageManager == null)
                 return;
             languageManager.OnChangeLanguage += OnChangeLanguage;
-            if (_localizationKey == null)
+            if (_nativeText == null)
                 return;
-            if (languageManager.HasKey(_localizationKey))
-                _text.text = Process(languageManager[_localizationKey]);
-            else
-                Log.Warning("Tried to localize key {0}, but LanguageManager has no such key", _localizationKey);
+            _text.text = Process(languageManager[_nativeText]);
         }
 
         protected virtual void OnDestroy() {
@@ -62,12 +56,9 @@ namespace HouraiTeahouse.Localization {
         /// <summary> Events callback for when the system wide language is changed. </summary>
         /// <param name="language"> the language set that was changed to. </param>
         void OnChangeLanguage(Language language) {
-            if (language == null || _localizationKey == null)
+            if (language == null || _nativeText == null)
                 return;
-            if (language.ContainsKey(_localizationKey))
-                _text.text = Process(language[_localizationKey]);
-            else
-                Log.Warning("Tried to localize key {0}, but langauge {1} has no such key", _localizationKey, language);
+            _text.text = Process(language[_nativeText]);
         }
 
         /// <summary> Post-Processing on the retrieved localized string. </summary>
@@ -92,14 +83,16 @@ namespace HouraiTeahouse.Localization {
 
         /// <summary> Gets or sets the localization key of the LocalizedText </summary>
         public string Key {
-            get { return LocalizationKey; }
-            set { LocalizationKey = value; }
+            get { return NativeText; }
+            set { NativeText = value; }
         }
 
         /// <summary> Unity callback. Called once before the object's first frame. </summary>
         protected override void Awake() {
             base.Awake();
-            LocalizationKey = _key;
+            if (Text && string.IsNullOrEmpty(_key))
+                _key = Text.text;
+            NativeText = _key;
         }
 
         /// <summary>

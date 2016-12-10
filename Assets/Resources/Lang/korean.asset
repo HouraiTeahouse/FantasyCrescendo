@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 227dee6326711f745a6c16d591c85acb, type: 3}
-  m_Name: korean
+  m_Name: Korean
   m_EditorClassIdentifier: 
   _strings:
   - "\uD55C\uAD6D\uC5B4"
+  - mm{0}dd{0}yyyy
   - "\uD658\uD0C0\uC9C0 \uD06C\uB808\uC13C\uB3C4"
   - "\uC774 \uAC8C\uC784\uC740 \uAC8C\uC784\uD328\uB4DC \uCEE8\uD2B8\uB864\uB7EC\uB97C
     \uC704\uD558\uC5EC \uB514\uC790\uC778 \uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uAC8C\uC784\uD328\uB4DC

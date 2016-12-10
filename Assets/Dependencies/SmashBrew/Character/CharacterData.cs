@@ -52,14 +52,12 @@ namespace HouraiTeahouse.SmashBrew {
         [Tooltip("The prefab of the Character to spawn.")]
         string _prefab;
 
-        [Header("Localization Data")]
+        [Header("Text Data")]
         [SerializeField]
-        [Tooltip("The localization key used for the character's shortened name")]
-        string _shortNameKey;
+        string _shortName;
 
         [SerializeField]
-        [Tooltip("The localization key used for the character's full name.")]
-        string _fullNameKey;
+        string _fullName;
 
         [Header("Audio Data")]
         [SerializeField]
@@ -74,12 +72,12 @@ namespace HouraiTeahouse.SmashBrew {
 
         /// <summary> The short name of the character. Usually just their first name. </summary>
         public string ShortName {
-            get { return _shortNameKey; }
+            get { return _shortName; }
         }
 
         /// <summary> The full name of the character. </summary>
         public string FullName {
-            get { return _fullNameKey; }
+            get { return _fullName; }
         }
 
         /// <summary> Gets how many palletes </summary>

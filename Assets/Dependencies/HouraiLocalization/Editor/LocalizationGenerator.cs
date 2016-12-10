@@ -37,11 +37,8 @@ namespace HouraiTeahouse.Localization.Editor {
         public void Generate() {
             ListFeed test = GDocService.GetSpreadsheet(GoogleLink);
             var languageMap = new Dictionary<string, StringSet>();
-            var keys = CreateInstance<StringSet>();
-            languageMap.Add("Keys", keys);
             var ignore = new HashSet<string>(_ignoreColumns);
             foreach (ListEntry row in test.Entries) {
-                keys.Add(row.Title.Text);
                 foreach (ListEntry.Custom element in row.Elements) {
                     string lang = element.LocalName;
                     if (ignore.Contains(lang))
