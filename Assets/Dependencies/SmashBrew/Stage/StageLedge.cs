@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.SmashBrew.Characters;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityConstants;
 using UnityEngine;
 
@@ -14,14 +14,11 @@ namespace HouraiTeahouse.SmashBrew {
         void OnTriggerEnter(Collider collider) {
             if (!collider.CompareTag(Tags.Player))
                 return;
-            Log.Debug("Ledge Collided");
             var movement = collider.GetComponentInParent<MovementState>();
             if (movement == null)
                 return;
-            Log.Debug("Ledge Touched");
             movement.Direction = _direction;
             movement.CurrentLedge = transform;
-            //TODO(james7132): Implement
         }
 
     }
