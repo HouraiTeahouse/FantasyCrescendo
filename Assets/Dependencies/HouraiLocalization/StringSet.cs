@@ -9,6 +9,7 @@ namespace HouraiTeahouse.Localization {
     public class StringSet : ScriptableObject, IList<string> {
 
         [SerializeField]
+        [TextArea]
         [Tooltip("The strings contained by this set")]
         List<string> _strings;
 

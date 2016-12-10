@@ -32,7 +32,8 @@ namespace HouraiTeahouse.Localization {
             get {
                 if (!_map.ContainsKey(key))
                     return key;
-                return _map[key];
+                string result = _map[key];
+                return string.IsNullOrEmpty(result) ? key : result;
             }
         }
 
