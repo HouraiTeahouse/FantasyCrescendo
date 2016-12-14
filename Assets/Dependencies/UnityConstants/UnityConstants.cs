@@ -53,10 +53,10 @@ namespace UnityConstants
     public static class Scenes
     {
         public const int Splash_Screen = 0;
-        public const int Physics_Test_Scene = 1;
-        public const int Stage_Bootstrap = 2;
-        public const int Main_Menu = 3;
-        public const int Forest_of_Magic_Stage = 4;
+        public const int Stage_Bootstrap = 1;
+        public const int Main_Menu = 2;
+        public const int Forest_of_Magic_Stage = 3;
+        public const int Physics_Test_Scene = 4;
         public const int Stage_Select = 5;
     }
 
