@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e06ba603e8092b4f8ff52df06fdcbf3, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
+  _extensions: []
   _gameModes:
     _allStar:
       _cpusAllowed: 1
@@ -60,3 +61,10 @@ MonoBehaviour:
     _shieldHitboxColor: {r: 0, g: 1, b: 1, a: 1}
     _absorbHitboxColor: {r: 0, g: 0.5019608, b: 1, a: 1}
     ReflectHitboxColor: {r: 0, g: 0.5019608, b: 0.2509804, a: 1}
+  _tags:
+    _playerTag: Player
+    _hitboxTag: Hitbox
+    _characterLayer: 9
+    _intangibleLayer: 12
+    _hitboxLayer: 10
+    _hurtboxLayer: 11

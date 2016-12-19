@@ -1,5 +1,4 @@
 using System.Linq;
-using UnityConstants;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -36,7 +35,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <param name="target"> </param>
         /// <param name="state"> </param>
         void ChangeIgnore(Collider target, bool state) {
-            if (target == null || !target.CompareTag(Tags.Player))
+            if (target == null || !target.CompareTag(Config.Tags.PlayerTag))
                 return;
 
             foreach (Collider col in _toIgnore)
@@ -46,7 +45,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Check if the </summary>
         /// <param name="col"> </param>
         static void Check(Component col) {
-            if (!col.CompareTag(Tags.Player))
+            if (!col.CompareTag(Config.Tags.PlayerTag))
                 return;
 
             // TODO: Reimplement

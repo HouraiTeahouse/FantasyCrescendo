@@ -1,5 +1,4 @@
 using System;
-using UnityConstants;
 using UnityEngine;
 using Random = System.Random;
 #if UNITY_EDITOR
@@ -122,14 +121,14 @@ namespace HouraiTeahouse.SmashBrew {
             //_effect = GetComponent<ParticleSystem>();
             //_soundEffect = GetComponent<AudioSource>();
 
-            gameObject.tag = Tags.Hitbox;
+            gameObject.tag = Config.Tags.HitboxTag;
             switch (CurrentType) {
                 case Type.Damageable:
                 case Type.Shield:
-                    gameObject.layer = Layers.Hurtbox;
+                    gameObject.layer = Config.Tags.HurtboxLayer;
                     break;
                 default:
-                    gameObject.layer = Layers.Hitbox;
+                    gameObject.layer = Config.Tags.HitboxLayer;
                     break;
             }
             _colliders = GetComponents<Collider>();
@@ -186,7 +185,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void OnTriggerEnter(Collider other) {
-            if (!other.CompareTag(Tags.Hitbox))
+            if (!other.CompareTag(Config.Tags.HitboxTag))
                 return;
             var otherHitbox = other.GetComponent<Hitbox>();
             if (otherHitbox == null || !ReactionMatrix.ContainsKey(CurrentType, otherHitbox.CurrentType))
