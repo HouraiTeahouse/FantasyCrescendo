@@ -8,7 +8,6 @@ namespace HouraiTeahouse.SmashBrew {
     }
 
     [DisallowMultipleComponent]
-    [Required]
     public sealed class Shield : BaseBehaviour, IDamageable {
 
         //[SerializeField]

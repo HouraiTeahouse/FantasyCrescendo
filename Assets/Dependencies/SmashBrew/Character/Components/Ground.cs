@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    [Required]
     public sealed class Ground : CharacterComponent {
 
         readonly HashSet<Collider> _ground = new HashSet<Collider>();

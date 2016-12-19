@@ -3,7 +3,6 @@ using UnityEngine;
 namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> A Status effect that causes Characters to become uncontrollable for a short period after being hit </summary>
-    [Required]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     public class Hitstun : Status {

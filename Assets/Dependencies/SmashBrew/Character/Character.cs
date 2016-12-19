@@ -297,34 +297,7 @@ namespace HouraiTeahouse.SmashBrew {
             Rigidbody.useGravity = false;
 
             Animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
-#if UNITY_EDITOR
-            if (EditorApplication.isPlayingOrWillChangePlaymode)
-                return;
-
-            Type[] requiredComponents = GetRequiredComponents();
-            foreach (Type component in requiredComponents) {
-                if (!gameObject.GetComponent(component))
-                    gameObject.AddComponent(component);
-            }
-#endif
         }
-
-#if UNITY_EDITOR
-
-        /// <summary> Editor only function that gets all of the required component types a Character needs. </summary>
-        /// <returns> an array of all of the concrete component types marked with RequiredCharacterComponent </returns>
-        public static Type[] GetRequiredComponents() {
-            Type component = typeof(Component);
-            // Use reflection to find required Components for Characters and statuses
-            // Enumerate all concrete Component types
-            return
-                ReflectionUtilty.AllTypes.ConcreteClasses()
-                    .IsAssignableFrom(component)
-                    .WithAttribute<RequiredAttribute>()
-                    .Keys()
-                    .ToArray();
-        }
-#endif
 
         void OnAnimatorMove() {
             //TODO: Merge Physics and Animation Movements here
