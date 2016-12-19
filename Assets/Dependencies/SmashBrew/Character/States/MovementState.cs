@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
+    [DisallowMultipleComponent]
     [RequireComponent(typeof(PhysicsState))]
     public class MovementState : NetworkBehaviour {
 

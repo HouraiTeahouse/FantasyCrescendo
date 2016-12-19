@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
+    [DisallowMultipleComponent]
     public class CollisionState : NetworkBehaviour, ICharacterState {
 
         [Header("Variables")]
