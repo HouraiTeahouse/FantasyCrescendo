@@ -25,8 +25,9 @@ namespace HouraiTeahouse.SmashBrew {
                     if (targets == null)
                         return;
                     var loadedMaterials = _materials.Select(Resources.Load<Material>).ToArray();
-                    foreach (Renderer renderer in targets.IgnoreNulls())
-                        renderer.sharedMaterials = loadedMaterials;
+                    foreach (Renderer renderer in targets)
+                        if(renderer != null)
+                            renderer.sharedMaterials = loadedMaterials;
                 }
 
             }
