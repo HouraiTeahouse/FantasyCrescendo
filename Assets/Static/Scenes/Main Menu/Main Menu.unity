@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678199ddc15e96f47982905005bc1b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _format: Version {0}
+  _format: v{0}
   _text: {fileID: 121482162}
 --- !u!114 &121482162
 MonoBehaviour:
@@ -234,7 +234,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Version Text
+  m_Text: v1.0
 --- !u!222 &121482163
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -948,7 +948,7 @@ ParticleSystemRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -1027,7 +1027,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 0
+  randomSeed: -2097956418
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4087,7 +4087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -1, y: 0.45}
   m_AnchorMax: {x: 2, y: 0.925}
-  m_AnchoredPosition: {x: 0, y: 0.0005645752}
+  m_AnchoredPosition: {x: 0, y: 0.0005493164}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1132499470
