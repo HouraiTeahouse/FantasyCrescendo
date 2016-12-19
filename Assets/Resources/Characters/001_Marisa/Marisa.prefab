@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: 11482844}
   - component: {fileID: 11437798}
   - component: {fileID: 11451206}
-  - component: {fileID: 114000014129941234}
   - component: {fileID: 114000012196341256}
   - component: {fileID: 114000014049512914}
   - component: {fileID: 114638214943715564}
@@ -123,7 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _facingMode: 0
   _maxFallSpeed: 5
   _fastFallSpeed: 9
   _jumpHeights:
@@ -1702,17 +1700,6 @@ MonoBehaviour:
   _knockbackScaling: 0
   _reflectable: 0
   _absorbable: 0
---- !u!114 &114000014129941234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdb17310a90b3c14f8d64e80c183dc60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114638214943715564
 MonoBehaviour:
   m_ObjectHideFlags: 1
