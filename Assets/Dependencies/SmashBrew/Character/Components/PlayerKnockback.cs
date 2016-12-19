@@ -3,7 +3,7 @@ using UnityEngine;
 namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> A MonoBehaviour that handles the knockback dealt to a Player </summary>
-    public sealed class PlayerKnockback : CharacterComponent, IKnockbackable {
+    public sealed class PlayerKnockback : MonoBehaviour, IKnockbackable {
 
         ModifierList<Vector2> _defensiveModifiers;
 

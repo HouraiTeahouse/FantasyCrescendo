@@ -5,9 +5,12 @@ using UnityEngine.Assertions;
 namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> AnimationEvent callbacks for SmashBrew Characters </summary>
-    public class CharacterAnimationEvents : CharacterComponent {
+    public class CharacterAnimationEvents : MonoBehaviour {
 
         public static string HitboxFunc = "Hitbox";
+        public Character Character { get; private set; }
+
+        void Awake() { Character = GetComponentInParent<Character>(); }
 
         public void Hitbox(AnimationEvent animationEvent) {
             var eventData = animationEvent.objectReferenceParameter as EventData;
@@ -32,9 +35,6 @@ namespace HouraiTeahouse.SmashBrew {
                 hitbox.CurrentType = states[i];
             }
         }
-
-        /// <summary> Actually applies the force to jump. </summary>
-        public void Jump() { Character.JumpImpl(); }
 
     }
 

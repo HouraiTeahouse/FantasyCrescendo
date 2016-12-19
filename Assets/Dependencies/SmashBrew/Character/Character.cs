@@ -16,7 +16,6 @@ namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     [RequireComponent(typeof(PlayerDamage), typeof(PlayerKnockback))]
-    [RequireComponent(typeof(Gravity), typeof(Ground))]
     public class Character : BaseBehaviour, IHitboxController {
 
         public SmashCharacterController Controller { get; private set; }
@@ -155,8 +154,6 @@ namespace HouraiTeahouse.SmashBrew {
         #region Required Components
 
         public CapsuleCollider MovementCollider { get; private set; }
-        public Gravity Gravity { get; private set; }
-        public Ground Ground { get; private set; }
         public PlayerDamage Damage { get; private set; }
 
         #endregion
@@ -190,18 +187,6 @@ namespace HouraiTeahouse.SmashBrew {
                 _jumpQueued = true;
         }
 
-        /// <summary> Actually applies the force to jump. </summary>
-        internal void JumpImpl() {
-            // Apply upward force to jump
-            Vector3 force = Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]);
-            force.y -= Rigidbody.velocity.y;
-            Rigidbody.AddForce(force, ForceMode.VelocityChange);
-
-            JumpCount++;
-
-            Events.Publish(new PlayerJumpEvent {Ground = Ground, RemainingJumps = MaxJumpCount - JumpCount});
-        }
-
         public void SetWeaponVisibilty(int weapon, bool state) {
             if (_weapons[weapon])
                 _weapons[weapon].enabled = state;
@@ -219,8 +204,6 @@ namespace HouraiTeahouse.SmashBrew {
         #region Unity Callbacks
 
         void GetCharacterComponents() {
-            Ground = GetComponent<Ground>();
-            Gravity = GetComponent<Gravity>();
             Damage = GetComponent<PlayerDamage>();
         }
 
@@ -257,7 +240,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         void AnimationUpdate() {
-            Animator.SetBool(CharacterAnim.Grounded, Ground);
             Animator.SetBool(CharacterAnim.Jump, _jumpQueued);
             Animator.SetBool(CharacterAnim.Tap, Time.realtimeSinceStartup - _lastTap > Config.Player.TapPersistence);
 
@@ -272,10 +254,7 @@ namespace HouraiTeahouse.SmashBrew {
 
             if (IsFastFalling || velocity.y < -FallSpeed)
                 velocity.y = -FallSpeed;
-            if (Ground && Rigidbody.velocity.y <= 0f) {
-                IsFastFalling = false;
-                JumpCount = 0;
-            }
+
             Rigidbody.velocity = velocity;
             gameObject.layer = velocity.magnitude > Config.Physics.TangibleSpeedCap
                 ? Config.Tags.IntangibleLayer
