@@ -6,30 +6,6 @@ namespace HouraiTeahouse.SmashBrew {
     [DisallowMultipleComponent]
     public class Hitlag : Status {
 
-        float _cachedTimeScale;
-
-        /// <summary>
-        ///     <see cref="Status.GetDeltaTime" />
-        /// </summary>
-        protected override float GetDeltaTime() { return Time.unscaledDeltaTime; }
-
-        /// <summary>
-        ///     <see cref="Status.OnStatusStart" />
-        /// </summary>
-        protected override void OnStatusStart() {
-            base.OnStatusStart();
-            _cachedTimeScale = LocalTimeScale;
-            LocalTimeScale = 0f;
-        }
-
-        /// <summary>
-        ///     <see cref="Status.OnStatusEnd" />
-        /// </summary>
-        protected override void OnStatusEnd() {
-            base.OnStatusEnd();
-            LocalTimeScale = _cachedTimeScale;
-        }
-
     }
 
 }

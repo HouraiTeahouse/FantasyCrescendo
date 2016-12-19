@@ -10,8 +10,7 @@ namespace HouraiTeahouse.SmashBrew {
         Hitbox[] _hitboxes;
 
         /// <summary> Unity callback. Called once before the object's first frame. </summary>
-        protected override void Start() {
-            base.Start();
+        void Start() {
             _damage = GetComponent<PlayerDamage>();
             _damage.DamageModifiers.In.Add(InvincibilityModifier, int.MaxValue);
             _hitboxes = GetComponentsInChildren<Hitbox>();

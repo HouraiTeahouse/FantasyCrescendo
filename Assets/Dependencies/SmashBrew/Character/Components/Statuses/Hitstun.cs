@@ -14,11 +14,6 @@ namespace HouraiTeahouse.SmashBrew {
             get { return enabled; }
         }
 
-        /// <summary>
-        ///     <see cref="Status.OnStatusUpdate" />
-        /// </summary>
-        protected override void OnStatusUpdate(float dt) { _oldVelocity = Rigidbody.velocity; }
-
         /// <summary> Unity callback. Called on entry into a physical collision with another object. </summary>
         /// <param name="col"> the collision data </param>
         protected virtual void OnCollisionEnter(Collision col) {
@@ -35,7 +30,6 @@ namespace HouraiTeahouse.SmashBrew {
             Debug.DrawRay(point, reflection, Color.green);
             Debug.DrawRay(point, normal, Color.red);
             Debug.DrawRay(point, -_oldVelocity, Color.yellow);
-            Rigidbody.velocity = Vector3.ClampMagnitude(reflection, 0.8f * _oldVelocity.magnitude);
         }
 
     }

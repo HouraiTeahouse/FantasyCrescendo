@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public abstract class Status : CharacterComponent {
+    public abstract class Status : MonoBehaviour {
 
         float _duration = Mathf.Infinity;
 
@@ -27,15 +27,13 @@ namespace HouraiTeahouse.SmashBrew {
             return Apply<T>(Argument.NotNull(target).gameObject, duration);
         }
 
-        protected override void Start() {
-            base.Start();
+        void Start() {
             enabled = false;
         }
 
-        protected virtual float GetDeltaTime() { return DeltaTime; }
 
         void Update() {
-            float dt = GetDeltaTime();
+            float dt = Time.deltaTime;
             EllapsedTime += dt;
             OnStatusUpdate(dt);
             enabled = EllapsedTime < Duration;
