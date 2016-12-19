@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityConstants;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -279,8 +278,8 @@ namespace HouraiTeahouse.SmashBrew {
             }
             Rigidbody.velocity = velocity;
             gameObject.layer = velocity.magnitude > Config.Physics.TangibleSpeedCap
-                ? Layers.Intangible
-                : Layers.Character;
+                ? Config.Tags.IntangibleLayer
+                : Config.Tags.CharacterLayer;
 
             AnimationUpdate();
         }
@@ -289,8 +288,8 @@ namespace HouraiTeahouse.SmashBrew {
             MovementCollider = GetComponent<CapsuleCollider>();
             MovementCollider.isTrigger = false;
 
-            gameObject.tag = Tags.Player;
-            gameObject.layer = Layers.Character;
+            gameObject.tag = Config.Tags.PlayerTag;
+            gameObject.layer = Config.Tags.CharacterLayer;
 
             Rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
             Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;

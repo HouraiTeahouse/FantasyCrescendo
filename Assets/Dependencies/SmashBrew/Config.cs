@@ -36,6 +36,10 @@ namespace HouraiTeahouse.SmashBrew {
             get { return Instance._debug; }
         }
 
+        public static TagConfig Tags {
+            get { return Instance._tags; }
+        }
+
         /// <summary> Unity callback. Called on load. </summary>
         void OnEnable() {
             //TODO: Generalize
@@ -56,7 +60,57 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         DebugConfig _debug;
 
+        [SerializeField]
+        TagConfig _tags;
+
         #endregion
+    }
+
+    [Serializable]
+    public class TagConfig {
+
+        [SerializeField, Tag]
+        string _playerTag;
+
+        [SerializeField, Tag]
+        string _hitboxTag;
+
+        [SerializeField, Layer]
+        int _characterLayer;
+
+        [SerializeField, Layer]
+        int _intangibleLayer;
+
+        [SerializeField, Layer]
+        int _hitboxLayer;
+
+        [SerializeField, Layer]
+        int _hurtboxLayer;
+
+        public string PlayerTag {
+            get { return _playerTag; }
+        }
+
+        public string HitboxTag {
+            get { return _hitboxTag; }
+        }
+
+        public int CharacterLayer {
+            get { return _characterLayer; }
+        }
+
+        public int IntangibleLayer {
+            get { return _intangibleLayer; }
+        }
+
+        public int HitboxLayer {
+            get { return _hitboxLayer; }
+        }
+
+        public int HurtboxLayer {
+            get { return _hurtboxLayer; }
+        }
+
     }
 
     [Serializable]

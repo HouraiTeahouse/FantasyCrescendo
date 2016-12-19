@@ -1,5 +1,4 @@
 using HouraiTeahouse.SmashBrew.Characters;
-using UnityConstants;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -12,7 +11,7 @@ namespace HouraiTeahouse.SmashBrew {
         public bool Occupied { get; private set; }
 
         void OnTriggerEnter(Collider collider) {
-            if (!collider.CompareTag(Tags.Player))
+            if (!collider.CompareTag(Config.Tags.PlayerTag))
                 return;
             var movement = collider.GetComponentInParent<MovementState>();
             if (movement == null)
