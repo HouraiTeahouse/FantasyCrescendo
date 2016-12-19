@@ -69,16 +69,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         [Test]
-        public void RequiredCharacterComponentTest() {
-            // Checks for all of the component types marked with RequiredCharacterComponent on all of the CharacterData's prefabs
-            LoadData();
-            Type[] requiredTypes = Character.GetRequiredComponents();
-            foreach (CharacterData character in data)
-                foreach (Type type in requiredTypes)
-                    Assert.NotNull(character.Prefab.Load().GetComponent(type));
-        }
-
-        [Test]
         public void PalleteCountTest() {
             // Checks that the pallete count is the same between MaterialSwap and CharacterData
             LoadData();
