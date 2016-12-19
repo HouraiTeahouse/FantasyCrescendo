@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
+    [DisallowMultipleComponent]
     public sealed class ShieldState : NetworkBehaviour, ICharacterState {
 
         // Character Constrants

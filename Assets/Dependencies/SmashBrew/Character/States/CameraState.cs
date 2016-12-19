@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
+    [DisallowMultipleComponent]
     public class CameraState : MonoBehaviour {
         MatchCameraTarget _cameraTarget;
 
