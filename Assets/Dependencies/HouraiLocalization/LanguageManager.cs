@@ -28,8 +28,6 @@ namespace HouraiTeahouse.Localization {
         Mediator _eventManager;
 #endif
 
-        HashSet<string> _keySet;
-
         [SerializeField]
         [Tooltip("The PlayerPrefs key to store the Player's language in")]
         PrefString _langPlayerPref;
@@ -56,7 +54,7 @@ namespace HouraiTeahouse.Localization {
 
         /// <summary> Gets an enumeration of all of the localizable keys. </summary>
         public IEnumerable<string> Keys {
-            get { return _keySet; }
+            get { return _defaultLanguage; }
         }
 
         /// <summary> Localizes a key based on the currently loaded language. </summary>
