@@ -7,7 +7,7 @@ namespace HouraiTeahouse.SmashBrew {
     [RequireComponent(typeof(Rigidbody))]
     public class Hitstun : Status {
 
-        Vector3 _oldVelocity;
+        Vector3 _oldVelocity = Vector3.zero;
 
         /// <summary> Gets whether the player has been hit recently </summary>
         public bool IsHit {
