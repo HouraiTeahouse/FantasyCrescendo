@@ -49,9 +49,6 @@ namespace HouraiTeahouse.SmashBrew {
             Animator.SetBool(CharacterAnim.AttackInput, altTap.sqrMagnitude > 0 || _controlMapping.Attack(input));
             Animator.SetBool(CharacterAnim.SpecialInput, _controlMapping.Special(input));
             Animator.SetBool(CharacterAnim.ShieldInput, _controlMapping.Shield(input));
-
-            if (_controlMapping.Jump(input))
-                _character.Jump();
         }
 
     }
