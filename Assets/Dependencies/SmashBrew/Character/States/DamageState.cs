@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Character/Damage State")]
     public class DamageState : NetworkBehaviour, ICharacterState {
 
         //TODO(james7132): Synchronize this across the network

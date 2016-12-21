@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Character/Shield State")]
     public sealed class ShieldState : NetworkBehaviour, ICharacterState {
 
         // Character Constrants

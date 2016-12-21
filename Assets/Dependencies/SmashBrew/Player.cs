@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using HouraiTeahouse.HouraiInput;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -270,7 +271,7 @@ namespace HouraiTeahouse.SmashBrew {
             PlayerObject = prefab.Duplicate(pos).GetComponent<Character>();
             //PlayerObject.Direction = direction;
             var controller = PlayerObject.GetComponentInChildren<PlayerController>();
-            var materialSwap = PlayerObject.GetComponentInChildren<MaterialSwap>();
+            var materialSwap = PlayerObject.GetComponentInChildren<ColorState>();
             if (controller)
                 controller.PlayerData = this;
             if (materialSwap)

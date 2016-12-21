@@ -1,17 +1,18 @@
 using System.Linq;
 using HouraiTeahouse.Editor;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEditor;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
-    [CustomEditor(typeof(MaterialSwap))]
-    public class MaterialSwapEditor : ScriptlessEditor {
+    [CustomEditor(typeof(ColorState))]
+    public class ColorStateEditor : ScriptlessEditor {
 
         SerializedProperty _swaps;
 
-        MaterialSwap Swap {
-            get { return target as MaterialSwap; }
+        ColorState Swap {
+            get { return target as ColorState; }
         }
 
         bool RemoveButton {
