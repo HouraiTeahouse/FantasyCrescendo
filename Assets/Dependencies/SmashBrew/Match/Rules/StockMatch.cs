@@ -3,11 +3,13 @@ using System.Linq;
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Matches {
 
     /// <summary> A Match Rule defining a Stock-based Match. AllPlayers will have a fixed number of lives to lose, via exiting
     /// the blast zone. After which they will no longer respawn, and cannot further participate. The winner is the last player
     /// standing. </summary>
+    [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Matches/Stock Match")]
     public sealed class StockMatch : MatchRule {
 
         Mediator _eventManager;

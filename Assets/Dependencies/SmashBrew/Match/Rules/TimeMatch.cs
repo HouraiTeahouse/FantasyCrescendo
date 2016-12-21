@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Matches {
 
     /// <summary> A MatchRule that adds a time limit. The match ends the instant the timer hits zero. Note this rule does not
     /// determine a winner, only ends the Match. </summary>
+    [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Matches/Time Match")]
     public sealed class TimeMatch : MatchRule {
 
         Mediator _eventManager;

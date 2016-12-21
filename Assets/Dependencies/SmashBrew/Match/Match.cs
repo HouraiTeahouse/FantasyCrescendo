@@ -1,8 +1,11 @@
+using UnityEngine;
 using UnityEngine.Networking;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Matches {
 
     /// <summary> The Match Singleton. Manages the current state of the match and all of the defined Match rules. </summary>
+    [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Matches/Match")]
     public class Match : NetworkBehaviour {
 
         Mediator _eventManager;
