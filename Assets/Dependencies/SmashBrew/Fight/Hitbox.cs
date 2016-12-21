@@ -1,4 +1,5 @@
 using System;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 using Random = System.Random;
 #if UNITY_EDITOR
@@ -285,7 +286,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public float BaseDamage {
-            get { return Source == null ? _damage : Source.GetComponent<PlayerDamage>().ModifyDamage(_damage); }
+            get { return Source == null ? _damage : Source.GetComponent<DamageState>().ModifyDamage(_damage); }
         }
 
         public bool FlipDirection {
