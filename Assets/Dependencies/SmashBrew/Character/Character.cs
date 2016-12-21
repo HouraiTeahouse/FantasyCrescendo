@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -64,49 +63,9 @@ namespace HouraiTeahouse.SmashBrew {
 
         public Mediator Events { get; private set; }
 
-        /// <summary> Gets or sets whether the Character is currently fast falling or not </summary>
-        public bool IsFastFalling { get; set; }
-
-        public float FallSpeed {
-            get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
-        }
-
-        ///// <summary> The direction the character is currently facing. If set to true, the character faces the right. If set to
-        ///// false, the character faces the left. The method in which the character is flipped depends on what the Facing Mode
-        ///// parameter is set to. </summary>
-        //public bool Direction {
-        //    get {
-        //        if (_facingMode == FacingMode.Rotation)
-        //            return transform.eulerAngles.y > 179f;
-        //        return transform.localScale.x > 0;
-        //    }
-        //    set {
-        //        if (_facing == value)
-        //            return;
-        //        _facing = value;
-        //        if (_facingMode == FacingMode.Rotation)
-        //            transform.Rotate(0f, 180f, 0f);
-        //        else
-        //            transform.localScale *= -1;
-        //    }
-        //}
-
-        /// <summary> Gets how many remaining jumps the Character currently has. </summary>
-        public int JumpCount { get; private set; }
-
         /// <summary> Gets an immutable collection of hitboxes that belong to </summary>
         public ICollection<Hitbox> Hitboxes {
             get { return _hitboxMap.Values; }
-        }
-
-        /// <summary> Gets the maximum number of jumps the Character can preform. </summary>
-        public int MaxJumpCount {
-            get { return _jumpHeights == null ? 0 : _jumpHeights.Length; }
-        }
-
-        /// <summary> Can the Character currently jump? </summary>
-        public bool CanJump {
-            get { return JumpCount < MaxJumpCount; }
         }
 
         public void ResetCharacter() {
@@ -118,7 +77,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Runtime Variables
 
-        bool _facing;
         float _lastTap;
         bool _jumpQueued;
         Dictionary<int, Hitbox> _hitboxMap;
@@ -126,21 +84,6 @@ namespace HouraiTeahouse.SmashBrew {
         #endregion
 
         #region Serialized Variables
-
-        //[SerializeField]
-        //FacingMode _facingMode;
-
-        [Header("Physics")]
-        [SerializeField]
-        float _maxFallSpeed = 5f;
-
-        [SerializeField]
-        [Tooltip("The fast falling speed applied")]
-        float _fastFallSpeed = 9f;
-
-        [SerializeField]
-        [Tooltip("The heights of each jump")]
-        float[] _jumpHeights = {1.5f, 1.5f};
 
         [SerializeField]
         Renderer[] _weapons;
@@ -178,11 +121,6 @@ namespace HouraiTeahouse.SmashBrew {
             //if (Direction)
             //    vel.x *= -1;
             Rigidbody.velocity = vel;
-        }
-
-        public void Jump() {
-            if (CanJump)
-                _jumpQueued = true;
         }
 
         public void SetWeaponVisibilty(int weapon, bool state) {
@@ -245,9 +183,6 @@ namespace HouraiTeahouse.SmashBrew {
             //if (!IsFastFalling && InputSource != null && InputSource.Movement.y < 0)
             //    _fastFall = true;
 
-            if (IsFastFalling || velocity.y < -FallSpeed)
-                velocity.y = -FallSpeed;
-
             Rigidbody.velocity = velocity;
             gameObject.layer = velocity.magnitude > Config.Physics.TangibleSpeedCap
                 ? Config.Tags.IntangibleLayer
@@ -262,11 +197,6 @@ namespace HouraiTeahouse.SmashBrew {
 
             gameObject.tag = Config.Tags.PlayerTag;
             gameObject.layer = Config.Tags.CharacterLayer;
-
-            Rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
-            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            Rigidbody.isKinematic = false;
-            Rigidbody.useGravity = false;
 
             Animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
         }

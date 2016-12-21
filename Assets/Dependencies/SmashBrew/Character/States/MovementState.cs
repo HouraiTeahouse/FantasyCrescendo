@@ -114,6 +114,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             private set { _isFastFalling = value; }
         }
 
+        /// <summary> Can the Character currently jump? </summary>
+        public bool CanJump {
+            get { return JumpCount < MaxJumpCount; }
+        }
+
         public float AirSpeed {
             get { return _airSpeed; }
         }
