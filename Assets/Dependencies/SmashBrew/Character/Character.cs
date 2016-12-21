@@ -15,7 +15,6 @@ namespace HouraiTeahouse.SmashBrew {
 #endif
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
-    [RequireComponent(typeof(PlayerDamage), typeof(PlayerKnockback))]
     public class Character : BaseBehaviour, IHitboxController {
 
         public SmashCharacterController Controller { get; private set; }
@@ -154,7 +153,6 @@ namespace HouraiTeahouse.SmashBrew {
         #region Required Components
 
         public CapsuleCollider MovementCollider { get; private set; }
-        public PlayerDamage Damage { get; private set; }
 
         #endregion
 
@@ -203,15 +201,10 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Unity Callbacks
 
-        void GetCharacterComponents() {
-            Damage = GetComponent<PlayerDamage>();
-        }
-
         /// <summary> Unity callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
             Events = new Mediator();
-            GetCharacterComponents();
             Reset();
 
             if (Animator != null)

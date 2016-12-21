@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -83,7 +84,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (!isActiveAndEnabled)
                 return;
             _stocks[eventArgs.Player] = stock;
-            eventArgs.Player.PlayerObject.GetComponent<PlayerDamage>().Type = DamageType.Percent;
+            eventArgs.Player.PlayerObject.GetComponent<DamageState>().Type = DamageType.Percent;
         }
 
     }
