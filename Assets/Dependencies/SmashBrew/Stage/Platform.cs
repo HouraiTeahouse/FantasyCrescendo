@@ -1,8 +1,9 @@
 using System.Linq;
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Stage { 
 
+    [AddComponentMenu("Smash Brew/Stage/Platform")]
     public sealed class Platform : MonoBehaviour {
 
         public enum HardnessSetting {

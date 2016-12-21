@@ -1,7 +1,8 @@
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Stage {
 
+    [AddComponentMenu("Smash Brew/Stage/Respawn")]
     public class RespawnPlatform : EventBehaviour<PlayerRespawnEvent> {
 
         Character _character;

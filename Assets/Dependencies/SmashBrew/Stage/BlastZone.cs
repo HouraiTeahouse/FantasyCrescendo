@@ -1,9 +1,10 @@
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Stage {
 
     /// <summary> The Blast Zone script. Publishes PlayerDieEvents in response to Players leaving it's bounds. </summary>
     [RequireComponent(typeof(Collider))]
+    [AddComponentMenu("Smash Brew/Stage/Blast Zone")]
     public sealed class BlastZone : MonoBehaviour {
 
         Collider _col;

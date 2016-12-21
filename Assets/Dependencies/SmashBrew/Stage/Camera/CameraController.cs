@@ -1,8 +1,9 @@
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Stage {
 
     [RequireComponent(typeof(Camera))]
+    [AddComponentMenu("Smash Brew/Stage/Camera/Camera Controller")]
     public sealed class CameraController : MonoBehaviour {
 
         Camera _camera;

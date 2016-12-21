@@ -1,7 +1,8 @@
 using UnityEngine;
 
-namespace HouraiTeahouse {
+namespace HouraiTeahouse.SmashBrew.Stage {
 
+    [AddComponentMenu("Smash Brew/Stage/Camera Target")]
     public sealed class CameraTarget : MonoBehaviour {
 
         [SerializeField]

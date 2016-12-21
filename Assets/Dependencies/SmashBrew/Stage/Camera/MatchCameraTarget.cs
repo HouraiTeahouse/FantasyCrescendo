@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Stage {
 
     [RequireComponent(typeof(CameraTarget))]
+    [AddComponentMenu("Smash Brew/Stage/Camera/Match Camera Target")]
     public class MatchCameraTarget : MonoBehaviour {
 
         [SerializeField]
