@@ -1,9 +1,10 @@
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Characters.Statuses {
 
     /// <summary> A Status effect that prevents players from taking damage while active. </summary>
     [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Characters/Status/Invincibility")]
     public sealed class Invincibility : Status {
 
         //PlayerDamage _damage;

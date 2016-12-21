@@ -1,10 +1,11 @@
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Characters.Statuses {
 
     /// <summary> A Status effect that causes Characters to become uncontrollable for a short period after being hit </summary>
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(Rigidbody))]
+    [AddComponentMenu("Smash Brew/Character/Status/Hitstun")]
+    [RequireComponent(typeof(PhysicsState))]
     public class Hitstun : Status {
 
         Vector3 _oldVelocity = Vector3.zero;
