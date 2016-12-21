@@ -1,8 +1,9 @@
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Stage {
 
+    [AddComponentMenu("SmashBrew/Stage/Ledge")]
     public class StageLedge : MonoBehaviour {
 
         [SerializeField]

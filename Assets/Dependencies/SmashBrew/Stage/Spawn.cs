@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Stage {
 
     /// <summary> A EventHandler for spawning characters at the start of the match </summary>
+    [AddComponentMenu("Smash Brew/Stage/Spawn")]
     public class Spawn : EventBehaviour<MatchStartEvent> {
 
         [Serializable]
