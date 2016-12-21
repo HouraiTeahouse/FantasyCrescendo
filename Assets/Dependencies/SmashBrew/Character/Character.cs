@@ -83,20 +83,8 @@ namespace HouraiTeahouse.SmashBrew {
 
         #endregion
 
-        #region Serialized Variables
-
-        [SerializeField]
-        Renderer[] _weapons;
-
-        [SerializeField]
-        ParticleSystem[] _particles;
-
-        #endregion
-
         #region Required Components
-
         public CapsuleCollider MovementCollider { get; private set; }
-
         #endregion
 
         #region Public Action Methods
@@ -123,18 +111,6 @@ namespace HouraiTeahouse.SmashBrew {
             Rigidbody.velocity = vel;
         }
 
-        public void SetWeaponVisibilty(int weapon, bool state) {
-            if (_weapons[weapon])
-                _weapons[weapon].enabled = state;
-        }
-
-        public void SetParticleVisibilty(int particle, bool state) {
-            if (state)
-                _particles[particle].Play();
-            else
-                _particles[particle].Stop();
-        }
-
         #endregion
 
         #region Unity Callbacks
@@ -151,12 +127,6 @@ namespace HouraiTeahouse.SmashBrew {
                 Log.Error("Character {0} does not have an Animator component in its hiearchy", name);
 
             MovementCollider = GetComponent<CapsuleCollider>();
-
-            foreach (ParticleSystem particle in _particles.IgnoreNulls())
-                particle.Stop();
-
-            foreach (Renderer weapon in _weapons.IgnoreNulls())
-                weapon.enabled = false;
 
             StartCoroutine(InitializeAnimator());
 
