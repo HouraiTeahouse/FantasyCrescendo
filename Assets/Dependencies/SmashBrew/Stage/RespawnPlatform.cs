@@ -1,3 +1,4 @@
+using HouraiTeahouse.SmashBrew.Characters.Statuses;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Stage {

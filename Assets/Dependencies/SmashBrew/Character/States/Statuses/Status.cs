@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Characters.Statuses {
 
-    public abstract class Status : MonoBehaviour {
+    public abstract class Status : NetworkBehaviour, ICharacterState {
+
+        //TODO(james7132): Synchronize over the network
 
         float _duration = Mathf.Infinity;
 
@@ -57,6 +60,10 @@ namespace HouraiTeahouse.SmashBrew {
         protected virtual void OnStatusUpdate(float dt) { }
 
         protected virtual void OnStatusEnd() { }
+
+        public void ResetState() {
+            //TODO(james7132): Implement
+        }
 
     }
 
