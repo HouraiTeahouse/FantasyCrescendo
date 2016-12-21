@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HouraiTeahouse.SmashBrew.Characters;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -73,7 +74,7 @@ namespace HouraiTeahouse.SmashBrew {
             // Checks that the pallete count is the same between MaterialSwap and CharacterData
             LoadData();
             foreach (CharacterData character in data) {
-                var swap = character.Prefab.Load().GetComponent<MaterialSwap>();
+                var swap = character.Prefab.Load().GetComponent<ColorState>();
                 Assert.AreEqual(swap.Count, character.PalleteCount);
             }
         }

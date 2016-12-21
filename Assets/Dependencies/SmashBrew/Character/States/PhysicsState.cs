@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Character/Physics State")]
     [RequireComponent(typeof(CharacterController))]
     public class PhysicsState : NetworkBehaviour, ICharacterState {
 

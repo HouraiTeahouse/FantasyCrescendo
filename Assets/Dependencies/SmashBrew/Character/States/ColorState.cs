@@ -1,13 +1,15 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Characters {
 
     /// <summary> The pallete swap behaviour for changing out the </summary>
     [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Characters/Color State")]
     [RequireComponent(typeof(PlayerController))]
-    public class MaterialSwap : MonoBehaviour {
+    public class ColorState : NetworkBehaviour, ICharacterState {
 
         [Serializable]
         public class Swap {
@@ -83,6 +85,9 @@ namespace HouraiTeahouse.SmashBrew {
                 swap.Set(value);
         }
 #endif
+
+        public void ResetState() { }
+
     }
 
 }
