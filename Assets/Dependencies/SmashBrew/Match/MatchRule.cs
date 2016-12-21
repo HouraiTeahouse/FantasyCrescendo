@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Matches {
 
     /// <summary> An abstract class  to define a Match Rule. These instances are searched for before the start of a Match to
     /// define the rules of a match. They run as normal MonoBehaviours, but are regularly polled for </summary>

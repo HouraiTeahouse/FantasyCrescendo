@@ -1,4 +1,4 @@
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Matches {
 
     /// <summary> Enum containing the possible end results of a Match </summary>
     public enum MatchResult {
