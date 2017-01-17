@@ -10,7 +10,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
             var index = 0;
-            foreach (Player player in Player.AllPlayers) {
+            foreach (Player player in PlayerManager.Instance.MatchPlayers) {
                 if (index >= testCharacters.Length)
                     break;
                 if (player == null || testCharacters[index] == null)

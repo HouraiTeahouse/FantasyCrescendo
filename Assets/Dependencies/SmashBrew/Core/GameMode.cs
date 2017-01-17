@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -8,6 +10,20 @@ namespace HouraiTeahouse.SmashBrew {
     public abstract class GameMode {
 
         static GameMode _current;
+
+        static readonly List<GameMode> _gameModes;
+
+        static GameMode() { _gameModes = new List<GameMode>(); }
+
+        public static IEnumerable<GameMode> All {
+            get { return _gameModes.Select(x => x); }
+        }
+
+        public static void Register(GameMode mode) {
+            Argument.NotNull(mode);
+            if(!_gameModes.Contains(mode))
+                _gameModes.Add(mode);
+        }
 
         /// <summary> The current game mode. </summary>
         public static GameMode Current {

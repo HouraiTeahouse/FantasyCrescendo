@@ -36,7 +36,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 return;
 
             //Create a player display for as many players as the game can support
-            foreach (Player player in Player.AllPlayers) {
+            var playerManager = PlayerManager.Instance;
+            foreach (Player player in playerManager.LocalPlayers) {
                 if (!player.Type.IsActive)
                     continue;
                 RectTransform display = Instantiate(_playerDisplay);

@@ -132,19 +132,9 @@ namespace HouraiTeahouse.SmashBrew {
 
     public sealed class Player {
 
-        //TODO: Make this more dynamic
-        static readonly Player[] _players;
-        static readonly ReadOnlyCollection<Player> _playerCollection;
         int _level;
         PlayerType _type;
         readonly PlayerSelection _selection;
-
-        static Player() {
-            _players = new Player[GameMode.Current.MaxPlayers];
-            for (var i = 0; i < _players.Length; i++)
-                _players[i] = new Player(i);
-            _playerCollection = new ReadOnlyCollection<Player>(_players);
-        }
 
         internal Player(int number) {
             ID = number;
@@ -160,28 +150,6 @@ namespace HouraiTeahouse.SmashBrew {
                 _selection.Copy(value);
                 Log.Info("Set Player {0}'s selection to {1}".With(ID, _selection));
             }
-        }
-
-        /// <summary> Gets an enumeration of all Player. Note this includes all inactive players as well. </summary>
-        public static ReadOnlyCollection<Player> AllPlayers {
-            get { return _playerCollection; }
-        }
-
-        /// <summary> Gets an enumeration of all active AllPlayers. To get an enumeration of all AllPlayers, active or not, see
-        /// <see cref="AllPlayers" />
-        /// </summary>
-        public static IEnumerable<Player> ActivePlayers {
-            get { return _players.Where(player => player.Type.IsActive); }
-        }
-
-        /// <summary> Gets the maximum number of players allowed in one match. </summary>
-        public static int MaxPlayers {
-            get { return _players.Length; }
-        }
-
-        /// <summary> Gets the count of currently active Players. </summary>
-        public static int ActiveCount {
-            get { return ActivePlayers.Count(); }
         }
 
         public int ID { get; private set; }
@@ -216,18 +184,6 @@ namespace HouraiTeahouse.SmashBrew {
         // The represnetative color of this player. Used in UI.
         public Color Color {
             get { return Type.Color ?? Config.Player.GetColor(ID); }
-        }
-
-        /// <summary> Retrieves a Player object given it's corresponding number. Note: Player numbers are 0 indexed. What appears
-        /// as Player 1 is actually player number 0 internally. </summary>
-        /// <param name="id"> the Player's number identifier </param>
-        /// <exception cref="ArgumentException">
-        ///     <param name="id"> is less than 0 or greater than or equal to the maximum number of players </param>
-        /// </exception>
-        /// <returns> the corresponding Player object </returns>
-        public static Player Get(int id) {
-            Argument.Check("playerNumber", Check.Range(id, _players));
-            return _players[id];
         }
 
         public event Action Changed;

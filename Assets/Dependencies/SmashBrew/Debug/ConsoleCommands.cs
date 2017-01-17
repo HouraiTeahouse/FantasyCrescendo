@@ -74,11 +74,12 @@ namespace HouraiTeahouse.SmashBrew {
 
         Player GetPlayer(string playerNumber) {
             int? playerNum = IntParse(playerNumber);
+            var playerManager = PlayerManager.Instance;
             if (playerNum != null) {
-                if (playerNum <= 0 || playerNum > Player.MaxPlayers)
-                    GameConsole.Log("There is no Player #{0}, try between 1 and {1}", playerNum, Player.MaxPlayers);
+                if (playerNum <= 0 || playerNum > playerManager.MaxPlayers)
+                    GameConsole.Log("There is no Player #{0}, try between 1 and {1}", playerNum, playerManager.MaxPlayers);
                 else
-                    return Player.Get(playerNum.Value - 1);
+                    return playerManager.GetLocalPlayer(playerNum.Value - 1);
             }
             else {
                 GameConsole.Log("The term {0} cannot be converted to a player number.", playerNumber);

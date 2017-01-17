@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using HouraiTeahouse.SmashBrew.Matches;
 using UnityEngine;
 
@@ -25,7 +26,8 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         /// <param name="eventArgs"> </param>
         protected override void OnEvent(MatchStartEvent eventArgs) {
             var i = 0;
-            IEnumerator<Player> activePlayers = Player.ActivePlayers.GetEnumerator();
+            var playerManager = PlayerManager.Instance;
+            IEnumerator<Player> activePlayers = playerManager.MatchPlayers.Where(p => p.Type.IsActive).GetEnumerator();
             while (i < _spawnPoints.Length && activePlayers.MoveNext()) {
                 Player player = activePlayers.Current;
                 Character runtimeCharacter = player.Spawn(_spawnPoints[i].Point, _spawnPoints[i].Direction);

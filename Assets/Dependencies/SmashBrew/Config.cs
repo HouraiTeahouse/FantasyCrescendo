@@ -43,6 +43,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Unity callback. Called on load. </summary>
         void OnEnable() {
             //TODO: Generalize
+            _gameModes.RegisterAll();
             GameMode.Current = _gameModes.StandardVersus;
         }
 
@@ -189,6 +190,13 @@ namespace HouraiTeahouse.SmashBrew {
 
         public GameMode AllStar {
             get { return _allStar; }
+        }
+
+        public void RegisterAll() {
+            GameMode.Register(_allStar);
+            GameMode.Register(_arcade);
+            GameMode.Register(_standardVersus);
+            GameMode.Register(_training);
         }
 
     }

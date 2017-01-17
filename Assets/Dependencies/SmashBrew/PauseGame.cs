@@ -1,3 +1,4 @@
+using System.Linq;
 using HouraiTeahouse.HouraiInput;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -21,7 +22,8 @@ namespace HouraiTeahouse.SmashBrew {
                 SmashTimeManager.PausedPlayer = null;
             }
             else {
-                foreach (Player player in Player.ActivePlayers) {
+                var playerManager = PlayerManager.Instance;
+                foreach (Player player in playerManager.LocalPlayers.Where(p => p.Type.IsActive)) {
                     if (player.Controller == null || !player.Controller.GetControl(_pauseButton).WasPressed)
                         continue;
                     SmashTimeManager.PausedPlayer = player;
