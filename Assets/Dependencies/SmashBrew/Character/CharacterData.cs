@@ -151,11 +151,11 @@ namespace HouraiTeahouse.SmashBrew {
         void OnEnable() {
             if (_portraits == null)
                 return;
-            Icon = new Resource<Sprite>(_icon);
-            Prefab = new Resource<GameObject>(_prefab);
-            HomeStage = new Resource<SceneData>(_homeStage);
-            Announcer = new Resource<AudioClip>(_announcerClip);
-            VictoryTheme = new Resource<AudioClip>(_victoryTheme);
+            Icon = Resource.Get<Sprite>(_icon);
+            Prefab = Resource.Get<GameObject>(_prefab);
+            HomeStage = Resource.Get<SceneData>(_homeStage);
+            Announcer = Resource.Get<AudioClip>(_announcerClip);
+            VictoryTheme = Resource.Get<AudioClip>(_victoryTheme);
             RegeneratePortraits();
         }
 
@@ -164,7 +164,7 @@ namespace HouraiTeahouse.SmashBrew {
             Unload();
         }
 
-        void RegeneratePortraits() { _portraitResources = _portraits.Select(s => new Resource<Sprite>(s)).ToArray(); }
+        void RegeneratePortraits() { _portraitResources = _portraits.Select(Resource.Get<Sprite>).ToArray(); }
 
     }
 

@@ -82,8 +82,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Unity Callback. Called when ScriptableObject is loaded. </summary>
         protected override void OnEnable() {
             base.OnEnable();
-            PreviewImage = new Resource<Sprite>(_previewImage);
-            Icon = new Resource<Sprite>(_icon);
+            PreviewImage = Resource.Get<Sprite>(_previewImage);
+            Icon = Resource.Get<Sprite>(_icon);
         }
 
         /// <summary> Unity callback. Called when ScriptableObject is unloaded. </summary>

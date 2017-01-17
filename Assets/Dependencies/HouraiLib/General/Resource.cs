@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
@@ -7,17 +8,34 @@ using UnityEditor;
 
 namespace HouraiTeahouse {
 
+    public class Resource {
+
+        protected static readonly Dictionary<string, Resource> _resources;
+        static Resource() {
+            _resources = new Dictionary<string, Resource>();
+        }
+
+        public static Resource<T> Get<T>(string location) where T : Object { return Resource<T>.Get(location); }
+
+    }
+
     /// <summary> A simple object that encapsulates the operations on a dynamically loaded asset using UnityEngine.Resources. </summary>
     /// <typeparam name="T"> the type of the asset encapsulated by the Resouce </typeparam>
     [Serializable]
-    public sealed class Resource<T> where T : Object {
+    public sealed class Resource<T> : Resource where T : Object {
 
         [SerializeField]
         readonly string _path;
 
+        public static Resource<T> Get(string location) {
+            if (!_resources.ContainsKey(location))
+                _resources[location] = new Resource<T>(location);
+            return _resources[location] as Resource<T>;
+        }
+
         /// <summary> Initializes a new instance of Resource with a specified Resources file path. </summary>
         /// <param name="path"> the Resourrces file path to the asset </param>
-        public Resource(string path) {
+        Resource(string path) {
             _path = path ?? string.Empty;
         }
 

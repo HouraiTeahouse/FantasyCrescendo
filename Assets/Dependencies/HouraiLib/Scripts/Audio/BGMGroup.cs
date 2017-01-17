@@ -115,7 +115,7 @@ namespace HouraiTeahouse {
         string GetKey(string stageName) { return string.Format("{0}{1}{2}_{3}", stageName, Delimiter, _bgm, Suffix); }
 
         public void Initialize(string stageName) {
-            BGM = new Resource<AudioClip>(_bgm);
+            BGM = Resource.Get<AudioClip>(_bgm);
             string key = GetKey(stageName);
             if (Prefs.Exists(key))
                 Weight = Prefs.GetFloat(key);
