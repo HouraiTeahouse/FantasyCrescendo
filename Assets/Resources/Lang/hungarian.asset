@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227dee6326711f745a6c16d591c85acb, type: 3}
+  m_Name: hungarian
+  m_EditorClassIdentifier: 
+  _strings:
+  - Magyar
+  - yyyy{0}mm{0}dd
+  - Fantasy Crescendo
+  - "Ez a j\xE1t\xE9k egy vagy t\xF6bb kontrollerrel a leg\xE9lvezhet\u0151bb!"
+  - "Figyelmeztet\u0151! \n\nEz a j\xE1t\xE9k a Touhou Project (\u6771\u65B9Project)
+    egy adapt\xE1ci\xF3ja. Sz\xEDnhelyeket, karakter \xE9s t\xF6rt\xE9neti elemeket
+    tartalmazhat az eredeti j\xE1t\xE9kokb\xF3l, m\u0171vekb\u0151l.\nMeg\xE9rt\xE9sedet
+    k\xF6sz\xF6nj\xFCk."
+  - Reimu
+  - Reimu Hakurei
+  - Marisa
+  - Marisa Kirisame
+  - Wriggle
+  - Wriggle Nightbug
+  - Yuuka
+  - Yuuka Kazami
+  - Yuugi
+  - Yuugi Hoshiguma
+  - Murasa
+  - Minamitsu Murasa
+  - Sakuya
+  - Sakuya Izayoi
+  - Youmou
+  - Youmou Konpaku
+  - "Hakurei Szent\xE9ly"
+  - "A B\u0171v\xF6s Erd\u0151"
+  - Makai
+  - "A Veres \xD6rd\xF6g Kast\xE9lya"
+  - "V\xE9letlenszer\u0171"
+  - "{0} J\xE1t\xE9kos "
+  - "T\xF6bbj\xE1t\xE9kos"
+  - "Egyj\xE1t\xE9kos"
+  - Alap
+  - "Speci\xE1lis"
+  - "Klasszikus M\xF3d"
+  - "All-Star M\xF3d"
+  - "Sztori M\xF3d"
+  - "Be\xE1ll\xEDt\xE1sok"
+  - Vissza
+  - "Kil\xE9p\xE9s"
+  - "Gyakorl\xE1s"
+  - Zene
+  - "Effekt Hanger\u0151"
+  - "Zene Hanger\u0151"
+  - "Besz\xE9d Hanger\u0151"
+  - Nyelv
+  - "\"Tele z\xF6ldel \xE9s  b\u0171vel, ez\xE9rt a n\xE9v\""
+  - "\"Egy j\xF3 p\xE1r mulats\xE1g otthona. Ez a szent\xE9ly Tenshit nem fogadja."
+  - Igen
+  - Nem
+  - Rendben
+  - "A nyelvet {0}ra/re \xE1ll\xEDtottuk, rendben?"

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 227dee6326711f745a6c16d591c85acb, type: 3}
-  m_Name: Polish
+  m_Name: polish
   m_EditorClassIdentifier: 
   _strings:
   - Polski
-  - 
+  - dd{0}mm{0}yyyy
   - Fantasy Crescendo - Crescendo Fantazji
   - "Zalecane jest u\u017Cycie kontrolera do czerpania jak najlepszych wra\u017Ce\u0144
     z gry."
@@ -38,7 +38,7 @@ MonoBehaviour:
   - Youmu
   - Youmu Konpaku
   - "\u015Awi\u0105tynia Hakurei"
-  - Magiczny Las
+  - Las Magii
   - Makai
   - "Rezydencja Szkar\u0142atnego Diab\u0142a"
   - Losowo
