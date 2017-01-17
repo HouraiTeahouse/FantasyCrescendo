@@ -29,7 +29,23 @@ namespace HouraiTeahouse {
             Argument.NotNull(gameObject);
             var attempt = gameObject.GetComponent<T>();
             if (attempt == null)
-                Log.Warning("Attempted to find a component of type {0}, but did not find one.", typeof(T));
+                Log.Warning("Attempted to find a component of type {0} on {1}, but did not find one.", typeof(T), gameObject.name);
+            return attempt;
+        }
+
+        public static T SafeGetComponentInChildren<T>(this GameObject gameObject) where T : class {
+            Argument.NotNull(gameObject);
+            var attempt = gameObject.GetComponentInChildren<T>();
+            if (attempt == null)
+                Log.Warning("Attempted to find a component of type {0} on child of {1}, but did not find one.", typeof(T), gameObject.name);
+            return attempt;
+        }
+
+        public static T SafeGetComponentInParent<T>(this GameObject gameObject) where T : class {
+            Argument.NotNull(gameObject);
+            var attempt = gameObject.GetComponentInParent<T>();
+            if (attempt == null)
+                Log.Warning("Attempted to find a component of type {0} on ancestor of {1}, but did not find one.", typeof(T), gameObject.name);
             return attempt;
         }
 

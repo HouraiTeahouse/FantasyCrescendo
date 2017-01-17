@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,6 +33,14 @@ namespace HouraiTeahouse {
         /// <returns> the retrieved Component </returns>
         public static T SafeGetComponent<T>(this Component component) where T : class {
             return Argument.NotNull(component).gameObject.SafeGetComponent<T>();
+        }
+
+        public static T SafeGetComponentInChildren<T>(this Component component) where T : class {
+            return Argument.NotNull(component).gameObject.SafeGetComponentInChildren<T>();
+        }
+
+        public static T SafeGetComponentInParent<T>(this Component component) where T : class {
+            return Argument.NotNull(component).gameObject.SafeGetComponentInParent<T>();
         }
 
     }
