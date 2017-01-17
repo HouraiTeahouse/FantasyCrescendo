@@ -17,7 +17,7 @@
 ---
 
 ## About
-*Fantasy Crescendo ~ Rumble Dream Ensemble* is a collaborative community project to create a *[Touhou Project](https://en.touhouwiki.net/wiki/Touhou_Project)* fangame akin to that of Super Smash Bros.
+*Fantasy Crescendo* is a collaborative community project to create a *[Touhou Project](https://en.touhouwiki.net/wiki/Touhou_Project)* fangame akin to that of Super Smash Bros.
 
 This project does not only consist of code contributions, and many of the assets included are custom art, music, sound effects, and 3D designs created by community submissions. For a full list of credits, see the [credits](./CREDITS.md) file in the repository.
 
@@ -31,5 +31,5 @@ This is an open project, intended to be a community driven project. Contribution
 First and foremost, *Fantasy Crescendo ~ Rumble Dream Ensemble* is a derivative of Touhou project. Thus, we ask that any redistirbution or derivative of this project adhere to the guidelines created by ZUN, [viewable in English here](http://en.touhouwiki.net/wiki/Touhou_Wiki:Copyrights). 
 
 Furthermore, *Fantasy Crescendo ~ Rumble Dream Ensemble* is licensed under two seperate liscenses depending what content is in question:  
-- The software (all text files) are under the MIT license. See [here](./LICENSE) for more information.
+- The software (all text files) are under the Version 2 of the GPL or any later version. See [here](./LICENSE) for more information.
 - The content, virtually everything else, is evaluated on a per item basis. Please contact the original creator before reproducing or editing any of the game assets.
