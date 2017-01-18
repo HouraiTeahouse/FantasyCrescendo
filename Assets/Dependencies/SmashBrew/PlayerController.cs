@@ -37,8 +37,8 @@ namespace HouraiTeahouse.SmashBrew {
             Vector2 tap = _tap.Process(stick, dt);
             Vector2 altTap = _altTap.Process(altStick, dt);
 
-            if (_character.Tap(tap + altTap))
-                stick += altStick;
+            //if (_character.Tap(tap + altTap))
+            //    stick += altStick;
 
             //Ensure that the character is walking in the right direction
             //if (!TimeManager.Paused && stick.x > 0 && _character.Direction || (stick.x < 0 && !_character.Direction))

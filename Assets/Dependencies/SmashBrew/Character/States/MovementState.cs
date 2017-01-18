@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -14,6 +15,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         PhysicsState Physics { get; set; }
         CharacterController CharacterController { get; set; }
+
+        public event Action OnJump;
 
         [Header("Constants")]
         [SerializeField]
@@ -168,6 +171,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) {
                 Physics.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
                 CurrentLedge = null;
+                OnJump.SafeInvoke();
                 CmdJump();
             }
 

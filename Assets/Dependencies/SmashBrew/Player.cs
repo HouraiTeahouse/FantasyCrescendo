@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using HouraiTeahouse.HouraiInput;
-using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew {
 
@@ -39,13 +35,16 @@ namespace HouraiTeahouse.SmashBrew {
 
         static PlayerType() {
             Types = new[] {None, HumanPlayer, CPU};
-            for (var i = 0; i < Types.Length - 1; i++)
+            for (short i = 0; i < Types.Length - 1; i++) {
                 Types[i].Next = Types[i + 1];
+                Types[i].ID = i;
+            }
             Types[Types.Length - 1].Next = Types[0];
         }
 
         // Private constructor
         PlayerType() { }
+        public short ID { get; private set; }
         public string Name { get; private set; }
         public string ShortName { get; private set; }
         public bool IsActive { get; private set; }
@@ -57,6 +56,15 @@ namespace HouraiTeahouse.SmashBrew {
 
     }
 
+
+    public class PlayerSelectionMessage : MessageBase {
+
+        public uint CharacterID;
+        public int Pallete;
+        public int CPULevel;
+
+    }
+
     [Serializable]
     public class PlayerSelection {
 
@@ -65,6 +73,9 @@ namespace HouraiTeahouse.SmashBrew {
 
         [SerializeField]
         int _pallete;
+
+        [SerializeField]
+        int _cpuLevel = 0;
 
         /// <summary> The Player's selected Character. If null, a random Character will be spawned when the match starts. </summary>
         public CharacterData Character {
@@ -86,7 +97,6 @@ namespace HouraiTeahouse.SmashBrew {
                 if (_character) {
                     int count = _character.PalleteCount;
                     if (count > 0)
-                        // This is
                         _pallete = value - count * Mathf.FloorToInt(value / (float) count);
                 }
                 else {
@@ -94,6 +104,36 @@ namespace HouraiTeahouse.SmashBrew {
                 }
                 Changed.SafeInvoke();
             }
+        }
+
+        public int CPULevel {
+            get { return _cpuLevel; }
+            set {
+                if (_cpuLevel == value)
+                    return;
+                _cpuLevel = value;
+                Changed.SafeInvoke();
+            }
+        }
+
+        public bool IsCPU {
+            get { return CPULevel > 0; }
+        }
+
+        public PlayerSelectionMessage ToMessage() {
+            return new PlayerSelectionMessage {
+                CharacterID = Character != null ? Character.Id : 0,
+                Pallete = Pallete,
+                CPULevel = CPULevel,
+            };
+        }
+
+        public static PlayerSelection FromMessage(PlayerSelectionMessage message) {
+            return new PlayerSelection {
+                Character = DataManager.Instance.GetCharacter(message.CharacterID),
+                CPULevel = message.CPULevel,
+                Pallete = message.Pallete
+            };
         }
 
         public event Action Changed;
@@ -115,7 +155,7 @@ namespace HouraiTeahouse.SmashBrew {
         public static bool operator ==(PlayerSelection s1, PlayerSelection s2) {
             bool n1 = ReferenceEquals(s1, null);
             bool n2 = ReferenceEquals(s2, null);
-            return n1 ^ n2 || (!n1 && s1.Character == s2.Character && s1.Pallete == s2.Pallete);
+            return (n1 && n2) || (n1 == n2 && s1.Character == s2.Character && s1.Pallete == s2.Pallete);
         }
 
         public static bool operator !=(PlayerSelection s1, PlayerSelection s2) { return !(s1 == s2); }
@@ -130,18 +170,31 @@ namespace HouraiTeahouse.SmashBrew {
 
     }
 
-    public sealed class Player {
+    public class Player : MessageBase {
 
-        int _level;
         PlayerType _type;
-        readonly PlayerSelection _selection;
+
+        [SerializeField]
+        PlayerSelection _selection;
+
+        [SerializeField]
+        short _typeId;
 
         internal Player(int number) {
             ID = number;
             Type = PlayerType.Types[0];
             _selection = new PlayerSelection();
             Selection.Changed += () => Changed.SafeInvoke();
-            Level = 3;
+        }
+
+        public override void Deserialize(NetworkReader reader) {
+            base.Deserialize(reader);
+            _type = PlayerType.Types[_typeId];
+        }
+
+        public override void Serialize(NetworkWriter writer) {
+            _typeId = _type.ID;
+            base.Serialize(writer);
         }
 
         public PlayerSelection Selection {
@@ -158,17 +211,6 @@ namespace HouraiTeahouse.SmashBrew {
         /// <see cref="Selection" />'s selected character, particularly if the Character was randomly selected. </summary>
         public CharacterData SpawnedCharacter { get; private set; }
 
-        /// <summary> The AI level </summary>
-        public int Level {
-            get { return _level; }
-            set {
-                if (_level == value)
-                    return;
-                _level = value;
-                Changed.SafeInvoke();
-            }
-        }
-
         public PlayerType Type {
             get { return _type; }
             set { _type = Argument.NotNull(value); }
@@ -178,9 +220,6 @@ namespace HouraiTeahouse.SmashBrew {
             get { return Check.Range(ID, HInput.Devices.Count) ? HInput.Devices[ID] : null; }
         }
 
-        /// <summary> The actual spawned GameObject of the Player. </summary>
-        public Character PlayerObject { get; private set; }
-
         // The represnetative color of this player. Used in UI.
         public Color Color {
             get { return Type.Color ?? Config.Player.GetColor(ID); }
@@ -188,52 +227,37 @@ namespace HouraiTeahouse.SmashBrew {
 
         public event Action Changed;
 
-        public static Player Get(GameObject go) {
-            if (!go)
-                return null;
-            var controller = go.GetComponentInParent<PlayerController>();
-            return !controller ? null : controller.PlayerData;
-        }
-
-        public static Player Get(Component comp) { return !comp ? null : Get(comp.gameObject); }
-
-        public static bool IsPlayer(GameObject go) { return Get(go) != null; }
-
-        public static bool IsPlayer(Component comp) { return Get(comp) != null; }
-
         public void CycleType() {
             Type = Type.Next;
             Changed.SafeInvoke();
         }
 
-        internal Character Spawn(Transform transform, bool direction) {
-            return Spawn(Argument.NotNull(transform).position, direction);
-        }
+        //internal Character Spawn(Transform transform, bool direction) {
+        //    return Spawn(Argument.NotNull(transform).position, direction);
+        //}
 
-        internal Character Spawn(Vector3 pos, bool direction) {
-            SpawnedCharacter = Selection.Character;
-            int color = Selection.Pallete;
-
-            // If the character is null, randomly select a character and pallete
-            if (SpawnedCharacter == null) {
-                SpawnedCharacter = DataManager.Instance.Characters.Random();
-                color = Random.Range(0, SpawnedCharacter.PalleteCount);
-            }
-
-            //TODO: Make the loading of characters asynchronous 
-            GameObject prefab = SpawnedCharacter.Prefab.Load();
-            if (prefab == null)
-                return null;
-            PlayerObject = prefab.Duplicate(pos).GetComponent<Character>();
-            //PlayerObject.Direction = direction;
-            var controller = PlayerObject.GetComponentInChildren<PlayerController>();
-            var materialSwap = PlayerObject.GetComponentInChildren<ColorState>();
-            if (controller)
-                controller.PlayerData = this;
-            if (materialSwap)
-                materialSwap.Pallete = color;
-            return PlayerObject;
-        }
+        //internal Character Spawn(Vector3 pos, bool direction) {
+        //    SpawnedCharacter = Selection.Character;
+        //    int color = Selection.Pallete;
+        //    // If the character is null, randomly select a character and pallete
+        //    if (SpawnedCharacter == null) {
+        //        SpawnedCharacter = DataManager.Instance.Characters.Random();
+        //        color = Random.Range(0, SpawnedCharacter.PalleteCount);
+        //    }
+        //    //TODO: Make the loading of characters asynchronous 
+        //    GameObject prefab = SpawnedCharacter.Prefab.Load();
+        //    if (prefab == null)
+        //        return null;
+        //    PlayerObject = prefab.Duplicate(pos).GetComponent<Character>();
+        //    //PlayerObject.Direction = direction;
+        //    var controller = PlayerObject.GetComponentInChildren<PlayerController>();
+        //    var materialSwap = PlayerObject.GetComponentInChildren<ColorState>();
+        //    if (controller)
+        //        controller.PlayerData = this;
+        //    if (materialSwap)
+        //        materialSwap.Pallete = color;
+        //    return PlayerObject;
+        //}
 
         public string GetName(bool shortName = false) {
             return string.Format(shortName ? Type.ShortName : Type.Name, ID + 1);
@@ -251,9 +275,9 @@ namespace HouraiTeahouse.SmashBrew {
         public override int GetHashCode() { return ID; }
 
         public static bool operator ==(Player p1, Player p2) {
-            bool nullCheck1 = ReferenceEquals(p1, null);
-            bool nullCheck2 = ReferenceEquals(p2, null);
-            return !(nullCheck1 ^ nullCheck2) && (nullCheck1 || p1.ID == p2.ID);
+            bool n1 = ReferenceEquals(p1, null);
+            bool n2 = ReferenceEquals(p2, null);
+            return (n1 && n2) || (n1 == n2 && p1.ID == p2.ID);
         }
 
         public static bool operator !=(Player p1, Player p2) { return !(p1 == p2); }

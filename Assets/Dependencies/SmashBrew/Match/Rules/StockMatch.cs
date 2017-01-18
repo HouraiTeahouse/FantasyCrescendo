@@ -86,7 +86,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
             if (!isActiveAndEnabled)
                 return;
             _stocks[eventArgs.Player] = stock;
-            eventArgs.Player.PlayerObject.GetComponent<DamageState>().Type = DamageType.Percent;
+            //eventArgs.Player.PlayerObject.GetComponent<DamageState>().Type = DamageType.Percent;
         }
 
     }

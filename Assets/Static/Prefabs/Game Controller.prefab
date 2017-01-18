@@ -19,8 +19,9 @@ GameObject:
   - component: {fileID: 11442566}
   - component: {fileID: 11458584}
   - component: {fileID: 114000013746611068}
-  - component: {fileID: 114040537478601680}
   - component: {fileID: 114358818079837736}
+  - component: {fileID: 114966787956079878}
+  - component: {fileID: 114264198699108660}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -105,7 +106,7 @@ MonoBehaviour:
       StackTrace: 0
     _error:
       Enabled: 1
-      StackTrace: 0
+      StackTrace: 1
 --- !u!114 &11460476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -415,7 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fdfb582b3c56bb4aa1ed91b0ba176aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114040537478601680
+--- !u!114 &114264198699108660
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -423,7 +424,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 189600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -822479833, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cc519527f6e1c74a8bd32fa67f777f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7777
@@ -435,9 +436,8 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 1735378196659804, guid: a69c1e958cf09484b9376f9e2d992a19,
-    type: 2}
-  m_AutoCreatePlayer: 1
+  m_PlayerPrefab: {fileID: 0}
+  m_AutoCreatePlayer: 0
   m_PlayerSpawnMethod: 0
   m_OfflineScene: 
   m_OnlineScene: 
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Channels: 
   m_UseWebSockets: 0
   m_UseSimulator: 0
-  m_SimulatedLatency: 30
+  m_SimulatedLatency: 1
   m_PacketLossPercentage: 0
   m_MaxBufferedPackets: 16
   m_AllowFragmentation: 1
@@ -499,3 +499,18 @@ MonoBehaviour:
   showGUI: 1
   offsetX: 0
   offsetY: 0
+--- !u!114 &114966787956079878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5a00fc0b20eb240980c9f4f1bfbba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testCharacters:
+  - _character: {fileID: 11400000, guid: 6693fd454a163df498a79fb671732a0b, type: 2}
+    _pallete: 0
+    _cpuLevel: 0

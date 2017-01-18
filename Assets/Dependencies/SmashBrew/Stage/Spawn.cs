@@ -25,21 +25,21 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         /// <summary> Spawns players when the match begins. </summary>
         /// <param name="eventArgs"> </param>
         protected override void OnEvent(MatchStartEvent eventArgs) {
-            var i = 0;
-            var playerManager = PlayerManager.Instance;
-            IEnumerator<Player> activePlayers = playerManager.MatchPlayers.Where(p => p.Type.IsActive).GetEnumerator();
-            while (i < _spawnPoints.Length && activePlayers.MoveNext()) {
-                Player player = activePlayers.Current;
-                Character runtimeCharacter = player.Spawn(_spawnPoints[i].Point, _spawnPoints[i].Direction);
-                i++;
-                if (runtimeCharacter == null)
-                    continue;
+            //var i = 0;
+            //var playerManager = PlayerManager.Instance;
+            //IEnumerator<Player> activePlayers = playerManager.MatchPlayers.Where(p => p.Type.IsActive).GetEnumerator();
+            //while (i < _spawnPoints.Length && activePlayers.MoveNext()) {
+            //    Player player = activePlayers.Current;
+            //    Character runtimeCharacter = player.Spawn(_spawnPoints[i].Point, _spawnPoints[i].Direction);
+            //    i++;
+            //    if (runtimeCharacter == null)
+            //        continue;
 
-                //TODO: Fix this hack, get netplay working
-                runtimeCharacter.gameObject.SetActive(true);
-                runtimeCharacter.name = "Player {0} ({1})".With(player.ID + 1, player.SpawnedCharacter.name);
-                EventManager.Publish(new PlayerSpawnEvent {Player = player, PlayerObject = runtimeCharacter.gameObject});
-            }
+            //    //TODO: Fix this hack, get netplay working
+            //    runtimeCharacter.gameObject.SetActive(true);
+            //    runtimeCharacter.name = "Player {0} ({1})".With(player.ID + 1, player.SpawnedCharacter.name);
+            //    EventManager.Publish(new PlayerSpawnEvent {Player = player, PlayerObject = runtimeCharacter.gameObject});
+            //}
         }
 
     }

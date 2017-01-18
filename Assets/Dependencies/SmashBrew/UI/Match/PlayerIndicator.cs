@@ -7,7 +7,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     [RequireComponent(typeof(Text), typeof(PlayerUIColor))]
     public sealed class PlayerIndicator : PlayerUIComponent {
 
-        CapsuleCollider _collider;
+        CharacterController _characterController;
         // the canvas's RectTransform
         RectTransform _cTransform;
 
@@ -36,9 +36,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         /// <summary> Unity callback. Called once every frame, after all Update calls are processed. </summary>
         void LateUpdate() {
-            if (Target == null)
+            if (_characterController == null)
                 return;
-            Bounds bounds = _collider.bounds;
+            Bounds bounds = _characterController.bounds;
             Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + _positionBias;
 
             //then you calculate the position of the UI element
@@ -56,7 +56,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         public override void SetData(Player data) {
             base.SetData(data);
             _target = data;
-            _collider = _target != null ? _target.PlayerObject.MovementCollider : null;
+            //_collider = _target != null ? _target.PlayerObject.MovementCollider : null;
         }
 
     }

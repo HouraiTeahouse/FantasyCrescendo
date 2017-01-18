@@ -22,6 +22,8 @@ namespace HouraiTeahouse.SmashBrew {
         [Tooltip("The scenes to show in the game")]
         List<SceneData> _scenes;
 
+        Dictionary<uint, CharacterData> _characterMap;
+
         /// <summary> The Singleton instance of DataManager. </summary>
         public static DataManager Instance { get; private set; }
 
@@ -40,8 +42,11 @@ namespace HouraiTeahouse.SmashBrew {
             if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
 
+            // Remove non-existent characters and scenes
             _characters = _characters.IgnoreNulls().ToList();
             _scenes = _scenes.IgnoreNulls().ToList();
+
+            _characterMap = _characters.ToDictionary(c => c.Id, c => c);
 
             Characters = new ReadOnlyCollection<CharacterData>(_characters);
             Scenes = new ReadOnlyCollection<SceneData>(_scenes);
@@ -60,6 +65,17 @@ namespace HouraiTeahouse.SmashBrew {
                 scene.Unload();
             foreach (CharacterData character in _characters)
                 character.Unload();
+        }
+
+        /// <summary>
+        /// Looks up a character by it's ID. Returns null if no character is found.
+        /// </summary>
+        /// <param name="id">the id of the character to lookup</param>
+        /// <returns>The matching character</returns>
+        public CharacterData GetCharacter(uint id) {
+            if (_characterMap.ContainsKey(id))
+                return _characterMap[id];
+            return null;
         }
 
     }

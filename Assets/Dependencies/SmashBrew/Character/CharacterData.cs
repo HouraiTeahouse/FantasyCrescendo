@@ -1,14 +1,19 @@
 using System.Linq;
 using UnityEngine;
+using Random = System.Random;
 
 namespace HouraiTeahouse.SmashBrew {
-
 
     /// <summary> A ScriptableObject </summary>
     /// <seealso cref="DataManager" />
     /// <seealso cref="SceneData" />
     [CreateAssetMenu(fileName = "New Character", menuName = "SmashBrew/Character Data")]
     public class CharacterData : ExtendableObject, IGameData {
+
+        [SerializeField]
+        [ReadOnly]
+        [Tooltip("The unique ID used for this character")]
+        uint _id;
 
         [Header("General Data")]
         [SerializeField]
@@ -115,6 +120,10 @@ namespace HouraiTeahouse.SmashBrew {
             get { return _isVisible; }
         }
 
+        public uint Id {
+            get { return _id; }
+        }
+
         public void Unload() {
             Icon.Unload();
             Prefab.Unload();
@@ -164,7 +173,13 @@ namespace HouraiTeahouse.SmashBrew {
             Unload();
         }
 
+        void Reset() {
+            RegenerateID();
+        }
+
         void RegeneratePortraits() { _portraitResources = _portraits.Select(Resource.Get<Sprite>).ToArray(); }
+        [ContextMenu("Regenerate ID")]
+        void RegenerateID() { _id = (uint)new Random().Next();}
 
     }
 

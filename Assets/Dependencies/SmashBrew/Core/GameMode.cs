@@ -13,6 +13,11 @@ namespace HouraiTeahouse.SmashBrew {
 
         static readonly List<GameMode> _gameModes;
 
+        /// <summary>
+        /// Event called when a new game mode is registered
+        /// </summary>
+        public static event Action<GameMode> OnRegister;
+
         static GameMode() { _gameModes = new List<GameMode>(); }
 
         public static IEnumerable<GameMode> All {
@@ -21,8 +26,10 @@ namespace HouraiTeahouse.SmashBrew {
 
         public static void Register(GameMode mode) {
             Argument.NotNull(mode);
-            if(!_gameModes.Contains(mode))
+            if(!_gameModes.Contains(mode)) {
                 _gameModes.Add(mode);
+                OnRegister.SafeInvoke(mode);
+            }
         }
 
         /// <summary> The current game mode. </summary>

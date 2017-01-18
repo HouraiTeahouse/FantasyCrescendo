@@ -35,14 +35,15 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             if (Occupied || eventArgs.Consumed)
                 return;
             eventArgs.Consumed = true;
-            _character = eventArgs.Player.PlayerObject;
-            _character.Rigidbody.velocity = Vector3.zero;
-            _character.transform.position = transform.position;
-            //_character.Direction = _facing;
-            _character.ResetCharacter();
-            _invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
-            _timer = 0f;
-            gameObject.SetActive(true);
+            //TODO(james7132): Fix this
+            //_character = eventArgs.Player.PlayerObject;
+            //_character.Rigidbody.velocity = Vector3.zero;
+            //_character.transform.position = transform.position;
+            ////_character.Direction = _facing;
+            //_character.ResetCharacter();
+            //_invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
+            //_timer = 0f;
+            //gameObject.SetActive(true);
         }
 
         /// <summary> Unity callback. Called once per frame. </summary>

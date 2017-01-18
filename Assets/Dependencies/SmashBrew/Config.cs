@@ -20,6 +20,8 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
+        public static Config Load() { return Instance; }
+
         public static PlayerConfig Player {
             get { return Instance._player; }
         }

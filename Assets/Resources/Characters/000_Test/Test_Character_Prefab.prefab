@@ -46,9 +46,10 @@ GameObject:
   - component: {fileID: 114983515620810260}
   - component: {fileID: 114675539462825158}
   - component: {fileID: 54917731395818528}
-  m_Layer: 0
+  - component: {fileID: 114453468933748422}
+  m_Layer: 9
   m_Name: Test_Character_Prefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -349,6 +350,17 @@ MonoBehaviour:
   color: {r: 0.9862069, g: 1, b: 0, a: 1}
   includeChildren: 0
   solid: 0
+--- !u!114 &114453468933748422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1735378196659804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114602395146956426
 MonoBehaviour:
   m_ObjectHideFlags: 1

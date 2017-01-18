@@ -107,7 +107,7 @@ namespace HouraiTeahouse.SmashBrew {
                 GameConsole.Log("The term {0} cannot be converted into a damage value.", args[1]);
                 return;
             }
-            player.PlayerObject.GetComponent<DamageState>().Damage(this, damage.Value);
+            //player.PlayerObject.GetComponent<DamageState>().Damage(this, damage.Value);
         }
 
         void TimeCommand(string[] args) {

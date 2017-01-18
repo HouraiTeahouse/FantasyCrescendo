@@ -23,15 +23,16 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         /// <param name="other"> the other collider that entered the c </param>
         void OnTriggerExit(Collider other) {
             // Filter only for player characters
-            Player player = Player.Get(other);
-            if (player == null)
-                return;
+            //TODO(james7132): Fix this
+            //Player player = Player.Get(other);
+            //if (player == null)
+            //    return;
 
-            Vector3 position = other.transform.position;
-            if (_col.ClosestPointOnBounds(position) == position)
-                return;
+            //Vector3 position = other.transform.position;
+            //if (_col.ClosestPointOnBounds(position) == position)
+            //    return;
 
-            _eventManager.Publish(new PlayerDieEvent {Player = player, Revived = false});
+            //_eventManager.Publish(new PlayerDieEvent {Player = player, Revived = false});
         }
 
     }

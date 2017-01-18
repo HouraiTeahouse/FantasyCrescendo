@@ -16,12 +16,13 @@ namespace HouraiTeahouse.SmashBrew.UI {
         ///     <see cref="IDataComponent{T}.SetData" />
         /// </summary>
         public void SetData(Player data) {
-            if (data == null || data.PlayerObject == null)
-                _character = null;
-            else {
-                _character = data.PlayerObject;
-                Number = _character.GetComponent<DamageState>();
-            }
+            //TODO(james7132): Fix this
+            //if (data == null || data.PlayerObject == null)
+            //    _character = null;
+            //else {
+            //    _character = data.PlayerObject;
+            //    Number = _character.GetComponent<DamageState>();
+            //}
         }
 
         /// <summary> Unity callback. Called once per frame. </summary>

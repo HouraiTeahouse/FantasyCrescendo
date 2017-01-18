@@ -13,19 +13,8 @@ namespace HouraiTeahouse.SmashBrew {
     [InitializeOnLoad]
 #endif
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
+    [RequireComponent(typeof(CharacterController))]
     public class Character : BaseBehaviour, IHitboxController {
-
-        public SmashCharacterController Controller { get; private set; }
-
-        protected virtual void BuildController(SmashCharacterControllerBuildder builder) {
-            BuildDefaultController(builder);
-        }
-
-        protected void BuildDefaultController(SmashCharacterControllerBuildder builder) {
-            //TODO(james7312): Implement
-            throw new NotImplementedException();
-        }
 
         void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
             Argument.NotNull(hitbox);
@@ -60,7 +49,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         #region Public Properties
-
         public Mediator Events { get; private set; }
 
         /// <summary> Gets an immutable collection of hitboxes that belong to </summary>
@@ -72,48 +60,11 @@ namespace HouraiTeahouse.SmashBrew {
             foreach (IResettable resetable in GetComponentsInChildren<IResettable>().IgnoreNulls())
                 resetable.OnReset();
         }
-
         #endregion
 
-        #region Runtime Variables
-
-        float _lastTap;
-        bool _jumpQueued;
         Dictionary<int, Hitbox> _hitboxMap;
 
-        #endregion
-
-        #region Required Components
-        public CapsuleCollider MovementCollider { get; private set; }
-        #endregion
-
-        #region Public Action Methods
-
-        public bool Tap(Vector2 direction) {
-            if (direction.sqrMagnitude > 0) {
-                _lastTap = Time.realtimeSinceStartup;
-                return true;
-            }
-            return false;
-        }
-
-        public void Move(float speed) {
-            //Check to see if we can move or not. Fixes getting stuck on wall
-            //if (_collided && !Ground) { //We are hitting a wall or someone.
-            //	if(Physics.Raycast(transform.position, Direction ? -Vector3.right : Vector3.right, MovementCollider.radius * 2, 9))
-            //		return; //Raycast will ignore characters...probably.
-            //}
-            Vector3 vel = Rigidbody.velocity;
-            vel.x = speed;
-
-            //if (Direction)
-            //    vel.x *= -1;
-            Rigidbody.velocity = vel;
-        }
-
-        #endregion
-
-        #region Unity Callbacks
+        public CharacterController Controller { get; private set; }
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         protected override void Awake() {
@@ -126,57 +77,13 @@ namespace HouraiTeahouse.SmashBrew {
             else
                 Log.Error("Character {0} does not have an Animator component in its hiearchy", name);
 
-            MovementCollider = GetComponent<CapsuleCollider>();
-
-            StartCoroutine(InitializeAnimator());
-
-            var builder = new SmashCharacterControllerBuildder();
-            BuildDefaultController(builder);
-            Controller = builder.Build();
-        }
-
-        IEnumerator InitializeAnimator() {
-            yield return null;
-            BaseAnimationBehaviour.InitializeAll(Animator);
-        }
-
-        void AnimationUpdate() {
-            Animator.SetBool(CharacterAnim.Jump, _jumpQueued);
-            Animator.SetBool(CharacterAnim.Tap, Time.realtimeSinceStartup - _lastTap > Config.Player.TapPersistence);
-
-            _jumpQueued = false;
-        }
-
-        void FixedUpdate() {
-            Vector3 velocity = Rigidbody.velocity;
-
-            //if (!IsFastFalling && InputSource != null && InputSource.Movement.y < 0)
-            //    _fastFall = true;
-
-            Rigidbody.velocity = velocity;
-            gameObject.layer = velocity.magnitude > Config.Physics.TangibleSpeedCap
-                ? Config.Tags.IntangibleLayer
-                : Config.Tags.CharacterLayer;
-
-            AnimationUpdate();
+            Controller = GetComponent<CharacterController>();
         }
 
         void Reset() {
-            MovementCollider = GetComponent<CapsuleCollider>();
-            MovementCollider.isTrigger = false;
-
             gameObject.tag = Config.Tags.PlayerTag;
             gameObject.layer = Config.Tags.CharacterLayer;
-
-            Animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
         }
-
-        void OnAnimatorMove() {
-            //TODO: Merge Physics and Animation Movements here
-            //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;
-        }
-
-        #endregion
     }
 
 }

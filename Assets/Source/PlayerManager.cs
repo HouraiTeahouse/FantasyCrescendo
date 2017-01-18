@@ -8,7 +8,7 @@ namespace HouraiTeahouse.SmashBrew {
 
     public class PlayerManager : NetworkBehaviour {
 
-        int _maxPlayers;
+        int _maxPlayers = -1;
         Player[] _localPlayers;
         Player[] _matchPlayers;
 
@@ -27,29 +27,66 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public Player GetLocalPlayer(int id) {
-            if(Check.Range(id, 0, GameMode.Current.MaxPlayers))
+            if(!Check.Range(id, 0, GameMode.Current.MaxPlayers))
                 throw new ArgumentOutOfRangeException();
+            if(id >= _maxPlayers)
+                RebuildPlayerArray();
             return _localPlayers[id];
         }
 
         public Player GetMatchPlayer(int id) {
-            if(Check.Range(id, 0, GameMode.Current.MaxPlayers))
+            if(!Check.Range(id, 0, GameMode.Current.MaxPlayers))
                 throw new ArgumentOutOfRangeException();
+            if(id >= _maxPlayers)
+                RebuildPlayerArray();
             return _matchPlayers[id];
         }
 
         [SerializeField]
         PlayerSelection[] testCharacters;
 
+        /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
             Instance = this;
-            _maxPlayers = GameMode.All.Max(mode => mode.MaxPlayers);
-            _localPlayers = new Player[_maxPlayers];
-            _matchPlayers = new Player[_maxPlayers];
+            Config.Load();
+            RebuildPlayerArray();
+            GameMode.OnRegister += mode => RebuildPlayerArray();
+        }
+
+        void RebuildPlayerArray() {
+            var check = !GameMode.All.Any() ? 0 : GameMode.All.Max(mode => mode.MaxPlayers);
+            if (check <= _maxPlayers)
+                return;
+            _maxPlayers = check;
+            _localPlayers = CopyPlayerSet(_localPlayers, _maxPlayers);
+            _matchPlayers = CopyPlayerSet(_matchPlayers, _maxPlayers);
             for (var i = 0; i < _maxPlayers; i++) {
-                _localPlayers[i] = new Player(i);
-                _matchPlayers[i] = new Player(i);
+                if(_localPlayers[i] == null)
+                    _localPlayers[i] = new Player(i);
+                if(_matchPlayers[i] == null)
+                    _matchPlayers[i] = new Player(i);
             }
+//#if UNITY_EDITOR
+            var index = 0;
+            foreach (Player player in LocalPlayers) {
+                if (index >= testCharacters.Length)
+                    break;
+                if (player == null || testCharacters[index] == null)
+                    continue;
+                player.Selection = testCharacters[index];
+                player.Type = player.Selection.Character ? PlayerType.HumanPlayer : PlayerType.None;
+                index++;
+            }
+//#endif
+        }
+
+        Player[] CopyPlayerSet(Player[] set, int size) {
+            if (set != null && size <= set.Length)
+                return set;
+            var temp = new Player[size];
+            if(set != null)
+                Array.Copy(set, temp , set.Length);
+            return temp;
         }
 
         public PlayerSelection GetSelection(int playerNum) {
@@ -58,19 +95,6 @@ namespace HouraiTeahouse.SmashBrew {
             return testCharacters[playerNum % testCharacters.Length];
         }
 
-        /// <summary> Unity callback. Called on object instantiation. </summary>
-        //void Awake() {
-        //    var index = 0;
-        //    foreach (Player player in Player.AllPlayers) {
-        //        if (index >= testCharacters.Length)
-        //            break;
-        //        if (player == null || testCharacters[index] == null)
-        //            continue;
-        //        player.Selection = testCharacters[index];
-        //        player.Type = player.Selection.Character ? PlayerType.HumanPlayer : PlayerType.None;
-        //        index++;
-        //    }
-        //}
 
     }
 
