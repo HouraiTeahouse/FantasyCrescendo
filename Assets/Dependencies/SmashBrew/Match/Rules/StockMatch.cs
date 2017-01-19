@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew.Matches {
 
@@ -14,8 +15,9 @@ namespace HouraiTeahouse.SmashBrew.Matches {
 
         Mediator _eventManager;
 
-        /// <summary> The store of how many lives each player currently has. </summary>
-        Dictionary<Player, int> _stocks;
+        /// <summary> The store of how many lijes each player currently has. </summary>
+        [SerializeField]
+        SyncListInt _stocks = new SyncListInt();
 
         /// <summary> The number of stock the players start with. </summary>
         [SerializeField]
@@ -25,14 +27,24 @@ namespace HouraiTeahouse.SmashBrew.Matches {
         /// <param name="player"> the Player in question </param>
         /// <returns> the number of remaining stocks they have </returns>
         public int this[Player player] {
-            get { return _stocks[player]; }
+            get { return _stocks[player.ID]; }
         }
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
             _eventManager = Mediator.Global;
-            _stocks = new Dictionary<Player, int>();
+        }
+
+        public override void OnStartServer() {
+            _stocks.Clear();
+            foreach (var player in PlayerManager.Instance.MatchPlayers) {
+                _stocks.Add(-1);
+                player.Changed += () => {
+                    if (player.Type.IsActive && _stocks[player.ID] < 0)
+                        _stocks[player.ID] = stock;
+                };
+            }
         }
 
         protected override void Start() {
@@ -49,7 +61,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
 
         /// <summary> Unity Callback. Called once every frame. </summary>
         void Update() {
-            if (hasAuthority && _stocks.Values.Count(lives => lives > 0) <= 1)
+            if (hasAuthority && _stocks.Count(lives => lives > 0) <= 1)
                 Match.CmdFinishMatch(false);
         }
 
@@ -60,21 +72,21 @@ namespace HouraiTeahouse.SmashBrew.Matches {
         public override Player GetWinner() {
             if (_stocks.Count <= 0)
                 return null;
-            return _stocks.ArgMax();
+            return PlayerManager.Instance.GetMatchPlayer(_stocks.ArgMax());
         }
 
         bool RespawnCheck(Player character) {
-            if (!isActiveAndEnabled || !_stocks.ContainsKey(character))
+            if (!isActiveAndEnabled || !Check.Range(character.ID, _stocks))
                 return false;
-            return _stocks[character] > 1;
+            return _stocks[character.ID] > 1;
         }
 
         /// <summary> Events callback. Called every time a Player dies. </summary>
         /// <param name="eventArgs"> the death event arguments </param>
         void OnPlayerDie(PlayerDieEvent eventArgs) {
-            if (eventArgs.Revived || _stocks[eventArgs.Player] <= 0)
+            if (eventArgs.Revived || _stocks[eventArgs.Player.ID] <= 0)
                 return;
-            _stocks[eventArgs.Player]--;
+            _stocks[eventArgs.Player.ID]--;
             _eventManager.Publish(new PlayerRespawnEvent {Player = eventArgs.Player});
             eventArgs.Revived = true;
         }
@@ -85,7 +97,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
         void OnSpawn(PlayerSpawnEvent eventArgs) {
             if (!isActiveAndEnabled)
                 return;
-            _stocks[eventArgs.Player] = stock;
+            _stocks[eventArgs.Player.ID] = stock;
             //eventArgs.Player.PlayerObject.GetComponent<DamageState>().Type = DamageType.Percent;
         }
 

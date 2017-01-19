@@ -20,14 +20,49 @@ namespace HouraiTeahouse.SmashBrew {
             PlayerManager = this.SafeGetComponent<PlayerManager>();
         }
 
+        public class Messages {
+            public const short UpdatePlayer = MsgType.Highest + 1;
+        }
+
+        public override void OnStartClient(NetworkClient client) {
+            base.OnStartClient(client);
+            // Update player when the server says so
+            client.RegisterHandler(Messages.UpdatePlayer,
+                msg => {
+                    var update = msg.ReadMessage<UpdatePlayerMessage>();
+                    Log.Debug("Local Update: " + update.ID);
+                    update.UpdatePlayer(PlayerManager.GetMatchPlayer(update.ID));
+                });
+        }
+
         public override void OnClientConnect(NetworkConnection conn) {
             if (!clientLoadedScene) {
                 // Ready/AddPlayer is usually triggered by a scene load completing. if no scene was loaded, then Ready/AddPlayer it here instead.
                 ClientScene.Ready(conn);
                 foreach (var player in PlayerManager.LocalPlayers.Where(p => p.Type.IsActive)) {
-                    ClientScene.AddPlayer(conn, localPlayerCount, player.Selection.ToMessage());
+                    ClientScene.AddPlayer(conn, localPlayerCount, PlayerSelectionMessage.FromSelection(player.Selection));
                     localPlayerCount++;
                 }
+            }
+        }
+
+        public override void OnStartServer() {
+            // Update players when they change
+            foreach (var player in PlayerManager.MatchPlayers) {
+                player.Changed += () => {
+                    if (Network.isServer) {
+                        Log.Debug("Server Dispatch: " + player.ID);
+                        NetworkServer.SendToAll(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
+                    }
+                };
+            }
+        }
+
+        public override void OnServerConnect(NetworkConnection conn) {
+            base.OnServerConnect(conn);
+            foreach (var player in PlayerManager.MatchPlayers) {
+                Log.Debug("Server Connect Dispatch: " + player.ID);
+                conn.Send(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
             }
         }
 
@@ -36,7 +71,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader) {
-            AddPlayer(conn, playerControllerId, PlayerSelection.FromMessage(extraMessageReader.ReadMessage<PlayerSelectionMessage>()));
+            AddPlayer(conn, playerControllerId, extraMessageReader.ReadMessage<PlayerSelectionMessage>().ToSelection());
         }
 
         void AddPlayer(NetworkConnection conn, short playerControllerId, PlayerSelection selection) {
@@ -52,9 +87,10 @@ namespace HouraiTeahouse.SmashBrew {
             bool random = character == null;
             if (random) {
                 Log.Info("No character was specfied, randomly selecting character and pallete...");
-                character = DataManager.Instance.Characters.Random();
+                selection.Character = DataManager.Instance.Characters.Random();
+                selection.Pallete = Mathf.FloorToInt(Random.value * selection.Character.PalleteCount);
             }
-            var prefab = character.Prefab.Load();
+            var prefab = selection.Character.Prefab.Load();
 
             if (prefab == null) {
                 Log.Error("The character {0} does not have a prefab. Please add a prefab object to it.", selection.Character);
@@ -74,13 +110,14 @@ namespace HouraiTeahouse.SmashBrew {
             else
                 playerObj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
             NetworkServer.AddPlayerForConnection(conn, playerObj, playerControllerId);
-            var player = PlayerManager.Instance.GetMatchPlayer(playerCount);
+            var player = PlayerManager.GetMatchPlayer(playerCount);
             var colorState = playerObj.GetComponentInChildren<ColorState>();
             if (colorState != null)
-                colorState.Pallete = Mathf.FloorToInt(Random.value * colorState.Count);
+                colorState.Pallete = selection.Pallete;
+            player.Selection = selection;
             player.Type = PlayerType.HumanPlayer;
-            Mediator.Global.Publish(new PlayerSpawnEvent {Player = player, PlayerObject = playerObj});
             playerCount++;
+            NetworkServer.SendToAll(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
         }
 
         public override void OnServerRemovePlayer(NetworkConnection conn, UnityEngine.Networking.PlayerController player) {
