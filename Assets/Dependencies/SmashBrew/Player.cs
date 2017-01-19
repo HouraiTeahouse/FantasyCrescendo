@@ -213,7 +213,12 @@ namespace HouraiTeahouse.SmashBrew {
 
         public PlayerType Type {
             get { return _type; }
-            set { _type = Argument.NotNull(value); }
+            set {
+                bool changed = _type != value;
+                _type = Argument.NotNull(value);
+                if (changed)
+                    Changed.SafeInvoke();
+            }
         }
 
         public InputDevice Controller {

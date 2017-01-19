@@ -71,12 +71,6 @@ namespace HouraiTeahouse.SmashBrew {
             base.Awake();
             Events = new Mediator();
             Reset();
-
-            if (Animator != null)
-                Animator.gameObject.GetOrAddComponent<CharacterAnimationEvents>();
-            else
-                Log.Error("Character {0} does not have an Animator component in its hiearchy", name);
-
             Controller = GetComponent<CharacterController>();
         }
 

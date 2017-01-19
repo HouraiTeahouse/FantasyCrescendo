@@ -74,16 +74,17 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public override void OnStartClient() {
-            ChangeColor(_color);
+            if(!isServer)
+                ChangeColor(_color);
         }
 
         void ChangeColor(int color) {
-            Log.Debug("Color changed");
             _color = color;
             if (_swaps == null)
                 return;
             foreach (Swap swap in _swaps)
                 swap.Set(color);
+            Log.Info("Set color on {0} to {1}", gameObject.name, _color);
         }
 
 

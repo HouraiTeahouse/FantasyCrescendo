@@ -4,7 +4,10 @@ using UnityEngine.UI;
 namespace HouraiTeahouse.SmashBrew.UI {
 
     /// <summary> A PrefabFactoryEventHandler that creates </summary>
-    public sealed class PlayerInfoGUI : PrefabFactoryEventBehaviour<RectTransform, PlayerSpawnEvent> {
+    public sealed class PlayerInfoGUI : MonoBehaviour {
+
+        [SerializeField]
+        RectTransform _prefab;
 
         /// <summary> The parent RectTransform to attach the spawned objects to. </summary>
         [SerializeField]
@@ -17,8 +20,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         RectTransform _spacePrefab;
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
-        protected override void Awake() {
-            base.Awake();
+        void Awake() {
             if (!_container) {
                 enabled = false;
                 return;
@@ -34,26 +36,17 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
             initialSpace.name = _spacePrefab.name;
             _finalSpace.name = _spacePrefab.name;
-        }
 
-        /// <summary>
-        ///     <see cref="AbstractFactoryEventBehaviour{T,TEvent}.ShouldCreate" />
-        /// </summary>
-        protected override bool ShouldCreate(PlayerSpawnEvent eventArgs) {
-            return base.ShouldCreate(eventArgs) && eventArgs.Player != null;
-        }
-
-        /// <summary>
-        ///     <see cref="AbstractFactoryEventBehaviour{T,TEvent}.Create" />
-        /// </summary>
-        protected override RectTransform Create(PlayerSpawnEvent eventArgs) {
-            Player player = eventArgs.Player;
-            RectTransform display = base.Create(eventArgs);
-            display.transform.SetParent(_container.transform, false);
-            LayoutRebuilder.MarkLayoutForRebuild(display);
-            display.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);
-            _finalSpace.transform.SetAsLastSibling();
-            return display;
+            foreach (var player in PlayerManager.Instance.MatchPlayers) {
+                RectTransform display = Instantiate(_prefab);
+                display.transform.SetParent(_container.transform, false);
+                LayoutRebuilder.MarkLayoutForRebuild(display);
+                display.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);
+                display.name = "Player {0} Display".With(player.ID + 1);
+                display.gameObject.SetActive(player.Type.IsActive);
+                player.Changed += () => display.gameObject.SetActive(player.Type.IsActive);
+                _finalSpace.transform.SetAsLastSibling();
+            }
         }
 
     }
