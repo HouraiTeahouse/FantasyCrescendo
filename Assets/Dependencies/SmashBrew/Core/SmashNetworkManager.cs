@@ -1,4 +1,5 @@
 using System.Linq;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -74,10 +75,12 @@ namespace HouraiTeahouse.SmashBrew {
                 playerObj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
             NetworkServer.AddPlayerForConnection(conn, playerObj, playerControllerId);
             var player = PlayerManager.Instance.GetMatchPlayer(playerCount);
+            var colorState = playerObj.GetComponentInChildren<ColorState>();
+            if (colorState != null)
+                colorState.Pallete = Mathf.FloorToInt(Random.value * colorState.Count);
             player.Type = PlayerType.HumanPlayer;
             Mediator.Global.Publish(new PlayerSpawnEvent {Player = player, PlayerObject = playerObj});
             playerCount++;
-
         }
 
         public override void OnServerRemovePlayer(NetworkConnection conn, UnityEngine.Networking.PlayerController player) {

@@ -56,6 +56,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         }
 
+        [SerializeField, ReadOnly]
+        [SyncVar(hook = "ChangeColor")]
         int _color;
 
         [SerializeField]
@@ -68,14 +70,22 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public int Pallete {
             get { return _color; }
-            set {
-                _color = value;
-                if (_swaps == null)
-                    return;
-                foreach (Swap swap in _swaps)
-                    swap.Set(value);
-            }
+            set { _color = value; }
         }
+
+        public override void OnStartClient() {
+            ChangeColor(_color);
+        }
+
+        void ChangeColor(int color) {
+            Log.Debug("Color changed");
+            _color = color;
+            if (_swaps == null)
+                return;
+            foreach (Swap swap in _swaps)
+                swap.Set(color);
+        }
+
 
 #if UNITY_EDITOR
         // For editor only.
