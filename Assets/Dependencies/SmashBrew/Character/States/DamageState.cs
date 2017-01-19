@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -22,6 +22,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void Awake() {
             DamageModifiers = new ModifierGroup<object>();
             HealingModifiers = new ModifierGroup<object>();
+            Type = DamageType.Percent;
         }
 
         internal float ModifyDamage(float baseDamage, object source = null) {

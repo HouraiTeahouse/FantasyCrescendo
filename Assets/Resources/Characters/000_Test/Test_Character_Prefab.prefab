@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 114453468933748422}
   - component: {fileID: 114263431639780312}
   - component: {fileID: 114505793761192248}
+  - component: {fileID: 114695748429117368}
   m_Layer: 9
   m_Name: Test_Character_Prefab
   m_TagString: Player
@@ -441,6 +442,17 @@ MonoBehaviour:
   _lockXRotation: 0
   _lockYRotation: 0
   _lockZRotation: 0
+--- !u!114 &114695748429117368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1735378196659804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b790f0ad0dfeec44cb2d83621cfe0b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114919771623551946
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -30,10 +30,8 @@ namespace HouraiTeahouse.SmashBrew {
             client.RegisterHandler(Messages.UpdatePlayer,
                 msg => {
                     var update = msg.ReadMessage<UpdatePlayerMessage>();
-                    Log.Debug("Local Update: " + update.ID);
                     var player = PlayerManager.GetMatchPlayer(update.ID);
                     update.UpdatePlayer(player);
-                    Log.Debug("Player {0}: {1}".With(player.ID, player.PlayerObject));
                 });
         }
 
@@ -53,19 +51,18 @@ namespace HouraiTeahouse.SmashBrew {
             foreach (var player in PlayerManager.MatchPlayers) {
                 player.Changed += () => {
                     if (Network.isServer) {
-                        Log.Debug("Server Dispatch: " + player.ID);
                         NetworkServer.SendToAll(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
                     }
                 };
             }
         }
 
-        public override void OnServerConnect(NetworkConnection conn) {
-            base.OnServerConnect(conn);
+        public override void OnServerReady(NetworkConnection conn) {
             foreach (var player in PlayerManager.MatchPlayers) {
-                Log.Debug("Server Connect Dispatch: " + player.ID);
+                Log.Debug(player.PlayerObject);
                 conn.Send(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
             }
+            NetworkServer.SetClientReady(conn);
         }
 
         public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
@@ -119,7 +116,6 @@ namespace HouraiTeahouse.SmashBrew {
             player.Selection = selection;
             player.Type = PlayerType.HumanPlayer;
             player.PlayerObject = playerObj;
-            Log.Debug(player.NetworkIdentity.netId);
             playerCount++;
             NetworkServer.SendToAll(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
         }

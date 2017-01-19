@@ -14,7 +14,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
             foreach (Player player in PlayerManager.Instance.MatchPlayers) {
                 PlayerIndicator indicator = Instantiate(_prefab);
                 indicator.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);
-                indicator.name = "Player {0} Indicator".With(player.ID + 1);
                 indicator.gameObject.SetActive(player.Type.IsActive);
                 player.Changed += () => indicator.gameObject.SetActive(player.Type.IsActive);
             }

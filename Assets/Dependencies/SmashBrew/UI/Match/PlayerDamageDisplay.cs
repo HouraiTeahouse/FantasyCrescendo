@@ -6,7 +6,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// <summary> A UI Text driver that displays the current damage of the a given player. </summary>
     public sealed class PlayerDamageDisplay : GradientNumberText, IDataComponent<Player> {
 
-        Character _character;
+        Player _player;
+        DamageState _damage;
 
         [SerializeField]
         [Tooltip("The font size of the suffix")]
@@ -16,24 +17,32 @@ namespace HouraiTeahouse.SmashBrew.UI {
         ///     <see cref="IDataComponent{T}.SetData" />
         /// </summary>
         public void SetData(Player data) {
-            //TODO(james7132): Fix this
-            //if (data == null || data.PlayerObject == null)
-            //    _character = null;
-            //else {
-            //    _character = data.PlayerObject;
-            //    Number = _character.GetComponent<DamageState>();
-            //}
+            if (_player != null)
+                _player.Changed -= PlayerChange;
+            _player = data;
+            if (_player != null)
+                _player.Changed += PlayerChange;
+            PlayerChange();
+        }
+
+        void PlayerChange() {
+            if (_player == null || _player.PlayerObject == null)
+                _damage = null;
+            else {
+                _damage = _player.PlayerObject.GetComponent<DamageState>();
+                Number = _damage;
+            }
         }
 
         /// <summary> Unity callback. Called once per frame. </summary>
         protected override void Update() {
             base.Update();
-            if (!Text || !_character)
+            if (!Text || !_damage)
                 return;
             //TODO: Change this into a event
-            bool visible = _character.isActiveAndEnabled;
+            bool visible = _damage.isActiveAndEnabled;
             Text.enabled = visible;
-            float value = Mathf.Floor(_character.GetComponent<DamageState>());
+            float value = Mathf.Floor(_damage);
             if (visible && !Mathf.Approximately(Number, value))
                 Number = value;
         }
@@ -42,9 +51,11 @@ namespace HouraiTeahouse.SmashBrew.UI {
         ///     <see cref="NumberText.ProcessNumber" />
         /// </summary>
         protected override string ProcessNumber(string number) {
-            if (!_character)
+            if (!_damage)
                 return number;
-            return string.Format("{0}<size={1}>{2}</size>", number, suffixSize, _character.GetComponent<DamageState>().Type.Suffix);
+            Log.Debug(_damage.Type.Suffix);
+            return "{0}{1}".With(number, _damage.Type.Suffix);
+            //return string.Format("{0}<size={1}>{2}</size>", number, suffixSize, _damage.Type.Suffix);
         }
 
     }
