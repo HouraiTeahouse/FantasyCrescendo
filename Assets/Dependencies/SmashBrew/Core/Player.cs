@@ -1,6 +1,7 @@
 using System;
 using HouraiTeahouse.HouraiInput;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew {
 
@@ -8,6 +9,8 @@ namespace HouraiTeahouse.SmashBrew {
 
         PlayerType _type;
         PlayerSelection _selection;
+        GameObject _playerObject;
+        NetworkIdentity _networkIdentity;
 
         internal Player(int number) {
             ID = number;
@@ -34,6 +37,23 @@ namespace HouraiTeahouse.SmashBrew {
                 if(_selection.Copy(value))
                     Log.Info("Set Player {0}'s selection to {1}".With(ID, _selection));
             }
+        }
+
+        public GameObject PlayerObject {
+            get { return _playerObject;  }
+            set {
+                bool changed = _playerObject != value;
+                _playerObject = value;
+                if (changed) {
+                    if (_playerObject != null)
+                        _networkIdentity = _playerObject.GetComponent<NetworkIdentity>();
+                    Changed.SafeInvoke();
+                }
+            }
+        }
+
+        public NetworkIdentity NetworkIdentity {
+            get { return _networkIdentity; }
         }
 
         // TODO(james7132): Move this somewhere else

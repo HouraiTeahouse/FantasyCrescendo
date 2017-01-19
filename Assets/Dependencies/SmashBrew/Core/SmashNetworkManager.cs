@@ -31,7 +31,9 @@ namespace HouraiTeahouse.SmashBrew {
                 msg => {
                     var update = msg.ReadMessage<UpdatePlayerMessage>();
                     Log.Debug("Local Update: " + update.ID);
-                    update.UpdatePlayer(PlayerManager.GetMatchPlayer(update.ID));
+                    var player = PlayerManager.GetMatchPlayer(update.ID);
+                    update.UpdatePlayer(player);
+                    Log.Debug("Player {0}: {1}".With(player.ID, player.PlayerObject));
                 });
         }
 
@@ -116,6 +118,8 @@ namespace HouraiTeahouse.SmashBrew {
                 colorState.Pallete = selection.Pallete;
             player.Selection = selection;
             player.Type = PlayerType.HumanPlayer;
+            player.PlayerObject = playerObj;
+            Log.Debug(player.NetworkIdentity.netId);
             playerCount++;
             NetworkServer.SendToAll(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
         }

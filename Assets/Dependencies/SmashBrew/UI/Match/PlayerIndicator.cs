@@ -7,6 +7,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     [RequireComponent(typeof(Text), typeof(PlayerUIColor))]
     public sealed class PlayerIndicator : PlayerUIComponent {
 
+        [SerializeField]
         CharacterController _characterController;
         // the canvas's RectTransform
         RectTransform _cTransform;
@@ -17,14 +18,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         // the indicator's RectTransform
         RectTransform _rTransform;
-
-        Player _target;
-
-        /// <summary> The Player for the PlayerIndicator to follow. </summary>
-        public Player Target {
-            get { return _target; }
-            set { SetData(value); }
-        }
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         protected override void Awake() {
@@ -50,13 +43,12 @@ namespace HouraiTeahouse.SmashBrew.UI {
             _rTransform.anchoredPosition = viewportPosition.Mult(_cTransform.sizeDelta) - 0.5f * _cTransform.sizeDelta;
         }
 
-        /// <summary>
-        ///     <see cref="IDataComponent{T}.SetData" />
-        /// </summary>
-        public override void SetData(Player data) {
-            base.SetData(data);
-            _target = data;
-            //_collider = _target != null ? _target.PlayerObject.MovementCollider : null;
+        protected override void PlayerChange() {
+            if (Player == null || Player.PlayerObject == null)
+                _characterController = null;
+            else {
+                _characterController = Player.PlayerObject.GetComponent<CharacterController>();
+            }
         }
 
     }

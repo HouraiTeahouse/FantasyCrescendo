@@ -6,6 +6,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         public int ID;
         public int TypeID;
+        public uint GameObjectNetId;
         public PlayerSelectionMessage Selection;
 
         public void UpdatePlayer(Player player) {
@@ -17,13 +18,25 @@ namespace HouraiTeahouse.SmashBrew {
             else
                 Log.Error("Attempted to update player {0} to player type {1}, which does not exist", player, TypeID);
             player.Selection = Selection.ToSelection();
+            var instanceId = new NetworkInstanceId(GameObjectNetId);
+            var objects = ClientScene.objects;
+            if(objects.ContainsKey(instanceId)) {
+                player.PlayerObject = objects[instanceId].gameObject;
+            } else {
+                player.PlayerObject = null;
+            }
         }
 
         public static UpdatePlayerMessage FromPlayer(Player player) {
+            uint netId = 0;
+            if(player.NetworkIdentity != null) {
+                netId = player.NetworkIdentity.netId.Value;
+            }
             return new UpdatePlayerMessage {
                 ID = player.ID,
                 TypeID = player.Type.ID,
-                Selection = PlayerSelectionMessage.FromSelection(player.Selection)
+                Selection = PlayerSelectionMessage.FromSelection(player.Selection),
+                GameObjectNetId = netId
             };
         }
     }
