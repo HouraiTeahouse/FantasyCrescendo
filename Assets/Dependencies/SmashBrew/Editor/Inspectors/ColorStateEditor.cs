@@ -88,8 +88,31 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             }
             if (AddButton)
                 Add(_swaps);
+            using (new EditorGUILayout.HorizontalScope()) {
+                if (GUILayout.Button("Add Swap"))
+                    AddSwap();
+                if (Swap.Count > 0)
+                    if (GUILayout.Button("Remove Swap"))
+                        RemoveSwap();
+            }
             if (GUI.changed)
                 serializedObject.ApplyModifiedProperties();
+        }
+
+        void AddSwap() {
+            for (var i = 0; i < _swaps.arraySize; i++) {
+                SerializedProperty set = _swaps.GetArrayElementAtIndex(i).FindPropertyRelative("MaterialSets");
+                set.InsertArrayElementAtIndex(Swap.Pallete);
+            }
+            Swap.Pallete++;
+        }
+
+        void RemoveSwap() {
+            for (var i = 0; i < _swaps.arraySize; i++) {
+                SerializedProperty set = _swaps.GetArrayElementAtIndex(i).FindPropertyRelative("MaterialSets");
+                set.DeleteArrayElementAtIndex(Swap.Pallete);
+            }
+            Swap.Pallete--;
         }
 
     }
