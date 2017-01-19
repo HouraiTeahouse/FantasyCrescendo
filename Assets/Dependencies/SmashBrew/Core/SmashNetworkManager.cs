@@ -58,11 +58,11 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public override void OnServerReady(NetworkConnection conn) {
+            NetworkServer.SetClientReady(conn);
             foreach (var player in PlayerManager.MatchPlayers) {
                 Log.Debug(player.PlayerObject);
                 conn.Send(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
             }
-            NetworkServer.SetClientReady(conn);
         }
 
         public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
