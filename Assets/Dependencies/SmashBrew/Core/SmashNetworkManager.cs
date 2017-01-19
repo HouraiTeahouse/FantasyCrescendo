@@ -88,6 +88,11 @@ namespace HouraiTeahouse.SmashBrew {
             playerCount--;
         }
 
+        public override void OnStopClient() {
+            playerCount = 0;
+            PlayerManager.ResetMatchPlayers();
+        }
+
     }
 
 }

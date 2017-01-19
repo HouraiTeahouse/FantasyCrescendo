@@ -42,6 +42,16 @@ namespace HouraiTeahouse.SmashBrew {
             return _matchPlayers[id];
         }
 
+        public void ResetMatchPlayers() {
+            var blankSelection = new PlayerSelection();
+            foreach (Player player in MatchPlayers) {
+                if (player == null)
+                    continue;
+                player.Selection = blankSelection;
+                player.Type = PlayerType.None;
+            }
+        }
+
         [SerializeField]
         PlayerSelection[] testCharacters;
 
