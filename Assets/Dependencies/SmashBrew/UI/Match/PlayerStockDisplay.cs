@@ -32,15 +32,16 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         /// <summary> Unity Callback. Called before the object's first frame. </summary>
         void Start() {
-            _stockMatch = FindObjectOfType<StockMatch>();
-            _stockMatch.StockChanged += Refresh;
-            DisableCheck();
+            Refresh();
         }
 
         void Refresh() {
-            DisableCheck();
-
-            if (_stockMatch == null || _player == null)
+            if (_stockMatch == null) {
+                _stockMatch = FindObjectOfType<StockMatch>();
+                if(_stockMatch != null)
+                    _stockMatch.StockChanged += Refresh;
+            }
+            if (_stockMatch == null || !_stockMatch.IsActive || _player == null)
                 return;
 
             int stock = _stockMatch[_player];
@@ -59,15 +60,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
                     if (standardIndicators[i])
                         standardIndicators[i].SetActive(i < stock);
             }
-        }
-
-        void DisableCheck() {
-            if (_stockMatch != null && _stockMatch.enabled || _player == null)
-                return;
-            if (ExcessDisplay)
-                ExcessDisplay.gameObject.SetActive(false);
-            foreach (GameObject indicator in standardIndicators.IgnoreNulls())
-                indicator.SetActive(false);
         }
 
     }
