@@ -10,7 +10,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
         PlayerIndicator _prefab;
 
         void Awake() {
-            Log.Debug(PlayerManager.Instance.MatchPlayers.Count());
             foreach (Player player in PlayerManager.Instance.MatchPlayers) {
                 PlayerIndicator indicator = Instantiate(_prefab);
                 indicator.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);

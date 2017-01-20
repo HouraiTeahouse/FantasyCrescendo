@@ -42,7 +42,6 @@ namespace HouraiTeahouse.SmashBrew {
         public GameObject PlayerObject {
             get { return _playerObject;  }
             set {
-                Log.Debug("New GameObject for Player {0}: {1}".With(ID, value));
                 bool changed = _playerObject != value;
                 _playerObject = value;
                 if (changed) {
