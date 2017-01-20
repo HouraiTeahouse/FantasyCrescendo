@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HouraiTeahouse.SmashBrew.Characters;
@@ -30,10 +31,13 @@ namespace HouraiTeahouse.SmashBrew.Matches {
             get { return _stocks[player.ID]; }
         }
 
+        public event Action StockChanged;
+
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
             _eventManager = Mediator.Global;
+            _stocks.Callback += (op, index) => StockChanged.SafeInvoke();
         }
 
         public override void OnStartServer() {
