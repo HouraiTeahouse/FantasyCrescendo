@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: youmu_clothes_1
+  m_Name: youmu_clothes_3
   m_Shader: {fileID: 4800000, guid: 82b106a640ad4f542a544fc130e555bf, type: 3}
   m_ShaderKeywords: _NORMALMAP
   m_LightmapFlags: 0
@@ -48,7 +48,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: b3655ab3ba11f814cbe3c3c7bd0edeb1, type: 3}
+        m_Texture: {fileID: 2800000, guid: a65d62a834e1a9e458f38b5ba19b2809, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:

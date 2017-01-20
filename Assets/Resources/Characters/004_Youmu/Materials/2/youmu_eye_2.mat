@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: youmu_eye_1
+  m_Name: youmu_eye_2
   m_Shader: {fileID: 4800000, guid: 765578c94c4f882489d828be93d8cbe0, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
@@ -96,7 +96,7 @@ Material:
       second: 0
     - first:
         name: _Emission
-      second: 0.05
+      second: 0.1
     - first:
         name: _GlossMapScale
       second: 1
@@ -142,7 +142,7 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _Color
-      second: {r: 0, g: 0.4044118, b: 0.2036004, a: 1}
+      second: {r: 0.472, g: 0.014632009, b: 0.08499658, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}

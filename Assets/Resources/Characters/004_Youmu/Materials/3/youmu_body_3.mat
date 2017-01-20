@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: youmu_body_1
-  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: youmu_body_3
+  m_Shader: {fileID: 4800000, guid: 82b106a640ad4f542a544fc130e555bf, type: 3}
   m_ShaderKeywords: _ALPHATEST_ON _EMISSION _NORMALMAP
   m_LightmapFlags: 1
   m_CustomRenderQueue: 2450
@@ -49,7 +49,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: 38ef55fb955ad8045a6943d3790b674b, type: 3}
+        m_Texture: {fileID: 2800000, guid: f4450f0e52c67364d8a11eb91845b70a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
