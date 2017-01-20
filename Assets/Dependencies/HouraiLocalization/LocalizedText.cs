@@ -21,7 +21,7 @@ namespace HouraiTeahouse.Localization {
         protected string NativeText {
             get { return _nativeText; }
             set {
-                if (_nativeText == value || value == null || !_text)
+                if (value == null || !_text)
                     return;
                 _nativeText = value;
                 LanguageManager languageManager = LanguageManager.Instance;
