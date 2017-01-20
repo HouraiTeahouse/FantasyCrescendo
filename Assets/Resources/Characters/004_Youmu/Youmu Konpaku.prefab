@@ -3378,6 +3378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _color: 0
   _swaps:
   - MaterialSets:
     - _materials:
@@ -3387,11 +3388,20 @@ MonoBehaviour:
       - Characters/004_Youmu/Materials/1/youmu_eye_1
       - Characters/004_Youmu/Materials/1/youmu_body_1
       - Characters/004_Youmu/Materials/1/youmu_sword_1
+    - _materials:
+      - Characters/004_Youmu/Materials/2/youmu_clothes_2
+      - Characters/004_Youmu/Materials/2/youmu_body_2
+      - Characters/004_Youmu/Materials/2/youmu_body_2
+      - Characters/004_Youmu/Materials/2/youmu_eye_2
+      - Characters/004_Youmu/Materials/2/youmu_body_2
+      - Characters/004_Youmu/Materials/2/youmu_sword_2
     TargetRenderers:
     - {fileID: 137763267182522856}
   - MaterialSets:
     - _materials:
       - Characters/004_Youmu/Materials/1/youmu_sword_1
+    - _materials:
+      - Characters/004_Youmu/Materials/2/youmu_sword_2
     TargetRenderers:
     - {fileID: 137926393833894076}
     - {fileID: 137796562543746948}
@@ -3527,14 +3537,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _facingMode: 0
-  _maxFallSpeed: 5
-  _fastFallSpeed: 9
-  _jumpHeights:
-  - 1.5
-  - 1.5
-  _weapons: []
-  _particles: []
 --- !u!114 &114933381560345342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3584,12 +3586,12 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7ebe81e8c654d384192b5102d589934d, type: 2}
-  - {fileID: 2100000, guid: 4a8b71a84ffd2a44ebd27d7f33e26840, type: 2}
-  - {fileID: 2100000, guid: 4a8b71a84ffd2a44ebd27d7f33e26840, type: 2}
-  - {fileID: 2100000, guid: f720970af611d6440816693a33b9557e, type: 2}
-  - {fileID: 2100000, guid: 4a8b71a84ffd2a44ebd27d7f33e26840, type: 2}
-  - {fileID: 2100000, guid: 853c4026bc226524eb90c0db8fc4e53f, type: 2}
+  - {fileID: 2100000, guid: a6e52abd195dacd44a8b7cdb77c36241, type: 2}
+  - {fileID: 2100000, guid: c8e35d1183cb0ca45984a129f5952792, type: 2}
+  - {fileID: 2100000, guid: c8e35d1183cb0ca45984a129f5952792, type: 2}
+  - {fileID: 2100000, guid: a36f2e76c5c58e047867d98832e1358b, type: 2}
+  - {fileID: 2100000, guid: c8e35d1183cb0ca45984a129f5952792, type: 2}
+  - {fileID: 2100000, guid: 13988063d12996145a449b7877c27359, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
