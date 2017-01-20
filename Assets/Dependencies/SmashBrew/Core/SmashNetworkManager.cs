@@ -1,9 +1,19 @@
+using System.Collections.Generic;
 using System.Linq;
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew {
+
+    public struct PlayerConnection {
+
+        public int ConnectionID;
+        public int PlayerControllerID;
+
+        public override int GetHashCode() { return ConnectionID * 37 + PlayerControllerID; }
+
+    }
     
     [RequireComponent(typeof(DataManager))]
     [RequireComponent(typeof(PlayerManager))]
@@ -11,13 +21,14 @@ namespace HouraiTeahouse.SmashBrew {
 
         short localPlayerCount = 0;
         int playerCount = 0;
-
+        Dictionary<PlayerConnection, Player> PlayerMap;
         DataManager DataManager { get; set; }
         PlayerManager PlayerManager { get; set; }
 
         void Awake() {
             DataManager = this.SafeGetComponent<DataManager>();
             PlayerManager = this.SafeGetComponent<PlayerManager>();
+            PlayerMap = new Dictionary<PlayerConnection, Player>();
         }
 
         public class Messages {
@@ -116,11 +127,36 @@ namespace HouraiTeahouse.SmashBrew {
             player.PlayerObject = playerObj;
             playerCount++;
             NetworkServer.SendToAll(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
+            var playerConnection = new PlayerConnection {
+                ConnectionID = conn.connectionId,
+                PlayerControllerID = playerControllerId
+            };
+            PlayerMap[playerConnection] = player;
         }
 
-        public override void OnServerRemovePlayer(NetworkConnection conn, UnityEngine.Networking.PlayerController player) {
-            base.OnServerRemovePlayer(conn, player);
-            playerCount--;
+        public override void OnServerRemovePlayer(NetworkConnection conn, UnityEngine.Networking.PlayerController playerController) {
+            base.OnServerRemovePlayer(conn, playerController);
+            RemovePlayer(conn, playerController);
+        }
+
+        public override void OnServerDisconnect(NetworkConnection conn) {
+            foreach (var playerController in conn.playerControllers)
+                RemovePlayer(conn, playerController);
+            base.OnServerDisconnect(conn);
+        }
+
+        void RemovePlayer(NetworkConnection conn, UnityEngine.Networking.PlayerController controller) {
+            var playerConnection = new PlayerConnection {
+                ConnectionID = conn.connectionId,
+                PlayerControllerID = controller.playerControllerId
+            };
+            if(PlayerMap.ContainsKey(playerConnection)) {
+                var player = PlayerMap[playerConnection];
+                player.Type = PlayerType.None;
+                player.Selection = new PlayerSelection();
+                PlayerMap.Remove(playerConnection);
+            }
+            playerCount = Mathf.Max(0, playerCount - 1);
         }
 
         public override void OnStopClient() {
