@@ -41,7 +41,7 @@ namespace HouraiTeahouse.SmashBrew {
             client.RegisterHandler(Messages.UpdatePlayer,
                 msg => {
                     var update = msg.ReadMessage<UpdatePlayerMessage>();
-                    var player = PlayerManager.GetMatchPlayer(update.ID);
+                    var player = PlayerManager.MatchPlayers.Get(update.ID);
                     update.UpdatePlayer(player);
                 });
         }
@@ -118,7 +118,7 @@ namespace HouraiTeahouse.SmashBrew {
             else
                 playerObj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
             NetworkServer.AddPlayerForConnection(conn, playerObj, playerControllerId);
-            var player = PlayerManager.GetMatchPlayer(playerCount);
+            var player = PlayerManager.MatchPlayers.Get(playerCount);
             var colorState = playerObj.GetComponentInChildren<ColorState>();
             if (colorState != null)
                 colorState.Pallete = selection.Pallete;
@@ -161,7 +161,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         public override void OnStopClient() {
             playerCount = 0;
-            PlayerManager.ResetMatchPlayers();
+            PlayerManager.MatchPlayers.ResetAll();
         }
 
     }

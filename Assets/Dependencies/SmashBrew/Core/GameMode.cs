@@ -18,6 +18,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         public static event Action<GameMode> OnRegister;
 
+        public static event Action<GameMode> OnChangeGameMode;
+
         static GameMode() { _gameModes = new List<GameMode>(); }
 
         public static IEnumerable<GameMode> All {
@@ -35,7 +37,12 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> The current game mode. </summary>
         public static GameMode Current {
             get { return _current ?? (_current = Config.GameModes.StandardVersus); }
-            set { _current = value ?? Config.GameModes.StandardVersus; }
+            set {
+                var old = _current;
+                _current = value ?? Config.GameModes.StandardVersus;
+                if (old != _current)
+                    OnChangeGameMode.SafeInvoke(_current);
+            }
         }
 
         /// <summary> The maximum number of chosen players in a match under this game mode. This does not affect the number of

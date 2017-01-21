@@ -53,7 +53,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
         protected override string ProcessNumber(string number) {
             if (!_damage)
                 return number;
-            Log.Debug(_damage.Type.Suffix);
             return "{0}{1}".With(number, _damage.Type.Suffix);
             //return string.Format("{0}<size={1}>{2}</size>", number, suffixSize, _damage.Type.Suffix);
         }

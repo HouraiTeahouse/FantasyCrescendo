@@ -66,6 +66,21 @@ namespace HouraiTeahouse.SmashBrew {
             get { return Type.Color ?? Config.Player.GetColor(ID); }
         }
 
+        public static Player Get(GameObject gameObject) {
+            var playerManager = PlayerManager.Instance;
+            while (playerManager != null && gameObject != null) {
+                foreach (var player in playerManager.MatchPlayers) {
+                    if (player.PlayerObject == gameObject)
+                        return player;
+                }
+                var parent = gameObject.transform.parent;
+                gameObject = parent != null ? parent.gameObject : null;
+            }
+            return null;
+        }
+
+        public static  Player Get(Component component) { return component == null ? null : Get(component.gameObject); }
+
         public event Action Changed;
 
         public void CycleType() {

@@ -239,6 +239,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [Command]
         void CmdSetDirection(bool direction) { _direction = direction; }
 
+        [ClientRpc]
+        public void RpcMove(Vector3 position, bool direction) {
+            transform.position = position;
+            Direction = direction;
+        }
+
         void OnChangeDirection(bool direction) {
             _direction = direction;
             if (FacingMode == CharacterFacingMode.Rotation) {

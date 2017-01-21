@@ -76,7 +76,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
         public override Player GetWinner() {
             if (_stocks.Count <= 0)
                 return null;
-            return PlayerManager.Instance.GetMatchPlayer(_stocks.ArgMax());
+            return PlayerManager.Instance.MatchPlayers.Get(_stocks.ArgMax());
         }
 
         bool RespawnCheck(Player character) {

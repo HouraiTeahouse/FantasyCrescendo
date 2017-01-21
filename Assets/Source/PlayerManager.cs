@@ -1,12 +1,68 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew {
 
-    public class PlayerManager : NetworkBehaviour {
+    public class PlayerSet : IEnumerable<Player> {
+
+        Player[] _players;
+
+        public Player Get(int id) {
+            if(!Check.Range(id, _players))
+                throw new ArgumentOutOfRangeException();
+            Assert.IsTrue(id < GameMode.Current.MaxPlayers);
+            return _players[id];
+        }
+
+        public IEnumerator<Player> GetEnumerator() { return _players.Cast<Player>().GetEnumerator(); }
+
+        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+
+        public int Count {
+            get { return _players.Length; }
+        }
+
+        public PlayerSet() {
+            // Note: These objects are not intended to be destroyed and thus do not unresgister these event handlers
+            // If there is a need to remove or replace them, this will need to be changed.
+            GameMode.OnRegister += mode => RebuildPlayerArray();
+            GameMode.OnChangeGameMode += mode => RebuildPlayerArray();
+            _players = new Player[0];
+            RebuildPlayerArray();
+        }
+
+        void RebuildPlayerArray() {
+            var maxPlayers= !GameMode.All.Any() ? 0 : GameMode.All.Max(mode => mode.MaxPlayers);
+            if (maxPlayers <= Count)
+                return;
+            var temp = new Player[maxPlayers];
+            if(_players != null)
+                Array.Copy(_players, temp , _players.Length);
+            for (var i = 0; i < temp.Length; i++) {
+                if(temp[i] == null)
+                    temp[i] = new Player(i);
+            }
+            _players = temp;
+        }
+
+        public void ResetAll() {
+            var blankSelection = new PlayerSelection();
+            foreach (Player player in _players) {
+                if (player == null)
+                    continue;
+                player.Selection = blankSelection;
+                player.Type = PlayerType.None;
+            }
+        }
+
+    }
+
+    public class PlayerManager : MonoBehaviour {
 
         int _maxPlayers = -1;
         Player[] _localPlayers;
@@ -14,41 +70,13 @@ namespace HouraiTeahouse.SmashBrew {
 
         public static PlayerManager Instance { get; private set; }
 
-        public IEnumerable<Player> LocalPlayers {
-            get { return _localPlayers.Select(x => x); }
-        }
-
-        public IEnumerable<Player> MatchPlayers {
-            get { return _matchPlayers.Select(x => x); }
-        }
+        public PlayerSet LocalPlayers { get; private set; }
+        public PlayerSet MatchPlayers { get; private set; }
 
         public int MaxPlayers {
-            get { return _maxPlayers; }
-        }
-
-        public Player GetLocalPlayer(int id) {
-            if(!Check.Range(id, 0, GameMode.Current.MaxPlayers))
-                throw new ArgumentOutOfRangeException();
-            if(id >= _maxPlayers)
-                RebuildPlayerArray();
-            return _localPlayers[id];
-        }
-
-        public Player GetMatchPlayer(int id) {
-            if(!Check.Range(id, 0, GameMode.Current.MaxPlayers))
-                throw new ArgumentOutOfRangeException();
-            if(id >= _maxPlayers)
-                RebuildPlayerArray();
-            return _matchPlayers[id];
-        }
-
-        public void ResetMatchPlayers() {
-            var blankSelection = new PlayerSelection();
-            foreach (Player player in MatchPlayers) {
-                if (player == null)
-                    continue;
-                player.Selection = blankSelection;
-                player.Type = PlayerType.None;
+            get {
+                Assert.IsTrue(LocalPlayers.Count == MatchPlayers.Count);
+                return LocalPlayers.Count;
             }
         }
 
@@ -59,52 +87,14 @@ namespace HouraiTeahouse.SmashBrew {
         void Awake() {
             Instance = this;
             Config.Load();
-            RebuildPlayerArray();
-            GameMode.OnRegister += mode => RebuildPlayerArray();
-        }
-
-        void RebuildPlayerArray() {
-            var check = !GameMode.All.Any() ? 0 : GameMode.All.Max(mode => mode.MaxPlayers);
-            if (check <= _maxPlayers)
-                return;
-            _maxPlayers = check;
-            _localPlayers = CopyPlayerSet(_localPlayers, _maxPlayers);
-            _matchPlayers = CopyPlayerSet(_matchPlayers, _maxPlayers);
-            for (var i = 0; i < _maxPlayers; i++) {
-                if(_localPlayers[i] == null)
-                    _localPlayers[i] = new Player(i);
-                if(_matchPlayers[i] == null)
-                    _matchPlayers[i] = new Player(i);
+            LocalPlayers = new PlayerSet();
+            MatchPlayers = new PlayerSet();
+            for (var i = 0; i < testCharacters.Length; i++) {
+                var player = LocalPlayers.Get(i);
+                player.Type = PlayerType.HumanPlayer;
+                player.Selection = testCharacters[i];
             }
-//#if UNITY_EDITOR
-            var index = 0;
-            foreach (Player player in LocalPlayers) {
-                if (index >= testCharacters.Length)
-                    break;
-                if (player == null || testCharacters[index] == null)
-                    continue;
-                player.Selection = testCharacters[index];
-                player.Type = player.Selection.Character ? PlayerType.HumanPlayer : PlayerType.None;
-                index++;
-            }
-//#endif
         }
-
-        Player[] CopyPlayerSet(Player[] set, int size) {
-            if (set != null && size <= set.Length)
-                return set;
-            var temp = new Player[size];
-            if(set != null)
-                Array.Copy(set, temp , set.Length);
-            return temp;
-        }
-
-        public PlayerSelection GetSelection(int playerNum) {
-            if(testCharacters.Length <= 0)
-                throw new ArgumentException();
-            return testCharacters[playerNum % testCharacters.Length];
-        }
-
 
     }
 
