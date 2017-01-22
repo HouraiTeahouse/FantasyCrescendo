@@ -12,7 +12,7 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         public bool Occupied { get; private set; }
 
         void OnTriggerEnter(Collider collider) {
-            if (!collider.CompareTag(Config.Tags.PlayerTag))
+            if (!collider.CompareTag(Config.Tags.LedgeTag))
                 return;
             var movement = collider.GetComponentInParent<MovementState>();
             if (movement == null)

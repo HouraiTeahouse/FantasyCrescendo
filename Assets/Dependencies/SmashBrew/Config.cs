@@ -78,6 +78,9 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField, Tag]
         string _hitboxTag;
 
+        [SerializeField, Tag]
+        string _ledgeTag;
+
         [SerializeField, Layer]
         int _characterLayer;
 
@@ -96,6 +99,10 @@ namespace HouraiTeahouse.SmashBrew {
 
         public string HitboxTag {
             get { return _hitboxTag; }
+        }
+
+        public string LedgeTag {
+            get { return _ledgeTag; }
         }
 
         public int CharacterLayer {
