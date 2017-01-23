@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using HouraiTeahouse.SmashBrew;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
+    [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementState))]
     public class AnimationState : NetworkBehaviour, ICharacterState {
 
@@ -13,6 +11,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         Animator _animator;
 
         MovementState Movement { get; set; }
+        CharacterController CharacterController { get; set; }
         bool _jumpState = false;
 
         public Animator Animator {
@@ -23,6 +22,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             if (_animator == null)
                 _animator = this.SafeGetComponentInChildren<Animator>();
             Movement = this.SafeGetComponent<MovementState>();
+            CharacterController = this.SafeGetComponent<CharacterController>();
             if (Movement != null)
                 Movement.OnJump += OnJump;
         }
@@ -35,7 +35,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void Update() {
             if (!hasAuthority || _animator == null || Movement == null)
                 return;
-            //_animator.SetBool("grounded", .IsGrounded);
+            _animator.SetBool("grounded", CharacterController.isGrounded);
             _animator.SetBool("ledge", Movement.CurrentLedge != null);
             _animator.SetBool("jump", _jumpState);
             _jumpState = false;
