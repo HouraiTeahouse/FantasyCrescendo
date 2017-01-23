@@ -26,9 +26,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                     if (targets == null)
                         return;
                     var loadedMaterials = _materials.Select(Resources.Load<Material>).ToArray();
-                    foreach (Renderer renderer in targets)
+                    foreach (Renderer renderer in targets) {
                         if(renderer != null)
                             renderer.sharedMaterials = loadedMaterials;
+                    }
                 }
 
             }
@@ -70,7 +71,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public int Pallete {
             get { return _color; }
-            set { _color = value; }
+            set { ChangeColor(value); }
         }
 
         public override void OnStartClient() {
