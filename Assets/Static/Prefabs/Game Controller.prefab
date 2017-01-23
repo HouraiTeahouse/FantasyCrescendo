@@ -183,7 +183,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 1
   _characters:
-  - {fileID: 11400000, guid: 6693fd454a163df498a79fb671732a0b, type: 2}
   - {fileID: 11400000, guid: c5c502acdb11a8349a2d99bcf7579352, type: 2}
   - {fileID: 11400000, guid: 909122be91dfc3f488344cb130b405b3, type: 2}
   - {fileID: 11400000, guid: 32bc70f9f255d3c4aaffc13450ffe9e1, type: 2}
@@ -511,6 +510,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testCharacters:
-  - _character: {fileID: 11400000, guid: 6693fd454a163df498a79fb671732a0b, type: 2}
+  - _character: {fileID: 11400000, guid: 08f598346f8cc9a47a9c4b6862537c30, type: 2}
     _pallete: 0
     _cpuLevel: 0
