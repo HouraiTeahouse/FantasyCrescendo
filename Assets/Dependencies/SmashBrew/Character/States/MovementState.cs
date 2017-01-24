@@ -132,7 +132,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public Transform CurrentLedge {
             get { return _currentLedge; }
-            set { _currentLedge = value; }
+            set {
+                _currentLedge = value;
+                CmdResetJumps();
+            }
         }
 
         void Start() {
@@ -150,12 +153,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         void Update() {
-            if (!hasAuthority)
+            if (!isLocalPlayer)
                 return;
 
             var movement = new MovementInfo { facing = Direction };
             // If currently hanging from a edge
             if (CurrentLedge != null) {
+                IsFastFalling = false;
                 var offset = LedgeTarget.position - transform.position;
                 transform.position = CurrentLedge.position - offset;
                 if (JumpCount != MaxJumpCount)
@@ -238,12 +242,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         [Command]
         void CmdSetDirection(bool direction) { _direction = direction; }
-
-        [ClientRpc]
-        public void RpcMove(Vector3 position, bool direction) {
-            transform.position = position;
-            Direction = direction;
-        }
 
         void OnChangeDirection(bool direction) {
             _direction = direction;
