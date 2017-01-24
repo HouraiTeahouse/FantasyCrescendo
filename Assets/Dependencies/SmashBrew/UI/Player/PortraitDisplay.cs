@@ -12,7 +12,16 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         Rect _cropRect;
 
-        Color _defaultColor;
+        Color? _defaultColor = null;
+
+        Color DefaultColor {
+            get {
+                if (_defaultColor == null)
+                    _defaultColor = Component.color;
+                return _defaultColor.Value;
+            }
+            set { _defaultColor = value; }
+        }
 
         [SerializeField]
         [Tooltip("Tint to cover the potrait, should the character be disabled")]
@@ -28,7 +37,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         protected override void Awake() {
             base.Awake();
             _rectTransform = Component.GetComponent<RectTransform>();
-            _defaultColor = Component.color;
+            DefaultColor = Component.color;
         }
 
         // See UIBehaviour.OnRectTransformDimensionsChange
@@ -60,7 +69,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 _cropRect = _cropped ? data.CropRect(texture) : texture.PixelRect();
                 _cropRect.position += _rectBias.Mult(texture.Size());
                 Component.texture = texture;
-                Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
+                Component.color = data.IsSelectable ? DefaultColor : _disabledTint;
                 SetRect();
             }).Done();
         }
