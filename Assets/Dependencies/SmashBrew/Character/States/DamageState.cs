@@ -10,8 +10,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         //TODO(james7132): Synchronize this across the network
 
+        [SyncVar, SerializeField]
+        float _currentDamage;
+
         /// <summary> The current internal damage value. Used for knockback calculations. </summary>
-        public float CurrentDamage { get; set; }
+        public float CurrentDamage {
+            get { return _currentDamage; }
+            set { _currentDamage = value; }
+        }
         public float DefaultDamage { get; set; }
 
         public ModifierGroup<object> DamageModifiers { get; private set; }
