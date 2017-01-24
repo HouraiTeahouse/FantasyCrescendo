@@ -26,10 +26,10 @@ namespace HouraiTeahouse {
             set {
                 bool changed = !Mathf.Approximately(_number, value);
                 _number = value;
+                UpdateText();
                 if (!changed)
                     return;
                 OnNumberChange.SafeInvoke();
-                UpdateText();
             }
         }
 
