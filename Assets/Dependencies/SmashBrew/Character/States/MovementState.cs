@@ -117,6 +117,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             private set { _isFastFalling = value; }
         }
 
+        public bool IsCrounching {
+            get { return CharacterController.isGrounded && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)); }
+        }
+
         /// <summary> Can the Character currently jump? </summary>
         public bool CanJump {
             get { return JumpCount < MaxJumpCount; }
@@ -171,7 +175,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                     movement = AerialMovement(movement);
             }
 
-            if (JumpCount > 0 && JumpCount <= MaxJumpCount &&
+            if (!IsCrounching && JumpCount > 0 && JumpCount <= MaxJumpCount &&
                 (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) {
                 Physics.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
                 CurrentLedge = null;
@@ -188,6 +192,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         MovementInfo GroundedMovement(MovementInfo info) {
             IsFastFalling = false;
+
             if (Input.GetKey(KeyCode.A)) {
                 info.horizontalSpeed = -RunSpeed;
                 info.facing = false;
@@ -206,6 +211,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
             if (JumpCount != MaxJumpCount)
                 CmdResetJumps();
+            if (IsCrounching)
+                info.horizontalSpeed = 0f;
             return info;
         }
 

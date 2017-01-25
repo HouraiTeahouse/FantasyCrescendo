@@ -37,6 +37,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 return;
             _animator.SetBool("grounded", CharacterController.isGrounded);
             _animator.SetBool("ledge", Movement.CurrentLedge != null);
+            _animator.SetBool("crouch", Movement.IsCrounching);
             _animator.SetBool("jump", _jumpState);
             _jumpState = false;
         }
