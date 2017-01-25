@@ -492,7 +492,7 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -502,7 +502,7 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
+    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
@@ -515,7 +515,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
-  copyAvatar: 0
+  copyAvatar: 1
   humanDescription:
     serializedVersion: 2
     human: []
@@ -532,7 +532,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 189a0391f7d41544aaac6c29f562dd28,
+    type: 3}
   animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
