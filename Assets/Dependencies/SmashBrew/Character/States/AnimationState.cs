@@ -5,12 +5,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementState))]
+    [RequireComponent(typeof(PhysicsState))]
     public class AnimationState : NetworkBehaviour, ICharacterState {
 
         [SerializeField]
         Animator _animator;
 
         MovementState Movement { get; set; }
+        PhysicsState Physics { get; set; }
         CharacterController CharacterController { get; set; }
         bool _jumpState = false;
 
@@ -22,6 +24,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             if (_animator == null)
                 _animator = this.SafeGetComponentInChildren<Animator>();
             Movement = this.SafeGetComponent<MovementState>();
+            Physics = this.SafeGetComponent<PhysicsState>();
             CharacterController = this.SafeGetComponent<CharacterController>();
             if (Movement != null)
                 Movement.OnJump += OnJump;
@@ -32,6 +35,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 Movement.OnJump -= OnJump;
         }
 
+        float Sign(float x) {
+            if (x > 0)
+                return 1;
+            if (x < 0)
+                return -1;
+            return 0;
+        }
+
         void Update() {
             if (!hasAuthority || _animator == null || Movement == null)
                 return;
@@ -40,6 +51,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             _animator.SetBool("crouch", Movement.IsCrounching);
             _animator.SetBool("jump", _jumpState);
             _jumpState = false;
+            var movement = Physics.Velocity.x;
+            if (Mathf.Abs(movement) > Movement.FastWalkSpeed)
+                movement = Sign(movement) * 2;
+            else
+                movement = Sign(movement);
+            _animator.SetFloat("horizontal", movement);
         }
 
         void OnJump() { _jumpState = true; }
