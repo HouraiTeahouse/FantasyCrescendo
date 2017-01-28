@@ -26,6 +26,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [SerializeField, ReadOnly]
         Vector2 _acceleration;
 
+        [SerializeField]
+        float _minimumReboundVelocity = 5f;
+
+        [SerializeField]
+        float _reboundLoss = 0.2f;
+
         [SyncVar, SerializeField, ReadOnly]
         bool _grounded;
 
@@ -74,6 +80,15 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 acceleration.y = 0;
             Velocity += acceleration * Time.deltaTime;
             CharacterController.Move(Velocity * Time.deltaTime);
+        }
+
+        void OnControllerColliderHit(ControllerColliderHit hit) {
+            if (CharacterController.isGrounded)
+                return;
+            if (Velocity.magnitude > _minimumReboundVelocity)
+                Velocity = Vector2.Reflect(hit.moveDirection, hit.normal);
+            else
+                Velocity = Vector2.zero;
         }
 
         void LateUpdate() {
