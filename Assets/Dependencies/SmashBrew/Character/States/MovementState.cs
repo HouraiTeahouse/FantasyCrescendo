@@ -137,8 +137,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public Transform CurrentLedge {
             get { return _currentLedge; }
             set {
+                bool grabbed = _currentLedge == null && value != null;
                 _currentLedge = value;
-                CmdResetJumps();
+                if (grabbed)
+                    CmdResetJumps();
             }
         }
 
@@ -245,7 +247,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void CmdJump() { JumpCount--; }
 
         [Command]
-        void CmdResetJumps() { JumpCount = MaxJumpCount; }
+        void CmdResetJumps() {
+            Log.Debug("Hello");
+            JumpCount = MaxJumpCount;
+        }
 
         [Command]
         void CmdSetDirection(bool direction) { _direction = direction; }
