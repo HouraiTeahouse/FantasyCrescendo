@@ -30,7 +30,7 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         }
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
-        void Awake() { _toIgnore = GetComponentsInChildren<Collider>().Where(col => col && col.isTrigger).ToArray(); }
+        void Awake() { _toIgnore = GetComponentsInChildren<Collider>().Where(col => col != null && !col.isTrigger).ToArray(); }
 
         /// <summary> Changes the ignore state of </summary>
         /// <param name="target"> </param>
@@ -67,6 +67,7 @@ namespace HouraiTeahouse.SmashBrew.Stage {
 
         /// <summary> Unity callback. Called every physics loop for each for each . </summary>
         void OnCollisionStay(Collision col) {
+            Log.Debug("Hello");
             if (Hardness <= HardnessSetting.Soft)
                 Check(col.collider);
         }
