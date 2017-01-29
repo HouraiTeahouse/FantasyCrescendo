@@ -1,7 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -14,7 +13,10 @@ namespace HouraiTeahouse.SmashBrew {
 #endif
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CharacterController))]
-    public class Character : BaseBehaviour, IHitboxController {
+    public class Character : NetworkBehaviour, IHitboxController {
+
+        [SyncVar(hook = "ChangeActive")]
+        bool _isActive;
 
         void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
             Argument.NotNull(hitbox);
@@ -66,9 +68,18 @@ namespace HouraiTeahouse.SmashBrew {
 
         public CharacterController Controller { get; private set; }
 
+        public override void OnStartServer() { _isActive = true; }
+
+        void ChangeActive(bool active) {
+            _isActive = active;
+            gameObject.SetActive(active);
+        }
+
+        void OnEnable() { _isActive = true; }
+        void OnDisable() { _isActive = false; }
+
         /// <summary> Unity callback. Called on object instantiation. </summary>
-        protected override void Awake() {
-            base.Awake();
+        void Awake() {
             Events = new Mediator();
             Reset();
             Controller = GetComponent<CharacterController>();

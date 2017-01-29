@@ -24,16 +24,16 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         [SyncVar, SerializeField, ReadOnly]
         float _timer;
 
-        [SyncVar, SerializeField, ReadOnly]
+        [SyncVar(hook = "OccupationChanged"), SerializeField, ReadOnly]
         bool _isOccupied;
 
         public bool Occupied {
             get { return _isOccupied; }
+            private set { OccupationChanged(value); }
         }
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
-            gameObject.SetActive(false);
             Mediator.Global.Subscribe<PlayerRespawnEvent>(OnEvent);
         }
 
@@ -41,28 +41,32 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             Mediator.Global.Unsubscribe<PlayerRespawnEvent>(OnEvent);
         }
 
+        public override void OnStartServer() {
+            gameObject.SetActive(false);
+            _isOccupied = false;
+        }
+
+        public override void OnStartClient() {
+            gameObject.SetActive(_isOccupied);
+        }
+
+        void OccupationChanged(bool isOccupied) {
+            _isOccupied = isOccupied;
+            gameObject.SetActive(_isOccupied);
+        }
+
         void OnEvent(PlayerRespawnEvent eventArgs) {
-            if (!isServer || Occupied || eventArgs.Consumed)
+            if (Occupied || eventArgs.Consumed)
                 return;
             eventArgs.Consumed = true;
             //TODO(james7132): Fix this
             _character = eventArgs.Player.PlayerObject.GetComponentInChildren<Character>();
-            _character.Rigidbody.velocity = Vector3.zero;
+            //_character.Rigidbody.velocity = Vector3.zero;
             _character.ResetCharacter();
             _invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
             _timer = 0f;
-            Log.Debug(isServer);
-            RpcSetActive(true);
-            gameObject.SetActive(true);
-            var movement = _character.GetComponent<MovementState>();
-            if(movement != null)
-                movement.RpcMove(transform.position, _facing);
+            Occupied = true;
             _isOccupied = true;
-        }
-
-        [ClientRpc]
-        void RpcSetActive(bool active) {
-            gameObject.SetActive(active);
         }
 
         /// <summary> Unity callback. Called once per frame. </summary>
@@ -73,11 +77,11 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             _timer += Time.deltaTime;
 
             // TODO: Find better alternative to this hack
-            if (_timer > _platformTimer || (_character.Rigidbody.velocity.magnitude > 0.5f)) {
+            if (_timer > _platformTimer) {
                 _invincibility.Duration -= _platformTimer;
                 _character.ResetCharacter();
 
-                RpcSetActive(false);
+                Occupied = false;
                 gameObject.SetActive(false);
             }
         }

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEditor;
-using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 

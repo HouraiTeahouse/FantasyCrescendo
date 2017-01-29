@@ -67,7 +67,6 @@ namespace HouraiTeahouse.SmashBrew.Stage {
 
         /// <summary> Unity callback. Called every physics loop for each for each . </summary>
         void OnCollisionStay(Collision col) {
-            Log.Debug("Hello");
             if (Hardness <= HardnessSetting.Soft)
                 Check(col.collider);
         }

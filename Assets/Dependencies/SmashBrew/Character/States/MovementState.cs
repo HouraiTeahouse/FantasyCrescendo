@@ -140,7 +140,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 bool grabbed = _currentLedge == null && value != null;
                 _currentLedge = value;
                 if (grabbed)
-                    CmdResetJumps();
+                    SnapToLedge();
             }
         }
 
@@ -158,6 +158,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             public bool facing;
         }
 
+        void SnapToLedge() {
+            IsFastFalling = false;
+            var offset = LedgeTarget.position - transform.position;
+            transform.position = CurrentLedge.position - offset;
+            if (JumpCount != MaxJumpCount)
+                CmdResetJumps();
+        }
+
         void Update() {
             if (!isLocalPlayer)
                 return;
@@ -165,11 +173,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             var movement = new MovementInfo { facing = Direction };
             // If currently hanging from a edge
             if (CurrentLedge != null) {
-                IsFastFalling = false;
-                var offset = LedgeTarget.position - transform.position;
-                transform.position = CurrentLedge.position - offset;
-                if (JumpCount != MaxJumpCount)
-                    CmdResetJumps();
+                SnapToLedge();
             } else {
                 if(CharacterController.isGrounded)
                     movement = GroundedMovement(movement);
@@ -253,6 +257,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         [Command]
         void CmdSetDirection(bool direction) { _direction = direction; }
+
+        [ClientRpc]
+        public void RpcMove(Vector2 position) { transform.position = position; }
 
         void OnChangeDirection(bool direction) {
             _direction = direction;

@@ -35,7 +35,8 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             Vector3 position = other.transform.position;
             if (_col.ClosestPointOnBounds(position) == position)
                 return;
-
+            
+            player.PlayerObject.SetActive(false);
             _eventManager.Publish(new PlayerDieEvent { Player = player, Revived = false });
         }
 
