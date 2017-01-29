@@ -248,7 +248,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         [Command]
         void CmdResetJumps() {
-            Log.Debug("Hello");
             JumpCount = MaxJumpCount;
         }
 

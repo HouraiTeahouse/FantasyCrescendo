@@ -83,7 +83,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         void OnControllerColliderHit(ControllerColliderHit hit) {
-            Log.Debug("{0} {1}", CharacterController.isGrounded, Velocity);
             if (CharacterController.isGrounded)
                 return;
             if (Velocity.magnitude > _minimumReboundVelocity)
