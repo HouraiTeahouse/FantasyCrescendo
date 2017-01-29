@@ -3523,8 +3523,8 @@ MonoBehaviour:
   _runSpeed: 10
   _airSpeed: 4
   _jumpPower:
+  - 7.5
   - 5
-  - 10
   _ledgeTarget: {fileID: 4342227001516904}
   _currentLedge: {fileID: 0}
   _direction: 0
@@ -3692,6 +3692,8 @@ MonoBehaviour:
   _gravity: 9.86
   _velocity: {x: 0, y: 0}
   _acceleration: {x: 0, y: 0}
+  _minimumReboundVelocity: 5
+  _reboundLoss: 0.2
   _grounded: 0
   _isFastFalling: 0
 --- !u!114 &114840894184870562
