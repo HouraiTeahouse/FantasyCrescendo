@@ -61,10 +61,11 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             eventArgs.Consumed = true;
             //TODO(james7132): Fix this
             _character = eventArgs.Player.PlayerObject.GetComponentInChildren<Character>();
-            //_character.Rigidbody.velocity = Vector3.zero;
+            _character.Movement.RpcMove(transform.position);
             _character.ResetCharacter();
             _invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
             _timer = 0f;
+            eventArgs.Player.PlayerObject.SetActive(true);
             Occupied = true;
             _isOccupied = true;
         }

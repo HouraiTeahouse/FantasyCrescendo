@@ -1,4 +1,5 @@
 using HouraiTeahouse.HouraiInput;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {

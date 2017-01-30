@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEditor;
 using UnityEngine;
 using Random = System.Random;

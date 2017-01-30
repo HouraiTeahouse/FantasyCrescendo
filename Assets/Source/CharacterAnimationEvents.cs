@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 using UnityEngine.Assertions;
 

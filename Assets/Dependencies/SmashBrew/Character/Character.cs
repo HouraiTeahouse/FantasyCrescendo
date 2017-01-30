@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using UnityEditor;
 #endif
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Characters {
 
     /// <summary> General character class for handling the physics and animations of individual characters </summary>
 #if UNITY_EDITOR
@@ -13,10 +13,31 @@ namespace HouraiTeahouse.SmashBrew {
 #endif
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(MovementState))]
     public class Character : NetworkBehaviour, IHitboxController {
 
         [SyncVar(hook = "ChangeActive")]
         bool _isActive;
+
+        public CharacterController Controller { get; private set; }
+        public MovementState Movement { get; private set; }
+        public PhysicsState Physics { get; private set; }
+
+        void OnEnable() { _isActive = true; }
+        void OnDisable() { _isActive = false; }
+
+        /// <summary> Unity callback. Called on object instantiation. </summary>
+        void Awake() {
+            Reset();
+            Controller = this.SafeGetComponent<CharacterController>();
+            Movement = this.SafeGetComponent<MovementState>();
+            Physics = this.SafeGetComponent<PhysicsState>();
+        }
+
+        void Reset() {
+            gameObject.tag = Config.Tags.PlayerTag;
+            gameObject.layer = Config.Tags.CharacterLayer;
+        }
 
         void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
             Argument.NotNull(hitbox);
@@ -51,8 +72,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         #region Public Properties
-        public Mediator Events { get; private set; }
-
+        Dictionary<int, Hitbox> _hitboxMap;
         /// <summary> Gets an immutable collection of hitboxes that belong to </summary>
         public ICollection<Hitbox> Hitboxes {
             get { return _hitboxMap.Values; }
@@ -64,9 +84,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
         #endregion
 
-        Dictionary<int, Hitbox> _hitboxMap;
-
-        public CharacterController Controller { get; private set; }
 
         public override void OnStartServer() { _isActive = true; }
 
@@ -75,20 +92,6 @@ namespace HouraiTeahouse.SmashBrew {
             gameObject.SetActive(active);
         }
 
-        void OnEnable() { _isActive = true; }
-        void OnDisable() { _isActive = false; }
-
-        /// <summary> Unity callback. Called on object instantiation. </summary>
-        void Awake() {
-            Events = new Mediator();
-            Reset();
-            Controller = GetComponent<CharacterController>();
-        }
-
-        void Reset() {
-            gameObject.tag = Config.Tags.PlayerTag;
-            gameObject.layer = Config.Tags.CharacterLayer;
-        }
     }
 
 }
