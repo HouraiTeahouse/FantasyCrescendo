@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse {
@@ -7,10 +8,12 @@ namespace HouraiTeahouse {
     [RequireComponent(typeof(Text))]
     public sealed class FPSCounter : MonoBehaviour {
 
+        [SerializeField]
+        NetworkManager _networkManager;
+
         Text Counter;
         float deltaTime;
         float fps;
-        float msec;
         string outputText;
 
         void Awake() {
@@ -18,16 +21,23 @@ namespace HouraiTeahouse {
             StartCoroutine(UpdateDisplay());
         }
 
+        void Start() {
+            if (_networkManager == null)
+                _networkManager = NetworkManager.singleton;
+        }
+
         void Update() {
             deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-            msec = deltaTime * 1000.0f;
             fps = 1.0f / deltaTime;
         }
 
         IEnumerator UpdateDisplay() {
             while (true) {
                 yield return new WaitForSeconds(0.5f);
-                Counter.text = "{0:0.0} ms ({1:0.} fps)".With(msec, fps);
+                var text = "{0:0.}FPS".With(fps);
+                if (_networkManager != null && _networkManager.client != null)
+                    text += "/{0:0.} RTT".With(_networkManager.client.GetRTT());
+                Counter.text = text;
             }
         }
 
