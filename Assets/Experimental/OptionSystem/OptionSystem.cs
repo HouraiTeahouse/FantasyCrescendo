@@ -17,6 +17,7 @@ public class OptionSystem : MonoBehaviour
 
     string allOptionsKey = "OptionNames";
 
+    // Unity will call this function upon object initialization
     void Start()
     {
         //ClearRegistry();
@@ -24,7 +25,7 @@ public class OptionSystem : MonoBehaviour
         GetDataFromPrefs();
         SaveAllChanges();
     }
-
+    // A function to initializa the OptionSystem Object
 	void Initialize()
     {
         // get all classes that have Options attributes
@@ -87,6 +88,7 @@ public class OptionSystem : MonoBehaviour
         PlayerPrefs.Save();
 	}
 
+    // Function to case a generic object as its appropriate type
     T Get<T>()
     {
         object obj;
@@ -94,6 +96,7 @@ public class OptionSystem : MonoBehaviour
         return (T)Convert.ChangeType(obj, typeof(T));
     }
 
+    // Function to save player option changes to memory
     void SaveAllChanges()
     {
         foreach(var pair in optionObjs)
@@ -123,7 +126,7 @@ public class OptionSystem : MonoBehaviour
         }
         PlayerPrefs.DeleteKey(allOptionsKey);
     }
-
+    // Get player option data from the registry
     void GetDataFromPrefs()
     {
         string allKeys = PlayerPrefs.GetString(allOptionsKey);
@@ -149,7 +152,7 @@ public class OptionSystem : MonoBehaviour
             previousClassName = className;
         }
     }
-
+    // Object to hold player option values
     object GetValueFromPrefs(string key)
     {
         string[] keyStrs = key.Split('*');
@@ -182,7 +185,7 @@ public class OptionSystem : MonoBehaviour
         }
         return val;
     }
-
+    // Function to initialize a new option as a given type of option
     void InitializePrefProperty(System.Type type, string key)
     {
         if (type == typeof(float))
