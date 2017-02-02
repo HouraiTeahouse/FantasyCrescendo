@@ -22,6 +22,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
 
         public bool IsActive {
             get { return _isActive; }
+            protected set { _isActive = value; }
         }
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
@@ -39,7 +40,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
 
         public override void OnStartServer() {
             base.OnStartServer();
-            _isActive = enabled;
+            _isActive = true;
         }
 
         /// <summary> Gets the winner of the Match, according to the Match Rule. </summary>

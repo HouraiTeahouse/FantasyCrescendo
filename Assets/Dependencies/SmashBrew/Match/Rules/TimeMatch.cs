@@ -44,6 +44,8 @@ namespace HouraiTeahouse.SmashBrew.Matches {
 
         /// <summary> Unity Callback. Called once every frame. </summary>
         void Update() {
+            if (!IsActive)
+                return;
             CurrentTime -= Time.unscaledDeltaTime;
             if (CurrentTime <= 0)
                 Match.CmdFinishMatch(false);

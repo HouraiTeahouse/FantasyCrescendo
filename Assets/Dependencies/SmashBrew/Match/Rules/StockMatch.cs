@@ -37,11 +37,12 @@ namespace HouraiTeahouse.SmashBrew.Matches {
         protected override void Awake() {
             base.Awake();
             _eventManager = Mediator.Global;
-            _stocks.Callback += (op, index) => StockChanged.SafeInvoke();
+            _stocks.Callback+= (op, index) => StockChanged.SafeInvoke();
         }
 
         public override void OnStartServer() {
             _stocks.Clear();
+            IsActive = true;
             foreach (var player in PlayerManager.Instance.MatchPlayers) {
                 _stocks.Add(-1);
                 player.Changed += () => {
@@ -65,7 +66,11 @@ namespace HouraiTeahouse.SmashBrew.Matches {
 
         /// <summary> Unity Callback. Called once every frame. </summary>
         void Update() {
-            if (hasAuthority && _stocks.Count(lives => lives > 0) <= 1)
+            if (!IsActive)
+                return;
+            if (hasAuthority && 
+                PlayerManager.Instance.MatchPlayers.Count(p => p.Type.IsActive) > 1 &&
+                _stocks.Count(lives => lives > 0) <= 1)
                 Match.CmdFinishMatch(false);
         }
 
@@ -80,7 +85,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
         }
 
         bool RespawnCheck(Player character) {
-            if (!isActiveAndEnabled || !Check.Range(character.ID, _stocks))
+            if (!IsActive || !Check.Range(character.ID, _stocks))
                 return false;
             return _stocks[character.ID] > 1;
         }

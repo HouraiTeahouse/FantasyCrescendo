@@ -27,7 +27,6 @@ namespace HouraiTeahouse.SmashBrew.Matches {
             foreach (MatchRule rule in rules) {
                 if (rule == null)
                     continue;
-                rule.enabled = false;
                 Player ruleWinner = rule.GetWinner();
                 if (ruleWinner == null || noContest)
                     continue;

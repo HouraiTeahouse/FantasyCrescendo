@@ -5,10 +5,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
     /// <summary> A behaviour used to display a Player's remaining stock </summary>
     //TODO: Change to be event based 
-    public class PlayerStockDisplay : MonoBehaviour, IDataComponent<Player> {
+    public class PlayerStockDisplay : PlayerUIComponent {
 
-        Player _player;
-
+        [SerializeField]
         StockMatch _stockMatch;
 
         [SerializeField]
@@ -19,32 +18,31 @@ namespace HouraiTeahouse.SmashBrew.UI {
         [Tooltip("The standard indicators to show current stock values")]
         GameObject[] standardIndicators;
 
-        /// <summary>
-        ///     <see cref="IDataComponent{T}.SetData" />
-        /// </summary>
-        public void SetData(Player data) {
-            if (_player != null)
-                _player.Changed -= Refresh;
-            _player = data;
-            if (_player != null)
-                _player.Changed += Refresh;
-        }
-
         /// <summary> Unity Callback. Called before the object's first frame. </summary>
-        void Start() {
+        protected override void Start() {
+            base.Start();
             Refresh();
         }
 
-        void Refresh() {
-            if (_stockMatch == null) {
-                _stockMatch = FindObjectOfType<StockMatch>();
-                if(_stockMatch != null)
-                    _stockMatch.StockChanged += Refresh;
-            }
-            if (_stockMatch == null || !_stockMatch.IsActive || _player == null)
+        void Update() {
+            if (_stockMatch != null)
                 return;
+            _stockMatch = FindObjectOfType<StockMatch>();
+            if(_stockMatch != null) {
+                _stockMatch.StockChanged += Refresh;
+                Refresh();
+            }
+        }
 
-            int stock = _stockMatch[_player];
+        void Refresh() {
+            if (_stockMatch == null || !_stockMatch.IsActive || Player == null) {
+                ExcessDisplay.gameObject.SetActive(false);
+                foreach (GameObject standardIndicator in standardIndicators)
+                    standardIndicator.SetActive(false);
+                return;
+            }
+
+            int stock = _stockMatch[Player];
             bool excess = stock > standardIndicators.Length;
             if (ExcessDisplay)
                 ExcessDisplay.gameObject.SetActive(excess);
