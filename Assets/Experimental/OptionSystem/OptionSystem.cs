@@ -27,11 +27,7 @@ public class OptionSystem : MonoBehaviour
     // Unity will call this function upon object initialization
     void Start()
     {
-        CheckOptionVersion();
         Initialize();
-        var audios = Get<AudioOptions>();
-        audios.Bgm = 1.0f;
-        SaveAllChanges();
     }
 
     void CheckOptionVersion()
