@@ -18,21 +18,39 @@ public class OptionSystem : MonoBehaviour
 
     string allOptionsKey = "OptionNames";
 
+    // A version tracker for deleting old registries
+    // only updates when serialized data format becomes different
+    // for example, when PlayerPrefs value changed from "type,value" to "value" only
+    const int optionVersion = 1;
+    string optionVersionKey = "OptionVersion";
+
     // Unity will call this function upon object initialization
     void Start()
     {
-        //ClearRegistry();
+        CheckOptionVersion();
         Initialize();
-        //GetDataFromPrefs();
         var audios = Get<AudioOptions>();
-        Log.Debug(this, audios.Bgm);
         audios.Bgm = 1.0f;
-        Log.Debug(this, audios.Bgm);
         SaveAllChanges();
     }
-    // A function to initializa the OptionSystem Object
-	void Initialize()
+
+    void CheckOptionVersion()
     {
+        if (!PlayerPrefs.HasKey(optionVersionKey))
+        {
+            ClearRegistry();
+        }
+        else if (optionVersion != PlayerPrefs.GetInt(optionVersionKey))
+        {
+            ClearRegistry();
+        }
+        PlayerPrefs.SetInt(optionVersionKey, optionVersion);
+    }
+
+    // A function to initializa the OptionSystem Object
+    void Initialize()
+    {
+        CheckOptionVersion();
         // get all classes that have Options attributes
         var query = from type in Assembly.GetExecutingAssembly().GetTypes()
                 where type.IsClass && type.GetCustomAttributes(typeof(OptionCategory), true).Length > 0
