@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System.Text;
@@ -20,46 +19,25 @@ public class OptionSystem : MonoBehaviour
 
     void Start()
     {
+        //ClearRegistry();
         Initialize();
         GetDataFromPrefs();
-        var audio = Get<AudioOptions>();
-        audio.Print();
-        audio.master = 1.0f;
-        audio.bgm = 2.0f;
-        audio.sfx = 3.0f;
-        audio.Print();
-        var some = Get<SomeOptions>();
-        some.Print();
-        some.someBool = true;
-        some.someFloat = 123.45f;
-        some.someInt = 21341;
-        some.someString = "afiohqrwoiy";
-        some.Print();
-
         SaveAllChanges();
-
-        optionObjs.Clear();
-        GetDataFromPrefs();
-        audio = Get<AudioOptions>();
-        audio.Print();
-        some = Get<SomeOptions>();
-        some.Print();
     }
 
 	void Initialize()
     {
         // get all classes that have Options attributes
-        var q = from t in Assembly.GetExecutingAssembly().GetTypes()
-                where t.IsClass && t.GetCustomAttributes(typeof(OptionCategory), true).Length > 0
-                select t;
+        var query = from type in Assembly.GetExecutingAssembly().GetTypes()
+                where type.IsClass && type.GetCustomAttributes(typeof(OptionCategory), true).Length > 0
+                select type;
 
         StringBuilder allPropertiesStr = new StringBuilder();
-        foreach (var t in q)
+        foreach (var type in query)
         {
-
-            string categoryClassName = t.FullName;
+            string categoryClassName = type.FullName;
             string categoryAttrValue = string.Empty;
-            var attrs = t.GetCustomAttributes(typeof(OptionCategory), true);
+            var attrs = type.GetCustomAttributes(typeof(OptionCategory), true);
             foreach (var attr in attrs)
             {
                 if (attr is OptionCategory)
@@ -69,9 +47,9 @@ public class OptionSystem : MonoBehaviour
                 }
             }
 
-            foreach (var p in t.GetProperties())
+            foreach (var property in type.GetProperties())
             {
-                string propertyName = p.Name;
+                string propertyName = property.Name;
                 string propertyAttrValue = string.Empty;
                 foreach (var attr in attrs)
                 {
@@ -81,13 +59,11 @@ public class OptionSystem : MonoBehaviour
                         propertyAttrValue = o.Name;
                     }
                 }
-                StringBuilder propertyStr = new StringBuilder();
-                propertyStr.Append(categoryClassName);
-                propertyStr.Append('*');
-                propertyStr.Append(propertyName);
-                if (!PlayerPrefs.HasKey(propertyStr.ToString()))
+                string propertyStr = categoryClassName + "*" + propertyName;
+
+                if (!PlayerPrefs.HasKey(propertyStr))
                 {
-                    InitializePrefProperty(p.PropertyType, propertyStr.ToString());
+                    InitializePrefProperty(property.PropertyType, propertyStr);
                 }
                 allPropertiesStr.Append(propertyStr);
                 allPropertiesStr.Append(',');
@@ -113,7 +89,8 @@ public class OptionSystem : MonoBehaviour
 
     T Get<T>()
     {
-        object obj = optionObjs[typeof(T)];
+        object obj;
+        optionObjs.TryGetValue(typeof(T), out obj);
         return (T)Convert.ChangeType(obj, typeof(T));
     }
 
@@ -121,25 +98,30 @@ public class OptionSystem : MonoBehaviour
     {
         foreach(var pair in optionObjs)
         {
-            Type t = pair.Key;
-            string typeName = t.FullName;
+            Type type = pair.Key;
+            string typeName = type.FullName;
             
-            foreach (var p in t.GetProperties())
+            foreach (var property in type.GetProperties())
             {
-                StringBuilder keyStr = new StringBuilder();
-                string propName = p.Name;
-                keyStr.Append(typeName);
-                keyStr.Append('*');
-                keyStr.Append(propName);
+                string propName = property.Name;
+                string keyStr = typeName + '*' + propName;
+                string valStr = property.PropertyType.FullName + ',' + property.GetValue(pair.Value, null);
 
-                StringBuilder valStr = new StringBuilder();
-                valStr.Append(p.PropertyType.FullName);
-                valStr.Append(',');
-                valStr.Append(p.GetValue(pair.Value, null));
-
-                PlayerPrefs.SetString(keyStr.ToString(), valStr.ToString());
+                PlayerPrefs.SetString(keyStr, valStr);
             }
         }
+    }
+
+    // Delete all option related entries in registry
+    void ClearRegistry()
+    {
+        string allKeys = PlayerPrefs.GetString(allOptionsKey);
+        string[] allMembers = allKeys.Split(',');
+        for (int i = 0; i < allMembers.Length; i++)
+        {
+            PlayerPrefs.DeleteKey(allMembers[i]);
+        }
+        PlayerPrefs.DeleteKey(allOptionsKey);
     }
 
     void GetDataFromPrefs()
@@ -155,14 +137,14 @@ public class OptionSystem : MonoBehaviour
             string propertyName = strs[1];
             object propertyValue = GetValueFromPrefs(allMembers[i]);
             
-            Type t = Type.GetType(className);
+            Type type = Type.GetType(className);
             if (className != previousClassName)
             {
-                obj = Activator.CreateInstance(t);
-                optionObjs.Add(t, obj);
+                obj = Activator.CreateInstance(type);
+                optionObjs.Add(type, obj);
             }
 
-            t.GetProperty(propertyName).SetValue(obj, propertyValue, null);
+            type.GetProperty(propertyName).SetValue(obj, propertyValue, null);
             
             previousClassName = className;
         }
@@ -170,31 +152,33 @@ public class OptionSystem : MonoBehaviour
 
     object GetValueFromPrefs(string key)
     {
-        string raw = PlayerPrefs.GetString(key);
-        string[] strs = raw.Split(',');
-        string typeName = strs[0];
-        string valStr = strs[1];
-        Type t = Type.GetType(typeName);
+        string[] keyStrs = key.Split('*');
+        string className = keyStrs[0];
+        string propName = keyStrs[1];
+        string typeName = Type.GetType(className).GetProperty(propName).PropertyType.ToString();
+        string valStr = PlayerPrefs.GetString(key);
+        Type type = Type.GetType(typeName);
         object val = null;
-        if (t == typeof(int))
+        if (type == typeof(int))
         {
             val = int.Parse(valStr);
         }
-        else if (t == typeof(float))
+        else if (type == typeof(float))
         {
             val = float.Parse(valStr);
         }
-        else if (t == typeof(bool))
+        else if (type == typeof(bool))
         {
             val = bool.Parse(valStr);
         }
-        else if (t == typeof(string))
+        else if (type == typeof(string))
         {
             val = valStr;
         }
         else
         {
             Debug.LogError(key + " has an unsupported type");
+            
         }
         return val;
     }
@@ -203,28 +187,23 @@ public class OptionSystem : MonoBehaviour
     {
         if (type == typeof(float))
         {
-            PlayerPrefs.SetString(key, type.FullName + ",0.0");
+            PlayerPrefs.SetString(key, "0.0");
         }
         else if (type == typeof(int))
         {
-            PlayerPrefs.SetString(key, type.FullName + ",0");
+            PlayerPrefs.SetString(key, "0");
         }
         else if (type == typeof(string))
         {
-            PlayerPrefs.SetString(key, type.FullName + ",");
+            PlayerPrefs.SetString(key, string.Empty);
         }
         else if (type == typeof(bool))
         {
-            PlayerPrefs.SetString(key, type.FullName + ",false");
+            PlayerPrefs.SetString(key, "false");
         }
         else
         {
             Debug.LogError(key + " has an unsupported property type " + type.ToString());
         }
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

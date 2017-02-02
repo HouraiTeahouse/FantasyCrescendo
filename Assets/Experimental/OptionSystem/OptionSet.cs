@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
+﻿using System;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class OptionCategory : Attribute {
+public class OptionCategory : Attribute
+{
     private string name;
     public OptionCategory(string name)
     {
@@ -42,37 +40,22 @@ public class Option : Attribute
 public class AudioOptions
 {
     [Option("Master")]
-    public float master { get; set; }
+    public float Master { get; set; }
     [Option("BGM")]
-    public float bgm { get; set; }
+    public float Bgm { get; set; }
     [Option("SFX")]
-    public float sfx { get; set; }
-
-    public void Print()
-    {
-        Debug.Log(master);
-        Debug.Log(bgm);
-        Debug.Log(sfx);
-    }
+    public float Sfx { get; set; }
 }
 
 [OptionCategory("Some Options")]
 public class SomeOptions
 {
     [Option("Some Float")]
-    public float someFloat { get; set; }
+    public float SomeFloat { get; set; }
     [Option("Some Bool")]
-    public bool someBool { get; set; }
+    public bool SomeBool { get; set; }
     [Option("Some Int")]
-    public int someInt { get; set; }
+    public int SomeInt { get; set; }
     [Option("Some String")]
-    public string someString { get; set; }
-
-    public void Print()
-    {
-        Debug.Log(someFloat);
-        Debug.Log(someBool);
-        Debug.Log(someInt);
-        Debug.Log(someString);
-    }
+    public string SomeString { get; set; }
 }
