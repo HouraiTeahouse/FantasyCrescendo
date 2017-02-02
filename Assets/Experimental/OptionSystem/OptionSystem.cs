@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System;
 using UnityEngine;
+using HouraiTeahouse;
 
 public class OptionSystem : MonoBehaviour
 {
@@ -22,7 +23,11 @@ public class OptionSystem : MonoBehaviour
     {
         //ClearRegistry();
         Initialize();
-        GetDataFromPrefs();
+        //GetDataFromPrefs();
+        var audios = Get<AudioOptions>();
+        Log.Debug(this, audios.Bgm);
+        audios.Bgm = 1.0f;
+        Log.Debug(this, audios.Bgm);
         SaveAllChanges();
     }
     // A function to initializa the OptionSystem Object
@@ -92,7 +97,24 @@ public class OptionSystem : MonoBehaviour
     T Get<T>()
     {
         object obj;
-        optionObjs.TryGetValue(typeof(T), out obj);
+        Type type = typeof(T);
+        if (optionObjs.ContainsKey(type))
+        {
+            optionObjs.TryGetValue(type, out obj);
+        }
+        else
+        {
+            obj = Activator.CreateInstance(type);
+            
+            foreach (var prop in type.GetProperties())
+            {
+                string key = type.ToString() + '*' + prop.Name;
+                object propertyValue = GetValueFromPrefs(key);
+                prop.SetValue(obj, propertyValue, null);
+            }
+
+            optionObjs.Add(type, obj);
+        }
         return (T)Convert.ChangeType(obj, typeof(T));
     }
 
@@ -108,7 +130,7 @@ public class OptionSystem : MonoBehaviour
             {
                 string propName = property.Name;
                 string keyStr = typeName + '*' + propName;
-                string valStr = property.PropertyType.FullName + ',' + property.GetValue(pair.Value, null);
+                string valStr = property.GetValue(pair.Value, null).ToString();
 
                 PlayerPrefs.SetString(keyStr, valStr);
             }
