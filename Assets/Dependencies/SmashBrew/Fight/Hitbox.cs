@@ -4,13 +4,14 @@ using UnityEngine;
 using Random = System.Random;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace HouraiTeahouse.SmashBrew {
 
     [DisallowMultipleComponent]
     public sealed class Hitbox : MonoBehaviour {
+
+        static bool _initialized = false;
 
         public enum Type {
 
@@ -32,28 +33,16 @@ namespace HouraiTeahouse.SmashBrew {
         [ReadOnly]
         int _id;
 
-        [SerializeField]
-        [HideInInspector]
-        Mesh _capsule;
-
         //TODO: Add triggers for on hit effects and SFX
         //ParticleSystem _effect;
         //AudioSource _soundEffect;
         Collider[] _colliders;
-
-        [SerializeField]
-        [HideInInspector]
-        Mesh _cube;
 
         IRegistrar<Hitbox> _registrar;
 
         [SerializeField]
         [HideInInspector]
         Material _material;
-
-        [SerializeField]
-        [HideInInspector]
-        Mesh _sphere;
 
         static Hitbox() {
             ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
@@ -112,8 +101,18 @@ namespace HouraiTeahouse.SmashBrew {
 
         #region Unity Callbacks
 
+        void Initialize() {
+            if (_initialized)
+                return;
+            // Draw Hitboxes in Debug builds
+            DrawHitboxes = Debug.isDebugBuild;
+            Log.Error(DrawHitboxes);
+            _initialized = true;
+        }
+
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
+            Initialize();
             CurrentType = DefaultType;
             Registrar = GetComponentInParent<IRegistrar<Hitbox>>();
             Source = GetComponentInParent<Character>();
@@ -156,12 +155,13 @@ namespace HouraiTeahouse.SmashBrew {
             if (_colliders == null)
                 _colliders = GetComponents<Collider>();
             Color color = Config.Debug.GetHitboxColor(CurrentType);
-            foreach (Collider col in _colliders)
+            foreach (Collider col in _colliders) {
                 DrawCollider(col, color);
-            //GL.wireframe = true;
-            //foreach (var col in _colliders)
-            //    DrawCollider(col, Color.white);
-            //GL.wireframe = false;
+            }
+            GL.wireframe = true;
+            foreach (var col in _colliders)
+                DrawCollider(col, Color.gray);
+            GL.wireframe = false;
         }
 
         void Reset() { _id = new Random().Next(int.MaxValue); }
@@ -171,11 +171,11 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             Mesh mesh = null;
             if (col is SphereCollider)
-                mesh = _sphere;
+                mesh = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Sphere);
             else if (col is BoxCollider)
-                mesh = _cube;
+                mesh = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Cube);
             else if (col is CapsuleCollider)
-                mesh = _capsule;
+                mesh = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Capsule);
             else if (col is MeshCollider)
                 mesh = ((MeshCollider) col).sharedMesh;
             if (mesh == null)

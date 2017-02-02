@@ -14,10 +14,9 @@ Material:
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
-    m_TexEnvs: {}
-    m_Floats: {}
+    m_TexEnvs: []
+    m_Floats: []
     m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.5019608}
+    - first:
+        name: _Color
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}

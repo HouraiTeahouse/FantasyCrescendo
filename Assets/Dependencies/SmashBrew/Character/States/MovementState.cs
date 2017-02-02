@@ -118,7 +118,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public bool IsCrounching {
-            get { return CharacterController.isGrounded && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)); }
+            get { return CharacterController != null && CharacterController.isGrounded && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)); }
         }
 
         /// <summary> Can the Character currently jump? </summary>

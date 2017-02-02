@@ -127,7 +127,7 @@ namespace HouraiTeahouse {
                 localToWorld = transform.localToWorldMatrix;
             }
             else if (sphereCol != null) {
-                scale = sphereCol.radius * Vector3.one;
+                scale = 2f * sphereCol.radius * Vector3.one;
                 localToWorld = Matrix4x4.TRS(transform.TransformPoint(sphereCol.center),
                     transform.rotation,
                     Vector3.one * transform.lossyScale.Max());
@@ -168,9 +168,9 @@ namespace HouraiTeahouse {
 
         static void DrawSphere(bool solid) {
             if (solid)
-                Gizmos.DrawSphere(Vector3.zero, 1f);
+                Gizmos.DrawSphere(Vector3.zero, 0.5f);
             else
-                Gizmos.DrawWireSphere(Vector3.zero, 1f);
+                Gizmos.DrawWireSphere(Vector3.zero, 0.5f);
         }
 
         static void DrawBox(bool solid) {
