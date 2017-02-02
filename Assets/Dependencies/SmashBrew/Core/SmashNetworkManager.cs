@@ -98,6 +98,23 @@ namespace HouraiTeahouse.SmashBrew {
                 selection.Character = DataManager.Instance.Characters.Random();
                 selection.Pallete = Mathf.FloorToInt(Random.value * selection.Character.PalleteCount);
             }
+            var sameCharacterSelections = new HashSet<PlayerSelection>(PlayerManager.MatchPlayers.Select(p => p.Selection));
+            if (sameCharacterSelections.Contains(selection)) {
+                bool success = false;
+                for (var i = 0; i < selection.Character.PalleteCount; i++) {
+                    selection.Pallete = i;
+                    if (!sameCharacterSelections.Contains(selection)) {
+                        success = true;
+                        break;
+                    }
+                }
+                if (!success) {
+                    Log.Error("Two players made the same selection, and no remaining palletes remain. {0} doesn't have enough colors".With(selection.Character));
+                    ClientScene.RemovePlayer(playerControllerId);
+                    return;
+                }
+            }
+
             var prefab = selection.Character.Prefab.Load();
 
             if (prefab == null) {
