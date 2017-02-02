@@ -106,7 +106,6 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             // Draw Hitboxes in Debug builds
             DrawHitboxes = Debug.isDebugBuild;
-            Log.Error(DrawHitboxes);
             _initialized = true;
         }
 
