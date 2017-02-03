@@ -104,7 +104,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
         /// player respawns. </summary>
         /// <param name="eventArgs"> the spawn event arguments </param>
         void OnSpawn(PlayerSpawnEvent eventArgs) {
-            if (!isActiveAndEnabled)
+            if (!IsActive)
                 return;
             _stocks[eventArgs.Player.ID] = stock;
             //eventArgs.Player.PlayerObject.GetComponent<DamageState>().Type = DamageType.Percent;
