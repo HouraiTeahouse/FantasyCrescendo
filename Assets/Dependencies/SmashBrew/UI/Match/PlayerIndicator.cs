@@ -5,7 +5,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
     /// <summary> UI element that shows where players are </summary>
     [RequireComponent(typeof(Text), typeof(PlayerUIColor))]
-    public sealed class PlayerIndicator : PlayerUIComponent {
+    public sealed class PlayerIndicator : PlayerUIComponent<Graphic> {
 
         [SerializeField]
         CharacterController _characterController;
@@ -41,6 +41,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Vector2 viewportPosition = Camera.main.WorldToViewportPoint(worldPosition);
             //now you can set the position of the ui element
             _rTransform.anchoredPosition = viewportPosition.Mult(_cTransform.sizeDelta) - 0.5f * _cTransform.sizeDelta;
+
+            if (Component)
+                Component.enabled = _characterController.gameObject.activeInHierarchy;
         }
 
         protected override void PlayerChange() {
