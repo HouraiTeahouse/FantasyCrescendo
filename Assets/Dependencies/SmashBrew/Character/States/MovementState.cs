@@ -1,4 +1,5 @@
 using System;
+using HouraiTeahouse.SmashBrew.Stage;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -245,6 +246,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 Physics.SetVerticalVelocity(-FastFallSpeed);
             else if (yVel < -MaxFallSpeed)
                 Physics.SetVerticalVelocity(-MaxFallSpeed);
+        }
+
+        void OnControllerColliderHit(ControllerColliderHit hit) {
+            var platform = hit.gameObject.GetComponent<Platform>();
+            if (platform != null)
+                platform.CharacterCollision(CharacterController);
         }
 
         [Command]

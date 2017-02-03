@@ -1,4 +1,5 @@
 using System.Linq;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Stage { 
@@ -45,18 +46,16 @@ namespace HouraiTeahouse.SmashBrew.Stage {
 
         /// <summary> Check if the </summary>
         /// <param name="col"> </param>
-        static void Check(Component col) {
+        void Check(Collider col) {
             if (!col.CompareTag(Config.Tags.PlayerTag))
                 return;
 
-            // TODO: Reimplement
-
-            //var character = col.gameObject.GetComponentInParent<Character>();
-            //if (character == null || character.InputSource == null)
-            //    return;
-
-            //if (character.InputSource.Crouch)
-            //    ChangeIgnore(col, true);
+            var character = col.gameObject.GetComponentInParent<Character>();
+            if (character == null)
+                return;
+            //TODO(james7132): Edit this to use normal input
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                ChangeIgnore(col, true);
         }
 
         /// <summary> Unity callback. Called when another collider enters an attached trigger collider. </summary>
@@ -65,16 +64,9 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         /// <summary> Unity callback. Called when another collider exits an attached trigger collider. </summary>
         void OnTriggerExit(Collider other) { ChangeIgnore(other, false); }
 
-        /// <summary> Unity callback. Called every physics loop for each for each . </summary>
-        void OnCollisionStay(Collision col) {
+        public void CharacterCollision(CharacterController controller) {
             if (Hardness <= HardnessSetting.Soft)
-                Check(col.collider);
-        }
-
-        /// <summary> Unity callback. Called when another collider enters an attached trigger collider. </summary>
-        void OnCollisionEnter(Collision col) {
-            if (Hardness <= HardnessSetting.Soft)
-                Check(col.collider);
+                Check(controller);
         }
 
     }
