@@ -167,6 +167,27 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 CmdResetJumps();
         }
 
+        void LedgeMovement() {
+            if (JumpCheck()) {
+            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
+                CurrentLedge = null;
+            } else {
+                SnapToLedge();
+            }
+        }
+
+        bool JumpCheck() {
+            bool success = (!IsCrounching && JumpCount > 0 && JumpCount <= MaxJumpCount
+                && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)));
+            if (success) {
+                CurrentLedge = null;
+                OnJump.SafeInvoke();
+                Physics.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
+                CmdJump();
+            }
+            return success;
+        }
+
         void Update() {
             if (!isLocalPlayer)
                 return;
@@ -174,20 +195,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             var movement = new MovementInfo { facing = Direction };
             // If currently hanging from a edge
             if (CurrentLedge != null) {
-                SnapToLedge();
-            } else {
-                if(CharacterController.isGrounded)
-                    movement = GroundedMovement(movement);
-                else
-                    movement = AerialMovement(movement);
-            }
-
-            if (!IsCrounching && JumpCount > 0 && JumpCount <= MaxJumpCount &&
-                (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) {
-                Physics.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
-                CurrentLedge = null;
-                OnJump.SafeInvoke();
-                CmdJump();
+                LedgeMovement();
+            } else if (CharacterController.isGrounded) {
+                movement = GroundedMovement(movement);
+            } else { 
+                movement = AerialMovement(movement);
             }
 
             LimitFallSpeed();
@@ -220,6 +232,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 CmdResetJumps();
             if (IsCrounching)
                 info.horizontalSpeed = 0f;
+            JumpCheck();
             return info;
         }
 
@@ -237,6 +250,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
                 IsFastFalling = true;
 
+            JumpCheck();
             return info;
         }
 
