@@ -2591,7 +2591,7 @@ Transform:
   m_GameObject: {fileID: 1398186200016304}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4914860541019148}
   - {fileID: 4594077044726828}
@@ -3466,7 +3466,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1101695543473290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 1.75, z: 0}
+  m_LocalPosition: {x: -0.03, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4437685227430292}
@@ -3838,10 +3838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 285979377
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4008,10 +4005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 695087141
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4032,10 +4026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 808779985
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4056,10 +4047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 342795866
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4080,10 +4068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 240217762
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4104,10 +4089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1571732220
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4163,10 +4145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 555153140
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4217,10 +4196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 984141623
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4241,10 +4217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 330129973
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4297,10 +4270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1403866113
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4321,10 +4291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1782134250
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 0}
   type: 4
   _priority: 100
   _damage: 5
@@ -4712,13 +4679,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.75
+  m_Height: 1.4
   m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.85, z: 0}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!198 &198070700526492778
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -4774,7 +4741,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2118340892
+  randomSeed: 1191156455
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4947,10 +4914,10 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.80784315, g: 0.9607843, b: 1, a: 0.3529412}
+      maxColor: {r: 0.80784315, g: 0.9607843, b: 1, a: 0.654902}
       minMaxState: 0
     startSize:
-      scalar: 1
+      scalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -7411,7 +7378,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1572527924
+  randomSeed: 246367177
   InitialModule:
     serializedVersion: 3
     enabled: 1
