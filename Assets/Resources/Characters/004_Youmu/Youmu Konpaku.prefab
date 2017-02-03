@@ -3989,10 +3989,10 @@ MonoBehaviour:
   m_SyncRotationAxis: 0
   m_RotationSyncCompression: 2
   m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_SnapThreshold: 50
+  m_MovementTheshold: 0.1
+  m_SnapThreshold: 1
   m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
+  m_InterpolateMovement: 0.5
 --- !u!114 &114427893136825504
 MonoBehaviour:
   m_ObjectHideFlags: 1
