@@ -93,9 +93,9 @@ namespace HouraiTeahouse.SmashBrew.Matches {
         /// <summary> Events callback. Called every time a Player dies. </summary>
         /// <param name="eventArgs"> the death event arguments </param>
         void OnPlayerDie(PlayerDieEvent eventArgs) {
+            _stocks[eventArgs.Player.ID]--;
             if (eventArgs.Revived || _stocks[eventArgs.Player.ID] <= 0)
                 return;
-            _stocks[eventArgs.Player.ID]--;
             _eventManager.Publish(new PlayerRespawnEvent {Player = eventArgs.Player});
             eventArgs.Revived = true;
         }
