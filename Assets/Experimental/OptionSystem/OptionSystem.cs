@@ -389,6 +389,11 @@ namespace HouraiTeahouse
                 optionAttr = attr;
             }
 
+            public object GetPropertyValue()
+            {
+                return propertyInfo.GetValue(instance, null);
+            }
+
             public void SetPropertyValue(object val)
             {
                 propertyInfo.SetValue(instance, val, null);

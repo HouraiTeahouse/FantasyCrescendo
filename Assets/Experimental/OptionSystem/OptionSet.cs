@@ -58,16 +58,7 @@ namespace HouraiTeahouse
             }
         }
 
-        float defValue;
-        public float DefValue
-        {
-            get
-            {
-                return defValue;
-            }
-        }
-
-        public UISlider(string name, float min, float max, float defValue = 0.0f) : base(name)
+        public UISlider(string name, float min, float max) : base(name)
         {
             this.min = min;
             this.max = max;
@@ -76,73 +67,46 @@ namespace HouraiTeahouse
 
     public class UIToggle : Option
     {
-        bool defValue;
-        public bool DefValue
+        public UIToggle(string name) : base(name)
         {
-            get
-            {
-                return defValue;
-            }
-        }
-        public UIToggle(string name, bool defValue = false) : base(name)
-        {
-            this.defValue = defValue;
         }
     }
 
     public class UIIntField : Option
     {
-        int defValue;
-        public int DefValue
+        public UIIntField(string name) : base(name)
         {
-            get
-            {
-                return defValue;
-            }
-        }
-        public UIIntField(string name, int defValue = 0) : base(name)
-        {
-            this.defValue = defValue;
         }
     }
 
     public class UITextField : Option
     {
-        string defValue;
-        public string DefValue
+        public UITextField(string name) : base(name)
         {
-            get
-            {
-                return defValue;
-            }
-        }
-        public UITextField(string name, string defValue = "") : base(name)
-        {
-            this.defValue = defValue;
         }
     }
 
     [OptionCategory("Audio Options")]
     public class AudioOptions
     {
-        [UISlider("Master Volume", 0.0f, 1.0f, 1.0f)]
+        [UISlider("Master Volume", 0.0f, 1.0f)]
         public float Master { get; set; }
-        [UISlider("Background Music", 0.0f, 1.0f, 1.0f)]
+        [UISlider("Background Music", 0.0f, 1.0f)]
         public float Bgm { get; set; }
-        [UISlider("Sound Effects", 0.0f, 1.0f, 1.0f)]
+        [UISlider("Sound Effects", 0.0f, 1.0f)]
         public float Sfx { get; set; }
     }
 
     [OptionCategory("Some Options")]
     public class SomeOptions
     {
-        [UISlider("Some Float", -100.0f, 100.0f, 60.0f)]
+        [UISlider("Some Float", -100.0f, 100.0f)]
         public float SomeFloat { get; set; }
-        [UIToggle("Some Bool", true)]
+        [UIToggle("Some Bool")]
         public bool SomeBool { get; set; }
-        [UIIntField("Some Int", 123)]
+        [UIIntField("Some Int")]
         public int SomeInt { get; set; }
-        [UITextField("Some String", "Okayama no kenboku")]
+        [UITextField("Some String")]
         public string SomeString { get; set; }
     }
 }

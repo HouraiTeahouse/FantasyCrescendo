@@ -35,7 +35,7 @@ namespace HouraiTeahouse
                         sliderObj.transform.parent = label.transform;
                         sliderObj.minValue = sliderAttr.Min;
                         sliderObj.maxValue = sliderAttr.Max;
-                        sliderObj.value = sliderAttr.DefValue;
+                        sliderObj.value = (float)option.GetPropertyValue();
                         sliderObj.onValueChanged.AddListener(delegate { SliderValueToProperty(sliderObj, option); });
                     }
                 }
