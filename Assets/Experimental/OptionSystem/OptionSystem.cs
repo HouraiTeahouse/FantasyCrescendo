@@ -50,7 +50,6 @@ namespace HouraiTeahouse
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
-                Log.Debug("Saved");
                 SaveAllChanges();
             }
         }
@@ -214,6 +213,35 @@ namespace HouraiTeahouse
                     PlayerPrefs.SetString(keyStr, valStr);
                 }
             }
+
+            Log.Debug("Options Saved");
+        }
+
+        public void RevertAllChanges()
+        {
+            string[] keys = new string[optionObjs.Count];
+            int i = 0;
+            foreach (var pair in optionObjs)
+            {
+                Type type = pair.Key;
+                string typeName = type.FullName;
+                keys[i] = typeName;
+                i++;
+            }
+
+            for (int j = 0; j < keys.Length; j++)
+            {
+                Type type = Type.GetType(keys[j]);
+                foreach (var prop in type.GetProperties())
+                {
+                    string key = type.FullName + '*' + prop.Name;
+                    object instance;
+                    optionObjs.TryGetValue(type, out instance);
+                    prop.SetValue(instance, GetValueFromPrefs(key), null);
+                }
+            }
+
+            Log.Debug("Options Reverted");
         }
 
         // Delete all option related entries in registry
