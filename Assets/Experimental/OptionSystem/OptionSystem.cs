@@ -5,12 +5,24 @@ using System.Text;
 using System;
 using UnityEngine;
 
-namespace HouraiTeaHouse
+namespace HouraiTeahouse
 {
-
     public class OptionSystem : MonoBehaviour
     {
         Dictionary<Type, object> optionObjs = new Dictionary<Type, object>();
+        List<CategoryInfo> metadataList;
+        public List<CategoryInfo> MetadataList
+        {
+            get
+            {
+                if (metadataList == null)
+                {
+                    metadataList = new List<CategoryInfo>();
+                    GenerateMetadata();
+                }
+                return metadataList;
+            }
+        }
 
         // in registry there will be an entry under this key,
         // which includes all options' key.
@@ -30,6 +42,17 @@ namespace HouraiTeaHouse
         void Start()
         {
             Initialize();
+        }
+
+        // Debug call for saving changes,
+        // just for testing purposes
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                Log.Debug("Saved");
+                SaveAllChanges();
+            }
         }
 
         void CheckOptionVersion()
@@ -109,8 +132,25 @@ namespace HouraiTeaHouse
             PlayerPrefs.Save();
         }
 
+        void GenerateMetadata()
+        {
+            string keys = PlayerPrefs.GetString(allOptionsKey);
+            string[] propFullNames = PlayerPrefs.GetString(allOptionsKey).Split(',');
+            string lastTypeName = string.Empty;
+            for (int i = 0; i < propFullNames.Length; i++)
+            {
+                string typeName = propFullNames[i].Split('*')[0];
+                if (lastTypeName != typeName)
+                {
+                    Type type = Type.GetType(typeName);
+                    metadataList.Add(new CategoryInfo(type, GetInstance(type)));
+                }
+                lastTypeName = typeName;
+            }
+        }
+
         // Function to case a generic object as its appropriate type
-        T Get<T>()
+        public T Get<T>()
         {
             object obj;
             Type type = typeof(T);
@@ -134,8 +174,31 @@ namespace HouraiTeaHouse
             return (T)Convert.ChangeType(obj, typeof(T));
         }
 
+        public object GetInstance(Type type)
+        {
+            object obj;
+            if (optionObjs.ContainsKey(type))
+            {
+                optionObjs.TryGetValue(type, out obj);
+            }
+            else
+            {
+                obj = Activator.CreateInstance(type);
+
+                foreach (var prop in type.GetProperties())
+                {
+                    string key = type.ToString() + '*' + prop.Name;
+                    object propertyValue = GetValueFromPrefs(key);
+                    prop.SetValue(obj, propertyValue, null);
+                }
+
+                optionObjs.Add(type, obj);
+            }
+            return obj;
+        }
+
         // Function to save player option changes to memory
-        void SaveAllChanges()
+        public void SaveAllChanges()
         {
             foreach (var pair in optionObjs)
             {
@@ -245,6 +308,122 @@ namespace HouraiTeaHouse
             else
             {
                 Debug.LogError(key + " has an unsupported property type " + type.ToString());
+            }
+        }
+
+        public class CategoryInfo
+        {
+            Type type;
+            string categoryName;
+            List<OptionInfo> optionList;
+
+            public CategoryInfo(Type type, object instance)
+            {
+                optionList = new List<OptionInfo>();
+                this.type = type;
+                foreach (var attr in type.GetCustomAttributes(true))
+                {
+                    Type attrType = attr.GetType();
+                    if (attrType.IsAssignableFrom(typeof(OptionCategory)) || attrType.IsSubclassOf(typeof(OptionCategory)))
+                    {
+                        categoryName = ((OptionCategory)attr).Name;
+                    }
+                }
+
+                foreach (var prop in type.GetProperties())
+                {
+                    foreach (var attr in prop.GetCustomAttributes(true))
+                    {
+                        if (attr.GetType().IsSubclassOf(typeof(Option)))
+                        {
+                            optionList.Add(new OptionInfo((Option)attr, prop, instance));
+                        }
+                    }
+                }
+            }
+
+            public string ClassName
+            {
+                get
+                {
+                    return type.FullName;
+                }
+            }
+
+            public Type ClassType
+            {
+                get
+                {
+                    return type;
+                }
+            }
+
+            public string CategoryName
+            {
+                get
+                {
+                    return categoryName;
+                }
+            }
+
+            public List<OptionInfo> OptionList
+            {
+                get
+                {
+                    return optionList;
+                }
+            }
+
+        }
+
+        public class OptionInfo
+        {
+            object instance;
+            PropertyInfo propertyInfo;
+            Option optionAttr;
+
+            public OptionInfo(Option attr, PropertyInfo prop, object instance)
+            {
+                this.instance = instance;
+                propertyInfo = prop;
+                optionAttr = attr;
+            }
+
+            public void SetPropertyValue(object val)
+            {
+                propertyInfo.SetValue(instance, val, null);
+            }
+
+            public string ProperptyName
+            {
+                get
+                {
+                    return propertyInfo.Name;
+                }
+            }
+
+            public string OptionName
+            {
+                get
+                {
+                    return optionAttr.Name;
+                }
+            }
+
+            public PropertyInfo PropertyInfo
+            {
+                get
+                {
+                    return propertyInfo;
+                }
+            }
+
+            public Option OptionAttr
+            {
+                get
+                {
+                    return optionAttr;
+                }
             }
         }
     }
