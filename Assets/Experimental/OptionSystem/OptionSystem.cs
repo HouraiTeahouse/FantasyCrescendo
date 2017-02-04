@@ -38,8 +38,8 @@ namespace HouraiTeahouse
         const int optionVersion = 1;
         string optionVersionKey = "OptionVersion";
 
-        // Unity will call this function upon object initialization
-        void Start()
+        // OptionSystem's initialization must be done before the MetadataList call
+        void Awake()
         {
             Initialize();
         }
