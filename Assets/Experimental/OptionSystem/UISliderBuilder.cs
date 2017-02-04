@@ -19,14 +19,14 @@ namespace HouraiTeahouse
             foreach (OptionSystem.CategoryInfo category in optionSystem.MetadataList) {
                 var label = Instantiate(labelTemplate);
                 label.name = category.CategoryName;
-                label.transform.parent = this.transform;
+                label.transform.SetParent(transform, false);
                 label.GetComponent<Text>().text = category.CategoryName;
                 foreach (var option in category.OptionList) {
                     if (option.OptionAttr is UISlider) {
                         UISlider sliderAttr = (UISlider)option.OptionAttr;
                         var sliderObj = Instantiate(sliderTemplate).GetComponent<Slider>();
                         sliderObj.gameObject.name = sliderAttr.Name;
-                        sliderObj.transform.parent = label.transform;
+                        sliderObj.transform.SetParent(label.transform, false);
                         sliderObj.minValue = sliderAttr.Min;
                         sliderObj.maxValue = sliderAttr.Max;
                         sliderObj.value = (float)option.GetPropertyValue();
