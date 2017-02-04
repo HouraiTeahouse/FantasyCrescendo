@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System.Text;
@@ -7,16 +7,12 @@ using UnityEngine;
 
 namespace HouraiTeahouse
 {
-    public class OptionSystem : MonoBehaviour
-    {
-        Dictionary<Type, object> optionObjs = new Dictionary<Type, object>();
+    public class OptionSystem : MonoBehaviour {
+        readonly Dictionary<Type, object> optionObjs = new Dictionary<Type, object>();
         List<CategoryInfo> metadataList;
-        public List<CategoryInfo> MetadataList
-        {
-            get
-            {
-                if (metadataList == null)
-                {
+        public List<CategoryInfo> MetadataList {
+            get {
+                if (metadataList == null) {
                     metadataList = new List<CategoryInfo>();
                     GenerateMetadata();
                 }
@@ -39,74 +35,46 @@ namespace HouraiTeahouse
         string optionVersionKey = "OptionVersion";
 
         // OptionSystem's initialization must be done before the MetadataList call
-        void Awake()
-        {
+        void Awake() {
             Initialize();
         }
 
+#if UNITY_EDITOR
         // Debug call for saving changes,
         // just for testing purposes
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
+            if (Input.GetKeyDown(KeyCode.S)) {
                 SaveAllChanges();
             }
         }
+#endif
 
-        void CheckOptionVersion()
-        {
-            if (!PlayerPrefs.HasKey(optionVersionKey))
-            {
+        void CheckOptionVersion() {
+            if (!PlayerPrefs.HasKey(optionVersionKey)) {
                 ClearRegistry();
-            }
-            else if (optionVersion != PlayerPrefs.GetInt(optionVersionKey))
-            {
+            } else if (optionVersion != PlayerPrefs.GetInt(optionVersionKey)) {
                 ClearRegistry();
             }
             PlayerPrefs.SetInt(optionVersionKey, optionVersion);
         }
 
         // A function to initializa the OptionSystem Object
-        void Initialize()
-        {
+        void Initialize() {
             CheckOptionVersion();
             // get all classes that have Options attributes
             var query = from type in Assembly.GetExecutingAssembly().GetTypes()
                         where type.IsClass && type.GetCustomAttributes(typeof(OptionCategory), true).Length > 0
                         select type;
 
-            StringBuilder allPropertiesStr = new StringBuilder();
-            foreach (var type in query)
-            {
+            var allPropertiesStr = new StringBuilder();
+            foreach (var type in query) {
                 string categoryClassName = type.FullName;
-                string categoryAttrValue = string.Empty;
-                var attrs = type.GetCustomAttributes(typeof(OptionCategory), true);
-                foreach (var attr in attrs)
-                {
-                    if (attr is OptionCategory)
-                    {
-                        OptionCategory o = (OptionCategory)attr;
-                        categoryAttrValue = o.Name;
-                    }
-                }
-
-                foreach (var property in type.GetProperties())
-                {
+                foreach (var property in type.GetProperties()) {
                     string propertyName = property.Name;
-                    string propertyAttrValue = string.Empty;
-                    foreach (var attr in attrs)
-                    {
-                        if (attr is Option)
-                        {
-                            Option o = (Option)attr;
-                            propertyAttrValue = o.Name;
-                        }
-                    }
                     string propertyStr = categoryClassName + "*" + propertyName;
 
-                    if (!PlayerPrefs.HasKey(propertyStr))
-                    {
+                    if (!PlayerPrefs.HasKey(propertyStr)) {
                         InitializePrefProperty(property.PropertyType, propertyStr);
                     }
                     allPropertiesStr.Append(propertyStr);
@@ -115,77 +83,43 @@ namespace HouraiTeahouse
             }
 
             allPropertiesStr.Remove(allPropertiesStr.Length - 1, 1);
-            if (PlayerPrefs.HasKey(allOptionsKey))
-            {
+            if (PlayerPrefs.HasKey(allOptionsKey)) {
                 List<string> oldKeys = PlayerPrefs.GetString(allOptionsKey).Split(',').ToList();
                 List<string> currKeys = allPropertiesStr.ToString().Split(',').ToList();
                 var obsoleteKeys = oldKeys.Except(currKeys);
-                foreach (var key in obsoleteKeys)
-                {
+                foreach (var key in obsoleteKeys) {
                     PlayerPrefs.DeleteKey(key);
                 }
             }
 
             PlayerPrefs.SetString(allOptionsKey, allPropertiesStr.ToString());
-
             PlayerPrefs.Save();
         }
 
-        void GenerateMetadata()
-        {
-            string keys = PlayerPrefs.GetString(allOptionsKey);
+        void GenerateMetadata() {
             string[] propFullNames = PlayerPrefs.GetString(allOptionsKey).Split(',');
             string lastTypeName = string.Empty;
-            for (int i = 0; i < propFullNames.Length; i++)
-            {
-                string typeName = propFullNames[i].Split('*')[0];
-                if (lastTypeName != typeName)
-                {
+            foreach (string fullname in propFullNames) {
+                string typeName = fullname.Split('*')[0];
+                if (lastTypeName != typeName) {
                     Type type = Type.GetType(typeName);
-                    metadataList.Add(new CategoryInfo(type, GetInstance(type)));
+                    metadataList.Add(new CategoryInfo(type, Get(type)));
                 }
                 lastTypeName = typeName;
             }
         }
 
         // Function to case a generic object as its appropriate type
-        public T Get<T>()
-        {
-            object obj;
-            Type type = typeof(T);
-            if (optionObjs.ContainsKey(type))
-            {
-                optionObjs.TryGetValue(type, out obj);
-            }
-            else
-            {
-                obj = Activator.CreateInstance(type);
-
-                foreach (var prop in type.GetProperties())
-                {
-                    string key = type.ToString() + '*' + prop.Name;
-                    object propertyValue = GetValueFromPrefs(key);
-                    prop.SetValue(obj, propertyValue, null);
-                }
-
-                optionObjs.Add(type, obj);
-            }
-            return (T)Convert.ChangeType(obj, typeof(T));
+        public T Get<T>() {
+            return (T)Get(typeof(T));
         }
 
-        public object GetInstance(Type type)
-        {
+        public object Get(Type type) {
             object obj;
-            if (optionObjs.ContainsKey(type))
-            {
-                optionObjs.TryGetValue(type, out obj);
-            }
-            else
-            {
+            if (!optionObjs.TryGetValue(type, out obj)) {
                 obj = Activator.CreateInstance(type);
 
-                foreach (var prop in type.GetProperties())
-                {
+                foreach (var prop in type.GetProperties()) {
                     string key = type.ToString() + '*' + prop.Name;
                     object propertyValue = GetValueFromPrefs(key);
                     prop.SetValue(obj, propertyValue, null);
@@ -199,13 +133,11 @@ namespace HouraiTeahouse
         // Function to save player option changes to memory
         public void SaveAllChanges()
         {
-            foreach (var pair in optionObjs)
-            {
+            foreach (var pair in optionObjs) {
                 Type type = pair.Key;
                 string typeName = type.FullName;
 
-                foreach (var property in type.GetProperties())
-                {
+                foreach (var property in type.GetProperties()) {
                     string propName = property.Name;
                     string keyStr = typeName + '*' + propName;
                     string valStr = property.GetValue(pair.Value, null).ToString();
@@ -219,19 +151,18 @@ namespace HouraiTeahouse
 
         public void RevertAllChanges()
         {
-            string[] keys = new string[optionObjs.Count];
+            string[] typeNames = new string[optionObjs.Count];
             int i = 0;
             foreach (var pair in optionObjs)
             {
                 Type type = pair.Key;
                 string typeName = type.FullName;
-                keys[i] = typeName;
+                typeNames[i] = typeName;
                 i++;
             }
 
-            for (int j = 0; j < keys.Length; j++)
-            {
-                Type type = Type.GetType(keys[j]);
+            foreach (string name in typeNames) {
+                Type type = Type.GetType(name);
                 foreach (var prop in type.GetProperties())
                 {
                     string key = type.FullName + '*' + prop.Name;
@@ -245,16 +176,15 @@ namespace HouraiTeahouse
         }
 
         // Delete all option related entries in registry
-        void ClearRegistry()
-        {
+        void ClearRegistry() {
             string allKeys = PlayerPrefs.GetString(allOptionsKey);
             string[] allMembers = allKeys.Split(',');
-            for (int i = 0; i < allMembers.Length; i++)
-            {
-                PlayerPrefs.DeleteKey(allMembers[i]);
+            foreach (string member in allMembers) {
+                PlayerPrefs.DeleteKey(member);
             }
             PlayerPrefs.DeleteKey(allOptionsKey);
         }
+
         // Get player option data from the registry
         void GetDataFromPrefs()
         {
@@ -262,16 +192,14 @@ namespace HouraiTeahouse
             string[] allMembers = allKeys.Split(',');
             string previousClassName = string.Empty;
             object obj = null;
-            for (int i = 0; i < allMembers.Length; i++)
-            {
-                string[] strs = allMembers[i].Split('*');
+            foreach (string member in allMembers) {
+                string[] strs = member.Split('*');
                 string className = strs[0];
                 string propertyName = strs[1];
-                object propertyValue = GetValueFromPrefs(allMembers[i]);
+                object propertyValue = GetValueFromPrefs(member);
 
                 Type type = Type.GetType(className);
-                if (className != previousClassName)
-                {
+                if (className != previousClassName) {
                     obj = Activator.CreateInstance(type);
                     optionObjs.Add(type, obj);
                 }
@@ -281,9 +209,9 @@ namespace HouraiTeahouse
                 previousClassName = className;
             }
         }
+
         // Object to hold player option values
-        object GetValueFromPrefs(string key)
-        {
+        object GetValueFromPrefs(string key) {
             string[] keyStrs = key.Split('*');
             string className = keyStrs[0];
             string propName = keyStrs[1];
@@ -291,172 +219,111 @@ namespace HouraiTeahouse
             string valStr = PlayerPrefs.GetString(key);
             Type type = Type.GetType(typeName);
             object val = null;
-            if (type == typeof(int))
-            {
+            if (type == typeof(int)) {
                 val = int.Parse(valStr);
-            }
-            else if (type == typeof(float))
-            {
+            } else if (type == typeof(float)) {
                 val = float.Parse(valStr);
-            }
-            else if (type == typeof(bool))
-            {
+            } else if (type == typeof(bool)) {
                 val = bool.Parse(valStr);
-            }
-            else if (type == typeof(string))
-            {
+            } else if (type == typeof(string)) {
                 val = valStr;
-            }
-            else
-            {
+            } else {
                 Debug.LogError(key + " has an unsupported type");
-
             }
             return val;
         }
         // Function to initialize a new option as a given type of option
-        void InitializePrefProperty(System.Type type, string key)
-        {
-            if (type == typeof(float))
-            {
+        void InitializePrefProperty(Type type, string key) {
+            if (type == typeof(float)) {
                 PlayerPrefs.SetString(key, "0.0");
-            }
-            else if (type == typeof(int))
-            {
+            } else if (type == typeof(int)) {
                 PlayerPrefs.SetString(key, "0");
-            }
-            else if (type == typeof(string))
-            {
+            } else if (type == typeof(string)) {
                 PlayerPrefs.SetString(key, string.Empty);
-            }
-            else if (type == typeof(bool))
-            {
+            } else if (type == typeof(bool)) {
                 PlayerPrefs.SetString(key, "false");
-            }
-            else
-            {
+            } else {
                 Debug.LogError(key + " has an unsupported property type " + type.ToString());
             }
         }
 
-        public class CategoryInfo
-        {
-            Type type;
-            string categoryName;
-            List<OptionInfo> optionList;
+        public class CategoryInfo {
 
-            public CategoryInfo(Type type, object instance)
-            {
-                optionList = new List<OptionInfo>();
-                this.type = type;
-                foreach (var attr in type.GetCustomAttributes(true))
-                {
+            readonly Type _type;
+            readonly string _categoryName;
+            readonly List<OptionInfo> _optionList;
+
+            public CategoryInfo(Type type, object instance) {
+                _optionList = new List<OptionInfo>();
+                _type = type;
+                foreach (var attr in type.GetCustomAttributes(true)) {
                     Type attrType = attr.GetType();
-                    if (attrType.IsAssignableFrom(typeof(OptionCategory)) || attrType.IsSubclassOf(typeof(OptionCategory)))
-                    {
-                        categoryName = ((OptionCategory)attr).Name;
+                    if (attrType.IsAssignableFrom(typeof(OptionCategory)) || attrType.IsSubclassOf(typeof(OptionCategory))) {
+                        _categoryName = ((OptionCategory)attr).Name;
                     }
                 }
 
-                foreach (var prop in type.GetProperties())
-                {
-                    foreach (var attr in prop.GetCustomAttributes(true))
-                    {
-                        if (attr.GetType().IsSubclassOf(typeof(Option)))
-                        {
-                            optionList.Add(new OptionInfo((Option)attr, prop, instance));
+                foreach (var prop in type.GetProperties()) {
+                    foreach (var attr in prop.GetCustomAttributes(true)) {
+                        if (attr.GetType().IsSubclassOf(typeof(Option))) {
+                            _optionList.Add(new OptionInfo((Option)attr, prop, instance));
                         }
                     }
                 }
             }
 
-            public string ClassName
-            {
-                get
-                {
-                    return type.FullName;
-                }
+            public string ClassName {
+                get { return _type.FullName; }
             }
 
-            public Type ClassType
-            {
-                get
-                {
-                    return type;
-                }
+            public Type ClassType {
+                get { return _type; }
             }
 
-            public string CategoryName
-            {
-                get
-                {
-                    return categoryName;
-                }
+            public string CategoryName {
+                get { return _categoryName; }
             }
 
-            public List<OptionInfo> OptionList
-            {
-                get
-                {
-                    return optionList;
-                }
+            public List<OptionInfo> OptionList {
+                get { return _optionList; }
             }
 
         }
 
-        public class OptionInfo
-        {
-            object instance;
-            PropertyInfo propertyInfo;
-            Option optionAttr;
+        public class OptionInfo {
 
-            public OptionInfo(Option attr, PropertyInfo prop, object instance)
-            {
-                this.instance = instance;
-                propertyInfo = prop;
-                optionAttr = attr;
+            readonly object _instance;
+            readonly PropertyInfo _propertyInfo;
+            readonly Option _optionAttr;
+
+            public OptionInfo(Option attr, PropertyInfo prop, object instance) {
+                _instance = instance;
+                _propertyInfo = prop;
+                _optionAttr = attr;
             }
 
-            public object GetPropertyValue()
-            {
-                return propertyInfo.GetValue(instance, null);
+            public object GetPropertyValue() {
+                return _propertyInfo.GetValue(_instance, null);
             }
 
-            public void SetPropertyValue(object val)
-            {
-                propertyInfo.SetValue(instance, val, null);
+            public void SetPropertyValue(object val) {
+                _propertyInfo.SetValue(_instance, val, null);
             }
 
-            public string ProperptyName
-            {
-                get
-                {
-                    return propertyInfo.Name;
-                }
+            public string PropertyName {
+                get { return _propertyInfo.Name; }
             }
 
-            public string OptionName
-            {
-                get
-                {
-                    return optionAttr.Name;
-                }
+            public string OptionName {
+                get { return _optionAttr.Name; }
             }
 
-            public PropertyInfo PropertyInfo
-            {
-                get
-                {
-                    return propertyInfo;
-                }
+            public PropertyInfo PropertyInfo {
+                get { return _propertyInfo; }
             }
 
-            public Option OptionAttr
-            {
-                get
-                {
-                    return optionAttr;
-                }
+            public Option OptionAttr {
+                get { return _optionAttr; }
             }
         }
     }
