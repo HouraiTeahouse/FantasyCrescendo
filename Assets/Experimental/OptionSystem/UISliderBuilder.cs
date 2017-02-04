@@ -8,8 +8,7 @@ namespace HouraiTeahouse
     public class UISliderBuilder : MonoBehaviour {
 
         [SerializeField]
-        OptionSystem _optionSystem;
-         _categories;
+        OptionSystem optionSystem;
 
         [SerializeField]
         GameObject labelTemplate;
@@ -17,7 +16,7 @@ namespace HouraiTeahouse
         GameObject sliderTemplate;
 
         void Start() {
-            foreach (OptionSystem.CategoryInfo category in _optionSystem.MetadataList) {
+            foreach (OptionSystem.CategoryInfo category in optionSystem.MetadataList) {
                 var label = Instantiate(labelTemplate);
                 label.name = category.CategoryName;
                 label.transform.parent = this.transform;
