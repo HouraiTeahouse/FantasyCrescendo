@@ -16,14 +16,14 @@ namespace HouraiTeahouse
         GameObject sliderTemplate;
 
         void Start() {
-            foreach (OptionSystem.CategoryInfo category in optionSystem.MetadataList) {
+            foreach (CategoryInfo category in optionSystem.Categories) {
                 var label = Instantiate(labelTemplate);
                 label.name = category.CategoryName;
                 label.transform.SetParent(transform, false);
                 label.GetComponent<Text>().text = category.CategoryName;
-                foreach (var option in category.OptionList) {
-                    if (option.OptionAttr is UISlider) {
-                        UISlider sliderAttr = (UISlider)option.OptionAttr;
+                foreach (OptionInfo option in category.Options) {
+                    if (option.Attribute is UISlider) {
+                        UISlider sliderAttr = (UISlider)option.Attribute;
                         var sliderObj = Instantiate(sliderTemplate).GetComponent<Slider>();
                         sliderObj.gameObject.name = sliderAttr.Name;
                         sliderObj.transform.SetParent(label.transform, false);
@@ -36,7 +36,7 @@ namespace HouraiTeahouse
             }
         }
 
-        void SliderValueToProperty(Slider slider, OptionSystem.OptionInfo info) {
+        void SliderValueToProperty(Slider slider, OptionInfo info) {
             info.SetPropertyValue(slider.value);
         }
     }
