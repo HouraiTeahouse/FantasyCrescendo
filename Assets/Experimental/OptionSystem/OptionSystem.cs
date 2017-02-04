@@ -51,12 +51,12 @@ namespace HouraiTeahouse
 #endif
 
         void CheckOptionVersion() {
-            if (!PlayerPrefs.HasKey(optionVersionKey)) {
+            if (!Prefs.Exists(optionVersionKey)) {
                 ClearRegistry();
-            } else if (optionVersion != PlayerPrefs.GetInt(optionVersionKey)) {
+            } else if (optionVersion != Prefs.GetInt(optionVersionKey)) {
                 ClearRegistry();
             }
-            PlayerPrefs.SetInt(optionVersionKey, optionVersion);
+            Prefs.SetInt(optionVersionKey, optionVersion);
         }
 
         // A function to initializa the OptionSystem Object
@@ -74,7 +74,7 @@ namespace HouraiTeahouse
                     string propertyName = property.Name;
                     string propertyStr = categoryClassName + "*" + propertyName;
 
-                    if (!PlayerPrefs.HasKey(propertyStr)) {
+                    if (!Prefs.Exists(propertyStr)) {
                         InitializePrefProperty(property.PropertyType, propertyStr);
                     }
                     allPropertiesStr.Append(propertyStr);
@@ -83,21 +83,21 @@ namespace HouraiTeahouse
             }
 
             allPropertiesStr.Remove(allPropertiesStr.Length - 1, 1);
-            if (PlayerPrefs.HasKey(allOptionsKey)) {
-                List<string> oldKeys = PlayerPrefs.GetString(allOptionsKey).Split(',').ToList();
+            if (Prefs.Exists(allOptionsKey)) {
+                List<string> oldKeys = Prefs.GetString(allOptionsKey).Split(',').ToList();
                 List<string> currKeys = allPropertiesStr.ToString().Split(',').ToList();
                 var obsoleteKeys = oldKeys.Except(currKeys);
                 foreach (var key in obsoleteKeys) {
-                    PlayerPrefs.DeleteKey(key);
+                    Prefs.Exists(key);
                 }
             }
 
-            PlayerPrefs.SetString(allOptionsKey, allPropertiesStr.ToString());
-            PlayerPrefs.Save();
+            Prefs.SetString(allOptionsKey, allPropertiesStr.ToString());
+            Prefs.Save();
         }
 
         void GenerateMetadata() {
-            string[] propFullNames = PlayerPrefs.GetString(allOptionsKey).Split(',');
+            string[] propFullNames = Prefs.GetString(allOptionsKey).Split(',');
             string lastTypeName = string.Empty;
             foreach (string fullname in propFullNames) {
                 string typeName = fullname.Split('*')[0];
@@ -142,7 +142,7 @@ namespace HouraiTeahouse
                     string keyStr = typeName + '*' + propName;
                     string valStr = property.GetValue(pair.Value, null).ToString();
 
-                    PlayerPrefs.SetString(keyStr, valStr);
+                    Prefs.SetString(keyStr, valStr);
                 }
             }
 
@@ -177,18 +177,18 @@ namespace HouraiTeahouse
 
         // Delete all option related entries in registry
         void ClearRegistry() {
-            string allKeys = PlayerPrefs.GetString(allOptionsKey);
+            string allKeys = Prefs.GetString(allOptionsKey);
             string[] allMembers = allKeys.Split(',');
             foreach (string member in allMembers) {
-                PlayerPrefs.DeleteKey(member);
+                Prefs.Delete(member);
             }
-            PlayerPrefs.DeleteKey(allOptionsKey);
+            Prefs.Delete(allOptionsKey);
         }
 
         // Get player option data from the registry
         void GetDataFromPrefs()
         {
-            string allKeys = PlayerPrefs.GetString(allOptionsKey);
+            string allKeys = Prefs.GetString(allOptionsKey);
             string[] allMembers = allKeys.Split(',');
             string previousClassName = string.Empty;
             object obj = null;
@@ -216,7 +216,7 @@ namespace HouraiTeahouse
             string className = keyStrs[0];
             string propName = keyStrs[1];
             string typeName = Type.GetType(className).GetProperty(propName).PropertyType.ToString();
-            string valStr = PlayerPrefs.GetString(key);
+            string valStr = Prefs.GetString(key);
             Type type = Type.GetType(typeName);
             object val = null;
             if (type == typeof(int)) {
@@ -235,13 +235,13 @@ namespace HouraiTeahouse
         // Function to initialize a new option as a given type of option
         void InitializePrefProperty(Type type, string key) {
             if (type == typeof(float)) {
-                PlayerPrefs.SetString(key, "0.0");
+                Prefs.SetString(key, "0.0");
             } else if (type == typeof(int)) {
-                PlayerPrefs.SetString(key, "0");
+                Prefs.SetString(key, "0");
             } else if (type == typeof(string)) {
-                PlayerPrefs.SetString(key, string.Empty);
+                Prefs.SetString(key, string.Empty);
             } else if (type == typeof(bool)) {
-                PlayerPrefs.SetString(key, "false");
+                Prefs.SetString(key, "false");
             } else {
                 Debug.LogError(key + " has an unsupported property type " + type.ToString());
             }
