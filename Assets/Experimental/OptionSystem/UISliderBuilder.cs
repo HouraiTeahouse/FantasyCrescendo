@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,9 +17,9 @@ namespace HouraiTeahouse
         void Start() {
             foreach (CategoryInfo category in optionSystem.Categories) {
                 var label = Instantiate(labelTemplate);
-                label.name = category.CategoryName;
+                label.name = category.Name;
                 label.transform.SetParent(transform, false);
-                label.GetComponent<Text>().text = category.CategoryName;
+                label.GetComponent<Text>().text = category.Name;
                 foreach (OptionInfo option in category.Options) {
                     if (option.Attribute is UISlider) {
                         UISlider sliderAttr = (UISlider)option.Attribute;
