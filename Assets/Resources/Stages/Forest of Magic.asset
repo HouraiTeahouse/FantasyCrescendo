@@ -31,9 +31,15 @@ MonoBehaviour:
     _baseWeight: 1
     _loopStart: 0
     _loopEnd: 13011176
-  _sceneName: Stages/Forest of Magic/Forest of Magic Stage
-  _isVisible: 1
+  - _name: Doll Judgement
+    _artist: crescentia
+    _bgm: Audio/BGM/Forest of Magic/Doll Judgement
+    _baseWeight: 1
+    _loopStart: 0
+    _loopEnd: 9815041
+  _icon: Icons/marisa_icon
   _isSelectable: 1
   _isStage: 1
+  _isVisible: 1
   _previewImage: Icons/marisa_icon
-  _icon: Icons/marisa_icon
+  _sceneName: Stages/Forest of Magic/Forest of Magic Stage

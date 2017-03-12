@@ -28122,6 +28122,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: 23a57936b8cb58e4bb6f82ee79c43e3e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d525f8e80a9e93b42b388b02a870e2a3, type: 2}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 23a57936b8cb58e4bb6f82ee79c43e3e, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 23a57936b8cb58e4bb6f82ee79c43e3e, type: 3}
@@ -28822,15 +28826,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011623777250, guid: d676e77c23d52414492a0eb39acca0da, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000011623777250, guid: d676e77c23d52414492a0eb39acca0da, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000011623777250, guid: d676e77c23d52414492a0eb39acca0da, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000011623777250, guid: d676e77c23d52414492a0eb39acca0da, type: 2}
       propertyPath: m_LocalRotation.w
@@ -28879,6 +28883,10 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011623777250, guid: d676e77c23d52414492a0eb39acca0da, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000011969871686, guid: d676e77c23d52414492a0eb39acca0da, type: 2}
@@ -33475,6 +33483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2016d6042fb0e334b8505285ad154063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _networkManager: {fileID: 0}
 --- !u!114 &731063899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36622,6 +36631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2016d6042fb0e334b8505285ad154063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _networkManager: {fileID: 0}
 --- !u!114 &751271049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73973,7 +73983,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1610947402}
   - component: {fileID: 1610947401}
-  - component: {fileID: 1610947400}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -73981,24 +73990,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1610947400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1610947399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &1610947401
 MonoBehaviour:
   m_ObjectHideFlags: 0
