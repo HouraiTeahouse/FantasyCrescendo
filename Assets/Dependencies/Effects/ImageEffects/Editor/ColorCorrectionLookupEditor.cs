@@ -13,7 +13,7 @@ namespace UnityStandardAssets.ImageEffects
             serObj = new SerializedObject (target);
         }
 
-        private Texture2D tempClutTex2D;
+        Texture2D tempClutTex2D;
 
 
         public override void OnInspectorGUI () {
@@ -51,7 +51,7 @@ namespace UnityStandardAssets.ImageEffects
                     if (textureImporter.mipmapEnabled == true) {
                         doImport = true;
                     }
-                    if (textureImporter.textureCompression != TextureImporterCompression.Uncompressed) {
+                    if (textureImporter.textureFormat != TextureImporterFormat.AutomaticTruecolor) {
                         doImport = true;
                     }
 
@@ -59,7 +59,7 @@ namespace UnityStandardAssets.ImageEffects
                     {
                         textureImporter.isReadable = true;
                         textureImporter.mipmapEnabled = false;
-						textureImporter.textureCompression = TextureImporterCompression.Uncompressed;
+                        textureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
                         AssetDatabase.ImportAsset (path, ImportAssetOptions.ForceUpdate);
                         //tex = AssetDatabase.LoadMainAssetAtPath(path);
                     }

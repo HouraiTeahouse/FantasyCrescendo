@@ -7,21 +7,21 @@ namespace UnityStandardAssets.ImageEffects
     [CustomEditor(typeof (Antialiasing))]
     public class AntialiasingEditor : Editor
     {
-        private SerializedObject serObj;
+        SerializedObject serObj;
 
-        private SerializedProperty mode;
+        SerializedProperty mode;
 
-        private SerializedProperty showGeneratedNormals;
-        private SerializedProperty offsetScale;
-        private SerializedProperty blurRadius;
-        private SerializedProperty dlaaSharp;
+        SerializedProperty showGeneratedNormals;
+        SerializedProperty offsetScale;
+        SerializedProperty blurRadius;
+        SerializedProperty dlaaSharp;
 
-        private SerializedProperty edgeThresholdMin;
-        private SerializedProperty edgeThreshold;
-        private SerializedProperty edgeSharpness;
+        SerializedProperty edgeThresholdMin;
+        SerializedProperty edgeThreshold;
+        SerializedProperty edgeSharpness;
 
 
-        private void OnEnable()
+        void OnEnable()
         {
             serObj = new SerializedObject(target);
 

@@ -16,8 +16,8 @@ namespace UnityStandardAssets.ImageEffects
         AnimBool m_showSoftnessWarning = new AnimBool();
         AnimBool m_showSpreadWarning = new AnimBool();
 
-        private bool softnessWarningValue { get { return m_softness.intValue > 4; } }
-        private bool spreadWarningValue { get { return m_spread.floatValue > 4; } }
+        bool softnessWarningValue { get { return m_softness.intValue > 4; } }
+        bool spreadWarningValue { get { return m_spread.floatValue > 4; } }
 
         void OnEnable () {
             serObj = new SerializedObject (target);

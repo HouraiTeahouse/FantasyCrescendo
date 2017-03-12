@@ -13,13 +13,12 @@ Shader "Hidden/BlendOneOne" {
 	};
 		
 	sampler2D _MainTex;
-	half4     _MainTex_ST;
 	half _Intensity;
 		
 	v2f vert( appdata_img v ) {
 		v2f o;
 		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-		o.uv = UnityStereoScreenSpaceUVAdjust(v.texcoord.xy, _MainTex_ST);
+		o.uv =  v.texcoord.xy;
 		return o;
 	}
 	

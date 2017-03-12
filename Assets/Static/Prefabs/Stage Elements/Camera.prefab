@@ -5,10 +5,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 432322}
-  - 114: {fileID: 11408808}
+  - component: {fileID: 432322}
+  - component: {fileID: 11408808}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -60,11 +60,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000014223627604}
-  - 114: {fileID: 114000014186037424}
-  - 114: {fileID: 114000011640499368}
+  - component: {fileID: 4000014223627604}
+  - component: {fileID: 114000014186037424}
+  - component: {fileID: 114000011640499368}
   m_Layer: 0
   m_Name: Match Camera Target
   m_TagString: Untagged
