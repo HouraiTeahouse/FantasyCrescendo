@@ -13,6 +13,11 @@ namespace HouraiTeahouse {
                 Log.Info("{0} ({1})", obj.name, obj.GetType());
         }
 
+        [MenuItem("Debug/Clear PlayerPrefs %#p")]
+        public static void ClearPlayerPrefs() {
+            PlayerPrefs.DeleteAll();
+        }
+
         [MenuItem("Animator/Zero Transition %#t", true)]
         public static bool ZeroTransitionValidate() {
             return Selection.objects.OfType<AnimatorStateTransition>().Any();
