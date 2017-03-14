@@ -212,21 +212,21 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         MovementInfo GroundedMovement(MovementInfo info) {
             IsFastFalling = false;
 
-            if (Input.GetKey(KeyCode.A)) {
-                info.horizontalSpeed = -RunSpeed;
-                info.facing = false;
-            } else if (Input.GetKey(KeyCode.LeftArrow)) {
-                info.horizontalSpeed = -FastWalkSpeed;
-                info.facing = false;
+            info.horizontalSpeed = 0;
+            if (Input.GetKey(KeyCode.A))
+                info.horizontalSpeed -= RunSpeed;
+            if (Input.GetKey(KeyCode.D))
+                info.horizontalSpeed += RunSpeed;
+
+            if (Mathf.Approximately(info.horizontalSpeed, 0)) {
+                if (Input.GetKey(KeyCode.LeftArrow)) 
+                    info.horizontalSpeed -= FastWalkSpeed;
+                if (Input.GetKey(KeyCode.RightArrow))
+                    info.horizontalSpeed += FastWalkSpeed;
             }
 
-            if (Input.GetKey(KeyCode.D)) {
-                info.horizontalSpeed = RunSpeed;
-                info.facing = true;
-            } else if (Input.GetKey(KeyCode.RightArrow)) {
-                info.horizontalSpeed = FastWalkSpeed;
-                info.facing = true;
-            }
+            if (!Mathf.Approximately(info.horizontalSpeed, 0))
+                info.facing = info.horizontalSpeed > 0;
 
             if (JumpCount != MaxJumpCount)
                 CmdResetJumps();
