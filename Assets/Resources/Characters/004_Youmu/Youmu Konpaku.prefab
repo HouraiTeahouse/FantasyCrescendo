@@ -2763,7 +2763,7 @@ Transform:
   m_GameObject: {fileID: 1723960368397862}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.57, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children:
   - {fileID: 4383538953315406}
   - {fileID: 4862916602140414}
@@ -3882,7 +3882,7 @@ MonoBehaviour:
   _fastFallSpeed: 10
   _slowWalkSpeed: 2
   _fastWalkSpeed: 4
-  _runSpeed: 10
+  _runSpeed: 8
   _airSpeed: 4
   _jumpPower:
   - 7.5
