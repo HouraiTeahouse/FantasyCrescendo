@@ -191,6 +191,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void Update() {
             if (!isLocalPlayer)
                 return;
+            if (Mathf.Approximately(Time.deltaTime, 0))
+                return;
 
             var movement = new MovementInfo { facing = Direction };
             // If currently hanging from a edge
