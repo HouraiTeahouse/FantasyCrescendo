@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using HouraiTeahouse.SmashBrew;
+﻿using HouraiTeahouse.SmashBrew;
 using UnityEngine;
 
 namespace HouraiTeahouse {
@@ -12,8 +10,18 @@ public class HitobxDisplay : MonoBehaviour {
 
     /// <summary> Unity callback. Called once per frame. </summary>
     void Update() {
+        if (!Debug.isDebugBuild)
+            enabled = false;
         if (Input.GetKeyDown(_key))
             Hitbox.DrawHitboxes = !Hitbox.DrawHitboxes;
+    }
+    
+    void OnRenderImage(RenderTexture src, RenderTexture dst) {
+        if (!Hitbox.DrawHitboxes)
+            return;
+        foreach (var hitbox in Hitbox.ActiveHitboxes)
+            hitbox.DrawHitbox();
+        Graphics.Blit(src, dst);
     }
 
 }

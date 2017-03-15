@@ -16,18 +16,21 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000011623777250}
-  - 20: {fileID: 20000011807970714}
-  - 81: {fileID: 81000010983057776}
-  - 114: {fileID: 114000011969871686}
-  - 114: {fileID: 114000012028097126}
-  - 114: {fileID: 114000012980253094}
-  - 114: {fileID: 114000013985206460}
-  - 114: {fileID: 114000014103145454}
-  - 114: {fileID: 114000011058375632}
-  - 114: {fileID: 114000010737565764}
+  - component: {fileID: 4000011623777250}
+  - component: {fileID: 20000011807970714}
+  - component: {fileID: 81000010983057776}
+  - component: {fileID: 114000012028097126}
+  - component: {fileID: 114000012980253094}
+  - component: {fileID: 114000013985206460}
+  - component: {fileID: 114000014103145454}
+  - component: {fileID: 114000011058375632}
+  - component: {fileID: 114000010737565764}
+  - component: {fileID: 114631762781122842}
+  - component: {fileID: 114972930926278538}
+  - component: {fileID: 114321024685401754}
+  - component: {fileID: 114791996059680784}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -41,7 +44,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012703858110}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.8, z: -13.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -116,26 +119,6 @@ MonoBehaviour:
   - MinimumShaderModel: 30
     Components:
     - {fileID: 114000012028097126}
---- !u!114 &114000011969871686
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012703858110}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0923359e9e352a4b9b11c7b7161ad67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Blur: 2
-  m_Downsampling: 2
-  m_MinZ: 0.01
-  m_OcclusionAttenuation: 1
-  m_OcclusionIntensity: 1.5
-  m_Radius: 0.4
-  m_RandomTexture: {fileID: 2800000, guid: a181ca8e3c62f3e4b8f183f6c586b032, type: 3}
-  m_SampleCount: 1
-  m_SSAOShader: {fileID: 4800000, guid: 43ca18288c424f645aaa1e9e07f04c50, type: 3}
 --- !u!114 &114000012028097126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -176,12 +159,14 @@ MonoBehaviour:
   blueChannel:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -196,12 +181,14 @@ MonoBehaviour:
   depthBlueChannel:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -212,12 +199,14 @@ MonoBehaviour:
   depthGreenChannel:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -228,12 +217,14 @@ MonoBehaviour:
   depthRedChannel:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -244,12 +235,14 @@ MonoBehaviour:
   greenChannel:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -261,12 +254,14 @@ MonoBehaviour:
   redChannel:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -285,12 +280,14 @@ MonoBehaviour:
   zCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -310,8 +307,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloomBlurIterations: 2
-  bloomIntensity: 0.5
-  bloomThreshold: 0.5
+  bloomIntensity: 8.4
+  bloomThreshold: 0.88
   bloomThresholdColor: {r: 1, g: 1, b: 1, a: 1}
   blurAndFlaresShader: {fileID: 4800000, guid: be6e39cf196f146d5be72fbefb18ed75, type: 3}
   brightPassFilterShader: {fileID: 4800000, guid: 0aeaa4cb29f5d4e9c8455f04c8575c8c,
@@ -321,7 +318,7 @@ MonoBehaviour:
   flareColorC: {r: 0.8, g: 0.4, b: 0.8, a: 0.75}
   flareColorD: {r: 0.8, g: 0.4, b: 0, a: 0.75}
   flareRotation: 0
-  hdr: 0
+  hdr: 1
   hollyStretchWidth: 2.5
   hollywoodFlareBlurIterations: 2
   lensflareIntensity: 0
@@ -347,3 +344,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd704a5b514bfa4ab22b0d85317ed3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114321024685401754
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012703858110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b5ec6153a1d55438228df10fe66844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceFog: 0
+  excludeFarPixels: 1
+  fogMaterial: {fileID: 0}
+  fogShader: {fileID: 4800000, guid: 70d8568987ac0499f952b54c7c13e265, type: 3}
+  height: 1
+  heightDensity: 1.17
+  heightFog: 1
+  startDistance: 0
+  useRadialDistance: 0
+--- !u!114 &114631762781122842
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012703858110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ebaf74e211ad5446a833fe8075f79b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: 292
+--- !u!114 &114791996059680784
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012703858110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0923359e9e352a4b9b11c7b7161ad67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Blur: 4
+  m_Downsampling: 1
+  m_MinZ: 0.192
+  m_OcclusionAttenuation: 0.613
+  m_OcclusionIntensity: 2.9
+  m_Radius: 0.73
+  m_RandomTexture: {fileID: 2800000, guid: a181ca8e3c62f3e4b8f183f6c586b032, type: 3}
+  m_SampleCount: 2
+  m_SSAOShader: {fileID: 4800000, guid: 43ca18288c424f645aaa1e9e07f04c50, type: 3}
+--- !u!114 &114972930926278538
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012703858110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd70d448b18cfbc46af26466f752332c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aperture: 0.448
+  blurSampleCount: 2
+  blurType: 0
+  dofHdrShader: {fileID: 4800000, guid: acd613035ff3e455e8abf23fdc8c8c24, type: 3}
+  dx11BokehIntensity: 2.5
+  dx11BokehScale: 1.2
+  dx11BokehShader: {fileID: 4800000, guid: d8e82664aa8686642a424c88ab10164a, type: 3}
+  dx11BokehTexture: {fileID: 2800000, guid: a4cdca73d61814d33ac1587f6c163bca, type: 3}
+  dx11BokehThreshold: 0.5
+  dx11SpawnHeuristic: 0.0875
+  focalLength: 10
+  focalSize: 0.05
+  focalTransform: {fileID: 0}
+  foregroundOverlap: 1
+  highResolution: 0
+  maxBlurSize: 0.566
+  nearBlur: 0
+  visualizeFocus: 0

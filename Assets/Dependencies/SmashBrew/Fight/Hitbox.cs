@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 using Random = System.Random;
@@ -28,6 +29,11 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         static readonly Table2D<Type, Action<Hitbox, Hitbox>> ReactionMatrix;
+        static readonly List<Hitbox> _hitboxes;
+
+        public static IEnumerable<Hitbox> ActiveHitboxes {
+            get { return _hitboxes; }
+        }
 
         [SerializeField]
         [ReadOnly]
@@ -46,6 +52,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         static Hitbox() {
             ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
+            _hitboxes = new List<Hitbox>();
             ReactionMatrix[Type.Offensive, Type.Damageable] = delegate(Hitbox src, Hitbox dst) {
                 if (dst.Damageable != null)
                     dst.Damageable.Damage(src, src.BaseDamage);
@@ -135,6 +142,9 @@ namespace HouraiTeahouse.SmashBrew {
                 col.isTrigger = true;
         }
 
+        void OnEnable() { _hitboxes.Add(this); }
+        void OnDisable() { _hitboxes.Remove(this); }
+
 #if UNITY_EDITOR
         bool gizmoInitialized;
 
@@ -148,7 +158,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 #endif
 
-        void OnRenderObject() {
+        public void DrawHitbox() {
             if (!DrawHitboxes)
                 return;
             if (_colliders == null)
@@ -157,10 +167,10 @@ namespace HouraiTeahouse.SmashBrew {
             foreach (Collider col in _colliders) {
                 DrawCollider(col, color);
             }
-            GL.wireframe = true;
-            foreach (var col in _colliders)
-                DrawCollider(col, Color.gray);
-            GL.wireframe = false;
+            //GL.wireframe = true;
+            //foreach (var col in _colliders)
+            //    DrawCollider(col, Color.gray);
+            //GL.wireframe = false;
         }
 
         void Reset() { _id = new Random().Next(int.MaxValue); }
