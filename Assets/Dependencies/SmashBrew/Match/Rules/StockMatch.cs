@@ -71,7 +71,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
             if (hasAuthority && 
                 PlayerManager.Instance.MatchPlayers.Count(p => p.Type.IsActive) > 1 &&
                 _stocks.Count(lives => lives > 0) <= 1)
-                Match.CmdFinishMatch(false);
+                Match.FinishMatch(false);
         }
 
         /// <summary> Gets the winner of the match. </summary>

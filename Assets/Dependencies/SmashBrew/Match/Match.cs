@@ -9,17 +9,23 @@ namespace HouraiTeahouse.SmashBrew.Matches {
     public class Match : NetworkBehaviour {
 
         Mediator _eventManager;
+        [SyncVar]
+        bool _isRunning;
 
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         void Awake() { _eventManager = Mediator.Global; }
 
         /// <summary> Unity Callback. Called before the object's first frame. </summary>
-        void Start() { _eventManager.Publish(new MatchStartEvent()); }
+        void Start() {
+            _eventManager.Publish(new MatchStartEvent());
+            _isRunning = true;
+        }
 
         /// <summary> Ends the match. </summary>
         /// <param name="noContest"> is the match ending prematurely? If set to true, no winner will be declared. </param>
-        [Command]
-        public void CmdFinishMatch(bool noContest) {
+        public void FinishMatch(bool noContest) {
+            if (!_isRunning)
+                return;
             MatchRule[] rules = FindObjectsOfType<MatchRule>();
 
             var result = MatchResult.HasWinner;
@@ -45,6 +51,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
                 winner = null;
             }
             _eventManager.Publish(new MatchEndEvent(result, winner));
+            _isRunning = true;
         }
 
     }
