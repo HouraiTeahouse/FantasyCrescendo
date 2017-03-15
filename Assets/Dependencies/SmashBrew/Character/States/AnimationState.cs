@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
@@ -46,7 +46,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void Update() {
             if (!hasAuthority || _animator == null || Movement == null)
                 return;
-            _animator.SetBool("grounded", CharacterController.isGrounded);
+            if (Mathf.Approximately(Time.deltaTime, 0))
+                return;
+            _animator.SetBool("grounded", Movement.IsGrounded);
             _animator.SetBool("ledge", Movement.CurrentLedge != null);
             _animator.SetBool("crouch", Movement.IsCrounching);
             _animator.SetBool("jump", _jumpState);

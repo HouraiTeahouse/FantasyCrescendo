@@ -35,8 +35,20 @@ namespace HouraiTeahouse.SmashBrew {
             public const short UpdatePlayer = MsgType.Highest + 1;
         }
 
+        void DestroyLeftoverPlayers() {
+            localPlayerCount = 0;
+            playerCount = 0;
+            var players = Resources.FindObjectsOfTypeAll<Character>();
+            foreach (Character character in players) {
+                if (character.gameObject.scene.isLoaded)
+                    Destroy(character.gameObject);
+            }
+            PlayerManager.MatchPlayers.ResetAll();
+        }
+
         public override void OnStartClient(NetworkClient client) {
             base.OnStartClient(client);
+            DestroyLeftoverPlayers();
             // Update player when the server says so
             client.RegisterHandler(Messages.UpdatePlayer,
                 msg => {
@@ -44,6 +56,10 @@ namespace HouraiTeahouse.SmashBrew {
                     var player = PlayerManager.MatchPlayers.Get(update.ID);
                     update.UpdatePlayer(player);
                 });
+        }
+
+        public override void OnClientDisconnect(NetworkConnection conn) {
+            DestroyLeftoverPlayers();
         }
 
         public override void OnClientConnect(NetworkConnection conn) {
@@ -58,6 +74,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public override void OnStartServer() {
+            DestroyLeftoverPlayers();
             // Update players when they change
             foreach (var player in PlayerManager.MatchPlayers) {
                 player.Changed += () => {

@@ -48,7 +48,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
                 return;
             CurrentTime -= Time.unscaledDeltaTime;
             if (CurrentTime <= 0)
-                Match.CmdFinishMatch(false);
+                Match.FinishMatch(false);
         }
 
     }
