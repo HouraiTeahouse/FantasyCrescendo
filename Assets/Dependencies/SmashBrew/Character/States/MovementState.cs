@@ -14,7 +14,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             Rotation, Scale
         }
 
-        PhysicsState Physics { get; set; }
+        PhysicsState PhysicsState { get; set; }
         CharacterController CharacterController { get; set; }
 
         public event Action OnJump;
@@ -118,8 +118,15 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             private set { _isFastFalling = value; }
         }
 
+        [SerializeField]
+        LayerMask _stageLayers = -1;
+
+        public bool IsGrounded {
+            get { return CharacterController != null && CharacterController.isGrounded && Physics.Raycast(transform.position, Vector3.down, 0.1f, _stageLayers); }
+        }
+
         public bool IsCrounching {
-            get { return CharacterController != null && CharacterController.isGrounded && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)); }
+            get { return IsGrounded && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)); }
         }
 
         /// <summary> Can the Character currently jump? </summary>
@@ -146,7 +153,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         void Start() {
-            Physics = this.SafeGetComponent<PhysicsState>();
+            PhysicsState = this.SafeGetComponent<PhysicsState>();
             CharacterController = this.SafeGetComponent<CharacterController>();
             JumpCount = MaxJumpCount;
             OnChangeDirection(_direction);
@@ -182,7 +189,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             if (success) {
                 CurrentLedge = null;
                 OnJump.SafeInvoke();
-                Physics.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
+                PhysicsState.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
                 CmdJump();
             }
             return success;
@@ -206,7 +213,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
             LimitFallSpeed();
 
-            Physics.SetHorizontalVelocity(movement.horizontalSpeed);
+            PhysicsState.SetHorizontalVelocity(movement.horizontalSpeed);
             if (Direction != movement.facing)
                 CmdSetDirection(movement.facing);
         }
@@ -257,11 +264,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         void LimitFallSpeed() {
-            var yVel = Physics.Velocity.y;
+            var yVel = PhysicsState.Velocity.y;
             if (IsFastFalling)
-                Physics.SetVerticalVelocity(-FastFallSpeed);
+                PhysicsState.SetVerticalVelocity(-FastFallSpeed);
             else if (yVel < -MaxFallSpeed)
-                Physics.SetVerticalVelocity(-MaxFallSpeed);
+                PhysicsState.SetVerticalVelocity(-MaxFallSpeed);
         }
 
         void OnControllerColliderHit(ControllerColliderHit hit) {

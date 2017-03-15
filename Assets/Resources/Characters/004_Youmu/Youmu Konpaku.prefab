@@ -3892,6 +3892,9 @@ MonoBehaviour:
   _direction: 0
   _jumpCount: 0
   _isFastFalling: 0
+  _stageLayers:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &114199694606747818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4683,7 +4686,7 @@ CharacterController:
   m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.0001
+  m_SkinWidth: 0.0025
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!198 &198070700526492778
