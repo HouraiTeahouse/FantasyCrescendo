@@ -58,6 +58,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _Occlusion
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _OcclusionMap
       second:
         m_Texture: {fileID: 0}
@@ -71,6 +77,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     - first:
         name: _SpecGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _TintMask
       second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -146,6 +158,12 @@ Material:
     - first:
         name: _SpecColor
       second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - first:
+        name: _TintColorA
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _TintColorB
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _WaveAndDistance
       second: {r: 12, g: 3.6, b: 1, a: 1}
