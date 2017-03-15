@@ -5,12 +5,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 455728}
-  - 65: {fileID: 6548812}
-  - 114: {fileID: 11469218}
-  - 114: {fileID: 11455926}
+  - component: {fileID: 455728}
+  - component: {fileID: 114614469031030518}
+  - component: {fileID: 6548812}
+  - component: {fileID: 11469218}
+  - component: {fileID: 11455926}
   m_Layer: 31
   m_Name: Blast Zone
   m_TagString: Untagged
@@ -25,11 +26,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.87, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6548812
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -78,3 +80,35 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 101290}
   m_IsPrefabParent: 1
+--- !u!114 &114614469031030518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 197
+    i1: 228
+    i2: 113
+    i3: 43
+    i4: 181
+    i5: 82
+    i6: 62
+    i7: 52
+    i8: 10
+    i9: 117
+    i10: 203
+    i11: 155
+    i12: 240
+    i13: 45
+    i14: 31
+    i15: 123
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
