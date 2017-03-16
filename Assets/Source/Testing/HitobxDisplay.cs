@@ -17,11 +17,11 @@ public class HitobxDisplay : MonoBehaviour {
     }
     
     void OnRenderImage(RenderTexture src, RenderTexture dst) {
+        Graphics.Blit(src, dst);
         if (!Hitbox.DrawHitboxes)
             return;
         foreach (var hitbox in Hitbox.ActiveHitboxes)
             hitbox.DrawHitbox();
-        Graphics.Blit(src, dst);
     }
 
 }
