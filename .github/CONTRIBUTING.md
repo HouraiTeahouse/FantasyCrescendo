@@ -1,7 +1,4 @@
-## Contributing to FantasyCrescendo
-
-Hi there! We're thrilled that you'd like to contribute to this project. Your
-help is essential for keeping it great.
+# Contributing to FantasyCrescendo
 
 ## Submitting a pull request (Code assets)
 
