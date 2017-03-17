@@ -70,7 +70,7 @@ QualitySettings:
     shadowCascade2Split: 0.33333334
     shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
     blendWeights: 4
-    textureQuality: 0
+    textureQuality: 1
     anisotropicTextures: 1
     antiAliasing: 2
     softParticles: 0
@@ -96,7 +96,7 @@ QualitySettings:
     shadowCascade2Split: 0.33333334
     shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
     blendWeights: 2
-    textureQuality: 0
+    textureQuality: 1
     anisotropicTextures: 1
     antiAliasing: 0
     softParticles: 0
@@ -122,7 +122,7 @@ QualitySettings:
     shadowCascade2Split: 0.33333334
     shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
     blendWeights: 2
-    textureQuality: 1
+    textureQuality: 2
     anisotropicTextures: 0
     antiAliasing: 0
     softParticles: 0
@@ -148,7 +148,7 @@ QualitySettings:
     shadowCascade2Split: 0.33333334
     shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
     blendWeights: 2
-    textureQuality: 1
+    textureQuality: 3
     anisotropicTextures: 0
     antiAliasing: 0
     softParticles: 0
