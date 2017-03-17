@@ -66,7 +66,8 @@ namespace HouraiTeahouse {
             base.FixedUpdate();
             if (_currentBGM == null || !_musicSource.isPlaying)
                 return;
-            if (_musicSource.timeSamples >= _currentBGM.LoopEnd)
+            var loopEnd = _currentBGM.LoopEnd > 0 ? _currentBGM.LoopEnd : _musicSource.clip.samples;
+            if (_musicSource.timeSamples >= loopEnd)
                 _musicSource.timeSamples = _musicSource.timeSamples + _currentBGM.LoopStart - _currentBGM.LoopEnd;
         }
 
