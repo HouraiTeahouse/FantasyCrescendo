@@ -184,7 +184,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void LedgeMovement() {
             if (JumpCheck()) {
             } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
-                CurrentLedge = null;
+                LeaveLedge();
             } else {
                 SnapToLedge();
             }
@@ -194,12 +194,24 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             bool success = (!IsCrounching && JumpCount > 0 && JumpCount <= MaxJumpCount
                 && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)));
             if (success) {
-                CurrentLedge = null;
+                if (CurrentLedge != null) {
+                    LeaveLedge();
+                }
                 OnJump.SafeInvoke();
                 PhysicsState.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
                 CmdJump();
             }
             return success;
+        }
+
+        void LeaveLedge() {
+            if (CurrentLedge != null) {
+                StageLedge ledge = CurrentLedge.GetComponent<StageLedge>();
+                if (ledge == null)
+                    return;
+                CurrentLedge = null;
+                ledge.Release();
+            }
         }
 
         void Update() {

@@ -15,12 +15,24 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             if (!collider.CompareTag(Config.Tags.LedgeTag))
                 return;
             var movement = collider.GetComponentInParent<MovementState>();
-            if (movement == null)
+            if (movement == null || Occupied)
                 return;
+            Grab(movement);
+        }
+
+        public void Grab(MovementState movement)
+        {
+            Log.Debug("Grabbed Ledge");
+            Occupied = true;
             movement.Direction = _direction;
             movement.CurrentLedge = transform;
         }
 
+        public void Release()
+        {
+            Log.Debug("Released Ledge");
+            Occupied = false;
+        }
     }
 
 }
