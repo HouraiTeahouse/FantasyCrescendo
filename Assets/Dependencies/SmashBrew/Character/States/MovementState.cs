@@ -72,6 +72,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [SyncVar, SerializeField, ReadOnly]
         bool _isFastFalling;
 
+        [SyncVar, SerializeField, ReadOnly]
+        bool _isCrouching;
+
         public float MaxFallSpeed {
             get { return _maxFallSpeed; }
         }
@@ -95,7 +98,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public bool Direction {
             get { return _direction; }
             set {
-                if(_direction != value)
+                if(_direction != value && hasAuthority)
                     CmdSetDirection(value);
             }
         }
@@ -126,7 +129,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public bool IsCrounching {
-            get { return IsGrounded && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)); }
+            get { return _isCrouching; }
+            set {
+                if (_isCrouching != value && hasAuthority)
+                    CmdSetCrouch(value);
+            }
         }
 
         /// <summary> Can the Character currently jump? </summary>
@@ -211,15 +218,18 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 movement = AerialMovement(movement);
             }
 
+            IsCrounching = IsGrounded && Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+
             LimitFallSpeed();
 
             PhysicsState.SetHorizontalVelocity(movement.horizontalSpeed);
-            if (Direction != movement.facing)
+            if (!IsCrounching && Direction != movement.facing)
                 CmdSetDirection(movement.facing);
         }
 
         MovementInfo GroundedMovement(MovementInfo info) {
             IsFastFalling = false;
+
 
             info.horizontalSpeed = 0;
             if (Input.GetKey(KeyCode.A))
@@ -281,12 +291,16 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void CmdJump() { JumpCount--; }
 
         [Command]
-        void CmdResetJumps() {
-            JumpCount = MaxJumpCount;
-        }
+        void CmdResetJumps() { JumpCount = MaxJumpCount; }
 
         [Command]
-        void CmdSetDirection(bool direction) { _direction = direction; }
+        void CmdSetCrouch(bool crouching) { _isCrouching = crouching; }
+
+        [Command]
+        void CmdSetDirection(bool direction) {
+            if (!IsCrounching)
+                _direction = direction;
+        }
 
         [ClientRpc]
         public void RpcMove(Vector2 position) { transform.position = position; }
