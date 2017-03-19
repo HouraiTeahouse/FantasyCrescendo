@@ -15,8 +15,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
         /// <summary> Unity Callback. Called on object instantiation. </summary>
         void Awake() { _eventManager = Mediator.Global; }
 
-        /// <summary> Unity Callback. Called before the object's first frame. </summary>
-        void Start() {
+        public override void OnStartServer() {
             _eventManager.Publish(new MatchStartEvent());
             _isRunning = true;
         }
@@ -51,7 +50,7 @@ namespace HouraiTeahouse.SmashBrew.Matches {
                 winner = null;
             }
             _eventManager.Publish(new MatchEndEvent(result, winner));
-            _isRunning = true;
+            _isRunning = false;
         }
 
     }
