@@ -154,8 +154,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             set {
                 bool grabbed = _currentLedge == null && value != null;
                 _currentLedge = value;
-                if (grabbed)
-                    SnapToLedge();
+                if (!grabbed)
+                    return;
+                var ledge = value.GetComponentInParent<StageLedge>();
+                if (ledge == null)
+                    return;
+                Direction = ledge.Direction;
+                SnapToLedge();
             }
         }
 
@@ -174,10 +179,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         void SnapToLedge() {
+            if (CurrentLedge == null)
+                return;
             IsFastFalling = false;
-            var ledge = CurrentLedge.GetComponentInParent<StageLedge>();
             var offset = LedgeTarget.position - transform.position;
-            Direction = ledge.Direction;
             transform.position = CurrentLedge.transform.position - offset;
             if (JumpCount != MaxJumpCount)
                 CmdResetJumps();
@@ -214,7 +219,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             CmdReleaseLedge();
         }
 
-        public void tryLedgeGrab(StageLedge ledge) {
+        public void GrabLedge(StageLedge ledge) {
             NetworkIdentity ledgeId = ledge.GetComponent<NetworkIdentity>();
             if (ledgeId == null || !isLocalPlayer)
                 return;

@@ -20,7 +20,11 @@ namespace HouraiTeahouse.SmashBrew.Stage {
 
         public bool Occupied {
             get { return _occupied; }
-            private set { _occupied = value; }
+            private set {
+                if (!isServer)
+                    return;
+                _occupied = value;
+            }
         }
 
         public NetworkIdentity GrabberId { get; private set; }
@@ -31,10 +35,11 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             var movement = collider.GetComponentInParent<MovementState>();
             if (movement == null)
                 return;
-            movement.tryLedgeGrab(this);
+            movement.GrabLedge(this);
         }
 
         public void Grab(MovementState movement) {
+            Argument.NotNull(movement);
             if (Occupied) {
                 Log.Debug("Edge Guarded");
                 return;
@@ -45,6 +50,7 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         }
         
         public void Release(MovementState movement) {
+            Argument.NotNull(movement);
             movement.CurrentLedge = null;
             Occupied = false;
         }
