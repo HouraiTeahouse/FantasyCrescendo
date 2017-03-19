@@ -334,6 +334,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -6399,7 +6403,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &94708958
 Transform:
@@ -8633,6 +8637,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard3 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -9146,6 +9154,10 @@ Prefab:
     - target: {fileID: 400000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
       propertyPath: m_LocalScale.z
       value: 3.1575437
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -9664,6 +9676,10 @@ Prefab:
     - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
       propertyPath: m_Name
       value: treeBillboard1 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -10958,6 +10974,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -11804,6 +11824,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard4 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -12302,6 +12326,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -12657,6 +12685,10 @@ Prefab:
     - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
       propertyPath: m_Name
       value: treeBillboard4 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -13092,6 +13124,10 @@ Prefab:
     - target: {fileID: 400000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 35.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
@@ -14349,6 +14385,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard3 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -15148,6 +15188,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 3.1575437
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
@@ -15455,6 +15499,10 @@ Prefab:
     - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
       propertyPath: m_Name
       value: treeBillboard4 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -15862,6 +15910,10 @@ Prefab:
     - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
       propertyPath: m_Name
       value: treeBillboard3 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -18764,6 +18816,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard4 (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -20557,6 +20613,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -21229,6 +21289,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard3 (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -21461,6 +21525,10 @@ Prefab:
     - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
       propertyPath: m_Name
       value: treeBillboard3 (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -25155,6 +25223,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard4 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -26195,6 +26267,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 3.1575437
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
@@ -26689,6 +26765,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 3.1575437
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -26835,6 +26915,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard1 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -26893,6 +26977,10 @@ Prefab:
     - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
       propertyPath: m_Name
       value: treeBillboard2 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -30437,6 +30525,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboardFar1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
@@ -30934,6 +31026,10 @@ Prefab:
     - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
       propertyPath: m_Name
       value: treeBillboard3 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -36829,6 +36925,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard2 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -36986,6 +37086,10 @@ Prefab:
     - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
       propertyPath: m_Name
       value: treeBillboard2 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -38106,6 +38210,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 3.1575437
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
@@ -39007,6 +39115,10 @@ Prefab:
     - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
       propertyPath: m_Name
       value: treeBillboard1 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -39992,6 +40104,10 @@ Prefab:
     - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
       propertyPath: m_Name
       value: treeBillboard1 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -41375,6 +41491,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard4 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -41857,6 +41977,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard3 (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -42238,7 +42362,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &902729959
 Transform:
@@ -42402,6 +42526,10 @@ Prefab:
     - target: {fileID: 400000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
       propertyPath: m_LocalScale.z
       value: 3.5510736
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
@@ -43231,6 +43359,10 @@ Prefab:
     - target: {fileID: 400000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
       propertyPath: m_LocalScale.z
       value: 3.1575437
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -44707,6 +44839,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -45446,6 +45582,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -45508,6 +45648,10 @@ Prefab:
     - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
       propertyPath: m_Name
       value: treeBillboard4 (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -46101,6 +46245,10 @@ Prefab:
     - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
       propertyPath: m_Name
       value: treeBillboard2 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -48182,6 +48330,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -49012,6 +49164,10 @@ Prefab:
     - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
       propertyPath: m_Name
       value: treeBillboard4 (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -53685,6 +53841,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard3 (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -54183,6 +54343,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard4 (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -54325,6 +54489,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard3 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -54466,6 +54634,10 @@ Prefab:
     - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
       propertyPath: m_Name
       value: treeBillboard3 (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -57982,6 +58154,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard4 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -59058,6 +59234,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard4 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -59302,6 +59482,10 @@ Prefab:
     - target: {fileID: 400000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -60367,6 +60551,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard3 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -60923,6 +61111,10 @@ Prefab:
     - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
       propertyPath: m_Name
       value: treeBillboard2 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -63848,6 +64040,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard1 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -64637,6 +64833,10 @@ Prefab:
     - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
       propertyPath: m_Name
       value: treeBillboard3 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -65892,7 +66092,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6.25, y: 10, z: 4}
+  m_Size: {x: 6.6, y: 10, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1447639067
 Prefab:
@@ -66115,6 +66315,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard4 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -66268,6 +66472,10 @@ Prefab:
     - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
       propertyPath: m_Name
       value: treeBillboard1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -67412,6 +67620,10 @@ Prefab:
     - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
       propertyPath: m_Name
       value: treeBillboard4 (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -71085,6 +71297,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard3 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -71441,7 +71657,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4289280317724602, guid: dde4057f70b42b240ace4795c0c1b624, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.125
+      value: 3.3
       objectReference: {fileID: 0}
     - target: {fileID: 4289280317724602, guid: dde4057f70b42b240ace4795c0c1b624, type: 2}
       propertyPath: m_LocalPosition.y
@@ -74223,6 +74439,10 @@ Prefab:
     - target: {fileID: 400000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -81784,6 +82004,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard2 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -83615,6 +83839,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 3.1575437
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -83678,6 +83906,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard4 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -83736,6 +83968,10 @@ Prefab:
     - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
       propertyPath: m_Name
       value: treeBillboard2 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -84729,6 +84965,10 @@ Prefab:
     - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
       propertyPath: m_Name
       value: treeBillboard2 (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -85769,6 +86009,10 @@ Prefab:
     - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
       propertyPath: m_Name
       value: treeBillboard2 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -93342,6 +93586,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -94619,6 +94867,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -95208,6 +95460,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.077002
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: a7083c903ed299446995f74e972ee77f, type: 3}
@@ -95792,6 +96048,10 @@ Prefab:
     - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
       propertyPath: m_Name
       value: treeBillboard3 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -97659,6 +97919,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: bf5ad6fdb7d311546a0f7f4cba6416b1, type: 3}
@@ -99075,6 +99339,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard3 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 96ff5958bf3be03478ea849e73455968, type: 3}
@@ -99497,6 +99765,10 @@ Prefab:
     - target: {fileID: 400000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 15.410001
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
@@ -100715,6 +100987,10 @@ Prefab:
       propertyPath: m_Name
       value: treeBillboard2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5e97513e8422b774c827fe5a5defb2bb, type: 3}
@@ -100872,6 +101148,10 @@ Prefab:
     - target: {fileID: 400000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
       propertyPath: m_LocalScale.z
       value: 3.1575437
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 42f78850290ac5f46ad9ad7b46587e2a, type: 3}
