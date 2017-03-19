@@ -60,8 +60,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         Transform _ledgeTarget;
 
         [Header("Variables")]
-        [SerializeField, ReadOnly]
-        Transform _currentLedge;
+        [SyncVar, SerializeField, ReadOnly]
+        GameObject _currentLedge;
 
         [SyncVar(hook = "OnChangeDirection"), SerializeField, ReadOnly]
         bool _direction;
@@ -149,7 +149,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _ledgeTarget; }
         }
 
-        public Transform CurrentLedge {
+        public GameObject CurrentLedge {
             get { return _currentLedge; }
             set {
                 bool grabbed = _currentLedge == null && value != null;
@@ -175,8 +175,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         void SnapToLedge() {
             IsFastFalling = false;
+            var ledge = CurrentLedge.GetComponentInParent<StageLedge>();
             var offset = LedgeTarget.position - transform.position;
-            transform.position = CurrentLedge.position - offset;
+            Direction = ledge.Direction;
+            transform.position = CurrentLedge.transform.position - offset;
             if (JumpCount != MaxJumpCount)
                 CmdResetJumps();
         }
@@ -209,8 +211,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             StageLedge ledge = CurrentLedge.GetComponent<StageLedge>();
             if (ledge == null)
                 return;
-            CurrentLedge = null;
-            ledge.Release();
+            CmdReleaseLedge();
+        }
+
+        public void tryLedgeGrab(StageLedge ledge) {
+            NetworkIdentity ledgeId = ledge.GetComponent<NetworkIdentity>();
+            if (ledgeId == null || !isLocalPlayer)
+                return;
+            CmdGrabLedge(ledgeId);
         }
 
         void Update() {
@@ -311,6 +319,24 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void CmdSetDirection(bool direction) {
             if (!IsCrounching)
                 _direction = direction;
+        }
+
+        [Command]
+        void CmdGrabLedge(NetworkIdentity ledgeId){
+            var ledge = ledgeId.GetComponent<StageLedge>();
+            if (ledge == null)
+                return;
+            ledge.Grab(this);
+        }
+
+        [Command]
+        void CmdReleaseLedge() {
+            if (CurrentLedge == null)
+                return;
+            var ledge = CurrentLedge.GetComponent<StageLedge>();
+            if (ledge == null)
+                return;
+            ledge.Release(this);
         }
 
         [ClientRpc]
