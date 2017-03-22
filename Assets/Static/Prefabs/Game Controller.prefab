@@ -208,12 +208,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bde28572b02ea4db7c258aa7c2e9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultLanguage: {fileID: 11400000, guid: 68bbe2defce8d9b438a01ca98007b316, type: 2}
+  _defaultLanguage: en
   _dontDestroyOnLoad: 1
   _langPlayerPref:
-    _defaultValue: english
+    _defaultValue: en
     _key: lang
-  localizaitonResourceDirectory: Lang/
+  localizationDirectory: lang
 --- !u!114 &11482896
 MonoBehaviour:
   m_ObjectHideFlags: 1

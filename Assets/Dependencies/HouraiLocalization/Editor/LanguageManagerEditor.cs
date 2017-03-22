@@ -28,7 +28,7 @@ namespace HouraiTeahouse.Localization.Editor {
 
             if (availableLanguages == null) {
                 availableLanguages = langManager.AvailableLanguages.ToArray();
-                display = availableLanguages.Select(lang => _splitCamelCase.Replace(lang, " $1")).ToArray();
+                display = availableLanguages.Select(Language.GetName).ToArray();
                 Language language = langManager.CurrentLangauge;
                 if (language != null)
                     _index = Array.LastIndexOf(availableLanguages, langManager.CurrentLangauge.Name);
