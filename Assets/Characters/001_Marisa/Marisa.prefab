@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb26086a4a32a01479fed2755acf72f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _color: 0
   _swaps:
   - MaterialSets:
     - _materials:
@@ -120,15 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf816381fe193943be209d6a59e68c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxFallSpeed: 5
-  _fastFallSpeed: 9
-  _jumpHeights:
-  - 1.5
-  - 1.5
-  _weapons:
-  - {fileID: 0}
-  _particles:
-  - {fileID: 0}
 --- !u!114 &11451206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1327,10 +1319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1774618721
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 1
   _priority: 100
   _damage: 5
@@ -1351,10 +1340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1918836377
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1375,10 +1361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1816207590
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 1
   _priority: 100
   _damage: 5
@@ -1399,10 +1382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1137152112
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1423,10 +1403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 459449514
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1447,10 +1424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1148626615
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 1
   _priority: 100
   _damage: 5
@@ -1471,10 +1445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 311854026
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 1
   _priority: 100
   _damage: 5
@@ -1495,10 +1466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 978312393
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1519,10 +1487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1214769337
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1543,10 +1508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 720376466
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1567,10 +1529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1866284761
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1591,10 +1550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1086025555
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1615,10 +1571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1144141036
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1639,10 +1592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1805344452
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
@@ -1663,10 +1613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1070703828
-  _capsule: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
-  _sphere: {fileID: 4300002, guid: 103612e5e1ff43a4e896c567a2cb3ae1, type: 3}
   type: 4
   _priority: 100
   _damage: 5
