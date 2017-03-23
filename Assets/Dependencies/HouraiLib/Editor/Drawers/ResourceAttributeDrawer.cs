@@ -55,7 +55,9 @@ namespace HouraiTeahouse.Editor {
 
             void Update(Object obj) {
                 _object = obj;
-                _path = Assets.GetResourcePath(_object);
+                _path = Assets.IsResource(_object)
+                    ? Assets.GetResourcePath(_object)
+                    : "{0}:{1}".With(AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(_object)).assetBundleName, _object.name);
             }
 
         }

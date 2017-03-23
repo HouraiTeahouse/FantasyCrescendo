@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HouraiTeahouse.AssetBundles;
 using UnityEngine;
 
 namespace HouraiTeahouse {
@@ -19,6 +20,17 @@ namespace HouraiTeahouse {
         }
 
         public static ITask<T> ToTask<T>(this ResourceRequest resourceRequest) where T : UnityEngine.Object {
+            Argument.NotNull(resourceRequest);
+            var manager = AsyncManager.Instance;
+            var task = new Task<T>();
+            if(manager == null)
+                task.Reject(new InvalidOperationException("Cannot convert a AsyncOperation to a Task without AsyncManager instance"));
+            else
+                manager.AddOpreation(resourceRequest, task);
+            return task;
+        }
+
+        public static ITask<T> ToTask<T>(this AssetBundleLoadAssetOperation<T> resourceRequest) where T : UnityEngine.Object {
             Argument.NotNull(resourceRequest);
             var manager = AsyncManager.Instance;
             var task = new Task<T>();

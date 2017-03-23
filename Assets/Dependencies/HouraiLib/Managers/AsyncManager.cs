@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HouraiTeahouse.AssetBundles;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -48,6 +49,18 @@ namespace HouraiTeahouse {
             StartCoroutine(WaitForResource(request, resolvable));
         }
 
+        /// <summary> Adds a AssetBundle request to manage. Can optionally provide a callback to be called once the operation is
+        /// finished. </summary>
+        /// <typeparam name="T"> the type of object loaded by </typeparam>
+        /// <param name="request"> the ResourceRequest to manage </param>
+        /// <param name="resolvable"> optional parameter, if not null, will be called after finish executing </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request" /> is null </exception>
+        public void AddOpreation<T>(AssetBundleLoadAssetOperation<T> request, IResolvable<T> resolvable = null) where T : Object {
+            Argument.NotNull(request);
+            _operations.Add(request);
+            StartCoroutine(WaitForResource(request, resolvable));
+        }
+
         public static void AddSynchronousAction(Action action) { WaitingSynchronousActions += action; }
 
         protected override void Awake() {
@@ -79,6 +92,14 @@ namespace HouraiTeahouse {
             if (task == null)
                 yield break;
             task.Resolve(request.asset as T);
+        }
+
+        IEnumerator WaitForResource<T>(AssetBundleLoadAssetOperation<T> request, IResolvable<T> task) where T : Object {
+            yield return request;
+            _operations.Remove(request);
+            if (task == null)
+                yield break;
+            task.Resolve(request.Asset);
         }
 
     }
