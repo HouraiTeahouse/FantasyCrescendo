@@ -44,7 +44,7 @@ namespace HouraiTeahouse.AssetBundles {
 				return;
 			}
 
-		    EditorSceneManager.LoadSceneAsync(levelPaths[0], loadMode);
+		    _operation = SceneManager.LoadSceneAsync(levelPaths[0], loadMode);
 		}
 		
 		public override bool Update ()
