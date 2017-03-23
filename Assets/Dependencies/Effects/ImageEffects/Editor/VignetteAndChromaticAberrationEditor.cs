@@ -7,15 +7,15 @@ namespace UnityStandardAssets.ImageEffects
     [CustomEditor (typeof(VignetteAndChromaticAberration))]
     class VignetteAndChromaticAberrationEditor : Editor
     {
-        SerializedObject m_SerObj;
-        SerializedProperty m_Mode;
-        SerializedProperty m_Intensity;             // intensity == 0 disables pre pass (optimization)
-        SerializedProperty m_ChromaticAberration;
-        SerializedProperty m_AxialAberration;
-        SerializedProperty m_Blur;                  // blur == 0 disables blur pass (optimization)
-        SerializedProperty m_BlurSpread;
-        SerializedProperty m_BlurDistance;
-        SerializedProperty m_LuminanceDependency;
+        private SerializedObject m_SerObj;
+        private SerializedProperty m_Mode;
+        private SerializedProperty m_Intensity;             // intensity == 0 disables pre pass (optimization)
+        private SerializedProperty m_ChromaticAberration;
+        private SerializedProperty m_AxialAberration;
+        private SerializedProperty m_Blur;                  // blur == 0 disables blur pass (optimization)
+        private SerializedProperty m_BlurSpread;
+        private SerializedProperty m_BlurDistance;
+        private SerializedProperty m_LuminanceDependency;
 
 
         void OnEnable ()
