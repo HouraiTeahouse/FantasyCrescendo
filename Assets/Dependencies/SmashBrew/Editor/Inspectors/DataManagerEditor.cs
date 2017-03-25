@@ -1,3 +1,4 @@
+using System.Linq;
 using HouraiTeahouse.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -8,23 +9,29 @@ namespace HouraiTeahouse.SmashBrew.Editor {
     [CustomEditor(typeof(DataManager))]
     public class DataManagerEditor : ScriptlessEditor {
 
-        SerializedProperty characters;
-        SerializedProperty scenes;
-
-        void OnEnable() {
-            characters = serializedObject.FindProperty("_characters");
-            scenes = serializedObject.FindProperty("_scenes");
-        }
+        bool charactersFoldout;
+        bool scenesFoldout;
 
         /// <summary>
         ///     <see cref="UnityEditor.Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
             DrawDefaultInspector();
-            if (GUILayout.Button("Refresh")) {
-                characters.SetArray(Resources.LoadAll<CharacterData>(""));
-                scenes.SetArray(Resources.LoadAll<SceneData>(""));
-                serializedObject.ApplyModifiedProperties();
+            if (!EditorApplication.isPlayingOrWillChangePlaymode || DataManager.Instance == null)
+                return;
+            charactersFoldout = EditorGUILayout.Foldout(charactersFoldout, "Loaded Characters");
+            if (charactersFoldout) {
+                EditorGUI.indentLevel++;
+                foreach (var character in DataManager.Instance.Characters.OrderBy(c => c.FullName))
+                    EditorGUILayout.LabelField(character.FullName, character.Id.ToString());
+                EditorGUI.indentLevel--;
+            }
+            scenesFoldout = EditorGUILayout.Foldout(scenesFoldout, "Loaded Scenes");
+            if (scenesFoldout) {
+                EditorGUI.indentLevel++;
+                foreach (var scene in DataManager.Instance.Scenes.OrderBy(c => c.name))
+                    EditorGUILayout.LabelField(scene.Name, scene.IsStage ? "Stage" : "Normal Scene");
+                EditorGUI.indentLevel--;
             }
         }
 

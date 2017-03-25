@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -65,6 +66,16 @@ namespace HouraiTeahouse.Editor {
 
         public static bool IsResource(Object asset) { return IsResourcePath(AssetDatabase.GetAssetPath(asset)); }
 
+        public static bool IsBundlePath(string path) { return path.IndexOf(Resource.BundleSeperator) >= 0; }
+
+        public static Object LoadBundledAsset(string assetPath) {
+            if (!IsBundlePath(assetPath))
+                return null;
+            string[] splits = assetPath.Split(Resource.BundleSeperator);
+            string[] path = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(splits[0], splits[1]);
+            return AssetDatabase.LoadMainAssetAtPath(path.FirstOrDefault());
+        }
+
         public static string GetResourcePath(Object asset) {
             string assetPath = AssetDatabase.GetAssetPath(asset);
             if (!IsResourcePath(assetPath))
@@ -90,3 +101,4 @@ namespace HouraiTeahouse.Editor {
     }
 
 }
+#endif

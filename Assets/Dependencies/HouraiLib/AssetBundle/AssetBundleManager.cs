@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine.SceneManagement;
 #if UNITY_EDITOR	
 using UnityEditor;
@@ -25,21 +26,29 @@ using Object = UnityEngine.Object;
 namespace HouraiTeahouse.AssetBundles {	
 
 	// Loaded assetBundle contains the references count which can be used to unload dependent assetBundles automatically.
-	public class LoadedAssetBundle
-	{
+	public class LoadedAssetBundle {
 		public AssetBundle AssetBundle { get; private set; }
 		public int ReferencedCount { get; internal set; }
 		
-		public LoadedAssetBundle(AssetBundle assetBundle)
-		{
+		public LoadedAssetBundle(AssetBundle assetBundle) {
 			AssetBundle = assetBundle;
 			ReferencedCount = 1;
 		}
 	}
-	
-	// Class takes care of loading assetBundle and its dependencies automatically, loading variants automatically.
-	public class AssetBundleManager : MonoBehaviour
-	{
+
+    enum AssetBundleAction {
+        Download, Delete
+    }
+
+    struct AssetBundleChange {
+        public string AssetBundleName { get; set; }
+        public AssetBundleAction Action { get; set; }
+        public Hash128 Hash { get; set; }
+    }
+
+    // Class takes care of loading assetBundle and its dependencies automatically, loading variants automatically.
+    public class AssetBundleManager : MonoBehaviour {
+
 	#if UNITY_EDITOR	
 		static int _simulateAssetBundleInEditor = -1;
 		const string SimulateAssetBundles = "SimulateAssetBundles";
@@ -48,10 +57,74 @@ namespace HouraiTeahouse.AssetBundles {
 		static readonly Dictionary<string, LoadedAssetBundle> LoadedAssetBundles = new Dictionary<string, LoadedAssetBundle> ();
 		static readonly Dictionary<string, WWW> DownloadingWwWs = new Dictionary<string, WWW> ();
 		static readonly Dictionary<string, string> DownloadingErrors = new Dictionary<string, string> ();
-		static readonly List<AssetBundleLoadOperation> InProgressOperations = new List<AssetBundleLoadOperation> ();
+		static readonly List<AssetBundleOperation> InProgressOperations = new List<AssetBundleOperation> ();
 		static readonly Dictionary<string, string[]> Dependencies = new Dictionary<string, string[]> ();
 
-	    static AssetBundleManager() {
+        static readonly Dictionary<Type, Delegate> TypeHandlers = new Dictionary<Type, Delegate> ();
+
+        public static void AddHandler<T>(Action<T> handler) {
+            var type = typeof(T);
+            Delegate current;
+            TypeHandlers[type] = TypeHandlers.TryGetValue(type, out current) ? Delegate.Combine(current, handler) : handler;
+        }
+
+        public static void RemoveHandler<T>(Action<T> handler) {
+            TypeHandlers[typeof(T)] = Delegate.RemoveAll(TypeHandlers[typeof(T)], handler);
+        }
+
+        public static void LoadLocalBundles(IEnumerable<string> searchPatterns) {
+            foreach (var pattern in searchPatterns) {
+                var files = Directory.GetFiles(Application.streamingAssetsPath, pattern);
+                foreach (var file in files) {
+                    //TODO(james7132): Make this asynchronous
+                    var bundle = AssetBundle.LoadFromFile(file);
+                    if (bundle == null) {
+                        Log.Error("Failed to load an AssetBundle from {0}.", file);
+                        continue;
+                    }
+                    var mainAsset = bundle.mainAsset;
+                    var assetType = mainAsset.GetType();
+                    Delegate handler;
+                    if (TypeHandlers.TryGetValue(assetType, out handler)) {
+                        handler.DynamicInvoke(mainAsset);
+                        Log.Info("Loaded {0} ({1}) from {2}.", mainAsset, assetType, file);
+                    } else {
+                        Log.Error("Attempted to load an asset of type {0} from asset bundle {1}, but no handler was found. Unloading...");
+                        bundle.Unload(true);
+                    }
+                }
+            }
+        }
+
+        IEnumerable<AssetBundleChange> DiffManifests(AssetBundleManifest current, AssetBundleManifest remote) {
+            var currentBundles = current.GetAllAssetBundles();
+            var remoteBundles = remote.GetAllAssetBundles();
+            foreach (var bundle in currentBundles.Except(remoteBundles)) {
+                yield return new AssetBundleChange {
+                    AssetBundleName = bundle,
+                    Action = AssetBundleAction.Delete
+                };
+            }
+            foreach (var bundle in remoteBundles.Except(currentBundles)) {
+                yield return new AssetBundleChange {
+                    AssetBundleName = bundle,
+                    Action = AssetBundleAction.Download,
+                    Hash = remote.GetAssetBundleHash(bundle)
+                };
+            }
+            foreach (var bundle in currentBundles.Intersect(remoteBundles)) {
+                if (current.GetAssetBundleHash(bundle) == remote.GetAssetBundleHash(bundle))
+                    continue;
+                yield return new AssetBundleChange {
+                    AssetBundleName = bundle,
+                    Action = AssetBundleAction.Download,
+                    Hash = remote.GetAssetBundleHash(bundle)
+                };
+            }
+        }
+
+
+        static AssetBundleManager() {
 	        BaseDownloadingUrl = "";
 		    ActiveVariants = new string[0];
 	    }
@@ -109,15 +182,12 @@ namespace HouraiTeahouse.AssetBundles {
 				return;
 			#endif
 			
-			TextAsset urlFile = Resources.Load("AssetBundleServerURL") as TextAsset;
+			var urlFile = Resources.Load("AssetBundleServerURL") as TextAsset;
 			string url = (urlFile != null) ? urlFile.text.Trim() : null;
 			if (string.IsNullOrEmpty(url))
-			{
-				Debug.LogError("Development Server URL could not be found.");
-				//AssetBundleManager.SetSourceAssetBundleURL("http://localhost:7888/" + UnityHelper.GetPlatformName() + "/");
-			} else {
+				Log.Error("Development Server URL could not be found.");
+			else
 				SetSourceAssetBundleUrl(url);
-			}
 		}
 		
 		// Get loaded AssetBundle, only return vaild object when all the dependencies are downloaded successfully.
@@ -150,12 +220,12 @@ namespace HouraiTeahouse.AssetBundles {
 			return bundle;
 		}
 	
-		public static AssetBundleLoadManifestOperation Initialize () {
+		public static AssetBundleManifestOperation Initialize () {
 			return Initialize(Utility.GetPlatformName());
 		}
 	
 		// Load AssetBundleManifest.
-		public static AssetBundleLoadManifestOperation Initialize (string manifestAssetBundleName) {
+		public static AssetBundleManifestOperation Initialize (string manifestAssetBundleName) {
 	#if UNITY_EDITOR
 			Log.Info("Simulation Mode: " + (SimulateAssetBundleInEditor ? "Enabled" : "Disabled"));
 	#endif
@@ -170,7 +240,7 @@ namespace HouraiTeahouse.AssetBundles {
 	#endif
 	
 			LoadAssetBundle(manifestAssetBundleName, true);
-			var operation = new AssetBundleLoadManifestOperation (manifestAssetBundleName, "AssetBundleManifest");
+			var operation = new AssetBundleManifestOperation (manifestAssetBundleName, "AssetBundleManifest");
 			InProgressOperations.Add (operation);
 			return operation;
 		}
@@ -364,11 +434,11 @@ namespace HouraiTeahouse.AssetBundles {
 		}
 	
 		// Load asset from the given assetBundle.
-		public static AssetBundleLoadAssetOperation<T> LoadAssetAsync<T>(string assetBundleName, string assetName) where T : Object 
+		public static AssetBundleAssetOperation<T> LoadAssetAsync<T>(string assetBundleName, string assetName) where T : Object 
 		{
 			Log.Info("Loading {0} from {1} bundle...", assetName, assetBundleName);
 	
-			AssetBundleLoadAssetOperation<T> operation;
+			AssetBundleAssetOperation<T> operation;
 	#if UNITY_EDITOR
 			if (SimulateAssetBundleInEditor) {
 				string[] assetPaths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName, assetName);
@@ -378,15 +448,15 @@ namespace HouraiTeahouse.AssetBundles {
 				}
 	
 				// @TODO: Now we only get the main object from the first asset. Should consider type also.
-				Object target = AssetDatabase.LoadMainAssetAtPath(assetPaths[0]);
-				operation = new AssetBundleLoadAssetOperationSimulation<T>(target);
+			    var target = AssetDatabase.LoadAssetAtPath<T>(assetPaths[0]);
+				operation = new AssetBundleAssetOperationSimulation<T>(target);
 			}
 			else
 	#endif
 			{
 				assetBundleName = RemapVariantName (assetBundleName);
 				LoadAssetBundle (assetBundleName);
-				operation = new AssetBundleLoadAssetOperationFull<T>(assetBundleName, assetName);
+				operation = new AssetBundleAssetOperationFull<T>(assetBundleName, assetName);
 	
 				InProgressOperations.Add (operation);
 			}
@@ -395,24 +465,24 @@ namespace HouraiTeahouse.AssetBundles {
 		}
 	
 		// Load level from the given assetBundle.
-		public static AssetBundleLoadOperation LoadLevelAsync (string assetBundleName, string levelName, LoadSceneMode loadMode) {
+		public static AssetBundleOperation LoadLevelAsync (string assetBundleName, string levelName, LoadSceneMode loadMode) {
 			Log.Info("Loading {0}  from {1} bundle...", levelName, assetBundleName);
 	
-			AssetBundleLoadOperation operation = null;
+			AssetBundleOperation operation;
 	#if UNITY_EDITOR
 			if (SimulateAssetBundleInEditor)
-				operation = new AssetBundleLoadLevelSimulationOperation(assetBundleName, levelName, loadMode);
+				operation = new AssetBundleLevelSimulationOperation(assetBundleName, levelName, loadMode);
 			else
 	#endif
 			{
 				assetBundleName = RemapVariantName(assetBundleName);
 				LoadAssetBundle (assetBundleName);
-				operation = new AssetBundleLoadLevelOperation (assetBundleName, levelName, loadMode);
+				operation = new AssetBundleLevelOperation (assetBundleName, levelName, loadMode);
 	
 				InProgressOperations.Add (operation);
 			}
 	
 			return operation;
 		}
-	} // End of AssetBundleManager.
+	} 
 }

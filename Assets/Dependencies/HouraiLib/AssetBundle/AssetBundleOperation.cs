@@ -1,40 +1,22 @@
-using System;
 using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEditor.SceneManagement;
 #endif
 
 namespace HouraiTeahouse.AssetBundles {
 
-	public abstract class AssetBundleLoadOperation : AsyncOperation, IEnumerator {
-
-		public object Current {
-            get { return null; }
-		}
-
-		public bool MoveNext() {
-			return !IsDone();
-		}
-		
-		public void Reset()
-		{
-		}
-		
+	public abstract class AssetBundleOperation : CustomYieldInstruction {
 		public abstract bool Update ();
-		
-		public abstract bool IsDone ();
 	}
 	
 	#if UNITY_EDITOR
-	public class AssetBundleLoadLevelSimulationOperation : AssetBundleLoadOperation {
+	public class AssetBundleLevelSimulationOperation : AssetBundleOperation {
 
 	    readonly AsyncOperation _operation;
 	
-		public AssetBundleLoadLevelSimulationOperation (string assetBundleName, string levelName, LoadSceneMode loadMode) {
+		public AssetBundleLevelSimulationOperation (string assetBundleName, string levelName, LoadSceneMode loadMode) {
 			string[] levelPaths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName, levelName);
 			if (levelPaths.Length == 0) {
 				///@TODO: The error needs to differentiate that an asset bundle name doesn't exist
@@ -47,19 +29,17 @@ namespace HouraiTeahouse.AssetBundles {
 		    _operation = SceneManager.LoadSceneAsync(levelPaths[0], loadMode);
 		}
 		
-		public override bool Update ()
-		{
+		public override bool Update () {
 			return false;
 		}
-		
-		public override bool IsDone ()
-		{		
-			return _operation == null || _operation.isDone;
-		}
+
+	    public override bool keepWaiting {
+	        get { return _operation != null && !_operation.isDone; }
+	    }
 	}
 	
 	#endif
-	public class AssetBundleLoadLevelOperation : AssetBundleLoadOperation
+	public class AssetBundleLevelOperation : AssetBundleOperation
 	{
 		protected string AssetBundleName { get; set; }
 		protected string LevelName { get; set; }
@@ -67,7 +47,7 @@ namespace HouraiTeahouse.AssetBundles {
 		protected string DownloadingError { get; set; }
 		protected AsyncOperation Request { get; set; }
 	
-		public AssetBundleLoadLevelOperation (string assetbundleName, string levelName, LoadSceneMode mode = LoadSceneMode.Single) {
+		public AssetBundleLevelOperation (string assetbundleName, string levelName, LoadSceneMode mode = LoadSceneMode.Single) {
 			AssetBundleName = assetbundleName;
 			LevelName = levelName;
 		    Mode = mode;
@@ -86,24 +66,26 @@ namespace HouraiTeahouse.AssetBundles {
 		    return false;
 		}
 		
-		public override bool IsDone () {
-			// Return if meeting downloading error.
-			// m_DownloadingError might come from the dependency downloading.
-		    if (Request != null || DownloadingError == null)
-		        return Request != null && Request.isDone;
-		    Log.Error(DownloadingError);
-		    return true;
+		public override bool keepWaiting {
+            get {
+                // Return if meeting downloading error.
+                // m_DownloadingError might come from the dependency downloading.
+                if (Request != null && DownloadingError == null)
+                    return Request != null || Request.isDone;
+                Log.Error(DownloadingError);
+                return false;
+            }
 		}
 	}
 	
-	public abstract class AssetBundleLoadAssetOperation<T> : AssetBundleLoadOperation where T : Object {
+	public abstract class AssetBundleAssetOperation<T> : AssetBundleOperation where T : Object {
 		public abstract T Asset { get; }
 	}
 	
-	public class AssetBundleLoadAssetOperationSimulation<T> : AssetBundleLoadAssetOperation<T> where T : Object {
+	public class AssetBundleAssetOperationSimulation<T> : AssetBundleAssetOperation<T> where T : Object {
 	    readonly Object	_simulatedObject;
 		
-		public AssetBundleLoadAssetOperationSimulation (Object simulatedObject) {
+		public AssetBundleAssetOperationSimulation (Object simulatedObject) {
 			_simulatedObject = simulatedObject;
 		}
 		
@@ -115,19 +97,19 @@ namespace HouraiTeahouse.AssetBundles {
 			return false;
 		}
 		
-		public override bool IsDone () {
-			return true;
+		public override bool keepWaiting {
+            get { return false; }
 		}
 	}
 	
-	public class AssetBundleLoadAssetOperationFull<T> : AssetBundleLoadAssetOperation<T> where T : Object {
+	public class AssetBundleAssetOperationFull<T> : AssetBundleAssetOperation<T> where T : Object {
 
 		protected string AssetBundleName { get; set; }
 		protected string AssetName { get; set; }
 		protected string DownloadingError { get; set; }
 		protected AssetBundleRequest Request { get; set; }
 	
-		public AssetBundleLoadAssetOperationFull (string bundleName, string assetName) {
+		public AssetBundleAssetOperationFull (string bundleName, string assetName) {
 			AssetBundleName = bundleName;
 			AssetName = assetName;
 		}
@@ -156,20 +138,22 @@ namespace HouraiTeahouse.AssetBundles {
 		    return true;
 		}
 		
-		public override bool IsDone () {
-			// Return if meeting downloading error.
-			// m_DownloadingError might come from the dependency downloading.
-			if (Request == null && DownloadingError != null) {
-				Log.Error(DownloadingError);
-				return true;
-			}
-			return Request != null && Request.isDone;
+		public override bool keepWaiting {
+		    get {
+		        // Return if meeting downloading error.
+		        // m_DownloadingError might come from the dependency downloading.
+                if ( Request == null && DownloadingError != null) {
+                    Log.Error(DownloadingError);
+                    return false;
+                }
+                return Request == null || !Request.isDone;
+		    }
 		}
 	}
 	
-	public class AssetBundleLoadManifestOperation : AssetBundleLoadAssetOperationFull<AssetBundleManifest> {
+	public class AssetBundleManifestOperation : AssetBundleAssetOperationFull<AssetBundleManifest> {
 
-		public AssetBundleLoadManifestOperation (string bundleName, string assetName) : base(bundleName, assetName)
+		public AssetBundleManifestOperation (string bundleName, string assetName) : base(bundleName, assetName)
 		{
 		}
 	

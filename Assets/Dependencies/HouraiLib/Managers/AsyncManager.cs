@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using HouraiTeahouse.AssetBundles;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse {
 
@@ -12,11 +10,11 @@ namespace HouraiTeahouse {
     public sealed class AsyncManager : Singleton<AsyncManager> {
 
         // Set of all asynchronous operations managed by the manager
-        readonly List<AsyncOperation> _operations = new List<AsyncOperation>();
+        readonly List<object> _operations = new List<object>();
 
         /// <summary> The overall progress of all of the asynchronous actions. Shown as a ratio in the range [0.0, 1.0] </summary>
         public float Progress {
-            get { return OperationsInProgress > 0 ? 1.0f : _operations.Average(op => op.progress); }
+            get { return OperationsInProgress > 0 ? 1.0f : _operations.OfType<AsyncOperation>().Average(op => op.progress); }
         }
 
         /// <summary> The number of operations in progress currently </summary>
@@ -31,34 +29,10 @@ namespace HouraiTeahouse {
         /// <param name="operation"> the operation to manage </param>
         /// <param name="resolvable"> optional parameter, if not null, will be called after finish executing </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operation" /> is null </exception>
-        public void AddOperation(AsyncOperation operation, IResolvable resolvable = null) {
+        public void AddOperation(object operation, IResolvable resolvable = null) {
             Argument.NotNull(operation);
             _operations.Add(operation);
-            StartCoroutine(WaitForOperation(operation, resolvable));
-        }
-
-        /// <summary> Adds a resource request to manage. Can optionally provide a callback to be called once the operation is
-        /// finished. </summary>
-        /// <typeparam name="T"> the type of object loaded by </typeparam>
-        /// <param name="request"> the ResourceRequest to manage </param>
-        /// <param name="resolvable"> optional parameter, if not null, will be called after finish executing </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request" /> is null </exception>
-        public void AddOpreation<T>(ResourceRequest request, IResolvable<T> resolvable = null) where T : Object {
-            Argument.NotNull(request);
-            _operations.Add(request);
-            StartCoroutine(WaitForResource(request, resolvable));
-        }
-
-        /// <summary> Adds a AssetBundle request to manage. Can optionally provide a callback to be called once the operation is
-        /// finished. </summary>
-        /// <typeparam name="T"> the type of object loaded by </typeparam>
-        /// <param name="request"> the ResourceRequest to manage </param>
-        /// <param name="resolvable"> optional parameter, if not null, will be called after finish executing </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request" /> is null </exception>
-        public void AddOpreation<T>(AssetBundleLoadAssetOperation<T> request, IResolvable<T> resolvable = null) where T : Object {
-            Argument.NotNull(request);
-            _operations.Add(request);
-            StartCoroutine(WaitForResource(request, resolvable));
+            StartCoroutine(Wait(operation, resolvable));
         }
 
         public static void AddSynchronousAction(Action action) { WaitingSynchronousActions += action; }
@@ -79,27 +53,11 @@ namespace HouraiTeahouse {
             WaitingSynchronousActions = null;
         }
 
-        IEnumerator WaitForOperation(AsyncOperation operation, IResolvable task) {
+        IEnumerator Wait(object operation, IResolvable task) {
             yield return operation;
             _operations.Remove(operation);
             if (task != null)
                 task.Resolve();
-        }
-
-        IEnumerator WaitForResource<T>(ResourceRequest request, IResolvable<T> task) where T : Object {
-            yield return request;
-            _operations.Remove(request);
-            if (task == null)
-                yield break;
-            task.Resolve(request.asset as T);
-        }
-
-        IEnumerator WaitForResource<T>(AssetBundleLoadAssetOperation<T> request, IResolvable<T> task) where T : Object {
-            yield return request;
-            _operations.Remove(request);
-            if (task == null)
-                yield break;
-            task.Resolve(request.Asset);
         }
 
     }

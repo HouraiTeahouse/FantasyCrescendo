@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -19,7 +20,7 @@ namespace HouraiTeahouse.Editor {
 
             public Data(SerializedProperty property, GUIContent content) {
                 _path = property.stringValue;
-                _object = Resources.Load(_path);
+                _object = Assets.IsBundlePath(_path) ? Assets.LoadBundledAsset(_path) : Resources.Load(_path);
                 Content = new GUIContent(content);
                 UpdateContent(content);
             }
@@ -30,10 +31,9 @@ namespace HouraiTeahouse.Editor {
 
             public void Draw(Rect position, SerializedProperty property, Type type) {
                 EditorGUI.BeginChangeCheck();
-                Color oldColor = GUI.color;
-                GUI.color = Valid ? GUI.color : Color.red;
-                Object obj = EditorGUI.ObjectField(position, Content, _object, type, false);
-                GUI.color = oldColor;
+                Object obj;
+                using (hGUI.Color(Valid ? GUI.color : Color.red))
+                    obj = EditorGUI.ObjectField(position, Content, _object, type, false);
                 if (!EditorGUI.EndChangeCheck())
                     return;
                 Update(obj);
@@ -46,8 +46,11 @@ namespace HouraiTeahouse.Editor {
                 if (!_object)
                     message = "No object specified";
                 else if (!Valid)
-                    message = "Not in a Resources folder. Will not be saved.";
-                else
+                    message = "Not in Resources folder or Asset Bundle. Will not be saved.";
+                else if (_path.IndexOf(Resource.BundleSeperator) >= 0) {
+                    string[] splits = _path.Split(Resource.BundleSeperator);
+                    message = "Asset Bundle: {0}\nPath:{1}".With(splits[0], splits[1]);
+                } else 
                     message = "Path: {0}".With(_path);
 
                 Content.tooltip = label.tooltip.IsNullOrEmpty() ? message : "{0}\n{1}".With(label.tooltip, message);
@@ -55,9 +58,14 @@ namespace HouraiTeahouse.Editor {
 
             void Update(Object obj) {
                 _object = obj;
-                _path = Assets.IsResource(_object)
-                    ? Assets.GetResourcePath(_object)
-                    : "{0}:{1}".With(AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(_object)).assetBundleName, _object.name);
+                var bundleName = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(_object)).assetBundleName;
+                if (Assets.IsResource(_object))
+                    _path = Assets.GetResourcePath(_object);
+                else if (!string.IsNullOrEmpty(bundleName))
+                    _path = "{0}:{1}".With(bundleName, _object.name);
+                else
+                    _path = string.Empty;
+                Log.Debug("{0} {1}", bundleName, _path);
             }
 
         }

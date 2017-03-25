@@ -2,6 +2,9 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
@@ -24,10 +27,23 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 public void Set(Renderer[] targets) {
                     if (targets == null)
                         return;
-                    var loadedMaterials = _materials.Select(Resources.Load<Material>).ToArray();
-                    foreach (Renderer renderer in targets) {
-                        if(renderer != null)
-                            renderer.sharedMaterials = loadedMaterials;
+#if UNITY_EDITOR
+                    if (!EditorApplication.isPlaying) {
+                        var loadedMaterials = _materials.Select(path => Resource.Get<Material>(path).Load()).ToArray();
+                        foreach (Renderer renderer in targets) {
+                            if(renderer != null)
+                                renderer.sharedMaterials = loadedMaterials;
+                        }
+                    } else
+#endif
+                    {
+                        Task.All(_materials.Select(path => Resource.Get<Material>(path).LoadAsync()))
+                            .Then(materials => {
+                                foreach (Renderer renderer in targets) {
+                                    if (renderer != null)
+                                        renderer.sharedMaterials = materials;
+                                }
+                            });
                     }
                 }
 

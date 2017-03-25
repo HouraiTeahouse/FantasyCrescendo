@@ -22,26 +22,19 @@ namespace HouraiTeahouse {
         public static ITask<T> ToTask<T>(this ResourceRequest resourceRequest) where T : UnityEngine.Object {
             Argument.NotNull(resourceRequest);
             var manager = AsyncManager.Instance;
-            var task = new Task<T>();
+            var task = new Task();
             if(manager == null)
                 task.Reject(new InvalidOperationException("Cannot convert a AsyncOperation to a Task without AsyncManager instance"));
             else
-                manager.AddOpreation(resourceRequest, task);
-            return task;
+                manager.AddOperation(resourceRequest, task);
+            return task.Then(() => Task.FromResult(resourceRequest.asset as T));
         }
 
-        public static ITask<T> ToTask<T>(this AssetBundleLoadAssetOperation<T> resourceRequest) where T : UnityEngine.Object {
-            Argument.NotNull(resourceRequest);
-            var manager = AsyncManager.Instance;
-            var task = new Task<T>();
-            if(manager == null)
-                task.Reject(new InvalidOperationException("Cannot convert a AsyncOperation to a Task without AsyncManager instance"));
-            else
-                manager.AddOpreation(resourceRequest, task);
-            return task;
+        public static ITask<T> Then<T>(this ITask task, Func<T> func) {
+            return task.Then(() => Task.FromResult(func()));
         }
 
-#region ThenAll Overloads
+        #region ThenAll Overloads
         public static ITask ThenAll(this ITask task, params ITask[] set) { return task.ThenAll(set as IEnumerable<ITask>); }
         public static ITask<T[]> ThenAll<T>(this ITask task, params ITask<T>[] set) { return task.ThenAll(set as IEnumerable<ITask<T>>); }
 

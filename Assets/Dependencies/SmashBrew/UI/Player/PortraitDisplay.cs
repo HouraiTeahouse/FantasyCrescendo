@@ -63,8 +63,10 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 return;
             int portrait = Player != null ? Player.Selection.Pallete : 0;
             data.GetPortrait(portrait).LoadAsync().Then(sprite => {
-                if (!sprite)
+                if (!sprite) {
+                    Component.enabled = false;
                     return;
+                }
                 Texture2D texture = data.GetPortrait(portrait).Asset.texture;
                 _cropRect = _cropped ? data.CropRect(texture) : texture.PixelRect();
                 _cropRect.position += _rectBias.Mult(texture.Size());
