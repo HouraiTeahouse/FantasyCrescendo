@@ -18,10 +18,10 @@ MonoBehaviour:
   _homeStage: Stages/Forest of Magic
   _icon: Icons/reimu_icon
   _portraits:
-  - Characters/002_Reimu/Portraits/reimu_portrait_1
-  - Characters/002_Reimu/Portraits/reimu_portrait_2
-  - Characters/002_Reimu/Portraits/reimu_portrait_3
-  - Characters/002_Reimu/Portraits/reimu_portrait_4
+  - characters/reimu_info:reimu_portrait_1
+  - characters/reimu_info:reimu_portrait_2
+  - characters/reimu_info:reimu_portrait_3
+  - characters/reimu_info:reimu_portrait_4
   _cropPositon: {x: 0.5, y: 0.775}
   _cropSize: 0.2
   _backgroundColor: {r: 1, g: 0, b: 0, a: 1}

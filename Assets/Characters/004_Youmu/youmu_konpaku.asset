@@ -18,10 +18,10 @@ MonoBehaviour:
   _homeStage: Stages/Forest of Magic
   _icon: Icons/youmu_icon
   _portraits:
-  - characters/youmu/base:youmu_portrait_1
-  - characters/youmu/base:youmu_portrait_2
-  - characters/youmu/base:youmu_portrait_3
-  - characters/youmu/base:youmu_portrait_4
+  - characters/youmu_info:youmu_portrait_1
+  - characters/youmu_info:youmu_portrait_2
+  - characters/youmu_info:youmu_portrait_3
+  - characters/youmu_info:youmu_portrait_4
   _cropPositon: {x: 0.5, y: 0.8}
   _cropSize: 0.22
   _backgroundColor: {r: 0, g: 0.6691177, b: 0.58605486, a: 1}
