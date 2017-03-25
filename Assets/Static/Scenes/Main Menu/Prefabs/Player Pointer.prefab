@@ -5,14 +5,13 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22458470}
-  - 222: {fileID: 22266240}
-  - 114: {fileID: 11484934}
-  - 114: {fileID: 11413592}
-  - 114: {fileID: 11428526}
-  m_Layer: 0
+  - component: {fileID: 22458470}
+  - component: {fileID: 22266240}
+  - component: {fileID: 11484934}
+  - component: {fileID: 11428526}
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,15 +23,14 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22425904}
-  - 222: {fileID: 22200848}
-  - 114: {fileID: 11407416}
-  - 114: {fileID: 11430052}
-  - 114: {fileID: 11439154}
-  - 114: {fileID: 11474724}
-  m_Layer: 0
+  - component: {fileID: 22425904}
+  - component: {fileID: 22200848}
+  - component: {fileID: 11407416}
+  - component: {fileID: 11439154}
+  - component: {fileID: 11474724}
+  m_Layer: 5
   m_Name: Player Token
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,13 +42,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22421244}
-  - 222: {fileID: 22277174}
-  - 114: {fileID: 11465244}
-  - 114: {fileID: 11445228}
-  - 114: {fileID: 11459248}
+  - component: {fileID: 22421244}
+  - component: {fileID: 22277174}
+  - component: {fileID: 11465244}
+  - component: {fileID: 11445228}
   m_Layer: 5
   m_Name: Player Text
   m_TagString: Untagged
@@ -63,15 +60,15 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22467192}
-  - 222: {fileID: 22205396}
-  - 114: {fileID: 11400540}
-  - 114: {fileID: 11466284}
-  - 114: {fileID: 11434868}
-  - 114: {fileID: 11467064}
-  - 114: {fileID: 11454192}
+  - component: {fileID: 22467192}
+  - component: {fileID: 22205396}
+  - component: {fileID: 11400540}
+  - component: {fileID: 11466284}
+  - component: {fileID: 11434868}
+  - component: {fileID: 11467064}
+  - component: {fileID: 11454192}
   m_Layer: 5
   m_Name: Player Pointer
   m_TagString: Untagged
@@ -133,20 +130,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11413592
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40eed5fea90b34d0c9e9fa38de58d3c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!114 &11428526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,20 +143,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _component: {fileID: 11484934}
   _short: 1
---- !u!114 &11430052
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40eed5fea90b34d0c9e9fa38de58d3c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!114 &11434868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,35 +167,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _component: {fileID: 11407416}
-  _saturation: 1
-  _value: 1
+  _character: {fileID: 0}
   _alpha: 1
   _alphaBlend: 0
-  _red:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 1
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 1
       outSlope: 0
@@ -237,12 +191,14 @@ MonoBehaviour:
   _green:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 1
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 1
       outSlope: 0
@@ -250,6 +206,27 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _red:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _saturation: 1
+  _useCharacterColor: 0
+  _value: 1
 --- !u!114 &11445228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -287,20 +264,6 @@ MonoBehaviour:
     EditMode: 0
     IncludeCharacterCheck: 0
     Invert: 0
---- !u!114 &11459248
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40eed5fea90b34d0c9e9fa38de58d3c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 1, y: 1}
-  m_UseGraphicAlpha: 1
 --- !u!114 &11465244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -346,35 +309,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _component: {fileID: 11400540}
-  _saturation: 1
-  _value: 1
+  _character: {fileID: 0}
   _alpha: 1
   _alphaBlend: 0
-  _red:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 1
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 1
       outSlope: 0
@@ -385,12 +333,14 @@ MonoBehaviour:
   _green:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 1
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 1
       outSlope: 0
@@ -398,6 +348,27 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _red:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _saturation: 1
+  _useCharacterColor: 0
+  _value: 1
 --- !u!114 &11467064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -491,6 +462,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22467192}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -20, y: 20}
@@ -509,6 +481,7 @@ RectTransform:
   - {fileID: 22458470}
   m_Father: {fileID: 22467192}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 27, y: -28}
@@ -526,6 +499,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22425904}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -545,6 +519,7 @@ RectTransform:
   - {fileID: 22425904}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -187.06151}
