@@ -15,7 +15,7 @@ namespace HouraiTeahouse {
     public class LogSettings {
 
         [SerializeField]
-        string _timeFormat = "MM-dd-yy HH:mm:ss";
+        string _timeFormat = "HH:mm:ss";
 
         [SerializeField]
         LogTypeSettings _info = new LogTypeSettings {Enabled = true, StackTrace = StackTraceLogType.None};
@@ -63,36 +63,36 @@ namespace HouraiTeahouse {
 
         public static void Info(object source, params object[] objs) {
 #if UNITY_EDITOR
-            const string format = "<color=green>[Info]</color> ({1}) - {0}";
+            const string format = "<color=green>I</color> {1}: {0}";
 #else
-            const string format = "[Info] ({1}) - {0}";
+            const string format = "I {1}: {0}";
 #endif
             WriteLog(format, _settings.Info, LogType.Log, source, objs);
         }
 
         public static void Debug(object source, params object[] objs) {
 #if UNITY_EDITOR
-            const string format = "<color=blue>[Debug]</color> ({1}) - {0}";
+            const string format = "<color=blue>D</color>{1}: {0}";
 #else
-            const string format = "[Debug] ({1}) - {0}";
+            const string format = "D {1}: {0}";
 #endif
             WriteLog(format, _settings.Debug, LogType.Log, source, objs);
         }
 
         public static void Warning(object source, params object[] objs) {
 #if UNITY_EDITOR
-            const string format = "<color=yellow>[Warning]</color> ({1}) -  {0}";
+            const string format = "<color=yellow>W</color>{1}: {0}";
 #else
-            const string format = "[Warning] ({1}) - {0}";
+            const string format = "W {1}: {0}";
 #endif
             WriteLog(format, _settings.Warning, LogType.Warning, source, objs);
         }
 
         public static void Error(object source, params object[] objs) {
 #if UNITY_EDITOR
-            const string format = "<color=red>[Error]</color> ({1}) - {0}";
+            const string format = "<color=red>E</color> {1}: {0}";
 #else
-            const string format = "[Error] {0}";
+            const string format = "E {1}: {0}";
 #endif
             WriteLog(format, _settings.Error, LogType.Error, source, objs);
         }
