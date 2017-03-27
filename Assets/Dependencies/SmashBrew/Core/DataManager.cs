@@ -98,6 +98,7 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             }
             _characters[data.Id] = data;
+            log.Info("Registered {0} ({1}) as a valid character.", data.name, data.Id);
         }
 
         public void AddScene(SceneData data) {
@@ -106,8 +107,8 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             }
             _scenes.Add(data);
+            log.Info("Registered {0} as a valid scene.", data.name);
         }
-
 
         void SceneLoad(Scene newScene, LoadSceneMode mode) {
             Log.Info("Unloading managed data assets");

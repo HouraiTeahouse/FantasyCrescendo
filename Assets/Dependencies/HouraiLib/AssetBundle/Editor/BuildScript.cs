@@ -14,7 +14,7 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 		public static void BuildAssetBundles() {
 			// Choose the output path according to the build target.
 			string outputPath = Path.Combine(Utility.AssetBundlesOutputPath,  Utility.GetPlatformName());
-			if (!Directory.Exists(outputPath) )
+			if (!Directory.Exists(outputPath))
 				Directory.CreateDirectory (outputPath);
 	
 			//@TODO: use append hash... (Make sure pipeline works correctly with it.)
@@ -111,22 +111,20 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 			}
 		}
 	
-		static void CopyAssetBundlesTo(string outputPath)
-		{
+		public static void CopyAssetBundlesTo(string outputPath) {
 			// Clear streaming assets folder.
-			FileUtil.DeleteFileOrDirectory(Application.streamingAssetsPath);
 			Directory.CreateDirectory(outputPath);
 	
 			string outputFolder = Utility.GetPlatformName();
 	
 			// Setup the source folder for assetbundles.
 			var source = Path.Combine(Path.Combine(System.Environment.CurrentDirectory, Utility.AssetBundlesOutputPath), outputFolder);
-			if (!Directory.Exists(source) )
-				Debug.Log("No assetBundle output folder, try to build the assetBundles first.");
+			if (!Directory.Exists(source))
+				Log.Info("No assetBundle output folder, try to build the assetBundles first.");
 	
 			// Setup the destination folder for assetbundles.
 			var destination = Path.Combine(outputPath, outputFolder);
-			if (Directory.Exists(destination) )
+			if (Directory.Exists(destination))
 				FileUtil.DeleteFileOrDirectory(destination);
 			
 			FileUtil.CopyFileOrDirectory(source, destination);

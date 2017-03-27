@@ -1,4 +1,6 @@
+using System.IO;
 using UnityEditor;
+using UnityEngine;
 
 namespace HouraiTeahouse.AssetBundles.Editor {
 
@@ -16,10 +18,21 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 			return true;
 		}
 		
-		[MenuItem ("Assets/AssetBundles/Build AssetBundles")]
+		[MenuItem ("Build/Build AssetBundles")]
 		public static void BuildAssetBundles () {
 			BuildScript.BuildAssetBundles();
+		    var path = Path.Combine(Application.streamingAssetsPath, Utility.AssetBundlesOutputPath);
+		    if (Directory.Exists(path))
+		        FileUtil.DeleteFileOrDirectory(path);
+            BuildScript.CopyAssetBundlesTo(path);
+            AssetDatabase.Refresh();
 		}
+		
+		[MenuItem ("Build/Build Standalone")]
+		public static void BuildStandalone () {
+			BuildScript.BuildStandalonePlayer();
+		}
+
 	}
 
 }

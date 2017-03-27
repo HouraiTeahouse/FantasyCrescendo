@@ -7,7 +7,7 @@ namespace HouraiTeahouse.AssetBundles {
 
 	public class Utility {
 
-		public const string AssetBundlesOutputPath = "AssetBundles";
+		public const string AssetBundlesOutputPath = "bundles";
 	
 		public static string GetPlatformName() {
 	#if UNITY_EDITOR

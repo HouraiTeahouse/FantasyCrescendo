@@ -60,13 +60,12 @@ namespace HouraiTeahouse.AssetBundles {
             TypeHandlers[typeof(T)] = Delegate.RemoveAll(TypeHandlers[typeof(T)], handler);
         }
 
-        const char Wildcard = '*';
-
         public static void LoadLocalBundles(IEnumerable<string> whitelist, IEnumerable<string> blacklist = null) {
             if (whitelist.IsNullOrEmpty())
                 return;
             log.Info("Loading local asset bundles....");
-            string basePath = Application.streamingAssetsPath + Path.DirectorySeparatorChar;
+            string basePath = Path.Combine(Application.streamingAssetsPath, 
+                Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName())) + Path.DirectorySeparatorChar;
             IEnumerable<string> files;
             try {
                 files = Directory.GetFiles(basePath, "*", SearchOption.AllDirectories);
@@ -104,9 +103,9 @@ namespace HouraiTeahouse.AssetBundles {
                 var assetType = mainAsset.GetType();
                 Delegate handler;
                 if (TypeHandlers.TryGetValue(assetType, out handler)) {
-                    handler.DynamicInvoke(mainAsset);
                     log.Info("Loaded bundle \"{0}\" from {1}.", filePath, file);
                     log.Info("Loaded {0} ({1}) from \"{2}\".", mainAsset.name, assetType.Name, filePath);
+                    handler.DynamicInvoke(mainAsset);
                     LoadedAssetBundles.Add(filePath, new LoadedAssetBundle(bundle));
                 } else {
                     log.Error(
@@ -116,6 +115,7 @@ namespace HouraiTeahouse.AssetBundles {
                     bundle.Unload(true);
                 }
             }
+            log.Info("Done loading local asset bundles");
         }
 
         IEnumerable<AssetBundleChange> DiffManifests(AssetBundleManifest current, AssetBundleManifest remote) {
