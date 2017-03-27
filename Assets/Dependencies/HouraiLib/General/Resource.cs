@@ -12,6 +12,7 @@ namespace HouraiTeahouse {
 
     public class Resource {
 
+        protected static readonly ILog log = Log.GetLogger<Resource>();
         public const char BundleSeperator = ':';
 
         protected static readonly Dictionary<string, Resource> _resources;
@@ -71,10 +72,7 @@ namespace HouraiTeahouse {
             T loadedObject;
             if (IsBundled)
 #if UNITY_EDITOR
-            {
-                Log.Debug(_path);
                 loadedObject = Assets.LoadBundledAsset(_path) as T;
-            }
 #else
                 throw new InvalidOperationException("Cannot synchronously load assets from AssetBundles. Path: {0}".With(_path));
 #endif
@@ -83,7 +81,7 @@ namespace HouraiTeahouse {
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
+                log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
             Asset = loadedObject;
             return Asset;
         }
@@ -104,7 +102,7 @@ namespace HouraiTeahouse {
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                Log.Info("Unloaded {0}", _path);
+                log.Info("[Resource] Unloaded \"{0}\" ({1})", _path, typeof(T).Name);
         }
 
         /// <summary> Loads the asset in an asynchronous manner. If no AsyncManager is currently availble, </summary>
@@ -121,19 +119,18 @@ namespace HouraiTeahouse {
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                Log.Info("Requesting load of {0} from {1}", typeName, _path);
+                log.Info("Started loading \"{1}\" ({0})", typeName, _path);
             LoadTask.Then(asset => {
 #if UNITY_EDITOR
                 if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                    Log.Info("Loaded {0} from {1}", typeName, _path);
+                    log.Info("Loaded \"{1} ({0})", typeName, _path);
                 Asset = asset;
             });
             return LoadTask;
         }
 
         ITask<T> LoadFromBundle() {
-            Log.Debug(_path);
             string[] splits = _path.Split(':');
             var operation = AssetBundleManager.LoadAssetAsync<T>(splits[0], splits[1]);
             var task = new Task();

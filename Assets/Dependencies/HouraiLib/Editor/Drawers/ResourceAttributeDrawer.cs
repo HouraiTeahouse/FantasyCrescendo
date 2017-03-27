@@ -65,7 +65,6 @@ namespace HouraiTeahouse.Editor {
                     _path = "{0}:{1}".With(bundleName, _object.name);
                 else
                     _path = string.Empty;
-                Log.Debug("{0} {1}", bundleName, _path);
             }
 
         }

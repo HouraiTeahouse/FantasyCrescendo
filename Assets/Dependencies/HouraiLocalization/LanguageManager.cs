@@ -16,6 +16,7 @@ namespace HouraiTeahouse.Localization {
     /// <summary> Singleton MonoBehaviour that manages all of localization system. </summary>
     public sealed class LanguageManager : Singleton<LanguageManager> {
 
+        internal static readonly ILog log = Log.GetLogger("Language");
         public const string FileExtension = ".json";
         Language _currentLanguage;
         string _storageDirectory;
@@ -79,7 +80,7 @@ namespace HouraiTeahouse.Localization {
 #if HOURAI_EVENTS
             _eventManager.Publish(new LanguageChanged {NewLanguage = _currentLanguage});
 #endif
-            Log.Info("Set language to {0}", Language.GetName(langName));
+            log.Info("Set language to {0}", Language.GetName(langName));
         }
 
         string GetLanguagePath(string identifier) {
@@ -103,7 +104,7 @@ namespace HouraiTeahouse.Localization {
             SystemLanguage systemLang = Application.systemLanguage;
             string currentLang = _langPlayerPref.HasKey() ? _langPlayerPref : systemLang.ToIdentifier();
             if (!_languages.Contains(currentLang) || systemLang == SystemLanguage.Unknown) {
-                Log.Info("No language data for \"{0}\" found. Loading default language: {1}", _defaultLanguage, currentLang);
+                log.Info("No language data for \"{0}\" found. Loading default language: {1}", _defaultLanguage, currentLang);
                 currentLang = _defaultLanguage;
             }
             LoadLanguage(currentLang);

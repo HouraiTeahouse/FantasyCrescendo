@@ -26,7 +26,6 @@ namespace HouraiTeahouse.Localization {
         public static SystemLanguage ToLanguage(CultureInfo info) {
             if (info == null)
                 return SystemLanguage.Unknown;
-            Log.Info(info.ToString());
             return ToLanguage(info.ToString());
         }
 

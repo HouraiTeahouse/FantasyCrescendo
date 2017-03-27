@@ -57,14 +57,14 @@ namespace HouraiTeahouse.SmashBrew {
             AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
             AssetBundleManager.AddHandler<SceneData>(AddScene);
 
-            //AssetBundleManager.LoadLocalBundles(_bundleSearchPatterns);
+            AssetBundleManager.LoadLocalBundles(_bundleSearchPatterns);
 
             Characters = new ReadOnlyCollection<CharacterData>(_characters.Values.ToList());
             Scenes = new ReadOnlyCollection<SceneData>(_scenes);
 
-            //foreach (CharacterData character in Characters) {
-            //    ClientScene.RegisterPrefab(character.Prefab.Load());
-            //}
+            foreach (CharacterData character in Characters)
+                character.Prefab.LoadAsync().Then(prefab => ClientScene.RegisterPrefab(prefab));
+
             Resources.UnloadUnusedAssets();
 
             SceneManager.sceneLoaded += SceneLoad;

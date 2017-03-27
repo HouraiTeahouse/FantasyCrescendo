@@ -85,7 +85,7 @@ namespace HouraiTeahouse.AssetBundles {
 	public class AssetBundleAssetOperationSimulation<T> : AssetBundleAssetOperation<T> where T : Object {
 	    readonly Object	_simulatedObject;
 		
-		public AssetBundleAssetOperationSimulation (Object simulatedObject) {
+		public AssetBundleAssetOperationSimulation (T simulatedObject) {
 			_simulatedObject = simulatedObject;
 		}
 		
