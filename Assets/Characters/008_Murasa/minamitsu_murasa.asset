@@ -18,10 +18,10 @@ MonoBehaviour:
   _homeStage: Stages/Forest of Magic
   _icon: Icons/murasa_icon
   _portraits:
-  - characters/murasa_info:murasa_portrait_1
-  - characters/murasa_info:murasa_portrait_2
-  - characters/murasa_info:murasa_portrait_3
-  - characters/murasa_info:murasa_portrait_4
+  - characters/murasa/portraits:murasa_portrait_1
+  - characters/murasa/portraits:murasa_portrait_2
+  - characters/murasa/portraits:murasa_portrait_3
+  - characters/murasa/portraits:murasa_portrait_4
   _cropPositon: {x: 0.435, y: 0.85}
   _cropSize: 0.2
   _backgroundColor: {r: 0, g: 0.53615606, b: 0.71323526, a: 1}

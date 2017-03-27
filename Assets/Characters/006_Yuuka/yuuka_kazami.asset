@@ -18,10 +18,10 @@ MonoBehaviour:
   _homeStage: Stages/Forest of Magic
   _icon: Icons/yuuka_icon
   _portraits:
-  - characters/yuuka_info:yuuka_portrait_1
-  - characters/yuuka_info:yuuka_portrait_2
-  - characters/yuuka_info:yuuka_portrait_3
-  - characters/yuuka_info:yuuka_portrait_4
+  - characters/yuuka/portraits:yuuka_portrait_1
+  - characters/yuuka/portraits:yuuka_portrait_2
+  - characters/yuuka/portraits:yuuka_portrait_3
+  - characters/yuuka/portraits:yuuka_portrait_4
   _cropPositon: {x: 0.5, y: 0.9}
   _cropSize: 0.2
   _backgroundColor: {r: 0, g: 0.39705884, b: 0, a: 1}

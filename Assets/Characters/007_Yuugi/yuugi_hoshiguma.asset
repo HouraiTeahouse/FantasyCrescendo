@@ -18,10 +18,10 @@ MonoBehaviour:
   _homeStage: Stages/Forest of Magic
   _icon: Icons/yuugi_icon
   _portraits:
-  - characters/yuugi_info:yuugi_portrait_1
-  - characters/yuugi_info:yuugi_portrait_2
-  - characters/yuugi_info:yuugi_portrait_3
-  - characters/yuugi_info:yuugi_portrait_4
+  - characters/yuugi/portraits:yuugi_portrait_1
+  - characters/yuugi/portraits:yuugi_portrait_2
+  - characters/yuugi/portraits:yuugi_portrait_3
+  - characters/yuugi/portraits:yuugi_portrait_4
   _cropPositon: {x: 0.45, y: 0.9}
   _cropSize: 0.22
   _backgroundColor: {r: 0, g: 0, b: 0.553, a: 1}

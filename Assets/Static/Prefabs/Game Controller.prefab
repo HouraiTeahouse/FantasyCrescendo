@@ -184,7 +184,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 1
   _bundleSearchPatterns:
-  - characters\*_info
+  - characters/*_info
+  _bundleBlacklist:
+  - '*.json'
+  - '*.manifest'
 --- !u!114 &11479720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -482,7 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 227461547, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  manager: {fileID: 114264198699108660}
   showGUI: 1
   offsetX: 0
   offsetY: 0

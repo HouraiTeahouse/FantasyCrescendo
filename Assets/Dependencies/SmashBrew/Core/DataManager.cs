@@ -16,6 +16,8 @@ namespace HouraiTeahouse.SmashBrew {
     /// <summary> A manager of all of the game data loaded into the game. </summary>
     public sealed class DataManager : MonoBehaviour {
 
+        static readonly ILog log = Log.GetLogger<DataManager>();
+
         [SerializeField]
         [Tooltip("Destroy this instance on scene loads?")]
         bool _dontDestroyOnLoad;
@@ -92,7 +94,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         public void AddCharacter(CharacterData data) {
             if (_characters.ContainsKey(data.Id)) {
-                Log.Warning("Attempted to load {0} while already loaded.", data);
+                log.Warning("Attempted to load {0} while already loaded.", data);
                 return;
             }
             _characters[data.Id] = data;
@@ -100,7 +102,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         public void AddScene(SceneData data) {
             if (_scenes.Contains(data)) {
-                Log.Warning("Attempted to load {0} while already loaded.", data);
+                log.Warning("Attempted to load {0} while already loaded.", data);
                 return;
             }
             _scenes.Add(data);

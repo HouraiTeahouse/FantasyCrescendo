@@ -65,6 +65,7 @@ namespace HouraiTeahouse.AssetBundles {
         public static void LoadLocalBundles(IEnumerable<string> whitelist, IEnumerable<string> blacklist = null) {
             if (whitelist.IsNullOrEmpty())
                 return;
+            log.Info("Loading local asset bundles....");
             string basePath = Application.streamingAssetsPath + Path.DirectorySeparatorChar;
             IEnumerable<string> files;
             try {
@@ -81,9 +82,6 @@ namespace HouraiTeahouse.AssetBundles {
                 .Select(r => new Regex(r.Replace("/", Regex.Escape(Path.DirectorySeparatorChar.ToString()))
                 .Replace("*", "(.*?)"), 
                 RegexOptions.Compiled)).ToArray();
-            foreach (Regex regex in whitelistRegex) {
-                Log.Debug(regex);
-            }
             foreach (var file in files) {
                 var filePath = file.Replace(basePath, string.Empty);
                 if (whitelistRegex.All(r => !r.IsMatch(filePath)) || blacklistRegex.Any(r => r.IsMatch(filePath)))
@@ -92,7 +90,6 @@ namespace HouraiTeahouse.AssetBundles {
                 if (file.EndsWith(".meta"))
                     continue;
 #endif
-                log.Info("{0}.", file);
                 //TODO(james7132): Make this asynchronous
                 var bundle = AssetBundle.LoadFromFile(file);
                 if (bundle == null) {
@@ -108,7 +105,9 @@ namespace HouraiTeahouse.AssetBundles {
                 Delegate handler;
                 if (TypeHandlers.TryGetValue(assetType, out handler)) {
                     handler.DynamicInvoke(mainAsset);
-                    log.Info("Loaded {0} ({1}) from {2}.", mainAsset, assetType, file);
+                    log.Info("Loaded bundle \"{0}\" from {1}.", filePath, file);
+                    log.Info("Loaded {0} ({1}) from \"{2}\".", mainAsset.name, assetType.Name, filePath);
+                    LoadedAssetBundles.Add(filePath, new LoadedAssetBundle(bundle));
                 } else {
                     log.Error(
                         "Attempted to load an asset of type {0} from asset bundle {1}, but no handler was found. Unloading...",

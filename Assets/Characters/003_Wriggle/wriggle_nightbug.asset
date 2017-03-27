@@ -18,10 +18,10 @@ MonoBehaviour:
   _homeStage: Stages/Forest of Magic
   _icon: Icons/wriggle_icon
   _portraits:
-  - characters/wriggle_info:wriggle_portrait_1
-  - characters/wriggle_info:wriggle_portrait_2
-  - characters/wriggle_info:wriggle_portrait_3
-  - characters/wriggle_info:wriggle_portrait_4
+  - characters/wriggle/portraits:wriggle_portrait_1
+  - characters/wriggle/portraits:wriggle_portrait_2
+  - characters/wriggle/portraits:wriggle_portrait_3
+  - characters/wriggle/portraits:wriggle_portrait_4
   _cropPositon: {x: 0.5, y: 0.85}
   _cropSize: 0.24
   _backgroundColor: {r: 0.39949295, g: 0.5735294, b: 0, a: 1}

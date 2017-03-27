@@ -99,7 +99,7 @@ namespace HouraiTeahouse {
         static readonly Dictionary<LogLevel, string> _colors = new Dictionary<LogLevel, string> {
             { LogLevel.Info, "green" },
             { LogLevel.Debug, "blue" },
-            { LogLevel.Warning, "yello" },
+            { LogLevel.Warning, "yellow" },
             { LogLevel.Error, "red" },
         };
 #endif
