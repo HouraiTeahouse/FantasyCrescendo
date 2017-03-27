@@ -86,9 +86,9 @@ namespace HouraiTeahouse {
     public static class LoggerExtensions {
 
         public static void Info(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Info, format, objs); }
-        public static void Debug(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Info, format, objs); }
-        public static void Warning(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Info, format, objs); }
-        public static void Error(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Info, format, objs); }
+        public static void Debug(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Debug, format, objs); }
+        public static void Warning(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Warning, format, objs); }
+        public static void Error(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Error, format, objs); }
 
     }
 
@@ -168,7 +168,7 @@ namespace HouraiTeahouse {
             UnityEngine.Debug.logger.LogFormat(level, prefix + output, objs);
             Application.SetStackTraceLogType(level, logType);
 #else
-            System.Console.WriteLine(format, prefix + output);
+            System.Console.WriteLine(prefix + output, objs);
 #endif
         }
 

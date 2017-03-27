@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
 #if UNITY_EDITOR	
 using UnityEditor;
@@ -59,44 +60,61 @@ namespace HouraiTeahouse.AssetBundles {
             TypeHandlers[typeof(T)] = Delegate.RemoveAll(TypeHandlers[typeof(T)], handler);
         }
 
-        public static void LoadLocalBundles(IEnumerable<string> searchPatterns) {
-            foreach (var pattern in searchPatterns) {
-                string[] files;
-                try {
-                    files = Directory.GetFiles(Application.streamingAssetsPath, pattern, SearchOption.AllDirectories);
-                } catch (DirectoryNotFoundException) {
-                    log.Error("Pattern {0} cannot be found in StreamingAssets: {1}", pattern, Application.streamingAssetsPath);
+        const char Wildcard = '*';
+
+        public static void LoadLocalBundles(IEnumerable<string> whitelist, IEnumerable<string> blacklist = null) {
+            if (whitelist.IsNullOrEmpty())
+                return;
+            string basePath = Application.streamingAssetsPath + Path.DirectorySeparatorChar;
+            IEnumerable<string> files;
+            try {
+                files = Directory.GetFiles(basePath, "*", SearchOption.AllDirectories);
+            } catch (DirectoryNotFoundException) {
+                log.Error("StreaminAssets cannot be found. Cannot load local bundles.", basePath);
+                return;
+            }
+            var whitelistRegex = whitelist.EmptyIfNull()
+                .Select(r => new Regex(r.Replace("/", Regex.Escape(Path.DirectorySeparatorChar.ToString()))
+                .Replace("*", "(.*?)"), 
+                RegexOptions.Compiled)).ToArray();
+            var blacklistRegex = blacklist.EmptyIfNull()
+                .Select(r => new Regex(r.Replace("/", Regex.Escape(Path.DirectorySeparatorChar.ToString()))
+                .Replace("*", "(.*?)"), 
+                RegexOptions.Compiled)).ToArray();
+            foreach (Regex regex in whitelistRegex) {
+                Log.Debug(regex);
+            }
+            foreach (var file in files) {
+                var filePath = file.Replace(basePath, string.Empty);
+                if (whitelistRegex.All(r => !r.IsMatch(filePath)) || blacklistRegex.Any(r => r.IsMatch(filePath)))
+                    continue;
+#if UNITY_EDITOR
+                if (file.EndsWith(".meta"))
+                    continue;
+#endif
+                log.Info("{0}.", file);
+                //TODO(james7132): Make this asynchronous
+                var bundle = AssetBundle.LoadFromFile(file);
+                if (bundle == null) {
+                    log.Error("Failed to load an AssetBundle from {0}.", file);
                     continue;
                 }
-                foreach (var file in files) {
-                    Log.Debug(file);
-                    if (file.EndsWith(".manifest"))
-                        continue;
-#if UNITY_EDITOR
-                    if (file.EndsWith(".meta"))
-                        continue;
-#endif
-                    //TODO(james7132): Make this asynchronous
-                    var bundle = AssetBundle.LoadFromFile(file);
-                    if (bundle == null) {
-                        log.Error("Failed to load an AssetBundle from {0}.", file);
-                        continue;
-                    }
-                    var mainAsset = bundle.mainAsset;
-                    if (mainAsset == null)
-                        return;
-                    var assetType = mainAsset.GetType();
-                    Delegate handler;
-                    if (TypeHandlers.TryGetValue(assetType, out handler)) {
-                        handler.DynamicInvoke(mainAsset);
-                        log.Info("Loaded {0} ({1}) from {2}.", mainAsset, assetType, file);
-                    } else {
-                        log.Error(
-                            "Attempted to load an asset of type {0} from asset bundle {1}, but no handler was found. Unloading...",
-                            assetType,
-                            file);
-                        bundle.Unload(true);
-                    }
+                var mainAsset = bundle.mainAsset;
+                if (mainAsset == null)
+                    mainAsset = bundle.LoadAsset(bundle.GetAllAssetNames()[0]);
+                if (mainAsset == null)
+                    continue;
+                var assetType = mainAsset.GetType();
+                Delegate handler;
+                if (TypeHandlers.TryGetValue(assetType, out handler)) {
+                    handler.DynamicInvoke(mainAsset);
+                    log.Info("Loaded {0} ({1}) from {2}.", mainAsset, assetType, file);
+                } else {
+                    log.Error(
+                        "Attempted to load an asset of type {0} from asset bundle {1}, but no handler was found. Unloading...",
+                        assetType,
+                        file);
+                    bundle.Unload(true);
                 }
             }
         }

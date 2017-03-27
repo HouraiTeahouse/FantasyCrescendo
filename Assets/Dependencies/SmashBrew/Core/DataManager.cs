@@ -23,6 +23,9 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         string[] _bundleSearchPatterns;
 
+        [SerializeField]
+        string[] _bundleBlacklist;
+
         List<SceneData> _scenes;
         Dictionary<uint, CharacterData> _characters;
 
@@ -57,7 +60,7 @@ namespace HouraiTeahouse.SmashBrew {
             AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
             AssetBundleManager.AddHandler<SceneData>(AddScene);
 
-            AssetBundleManager.LoadLocalBundles(_bundleSearchPatterns);
+            AssetBundleManager.LoadLocalBundles(_bundleSearchPatterns, _bundleBlacklist);
 
             Characters = new ReadOnlyCollection<CharacterData>(_characters.Values.ToList());
             Scenes = new ReadOnlyCollection<SceneData>(_scenes);
