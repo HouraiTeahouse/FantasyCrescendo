@@ -60,17 +60,34 @@ namespace HouraiTeahouse.AssetBundles {
             TypeHandlers[typeof(T)] = Delegate.RemoveAll(TypeHandlers[typeof(T)], handler);
         }
 
+        public static void CopyDirectory(string src, string dest) {
+            if (src == dest)
+                return;
+            //Now Create all of the directories
+            foreach (string dirPath in Directory.GetDirectories(src, "*", SearchOption.AllDirectories)) {
+                var dir = dirPath.Replace(src, dest);
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+            }
+
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(src, "*", SearchOption.AllDirectories)) {
+                var file = newPath.Replace(src, dest);
+                if (!File.Exists(file))
+                    File.Copy(newPath, file, true);
+            }
+        }
+
         public static void LoadLocalBundles(IEnumerable<string> whitelist, IEnumerable<string> blacklist = null) {
             if (whitelist.IsNullOrEmpty())
                 return;
             log.Info("Loading local asset bundles....");
-            string basePath = Path.Combine(Application.streamingAssetsPath, 
-                Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName())) + Path.DirectorySeparatorChar;
+            string basePath = BundleUtility.GetBundleStoragePath() + Path.DirectorySeparatorChar;
             IEnumerable<string> files;
             try {
                 files = Directory.GetFiles(basePath, "*", SearchOption.AllDirectories);
             } catch (DirectoryNotFoundException) {
-                log.Error("StreaminAssets cannot be found. Cannot load local bundles.", basePath);
+                log.Error("Base directory {0} cannot be found. Cannot load local bundles.", basePath);
                 return;
             }
             var whitelistRegex = whitelist.EmptyIfNull()
@@ -194,7 +211,7 @@ namespace HouraiTeahouse.AssetBundles {
 		}
 		
 		public static void SetSourceAssetBundleUrl(string absolutePath) {
-			BaseDownloadingUrl = absolutePath + Utility.GetPlatformName() + "/";
+			BaseDownloadingUrl = absolutePath + BundleUtility.GetPlatformName() + "/";
 		}
 	
 		public static void SetDevelopmentAssetBundleServer() {
@@ -243,7 +260,7 @@ namespace HouraiTeahouse.AssetBundles {
 		}
 	
 		public static AssetBundleManifestOperation Initialize () {
-			return Initialize(Utility.GetPlatformName());
+			return Initialize(BundleUtility.GetPlatformName());
 		}
 	
 		// Load AssetBundleManifest.

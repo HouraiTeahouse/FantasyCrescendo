@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using HouraiTeahouse.AssetBundles;
 using UnityEngine;
@@ -17,16 +18,6 @@ namespace HouraiTeahouse.SmashBrew {
     public sealed class DataManager : MonoBehaviour {
 
         static readonly ILog log = Log.GetLogger<DataManager>();
-
-        [SerializeField]
-        [Tooltip("Destroy this instance on scene loads?")]
-        bool _dontDestroyOnLoad;
-
-        [SerializeField]
-        string[] _bundleSearchPatterns;
-
-        [SerializeField]
-        string[] _bundleBlacklist;
 
         List<SceneData> _scenes;
         Dictionary<uint, CharacterData> _characters;
@@ -46,8 +37,7 @@ namespace HouraiTeahouse.SmashBrew {
         void Awake() {
             Instance = this;
 
-            if (_dontDestroyOnLoad)
-                DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
 
             _characters = new Dictionary<uint, CharacterData>();
             _scenes = new List<SceneData>();
@@ -56,13 +46,33 @@ namespace HouraiTeahouse.SmashBrew {
             LoadFromEditor<CharacterData>(AddCharacter);
             LoadFromEditor<SceneData>(AddScene);
 #endif
+            var bundlePath = BundleUtility.GetStoragePath();
+            var dataFilePath = Path.Combine(bundlePath, "data");
+            log.Info("Storage Path: {0}", bundlePath);
+            if (!File.Exists(dataFilePath)) {
+                log.Info("Cannot find {0} copying StreamingAssets...", dataFilePath, bundlePath);
+                AssetBundleManager.CopyDirectory(Application.streamingAssetsPath, bundlePath);
+            }
+
+            var file = File.ReadAllText(dataFilePath);
+            var whitelist = new List<string>();
+            var blacklist = new List<string>();
+            foreach (var entry in file.Split('\n')) {
+                if (entry.StartsWith("-")) {
+                    blacklist.Add(entry.Substring(1).Trim());
+                    log.Info("Registered bundle blacklist: {0}".With(entry.Substring(1).Trim()));
+                } else {
+                    whitelist.Add(entry.Trim());
+                    log.Info("Registered bundle whitelist: {0}".With(entry.Trim()));
+                }
+            }
 
             AssetBundleManager.Initialize();
 
             AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
             AssetBundleManager.AddHandler<SceneData>(AddScene);
 
-            AssetBundleManager.LoadLocalBundles(_bundleSearchPatterns, _bundleBlacklist);
+            AssetBundleManager.LoadLocalBundles(whitelist, blacklist);
 
             Characters = new ReadOnlyCollection<CharacterData>(_characters.Values.ToList());
             Scenes = new ReadOnlyCollection<SceneData>(_scenes);

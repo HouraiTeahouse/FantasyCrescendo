@@ -21,16 +21,16 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 		[MenuItem ("Build/Build AssetBundles")]
 		public static void BuildAssetBundles () {
 			BuildScript.BuildAssetBundles();
-		    var path = Path.Combine(Application.streamingAssetsPath, Utility.AssetBundlesOutputPath);
+		    var path = Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath);
 		    if (Directory.Exists(path))
 		        FileUtil.DeleteFileOrDirectory(path);
             BuildScript.CopyAssetBundlesTo(path);
             AssetDatabase.Refresh();
 		}
 		
-		[MenuItem ("Build/Build Standalone")]
+		[MenuItem ("Build/Build Player")]
 		public static void BuildStandalone () {
-			BuildScript.BuildStandalonePlayer();
+			BuildScript.BuildPlayer();
 		}
 
 	}

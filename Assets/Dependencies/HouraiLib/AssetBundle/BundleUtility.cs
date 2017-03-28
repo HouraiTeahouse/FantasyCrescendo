@@ -1,3 +1,7 @@
+using System;
+using System.IO;
+using System.Security;
+using System.Security.Permissions;
 using UnityEngine;
 #if UNITY_EDITOR	
 using UnityEditor;
@@ -5,19 +9,38 @@ using UnityEditor;
 
 namespace HouraiTeahouse.AssetBundles {
 
-	public class Utility {
+	public class BundleUtility {
 
 		public const string AssetBundlesOutputPath = "bundles";
+
+        public static string GetStoragePath() {
+#if UNITY_EDITOR
+            return Application.streamingAssetsPath;
+#else
+            try {
+                var file = Path.Combine(Application.streamingAssetsPath, "test.txt");
+                File.WriteAllText(file, "test");
+                File.Delete(file);
+                return Application.streamingAssetsPath;
+            } catch (UnauthorizedAccessException) {
+                return Application.persistentDataPath;
+            }
+#endif 
+        }
+
+        public static string GetBundleStoragePath() {
+            return Path.Combine(GetStoragePath(), Path.Combine(AssetBundlesOutputPath, GetPlatformName()));
+        }
 	
 		public static string GetPlatformName() {
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
 			return GetPlatformForAssetBundles(EditorUserBuildSettings.activeBuildTarget);
-	#else
+#else
 			return GetPlatformForAssetBundles(Application.platform);
-	#endif
+#endif
 		}
 	
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
 	    static string GetPlatformForAssetBundles(BuildTarget target) {
 			switch(target) {
                 case BuildTarget.Android:
@@ -39,7 +62,7 @@ namespace HouraiTeahouse.AssetBundles {
                     return null;
 			}
 		}
-	#endif
+#endif
 
 	    static string GetPlatformForAssetBundles(RuntimePlatform platform) {
 			switch(platform) {

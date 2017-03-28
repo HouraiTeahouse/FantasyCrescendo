@@ -13,12 +13,12 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 	
 		public static void BuildAssetBundles() {
 			// Choose the output path according to the build target.
-			string outputPath = Path.Combine(Utility.AssetBundlesOutputPath,  Utility.GetPlatformName());
+			string outputPath = Path.Combine(BundleUtility.AssetBundlesOutputPath,  BundleUtility.GetPlatformName());
 			if (!Directory.Exists(outputPath))
 				Directory.CreateDirectory (outputPath);
 	
 			//@TODO: use append hash... (Make sure pipeline works correctly with it.)
-			BuildPipeline.BuildAssetBundles (outputPath, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+			BuildPipeline.BuildAssetBundles (outputPath, BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
 		}
 	
 		public static void WriteServerURL() {
@@ -43,34 +43,11 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 			File.WriteAllText(assetBundleUrlPath, downloadUrl);
 			AssetDatabase.Refresh();
 		}
-	
+		
 		public static void BuildPlayer() {
 			var outputPath = EditorUtility.SaveFolderPanel("Choose Location of the Built Game", "", "");
 			if (outputPath.Length == 0)
 				return;
-	
-			string[] levels = GetLevelsFromBuildSettings();
-			if (levels.Length == 0) {
-				Log.Info("Nothing to build.");
-				return;
-			}
-	
-			string targetName = GetBuildTargetName(EditorUserBuildSettings.activeBuildTarget);
-			if (targetName == null)
-				return;
-	
-			// Build and copy AssetBundles.
-			BuildAssetBundles();
-			WriteServerURL();
-	
-			BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
-			BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
-		}
-		
-		public static void BuildStandalonePlayer() {
-			var outputPath = EditorUtility.SaveFolderPanel("Choose Location of the Built Game", "", "");
-			if (outputPath.Length == 0)
-				return;
 			
 			string[] levels = GetLevelsFromBuildSettings();
 			if (levels.Length == 0) {
@@ -84,29 +61,39 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 			
 			// Build and copy AssetBundles.
 			BuildAssetBundles();
-			CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, Utility.AssetBundlesOutputPath) );
+			CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath));
 			AssetDatabase.Refresh();
 			
 			BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
 			BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
+            if (Directory.Exists(outputPath)) {
+                foreach (var file in Directory.GetFiles(outputPath, "*.manifest", SearchOption.AllDirectories))
+                    File.Delete(file);
+            }
 		}
 	
 		public static string GetBuildTargetName(BuildTarget target) {
+		    var baseName =
+		        string.Join(string.Empty,
+		            PlayerSettings.productName.Split(' ')
+		                .Where(s => !s.IsNullOrEmpty())
+		                .Select(s => s.Substring(0, 1).ToLower())
+                        .ToArray());
 			switch(target) {
                 case BuildTarget.Android :
-                    return "/test.apk";
+			        return "/{0}.apk".With(baseName);
                 case BuildTarget.StandaloneWindows:
                 case BuildTarget.StandaloneWindows64:
-                    return "/test.exe";
+			        return "/{0}.exe".With(baseName);
                 case BuildTarget.StandaloneOSXIntel:
                 case BuildTarget.StandaloneOSXIntel64:
                 case BuildTarget.StandaloneOSXUniversal:
-                    return "/test.app";
+			        return "/{0}.app".With(baseName);
                 case BuildTarget.WebGL:
                     return "";
                     // Add more build targets for your own.
                 default:
-                    Debug.Log("Target not implemented.");
+                    Log.Error("Target not implemented.");
                     return null;
 			}
 		}
@@ -115,10 +102,10 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 			// Clear streaming assets folder.
 			Directory.CreateDirectory(outputPath);
 	
-			string outputFolder = Utility.GetPlatformName();
+			string outputFolder = BundleUtility.GetPlatformName();
 	
 			// Setup the source folder for assetbundles.
-			var source = Path.Combine(Path.Combine(System.Environment.CurrentDirectory, Utility.AssetBundlesOutputPath), outputFolder);
+			var source = Path.Combine(Path.Combine(System.Environment.CurrentDirectory, BundleUtility.AssetBundlesOutputPath), outputFolder);
 			if (!Directory.Exists(source))
 				Log.Info("No assetBundle output folder, try to build the assetBundles first.");
 	
