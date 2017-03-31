@@ -112,7 +112,7 @@ namespace HouraiTeahouse {
             if (LoadTask != null)
                 return LoadTask;
             // If no AsyncManager is available, load the assets synchrounously.
-            if (AsyncManager.Instance == null || IsLoaded)
+            if (IsLoaded)
                 return Task.FromResult(Asset);
             LoadTask = IsBundled ? LoadFromBundle(): LoadFromResources(priority);
             string typeName = typeof(T).Name;
@@ -132,16 +132,13 @@ namespace HouraiTeahouse {
 
         ITask<T> LoadFromBundle() {
             string[] splits = _path.Split(':');
-            var operation = AssetBundleManager.LoadAssetAsync<T>(splits[0], splits[1]);
-            var task = new Task();
-            AsyncManager.Instance.AddOperation(operation, task);
-            return task.Then(() => operation.Asset);
+            return AssetBundleManager.LoadAssetAsync<T>(splits[0], splits[1]);
         }
 
         ITask<T> LoadFromResources(int priority) {
-            ResourceRequest request = Resources.LoadAsync<T>(_path);
+            var request = Resources.LoadAsync<T>(_path);
             request.priority = priority;
-            return request.ToTask<T>();
+            return AsyncManager.AddOperation(request).Then(req => req.asset as T);
         }
 
     }

@@ -22,6 +22,10 @@ namespace HouraiTeahouse.SmashBrew {
 
         public static Config Load() { return Instance; }
 
+        public static BundleConfig Bundles {
+            get { return Instance._bundles; }
+        }
+
         public static PlayerConfig Player {
             get { return Instance._player; }
         }
@@ -52,6 +56,9 @@ namespace HouraiTeahouse.SmashBrew {
         #region Serialized Fields
 
         [SerializeField]
+        BundleConfig _bundles;
+
+        [SerializeField]
         GameModeConfig _gameModes;
 
         [SerializeField]
@@ -67,6 +74,14 @@ namespace HouraiTeahouse.SmashBrew {
         TagConfig _tags;
 
         #endregion
+    }
+
+    [Serializable]
+    public class BundleConfig {
+
+        [SerializeField]
+        string BaseDownloadingURL;
+
     }
 
     [Serializable]

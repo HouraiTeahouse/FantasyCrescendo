@@ -42,43 +42,51 @@ namespace HouraiTeahouse.SmashBrew {
             _characters = new Dictionary<uint, CharacterData>();
             _scenes = new List<SceneData>();
 
-#if UNITY_EDITOR
-            LoadFromEditor<CharacterData>(AddCharacter);
-            LoadFromEditor<SceneData>(AddScene);
-#endif
-            var bundlePath = BundleUtility.GetStoragePath();
-            var dataFilePath = Path.Combine(bundlePath, "data");
-            log.Info("Storage Path: {0}", bundlePath);
-            if (!File.Exists(dataFilePath)) {
-                log.Info("Cannot find {0} copying StreamingAssets...", dataFilePath, bundlePath);
-                AssetBundleManager.CopyDirectory(Application.streamingAssetsPath, bundlePath);
-            }
-
-            var file = File.ReadAllText(dataFilePath);
-            var whitelist = new List<string>();
-            var blacklist = new List<string>();
-            foreach (var entry in file.Split('\n')) {
-                if (entry.StartsWith("-")) {
-                    blacklist.Add(entry.Substring(1).Trim());
-                    log.Info("Registered bundle blacklist: {0}".With(entry.Substring(1).Trim()));
-                } else {
-                    whitelist.Add(entry.Trim());
-                    log.Info("Registered bundle whitelist: {0}".With(entry.Trim()));
-                }
-            }
-
             AssetBundleManager.Initialize();
 
             AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
             AssetBundleManager.AddHandler<SceneData>(AddScene);
 
-            AssetBundleManager.LoadLocalBundles(whitelist, blacklist);
+#if UNITY_EDITOR
+            if (AssetBundleManager.SimulateAssetBundleInEditor) {
+                LoadFromEditor<CharacterData>(AddCharacter);
+                LoadFromEditor<SceneData>(AddScene);
+            }
+            else
+#endif
+            {
+                var bundlePath = BundleUtility.GetStoragePath();
+                var dataFilePath = Path.Combine(bundlePath, "data");
+                log.Info("Storage Path: {0}", bundlePath);
+                if (!File.Exists(dataFilePath)) {
+                    log.Info("Cannot find {0} copying StreamingAssets...", dataFilePath, bundlePath);
+                    AssetBundleManager.CopyDirectory(Application.streamingAssetsPath, bundlePath);
+                }
 
+                var file = File.ReadAllText(dataFilePath);
+                var whitelist = new List<string>();
+                var blacklist = new List<string>();
+                foreach (var entry in file.Split('\n')) {
+                    if (entry.StartsWith("-")) {
+                        blacklist.Add(entry.Substring(1).Trim());
+                        log.Info("Registered bundle blacklist: {0}".With(entry.Substring(1).Trim()));
+                    } else {
+                        whitelist.Add(entry.Trim());
+                        log.Info("Registered bundle whitelist: {0}".With(entry.Trim()));
+                    }
+                }
+
+                AssetBundleManager.LoadLocalBundles(whitelist, blacklist);
+            }
             Characters = new ReadOnlyCollection<CharacterData>(_characters.Values.ToList());
             Scenes = new ReadOnlyCollection<SceneData>(_scenes);
 
-            foreach (CharacterData character in Characters)
-                character.Prefab.LoadAsync().Then(prefab => ClientScene.RegisterPrefab(prefab));
+            foreach (CharacterData character in Characters) {
+                character.Prefab.LoadAsync().Then(prefab => {
+                    ClientScene.RegisterPrefab(prefab); 
+                    log.Info("Registered the prefab for {0} for network spawning.", character.name);
+                });
+            }
 
             Resources.UnloadUnusedAssets();
 

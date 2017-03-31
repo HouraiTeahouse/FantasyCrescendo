@@ -37,7 +37,7 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 				downloadUrl = "http://" + localIp + ":7888/";
 			}
 			
-			const string assetBundleManagerResourcesDirectory = "Assets/AssetBundleManager/Resources";
+			const string assetBundleManagerResourcesDirectory = "Assets/Dependencies/AssetBundleManager/Resources";
 			string assetBundleUrlPath = Path.Combine (assetBundleManagerResourcesDirectory, "AssetBundleServerURL.bytes");
 			Directory.CreateDirectory(assetBundleManagerResourcesDirectory);
 			File.WriteAllText(assetBundleUrlPath, downloadUrl);
@@ -115,6 +115,10 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 				FileUtil.DeleteFileOrDirectory(destination);
 			
 			FileUtil.CopyFileOrDirectory(source, destination);
+            if (Directory.Exists(destination)) {
+                foreach (var file in Directory.GetFiles(destination, "*.manifest*", SearchOption.AllDirectories))
+                    File.Delete(file);
+            }
 		}
 	
 		static string[] GetLevelsFromBuildSettings() {

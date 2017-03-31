@@ -8,28 +8,6 @@ namespace HouraiTeahouse {
 
     public static class TaskExtensions {
 
-        public static ITask ToTask(this AsyncOperation asyncOperation) {
-            Argument.NotNull(asyncOperation);
-            var manager = AsyncManager.Instance;
-            var task = new Task();
-            if(manager == null)
-                task.Reject(new InvalidOperationException("Cannot convert a AsyncOperation to a Task without an AsyncManager instance"));
-            else
-                manager.AddOperation(asyncOperation, task);
-            return task;
-        }
-
-        public static ITask<T> ToTask<T>(this ResourceRequest resourceRequest) where T : UnityEngine.Object {
-            Argument.NotNull(resourceRequest);
-            var manager = AsyncManager.Instance;
-            var task = new Task();
-            if(manager == null)
-                task.Reject(new InvalidOperationException("Cannot convert a AsyncOperation to a Task without AsyncManager instance"));
-            else
-                manager.AddOperation(resourceRequest, task);
-            return task.Then(() => Task.FromResult(resourceRequest.asset as T));
-        }
-
         public static ITask<T> Then<T>(this ITask task, Func<T> func) {
             return task.Then(() => Task.FromResult(func()));
         }

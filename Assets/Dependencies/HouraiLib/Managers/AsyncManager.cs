@@ -7,18 +7,30 @@ using UnityEngine;
 namespace HouraiTeahouse {
 
     /// <summary> A Singleton for managing a number of asynchronous operations </summary>
-    public sealed class AsyncManager : Singleton<AsyncManager> {
+    public class AsyncManager : MonoBehaviour {
+
+        static AsyncManager _baseBehavior;
+        static AsyncManager EngineHook {
+            get {
+                if (_baseBehavior == null) {
+                    var gameObject = new GameObject("Async Manager");
+                    DontDestroyOnLoad(gameObject);
+                    _baseBehavior = gameObject.AddComponent<AsyncManager>();
+                }
+                return _baseBehavior;
+            }
+        }
 
         // Set of all asynchronous operations managed by the manager
-        readonly List<object> _operations = new List<object>();
+        static readonly List<object> _operations = new List<object>();
 
         /// <summary> The overall progress of all of the asynchronous actions. Shown as a ratio in the range [0.0, 1.0] </summary>
-        public float Progress {
+        public static float Progress {
             get { return OperationsInProgress > 0 ? 1.0f : _operations.OfType<AsyncOperation>().Average(op => op.progress); }
         }
 
         /// <summary> The number of operations in progress currently </summary>
-        public int OperationsInProgress {
+        public static int OperationsInProgress {
             get { return _operations.Count; }
         }
 
@@ -29,18 +41,18 @@ namespace HouraiTeahouse {
         /// <param name="operation"> the operation to manage </param>
         /// <param name="resolvable"> optional parameter, if not null, will be called after finish executing </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operation" /> is null </exception>
-        public void AddOperation(object operation, IResolvable resolvable = null) {
+        public static ITask<T> AddOperation<T>(T operation) {
             Argument.NotNull(operation);
             _operations.Add(operation);
-            StartCoroutine(Wait(operation, resolvable));
+            //Log.Debug(_operations.Count);
+            var task = new Task<T>();
+            EngineHook.StartCoroutine(Wait(operation, task));
+            return task;
         }
 
         public static void AddSynchronousAction(Action action) { WaitingSynchronousActions += action; }
 
-        protected override void Awake() {
-            base.Awake();
-            Flush();
-        }
+        void Awake() { Flush(); }
 
         void Start() { Flush(); }
 
@@ -53,11 +65,12 @@ namespace HouraiTeahouse {
             WaitingSynchronousActions = null;
         }
 
-        IEnumerator Wait(object operation, IResolvable task) {
+        static IEnumerator Wait<T>(T operation, IResolvable<T> task) {
             yield return operation;
             _operations.Remove(operation);
+            //Log.Debug(_operations.Count);
             if (task != null)
-                task.Resolve();
+                task.Resolve(operation);
         }
 
     }
