@@ -16,7 +16,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         protected virtual void Awake() {
             Log = HouraiTeahouse.Log.GetLogger(this);
-            CreateSelect();
+            DataManager.Instance.LoadTask.Then(() => CreateSelect());
         }
 
         public static void Attach(RectTransform child, Transform parent) {

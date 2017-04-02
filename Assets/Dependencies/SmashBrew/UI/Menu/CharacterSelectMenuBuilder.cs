@@ -21,7 +21,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         protected override void Awake() {
             base.Awake();
-            DataManager.Instance.LoadTask.Then(() => CreatePlayerDisplay());
+            CreatePlayerDisplay();
         }
 
         protected override IEnumerable<CharacterData> GetData() { return DataManager.Instance.Characters; }

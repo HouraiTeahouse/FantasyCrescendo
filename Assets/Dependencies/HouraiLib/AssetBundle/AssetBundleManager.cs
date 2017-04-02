@@ -369,7 +369,7 @@ namespace HouraiTeahouse.AssetBundles {
 		        task = LoadAssetBundleInternal(assetBundleName);
             else
                 task = RemapVariantName(assetBundleName).Then(bundleName => LoadAssetBundleAsync(bundleName));
-            var assetTask = task.Then(bundle => AsyncManager.AddOperation(bundle.AssetBundle.LoadAssetAsync(assetName)));
+            var assetTask = task.Then(bundle => AsyncManager.AddOperation(bundle.AssetBundle.LoadAssetAsync<T>(assetName)));
             assetTask.Then(() => log.Info("Loaded {0} from {1}", assetName, assetBundleName));
             return assetTask.Then(request => request.asset as T);
 		}
