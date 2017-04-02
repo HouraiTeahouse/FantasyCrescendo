@@ -12,19 +12,9 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         ///     <see cref="UnityEditor.Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
+            if (!Assets.IsResource(target) && !Assets.IsBundleAsset(target))
+                EditorGUILayout.HelpBox( "Scene Data is not bundled nor in a Resource folder. The game cannot find it.", MessageType.Error);
             DrawDefaultInspector();
-            string message;
-            MessageType type;
-            if (!Assets.IsResource(target)) {
-                message =
-                    "This game cannot find this Scene Data if it is not in a Resources folder. Please move it to a Resources (sub)folder.";
-                type = MessageType.Error;
-            }
-            else {
-                message = "This Scene Data is correctly placed. The game can find it.";
-                type = MessageType.Info;
-            }
-            EditorGUILayout.HelpBox(message, type);
             if (GUILayout.Button("Load")) {
                 (target as SceneData).Load();
             }

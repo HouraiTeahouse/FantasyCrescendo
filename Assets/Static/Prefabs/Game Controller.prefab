@@ -12,17 +12,14 @@ GameObject:
   - component: {fileID: 11479720}
   - component: {fileID: 11439252}
   - component: {fileID: 11460476}
-  - component: {fileID: 11478998}
   - component: {fileID: 11473446}
   - component: {fileID: 11463294}
   - component: {fileID: 11482896}
-  - component: {fileID: 11442566}
   - component: {fileID: 11458584}
   - component: {fileID: 114000013746611068}
   - component: {fileID: 114358818079837736}
   - component: {fileID: 114966787956079878}
   - component: {fileID: 114264198699108660}
-  - component: {fileID: 114948879885496674}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -60,17 +57,6 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   _customProfiles:
   - HouraiTeahouse.SmashBrew.SmashBrewKeyboardProfile
---- !u!114 &11442566
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb5e645c62a8f9c4ab835c447489b0ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11442866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -171,17 +157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inEditor: 0
---- !u!114 &11478998
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11479720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -483,17 +458,6 @@ MonoBehaviour:
   showGUI: 1
   offsetX: 0
   offsetY: 0
---- !u!114 &114948879885496674
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6309cb12c9f62482c8451f716f97d470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114966787956079878
 MonoBehaviour:
   m_ObjectHideFlags: 1

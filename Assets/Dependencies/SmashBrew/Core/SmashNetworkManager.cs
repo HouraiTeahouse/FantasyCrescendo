@@ -15,18 +15,15 @@ namespace HouraiTeahouse.SmashBrew {
 
     }
     
-    [RequireComponent(typeof(DataManager))]
     [RequireComponent(typeof(PlayerManager))]
     public class SmashNetworkManager : NetworkManager {
 
         short localPlayerCount = 0;
         int playerCount = 0;
         Dictionary<PlayerConnection, Player> PlayerMap;
-        DataManager DataManager { get; set; }
         PlayerManager PlayerManager { get; set; }
 
         void Awake() {
-            DataManager = this.SafeGetComponent<DataManager>();
             PlayerManager = this.SafeGetComponent<PlayerManager>();
             PlayerMap = new Dictionary<PlayerConnection, Player>();
         }

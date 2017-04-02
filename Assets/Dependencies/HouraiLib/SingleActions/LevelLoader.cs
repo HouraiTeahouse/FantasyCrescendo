@@ -1,8 +1,21 @@
+using System;
 using System.Collections.Generic;
+using HouraiTeahouse.AssetBundles;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace HouraiTeahouse {
+
+    public static class SceneLoader {
+        
+        public static ITask LoadScene(string path, LoadSceneMode mode= LoadSceneMode.Single) {
+            if (!path.Contains(Resource.BundleSeperator.ToString()))
+                return AsyncManager.AddOperation(SceneManager.LoadSceneAsync(path, mode));
+            string[] parts = path.Split(Resource.BundleSeperator);
+            return AssetBundleManager.LoadLevelAsync(parts[0], parts[1], mode);
+        }
+
+    }
 
     /// <summary> A SingleActionBehaviour that loads new Scenes </summary>
     public class LevelLoader : SingleActionBehaviour {
@@ -34,12 +47,15 @@ namespace HouraiTeahouse {
         /// <summary> Loads the scenes </summary>
         public void Load() {
             var paths = new HashSet<string>();
-            for (var i = 0; i < SceneManager.sceneCount; i++)
-                paths.Add(SceneManager.GetSceneAt(i).path);
+            for (var i = 0; i < SceneManager.sceneCount; i++) {
+                var path = SceneManager.GetSceneAt(i).path;
+                paths.Add(path);
+                Log.Debug(path);
+            }
             foreach (string scenePath in _scenes) {
                 if (!_ignoreLoadedScenes && paths.Contains("Assets/{0}.unity".With(scenePath)))
                     continue;
-                SceneManager.LoadScene(scenePath, _mode);
+                SceneLoader.LoadScene(scenePath);
             }
         }
 

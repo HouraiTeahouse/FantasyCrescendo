@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HouraiTeahouse.AssetBundles;
 using UnityEngine;
 
 namespace HouraiTeahouse {
@@ -44,7 +45,6 @@ namespace HouraiTeahouse {
         public static ITask<T> AddOperation<T>(T operation) {
             Argument.NotNull(operation);
             _operations.Add(operation);
-            //Log.Debug(_operations.Count);
             var task = new Task<T>();
             EngineHook.StartCoroutine(Wait(operation, task));
             return task;
@@ -56,7 +56,10 @@ namespace HouraiTeahouse {
 
         void Start() { Flush(); }
 
-        void Update() { Flush(); }
+        void Update() {
+            Flush();
+            //Log.Debug(AssetBundleManager.Manifest.State);
+        }
 
         static void Flush() {
             if (WaitingSynchronousActions == null)
@@ -68,9 +71,7 @@ namespace HouraiTeahouse {
         static IEnumerator Wait<T>(T operation, IResolvable<T> task) {
             yield return operation;
             _operations.Remove(operation);
-            //Log.Debug(_operations.Count);
-            if (task != null)
-                task.Resolve(operation);
+            task.Resolve(operation);
         }
 
     }

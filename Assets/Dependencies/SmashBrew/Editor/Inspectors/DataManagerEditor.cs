@@ -1,7 +1,6 @@
 using System.Linq;
 using HouraiTeahouse.Editor;
 using UnityEditor;
-using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
@@ -30,7 +29,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             if (scenesFoldout) {
                 EditorGUI.indentLevel++;
                 foreach (var scene in DataManager.Instance.Scenes.OrderBy(c => c.name))
-                    EditorGUILayout.LabelField(scene.Name, scene.IsStage ? "Stage" : "Normal Scene");
+                    EditorGUILayout.LabelField(scene.Name, scene.Type.ToString());
                 EditorGUI.indentLevel--;
             }
         }

@@ -94,6 +94,11 @@ namespace HouraiTeahouse {
 
     public static class Log {
 
+        static Log() { Task.UnhandledException += (src, args) => {
+                Error(args.ExceptionObject);
+            };
+        }
+
         static LogSettings _settings = new LogSettings();
 #if UNITY_EDITOR
         static readonly Dictionary<LogLevel, string> _colors = new Dictionary<LogLevel, string> {

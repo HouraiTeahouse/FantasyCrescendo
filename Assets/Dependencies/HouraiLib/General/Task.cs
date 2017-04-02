@@ -211,14 +211,14 @@ namespace HouraiTeahouse {
 
         void OnResolve() {
             if(_resolveHandlers != null)
-                foreach (ResolveHandler handler in _resolveHandlers)
+                foreach (ResolveHandler handler in _resolveHandlers.ToArray())
                     InvokeResolve(handler.Callback, handler.Rejectable);
             Clear();
         }
 
         void OnReject(Exception error) {
             if(_rejectHandlers != null)
-                foreach (RejectHandler handler in _rejectHandlers)
+                foreach (RejectHandler handler in _rejectHandlers.ToArray())
                     InvokeReject(handler.Callback, error, handler.Rejectable);
             Clear();
         }
@@ -232,7 +232,9 @@ namespace HouraiTeahouse {
             var task = new Task();
             ActionHandlers(task,
                 () => {
-                    onResolved.SafeInvoke();
+                    // Avoiding use of SafeInvoke here due higher chances of stack overflow
+                    if (onResolved != null)
+                        onResolved();
                     task.Resolve();
                 });
             return task;
@@ -473,11 +475,11 @@ namespace HouraiTeahouse {
         public T Result { get; private set; }
 
         public void Resolve(T value) {
+            Resolve();
             Result = value;
             if(_resolveHandlers != null)
-                foreach (ResolveHandler handler in _resolveHandlers)
+                foreach (ResolveHandler handler in _resolveHandlers.ToArray())
                     InvokeResolve(handler.Callback, handler.Rejectable);
-            Resolve();
         }
 
         public ITask Then(Action<T> onResolve) {

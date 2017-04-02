@@ -102,7 +102,7 @@ namespace HouraiTeahouse {
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                log.Info("[Resource] Unloaded \"{0}\" ({1})", _path, typeof(T).Name);
+                log.Info("Unloaded \"{0}\" ({1})", _path, typeof(T).Name);
         }
 
         /// <summary> Loads the asset in an asynchronous manner. If no AsyncManager is currently availble, </summary>
@@ -124,15 +124,14 @@ namespace HouraiTeahouse {
 #if UNITY_EDITOR
                 if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                    log.Info("Loaded \"{1} ({0})", typeName, _path);
+                    log.Info("Loaded \"{1}\" ({0})", typeName, _path);
                 Asset = asset;
             });
             return LoadTask;
         }
 
         ITask<T> LoadFromBundle() {
-            string[] splits = _path.Split(':');
-            return AssetBundleManager.LoadAssetAsync<T>(splits[0], splits[1]);
+            return AssetBundleManager.LoadAssetAsync<T>(_path);
         }
 
         ITask<T> LoadFromResources(int priority) {

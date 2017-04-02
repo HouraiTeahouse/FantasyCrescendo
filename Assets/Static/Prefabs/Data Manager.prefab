@@ -52,12 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
-  _bundleSearchPatterns:
-  - characters/*_info
-  _bundleBlacklist:
-  - '*.json'
-  - '*.manifest'
 --- !u!114 &114851794851332010
 MonoBehaviour:
   m_ObjectHideFlags: 1

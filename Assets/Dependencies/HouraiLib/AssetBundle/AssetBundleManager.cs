@@ -33,8 +33,9 @@ namespace HouraiTeahouse.AssetBundles {
 		const string SimulateAssetBundles = "SimulateAssetBundles";
 	#endif
 
+        static readonly Regex SeperatorRegex = new Regex(@"[\\]", RegexOptions.Compiled);
         static readonly ILog log = Log.GetLogger("AssetBundle");
-        static readonly ITask<AssetBundleManifest> Manifest = new Task<AssetBundleManifest>();
+        public static readonly ITask<AssetBundleManifest> Manifest = new Task<AssetBundleManifest>();
 		static readonly Dictionary<string, ITask<LoadedAssetBundle>> AssetBundles = new Dictionary<string, ITask<LoadedAssetBundle>> ();
 		static readonly Dictionary<string, string[]> Dependencies = new Dictionary<string, string[]> ();
         static readonly Dictionary<Type, Delegate> TypeHandlers = new Dictionary<Type, Delegate> ();
@@ -99,30 +100,31 @@ namespace HouraiTeahouse.AssetBundles {
                 bundles.Add(filePath);
             }
             var bundleTasks = bundles.Select(name => LoadAssetBundleAsync(name).Then(loadedBundle => {
-                //TODO(james7132): Make this asynchronous
                 var bundle = loadedBundle.AssetBundle;
                 if (bundle == null) {
                     log.Error("Failed to load an AssetBundle from {0}.", loadedBundle.Name);
-                    return;
+                    return Task.Resolved;
                 }
-                var mainAsset = bundle.mainAsset;
-                if (mainAsset == null)
-                    mainAsset = bundle.LoadAsset(bundle.GetAllAssetNames()[0]);
-                if (mainAsset == null)
-                    return;
-                var assetType = mainAsset.GetType();
-                Delegate handler;
-                if (TypeHandlers.TryGetValue(assetType, out handler)) {
-                    log.Info("Loaded {0} ({1}) from \"{2}\".", mainAsset.name, assetType.Name, loadedBundle.Name);
-                    handler.DynamicInvoke(mainAsset);
-                }
-                else {
-                    log.Error(
-                        "Attempted to load an asset of type {0} from asset bundle {1}, but no handler was found. Unloading...",
-                        assetType,
-                        loadedBundle.Name);
-                    UnloadAssetBundle(loadedBundle.Name);
-                }
+                var assetName = bundle.GetAllAssetNames()[0];
+                ITask<Object> assetTask = bundle.mainAsset != null 
+                    ? Task.FromResult(bundle.mainAsset) 
+                    : LoadAssetAsync<Object>(loadedBundle.Name, assetName);
+                return assetTask.Then(asset => {
+                    if (asset == null)
+                        return;
+                    var assetType = asset.GetType();
+                    Delegate handler;
+                    if (TypeHandlers.TryGetValue(assetType, out handler)) {
+                        log.Info("Loaded {0} ({1}) from \"{2}\".", asset.name, assetType.Name, loadedBundle.Name);
+                        handler.DynamicInvoke(asset);
+                    } else {
+                        log.Error(
+                            "Attempted to load an asset of type {0} from asset bundle {1}, but no handler was found. Unloading...",
+                            assetType,
+                            loadedBundle.Name);
+                        UnloadAssetBundle(loadedBundle.Name);
+                    }
+                });
             }));
             var task = Task.All(bundleTasks);
             task.Then(() => log.Info("Done loading local asset bundles"));
@@ -212,7 +214,7 @@ namespace HouraiTeahouse.AssetBundles {
 		
 		// Load AssetBundle and its dependencies.
 		static ITask<LoadedAssetBundle> LoadAssetBundleAsync(string assetBundleName, bool isLoadingAssetBundleManifest = false) {
-			log.Info("Loading Asset Bundle " + (isLoadingAssetBundleManifest ? "Manifest: " : ": ") + assetBundleName);
+			log.Info("Loading Asset Bundle" + (isLoadingAssetBundleManifest ? " Manifest: " : ": ") + assetBundleName);
 	
 	#if UNITY_EDITOR
 			// If we're in Editor simulation mode, we don't have to really load the assetBundle and its dependencies.
@@ -265,13 +267,14 @@ namespace HouraiTeahouse.AssetBundles {
 		// Where we actually load the assetbundles from the local disk.
         static ITask<LoadedAssetBundle> LoadAssetBundleInternal(string assetBundleName) {
             // Already loaded.
+            var name = SeperatorRegex.Replace(assetBundleName, "/");
             ITask<LoadedAssetBundle> bundle;
-            if (AssetBundles.TryGetValue(assetBundleName, out bundle)) {
+            if (AssetBundles.TryGetValue(name, out bundle)) {
                 bundle.Then(b => b.ReferencedCount++);
                 return bundle;
             }
 
-            var filePath = Path.Combine(BundleUtility.GetBundleStoragePath(), assetBundleName);
+            var filePath = Path.Combine(BundleUtility.GetBundleStoragePath(), name);
 
             // For manifest assetbundle, always download it as we don't have hash for it.
             if (!File.Exists(filePath))
@@ -280,12 +283,12 @@ namespace HouraiTeahouse.AssetBundles {
             var task = AsyncManager.AddOperation(operation).Then(request => {
                 var assetBundle = request.assetBundle;
                 if (assetBundle == null) 
-                    throw new Exception("{0} is not a valid asset bundle.".With(assetBundle));
-                var loadedBundle = new LoadedAssetBundle(assetBundleName, assetBundle);
+                    throw new Exception("{0} is not a valid asset bundle.".With(name));
+                var loadedBundle = new LoadedAssetBundle(name, assetBundle);
                 return loadedBundle;
             });
-            task.Then(() => { log.Info("Loaded bundle \"{0}\" from {1}.", assetBundleName, filePath); });
-            AssetBundles.Add(assetBundleName, task);
+            task.Then(() => { log.Info("Loaded bundle \"{0}\" from {1}.", name, filePath); });
+            AssetBundles.Add(name, task);
             return task;
         }
 	
@@ -336,6 +339,16 @@ namespace HouraiTeahouse.AssetBundles {
 		        log.Info("{0} has been unloaded successfully", assetBundleName);
 		    });
 		}
+
+		// Loads an asset given a bundle encoded path
+        public static ITask<T> LoadAssetAsync<T>(string assetPath) where T : Object {
+            if (assetPath.IndexOf(Resource.BundleSeperator) < 0)
+                return Task.FromError<T>(new ArgumentException(
+                    "assetPath must contain the bundle seperator ({0}) to load from asset bundles".With(Resource.BundleSeperator)
+                    ));
+            string[] parts = assetPath.Split(Resource.BundleSeperator);
+            return LoadAssetAsync<T>(parts[0], parts[1]);
+        }
 	
 		// Load asset from the given assetBundle.
 		public static ITask<T> LoadAssetAsync<T>(string assetBundleName, string assetName) where T : Object {
@@ -355,13 +368,25 @@ namespace HouraiTeahouse.AssetBundles {
 		    if (typeof(T) == typeof(AssetBundleManifest))
 		        task = LoadAssetBundleInternal(assetBundleName);
             else
-                task = RemapVariantName(assetBundleName).Then(bundleName => LoadAssetBundleAsync(assetBundleName));
-            return task.Then(bundle => AsyncManager.AddOperation(bundle.AssetBundle.LoadAssetAsync(assetName)))
-                    .Then(request => request.asset as T);
+                task = RemapVariantName(assetBundleName).Then(bundleName => LoadAssetBundleAsync(bundleName));
+            var assetTask = task.Then(bundle => AsyncManager.AddOperation(bundle.AssetBundle.LoadAssetAsync(assetName)));
+            assetTask.Then(() => log.Info("Loaded {0} from {1}", assetName, assetBundleName));
+            return assetTask.Then(request => request.asset as T);
 		}
-	
-		// Load level from the given assetBundle.
-		public static ITask LoadLevelAsync (string assetBundleName, string levelName, LoadSceneMode loadMode) {
+
+		// Loads a scene given a bundle encoded path
+        public static ITask LoadLevelAsync(string assetPath,
+                                           LoadSceneMode loadMode = LoadSceneMode.Single) {
+            if (assetPath.IndexOf(Resource.BundleSeperator) < 0)
+                return Task.FromError(new ArgumentException(
+                    "assetPath must contain the bundle seperator ({0}) to load from asset bundles".With(Resource.BundleSeperator)
+                    ));
+            string[] parts = assetPath.Split(Resource.BundleSeperator);
+            return LoadLevelAsync(parts[0], parts[1], loadMode);
+        }
+
+        // Load level from the given assetBundle.
+		public static ITask LoadLevelAsync (string assetBundleName, string levelName, LoadSceneMode loadMode = LoadSceneMode.Single) {
 			log.Info("Loading {0} from {1} bundle...", levelName, assetBundleName);
 
 #if UNITY_EDITOR

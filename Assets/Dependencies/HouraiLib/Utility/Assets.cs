@@ -66,6 +66,9 @@ namespace HouraiTeahouse.Editor {
 
         public static bool IsResource(Object asset) { return IsResourcePath(AssetDatabase.GetAssetPath(asset)); }
 
+        public static bool IsBundleAsset(Object asset) {
+            return !string.IsNullOrEmpty(AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(asset)).assetBundleName);
+        }
         public static bool IsBundlePath(string path) { return path.IndexOf(Resource.BundleSeperator) >= 0; }
 
         public static Object LoadBundledAsset(string assetPath) {
@@ -81,6 +84,18 @@ namespace HouraiTeahouse.Editor {
             if (!IsResourcePath(assetPath))
                 return string.Empty;
             return ResourceRegex.Replace(assetPath, "$1");
+        }
+
+        public static string GetBundlePath(Object obj) {
+            var bundleName = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(obj)).assetBundleName;
+            return !string.IsNullOrEmpty(bundleName) ?bundleName + Resource.BundleSeperator + obj.name : null;
+        }
+
+        public static string GetScenePath(SceneAsset scene) {
+            var path = Regex.Replace(AssetDatabase.GetAssetPath(scene),
+                "Assets/(.*)\\..*",
+                "$1");
+            return EditorBuildSettings.scenes.Select(s => s.path).FirstOrDefault(p => p == path);
         }
 
         public static void CreateFolder(string path) {

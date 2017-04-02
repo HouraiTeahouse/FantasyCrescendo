@@ -15,15 +15,18 @@ using UnityEditor;
 namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> A manager of all of the game data loaded into the game. </summary>
-    public sealed class DataManager : MonoBehaviour {
+    public sealed class DataManager : Singleton<DataManager> {
 
         static readonly ILog log = Log.GetLogger<DataManager>();
 
         List<SceneData> _scenes;
+        List<CharacterData> _characterList;
         Dictionary<uint, CharacterData> _characters;
+        public ITask LoadTask { get; private set; }
 
-        /// <summary> The Singleton instance of DataManager. </summary>
-        public static DataManager Instance { get; private set; }
+        public bool IsReady {
+            get { return LoadTask != null && LoadTask.State != TaskState.Pending; }
+        }
 
         /// <summary> All Characters that are included with the Game's build. The Data Manager will automatically load all
         /// CharacterData instances from Resources. </summary>
@@ -34,11 +37,11 @@ namespace HouraiTeahouse.SmashBrew {
         public ReadOnlyCollection<SceneData> Scenes { get; private set; }
 
         /// <summary> Unity Callback. Called on object instantion. </summary>
-        void Awake() {
-            Instance = this;
-
+        protected override void Awake() {
+            base.Awake();
             DontDestroyOnLoad(this);
 
+            _characterList = new List<CharacterData>();
             _characters = new Dictionary<uint, CharacterData>();
             _scenes = new List<SceneData>();
 
@@ -76,19 +79,27 @@ namespace HouraiTeahouse.SmashBrew {
                     }
                 }
 
-                AssetBundleManager.LoadLocalBundles(whitelist, blacklist);
+                LoadTask = AssetBundleManager.LoadLocalBundles(whitelist, blacklist).Then(() => {
+                    var scenes = Scenes.OrderByDescending(s => s.Type).ThenByDescending(s => s.LoadPriority);
+                    var logStr = "Scene Considerations: ";
+                    foreach (var scene in scenes)
+                        logStr += "\n   {0}: {1} {2}".With(scene.name, scene.Type, scene.LoadPriority);
+                    log.Info(logStr);
+                    var startScene = scenes.FirstOrDefault();
+                    if (startScene == null)
+                        log.Error("No usable loadable scene found.");
+                    else {
+                        log.Info("Loading {0} as the initial scene...".With(startScene.name));
+                        startScene.Load();
+                    }
+                });
+                LoadTask.Done();
             }
-            Characters = new ReadOnlyCollection<CharacterData>(_characters.Values.ToList());
+
+            Characters = new ReadOnlyCollection<CharacterData>(_characterList);
             Scenes = new ReadOnlyCollection<SceneData>(_scenes);
 
-            foreach (CharacterData character in Characters) {
-                character.Prefab.LoadAsync().Then(prefab => {
-                    ClientScene.RegisterPrefab(prefab); 
-                    log.Info("Registered the prefab for {0} for network spawning.", character.name);
-                });
-            }
 
-            Resources.UnloadUnusedAssets();
 
             SceneManager.sceneLoaded += SceneLoad;
         }
@@ -116,6 +127,11 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             }
             _characters[data.Id] = data;
+            _characterList.Add(data);
+            //data.Prefab.LoadAsync().Then(prefab => {
+            //    ClientScene.RegisterPrefab(prefab);
+            //    log.Info("Registered {0} ({1}) as a spawnable network character.", data.name, data.Id);
+            //});
             log.Info("Registered {0} ({1}) as a valid character.", data.name, data.Id);
         }
 

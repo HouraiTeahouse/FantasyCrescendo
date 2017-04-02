@@ -1,25 +1,34 @@
+using UnityEngine;
+using UnityEditor;
 using System;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-using Object = UnityEngine.Object;
+using System.Linq;
 
 namespace HouraiTeahouse.Editor {
 
-    /// <summary> Custom PropertyDrawer for ResourcePathAttribute. </summary>
-    //TODO(jame7132): Move this to the Resource Attribute file
-    [CustomPropertyDrawer(typeof(ResourceAttribute))]
-    internal class ResourceAttributeDrawer : BasePropertyDrawer<ResourceAttribute> {
+    /// <summary> Custom PropertyDrawer for SceneAttribute </summary>
+    [CustomPropertyDrawer(typeof(SceneAttribute))]
+    internal class SceneAttributeDrawer : PropertyDrawer {
+
+        readonly Dictionary<string, Data> _data;
+
+        public SceneAttributeDrawer() { _data = new Dictionary<string, Data>(); }
 
         class Data {
 
-            Object _object;
+            SceneAsset _object;
             string _path;
             public readonly GUIContent Content;
 
             public Data(SerializedProperty property, GUIContent content) {
                 _path = property.stringValue;
-                _object = Assets.IsBundlePath(_path) ? Assets.LoadBundledAsset(_path) : Resources.Load(_path);
+                string path = "Assets/{0}.unity".With(_path);
+                if (Assets.IsBundlePath(_path)) {
+                    string[] parts = _path.Split(Resource.BundleSeperator);
+                    var paths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(parts[0], parts[1]);
+                    path = paths.FirstOrDefault() ?? path;
+                }
+                _object = AssetDatabase.LoadAssetAtPath<SceneAsset>(path);
                 Content = new GUIContent(content);
                 UpdateContent(content);
             }
@@ -30,9 +39,9 @@ namespace HouraiTeahouse.Editor {
 
             public void Draw(Rect position, SerializedProperty property, Type type) {
                 EditorGUI.BeginChangeCheck();
-                Object obj;
+                SceneAsset obj;
                 using (hGUI.Color(Valid ? GUI.color : Color.red))
-                    obj = EditorGUI.ObjectField(position, Content, _object, type, false);
+                    obj = EditorGUI.ObjectField(position, Content, _object, type, false) as SceneAsset;
                 if (!EditorGUI.EndChangeCheck())
                     return;
                 Update(obj);
@@ -45,7 +54,7 @@ namespace HouraiTeahouse.Editor {
                 if (!_object) {
                     message = "No object specified";
                 } else if (!Valid) {
-                    message = "Not in Resources folder or Asset Bundle. Will not be saved.";
+                    message = "Not in Build Settings or Asset Bundle. Will not be saved.";
                 } else if (_path.IndexOf(Resource.BundleSeperator) >= 0) {
                     string[] splits = _path.Split(Resource.BundleSeperator);
                     message = "Asset Bundle: {0}\nPath:{1}".With(splits[0], splits[1]);
@@ -56,22 +65,15 @@ namespace HouraiTeahouse.Editor {
                 Content.tooltip = label.tooltip.IsNullOrEmpty() ? message : "{0}\n{1}".With(label.tooltip, message);
             }
 
-            void Update(Object obj) {
+            void Update(SceneAsset obj) {
                 _object = obj;
-                var bundleName = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(_object)).assetBundleName;
-                if (Assets.IsResource(_object))
-                    _path = Assets.GetResourcePath(_object);
-                else if (!string.IsNullOrEmpty(bundleName))
-                    _path = "{0}:{1}".With(bundleName, _object.name);
-                else
-                    _path = string.Empty;
+                var scenePath = Assets.GetScenePath(obj);
+                var bundleName = Assets.GetBundlePath(obj);
+                _path = scenePath ?? bundleName ?? string.Empty;
             }
 
         }
 
-        readonly Dictionary<string, Data> _data;
-
-        public ResourceAttributeDrawer() { _data = new Dictionary<string, Data>(); }
 
         /// <summary>
         ///     <see cref="PropertyDrawer.OnGUI" />
@@ -91,11 +93,10 @@ namespace HouraiTeahouse.Editor {
 
             using (hGUI.Property(data.Content, position, property)) {
                 data.UpdateContent(label);
-                data.Draw(position, property, attribute.TypeRestriction);
+                data.Draw(position, property, typeof(SceneAsset));
                 _data[propertyPath] = data;
             }
         }
 
     }
-
 }
