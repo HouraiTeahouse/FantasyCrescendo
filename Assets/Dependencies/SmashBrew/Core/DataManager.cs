@@ -54,6 +54,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (AssetBundleManager.SimulateAssetBundleInEditor) {
                 LoadFromEditor<CharacterData>(AddCharacter);
                 LoadFromEditor<SceneData>(AddScene);
+                LoadTask = Task.Resolved;
             }
             else
 #endif
@@ -80,18 +81,6 @@ namespace HouraiTeahouse.SmashBrew {
                 }
 
                 LoadTask = AssetBundleManager.LoadLocalBundles(whitelist, blacklist).Then(() => {
-                    var scenes = Scenes.OrderByDescending(s => s.Type).ThenByDescending(s => s.LoadPriority);
-                    var logStr = "Scene Considerations: ";
-                    foreach (var scene in scenes)
-                        logStr += "\n   {0}: {1} {2}".With(scene.name, scene.Type, scene.LoadPriority);
-                    log.Info(logStr);
-                    var startScene = scenes.FirstOrDefault();
-                    if (startScene == null)
-                        log.Error("No usable loadable scene found.");
-                    else {
-                        log.Info("Loading {0} as the initial scene...".With(startScene.name));
-                        startScene.Load();
-                    }
                 });
                 LoadTask.Done();
             }
