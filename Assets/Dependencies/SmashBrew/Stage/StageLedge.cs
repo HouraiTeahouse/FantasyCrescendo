@@ -1,15 +1,33 @@
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew.Stage {
 
     [AddComponentMenu("SmashBrew/Stage/Ledge")]
-    public class StageLedge : MonoBehaviour {
+    public class StageLedge : NetworkBehaviour {
 
         [SerializeField]
         bool _direction;
 
-        public bool Occupied { get; private set; }
+        public bool Direction
+        {
+            get { return _direction; }
+        }
+
+        [SyncVar, SerializeField]
+        bool _occupied;
+
+        public bool Occupied {
+            get { return _occupied; }
+            private set {
+                if (!isServer)
+                    return;
+                _occupied = value;
+            }
+        }
+
+        public NetworkIdentity GrabberId { get; private set; }
 
         void OnTriggerEnter(Collider collider) {
             if (!collider.CompareTag(Config.Tags.LedgeTag))
@@ -17,10 +35,25 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             var movement = collider.GetComponentInParent<MovementState>();
             if (movement == null)
                 return;
-            movement.Direction = _direction;
-            movement.CurrentLedge = transform;
+            movement.GrabLedge(this);
         }
 
+        public void Grab(MovementState movement) {
+            Argument.NotNull(movement);
+            if (Occupied) {
+                Log.Debug("Edge Guarded");
+                return;
+            }
+            Occupied = true;
+            movement.CurrentLedge = gameObject;
+            movement.Direction = _direction;
+        }
+        
+        public void Release(MovementState movement) {
+            Argument.NotNull(movement);
+            movement.CurrentLedge = null;
+            Occupied = false;
+        }
     }
 
 }

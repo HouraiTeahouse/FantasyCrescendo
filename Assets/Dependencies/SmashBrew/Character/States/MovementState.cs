@@ -60,8 +60,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         Transform _ledgeTarget;
 
         [Header("Variables")]
-        [SerializeField, ReadOnly]
-        Transform _currentLedge;
+        [SyncVar, SerializeField, ReadOnly]
+        GameObject _currentLedge;
 
         [SyncVar(hook = "OnChangeDirection"), SerializeField, ReadOnly]
         bool _direction;
@@ -149,13 +149,18 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _ledgeTarget; }
         }
 
-        public Transform CurrentLedge {
+        public GameObject CurrentLedge {
             get { return _currentLedge; }
             set {
                 bool grabbed = _currentLedge == null && value != null;
                 _currentLedge = value;
-                if (grabbed)
-                    SnapToLedge();
+                if (!grabbed)
+                    return;
+                var ledge = value.GetComponentInParent<StageLedge>();
+                if (ledge == null)
+                    return;
+                Direction = ledge.Direction;
+                SnapToLedge();
             }
         }
 
@@ -174,9 +179,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         void SnapToLedge() {
+            if (CurrentLedge == null)
+                return;
             IsFastFalling = false;
             var offset = LedgeTarget.position - transform.position;
-            transform.position = CurrentLedge.position - offset;
+            transform.position = CurrentLedge.transform.position - offset;
             if (JumpCount != MaxJumpCount)
                 CmdResetJumps();
         }
@@ -184,7 +191,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void LedgeMovement() {
             if (JumpCheck()) {
             } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
-                CurrentLedge = null;
+                LeaveLedge();
             } else {
                 SnapToLedge();
             }
@@ -194,12 +201,29 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             bool success = (!IsCrounching && JumpCount > 0 && JumpCount <= MaxJumpCount
                 && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)));
             if (success) {
-                CurrentLedge = null;
+                if (CurrentLedge != null)
+                    LeaveLedge();
                 OnJump.SafeInvoke();
                 PhysicsState.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
                 CmdJump();
             }
             return success;
+        }
+
+        void LeaveLedge() {
+            if (CurrentLedge == null)
+                return;
+            StageLedge ledge = CurrentLedge.GetComponent<StageLedge>();
+            if (ledge == null)
+                return;
+            CmdReleaseLedge();
+        }
+
+        public void GrabLedge(StageLedge ledge) {
+            NetworkIdentity ledgeId = ledge.GetComponent<NetworkIdentity>();
+            if (ledgeId == null || !isLocalPlayer)
+                return;
+            CmdGrabLedge(ledgeId);
         }
 
         void Update() {
@@ -300,6 +324,24 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void CmdSetDirection(bool direction) {
             if (!IsCrounching)
                 _direction = direction;
+        }
+
+        [Command]
+        void CmdGrabLedge(NetworkIdentity ledgeId){
+            var ledge = ledgeId.GetComponent<StageLedge>();
+            if (ledge == null)
+                return;
+            ledge.Grab(this);
+        }
+
+        [Command]
+        void CmdReleaseLedge() {
+            if (CurrentLedge == null)
+                return;
+            var ledge = CurrentLedge.GetComponent<StageLedge>();
+            if (ledge == null)
+                return;
+            ledge.Release(this);
         }
 
         [ClientRpc]

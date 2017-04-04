@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4289280317724602}
   - component: {fileID: 136202368516138338}
   - component: {fileID: 114492879605737868}
+  - component: {fileID: 114863276223545444}
   m_Layer: 0
   m_Name: Ledge
   m_TagString: Untagged
@@ -53,6 +54,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _direction: 1
+  _occupied: 0
+--- !u!114 &114863276223545444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1654369761988082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 221
+    i1: 228
+    i2: 5
+    i3: 127
+    i4: 112
+    i5: 180
+    i6: 43
+    i7: 36
+    i8: 10
+    i9: 206
+    i10: 71
+    i11: 149
+    i12: 192
+    i13: 193
+    i14: 182
+    i15: 36
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!136 &136202368516138338
 CapsuleCollider:
   m_ObjectHideFlags: 1
