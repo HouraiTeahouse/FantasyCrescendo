@@ -63,7 +63,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 return;
             int portrait = Player != null ? Player.Selection.Pallete : 0;
             data.GetPortrait(portrait).LoadAsync().Then(sprite => {
-                Log.Debug(sprite);
                 if (!sprite) {
                     Component.enabled = false;
                     return;
