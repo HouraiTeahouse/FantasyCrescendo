@@ -1,30 +1,18 @@
 fileFormatVersion: 2
-guid: f460993c39951284a8c97579697a61d0
-timeCreated: 1490920181
+guid: dd12a74688d6e494ca32fffdd4be8610
+timeCreated: 1491255236
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: blob003
-    100002: Object232
-    100004: //RootNode
-    100006: tree2uv
-    400000: blob003
-    400002: Object232
-    400004: //RootNode
-    400006: tree2uv
-    2300000: blob003
-    2300002: Object232
-    2300004: tree2uv
-    3300000: blob003
-    3300002: Object232
-    3300004: tree2uv
-    4300000: tree2uv
-    4300002: blob003
-    4300004: Object232
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: mushy7_uv
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -33,6 +21,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -66,7 +56,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

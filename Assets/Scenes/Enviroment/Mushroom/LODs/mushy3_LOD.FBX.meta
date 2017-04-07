@@ -1,25 +1,18 @@
 fileFormatVersion: 2
-guid: 1409440f36ff5084394f7372cd55dfb7
-timeCreated: 1490919154
+guid: 3bc8d24c3fcd91445a0de591278485c8
+timeCreated: 1491254014
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: backfaceleaves
-    100002: //RootNode
-    100004: tree1UV
-    400000: backfaceleaves
-    400002: //RootNode
-    400004: tree1UV
-    2300000: backfaceleaves
-    2300002: tree1UV
-    3300000: backfaceleaves
-    3300002: tree1UV
-    4300000: tree1UV
-    4300002: backfaceleaves
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: mushy3_uv
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -28,6 +21,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

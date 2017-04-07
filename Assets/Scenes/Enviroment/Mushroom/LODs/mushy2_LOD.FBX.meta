@@ -1,25 +1,18 @@
 fileFormatVersion: 2
-guid: f914e3d1278498f4299d42c70c416e3c
-timeCreated: 1490921705
+guid: a3c92df7037e39c4c983473758c3fe1e
+timeCreated: 1491253528
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Plane2175
-    100002: //RootNode
-    100004: tree5uv
-    400000: Plane2175
-    400002: //RootNode
-    400004: tree5uv
-    2300000: Plane2175
-    2300002: tree5uv
-    3300000: Plane2175
-    3300002: tree5uv
-    4300000: tree5uv
-    4300002: Plane2175
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: mushy2_uv001
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -28,6 +21,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

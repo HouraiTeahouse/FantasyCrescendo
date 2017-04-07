@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 3bc8d24c3fcd91445a0de591278485c8
-timeCreated: 1491254014
+guid: 47489349d00929049923b93101fd5184
+timeCreated: 1491255235
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,10 +9,10 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: mushy3_uv
+    4300000: mushy6_uv
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -21,6 +21,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -54,7 +56,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

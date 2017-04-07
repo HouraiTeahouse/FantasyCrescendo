@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 2ea05ca8f56375b4199564d9672fe60f
-timeCreated: 1490895555
+guid: 86ad68fe5c3c2e347ad4b39c6b5fec6e
+timeCreated: 1491074338
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Plane2157
+    100000: Plane2181
     100002: //RootNode
-    100004: tree4uv
-    400000: Plane2157
+    100004: tree6uv
+    400000: Plane2181
     400002: //RootNode
-    400004: tree4uv
-    2300000: Plane2157
-    2300002: tree4uv
-    3300000: Plane2157
-    3300002: tree4uv
-    4300000: tree4uv
-    4300002: Plane2157
+    400004: tree6uv
+    2300000: Plane2181
+    2300002: tree6uv
+    3300000: Plane2181
+    3300002: tree6uv
+    4300000: Plane2181
+    4300002: tree6uv
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -28,6 +28,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

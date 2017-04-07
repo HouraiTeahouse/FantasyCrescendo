@@ -1,18 +1,25 @@
 fileFormatVersion: 2
-guid: 47489349d00929049923b93101fd5184
-timeCreated: 1491255235
+guid: 2ea05ca8f56375b4199564d9672fe60f
+timeCreated: 1490895555
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: mushy6_uv
+    100000: Plane2157
+    100002: //RootNode
+    100004: tree4uv
+    400000: Plane2157
+    400002: //RootNode
+    400004: tree4uv
+    2300000: Plane2157
+    2300002: tree4uv
+    3300000: Plane2157
+    3300002: tree4uv
+    4300000: tree4uv
+    4300002: Plane2157
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -21,6 +28,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -54,7 +63,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
