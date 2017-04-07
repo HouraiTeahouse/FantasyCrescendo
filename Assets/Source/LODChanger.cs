@@ -1,29 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LODChanger : MonoBehaviour {
+namespace HouraiTeahouse.FantasyCrescendo {
 
-    [SerializeField]
-    MeshRenderer []HighQualityLOD;
+    public class LODChanger : MonoBehaviour {
 
-    [SerializeField]
-    MeshRenderer[]LowQualityLOD;
+        [SerializeField]
+        MeshRenderer[] HighQualityLOD;
 
-    // Use this for initialization
-    public void EnableLODs () {
+        [SerializeField]
+        MeshRenderer[] LowQualityLOD;
 
+        // Use this for initialization
+        public void EnableLODs() {
             foreach (var render in HighQualityLOD)
-            {
                 render.enabled = false;
-                
-            }
             foreach (var render in LowQualityLOD)
-            {
-                
                 render.enabled = true;
-            }
         }
-	
+
+    }
 
 }
