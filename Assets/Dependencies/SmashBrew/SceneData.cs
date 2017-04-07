@@ -16,8 +16,23 @@ namespace HouraiTeahouse.SmashBrew {
 
     }
 
+    public enum SceneType {
+        Other = 0,
+        Stage = 1,
+        Menu = 2
+    }
+
     [CreateAssetMenu(fileName = "New Stage", menuName = "SmashBrew/Scene Data")]
     public class SceneData : BGMGroup, IGameData {
+
+        [Header("Load Data")]
+        [SerializeField]
+        [Tooltip("What kind of scene is it?")]
+        SceneType _type;
+
+        [SerializeField]
+        [Tooltip("The priority in loading in dynamic enviroments.")]
+        int _loadPriority;
 
         [SerializeField]
         [Resource(typeof(Sprite))]
@@ -27,10 +42,6 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         [Tooltip("Is this scene selectable on select screens?")]
         bool _isSelectable = true;
-
-        [SerializeField]
-        [Tooltip("Is this scene a stage?")]
-        bool _isStage = true;
 
         [SerializeField]
         [Tooltip("Is this scene visible on select screens?")]
@@ -45,7 +56,7 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         [Scene]
         [Tooltip("The internal name of the scene. Must be in build settings.")]
-        string _sceneName;
+        string _scene;
 
         /// <summary> The image shown on menus to represent the scene. </summary>
         public Resource<Sprite> PreviewImage { get; private set; }
@@ -54,12 +65,16 @@ namespace HouraiTeahouse.SmashBrew {
         public Resource<Sprite> Icon { get; private set; }
 
         /// <summary> Is the scene described by this SceneData a stage? </summary>
-        public bool IsStage {
-            get { return _isStage; }
+        public SceneType Type {
+            get { return _type; }
+        }
+
+        public int LoadPriority {
+            get { return _loadPriority; }
         }
 
         public bool IsSelectable {
-            get { return _isSelectable; }
+            get { return _isSelectable && _isVisible; }
         }
 
         public bool IsVisible {
@@ -74,7 +89,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Loads the scene described by the SceneData </summary>
         public void Load() {
             Mediator.Global.Publish(new LoadSceneEvent {
-                LoadOperation = SceneManager.LoadSceneAsync(_sceneName),
+                Task = SceneLoader.LoadScene(_scene),
                 Scene = this
             });
         }

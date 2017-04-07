@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +12,12 @@ namespace HouraiTeahouse.SmashBrew.UI {
         [SerializeField]
         RectTransform _prefab;
 
-        protected virtual void Awake() { CreateSelect(); }
+        protected ILog Log { get; private set; }
+
+        protected virtual void Awake() {
+            Log = HouraiTeahouse.Log.GetLogger(this);
+            DataManager.Instance.LoadTask.Then(() => CreateSelect());
+        }
 
         public static void Attach(RectTransform child, Transform parent) {
             child.SetParent(parent, false);

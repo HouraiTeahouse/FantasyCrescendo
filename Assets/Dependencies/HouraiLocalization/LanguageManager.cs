@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace HouraiTeahouse.Localization {
@@ -14,29 +16,31 @@ namespace HouraiTeahouse.Localization {
     /// <summary> Singleton MonoBehaviour that manages all of localization system. </summary>
     public sealed class LanguageManager : Singleton<LanguageManager> {
 
+        internal static readonly ILog log = Log.GetLogger("Language");
+        public const string FileExtension = ".json";
         Language _currentLanguage;
-
-        [SerializeField]
-        [Tooltip("The default language to use if the Player's current language is not supported")]
-        StringSet _defaultLanguage;
-
-        [SerializeField]
-        [Tooltip("Destroy this object on scene changes?")]
-        bool _dontDestroyOnLoad = false;
+        string _storageDirectory;
+        HashSet<string> _languages;
 
 #if HOURAI_EVENTS
         Mediator _eventManager;
 #endif
 
         [SerializeField]
+        [Tooltip("The default language to use if the Player's current language is not supported")]
+        string _defaultLanguage = "en";
+
+        [SerializeField]
+        [Tooltip("Destroy this object on scene changes?")]
+        bool _dontDestroyOnLoad = false;
+
+        [SerializeField]
         [Tooltip("The PlayerPrefs key to store the Player's language in")]
         PrefString _langPlayerPref;
 
-        HashSet<string> _languages;
-
         [SerializeField]
         [Tooltip("The Resources directory to load the Language files from")]
-        string localizaitonResourceDirectory = "Lang/";
+        string localizationDirectory = "lang";
 
         /// <summary> The currently used language. </summary>
         public Language CurrentLangauge {
@@ -48,13 +52,13 @@ namespace HouraiTeahouse.Localization {
             get {
                 if (_languages != null)
                     return _languages;
-                return new string[0];
+                return Enumerable.Empty<string>();
             }
         }
 
         /// <summary> Gets an enumeration of all of the localizable keys. </summary>
         public IEnumerable<string> Keys {
-            get { return _defaultLanguage; }
+            get { return CurrentLangauge.Keys; }
         }
 
         /// <summary> Localizes a key based on the currently loaded language. </summary>
@@ -67,15 +71,20 @@ namespace HouraiTeahouse.Localization {
         /// <summary> An event that is called every time the language is changed. </summary>
         public event Action<Language> OnChangeLanguage;
 
-        void SetLanguage(string name, StringSet set) {
-            if (_currentLanguage.Name == name)
+        void SetLanguage(string langName, IDictionary<string, string> values) {
+            if (_currentLanguage.Name == langName)
                 return;
-            _currentLanguage.Update(_defaultLanguage, set);
-            _currentLanguage.Name = set.name;
+            _currentLanguage.Update(values);
+            _currentLanguage.Name = langName;
             OnChangeLanguage.SafeInvoke(_currentLanguage);
 #if HOURAI_EVENTS
             _eventManager.Publish(new LanguageChanged {NewLanguage = _currentLanguage});
 #endif
+            log.Info("Set language to {0}", Language.GetName(langName));
+        }
+
+        string GetLanguagePath(string identifier) {
+            return Path.Combine(_storageDirectory, identifier + FileExtension);
         }
 
         protected override void Awake() {
@@ -86,23 +95,20 @@ namespace HouraiTeahouse.Localization {
             _eventManager = Mediator.Global;
 #endif
 
-            var languages = new List<StringSet>(Resources.LoadAll<StringSet>(localizaitonResourceDirectory));
-            _languages = new HashSet<string>(languages.Select(lang => lang.name));
+            _storageDirectory = Path.Combine(Application.streamingAssetsPath, localizationDirectory);
+            var languages = Directory.GetFiles(_storageDirectory);
+            _languages = new HashSet<string>(from file in languages
+                                             where file.EndsWith(FileExtension)
+                                             select Path.GetFileNameWithoutExtension(file));
 
             SystemLanguage systemLang = Application.systemLanguage;
-            string currentLang = _langPlayerPref.HasKey() ? _langPlayerPref : systemLang.ToString();
+            string currentLang = _langPlayerPref.HasKey() ? _langPlayerPref : systemLang.ToIdentifier();
             if (!_languages.Contains(currentLang) || systemLang == SystemLanguage.Unknown) {
-                Log.Info("No language data for \"{0}\" found. Loading default language: {1}", _defaultLanguage.name, currentLang);
-                currentLang = _defaultLanguage.name;
+                log.Info("No language data for \"{0}\" found. Loading default language: {1}", _defaultLanguage, currentLang);
+                currentLang = _defaultLanguage;
             }
+            LoadLanguage(currentLang);
             _langPlayerPref.Value = currentLang;
-
-            foreach (StringSet lang in languages) {
-                if (lang.name == currentLang)
-                    SetLanguage(lang.name, lang);
-                else
-                    Resources.UnloadAsset(lang);
-            }
 
             if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
@@ -130,11 +136,11 @@ namespace HouraiTeahouse.Localization {
         /// supported. </exception>
         public Language LoadLanguage(string identifier) {
             Argument.NotNull(identifier);
+            identifier = identifier.ToLower();
             if (!_languages.Contains(identifier))
                 throw new InvalidOperationException("Language with identifier of {0} is not supported.".With(identifier));
-            var languageValues = Resources.Load<StringSet>(localizaitonResourceDirectory + identifier);
-            SetLanguage(languageValues.name, languageValues);
-            Resources.UnloadAsset(languageValues);
+            var languageValues = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(GetLanguagePath(identifier)));
+            SetLanguage(identifier, languageValues);
             return CurrentLangauge;
         }
 

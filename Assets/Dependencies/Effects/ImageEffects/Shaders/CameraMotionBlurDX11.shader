@@ -1,5 +1,7 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
  /*
  	NOTES: see CameraMotionBlur.shader
  */
@@ -36,6 +38,8 @@
 	float4 _CameraDepthTexture_TexelSize;
 	float4 _VelTex_TexelSize;
 	
+	half4 _MainTex_ST;
+
 	float4x4 _InvViewProj;	// inverse view-projection matrix
 	float4x4 _PrevViewProj;	// previous view-projection matrix
 	float4x4 _ToPrevViewProjCombined; // combined
@@ -53,7 +57,7 @@
 	{
 		v2f o;
 		o.pos = UnityObjectToClipPos (v.vertex);
-		o.uv = v.texcoord.xy;
+		o.uv = UnityStereoScreenSpaceUVAdjust(v.texcoord.xy, _MainTex_ST);
 		return o;
 	}
 

@@ -16,6 +16,7 @@ CGPROGRAM
 
 uniform sampler2D _MainTex;
 uniform float4 _MainTex_TexelSize;
+half4 _MainTex_ST;
 uniform float4 _CenterRadius;
 uniform float4x4 _RotationMatrix;
 
@@ -42,7 +43,7 @@ float4 frag (v2f i) : SV_Target
 	offset = lerp (distortedOffset, offset, t);
 	offset += _CenterRadius.xy;
 	
-	return tex2D(_MainTex, offset);
+	return tex2D(_MainTex, UnityStereoScreenSpaceUVAdjust(offset, _MainTex_ST));
 }
 ENDCG
 

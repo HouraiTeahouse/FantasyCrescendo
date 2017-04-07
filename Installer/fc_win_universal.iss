@@ -4,7 +4,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define APP_NAME      'Fantasy Crescendo'
-#define APP_VERSION   '0.2.1'
+#define APP_VERSION   '0.3.0-alpha'
 #define BUILD_NAME    'fc'
 
 #define README        '..\README.md'
@@ -52,12 +52,14 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
+[Dirs]
+Name: "{app}"; Flags: uninsalwaysuninstall;
+
 [Files]
 ; Universal Items
 Source: "{#README}"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "{#LICENSE}"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "..\CREDITS.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\CONTRIBUTING.md"; DestDir: "{app}"; Flags: ignoreversion
 
 ; Architecture specfic files
 Source: "..\Build\Win{#BITS}\{#BUILD_NAME}.exe"; DestDir: "{app}"; Flags: ignoreversion;      

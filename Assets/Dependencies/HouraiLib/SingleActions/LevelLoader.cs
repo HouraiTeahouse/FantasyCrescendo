@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 namespace HouraiTeahouse {
 
@@ -34,12 +34,15 @@ namespace HouraiTeahouse {
         /// <summary> Loads the scenes </summary>
         public void Load() {
             var paths = new HashSet<string>();
-            for (var i = 0; i < SceneManager.sceneCount; i++)
-                paths.Add(SceneManager.GetSceneAt(i).path);
+            for (var i = 0; i < SceneManager.sceneCount; i++) {
+                var path = SceneManager.GetSceneAt(i).path;
+                paths.Add(path);
+                Log.Debug(path);
+            }
             foreach (string scenePath in _scenes) {
                 if (!_ignoreLoadedScenes && paths.Contains("Assets/{0}.unity".With(scenePath)))
                     continue;
-                SceneManager.LoadScene(scenePath, _mode);
+                SceneLoader.LoadScene(scenePath);
             }
         }
 

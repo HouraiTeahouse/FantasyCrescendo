@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Name: Config
   m_EditorClassIdentifier: 
   _extensions: []
+  _bundles:
+    BaseDownloadingURL: http://192.168.1.115:7888/
   _gameModes:
     _allStar:
       _cpusAllowed: 1

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc1c5be4a751a7c44b0536b9cf55d1a9, type: 3}
+  m_Name: youmu_konpaku
+  m_EditorClassIdentifier: 
+  _extensions: []
+  _id: 1237922517
+  _isSelectable: 1
+  _isVisible: 1
+  _homeStage: Stages/Forest of Magic
+  _icon: Icons/youmu_icon
+  _portraits:
+  - characters/youmu/portraits:youmu_portrait_1
+  - characters/youmu/portraits:youmu_portrait_2
+  - characters/youmu/portraits:youmu_portrait_3
+  - characters/youmu/portraits:youmu_portrait_4
+  _cropPositon: {x: 0.5, y: 0.8}
+  _cropSize: 0.22
+  _backgroundColor: {r: 0, g: 0.6691177, b: 0.58605486, a: 1}
+  _prefab: characters/youmu/player:youmu
+  _shortName: Youmu
+  _fullName: Youmu Konpaku
+  _announcerClip: Characters/004_Youmu/Audio/youmu_announcer
+  _victoryTheme: Characters/004_Youmu/Audio/youmu_announcer

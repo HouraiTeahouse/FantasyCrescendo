@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse {
@@ -15,7 +16,7 @@ namespace HouraiTeahouse {
     public class LogSettings {
 
         [SerializeField]
-        string _timeFormat = "MM-dd-yy HH:mm:ss";
+        string _timeFormat = "HH:mm:ss";
 
         [SerializeField]
         LogTypeSettings _info = new LogTypeSettings {Enabled = true, StackTrace = StackTraceLogType.None};
@@ -37,12 +38,27 @@ namespace HouraiTeahouse {
             get { return _debug; }
         }
 
+        public LogTypeSettings Warning {
+            get { return _warning; }
+        }
+
         public LogTypeSettings Error {
             get { return _error; }
         }
 
-        public LogTypeSettings Warning {
-            get { return _warning; }
+        public LogTypeSettings GetTypeSettings(LogLevel level) {
+            switch (level) {
+                case LogLevel.Debug:
+                    return Debug;
+                case LogLevel.Info:
+                    return Info;
+                case LogLevel.Warning:
+                    return Warning;
+                case LogLevel.Error:
+                    return Error;
+                default:
+                    throw new ArgumentOutOfRangeException("level", level, null);
+            }
         }
 
         public string TimeFormat {
@@ -52,67 +68,113 @@ namespace HouraiTeahouse {
 
     }
 
+    public enum LogLevel {
+
+        Debug = 0,
+        Info,
+        Warning,
+        Error
+
+    }
+
+    public interface ILog {
+
+        void Log(LogLevel logType, string format, params object[] objs);
+
+    }
+
+    public static class LoggerExtensions {
+
+        public static void Info(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Info, format, objs); }
+        public static void Debug(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Debug, format, objs); }
+        public static void Warning(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Warning, format, objs); }
+        public static void Error(this ILog log, string format, params object[] objs) { log.Log(LogLevel.Error, format, objs); }
+
+    }
+
     public static class Log {
 
+        static Log() { Task.UnhandledException += (src, args) => {
+                Error(args.ExceptionObject);
+            };
+        }
+
         static LogSettings _settings = new LogSettings();
+#if UNITY_EDITOR
+        static readonly Dictionary<LogLevel, string> _colors = new Dictionary<LogLevel, string> {
+            { LogLevel.Info, "green" },
+            { LogLevel.Debug, "blue" },
+            { LogLevel.Warning, "yellow" },
+            { LogLevel.Error, "red" },
+        };
+#endif
 
         public static LogSettings Settings {
             get { return _settings; }
             set { _settings = Argument.NotNull(value); }
         }
 
+        class Logger : ILog {
+
+            string Prefix { get; set; }
+
+            public Logger(string prefix) { Prefix = prefix; }
+
+            void ILog.Log(LogLevel logType, string format, params object[] objs) {
+                WriteLog(logType, "[{0}] ".With(Prefix) + format, objs);
+            }
+
+        }
+
+        public static ILog GetLogger(string prefix) {
+            return new Logger(prefix);
+        }
+
+        public static ILog GetLogger(object obj) { return GetLogger(obj.GetType()); }
+        public static ILog GetLogger(Type type) { return GetLogger(type.Name); }
+        public static ILog GetLogger<T>() { return GetLogger(typeof(T)); }
+
         public static void Info(object source, params object[] objs) {
-#if UNITY_EDITOR
-            const string format = "<color=green>[Info]</color> ({1}) - {0}";
-#else
-            const string format = "[Info] ({1}) - {0}";
-#endif
-            WriteLog(format, _settings.Info, LogType.Log, source, objs);
+            WriteLog(LogLevel.Info, source, objs);
         }
 
         public static void Debug(object source, params object[] objs) {
-#if UNITY_EDITOR
-            const string format = "<color=blue>[Debug]</color> ({1}) - {0}";
-#else
-            const string format = "[Debug] ({1}) - {0}";
-#endif
-            WriteLog(format, _settings.Debug, LogType.Log, source, objs);
+            WriteLog(LogLevel.Debug, source, objs);
         }
 
         public static void Warning(object source, params object[] objs) {
-#if UNITY_EDITOR
-            const string format = "<color=yellow>[Warning]</color> ({1}) -  {0}";
-#else
-            const string format = "[Warning] ({1}) - {0}";
-#endif
-            WriteLog(format, _settings.Warning, LogType.Warning, source, objs);
+            WriteLog(LogLevel.Warning, source, objs);
         }
 
         public static void Error(object source, params object[] objs) {
-#if UNITY_EDITOR
-            const string format = "<color=red>[Error]</color> ({1}) - {0}";
-#else
-            const string format = "[Error] {0}";
-#endif
-            WriteLog(format, _settings.Error, LogType.Error, source, objs);
+            WriteLog(LogLevel.Error, source, objs);
         }
 
-        static void WriteLog(string format, LogTypeSettings settings, LogType log, object source, params object[] objs) {
-            if (!settings.Enabled)
+        static void WriteLog(LogLevel log, object source, params object[] objs) {
+            var settings = Settings.GetTypeSettings(log);
+            if (!Settings.GetTypeSettings(log).Enabled)
                 return;
-            StackTraceLogType logType = Application.GetStackTraceLogType(log);
-            Application.SetStackTraceLogType(log, settings.StackTrace);
+            var date = DateTime.Now.ToString(_settings.TimeFormat);
+            var type = log.ToString().Substring(0, 1);
+#if UNITY_EDITOR
+            string prefix = "<color={2}>{1}</color> {0}: ".With(date, type, _colors[log]);
+#else
+            string prefix = "{1} {0}:".With(date, type);
+#endif
             var output = source as string;
             if (output != null)
                 output = output.With(objs);
             else
                 output = source == null ? "Null" : source.ToString();
 #if UNITY_EDITOR
-            UnityEngine.Debug.logger.LogFormat(log, format, output, DateTime.Now.ToString(_settings.TimeFormat));
+            var level = log == LogLevel.Error ? LogType.Error : LogType.Log;
+            StackTraceLogType logType = Application.GetStackTraceLogType(level);
+            Application.SetStackTraceLogType(level, settings.StackTrace);
+            UnityEngine.Debug.logger.LogFormat(level, prefix + output, objs);
+            Application.SetStackTraceLogType(level, logType);
 #else
-            System.Console.WriteLine(format, output, DateTime.Now.ToString(_settings.TimeFormat));
+            System.Console.WriteLine(prefix + output, objs);
 #endif
-            Application.SetStackTraceLogType(log, logType);
         }
 
     }

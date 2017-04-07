@@ -1,35 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HouraiTeahouse.AssetBundles;
 using UnityEngine;
 
 namespace HouraiTeahouse {
 
     public static class TaskExtensions {
 
-        public static ITask ToTask(this AsyncOperation asyncOperation) {
-            Argument.NotNull(asyncOperation);
-            var manager = AsyncManager.Instance;
-            var task = new Task();
-            if(manager == null)
-                task.Reject(new InvalidOperationException("Cannot convert a AsyncOperation to a Task without an AsyncManager instance"));
-            else
-                manager.AddOperation(asyncOperation, task);
-            return task;
+        public static ITask<T> Then<T>(this ITask task, Func<T> func) {
+            return task.Then(() => Task.FromResult(func()));
         }
 
-        public static ITask<T> ToTask<T>(this ResourceRequest resourceRequest) where T : UnityEngine.Object {
-            Argument.NotNull(resourceRequest);
-            var manager = AsyncManager.Instance;
-            var task = new Task<T>();
-            if(manager == null)
-                task.Reject(new InvalidOperationException("Cannot convert a AsyncOperation to a Task without AsyncManager instance"));
-            else
-                manager.AddOpreation(resourceRequest, task);
-            return task;
-        }
-
-#region ThenAll Overloads
+        #region ThenAll Overloads
         public static ITask ThenAll(this ITask task, params ITask[] set) { return task.ThenAll(set as IEnumerable<ITask>); }
         public static ITask<T[]> ThenAll<T>(this ITask task, params ITask<T>[] set) { return task.ThenAll(set as IEnumerable<ITask<T>>); }
 
@@ -228,14 +211,14 @@ namespace HouraiTeahouse {
 
         void OnResolve() {
             if(_resolveHandlers != null)
-                foreach (ResolveHandler handler in _resolveHandlers)
+                foreach (ResolveHandler handler in _resolveHandlers.ToArray())
                     InvokeResolve(handler.Callback, handler.Rejectable);
             Clear();
         }
 
         void OnReject(Exception error) {
             if(_rejectHandlers != null)
-                foreach (RejectHandler handler in _rejectHandlers)
+                foreach (RejectHandler handler in _rejectHandlers.ToArray())
                     InvokeReject(handler.Callback, error, handler.Rejectable);
             Clear();
         }
@@ -249,7 +232,9 @@ namespace HouraiTeahouse {
             var task = new Task();
             ActionHandlers(task,
                 () => {
-                    onResolved.SafeInvoke();
+                    // Avoiding use of SafeInvoke here due higher chances of stack overflow
+                    if (onResolved != null)
+                        onResolved();
                     task.Resolve();
                 });
             return task;
@@ -490,11 +475,11 @@ namespace HouraiTeahouse {
         public T Result { get; private set; }
 
         public void Resolve(T value) {
+            Resolve();
             Result = value;
             if(_resolveHandlers != null)
-                foreach (ResolveHandler handler in _resolveHandlers)
+                foreach (ResolveHandler handler in _resolveHandlers.ToArray())
                     InvokeResolve(handler.Callback, handler.Rejectable);
-            Resolve();
         }
 
         public ITask Then(Action<T> onResolve) {

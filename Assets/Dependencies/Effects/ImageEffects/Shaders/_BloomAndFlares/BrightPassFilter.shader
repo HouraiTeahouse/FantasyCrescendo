@@ -1,5 +1,7 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Hidden/BrightPassFilterForBloom"
 {
 	Properties 
@@ -18,7 +20,8 @@ Shader "Hidden/BrightPassFilterForBloom"
 	};
 	
 	sampler2D _MainTex;	
-	
+	half4     _MainTex_ST;
+
 	half4 threshold;
 	half useSrcAlphaAsMask;
 		
@@ -26,7 +29,7 @@ Shader "Hidden/BrightPassFilterForBloom"
 	{
 		v2f o;
 		o.pos = UnityObjectToClipPos(v.vertex);
-		o.uv =  v.texcoord.xy;
+		o.uv = UnityStereoScreenSpaceUVAdjust(v.texcoord.xy, _MainTex_ST);
 		return o;
 	} 
 	

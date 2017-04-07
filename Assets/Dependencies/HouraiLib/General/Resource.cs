@@ -1,14 +1,19 @@
 using System;
 using System.Collections.Generic;
+using HouraiTeahouse.AssetBundles;
 using UnityEngine;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
+using HouraiTeahouse.Editor;
 #endif
 
 namespace HouraiTeahouse {
 
     public class Resource {
+
+        protected static readonly ILog log = Log.GetLogger<Resource>();
+        public const char BundleSeperator = ':';
 
         protected static readonly Dictionary<string, Resource> _resources;
         static Resource() {
@@ -44,6 +49,11 @@ namespace HouraiTeahouse {
             get { return _path; }
         }
 
+        /// <summary> Checks whether the </summary>
+        public bool IsBundled {
+            get { return _path.IndexOf(BundleSeperator) >= 0; }
+        }
+
         /// <summary> Whether the asset has been loaded in or not. </summary>
         public bool IsLoaded {
             get { return Asset; }
@@ -52,16 +62,26 @@ namespace HouraiTeahouse {
         /// <summary> The asset handled by the Resource. Will be null if it has not been loaded yet. </summary>
         public T Asset { get; private set; }
 
+        ITask<T> LoadTask { get; set; }
+
         /// <summary> Loads the asset specifed by the Resource into memory. </summary>
         /// <returns> the loaded asset </returns>
         public T Load() {
             if (IsLoaded)
                 return Asset;
-            var loadedObject = Resources.Load<T>(_path);
+            T loadedObject;
+            if (IsBundled)
+#if UNITY_EDITOR
+                loadedObject = Assets.LoadBundledAsset(_path) as T;
+#else
+                throw new InvalidOperationException("Cannot synchronously load assets from AssetBundles. Path: {0}".With(_path));
+#endif
+            else
+                loadedObject = Resources.Load<T>(_path);
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                Log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
+                log.Info("Loaded {0} from {1}", typeof(T).Name, _path);
             Asset = loadedObject;
             return Asset;
         }
@@ -69,39 +89,55 @@ namespace HouraiTeahouse {
         /// <summary> Unloads the asset from memory. Asset will be null after this. </summary>
         public void Unload() {
             Asset = null;
+            //if (LoadTask != null && LoadTask.State == TaskState.Pending)
+            //    LoadTask.Reject(new Exception("Loading of {0} canceled.".With(_path)));
+            LoadTask = null;
             // Logs error if trying to unload a GameObject as a whole
-            if (!IsLoaded || Asset is GameObject)
+            if (!IsLoaded)
                 return;
-            Resources.UnloadAsset(Asset);
+            if (Asset is GameObject)
+                Object.Destroy(Asset);
+            else
+                Resources.UnloadAsset(Asset);
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                Log.Info("Unloaded {0}", _path);
+                log.Info("Unloaded \"{0}\" ({1})", _path, typeof(T).Name);
         }
 
         /// <summary> Loads the asset in an asynchronous manner. If no AsyncManager is currently availble, </summary>
         /// <param name="priority"> optional parameter, the priority of the resource request </param>
         /// <returns> the ResourceRequest associated with the load. Null if </returns>
         public ITask<T> LoadAsync(int priority = 0) {
+            if (LoadTask != null)
+                return LoadTask;
             // If no AsyncManager is available, load the assets synchrounously.
-            if (AsyncManager.Instance == null || IsLoaded)
-                return Task.FromResult(Load());
-            ResourceRequest request = Resources.LoadAsync<T>(_path);
-            request.priority = priority;
+            if (IsLoaded)
+                return Task.FromResult(Asset);
+            LoadTask = IsBundled ? LoadFromBundle(): LoadFromResources(priority);
             string typeName = typeof(T).Name;
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                Log.Info("Requesting load of {0} from {1}", typeName, _path);
-            var task = request.ToTask<T>();
-            task.Then(asset => {
+                log.Info("Started loading \"{1}\" ({0})", typeName, _path);
+            LoadTask.Then(asset => {
 #if UNITY_EDITOR
                 if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif
-                    Log.Info("Loaded {0} from {1}", typeName, _path);
+                    log.Info("Loaded \"{1}\" ({0})", typeName, _path);
                 Asset = asset;
             });
-            return task;
+            return LoadTask;
+        }
+
+        ITask<T> LoadFromBundle() {
+            return AssetBundleManager.LoadAssetAsync<T>(_path);
+        }
+
+        ITask<T> LoadFromResources(int priority) {
+            var request = Resources.LoadAsync<T>(_path);
+            request.priority = priority;
+            return AsyncManager.AddOperation(request).Then(req => req.asset as T);
         }
 
     }

@@ -117,7 +117,7 @@ namespace UnityStandardAssets.ImageEffects
 
             EditorGUILayout.Separator();
 
-            EditorGUILayout.PropertyField(blurType, new GUIContent("Defocus AttackType"));
+            EditorGUILayout.PropertyField(blurType, new GUIContent("Defocus Type"));
 
             if (!(target as DepthOfField).Dx11Support() && blurType.enumValueIndex > 0)
             {

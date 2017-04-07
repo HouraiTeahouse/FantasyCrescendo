@@ -11,13 +11,9 @@ namespace HouraiTeahouse.Localization.Editor {
     [CustomEditor(typeof(LanguageManager))]
     internal class LanguageManagerEditor : ScriptlessEditor {
 
-        string[] availableLanguages;
-        string[] display;
+        string[] _availableLanguages;
+        string[] _display;
         int _index;
-
-        Regex _splitCamelCase;
-
-        void OnEnable() { _splitCamelCase = new Regex(".([A-Z])"); }
 
         /// <summary>
         ///     <see cref="UnityEditor.Editor.OnInspectorGUI" />
@@ -26,19 +22,19 @@ namespace HouraiTeahouse.Localization.Editor {
             base.OnInspectorGUI();
             var langManager = target as LanguageManager;
 
-            if (availableLanguages == null) {
-                availableLanguages = langManager.AvailableLanguages.ToArray();
-                display = availableLanguages.Select(lang => _splitCamelCase.Replace(lang, " $1")).ToArray();
+            if (_availableLanguages == null) {
+                _availableLanguages = langManager.AvailableLanguages.ToArray();
+                _display = _availableLanguages.Select(Language.GetName).ToArray();
                 Language language = langManager.CurrentLangauge;
                 if (language != null)
-                    _index = Array.LastIndexOf(availableLanguages, langManager.CurrentLangauge.Name);
+                    _index = Array.LastIndexOf(_availableLanguages, langManager.CurrentLangauge.Name);
             }
 
             GUI.enabled = EditorApplication.isPlayingOrWillChangePlaymode;
             int oldIndex = _index;
-            _index = EditorGUILayout.Popup("Current Language", _index, display);
+            _index = EditorGUILayout.Popup("Current Language", _index, _display);
             if (_index != oldIndex)
-                langManager.LoadLanguage(availableLanguages[_index]);
+                langManager.LoadLanguage(_availableLanguages[_index]);
             GUI.enabled = true;
         }
 

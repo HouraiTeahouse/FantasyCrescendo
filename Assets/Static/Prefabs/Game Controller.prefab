@@ -12,11 +12,9 @@ GameObject:
   - component: {fileID: 11479720}
   - component: {fileID: 11439252}
   - component: {fileID: 11460476}
-  - component: {fileID: 11478998}
   - component: {fileID: 11473446}
   - component: {fileID: 11463294}
   - component: {fileID: 11482896}
-  - component: {fileID: 11442566}
   - component: {fileID: 11458584}
   - component: {fileID: 114000013746611068}
   - component: {fileID: 114358818079837736}
@@ -59,17 +57,6 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   _customProfiles:
   - HouraiTeahouse.SmashBrew.SmashBrewKeyboardProfile
---- !u!114 &11442566
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb5e645c62a8f9c4ab835c447489b0ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11442866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings:
-    _timeFormat: MM-dd-yy HH:mm:ss
+    _timeFormat: HH:mm:ss
     _info:
       Enabled: 1
       StackTrace: 0
@@ -170,33 +157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inEditor: 0
---- !u!114 &11478998
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7130104210fe34b439eccc919cad05f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
-  _characters:
-  - {fileID: 11400000, guid: c5c502acdb11a8349a2d99bcf7579352, type: 2}
-  - {fileID: 11400000, guid: 909122be91dfc3f488344cb130b405b3, type: 2}
-  - {fileID: 11400000, guid: 32bc70f9f255d3c4aaffc13450ffe9e1, type: 2}
-  - {fileID: 11400000, guid: 08f598346f8cc9a47a9c4b6862537c30, type: 2}
-  - {fileID: 11400000, guid: bbb5dd3a7c08b724db73c8fd56edcd99, type: 2}
-  - {fileID: 11400000, guid: e30df62a022e1444184b24b3d299cd46, type: 2}
-  - {fileID: 11400000, guid: b80cef4f7afc64743832c2b0ef22c060, type: 2}
-  - {fileID: 11400000, guid: 07a01ef61634ca64598faa7809281798, type: 2}
-  _scenes:
-  - {fileID: 11400000, guid: 4fdd220a86869f347a639eb8a61773fa, type: 2}
-  - {fileID: 11400000, guid: 8d79fa23890a7e34bb353807cea6c06e, type: 2}
-  - {fileID: 11400000, guid: ed7ac9f98c46eb9468257ba6a2ddbcec, type: 2}
-  - {fileID: 11400000, guid: c0df81ebcb47e1d40b29030a22aa5e73, type: 2}
-  - {fileID: 11400000, guid: e1619e5c32188425d87d27c805d81cd8, type: 2}
 --- !u!114 &11479720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,12 +168,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bde28572b02ea4db7c258aa7c2e9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultLanguage: {fileID: 11400000, guid: 68bbe2defce8d9b438a01ca98007b316, type: 2}
+  _defaultLanguage: en
   _dontDestroyOnLoad: 1
   _langPlayerPref:
-    _defaultValue: english
+    _defaultValue: en
     _key: lang
-  localizaitonResourceDirectory: Lang/
+  localizationDirectory: lang
 --- !u!114 &11482896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -494,7 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 227461547, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  manager: {fileID: 114264198699108660}
   showGUI: 1
   offsetX: 0
   offsetY: 0

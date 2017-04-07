@@ -16,8 +16,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [RequireComponent(typeof(MovementState))]
     public class Character : NetworkBehaviour, IHitboxController {
 
+#pragma warning disable 414
         [SyncVar(hook = "ChangeActive")]
         bool _isActive;
+#pragma warning restore 414
 
         public CharacterController Controller { get; private set; }
         public MovementState Movement { get; private set; }

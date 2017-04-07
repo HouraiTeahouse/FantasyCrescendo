@@ -1,5 +1,7 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Hidden/BlendOneOne" {
 	Properties {
 		_MainTex ("-", 2D) = "" {}
@@ -15,6 +17,7 @@ Shader "Hidden/BlendOneOne" {
 	};
 		
 	sampler2D _MainTex;
+	half4     _MainTex_ST;
 	half _Intensity;
 		
 	v2f vert( appdata_img v ) {

@@ -17,6 +17,7 @@ Shader "Hidden/ChromaticAberration" {
 	sampler2D _MainTex;
 	
 	float4 _MainTex_TexelSize;
+	half4 _MainTex_ST;
 	half _ChromaticAberration;
 	half _AxialAberration;
 	half _Luminance;
@@ -33,10 +34,10 @@ Shader "Hidden/ChromaticAberration" {
 	
 	half4 fragDs(v2f i) : SV_Target 
 	{
-		half4 c = tex2D (_MainTex, i.uv.xy + _MainTex_TexelSize.xy * 0.5);
-		c += tex2D (_MainTex, i.uv.xy - _MainTex_TexelSize.xy * 0.5);
-		c += tex2D (_MainTex, i.uv.xy + _MainTex_TexelSize.xy * float2(0.5,-0.5));
-		c += tex2D (_MainTex, i.uv.xy - _MainTex_TexelSize.xy * float2(0.5,-0.5));
+		half4 c = tex2D (_MainTex, UnityStereoScreenSpaceUVAdjust(i.uv.xy + _MainTex_TexelSize.xy * 0.5, _MainTex_ST));
+		c += tex2D (_MainTex, UnityStereoScreenSpaceUVAdjust(i.uv.xy - _MainTex_TexelSize.xy * 0.5, _MainTex_ST));
+		c += tex2D (_MainTex, UnityStereoScreenSpaceUVAdjust(i.uv.xy + _MainTex_TexelSize.xy * float2(0.5,-0.5), _MainTex_ST));
+		c += tex2D (_MainTex, UnityStereoScreenSpaceUVAdjust(i.uv.xy - _MainTex_TexelSize.xy * float2(0.5,-0.5), _MainTex_ST));
 		return c/4.0;
 	}
 
@@ -49,12 +50,12 @@ Shader "Hidden/ChromaticAberration" {
 		half coordDot = dot (coords,coords);
 		
 		half2 uvG = uv - _MainTex_TexelSize.xy * _ChromaticAberration * coords * coordDot;
-		half4 color = tex2D (_MainTex, uv);
+		half4 color = tex2D (_MainTex, UnityStereoScreenSpaceUVAdjust(uv, _MainTex_ST));
 		#if SHADER_API_D3D9
 			// Work around Cg's code generation bug for D3D9 pixel shaders :(
-			color.g = color.g * 0.0001 + tex2D (_MainTex, uvG).g;
+			color.g = color.g * 0.0001 + tex2D (_MainTex, UnityStereoScreenSpaceUVAdjust(uvG, _MainTex_ST)).g;
 		#else
-			color.g = tex2D (_MainTex, uvG).g;
+			color.g = tex2D (_MainTex, UnityStereoScreenSpaceUVAdjust(uvG, _MainTex_ST)).g;
 		#endif
 		
 		return color;
@@ -84,7 +85,7 @@ Shader "Hidden/ChromaticAberration" {
 		coords = (coords - 0.5h) * 2.0h;		
 		half coordDot = dot (coords,coords);
 
-		half4 color = tex2D (_MainTex, uv);
+		half4 color = tex2D (_MainTex, UnityStereoScreenSpaceUVAdjust(uv, _MainTex_ST));
 		half tangentialStrength = _ChromaticAberration * coordDot * coordDot;
 		half maxOfs = clamp(max(_AxialAberration, tangentialStrength), _BlurDistance.x, _BlurDistance.y);
 
@@ -98,7 +99,7 @@ Shader "Hidden/ChromaticAberration" {
 		for(int l=0; l < SmallDiscKernelSamples; l++)
 		{
 			half2 sampleUV = uv + SmallDiscKernel[l].xy * _MainTex_TexelSize.xy * maxOfs;
-			half3 tap = tex2D(_MainTex, sampleUV).rgb;
+			half3 tap = tex2D(_MainTex, UnityStereoScreenSpaceUVAdjust(sampleUV, _MainTex_ST)).rgb;
 			blurredTap.rgb += tap;
 		}
 		blurredTap.rgb /= (float)SmallDiscKernelSamples + 0.2h;
@@ -129,7 +130,6 @@ Subshader {
       
       #pragma vertex vert
       #pragma fragment fragDs
-      
       ENDCG
   }
 // 1: simple chrom aberration
@@ -140,7 +140,6 @@ Pass {
       
       #pragma vertex vert
       #pragma fragment frag
-      
       ENDCG
   }
 // 2: simulates more chromatic aberration effects
@@ -151,7 +150,6 @@ Pass {
       
       #pragma vertex vert
       #pragma fragment fragComplex
-      
       ENDCG
   }  
 }

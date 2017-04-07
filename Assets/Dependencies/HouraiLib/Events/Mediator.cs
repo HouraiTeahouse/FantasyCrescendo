@@ -9,6 +9,7 @@ namespace HouraiTeahouse {
 
         public delegate void Event<in T>(T arg);
 
+        static readonly ILog log = Log.GetLogger("Events");
         public static readonly Mediator Global = new Mediator();
 
         // Maps types of events to a set of handlers
@@ -68,9 +69,8 @@ namespace HouraiTeahouse {
         public void Publish(object evnt) {
             Argument.NotNull(evnt);
             Type eventType = evnt.GetType();
-            Type[] typeSet = GetEventTypes(eventType);
-            Log.Info("Event Published: " + eventType.Name);
-            foreach (Type type in typeSet)
+            log.Info("Published: " + eventType.Name);
+            foreach (Type type in GetEventTypes(eventType))
                 if (_subscribers.ContainsKey(type))
                     _subscribers[type].DynamicInvoke(evnt);
         }
@@ -109,15 +109,15 @@ namespace HouraiTeahouse {
 
         Type[] GetEventTypes(Type type) {
             Argument.NotNull(type);
-            if (!_typeCache.ContainsKey(type)) {
-                Type currentType = type;
-                var ancestors = new List<Type>(type.GetInterfaces());
-                while (currentType != null) {
-                    ancestors.Add(currentType);
-                    currentType = currentType.BaseType;
-                }
-                _typeCache.Add(type, ancestors.ToArray());
+            if (_typeCache.ContainsKey(type))
+                return _typeCache[type];
+            Type currentType = type;
+            var ancestors = new List<Type>(type.GetInterfaces());
+            while (currentType != null) {
+                ancestors.Add(currentType);
+                currentType = currentType.BaseType;
             }
+            _typeCache.Add(type, ancestors.ToArray());
             return _typeCache[type];
         }
 
