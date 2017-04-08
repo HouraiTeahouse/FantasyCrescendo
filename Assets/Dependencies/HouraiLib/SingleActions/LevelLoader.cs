@@ -42,7 +42,7 @@ namespace HouraiTeahouse {
             foreach (string scenePath in _scenes) {
                 if (!_ignoreLoadedScenes && paths.Contains("Assets/{0}.unity".With(scenePath)))
                     continue;
-                SceneLoader.LoadScene(scenePath);
+                SceneLoader.LoadScene(scenePath, _mode);
             }
         }
 

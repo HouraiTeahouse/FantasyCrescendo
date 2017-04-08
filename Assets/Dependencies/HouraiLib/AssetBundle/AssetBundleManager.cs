@@ -39,6 +39,7 @@ namespace HouraiTeahouse.AssetBundles {
 		static readonly Dictionary<string, ITask<LoadedAssetBundle>> AssetBundles = new Dictionary<string, ITask<LoadedAssetBundle>> ();
 		static readonly Dictionary<string, string[]> Dependencies = new Dictionary<string, string[]> ();
         static readonly Dictionary<Type, Delegate> TypeHandlers = new Dictionary<Type, Delegate> ();
+        static bool _initalized;
 
         public static void AddHandler<T>(Action<T> handler) {
             var type = typeof(T);
@@ -194,12 +195,10 @@ namespace HouraiTeahouse.AssetBundles {
 				SetSourceAssetBundleUrl(url);
 		}
 	
-		public static ITask<AssetBundleManifest> Initialize () {
-			return Initialize(BundleUtility.GetPlatformName());
-		}
-	
 		// Load AssetBundleManifest.
-		public static ITask<AssetBundleManifest> Initialize (string manifestAssetBundleName) {
+		public static ITask<AssetBundleManifest> Initialize () {
+		    if (_initalized)
+		        return Manifest;
 	#if UNITY_EDITOR	
 			log.Info("Simulation Mode: " + (SimulateAssetBundleInEditor ? "Enabled" : "Disabled"));
 			// If we're in Editor simulation mode, we don't need the manifest assetBundle.
@@ -207,8 +206,9 @@ namespace HouraiTeahouse.AssetBundles {
 				return Task.FromResult<AssetBundleManifest>(null);
 	#endif
 
-		    var task = LoadAssetAsync<AssetBundleManifest>(manifestAssetBundleName, "AssetBundleManifest");
+		    var task = LoadAssetAsync<AssetBundleManifest>(BundleUtility.GetPlatformName(), "AssetBundleManifest");
             task.Then(manifest => Manifest.Resolve(manifest));
+		    _initalized = true;
 			return task;
 		}
 		
@@ -230,6 +230,8 @@ namespace HouraiTeahouse.AssetBundles {
 		
 		// Remaps the asset bundle name to the best fitting asset bundle variant.
 		static ITask<string> RemapVariantName(string assetBundleName) {
+		    if (!_initalized)
+		        Initialize();
 		    return Manifest.Then(manifest => {
 		        string[] bundlesWithVariant = manifest.GetAllAssetBundlesWithVariant();
 		        string[] split = assetBundleName.Split('.');
@@ -294,6 +296,8 @@ namespace HouraiTeahouse.AssetBundles {
 	
 		// Where we get all the dependencies and load them all.
 		static ITask<LoadedAssetBundle[]> LoadDependencies(string assetBundleName) {
+		    if (!_initalized)
+		        Initialize();
 		    return Manifest.Then(manifest => {
                 // Get dependecies from the AssetBundleManifest object..
 		        var dependencies = Task.All(manifest.GetAllDependencies(assetBundleName).Select(RemapVariantName));

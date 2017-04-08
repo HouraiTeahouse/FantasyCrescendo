@@ -41,8 +41,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trigger: 0
-  _ignoreLoadedScenes: 0
-  _mode: 0
+  _ignoreLoadedScenes: 1
+  _mode: 1
   _scenes:
   - scenes/stages/bootstrap:Stage Bootstrap
 --- !u!1001 &100100000

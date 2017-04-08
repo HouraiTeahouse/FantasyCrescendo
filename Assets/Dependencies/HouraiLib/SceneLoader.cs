@@ -5,7 +5,7 @@ namespace HouraiTeahouse {
 
     public static class SceneLoader {
         
-        public static ITask LoadScene(string path, LoadSceneMode mode= LoadSceneMode.Single) {
+        public static ITask LoadScene(string path, LoadSceneMode mode = LoadSceneMode.Single) {
             if (!path.Contains(Resource.BundleSeperator.ToString()))
                 return AsyncManager.AddOperation(SceneManager.LoadSceneAsync(path, mode));
             string[] parts = path.Split(Resource.BundleSeperator);
