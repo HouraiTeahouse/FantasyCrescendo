@@ -94,9 +94,10 @@ namespace HouraiTeahouse {
 
     public static class Log {
 
-        static Log() { Task.UnhandledException += (src, args) => {
-                Error(args.ExceptionObject);
-            };
+        static Log() {
+            //Task.UnhandledException += (src, args) => {
+            //    Error(args.ExceptionObject);
+            //};
         }
 
         static LogSettings _settings = new LogSettings();
