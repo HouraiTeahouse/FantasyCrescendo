@@ -14,8 +14,6 @@ namespace HouraiTeahouse.Localization.Editor {
     /// approriate Langauge assets. </summary>
     public class LocalizationGenerator : ScriptableObject {
 
-        const string DefaultStoragePath = "Assets/Resources/Lang";
-
         [SerializeField]
         [Tooltip("The public Google Spreadsheets link to pull data from")]
         string GoogleLink;
@@ -32,7 +30,7 @@ namespace HouraiTeahouse.Localization.Editor {
         [Tooltip("The folder to save all of the generated assets into.")]
         Object _saveFolder;
 
-        [MenuItem("Hourai/Localization/Generate")]
+        [MenuItem("Hourai Teahouse/Localization/Generate")]
         static void Create() {
             var generator = Assets.LoadOrCreate<LocalizationGenerator>();
             Assert.IsNotNull(generator);

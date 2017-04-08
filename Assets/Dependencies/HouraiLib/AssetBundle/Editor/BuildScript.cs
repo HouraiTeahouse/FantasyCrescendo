@@ -11,14 +11,16 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 
 		public static string OverloadedDevelopmentServerUrl = "";
 	
-		public static void BuildAssetBundles() {
+		public static void BuildAssetBundles(BuildTarget? target = null) {
+		    var buildTarget = target ?? EditorUserBuildSettings.activeBuildTarget;
 			// Choose the output path according to the build target.
 			string outputPath = Path.Combine(BundleUtility.AssetBundlesOutputPath,  BundleUtility.GetPlatformName());
 			if (!Directory.Exists(outputPath))
 				Directory.CreateDirectory (outputPath);
 	
 			//@TODO: use append hash... (Make sure pipeline works correctly with it.)
-			BuildPipeline.BuildAssetBundles (outputPath, BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
+			BuildPipeline.BuildAssetBundles (outputPath, BuildAssetBundleOptions.ChunkBasedCompression, buildTarget);
+			CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath));
 		}
 	
 		public static void WriteServerURL() {
