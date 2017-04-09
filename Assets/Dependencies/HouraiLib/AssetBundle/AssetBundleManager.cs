@@ -15,14 +15,13 @@ namespace HouraiTeahouse.AssetBundles {
 
 	// Loaded assetBundle contains the references count which can be used to unload dependent assetBundles automatically.
 	public class LoadedAssetBundle {
-        public string Name { get; private set; }
         public BundleMetadata Metadata { get; private set; }
 		public AssetBundle AssetBundle { get; private set; }
 		public int ReferencedCount { get; internal set; }
 		
-		public LoadedAssetBundle(string name, AssetBundle assetBundle) {
-		    Name = name;
-			AssetBundle = assetBundle;
+		public LoadedAssetBundle(BundleMetadata metadata, AssetBundle assetBundle) {
+		    Metadata = Argument.NotNull(metadata);
+			AssetBundle = Argument.NotNull(assetBundle);
 			ReferencedCount = 1;
 		}
 	}
@@ -102,7 +101,7 @@ namespace HouraiTeahouse.AssetBundles {
 
         static readonly Regex SeperatorRegex = new Regex(@"[\\]", RegexOptions.Compiled);
         static readonly ILog log = Log.GetLogger("AssetBundle");
-        public static readonly ITask<BundleManfiestMap> Manifest = new Task<BundleManfiestMap>();
+        public static readonly Task<BundleManfiestMap> Manifest = new Task<BundleManfiestMap>();
 		static readonly Dictionary<string, ITask<LoadedAssetBundle>> AssetBundles = new Dictionary<string, ITask<LoadedAssetBundle>> ();
 		static readonly Dictionary<string, string[]> Dependencies = new Dictionary<string, string[]> ();
         static readonly Dictionary<Type, Delegate> TypeHandlers = new Dictionary<Type, Delegate> ();
@@ -160,27 +159,27 @@ namespace HouraiTeahouse.AssetBundles {
                     .Select(name => LoadAssetBundleAsync(name).Then(loadedBundle => {
                         var bundle = loadedBundle.AssetBundle;
                         if (bundle == null) {
-                            log.Error("Failed to load an AssetBundle from {0}.", loadedBundle.Name);
+                            log.Error("Failed to load an AssetBundle from {0}.", loadedBundle.Metadata.Name);
                             return Task.Resolved;
                         }
                         var assetName = bundle.GetAllAssetNames()[0];
                         ITask<Object> assetTask = bundle.mainAsset != null 
                             ? Task.FromResult(bundle.mainAsset) 
-                            : LoadAssetAsync<Object>(loadedBundle.Name, assetName);
+                            : LoadAssetAsync<Object>(loadedBundle.Metadata.Name, assetName);
                         return assetTask.Then(asset => {
                             if (asset == null)
                                 return;
                             var assetType = asset.GetType();
                             Delegate handler;
                             if (TypeHandlers.TryGetValue(assetType, out handler)) {
-                                log.Info("Loaded {0} ({1}) from \"{2}\".", asset.name, assetType.Name, loadedBundle.Name);
+                                log.Info("Loaded {0} ({1}) from \"{2}\".", asset.name, assetType.Name, loadedBundle.Metadata.Name);
                                 handler.DynamicInvoke(asset);
                             } else {
                                 log.Error(
                                     "Attempted to load an asset of type {0} from asset bundle {1}, but no handler was found. Unloading...",
                                     assetType,
-                                    loadedBundle.Name);
-                                UnloadAssetBundle(loadedBundle.Name);
+                                    loadedBundle.Metadata.Name);
+                                UnloadAssetBundle(loadedBundle.Metadata.Name);
                             }
                     });
                 }))
@@ -356,7 +355,16 @@ namespace HouraiTeahouse.AssetBundles {
                     var assetBundle = request.assetBundle;
                     if (assetBundle == null)
                         throw new Exception("{0} is not a valid asset bundle.".With(name));
-                    var loadedBundle = new LoadedAssetBundle(name, assetBundle);
+                    LoadedAssetBundle loadedBundle;
+                    if (isManifest)
+                         loadedBundle = new LoadedAssetBundle(
+                             new BundleMetadata(assetBundleName, 
+                                                new Hash128(), 
+                                                Enumerable.Empty<BundleMetadata>(),
+                                                Enumerable.Empty<string>()), 
+                             assetBundle);
+                    else
+                        loadedBundle = new LoadedAssetBundle(Manifest.Result[name], assetBundle);
                     log.Info("Loaded bundle \"{0}\" from {1}.", name, path);
                     return loadedBundle;
                 });
