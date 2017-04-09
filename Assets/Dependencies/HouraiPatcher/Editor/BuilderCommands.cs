@@ -1,9 +1,8 @@
-using HouraiTeahouse.AssetBundles.Editor;
 using UnityEditor;
 
-namespace HouraiTeahouse.HouraiPatcher {
+namespace HouraiTeahouse.AssetBundles.Editor {
 
-    public static  class BuilderCommandscs {
+    public static class BuilderCommands {
 
         [MenuItem("Hourai Teahouse/Build/Build Asset Bundles (Windows)")]
         public static void BuildAssetBundlesWindows() {
@@ -18,6 +17,10 @@ namespace HouraiTeahouse.HouraiPatcher {
         [MenuItem("Hourai Teahouse/Build/Build Asset Bundles (Linux)")]
         public static void BuildAssetBundlesLinux() {
             BuildScript.BuildAssetBundles(BuildTarget.StandaloneLinuxUniversal);
+        }
+
+        public static void BuildCurrentBundles() {
+            BuildScript.BuildAssetBundles();
         }
 
     }
