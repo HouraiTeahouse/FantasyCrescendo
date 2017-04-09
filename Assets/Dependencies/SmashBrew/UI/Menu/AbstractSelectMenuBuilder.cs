@@ -16,7 +16,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         protected virtual void Awake() {
             Log = HouraiTeahouse.Log.GetLogger(this);
-            DataManager.Instance.LoadTask.Then(() => CreateSelect());
+            DataManager.LoadTask.Then(() => CreateSelect());
         }
 
         public static void Attach(RectTransform child, Transform parent) {
@@ -26,8 +26,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         /// <summary> Construct the select area for characters. </summary>
         void CreateSelect() {
-            DataManager dataManager = DataManager.Instance;
-            if (dataManager == null || !_container || !_prefab)
+            if (!_container || !_prefab)
                 return;
 
             foreach (T data in GetData()) {

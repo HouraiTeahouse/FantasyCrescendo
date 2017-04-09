@@ -109,7 +109,7 @@ namespace HouraiTeahouse.SmashBrew {
             bool random = character == null;
             if (random) {
                 Log.Info("No character was specfied, randomly selecting character and pallete...");
-                selection.Character = DataManager.Instance.Characters.Random();
+                selection.Character = DataManager.Characters.Random();
                 selection.Pallete = Mathf.FloorToInt(Random.value * selection.Character.PalleteCount);
             }
             var sameCharacterSelections = new HashSet<PlayerSelection>(PlayerManager.MatchPlayers.Select(p => p.Selection));

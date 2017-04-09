@@ -19,7 +19,12 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 				Directory.CreateDirectory (outputPath);
 	
 			//@TODO: use append hash... (Make sure pipeline works correctly with it.)
-			BuildPipeline.BuildAssetBundles (outputPath, BuildAssetBundleOptions.ChunkBasedCompression, buildTarget);
+			BuildPipeline.BuildAssetBundles (outputPath, 
+                BuildAssetBundleOptions.ChunkBasedCompression |
+                BuildAssetBundleOptions.AppendHashToAssetBundleName |
+                BuildAssetBundleOptions.DeterministicAssetBundle |
+                BuildAssetBundleOptions.StrictMode,
+                buildTarget);
 			CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath));
 		}
 	

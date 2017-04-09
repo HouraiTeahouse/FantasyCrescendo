@@ -56,7 +56,7 @@ namespace HouraiTeahouse.SmashBrew {
 
         public PlayerSelection ToSelection() {
             return new PlayerSelection {
-                Character = DataManager.Instance.GetCharacter(CharacterID),
+                Character = DataManager.GetCharacter(CharacterID),
                 CPULevel = CPULevel,
                 Pallete = Pallete
             };

@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using HouraiTeahouse.AssetBundles;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
@@ -15,40 +13,33 @@ using UnityEditor;
 namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> A manager of all of the game data loaded into the game. </summary>
-    public sealed class DataManager : Singleton<DataManager> {
+    public sealed class DataManager : MonoBehaviour {
 
-        static readonly ILog log = Log.GetLogger<DataManager>();
+        static readonly ILog log = Log.GetLogger(typeof(DataManager));
 
-        List<SceneData> _scenes;
-        List<CharacterData> _characterList;
-        Dictionary<uint, CharacterData> _characters;
-        public ITask LoadTask { get; private set; }
+        static List<SceneData> _scenes;
+        static List<CharacterData> _characterList;
+        static Dictionary<uint, CharacterData> _characters;
+        public static ITask LoadTask { get; private set; }
 
-        public bool IsReady {
+        public static bool IsReady {
             get { return LoadTask != null && LoadTask.State != TaskState.Pending; }
         }
 
-        /// <summary> All Characters that are included with the Game's build. The Data Manager will automatically load all
-        /// CharacterData instances from Resources. </summary>
-        public ReadOnlyCollection<CharacterData> Characters { get; private set; }
-
-        /// <summary> All Scenes and their metadata included with the game's build. The DataManager will automatically load all
-        /// SceneData instances from Resources. </summary>
-        public ReadOnlyCollection<SceneData> Scenes { get; private set; }
-
-        /// <summary> Unity Callback. Called on object instantion. </summary>
-        protected override void Awake() {
-            base.Awake();
-            DontDestroyOnLoad(this);
+        [RuntimeInitializeOnLoadMethod]
+        static void Initialize() {
+            log.Error("TEST");
+            AssetBundleManager.Initialize();
+            AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
+            AssetBundleManager.AddHandler<SceneData>(AddScene);
 
             _characterList = new List<CharacterData>();
             _characters = new Dictionary<uint, CharacterData>();
             _scenes = new List<SceneData>();
 
-            AssetBundleManager.Initialize();
-
-            AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
-            AssetBundleManager.AddHandler<SceneData>(AddScene);
+            Characters = new ReadOnlyCollection<CharacterData>(_characterList);
+            Scenes = new ReadOnlyCollection<SceneData>(_scenes);
+            SceneManager.sceneLoaded += SceneLoad;
 
 #if UNITY_EDITOR
             if (AssetBundleManager.SimulateAssetBundleInEditor) {
@@ -80,26 +71,21 @@ namespace HouraiTeahouse.SmashBrew {
                     }
                 }
 
-                LoadTask = AssetBundleManager.LoadLocalBundles(whitelist, blacklist).Then(() => {
-                });
+                LoadTask = AssetBundleManager.LoadLocalBundles(whitelist, blacklist);
                 LoadTask.Done();
             }
-
-            Characters = new ReadOnlyCollection<CharacterData>(_characterList);
-            Scenes = new ReadOnlyCollection<SceneData>(_scenes);
-
-
-
-            SceneManager.sceneLoaded += SceneLoad;
         }
 
-        void OnDestroy() {
-            AssetBundleManager.RemoveHandler<CharacterData>(AddCharacter);
-            AssetBundleManager.RemoveHandler<SceneData>(AddScene);
-        }
+        /// <summary> All Characters that are included with the Game's build. The Data Manager will automatically load all
+        /// CharacterData instances from Resources. </summary>
+        public static ReadOnlyCollection<CharacterData> Characters { get; private set; }
+
+        /// <summary> All Scenes and their metadata included with the game's build. The DataManager will automatically load all
+        /// SceneData instances from Resources. </summary>
+        public static ReadOnlyCollection<SceneData> Scenes { get; private set; }
 
 #if UNITY_EDITOR
-        void LoadFromEditor<T>(Action<T> loadFunc) where T : Object {
+        static void LoadFromEditor<T>(Action<T> loadFunc) where T : Object {
             var guids = AssetDatabase.FindAssets("t:{0}".With(typeof(T).Name));
             foreach (string guid in guids) {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
@@ -110,7 +96,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 #endif
 
-        public void AddCharacter(CharacterData data) {
+        public static void AddCharacter(CharacterData data) {
             if (_characters.ContainsKey(data.Id)) {
                 log.Warning("Attempted to load {0} while already loaded.", data);
                 return;
@@ -124,7 +110,7 @@ namespace HouraiTeahouse.SmashBrew {
             log.Info("Registered {0} ({1}) as a valid character.", data.name, data.Id);
         }
 
-        public void AddScene(SceneData data) {
+        public static void AddScene(SceneData data) {
             if (_scenes.Contains(data)) {
                 log.Warning("Attempted to load {0} while already loaded.", data);
                 return;
@@ -133,8 +119,8 @@ namespace HouraiTeahouse.SmashBrew {
             log.Info("Registered {0} as a valid scene.", data.name);
         }
 
-        void SceneLoad(Scene newScene, LoadSceneMode mode) {
-            Log.Info("Unloading managed data assets");
+        static void SceneLoad(Scene newScene, LoadSceneMode mode) {
+            log.Info("Unloading managed data assets");
             foreach (SceneData scene in _scenes)
                 scene.Unload();
             foreach (CharacterData character in _characters.Values)
@@ -146,7 +132,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         /// <param name="id">the id of the character to lookup</param>
         /// <returns>The matching character</returns>
-        public CharacterData GetCharacter(uint id) {
+        public static CharacterData GetCharacter(uint id) {
             if (_characters .ContainsKey(id))
                 return _characters[id];
             return null;
