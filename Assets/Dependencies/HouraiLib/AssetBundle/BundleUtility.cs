@@ -1,7 +1,4 @@
-using System;
 using System.IO;
-using System.Security;
-using System.Security.Permissions;
 using UnityEngine;
 #if UNITY_EDITOR	
 using UnityEditor;
@@ -39,25 +36,34 @@ namespace HouraiTeahouse.AssetBundles {
 			return GetPlatformForAssetBundles(Application.platform);
 #endif
 		}
+
+	    const string AndroidPlatform = "Android";
+	    const string iOSPlatform = "iOS";
+	    const string WebGLPlatform = "WebGL";
+	    const string WindowsPlatform = "Windows";
+	    const string MacOSPlatform = "OSX";
+	    const string LinuxPlatform = "Linux";
 	
 #if UNITY_EDITOR
 	    static string GetPlatformForAssetBundles(BuildTarget target) {
 			switch(target) {
                 case BuildTarget.Android:
-                    return "Android";
+                    return AndroidPlatform;
                 case BuildTarget.iOS:
-                    return "iOS";
+                    return iOSPlatform;
                 case BuildTarget.WebGL:
-                    return "WebGL";
+                    return WebGLPlatform;
                 case BuildTarget.StandaloneWindows:
                 case BuildTarget.StandaloneWindows64:
-                    return "Windows";
+                    return WindowsPlatform;
                 case BuildTarget.StandaloneOSXIntel:
                 case BuildTarget.StandaloneOSXIntel64:
                 case BuildTarget.StandaloneOSXUniversal:
-                    return "OSX";
-                    // Add more build targets for your own.
-                    // If you add more targets, don't forget to add the same platforms to GetPlatformForAssetBundles(RuntimePlatform) function.
+                    return MacOSPlatform;
+                case BuildTarget.StandaloneLinux:
+                case BuildTarget.StandaloneLinux64:
+                case BuildTarget.StandaloneLinuxUniversal:
+			        return LinuxPlatform;
                 default:
                     return null;
 			}
@@ -67,17 +73,17 @@ namespace HouraiTeahouse.AssetBundles {
 	    static string GetPlatformForAssetBundles(RuntimePlatform platform) {
 			switch(platform) {
                 case RuntimePlatform.Android:
-                    return "Android";
+                    return AndroidPlatform;
                 case RuntimePlatform.IPhonePlayer:
-                    return "iOS";
+                    return iOSPlatform;
                 case RuntimePlatform.WebGLPlayer:
-                    return "WebGL";
+                    return WebGLPlatform;
                 case RuntimePlatform.WindowsPlayer:
-                    return "Windows";
+                    return WindowsPlatform;
                 case RuntimePlatform.OSXPlayer:
-                    return "OSX";
-                    // Add more build targets for your own.
-                    // If you add more targets, don't forget to add the same platforms to GetPlatformForAssetBundles(RuntimePlatform) function.
+                    return MacOSPlatform;
+                case RuntimePlatform.LinuxPlayer:
+			        return LinuxPlatform;
                 default:
                     return null;
 			}
