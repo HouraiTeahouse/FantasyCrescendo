@@ -7,36 +7,36 @@ using UnityEditor;
 
 namespace HouraiTeahouse.AssetBundles {
 
-	public class BundleUtility {
+	public static class BundleUtility {
 
 		public const string AssetBundlesOutputPath = "bundles";
+
+#if !UNITY_EDITOR
+        static bool? writeable;
+#endif
 
         public static string GetStoragePath() {
 #if UNITY_EDITOR
             return Application.streamingAssetsPath;
 #else
+            if (writeable != null) 
+                return writeable.Value ? Application.streamingAssetsPath : Application.persistentDataPath;
             try {
                 var file = Path.Combine(Application.streamingAssetsPath, "test.txt");
                 File.WriteAllText(file, "test");
                 File.Delete(file);
+                writeable = true;
                 return Application.streamingAssetsPath;
             } catch (UnauthorizedAccessException) {
+                writeable = false;
                 return Application.persistentDataPath;
             }
-#endif 
+#endif
         }
 
         public static string GetBundleStoragePath() {
             return Path.Combine(GetStoragePath(), Path.Combine(AssetBundlesOutputPath, GetPlatformName()));
         }
-	
-		public static string GetPlatformName() {
-#if UNITY_EDITOR
-			return GetPlatformForAssetBundles(EditorUserBuildSettings.activeBuildTarget);
-#else
-			return GetPlatformForAssetBundles(Application.platform);
-#endif
-		}
 
 	    const string AndroidPlatform = "Android";
 	    const string iOSPlatform = "iOS";
@@ -46,8 +46,8 @@ namespace HouraiTeahouse.AssetBundles {
 	    const string LinuxPlatform = "Linux";
 	
 #if UNITY_EDITOR
-	    static string GetPlatformForAssetBundles(BuildTarget target) {
-			switch(target) {
+	    public static string GetPlatformName (BuildTarget? target = null) {
+			switch(target ?? EditorUserBuildSettings.activeBuildTarget) {
                 case BuildTarget.Android:
                     return AndroidPlatform;
                 case BuildTarget.iOS:
@@ -69,10 +69,9 @@ namespace HouraiTeahouse.AssetBundles {
                     return null;
 			}
 		}
-#endif
-
-	    static string GetPlatformForAssetBundles(RuntimePlatform platform) {
-			switch(platform) {
+#else
+	    public static string GetPlatformName (RuntimePlatform? platform = null) {
+			switch(platform ?? Application.platform) {
                 case RuntimePlatform.Android:
                     return AndroidPlatform;
                 case RuntimePlatform.IPhonePlayer:
@@ -89,5 +88,6 @@ namespace HouraiTeahouse.AssetBundles {
                     return null;
 			}
 		}
+#endif
 	}
 }

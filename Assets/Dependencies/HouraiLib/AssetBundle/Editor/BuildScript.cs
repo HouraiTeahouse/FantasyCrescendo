@@ -14,7 +14,7 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 		public static void BuildAssetBundles(BuildTarget? target = null) {
 		    var buildTarget = target ?? EditorUserBuildSettings.activeBuildTarget;
 			// Choose the output path according to the build target.
-			string outputPath = Path.Combine(BundleUtility.AssetBundlesOutputPath,  BundleUtility.GetPlatformName());
+			string outputPath = Path.Combine(BundleUtility.AssetBundlesOutputPath,  BundleUtility.GetPlatformName(target));
 			if (!Directory.Exists(outputPath))
 				Directory.CreateDirectory (outputPath);
 	
@@ -25,7 +25,7 @@ namespace HouraiTeahouse.AssetBundles.Editor {
                 BuildAssetBundleOptions.DeterministicAssetBundle |
                 BuildAssetBundleOptions.StrictMode,
                 buildTarget);
-			CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath));
+			CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath), target);
 		}
 	
 		public static void WriteServerURL() {
@@ -105,11 +105,11 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 			}
 		}
 	
-		public static void CopyAssetBundlesTo(string outputPath) {
+		public static void CopyAssetBundlesTo(string outputPath, BuildTarget? target = null) {
 			// Clear streaming assets folder.
 			Directory.CreateDirectory(outputPath);
 	
-			string outputFolder = BundleUtility.GetPlatformName();
+			string outputFolder = BundleUtility.GetPlatformName(target);
 	
 			// Setup the source folder for assetbundles.
 			var source = Path.Combine(Path.Combine(System.Environment.CurrentDirectory, BundleUtility.AssetBundlesOutputPath), outputFolder);
