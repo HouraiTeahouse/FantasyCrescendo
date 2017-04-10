@@ -20,7 +20,12 @@ namespace HouraiTeahouse.SmashBrew {
         static List<SceneData> _scenes;
         static List<CharacterData> _characterList;
         static Dictionary<uint, CharacterData> _characters;
-        public static ITask LoadTask { get; private set; }
+        static ITask _loadTask;
+
+        public static ITask LoadTask {
+            get { return _loadTask ?? (LoadTask = new Task()); }
+            private set { _loadTask = value; }
+        }
 
         public static bool IsReady {
             get { return LoadTask != null && LoadTask.State != TaskState.Pending; }
@@ -28,7 +33,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         [RuntimeInitializeOnLoadMethod]
         static void Initialize() {
-            log.Error("TEST");
             AssetBundleManager.Initialize();
             AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
             AssetBundleManager.AddHandler<SceneData>(AddScene);
@@ -45,7 +49,7 @@ namespace HouraiTeahouse.SmashBrew {
             if (AssetBundleManager.SimulateAssetBundleInEditor) {
                 LoadFromEditor<CharacterData>(AddCharacter);
                 LoadFromEditor<SceneData>(AddScene);
-                LoadTask = Task.Resolved;
+                LoadTask.Resolve();
             }
             else
 #endif
@@ -71,8 +75,9 @@ namespace HouraiTeahouse.SmashBrew {
                     }
                 }
 
-                LoadTask = AssetBundleManager.LoadLocalBundles(whitelist, blacklist);
-                LoadTask.Done();
+                var task = AssetBundleManager.LoadLocalBundles(whitelist, blacklist);
+                task.Then(() => LoadTask.Resolve());
+                task.Done();
             }
         }
 
