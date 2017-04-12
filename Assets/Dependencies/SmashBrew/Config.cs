@@ -1,4 +1,5 @@
 using System;
+using HouraiTeahouse.AssetBundles;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -9,7 +10,7 @@ namespace HouraiTeahouse.SmashBrew {
         static Config _instance;
 
         /// <summary> The singleton instance of the game's config </summary>
-        static Config Instance {
+        public static Config Instance {
             get {
                 if (_instance)
                     return _instance;
@@ -51,6 +52,8 @@ namespace HouraiTeahouse.SmashBrew {
             //TODO: Generalize
             _gameModes.RegisterAll();
             GameMode.Current = _gameModes.StandardVersus;
+            if (_bundles != null)
+                _bundles.OnEnable();
         }
 
         #region Serialized Fields
@@ -79,8 +82,27 @@ namespace HouraiTeahouse.SmashBrew {
     [Serializable]
     public class BundleConfig {
 
+        [SerializeField, Multiline]
+        string _url;
+
         [SerializeField]
-        string BaseDownloadingURL;
+        string _branch;
+
+        const string BranchIdentifier = "%branch%";
+        const string PlatformIdentifier = "%platform%";
+        Uri _formattedUrl;
+
+        public string Branch {
+            get { return _branch; }
+        }
+
+        public string GetBundleUrl(string bundleName) { return new Uri(_formattedUrl, bundleName).ToString(); }
+
+        public void OnEnable() {
+            _formattedUrl =
+                new Uri(_url.Replace(BranchIdentifier, Branch)
+                    .Replace(PlatformIdentifier, BundleUtility.GetPlatformName()));
+        }
 
     }
 
