@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HouraiTeahouse.AssetBundles;
-using UnityEngine;
 
 namespace HouraiTeahouse {
 
@@ -197,6 +195,7 @@ namespace HouraiTeahouse {
         }
 
         public void Reject(Exception error) {
+            Log.Error(error.ToString());
             if(State != TaskState.Pending)
                 throw new InvalidOperationException(
                     string.Format("Attempted to reject a task that is already in state {0}. "

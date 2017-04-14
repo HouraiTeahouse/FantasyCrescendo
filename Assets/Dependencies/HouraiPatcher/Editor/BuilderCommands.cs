@@ -24,16 +24,16 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 #if UNITY_CLOUD_BUILD
         public static void BuildCurrentBundles(UnityEngine.CloudBuild.BuildManifestObject manifest) {
             string branch = manifest.GetValue("scmBranch");
-#else
-        public static void BuildCurrentBundles() {
-            const string branch = "master";
-#endif
             var config = Config.Instance;
             var serializedConfig = new SerializedObject(config);
             serializedConfig.FindProperty("_bundles._branch").stringValue = branch;
             serializedConfig.ApplyModifiedProperties();
-            Log.Info("Set Bundle Branch to \"{0}\"".With(Config.Bundles.Branch));
+            AssetDatabase.SaveAssets();
+            Log.Info("Set Bundle Branch to \"{0}\"".With(branch));
             Log.Info("Base URL set to \"{0}\"".With(Config.Bundles.GetBundleUrl("")));
+#else
+        public static void BuildCurrentBundles() {
+#endif
             BuildScript.BuildAssetBundles();
         }
 

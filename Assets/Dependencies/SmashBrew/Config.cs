@@ -52,8 +52,6 @@ namespace HouraiTeahouse.SmashBrew {
             //TODO: Generalize
             _gameModes.RegisterAll();
             GameMode.Current = _gameModes.StandardVersus;
-            if (_bundles != null)
-                _bundles.OnEnable();
         }
 
         #region Serialized Fields
@@ -90,18 +88,20 @@ namespace HouraiTeahouse.SmashBrew {
 
         const string BranchIdentifier = "%branch%";
         const string PlatformIdentifier = "%platform%";
-        Uri _formattedUrl;
+        string _baseUrl = null;
+
+        public string BaseUrl {
+            get {
+                if (!string.IsNullOrEmpty(_baseUrl))
+                    return _baseUrl;
+                _baseUrl = _url.Replace(BranchIdentifier, Branch)
+                    .Replace(PlatformIdentifier, BundleUtility.GetPlatformName());
+                return _baseUrl;
+            }
+        }
 
         public string Branch {
             get { return _branch; }
-        }
-
-        public string GetBundleUrl(string bundleName) { return new Uri(_formattedUrl, bundleName).ToString(); }
-
-        public void OnEnable() {
-            _formattedUrl =
-                new Uri(_url.Replace(BranchIdentifier, Branch)
-                    .Replace(PlatformIdentifier, BundleUtility.GetPlatformName()));
         }
 
     }

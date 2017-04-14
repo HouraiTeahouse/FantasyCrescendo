@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using HouraiTeahouse.SmashBrew;
 using UnityEngine;
 #if UNITY_EDITOR	
 using UnityEditor;
@@ -15,27 +16,37 @@ namespace HouraiTeahouse.AssetBundles {
         static bool? writeable;
 #endif
 
-        public static string GetStoragePath() {
+        public static string StoragePath {
+            get {
 #if UNITY_EDITOR
-            return Application.streamingAssetsPath;
-#else
-            if (writeable != null) 
-                return writeable.Value ? Application.streamingAssetsPath : Application.persistentDataPath;
-            try {
-                var file = Path.Combine(Application.streamingAssetsPath, "test.txt");
-                File.WriteAllText(file, "test");
-                File.Delete(file);
-                writeable = true;
                 return Application.streamingAssetsPath;
-            } catch (UnauthorizedAccessException) {
-                writeable = false;
-                return Application.persistentDataPath;
-            }
+#else
+                if (writeable != null) 
+                    return writeable.Value ? Application.streamingAssetsPath : Application.persistentDataPath;
+                try {
+                    var file = Path.Combine(Application.streamingAssetsPath, "test.txt");
+                    File.WriteAllText(file, "test");
+                    File.Delete(file);
+                    writeable = true;
+                    return Application.streamingAssetsPath;
+                } catch (UnauthorizedAccessException) {
+                    writeable = false;
+                    return Application.persistentDataPath;
+                }
 #endif
+            }
         }
 
-        public static string GetBundleStoragePath() {
-            return Path.Combine(GetStoragePath(), Path.Combine(AssetBundlesOutputPath, GetPlatformName()));
+        public static string GetLocalStoragePath() {
+            return PathUtility.Combine(StoragePath, AssetBundlesOutputPath, GetPlatformName());
+        }
+
+        public static string GetLocalBundlePath(string bundleName) {
+            return Path.Combine(GetLocalStoragePath(), bundleName);
+        }
+
+        public static string GetRemoteBundleUri(string bundleName) {
+            return UriUtility.Combine(Config.Bundles.BaseUrl, AssetBundlesOutputPath, GetPlatformName(), bundleName);
         }
 
 	    const string AndroidPlatform = "Android";

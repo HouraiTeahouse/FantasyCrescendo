@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using HouraiTeahouse.AssetBundles;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
@@ -33,18 +34,22 @@ namespace HouraiTeahouse.SmashBrew {
 
         [RuntimeInitializeOnLoadMethod]
         static void Initialize() {
-            AssetBundleManager.Initialize();
-            AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
-            AssetBundleManager.AddHandler<SceneData>(AddScene);
-
             _characterList = new List<CharacterData>();
             _characters = new Dictionary<uint, CharacterData>();
             _scenes = new List<SceneData>();
 
+            AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
+            AssetBundleManager.AddHandler<SceneData>(AddScene);
+
             Characters = new ReadOnlyCollection<CharacterData>(_characterList);
             Scenes = new ReadOnlyCollection<SceneData>(_scenes);
+
             SceneManager.sceneLoaded += SceneLoad;
 
+            var bundlePath = BundleUtility.StoragePath;
+            log.Info("Storage Path: {0}", bundlePath);
+
+            AssetBundleUpdater.UpdateGame().Then(() => { 
 #if UNITY_EDITOR
             if (AssetBundleManager.SimulateAssetBundleInEditor) {
                 LoadFromEditor<CharacterData>(AddCharacter);
@@ -54,9 +59,7 @@ namespace HouraiTeahouse.SmashBrew {
             else
 #endif
             {
-                var bundlePath = BundleUtility.GetStoragePath();
                 var dataFilePath = Path.Combine(bundlePath, "data");
-                log.Info("Storage Path: {0}", bundlePath);
                 if (!File.Exists(dataFilePath)) {
                     log.Info("Cannot find {0} copying StreamingAssets...", dataFilePath, bundlePath);
                     AssetBundleManager.CopyDirectory(Application.streamingAssetsPath, bundlePath);
@@ -69,7 +72,8 @@ namespace HouraiTeahouse.SmashBrew {
                     if (entry.StartsWith("-")) {
                         blacklist.Add(entry.Substring(1).Trim());
                         log.Info("Registered bundle blacklist: {0}".With(entry.Substring(1).Trim()));
-                    } else {
+                    }
+                    else {
                         whitelist.Add(entry.Trim());
                         log.Info("Registered bundle whitelist: {0}".With(entry.Trim()));
                     }
@@ -79,6 +83,8 @@ namespace HouraiTeahouse.SmashBrew {
                 task.Then(() => LoadTask.Resolve());
                 task.Done();
             }
+        });
+
         }
 
         /// <summary> All Characters that are included with the Game's build. The Data Manager will automatically load all
@@ -108,10 +114,10 @@ namespace HouraiTeahouse.SmashBrew {
             }
             _characters[data.Id] = data;
             _characterList.Add(data);
-            //data.Prefab.LoadAsync().Then(prefab => {
-            //    ClientScene.RegisterPrefab(prefab);
-            //    log.Info("Registered {0} ({1}) as a spawnable network character.", data.name, data.Id);
-            //});
+            data.Prefab.LoadAsync().Then(prefab => {
+                ClientScene.RegisterPrefab(prefab);
+                log.Info("Registered {0} ({1}) as a spawnable network character.", data.name, data.Id);
+            });
             log.Info("Registered {0} ({1}) as a valid character.", data.name, data.Id);
         }
 

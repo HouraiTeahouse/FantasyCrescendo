@@ -164,13 +164,8 @@ namespace HouraiTeahouse.SmashBrew {
             if (_colliders == null)
                 _colliders = GetComponents<Collider>();
             Color color = Config.Debug.GetHitboxColor(CurrentType);
-            foreach (Collider col in _colliders) {
+            foreach (Collider col in _colliders)
                 DrawCollider(col, color);
-            }
-            //GL.wireframe = true;
-            //foreach (var col in _colliders)
-            //    DrawCollider(col, Color.gray);
-            //GL.wireframe = false;
         }
 
         void Reset() { _id = new Random().Next(int.MaxValue); }

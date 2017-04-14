@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,38 +11,6 @@ using UnityEditor;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.AssetBundles {	
-
-	// Loaded assetBundle contains the references count which can be used to unload dependent assetBundles automatically.
-	public class LoadedAssetBundle {
-        public BundleMetadata Metadata { get; private set; }
-		public AssetBundle AssetBundle { get; private set; }
-		public int ReferencedCount { get; internal set; }
-		
-		public LoadedAssetBundle(BundleMetadata metadata, AssetBundle assetBundle) {
-		    Metadata = Argument.NotNull(metadata);
-			AssetBundle = Argument.NotNull(assetBundle);
-			ReferencedCount = 1;
-		}
-	}
-
-    public class BundleMetadata {
-
-        public string Name { get; private set; }
-        public Hash128 Hash { get; private set; }
-        public ReadOnlyCollection<string> Paths { get; private set; }
-        public ReadOnlyCollection<BundleMetadata> Dependencies { get; private set; }
-
-        internal BundleMetadata(string baseName, 
-                                Hash128 hash, 
-                                IEnumerable<BundleMetadata> dependencies,
-                                IEnumerable<string> alternativeNames) {
-            Name = baseName;
-            Hash = hash;
-            Paths = new ReadOnlyCollection<string>(alternativeNames.ToArray());
-            Dependencies = new ReadOnlyCollection<BundleMetadata>(dependencies.ToArray());
-        }
-
-    }
 
     public class BundleManfiestMap {
 
@@ -66,6 +33,10 @@ namespace HouraiTeahouse.AssetBundles {
             }
         }
 
+        public bool TryGetValue(string name, out BundleMetadata bundle) {
+            return _validIdentifiers.TryGetValue(name, out bundle);
+        }
+
         void AddUnique(ICollection<string> collection, string val) {
             if (!collection.Contains(val))
                 collection.Add(val);
@@ -81,7 +52,6 @@ namespace HouraiTeahouse.AssetBundles {
             AddUnique(paths, bundle);
             AddUnique(paths, name);
             AddUnique(paths, hash.ToString());
-            Log.Debug("{0}, {1}, {2}, {3}", bundle, name, hash, paths.Count);
             var dependencies = new List<BundleMetadata>();
             foreach (var dep in Manifest.GetAllDependencies(bundle))
                 dependencies.Add(CreateMetadata(dep));
@@ -94,16 +64,15 @@ namespace HouraiTeahouse.AssetBundles {
     // Class takes care of loading assetBundle and its dependencies automatically, loading variants automatically.
     public static class AssetBundleManager {
 
-	#if UNITY_EDITOR	
+#if UNITY_EDITOR
 		static int _simulateAssetBundleInEditor = -1;
 		const string SimulateAssetBundles = "SimulateAssetBundles";
-	#endif
+#endif
 
         static readonly Regex SeperatorRegex = new Regex(@"[\\]", RegexOptions.Compiled);
-        static readonly ILog log = Log.GetLogger("AssetBundle");
+        static readonly ILog log = Log.GetLogger(typeof(AssetBundleManager));
         public static readonly Task<BundleManfiestMap> Manifest = new Task<BundleManfiestMap>();
 		static readonly Dictionary<string, ITask<LoadedAssetBundle>> AssetBundles = new Dictionary<string, ITask<LoadedAssetBundle>> ();
-		static readonly Dictionary<string, string[]> Dependencies = new Dictionary<string, string[]> ();
         static readonly Dictionary<Type, Delegate> TypeHandlers = new Dictionary<Type, Delegate> ();
         static bool _initalized;
 
@@ -138,8 +107,8 @@ namespace HouraiTeahouse.AssetBundles {
         public static ITask LoadLocalBundles(IEnumerable<string> whitelist, IEnumerable<string> blacklist = null) {
             if (whitelist.IsNullOrEmpty())
                 return Task.Resolved;
-            log.Info("Loading local asset bundles from {0}....", BundleUtility.GetBundleStoragePath());
-            string basePath = BundleUtility.GetBundleStoragePath() + Path.DirectorySeparatorChar;
+            string basePath = BundleUtility.GetLocalBundlePath("");
+            log.Info("Loading local asset bundles from {0}....", basePath);
             IEnumerable<string> files;
             try {
                 files = Directory.GetFiles(basePath, "*", SearchOption.AllDirectories);
@@ -199,7 +168,7 @@ namespace HouraiTeahouse.AssetBundles {
 		// Variants which is used to define the active variants.
 		public static string[] ActiveVariants { get; set; }
 	
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
 		// Flag to indicate if we want to simulate assetBundles in Editor without building them actually.
 		public static bool SimulateAssetBundleInEditor {
 			get {
@@ -216,7 +185,7 @@ namespace HouraiTeahouse.AssetBundles {
 			    EditorPrefs.SetBool(SimulateAssetBundles, value);
 			}
 		}
-    #endif
+#endif
 
 	    static string GetStreamingAssetsPath() {
 	        if (Application.isEditor)
@@ -237,11 +206,11 @@ namespace HouraiTeahouse.AssetBundles {
 		}
 	
 		public static void SetDevelopmentAssetBundleServer() {
-			#if UNITY_EDITOR
+#if UNITY_EDITOR
 			// If we're in Editor simulation mode, we don't have to setup a download URL
 			if (SimulateAssetBundleInEditor)
 				return;
-			#endif
+#endif
 			
 			var urlFile = Resources.Load("AssetBundleServerURL") as TextAsset;
 			string url = (urlFile != null) ? urlFile.text.Trim() : null;
@@ -255,12 +224,12 @@ namespace HouraiTeahouse.AssetBundles {
 		public static ITask<BundleManfiestMap> Initialize () {
 		    if (_initalized)
 		        return Manifest;
-	#if UNITY_EDITOR	
+#if UNITY_EDITOR
 			log.Info("Simulation Mode: " + (SimulateAssetBundleInEditor ? "Enabled" : "Disabled"));
 			// If we're in Editor simulation mode, we don't need the manifest assetBundle.
 			if (SimulateAssetBundleInEditor)
 				return Task.FromResult<BundleManfiestMap>(null);
-	#endif
+#endif
 
 		    var task = LoadAssetAsync<AssetBundleManifest>(BundleUtility.GetPlatformName(), "AssetBundleManifest");
             task.Then(manifest => Manifest.Resolve(new BundleManfiestMap(manifest)));
@@ -272,11 +241,11 @@ namespace HouraiTeahouse.AssetBundles {
 		static ITask<LoadedAssetBundle> LoadAssetBundleAsync(string assetBundleName, bool isLoadingAssetBundleManifest = false) {
 			log.Info("Loading Asset Bundle" + (isLoadingAssetBundleManifest ? " Manifest: " : ": ") + assetBundleName);
 	
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
 			// If we're in Editor simulation mode, we don't have to really load the assetBundle and its dependencies.
 			if (SimulateAssetBundleInEditor)
 				return Task.FromResult<LoadedAssetBundle>(null);
-	#endif
+#endif
 
 		    var mainTask = LoadAssetBundleInternal(assetBundleName, isLoadingAssetBundleManifest);
 		    if (isLoadingAssetBundleManifest)
@@ -335,14 +304,13 @@ namespace HouraiTeahouse.AssetBundles {
 
             ITask<string> pathTask;
             if (isManifest)
-                pathTask = Task.FromResult(Path.Combine(BundleUtility.GetBundleStoragePath(), name));
+                pathTask = Task.FromResult(BundleUtility.GetLocalBundlePath(name));
             else
                 pathTask = Manifest.Then(manfiest => {
                     if (manfiest == null)
                         return null;
                     foreach (var path in manfiest[name].Paths) {
-                        var fullPath = Path.Combine(BundleUtility.GetBundleStoragePath(), path);
-                        log.Debug(fullPath);
+                        var fullPath = BundleUtility.GetLocalBundlePath(path);
                         if (File.Exists(fullPath))
                             return fullPath;
                     }
@@ -375,39 +343,35 @@ namespace HouraiTeahouse.AssetBundles {
 	
 		// Where we get all the dependencies and load them all.
 		static ITask<LoadedAssetBundle[]> LoadDependencies(string assetBundleName) {
-		    if (!_initalized)
-		        Initialize();
-		    return Manifest.Then(map => {
+		    return Initialize().ThenAll(map =>
                 // Get dependecies from the AssetBundleManifest object..
-		        var dependencies = Task.All(map[assetBundleName].Dependencies.Select(dep => RemapVariantName(dep.Name)));
-
-		        // Record and load all dependencies.
-		        dependencies.Then(deps => Dependencies.Add(assetBundleName, deps));
-		        return dependencies.Then(deps => Task.All(deps.Select(dep => LoadAssetBundleInternal(dep, false))));
-		    });
+		        map[assetBundleName].Dependencies.Select(dep =>  
+                    RemapVariantName(dep.Name).Then(name => 
+                    LoadAssetBundleInternal(name, false)))
+		    );
 		}
 	
 		// Unload assetbundle and its dependencies.
 		public static void UnloadAssetBundle(string assetBundleName) {
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
 			// If we're in Editor simulation mode, we don't have to load the manifest assetBundle.
 			if (SimulateAssetBundleInEditor)
 				return;
-	#endif
+#endif
 			UnloadAssetBundleInternal(assetBundleName);
 			UnloadDependencies(assetBundleName);
 		}
 	
-		static void UnloadDependencies(string assetBundleName) {
-			string[] dependencies;
-			if (!Dependencies.TryGetValue(assetBundleName, out dependencies))
-				return;
+		static ITask UnloadDependencies(string assetBundleName) {
+		    return Initialize().Then(map => {
+		        BundleMetadata bundle;
+                if (!map.TryGetValue(assetBundleName, out bundle))
+                    return;
 	
-			// Loop dependencies.
-			foreach(var dependency in dependencies)
-				UnloadAssetBundleInternal(dependency);
-	
-			Dependencies.Remove(assetBundleName);
+                // Loop dependencies.
+                foreach(var dependency in bundle.Dependencies)
+                    UnloadAssetBundleInternal(dependency.Name);
+		    });
 		}
 	
 		static void UnloadAssetBundleInternal(string assetBundleName) {
@@ -437,7 +401,7 @@ namespace HouraiTeahouse.AssetBundles {
 		public static ITask<T> LoadAssetAsync<T>(string assetBundleName, string assetName) where T : Object {
 			log.Info("Loading {0} from {1} bundle...", assetName, assetBundleName);
 	
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
 			if (SimulateAssetBundleInEditor) {
 				string[] assetPaths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName, assetName);
 			    if (assetPaths.Length != 0)
@@ -446,7 +410,7 @@ namespace HouraiTeahouse.AssetBundles {
 			    log.Error(message);
 			    return Task.FromError<T>(new Exception(message));
 			}
-	#endif
+#endif
 		    ITask<LoadedAssetBundle> task;
 		    if (typeof(T) == typeof(AssetBundleManifest))
 		        task = LoadAssetBundleInternal(assetBundleName, true);
