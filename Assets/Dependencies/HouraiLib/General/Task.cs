@@ -216,9 +216,11 @@ namespace HouraiTeahouse {
         }
 
         void OnReject(Exception error) {
-            if(_rejectHandlers != null)
+            if(_rejectHandlers != null && _rejectHandlers.Any())
                 foreach (RejectHandler handler in _rejectHandlers.ToArray())
                     InvokeReject(handler.Callback, error, handler.Rejectable);
+            else
+                Log.Error(error);
             Clear();
         }
 
