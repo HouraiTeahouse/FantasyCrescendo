@@ -195,7 +195,6 @@ namespace HouraiTeahouse {
         }
 
         public void Reject(Exception error) {
-            Log.Error(error.ToString());
             if(State != TaskState.Pending)
                 throw new InvalidOperationException(
                     string.Format("Attempted to reject a task that is already in state {0}. "
@@ -219,8 +218,6 @@ namespace HouraiTeahouse {
             if(_rejectHandlers != null && _rejectHandlers.Any())
                 foreach (RejectHandler handler in _rejectHandlers.ToArray())
                     InvokeReject(handler.Callback, error, handler.Rejectable);
-            else
-                Log.Error(error);
             Clear();
         }
 
