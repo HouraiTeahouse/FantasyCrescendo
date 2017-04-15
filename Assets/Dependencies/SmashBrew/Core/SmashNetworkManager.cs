@@ -129,40 +129,40 @@ namespace HouraiTeahouse.SmashBrew {
                 }
             }
 
-            var prefab = selection.Character.Prefab.Load();
+            selection.Character.Prefab.LoadAsync().Then(prefab => {
+                if (prefab == null) {
+                    Log.Error("The character {0} does not have a prefab. Please add a prefab object to it.", selection.Character);
+                    return;
+                }
 
-            if (prefab == null) {
-                Log.Error("The character {0} does not have a prefab. Please add a prefab object to it.", selection.Character);
-                return;
-            }
+                if (prefab.GetComponent<NetworkIdentity>() == null) {
+                    Log.Error(
+                        "The character prefab for {0} does not have a NetworkIdentity. Please add a NetworkIdentity to it's prefab.",
+                        selection.Character);
+                    return;
+                }
 
-            if (prefab.GetComponent<NetworkIdentity>() == null) {
-                Log.Error(
-                    "The character prefab for {0} does not have a NetworkIdentity. Please add a NetworkIdentity to it's prefab.",
-                    selection.Character);
-                return;
-            }
-
-            GameObject playerObj;
-            if (startPosition != null)
-                playerObj = Instantiate(prefab, startPosition.position, startPosition.rotation);
-            else
-                playerObj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-            NetworkServer.AddPlayerForConnection(conn, playerObj, playerControllerId);
-            var player = PlayerManager.MatchPlayers.Get(playerCount);
-            var colorState = playerObj.GetComponentInChildren<ColorState>();
-            if (colorState != null)
-                colorState.Pallete = selection.Pallete;
-            player.Selection = selection;
-            player.Type = PlayerType.HumanPlayer;
-            player.PlayerObject = playerObj;
-            playerCount++;
-            NetworkServer.SendToAll(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
-            var playerConnection = new PlayerConnection {
-                ConnectionID = conn.connectionId,
-                PlayerControllerID = playerControllerId
-            };
-            PlayerMap[playerConnection] = player;
+                GameObject playerObj;
+                if (startPosition != null)
+                    playerObj = Instantiate(prefab, startPosition.position, startPosition.rotation);
+                else
+                    playerObj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+                NetworkServer.AddPlayerForConnection(conn, playerObj, playerControllerId);
+                var player = PlayerManager.MatchPlayers.Get(playerCount);
+                var colorState = playerObj.GetComponentInChildren<ColorState>();
+                if (colorState != null)
+                    colorState.Pallete = selection.Pallete;
+                player.Selection = selection;
+                player.Type = PlayerType.HumanPlayer;
+                player.PlayerObject = playerObj;
+                playerCount++;
+                NetworkServer.SendToAll(Messages.UpdatePlayer, UpdatePlayerMessage.FromPlayer(player));
+                var playerConnection = new PlayerConnection {
+                    ConnectionID = conn.connectionId,
+                    PlayerControllerID = playerControllerId
+                };
+                PlayerMap[playerConnection] = player;
+            });
         }
 
         public override void OnServerRemovePlayer(NetworkConnection conn, UnityEngine.Networking.PlayerController playerController) {
