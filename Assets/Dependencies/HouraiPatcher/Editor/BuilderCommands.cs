@@ -30,7 +30,7 @@ namespace HouraiTeahouse.AssetBundles.Editor {
             serializedConfig.ApplyModifiedProperties();
             AssetDatabase.SaveAssets();
             Log.Info("Set Bundle Branch to \"{0}\"".With(branch));
-            Log.Info("Base URL set to \"{0}\"".With(Config.Bundles.GetBundleUrl("")));
+            Log.Info("Base URL set to \"{0}\"".With(BundleUtility.GetRemoteBundleUri("")));
 #else
         public static void BuildCurrentBundles() {
 #endif

@@ -46,6 +46,7 @@ namespace HouraiTeahouse.AssetBundles {
                 if (manifestRequest.isError)
                     throw new Exception("HTTP Error: {0}".With(manifestRequest.error));
                 log.Info("Downloaded remote manifest bundle ({0} bytes)", manifestRequest.downloadedBytes);
+                Directory.CreateDirectory(Path.GetDirectoryName(localManifestPath));
                 File.WriteAllBytes(localManifestPath, manifestRequest.downloadHandler.data);
                 manifestRequest.Dispose();
                 return AsyncManager.AddOperation(AssetBundle.LoadFromFileAsync(localManifestPath));
@@ -81,6 +82,7 @@ namespace HouraiTeahouse.AssetBundles {
                             name,
                             path,
                             bundleRequest.downloadedBytes);
+                        Directory.CreateDirectory(Path.GetDirectoryName(path));
                         File.WriteAllBytes(path, bundleRequest.downloadHandler.data);
                         bundleRequest.Dispose();
                     });
@@ -101,6 +103,19 @@ namespace HouraiTeahouse.AssetBundles {
                     log.Info("Deleting {0} ({1})", bundleName, bundle);
                     File.Delete(bundle);
                 }
+                // Delete empty subdirectories
+                bool deleted = false;
+                do {
+                    deleted = false;
+                    foreach (var directory in Directory.GetDirectories(localStorage, "*", SearchOption.AllDirectories)) {
+                        if (Directory.GetFiles(directory).Any() || Directory.GetDirectories(directory).Any())
+                            continue;
+                        deleted = true;
+                        Directory.Delete(directory);
+                        log.Info("Deleted empty directory {0}.", directory);
+                    }
+                }
+                while (deleted);
             });
             task.Catch(ex => { log.Error(ex.ToString()); });
             return task;
