@@ -31,10 +31,10 @@ namespace HouraiTeahouse.AssetBundles {
         }
 
         public static ITask UpdateGame() {
-            //if (!Updateable) {
-            //    log.Info("Build is a debug build. Not downloading updates...");
-            //    return Task.Resolved;
-            //}
+            if (!Updateable) {
+                log.Info("Build is a debug build. Not downloading updates...");
+                return Task.Resolved;
+            }
             log.Info("Starting game update checks...");
             var bundles = new HashSet<string>();
             var platformName = BundleUtility.GetPlatformName();
