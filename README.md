@@ -1,20 +1,13 @@
 ![logo](./Assets/Static/Sprites/logo.png)
 
----
-
 <p align="center">
-    <a href="https://opensource.org/licenses/mit-license.php">
-        <img src="https://badges.frapsoft.com/os/mit/mit.png?v=103" alt="MIT License">
-    </a>
-    <a href="https://twitter.com/HouraiTeahouse">
-        <img src="https://img.shields.io/badge/twitter-HouraiTeahouse-blue.svg" alt="Follow Hourai Teahouse on Twitter">
+    <a href="https://github.com/HouraiTeahouse/FantasyCrescendo/blob/develop/LICENSE">
+        <img src="https://img.shields.io/github/license/HouraiTeahouse/FantasyCrescendo.svg" alt="License">
     </a>
     <a href="https://discordapp.com/invite/VuZhs9V">
         <img src="https://img.shields.io/badge/discord-hourai--teahouse-738bd7.svg" alt="Join the Hourai Teahouse Discord Chat">
     </a>
 </p>
-
----
 
 ## About
 *Fantasy Crescendo* is a collaborative community project to create a *[Touhou Project](https://en.touhouwiki.net/wiki/Touhou_Project)* fangame akin to that of Super Smash Bros.
@@ -22,7 +15,7 @@
 This project does not only consist of code contributions, and many of the assets included are custom art, music, sound effects, and 3D designs created by community submissions. For a full list of credits, see the [credits](./CREDITS.md) file in the repository.
 
 ## Documentation
-The Hourai Teahouse documentation site is currently being rebuilt. Please wait warmly.
+Documentation regarding the development of the game can be seen at https://wiki.houraiteahouse.net/FantasyCrescendo/Development.
 
 ## Contributing
 This is an open project, intended to be a community driven project. Contributions are very welcome. Code based contributions can be received and reviewed publicly on this repository. Non-code assets like BGM or 3D models are best sent to the project's open mailbox: simply mail teahouse.hourai@gmail.com. For more information, please read [this](./CONTRIBUTING.md).
