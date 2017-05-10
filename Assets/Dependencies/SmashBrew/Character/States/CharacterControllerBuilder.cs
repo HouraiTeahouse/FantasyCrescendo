@@ -24,7 +24,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         protected CharacterState RunTurn;
 
         // -----------------------------------------------
-        // Shield States
+        // Jump States
         // -----------------------------------------------
         protected CharacterState Jump;
         protected CharacterState JumpStart;
@@ -57,7 +57,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         // Attacks
         // -----------------------------------------------
         // Neutral Combo
-        protected CharacterState[] Netural;
+        protected CharacterState[] Neutral;
 
         // Tilt Attacks
         protected CharacterState TiltUp;
@@ -70,13 +70,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         protected CharacterState SmashDown;
 
         // Aerial Attacks
-        protected CharacterState AerialNetural;
+        protected CharacterState AerialNeutral;
         protected CharacterState AerialForward;
         protected CharacterState AerialBackward;
         public CharacterStateData AerialUp;
         public CharacterStateData AerialDown;
 
         // Special Attacks
+        public CharacterStateData SpecialNeutral;
         public CharacterStateData SpecialUp;
         public CharacterStateData SpecialSide;
         public CharacterStateData SpecialDown;
