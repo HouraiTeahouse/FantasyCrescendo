@@ -8,7 +8,6 @@ using HouraiTeahouse.SmashBrew.States;
 namespace HouraiTeahouse.SmashBrew.Characters {
 
     public partial class CharacterControllerBuilder {
-
         // -----------------------------------------------
         // Ground Movement States
         // -----------------------------------------------
@@ -45,11 +44,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             public CharacterState Stunned { get; set; }
         }
 
-        public class SmashAttackStates {
-            public CharacterState Charge { get; set; }
-            public CharacterState Attack { get; set; }
-        }
-
         public ShieldStates Shield { get; private set; }
 
         // Ground Dodge States
@@ -58,11 +52,45 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public CharacterState EscapeBackward { get; private set; }
 
         // -----------------------------------------------
-        // Air States
+        // Air States 
         // -----------------------------------------------
         public CharacterState Fall { get; private set; }
         public CharacterState FallHelpless { get; private set; }
         public CharacterState EscapeAir { get; private set; }
+
+        // -----------------------------------------------
+        // Attacks
+        // -----------------------------------------------
+        public class SmashAttackStates {
+            public CharacterState Charge { get; private set; }
+            public CharacterState Attack { get; private set; }
+        }
+
+        // Neutral Combo
+        public CharacterState[] Neutral { get; private set; }
+
+        // Tilt Attacks
+        public CharacterState TiltUp { get; private set; }
+        public CharacterState TiltSide { get; private set; }
+        public CharacterState TiltDown { get; private set; }
+
+        // Smash Attacks
+        public SmashAttackStates SmashUp { get; private set; }
+        public SmashAttackStates SmashSide { get; private set; }
+        public SmashAttackStates SmashDown { get; private set; }
+
+        // Aerial Attacks
+        public CharacterState AerialNeutral { get; private set; }
+        public CharacterState AerialForward { get; private set; }
+        public CharacterState AerialBackward { get; private set; }
+        public CharacterState AerialUp { get; private set; }
+        public CharacterState AerialDown { get; private set; }
+
+        // Special Attacks
+        public CharacterState SpecialNeutral { get; private set; }
+        public CharacterState SpecialUp { get; private set; }
+        public CharacterState SpecialSide { get; private set; }
+        public CharacterState SpecialDown { get; private set; }
 
         // -----------------------------------------------
         // Ledge States
@@ -86,20 +114,31 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         // -----------------------------------------------
         // Grabbed/Thrown States
         // -----------------------------------------------
-        /*
-        // grabbed
+        // Grabs
+        protected CharacterState GrabPull { get; private set; }
+        protected CharacterState GrabRunPull { get; private set; }
+        protected CharacterState GrabWait { get; private set; }
+        protected CharacterState GrabInterrupted { get; private set; }
+        protected CharacterState GrabPummel { get; private set; }
+
+        // Throwing
+        protected CharacterState ThrowForward { get; private set; }
+        protected CharacterState ThrowBackward { get; private set; }
+        protected CharacterState ThrowUp { get; private set; }
+        protected CharacterState ThrowDown { get; private set; }
+
+        // Grabbed
         protected CharacterState GrabbedPulled { get; private set; }
         protected CharacterState GrabbedWait { get; private set; }
         protected CharacterState GrabbedInterrupt { get; private set; }
         protected CharacterState GrabbedInterruptJump { get; private set; }
         protected CharacterState GrabbedDamaged { get; private set; }
 
-        // thrown
+        // Thrown
         protected CharacterState ThrownUp { get; private set; }
         protected CharacterState ThrownDown { get; private set; }
         protected CharacterState ThrownForward { get; private set; }
         protected CharacterState ThrownBackward { get; private set; }
-        */
 
         // -----------------------------------------------
         // Environmental Collision States
@@ -108,64 +147,19 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public CharacterState StopWall { get; private set; }
         public CharacterState Crash { get; private set; }
 
-        // prone
+        // Prone
         public CharacterState Prone { get; private set; }
         public CharacterState ProneStand { get; private set; }
         public CharacterState ProneAttack { get; private set; }
         public CharacterState ProneRollLeft { get; private set; }
         public CharacterState ProneRollRight { get; private set; }
 
-        // teching
+        // Teching
         public CharacterState Tech { get; private set; }
         public CharacterState TechRollLeft { get; private set; }
         public CharacterState TechRollRight { get; private set; }
         public CharacterState TechWall { get; private set; }
         public CharacterState TechWallJump { get; private set; }
-
-        // -----------------------------------------------
-        // Attacks
-        // -----------------------------------------------
-        // Neutral Combo
-        public CharacterState Neutral { get; private set; }
-
-        // Tilt Attacks
-        public CharacterState TiltUp { get; private set; }
-        public CharacterState TiltSide { get; private set; }
-        public CharacterState TiltDown { get; private set; }
-
-        // Smash Attacks
-        public SmashAttackStates SmashUp { get; private set; }
-        public SmashAttackStates SmashSide { get; private set; }
-        public SmashAttackStates SmashDown { get; private set; }
-
-        // Aerial Attacks
-        public CharacterState AerialNeutral { get; private set; }
-        public CharacterState AerialForward { get; private set; }
-        public CharacterState AerialBackward { get; private set; }
-        public CharacterState AerialUp { get; private set; }
-        public CharacterState AerialDown { get; private set; }
-        public CharacterState AerialAttackLand { get; private set; }
-
-        // Special Attacks
-        public CharacterState SpecialNeutral { get; private set; }
-        public CharacterState SpecialUp { get; private set; }
-        public CharacterState SpecialSide { get; private set; }
-        public CharacterState SpecialDown { get; private set; }
-
-        /*
-        // Grabs
-        protected CharacterState GrabPull;
-        protected CharacterState GrabRunPull;
-        protected CharacterState GrabWait;
-        protected CharacterState GrabInterrupted;
-        protected CharacterState GrabPummel;
-
-        // Throwing
-        protected CharacterState ThrowForward;
-        protected CharacterState ThrowBackward;
-        protected CharacterState ThrowUp;
-        protected CharacterState ThrowDown;
-        */
 
     }
 
