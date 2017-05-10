@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -30,6 +30,7 @@ namespace HouraiTeahouse.AssetBundles {
             ActiveRequests = new ReadOnlyCollection<UnityWebRequest>(_requests);
         }
 
+#pragma warning disable 0162
         public static ITask UpdateGame() {
             if (!Updateable) {
                 log.Info("Build is a debug build. Not downloading updates...");
@@ -120,6 +121,7 @@ namespace HouraiTeahouse.AssetBundles {
             task.Catch(ex => { log.Error(ex.ToString()); });
             return task;
         }
+#pragma warning restore 0162
 
     }
 

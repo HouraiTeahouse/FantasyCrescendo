@@ -19,8 +19,8 @@ namespace HouraiTeahouse.SmashBrew.States {
         [SetUp]
         public void Setup() {
             _state = new TestState();
-            builder = new StateControllerBuilder<TestState, TestContext>("builder");
-            nonEmptyBuilder = new StateControllerBuilder<TestState, TestContext>("nonEmptyBuilder");
+            builder = new StateControllerBuilder<TestState, TestContext>();
+            nonEmptyBuilder = new StateControllerBuilder<TestState, TestContext>();
             nonEmptyBuilder.AddState(_state);
         }
 

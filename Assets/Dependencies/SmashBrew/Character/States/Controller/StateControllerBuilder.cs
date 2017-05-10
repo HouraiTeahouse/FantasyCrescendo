@@ -12,7 +12,7 @@ namespace HouraiTeahouse.SmashBrew.States {
             get { return _states.Select(x => x); }
         }
 
-        public StateControllerBuilder(string name) {
+        public StateControllerBuilder() {
             _states = new HashSet<T>();
         }
 

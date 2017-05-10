@@ -1,9 +1,5 @@
 using System;
-using UnityEngine;
-using UnityEditor;
-using UnityEngine.TestTools;
 using NUnit.Framework;
-using System.Collections;
 
 namespace HouraiTeahouse.SmashBrew.States {
 
@@ -29,7 +25,7 @@ namespace HouraiTeahouse.SmashBrew.States {
         [SetUp]
         public void Setup() {
             var builder =
-                new StateControllerBuilder<TestState, TestContext>("test controller")
+                new StateControllerBuilder<TestState, TestContext>()
                     .WithDefaultState(A)
                     .AddState(B)
                     .AddState(C)
