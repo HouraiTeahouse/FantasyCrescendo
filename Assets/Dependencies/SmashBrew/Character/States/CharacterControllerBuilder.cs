@@ -68,11 +68,70 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         protected CharacterState EscapeBackward { get; private set; }
 
         // -----------------------------------------------
-        // Air States 
+        // Air States
         // -----------------------------------------------
         protected CharacterState Fall { get; private set; }
         protected CharacterState FallHelpless { get; private set; }
         protected CharacterState EscapeAir { get; private set; }
+
+        // -----------------------------------------------
+        // Ledge States
+        // -----------------------------------------------
+        protected CharacterState LedgeGrab { get; private set; }
+        protected CharacterState LedgeIdle { get; private set; }
+        protected CharacterState LedgeClimb { get; private set; }
+        protected CharacterState LedgeEscape { get; private set; }
+        protected CharacterState LedgeAttack { get; private set; }
+        protected CharacterState LedgeJump { get; private set; }
+        protected CharacterState LedgeRelease { get; private set; }
+
+        // -----------------------------------------------
+        // Damaged/Launched States
+        // -----------------------------------------------
+
+        protected CharacterState DamageStun { get; private set; }
+        protected CharacterState DamageStunAir { get; private set; }
+        protected CharacterState DamageLaunched { get; private set; }
+        protected CharacterState DamageFall { get; private set; } // tumble equivalent
+
+        // -----------------------------------------------
+        // Grabbed/Thrown States
+        // -----------------------------------------------
+        /*
+        // grabbed
+        protected CharacterState GrabbedPulled { get; private set; }
+        protected CharacterState GrabbedWait { get; private set; }
+        protected CharacterState GrabbedInterrupt { get; private set; }
+        protected CharacterState GrabbedInterruptJump { get; private set; }
+        protected CharacterState GrabbedDamaged { get; private set; }
+
+        // thrown
+        protected CharacterState ThrownUp { get; private set; }
+        protected CharacterState ThrownDown { get; private set; }
+        protected CharacterState ThrownForward { get; private set; }
+        protected CharacterState ThrownBackward { get; private set; }
+        */
+
+        // -----------------------------------------------
+        // Environmental Collision States
+        // -----------------------------------------------
+        protected CharacterState StopCeiling { get; private set; }
+        protected CharacterState StopWall { get; private set; }
+        protected CharacterState Crash { get; private set; }
+
+        // prone
+        protected CharacterState Prone { get; private set; }
+        protected CharacterState ProneStand { get; private set; }
+        protected CharacterState ProneAttack { get; private set; }
+        protected CharacterState ProneRollLeft { get; private set; }
+        protected CharacterState ProneRollRight { get; private set; }
+
+        // teching
+        protected CharacterState Tech { get; private set; }
+        protected CharacterState TechRollLeft { get; private set; }
+        protected CharacterState TechRollRight { get; private set; }
+        protected CharacterState TechWall { get; private set; }
+        protected CharacterState TechWallJump { get; private set; }
 
         // -----------------------------------------------
         // Attacks
@@ -94,14 +153,29 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         protected CharacterState AerialNeutral { get; private set; }
         protected CharacterState AerialForward { get; private set; }
         protected CharacterState AerialBackward { get; private set; }
-        public CharacterStateData AerialUp { get; private set; }
-        public CharacterStateData AerialDown { get; private set; }
+        protected CharacterState AerialUp { get; private set; }
+        protected CharacterState AerialDown { get; private set; }
 
         // Special Attacks
-        public CharacterStateData SpecialNeutral { get; private set; }
-        public CharacterStateData SpecialUp { get; private set; }
-        public CharacterStateData SpecialSide { get; private set; }
-        public CharacterStateData SpecialDown { get; private set; }
+        protected CharacterState SpecialNeutral { get; private set; }
+        protected CharacterState SpecialUp { get; private set; }
+        protected CharacterState SpecialSide { get; private set; }
+        protected CharacterState SpecialDown { get; private set; }
+
+        /*
+        // Grabs
+        protected CharacterState GrabPull;
+        protected CharacterState GrabRunPull;
+        protected CharacterState GrabWait;
+        protected CharacterState GrabInterrupted;
+        protected CharacterState GrabPummel;
+
+        // Throwing
+        protected CharacterState ThrowForward;
+        protected CharacterState ThrowBackward;
+        protected CharacterState ThrowUp;
+        protected CharacterState ThrowDown;
+        */
 
         protected internal StateControllerBuilder<CharacterState, CharacterStateContext> Builder { get; internal set; }
 
@@ -142,7 +216,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             }
         }
 
-        public void BuildCharacterControllerImpl() {
+        public void BuildCharacterControllerImpl(StateControllerBuilder<CharacterState, CharacterStateContext> builder) {
+            Builder = builder;
             InjectState(this);
             Dash.AddTransition(Run);
             RunTurn.AddTransition(Run);

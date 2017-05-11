@@ -9,7 +9,7 @@ namespace HouraiTeahouse.SmashBrew.States {
         [Test]
         public void build_does_not_throw_errors() {
             var instance = ScriptableObject.CreateInstance<CharacterControllerBuilder>();
-            instance.BuildCharacterControllerImpl();
+            instance.BuildCharacterControllerImpl(new StateControllerBuilder<CharacterState, CharacterStateContext>());
             Object.DestroyImmediate(instance);
         }
 
