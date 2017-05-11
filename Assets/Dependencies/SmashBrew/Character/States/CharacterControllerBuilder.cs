@@ -53,64 +53,64 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         protected CharacterState FallHelpless;
         protected CharacterState EscapeAir;
 
-				// -----------------------------------------------
-				// Ledge States
-				// -----------------------------------------------
-				protected CharacterState LedgeGrab;
-				protected CharacterState LedgeIdle;
-				protected CharacterState LedgeClimb;
-				protected CharacterState LedgeEscape;
-				protected CharacterState LedgeAttack;
-				protected CharacterState LedgeJump;
-				protected CharacterState LedgeRelease;
+	// -----------------------------------------------
+	// Ledge States
+	// -----------------------------------------------
+	protected CharacterState LedgeGrab;
+	protected CharacterState LedgeIdle;
+	protected CharacterState LedgeClimb;
+	protected CharacterState LedgeEscape;
+	protected CharacterState LedgeAttack;
+	protected CharacterState LedgeJump;
+	protected CharacterState LedgeRelease;
 
-				// -----------------------------------------------
-				// Damaged/Launched States
-				// -----------------------------------------------
+	// -----------------------------------------------
+	// Damaged/Launched States
+	// -----------------------------------------------
 
-				protected CharacterState DamageStun;
-				protected CharacterState DamageStunAir;
-				protected CharacterState DamageLaunched;
-				protected CharacterState DamageFall; // tumble equivalent
+	protected CharacterState DamageStun;
+	protected CharacterState DamageStunAir;
+	protected CharacterState DamageLaunched;
+	protected CharacterState DamageFall; // tumble equivalent
 
-				// -----------------------------------------------
-				// Grabbed/Thrown States
-				// -----------------------------------------------
-				/*
-				// grabbed
-				protected CharacterState GrabbedPulled;
-				protected CharacterState GrabbedWait;
-				protected CharacterState GrabbedInterrupt;
-				protected CharacterState GrabbedInterruptJump;
-				protected CharacterState GrabbedDamaged;
+	// -----------------------------------------------
+	// Grabbed/Thrown States
+	// -----------------------------------------------
+	/*
+	// grabbed
+	protected CharacterState GrabbedPulled;
+	protected CharacterState GrabbedWait;
+	protected CharacterState GrabbedInterrupt;
+	protected CharacterState GrabbedInterruptJump;
+	protected CharacterState GrabbedDamaged;
 
-				// thrown
-				protected CharacterState ThrownUp;
-				protected CharacterState ThrownDown;
-				protected CharacterState ThrownForward;
-				protected CharacterState ThrownBackward;
-				*/
+	// thrown
+	protected CharacterState ThrownUp;
+	protected CharacterState ThrownDown;
+	protected CharacterState ThrownForward;
+	protected CharacterState ThrownBackward;
+	*/
 
-				// -----------------------------------------------
-				// Environmental Collision States
-				// -----------------------------------------------
-				protected CharacterState StopCeiling;
-				protected CharacterState StopWall;
-				protected CharacterState Crash;
+	// -----------------------------------------------
+	// Environmental Collision States
+	// -----------------------------------------------
+	protected CharacterState StopCeiling;
+	protected CharacterState StopWall;
+	protected CharacterState Crash;
 
-				// prone
-				protected CharacterState Prone;
-				protected CharacterState ProneStand;
-				protected CharacterState ProneAttack;
-				protected CharacterState ProneRollLeft;
-				protected CharacterState ProneRollRight;
+	// prone
+	protected CharacterState Prone;
+	protected CharacterState ProneStand;
+	protected CharacterState ProneAttack;
+	protected CharacterState ProneRollLeft;
+	protected CharacterState ProneRollRight;
 
-				// teching
-				protected CharacterState Tech;
-				protected CharacterState TechRollLeft;
-				protected CharacterState TechRollRight;
-				protected CharacterState TechWall;
-				protected CharacterState TechWallJump;
+	// teching
+	protected CharacterState Tech;
+	protected CharacterState TechRollLeft;
+	protected CharacterState TechRollRight;
+	protected CharacterState TechWall;
+	protected CharacterState TechWallJump;
 
         // -----------------------------------------------
         // Attacks
@@ -141,20 +141,20 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         protected CharacterState SpecialSide;
         protected CharacterState SpecialDown;
 
-				/*
-				// Grabs
-				protected CharacterState GrabPull;
-				protected CharacterState GrabRunPull;
-				protected CharacterState GrabWait;
-				protected CharacterState GrabInterrupted;
-				protected CharacterState GrabPummel;
+	/*
+	// Grabs
+	protected CharacterState GrabPull;
+	protected CharacterState GrabRunPull;
+	protected CharacterState GrabWait;
+	protected CharacterState GrabInterrupted;
+	protected CharacterState GrabPummel;
 
-				// Throwing
-				protected CharacterState ThrowForward;
-				protected CharacterState ThrowBackward;
-				protected CharacterState ThrowUp;
-				protected CharacterState ThrowDown;
-				*/
+	// Throwing
+	protected CharacterState ThrowForward;
+	protected CharacterState ThrowBackward;
+	protected CharacterState ThrowUp;
+	protected CharacterState ThrowDown;
+	*/
 
 
         protected CharacterState[] GroundMovement;
