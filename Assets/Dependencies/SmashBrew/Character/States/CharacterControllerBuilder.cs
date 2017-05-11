@@ -54,6 +54,17 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         protected CharacterState EscapeAir;
 
 				// -----------------------------------------------
+				// Ledge States
+				// -----------------------------------------------
+				protected CharacterState LedgeGrab;
+				protected CharacterState LedgeIdle;
+				protected CharacterState LedgeClimb;
+				protected CharacterState LedgeEscape;
+				protected CharacterState LedgeAttack;
+				protected CharacterState LedgeJump;
+				protected CharacterState LedgeRelease;
+
+				// -----------------------------------------------
 				// Damaged/Launched States
 				// -----------------------------------------------
 
