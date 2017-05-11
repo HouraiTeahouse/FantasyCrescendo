@@ -1,10 +1,5 @@
 using System;
-using UnityEngine;
-using UnityEditor;
-using UnityEngine.TestTools;
 using NUnit.Framework;
-using System.Collections;
-using HouraiTeahouse.SmashBrew.Characters;
 
 namespace HouraiTeahouse.SmashBrew.States {
 
@@ -25,7 +20,7 @@ namespace HouraiTeahouse.SmashBrew.States {
 
         [Test]
         public void state_add_transition_throws_if_null_predicate() {
-            Assert.Throws<ArgumentNullException>(() => new TestState().AddTransition(null, ctx => false));
+            Assert.Throws<ArgumentNullException>(() => new TestState().AddTransition<TestState, TestContext>(null, ctx => false));
         }
 
         [Test]

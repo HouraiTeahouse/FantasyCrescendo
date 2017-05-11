@@ -44,7 +44,7 @@ namespace HouraiTeahouse.SmashBrew.States {
             E.AddTransition(A, ctx => ctx.C > 50);
             F.AddTransition(A, ctx => ctx.B > 50);
             F.AddTransition(B, ctx => ctx.C > 50);
-            new[] {B, C, D, E, F}.AddTransition(A, ctx => ctx.A);
+            new[] {B, C, D, E, F}.AddTransitions(A, ctx => ctx.A);
             _controller = builder.Build();
         }
 

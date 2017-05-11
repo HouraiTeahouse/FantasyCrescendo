@@ -10,7 +10,7 @@ namespace HouraiTeahouse.SmashBrew.States {
 
         [Test]
         public void add_transition_predicate_throws_if_state_is_null() {
-            Assert.Throws<ArgumentNullException>(() => new TestState().AddTransition(null, ctx => true));
+            Assert.Throws<ArgumentNullException>(() => new TestState().AddTransition<TestState, object>(null, ctx => true));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace HouraiTeahouse.SmashBrew.States {
             var multistate = new[] {new TestState(), new TestState(), new TestState()};
             var target = new TestState();
             for (var i = 0; i < 10; i++) {
-                multistate.AddTransition(ctx => target);
+                multistate.AddTransitions<TestState, object>(ctx => target);
                 foreach (TestState testState in multistate)
                     Assert.AreEqual(i + 1, testState.Transitions.Count);
             }

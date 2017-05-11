@@ -205,7 +205,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                         _dataMap = new Dictionary<string, CharacterStateData>();
                     if (!_dataMap.ContainsKey(propertyName))
                         _dataMap.Add(propertyName, new CharacterStateData());
-                    instance = new CharacterState(propertyName, _dataMap[propertyName]);
+                    var state = new CharacterState(propertyName, _dataMap[propertyName]);
+                    Builder.AddState(state);
+                    instance = state;
                 } else {
                     instance = Activator.CreateInstance(propertyType);
                     Log.Debug("DERP");
@@ -219,32 +221,60 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public void BuildCharacterControllerImpl(StateControllerBuilder<CharacterState, CharacterStateContext> builder) {
             Builder = builder;
             InjectState(this);
-            Dash.AddTransition(Run);
-            RunTurn.AddTransition(Run);
 
-            RunBrake.AddTransition(Idle);
-            Shield.Off.AddTransition(Idle);
-            Shield.Broken.AddTransition(Shield.Stunned);
+            Idle.AddTransition(Fall, ctx => !ctx.IsGrounded);
 
-            CrouchStart.AddTransition(Crouch);
-            CrouchEnd.AddTransition(Idle);
+            const float inputThreshold = 0.1f;
+            // All of these will need conditionals
+            Idle.AddTransition(Walk, ctx => Math.Abs(ctx.Input.Movement.x) > inputThreshold) //TODO(james7132): Make this configurable
+                .AddTransitionTo(Dash) //TODO(james7132): Figure out how to do proper smash input detection
+                .AddTransition(TiltUp, ctx => ctx.Input.Attack.WasPressed && ctx.Input.Movement.y > inputThreshold)
+                .AddTransition(TiltDown, ctx => ctx.Input.Attack.WasPressed && ctx.Input.Movement.y < -inputThreshold)
+                .AddTransition(TiltDown, ctx => ctx.Input.Attack.WasPressed && Math.Abs(ctx.Input.Movement.y) > inputThreshold)
+                .AddTransition(Neutral, ctx => ctx.Input.Attack.WasPressed)
+                .AddTransitionTo(SmashUp.Charge)
+                .AddTransitionTo(SmashSide.Charge)
+                .AddTransitionTo(SmashDown.Charge);
 
-            JumpStart.AddTransition(Jump);
-            Fall.AddTransition(Land);
-            Land.AddTransition(Idle);
+            new[] {Neutral, TiltUp, TiltDown, TiltSide, SmashUp.Attack, SmashDown.Attack, SmashSide.Attack}
+                .AddTransitionTo(Idle);
 
-            EscapeAir.AddTransition(FallHelpless);
-            FallHelpless.AddTransition(Land);
+            Fall.AddTransition(AerialUp, ctx => ctx.Input.Attack.WasPressed && ctx.Input.Movement.y > inputThreshold)
+                .AddTransition(AerialDown, ctx => ctx.Input.Attack.WasPressed && ctx.Input.Movement.y < -inputThreshold)
+                // TODO(james7132): Make these face in the right direction
+                .AddTransition(AerialForward,
+                    ctx => ctx.Input.Attack.WasPressed && Math.Abs(ctx.Input.Movement.y) > inputThreshold)
+                .AddTransition(AerialNeutral, ctx => ctx.Input.Attack.WasPressed);
 
-            new[] {Escape, EscapeForward, EscapeBackward}.AddTransition(Shield.Main);
+            new[] {AerialForward, AerialBackward, AerialDown, AerialUp, AerialNeutral}.AddTransitionTo(Fall);
+
+            Dash.AddTransitionTo(Run);
+            RunTurn.AddTransitionTo(Run);
+
+            Run.AddTransitionTo(RunBrake);                                  // May require additional conditional
+            RunBrake.AddTransitionTo(Idle);
+            Shield.Off.AddTransitionTo(Idle);
+            Shield.Broken.AddTransitionTo(Shield.Stunned);
+            Shield.Stunned.AddTransitionTo(Idle);                           // May require additional conditional
+
+            CrouchStart.AddTransitionTo(Crouch);
+            CrouchEnd.AddTransitionTo(Idle);
+
+            JumpStart.AddTransitionTo(Jump);
+            new[] {Fall, FallHelpless}.AddTransitions(Land, ctx => ctx.IsGrounded);
+            Land.AddTransitionTo(Idle);
+
+            EscapeAir.AddTransitionTo(FallHelpless);
+
+            new[] {Escape, EscapeForward, EscapeBackward}.AddTransitionTo(Shield.Main);
 
             Builder.WithDefaultState(Idle);
             BuildCharacterController();
         }
 
         protected virtual void BuildCharacterController() {
-            new[] {TiltUp, TiltDown, TiltSide}.AddTransition(Idle);
-            Crouch.AddTransition(TiltDown);
+            new[] {TiltUp, TiltDown, TiltSide}.AddTransitionTo(Idle);
+            Crouch.AddTransitionTo(TiltDown);
         }
 
         void ISerializationCallbackReceiver.OnBeforeSerialize() {
