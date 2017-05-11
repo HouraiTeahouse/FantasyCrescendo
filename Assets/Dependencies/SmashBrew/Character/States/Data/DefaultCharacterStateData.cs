@@ -50,64 +50,64 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public CharacterStateData FallHelpless;
         public CharacterStateData EscapeAir;
 
-				// -----------------------------------------------
-				// Ledge States
-				// -----------------------------------------------
-				public CharacterStateData LedgeGrab;
-				public CharacterStateData LedgeIdle;
-				public CharacterStateData LedgeClimb;
-				public CharacterStateData LedgeEscape;
-				public CharacterStateData LedgeAttack;
-				public CharacterStateData LedgeJump;
-				public CharacterStateData LedgeRelease;
+	// -----------------------------------------------
+	// Ledge States
+	// -----------------------------------------------
+	public CharacterStateData LedgeGrab;
+	public CharacterStateData LedgeIdle;
+	public CharacterStateData LedgeClimb;
+	public CharacterStateData LedgeEscape;
+	public CharacterStateData LedgeAttack;
+	public CharacterStateData LedgeJump;
+	public CharacterStateData LedgeRelease;
 
-				// -----------------------------------------------
-				// Damaged/Launched States
-				// -----------------------------------------------
+	// -----------------------------------------------
+	// Damaged/Launched States
+	// -----------------------------------------------
 
-				public CharacterStateData DamageStun;
-				public CharacterStateData DamageStunAir;
-				public CharacterStateData DamageLaunched;
-				public CharacterStateData DamageFall; // tumble equivalent
+	public CharacterStateData DamageStun;
+	public CharacterStateData DamageStunAir;
+	public CharacterStateData DamageLaunched;
+	public CharacterStateData DamageFall; // tumble equivalent
 
-				// -----------------------------------------------
-				// Grabbed/Thrown States
-				// -----------------------------------------------
-				/*
-				// grabbed
-				public CharacterStateData GrabbedPulled;
-				public CharacterStateData GrabbedWait;
-				public CharacterStateData GrabbedInterrupt;
-				public CharacterStateData GrabbedInterruptJump;
-				public CharacterStateData GrabbedDamaged;
+	// -----------------------------------------------
+	// Grabbed/Thrown States
+	// -----------------------------------------------
+	/*
+	// grabbed
+	public CharacterStateData GrabbedPulled;
+	public CharacterStateData GrabbedWait;
+	public CharacterStateData GrabbedInterrupt;
+	public CharacterStateData GrabbedInterruptJump;
+	public CharacterStateData GrabbedDamaged;
 
-				// thrown
-				public CharacterStateData ThrownUp;
-				public CharacterStateData ThrownDown;
-				public CharacterStateData ThrownForward;
-				public CharacterStateData ThrownBackward;
-				*/
+	// thrown
+	public CharacterStateData ThrownUp;
+	public CharacterStateData ThrownDown;
+	public CharacterStateData ThrownForward;
+	public CharacterStateData ThrownBackward;
+	*/
 
-				// -----------------------------------------------
-				// Environmental Collision States
-				// -----------------------------------------------
-				public CharacterStateData StopCeiling;
-				public CharacterStateData StopWall;
-				public CharacterStateData Crash;
+	// -----------------------------------------------
+	// Environmental Collision States
+	// -----------------------------------------------
+	public CharacterStateData StopCeiling;
+	public CharacterStateData StopWall;
+	public CharacterStateData Crash;
 
-				// prone
-				public CharacterStateData Prone;
-				public CharacterStateData ProneStand;
-				public CharacterStateData ProneAttack;
-				public CharacterStateData ProneRollLeft;
-				public CharacterStateData ProneRollRight;
+	// prone
+	public CharacterStateData Prone;
+	public CharacterStateData ProneStand;
+	public CharacterStateData ProneAttack;
+	public CharacterStateData ProneRollLeft;
+	public CharacterStateData ProneRollRight;
 
-				// teching
-				public CharacterStateData Tech;
-				public CharacterStateData TechRollLeft;
-				public CharacterStateData TechRollRight;
-				public CharacterStateData TechWall;
-				public CharacterStateData TechWallJump;
+	// teching
+	public CharacterStateData Tech;
+	public CharacterStateData TechRollLeft;
+	public CharacterStateData TechRollRight;
+	public CharacterStateData TechWall;
+	public CharacterStateData TechWallJump;
 
         // -----------------------------------------------
         // Attacks
@@ -137,20 +137,20 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public CharacterStateData SpecialSide;
         public CharacterStateData SpecialDown;
 
-				/*
-				// Grab
-				public CharacterStateData GrabPull;
-				public CharacterStateData GrabRunPull;
-				public CharacterStateData GrabWait;
-				public CharacterStateData GrabInterrupted;
-				public CharacterStateData GrabPummel;
+	/*
+	// Grab
+	public CharacterStateData GrabPull;
+	public CharacterStateData GrabRunPull;
+	public CharacterStateData GrabWait;
+	public CharacterStateData GrabInterrupted;
+	public CharacterStateData GrabPummel;
 
-				// Throwing
-				public CharacterStateData ThrowForward;
-				public CharacterStateData ThrowBackward;
-				public CharacterStateData ThrowUp;
-				public CharacterStateData ThrowDown;
-				*/
+	// Throwing
+	public CharacterStateData ThrowForward;
+	public CharacterStateData ThrowBackward;
+	public CharacterStateData ThrowUp;
+	public CharacterStateData ThrowDown;
+	*/
     }
 
 }
