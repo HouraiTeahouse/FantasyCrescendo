@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
+using HouraiTeahouse.SmashBrew.Characters;
 
 namespace HouraiTeahouse.SmashBrew.States {
 
@@ -65,4 +66,3 @@ namespace HouraiTeahouse.SmashBrew.States {
     }
 
 }
-

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HouraiTeahouse.SmashBrew.States;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
@@ -22,6 +23,15 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     }
 
     public static class CharacterStateExtensions {
+
+        public static IEnumerable<CharacterState> AddTransition(this IEnumerable<CharacterState> states,
+                                                                State<CharacterStateContext> state) {
+            Func<CharacterStateContext, State<CharacterStateContext>> transition =
+                ctx => ctx.NormalizedAnimationTime > 1.0f ? state : null;
+            foreach (CharacterState characterState in states)
+                characterState.AddTransition(transition);
+            return states;
+        }
 
         public static void Chain(this IEnumerable<CharacterState> states) {
             var enumerator = Argument.NotNull(states).GetEnumerator();
