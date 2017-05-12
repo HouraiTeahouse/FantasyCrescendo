@@ -81,25 +81,19 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             //TODO(james7132): Make this configurable
             const float inputThreshold = 0.1f;
 
-            // Ground Attacks
-            Idle
-                // Tilt Attacks
-                .AddTransition(TiltUp, Attack(input => input.Movement.y > inputThreshold))
-                .AddTransition(TiltDown, Attack(input => input.Movement.y < -inputThreshold))
-                .AddTransition(TiltDown, Attack(input => Math.Abs(input.Movement.y) > inputThreshold))
-                // Smash Attacks
-                .AddTransitionTo(SmashUp.Charge)                            // May require additional conditional
-                .AddTransitionTo(SmashSide.Charge)                          // May require additional conditional
-                .AddTransitionTo(SmashDown.Charge)                          // May require additional conditional
-                // Neutral Combo
-                .AddTransition(Neutral, Attack());
-
-            // Normal 
+            // Ground Movement 
             Idle.AddTransition(Walk, ctx => Math.Abs(ctx.Input.Movement.x) > inputThreshold)
                 //TODO(james7132): Figure out how to do proper smash input detection
-                .AddTransitionTo(Dash)
                 .AddTransition(Crouch, Input(input => input.Movement.y < -inputThreshold))
                 .AddTransition(Fall, ctx => !ctx.IsGrounded);
+
+            // Running States
+            Idle.AddTransition(Dash, Input(input => Mathf.Abs(input.Smash.x) > inputThreshold));
+            new[] {Dash, RunTurn}.AddTransitionTo(Run);
+            Run.AddTransition(RunBrake, Input(input => Mathf.Abs(input.Movement.x) < inputThreshold));
+            Run.AddTransition(RunTurn,
+                ctx => Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.x), Mathf.Sign(ctx.Direction)));
+            RunBrake.AddTransitionTo(Idle);
 
             // Crouching States
             CrouchStart.AddTransitionTo(Crouch);
@@ -118,24 +112,52 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 .AddTransitions(Idle, ctx => ctx.NormalizedAnimationTime >= 1.0f && ctx.IsGrounded)
                 .AddTransitions(Fall, ctx => ctx.NormalizedAnimationTime >= 1.0f && !ctx.IsGrounded);
 
-            Run.AddTransitionTo(RunBrake);                                  // May require additional conditional
+            // Aerial Movement
+            new [] {Idle, Walk, Dash, Run, RunTurn, RunBrake, CrouchStart, Crouch, CrouchEnd, Shield.Main} 
+                .AddTransitions(JumpStart, Input(input => input.Jump.WasPressed));
+            new[] {JumpStart, JumpAerial}.AddTransitionTo(Jump);
+            new[] {Jump, Fall}.AddTransitions(JumpAerial, Input(input => input.Jump.WasPressed))
+                              .AddTransitions(EscapeAir, Input(input => input.Shield.WasPressed));
+            Jump.AddTransition(Idle, ctx => ctx.NormalizedAnimationTime >= 1.0f && ctx.IsGrounded)
+                .AddTransition(Fall, ctx => ctx.NormalizedAnimationTime >= 1.0f && !ctx.IsGrounded);
+            EscapeAir.AddTransitionTo(FallHelpless);
+            new[] {Fall, FallHelpless}.AddTransitions(Land, ctx => ctx.IsGrounded);
+            Land.AddTransitionTo(Idle);
+
+            // Ground Attacks
+            new [] {Idle, Walk, CrouchStart, Crouch, CrouchEnd}
+                // Tilt Attacks
+                .AddTransitions(TiltUp, Attack(input => input.Movement.y > inputThreshold))
+                .AddTransitions(TiltDown, Attack(input => input.Movement.y < -inputThreshold))
+                .AddTransitions(TiltDown, Attack(input => Math.Abs(input.Movement.y) > inputThreshold))
+                // Smash Attacks
+                .AddTransitions(SmashUp.Charge, Attack(input => input.Smash.y > inputThreshold))
+                .AddTransitions(SmashSide.Charge, Attack(input => Math.Abs(input.Smash.x) > inputThreshold))
+                .AddTransitions(SmashDown.Charge, Attack(input => input.Smash.y < -inputThreshold))
+                // Neutral Combo
+                .AddTransitions(Neutral, Attack());
+            new[] {Neutral, TiltUp, TiltDown, TiltSide, SmashUp.Attack, SmashDown.Attack, SmashSide.Attack}
+                .AddTransitionTo(Idle);
 
             // Aerial Attacks
-            Fall.AddTransition(AerialUp, Attack(input => input.Movement.y > inputThreshold))
-                .AddTransition(AerialDown, Attack(input => input.Movement.y < -inputThreshold))
+            new [] {Fall, Jump, JumpAerial}
+                .AddTransitions(AerialUp, Attack(input => input.Movement.y > inputThreshold))
+                .AddTransitions(AerialDown, Attack(input => input.Movement.y < -inputThreshold))
                 // TODO(james7132): Make these face in the right direction
-                .AddTransition(AerialForward, Attack(input => input.Movement.y > inputThreshold))
-                .AddTransition(AerialBackward, Attack(input => input.Movement.y < -inputThreshold))
-                .AddTransition(AerialNeutral, Attack());
+                .AddTransitions(AerialForward, Attack(input => input.Movement.y > inputThreshold))
+                .AddTransitions(AerialBackward, Attack(input => input.Movement.y < -inputThreshold))
+                .AddTransitions(AerialNeutral, Attack());
             new[] {AerialForward, AerialBackward, AerialDown, AerialUp, AerialNeutral}
+                .AddTransitions(AerialAttackLand, ctx => ctx.IsGrounded)
                 .AddTransitionTo(Fall);
+            AerialAttackLand.AddTransitionTo(Idle);
 
             // Shielding
-            Idle.AddTransition(Shield.On, Input(input => input.Shield.WasPressed));
+            Idle.AddTransition(Shield.On, Input(input => input.Shield.Currrent));
             Shield.On.AddTransition(Shield.Perfect, ctx => ctx.IsHit)
                 .AddTransitionTo(Shield.Main);
-            Shield.Main.AddTransition(Shield.Broken, ctx => ctx.ShieldHP < 0);
-            Shield.Broken.AddTransitionTo(Shield.Stunned);
+            Shield.Main.AddTransition(Shield.Broken, ctx => ctx.ShieldHP < 0)
+                .AddTransition(Shield.Off, Input(input => !input.Shield.Currrent));
             new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
             
             // Rolls/Sidesteps
@@ -144,30 +166,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 .AddTransition(Escape, Input(input => input.Movement.y < -inputThreshold));
             new[] {Escape, EscapeForward, EscapeBackward}.AddTransitionTo(Shield.Main);
 
-            // Returning to Ground
-            new[] {Fall, FallHelpless}.AddTransitions(Land, ctx => ctx.IsGrounded);
-
-            new[] {Land,
-                   Neutral,
-                   TiltUp, TiltDown, TiltSide,
-                   SmashUp.Attack, SmashDown.Attack, SmashSide.Attack,
-                   RunBrake,
-                   Shield.Off, Shield.Stunned}
-                .AddTransitionTo(Idle);
-
-            new[] {Dash, RunTurn}.AddTransitionTo(Run);
-
-
-            JumpStart.AddTransitionTo(Jump);
-            EscapeAir.AddTransitionTo(FallHelpless);
-
             Builder.WithDefaultState(Idle);
             BuildCharacterController();
             return Builder.Build();
         }
 
         protected virtual void BuildCharacterController() {
-            Crouch.AddTransitionTo(TiltDown);
         }
 
         void ISerializationCallbackReceiver.OnBeforeSerialize() {

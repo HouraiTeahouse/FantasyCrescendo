@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using UnityEngine;
+using HouraiTeahouse.SmashBrew.States;
+
 namespace HouraiTeahouse.SmashBrew.Characters {
 
     public partial class CharacterControllerBuilder {
@@ -137,6 +144,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         protected CharacterState AerialBackward { get; private set; }
         protected CharacterState AerialUp { get; private set; }
         protected CharacterState AerialDown { get; private set; }
+        protected CharacterState AerialAttackLand { get; private set; }
 
         // Special Attacks
         protected CharacterState SpecialNeutral { get; private set; }
