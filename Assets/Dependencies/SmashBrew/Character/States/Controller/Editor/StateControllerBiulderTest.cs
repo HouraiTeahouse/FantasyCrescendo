@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace HouraiTeahouse.SmashBrew.States {
 
+    [Parallelizable]
     public class StateControllerBiulderTest {
 
         public class TestContext {

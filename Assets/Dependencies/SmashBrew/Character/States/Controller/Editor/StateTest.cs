@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace HouraiTeahouse.SmashBrew.States {
 
+    [ParallelizableAttribute]
     public class StateTest {
 
         public class TestContext {

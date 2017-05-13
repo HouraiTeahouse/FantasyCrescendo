@@ -16,7 +16,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public CharacterState AddTransitionTo(CharacterState state) {
-            AddTransition(ctx => ctx.NormalizedAnimationTime > 1.0f ? state : null);
+            AddTransition(ctx => ctx.NormalizedAnimationTime >= 1.0f ? state : null);
             return this;
         }
 
@@ -27,7 +27,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public static IEnumerable<CharacterState> AddTransitionTo(this IEnumerable<CharacterState> states,
                                                                 State<CharacterStateContext> state) {
             Func<CharacterStateContext, State<CharacterStateContext>> transition =
-                ctx => ctx.NormalizedAnimationTime > 1.0f ? state : null;
+                ctx => ctx.NormalizedAnimationTime >= 1.0f ? state : null;
             foreach (CharacterState characterState in states)
                 characterState.AddTransition(transition);
             return states;
@@ -36,7 +36,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public static void Chain(this IEnumerable<CharacterState> states) {
             var enumerator = Argument.NotNull(states).GetEnumerator();
             CharacterState last = null;
-            enumerator.MoveNext();
             while (enumerator.MoveNext()) {
                 if (enumerator.Current == null)
                     continue;

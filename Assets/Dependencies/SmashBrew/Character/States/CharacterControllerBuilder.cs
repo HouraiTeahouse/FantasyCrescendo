@@ -81,59 +81,16 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             //TODO(james7132): Make this configurable
             const float inputThreshold = 0.1f;
 
-            // Ground Movement 
-            Idle.AddTransition(Walk, ctx => Math.Abs(ctx.Input.Movement.x) > inputThreshold)
-                //TODO(james7132): Figure out how to do proper smash input detection
-                .AddTransition(Crouch, Input(input => input.Movement.y < -inputThreshold))
-                .AddTransition(Fall, ctx => !ctx.IsGrounded);
-
-            // Running States
-            Idle.AddTransition(Dash, Input(input => Mathf.Abs(input.Smash.x) > inputThreshold));
-            new[] {Dash, RunTurn}.AddTransitionTo(Run);
-            Run.AddTransition(RunBrake, Input(input => Mathf.Abs(input.Movement.x) < inputThreshold));
-            Run.AddTransition(RunTurn,
-                ctx => Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.x), Mathf.Sign(ctx.Direction)));
-            RunBrake.AddTransitionTo(Idle);
-
-            // Crouching States
-            CrouchStart.AddTransitionTo(Crouch);
-            Crouch.AddTransition(TiltDown, Attack())
-                .AddTransition(CrouchEnd, Input(input => input.Movement.y >= -inputThreshold));
-            CrouchEnd.AddTransitionTo(Idle);
-
-            // Ledge States
-            Idle.AddTransition(LedgeGrab, ctx => ctx.IsGrabbingLedge);
-            LedgeGrab.AddTransitionTo(LedgeIdle);
-            LedgeIdle.AddTransition(LedgeRelease, Input(input => input.Movement.y < -inputThreshold))
-                .AddTransition(LedgeClimb, Input(input => input.Movement.y > inputThreshold))
-                .AddTransition(LedgeJump, Input(input => input.Jump.WasPressed));
-            LedgeJump.AddTransitionTo(Jump);
-            new[] {LedgeRelease, LedgeClimb, LedgeEscape}
-                .AddTransitions(Idle, ctx => ctx.NormalizedAnimationTime >= 1.0f && ctx.IsGrounded)
-                .AddTransitions(Fall, ctx => ctx.NormalizedAnimationTime >= 1.0f && !ctx.IsGrounded);
-
-            // Aerial Movement
-            new [] {Idle, Walk, Dash, Run, RunTurn, RunBrake, CrouchStart, Crouch, CrouchEnd, Shield.Main} 
-                .AddTransitions(JumpStart, Input(input => input.Jump.WasPressed));
-            new[] {JumpStart, JumpAerial}.AddTransitionTo(Jump);
-            new[] {Jump, Fall}.AddTransitions(JumpAerial, Input(input => input.Jump.WasPressed))
-                              .AddTransitions(EscapeAir, Input(input => input.Shield.WasPressed));
-            Jump.AddTransition(Idle, ctx => ctx.NormalizedAnimationTime >= 1.0f && ctx.IsGrounded)
-                .AddTransition(Fall, ctx => ctx.NormalizedAnimationTime >= 1.0f && !ctx.IsGrounded);
-            EscapeAir.AddTransitionTo(FallHelpless);
-            new[] {Fall, FallHelpless}.AddTransitions(Land, ctx => ctx.IsGrounded);
-            Land.AddTransitionTo(Idle);
-
             // Ground Attacks
             new [] {Idle, Walk, CrouchStart, Crouch, CrouchEnd}
                 // Tilt Attacks
-                .AddTransitions(TiltUp, Attack(input => input.Movement.y > inputThreshold))
-                .AddTransitions(TiltDown, Attack(input => input.Movement.y < -inputThreshold))
-                .AddTransitions(TiltDown, Attack(input => Math.Abs(input.Movement.y) > inputThreshold))
+                .AddTransitions(TiltUp, Attack(i => i.Movement.y > inputThreshold))
+                .AddTransitions(TiltDown, Attack(i => i.Movement.y < -inputThreshold))
+                .AddTransitions(TiltSide, Attack(i => Math.Abs(i.Movement.x) > inputThreshold))
                 // Smash Attacks
-                .AddTransitions(SmashUp.Charge, Attack(input => input.Smash.y > inputThreshold))
-                .AddTransitions(SmashSide.Charge, Attack(input => Math.Abs(input.Smash.x) > inputThreshold))
-                .AddTransitions(SmashDown.Charge, Attack(input => input.Smash.y < -inputThreshold))
+                .AddTransitions(SmashUp.Charge, Attack(i => i.Smash.y > inputThreshold))
+                .AddTransitions(SmashSide.Charge, Attack(i => Math.Abs(i.Smash.x) > inputThreshold))
+                .AddTransitions(SmashDown.Charge, Attack(i => i.Smash.y < -inputThreshold))
                 // Neutral Combo
                 .AddTransitions(Neutral, Attack());
             new[] {Neutral, TiltUp, TiltDown, TiltSide, SmashUp.Attack, SmashDown.Attack, SmashSide.Attack}
@@ -141,29 +98,72 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
             // Aerial Attacks
             new [] {Fall, Jump, JumpAerial}
-                .AddTransitions(AerialUp, Attack(input => input.Movement.y > inputThreshold))
-                .AddTransitions(AerialDown, Attack(input => input.Movement.y < -inputThreshold))
+                .AddTransitions(AerialUp, Attack(i => i.Movement.y > inputThreshold))
+                .AddTransitions(AerialDown, Attack(i => i.Movement.y < -inputThreshold))
                 // TODO(james7132): Make these face in the right direction
-                .AddTransitions(AerialForward, Attack(input => input.Movement.y > inputThreshold))
-                .AddTransitions(AerialBackward, Attack(input => input.Movement.y < -inputThreshold))
+                .AddTransitions(AerialForward, ctx => 
+                    Attack(i => i.Movement.x * Mathf.Sign(ctx.Direction) > inputThreshold)(ctx))
+                .AddTransitions(AerialBackward, ctx => 
+                    Attack(i => i.Movement.x * Mathf.Sign(ctx.Direction) < -inputThreshold)(ctx))
                 .AddTransitions(AerialNeutral, Attack());
             new[] {AerialForward, AerialBackward, AerialDown, AerialUp, AerialNeutral}
                 .AddTransitions(AerialAttackLand, ctx => ctx.IsGrounded)
                 .AddTransitionTo(Fall);
             AerialAttackLand.AddTransitionTo(Idle);
 
+            // Ground Movement 
+            Idle.AddTransition(Walk, ctx => Math.Abs(ctx.Input.Movement.x) > inputThreshold)
+                .AddTransition(Crouch, Input(i => i.Movement.y < -inputThreshold))
+                .AddTransition(Fall, ctx => !ctx.IsGrounded);
+
+            // Running States
+            Idle.AddTransition(Dash, Input(i => Mathf.Abs(i.Smash.x) > inputThreshold));
+            new[] {Dash, RunTurn}.AddTransitionTo(Run);
+            Run.AddTransition(RunBrake, Input(i => Mathf.Abs(i.Movement.x) < inputThreshold));
+            Run.AddTransition(RunTurn,
+                ctx => Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.x), Mathf.Sign(ctx.Direction)));
+            RunBrake.AddTransitionTo(Idle);
+
+            // Crouching States
+            CrouchStart.AddTransitionTo(Crouch);
+            Crouch.AddTransition(CrouchEnd, Input(i => i.Movement.y >= -inputThreshold));
+            CrouchEnd.AddTransitionTo(Idle);
+
+            // Ledge States
+            Idle.AddTransition(LedgeGrab, ctx => ctx.IsGrabbingLedge);
+            LedgeGrab.AddTransitionTo(LedgeIdle);
+            LedgeIdle.AddTransition(LedgeRelease, Input(i => i.Movement.y < -inputThreshold))
+                .AddTransition(LedgeClimb, Input(i => i.Movement.y > inputThreshold))
+                .AddTransition(LedgeJump, Input(i => i.Jump.WasPressed));
+            LedgeJump.AddTransitionTo(Jump);
+            new[] {LedgeRelease, LedgeClimb, LedgeEscape}
+                .AddTransitions(Idle, ctx => ctx.NormalizedAnimationTime >= 1.0f && ctx.IsGrounded)
+                .AddTransitions(Fall, ctx => ctx.NormalizedAnimationTime >= 1.0f && !ctx.IsGrounded);
+
+            // Aerial Movement
+            new [] {Idle, Walk, Dash, Run, RunTurn, RunBrake, CrouchStart, Crouch, CrouchEnd, Shield.Main} 
+                .AddTransitions(JumpStart, Input(i => i.Jump.WasPressed));
+            new[] {JumpStart, JumpAerial}.AddTransitionTo(Jump);
+            new[] {Jump, Fall}.AddTransitions(JumpAerial, Input(i => i.Jump.WasPressed))
+                              .AddTransitions(EscapeAir, Input(i => i.Shield.WasPressed));
+            Jump.AddTransition(Idle, ctx => ctx.NormalizedAnimationTime >= 1.0f && ctx.IsGrounded)
+                .AddTransition(Fall, ctx => ctx.NormalizedAnimationTime >= 1.0f && !ctx.IsGrounded);
+            EscapeAir.AddTransitionTo(FallHelpless);
+            new[] {Fall, FallHelpless}.AddTransitions(Land, ctx => ctx.IsGrounded);
+            Land.AddTransitionTo(Idle);
+
             // Shielding
-            Idle.AddTransition(Shield.On, Input(input => input.Shield.Currrent));
+            Idle.AddTransition(Shield.On, Input(i => i.Shield.Current));
             Shield.On.AddTransition(Shield.Perfect, ctx => ctx.IsHit)
                 .AddTransitionTo(Shield.Main);
             Shield.Main.AddTransition(Shield.Broken, ctx => ctx.ShieldHP < 0)
-                .AddTransition(Shield.Off, Input(input => !input.Shield.Currrent));
+                .AddTransition(Shield.Off, Input(i => !i.Shield.Current));
             new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
             
             // Rolls/Sidesteps
-            Shield.Main.AddTransition(EscapeForward, Input(input => input.Movement.x > inputThreshold))
-                .AddTransition(EscapeBackward, Input(input => input.Movement.x < -inputThreshold))
-                .AddTransition(Escape, Input(input => input.Movement.y < -inputThreshold));
+            Shield.Main.AddTransition(EscapeForward, Input(i => i.Movement.x > inputThreshold))
+                .AddTransition(EscapeBackward, Input(i => i.Movement.x < -inputThreshold))
+                .AddTransition(Escape, Input(i => i.Movement.y < -inputThreshold));
             new[] {Escape, EscapeForward, EscapeBackward}.AddTransitionTo(Shield.Main);
 
             Builder.WithDefaultState(Idle);

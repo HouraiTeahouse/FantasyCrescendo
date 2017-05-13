@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace HouraiTeahouse.SmashBrew.States {
 
+    [Parallelizable]
     public class StateExtensionsTest {
 
         public class TestState : State<object> {
