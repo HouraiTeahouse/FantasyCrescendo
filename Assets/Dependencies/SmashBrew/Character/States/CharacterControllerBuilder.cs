@@ -93,6 +93,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 .AddTransitions(SmashDown.Charge, Attack(i => i.Smash.y < -inputThreshold))
                 // Neutral Combo
                 .AddTransitions(Neutral, Attack());
+            SmashUp.Charge.AddTransitionTo(SmashUp.Attack);
+            SmashDown.Charge.AddTransitionTo(SmashDown.Attack);
+            SmashSide.Charge.AddTransitionTo(SmashSide.Attack);
             new[] {Neutral, TiltUp, TiltDown, TiltSide, SmashUp.Attack, SmashDown.Attack, SmashSide.Attack}
                 .AddTransitionTo(Idle);
 
