@@ -25,8 +25,11 @@ namespace HouraiTeahouse.SmashBrew.States {
         }
 
         public State<T> EvaluateTransitions(T context) {
-            return _transitions.Select(func => func(context)).FirstOrDefault(state => state != null);
+            return _transitions.Select(func => func(context))
+                .FirstOrDefault(state => state != null && state.IsActive(context));
         }
+
+        public virtual bool IsActive(T context) { return true; }
 
     }
 

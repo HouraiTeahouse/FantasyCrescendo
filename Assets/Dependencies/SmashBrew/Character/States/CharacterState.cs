@@ -1,6 +1,7 @@
-﻿using System;
+﻿using HouraiTeahouse.SmashBrew.States;
+using System;
 using System.Collections.Generic;
-using HouraiTeahouse.SmashBrew.States;
+using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
@@ -8,16 +9,24 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public string Name { get; private set; }
         public CharacterStateData Data { get; private set; }
+        public string AnimatorName { get; private set; }
+        public int AnimatorHash { get; private set; }
 
         public CharacterState(string name,
                               CharacterStateData data) {
             Name = name;
             Data = Argument.NotNull(data);
+            AnimatorName = Name.Replace(".", "-");
+            AnimatorHash = Animator.StringToHash(AnimatorName);
         }
 
         public CharacterState AddTransitionTo(CharacterState state) {
             AddTransition(ctx => ctx.NormalizedAnimationTime >= 1.0f ? state : null);
             return this;
+        }
+
+        public override bool IsActive(CharacterStateContext context) {
+            return Data.IsActive;
         }
 
     }

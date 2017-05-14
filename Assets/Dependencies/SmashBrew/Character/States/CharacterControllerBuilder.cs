@@ -19,7 +19,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public StateData[] _data;
         Dictionary<string, CharacterStateData> _dataMap;
 
-        protected internal StateControllerBuilder<CharacterState, CharacterStateContext> Builder { get; internal set; }
+        public StateControllerBuilder<CharacterState, CharacterStateContext> Builder { get; set; }
 
         const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
 
@@ -77,6 +77,15 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public StateController<CharacterState, CharacterStateContext> BuildCharacterControllerImpl(StateControllerBuilder<CharacterState, CharacterStateContext> builder) {
             Builder = builder;
             InjectState(this);
+
+            // Declare Smash Attacks
+            SmashUp.Charge.Data.SmashAttack = SmashAttack.Charge;
+            SmashSide.Charge.Data.SmashAttack = SmashAttack.Charge;
+            SmashDown.Charge.Data.SmashAttack = SmashAttack.Charge;
+
+            SmashUp.Attack.Data.SmashAttack = SmashAttack.Attack;
+            SmashSide.Attack.Data.SmashAttack = SmashAttack.Attack;
+            SmashDown.Attack.Data.SmashAttack = SmashAttack.Attack;
 
             //TODO(james7132): Make this configurable
             const float inputThreshold = 0.1f;

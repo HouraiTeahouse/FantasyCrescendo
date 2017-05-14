@@ -45,7 +45,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             public CharacterState Stunned { get; set; }
         }
 
-        protected class SmashAttack {
+        protected class SmashAttackStates {
             public CharacterState Charge { get; set; }
             public CharacterState Attack { get; set; }
         }
@@ -134,9 +134,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         protected CharacterState TiltDown { get; private set; }
 
         // Smash Attacks
-        protected SmashAttack SmashUp { get; private set; }
-        protected SmashAttack SmashSide { get; private set; }
-        protected SmashAttack SmashDown { get; private set; }
+        protected SmashAttackStates SmashUp { get; private set; }
+        protected SmashAttackStates SmashSide { get; private set; }
+        protected SmashAttackStates SmashDown { get; private set; }
 
         // Aerial Attacks
         protected CharacterState AerialNeutral { get; private set; }
