@@ -25,8 +25,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return this;
         }
 
-        public override bool IsActive(CharacterStateContext context) {
-            return Data.IsActive;
+        public override StateEntryPolicy GetEntryPolicy (CharacterStateContext context) {
+            return Data.EntryPolicy;
         }
 
     }

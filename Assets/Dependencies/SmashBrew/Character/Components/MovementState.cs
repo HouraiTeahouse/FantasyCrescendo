@@ -8,7 +8,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Movement State")]
     [RequireComponent(typeof(PhysicsState))]
-    public class MovementState : NetworkBehaviour {
+    public class MovementState : CharacterComponent {
 
         public enum CharacterFacingMode {
             Rotation, Scale
@@ -285,6 +285,31 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             var platform = hit.gameObject.GetComponent<Platform>();
             if (platform != null)
                 platform.CharacterCollision(CharacterController);
+        }
+
+        public override void UpdateStateContext(CharacterStateContext context) {
+            context.IsGrounded = IsGrounded;
+            context.IsGrabbingLedge = CurrentLedge != null;
+            context.Direction = Direction ? 1.0f : -1.0f;
+            var movement = Vector2.zero;
+            var smash = Vector2.zero;
+            if (Input.GetKey(KeyCode.A))
+                smash.x += -1;
+            if (Input.GetKey(KeyCode.D)) 
+                smash.x += 1;
+            if (Input.GetKey(KeyCode.W)) 
+                smash.y += 1;
+            if (Input.GetKey(KeyCode.S)) 
+                smash.y += -1;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                movement.x += -1;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
+                movement.x += 1;
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) 
+                movement.y += 1;
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) 
+                movement.y += -1;
+            context.Input.Movement = movement;
         }
 
         [Command]

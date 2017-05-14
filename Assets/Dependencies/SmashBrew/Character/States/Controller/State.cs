@@ -5,6 +5,12 @@ using System.Linq;
 
 namespace HouraiTeahouse.SmashBrew.States {
 
+    public enum StateEntryPolicy {
+        Normal,             // Any other state can pass into it
+        Passthrough,        // State can be transitioned to, but will instantly be reevaluated for an exit
+        Blocked             // State cannot be transitioned to
+    }
+
     public abstract class State<T> {
 
         readonly List<Func<T, State<T>>> _transitions;
@@ -26,10 +32,10 @@ namespace HouraiTeahouse.SmashBrew.States {
 
         public State<T> EvaluateTransitions(T context) {
             return _transitions.Select(func => func(context))
-                .FirstOrDefault(state => state != null && state.IsActive(context));
+                .FirstOrDefault(state => state != null && state.GetEntryPolicy(context) != StateEntryPolicy.Blocked);
         }
 
-        public virtual bool IsActive(T context) { return true; }
+        public virtual StateEntryPolicy GetEntryPolicy(T context) { return StateEntryPolicy.Normal; }
 
     }
 

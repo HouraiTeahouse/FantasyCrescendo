@@ -52,15 +52,18 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             Controller = this.SafeGetComponent<CharacterController>();
             Movement = this.SafeGetComponent<MovementState>();
             Physics = this.SafeGetComponent<PhysicsState>();
-            ValidateAnimator();
-        }
-
-        void ValidateAnimator() {
             if (_animator == null)
                 _animator = GetComponentInChildren<Animator>();
             Animator = _animator;
             if (Animator == null)
                 throw new InvalidOperationException("No animator found on character: {0}".With(name));
+        }
+
+        void Start() {
+            ValidateAnimator();
+        }
+
+        void ValidateAnimator() {
             foreach (var state in StateController.States) {
                 if (Animator.HasState(0, state.AnimatorHash))
                     Log.Error("The animator for {0} does not have the state {1} ({2})".With(name, state.Name, state.AnimatorHash));

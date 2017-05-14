@@ -32,7 +32,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public virtual void ResetState() {
         }
 
-        public void UpdateStateContext(CharacterStateContext context) {
+        public virtual void UpdateStateContext(CharacterStateContext context) {
         }
 
     }

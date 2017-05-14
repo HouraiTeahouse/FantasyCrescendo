@@ -33,8 +33,19 @@ namespace HouraiTeahouse.SmashBrew.States {
 
         public T UpdateState(TContext context) {
             var nextState = CurrentState.EvaluateTransitions(context) as T;
-            if (nextState != null)
-                SetState(nextState);
+            if (nextState != null) {
+                switch (nextState.GetEntryPolicy(context)) {
+                    case StateEntryPolicy.Normal:
+                        SetState(nextState);
+                        break;
+                    case StateEntryPolicy.Passthrough:
+                        SetState(nextState);
+                        UpdateState(context);
+                        break;
+                    case StateEntryPolicy.Blocked:
+                        break;
+                }
+            }
             return CurrentState;
         }
 

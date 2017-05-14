@@ -135,13 +135,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             new[] {Fall, FallHelpless, EscapeAir}.AddTransitions(Land, ctx => ctx.IsGrounded);
             Land.AddTransitionTo(Idle);
 
-            // Ground Movement 
-            new[] {Idle, Walk, Run}
-                .AddTransitions(CrouchStart, Input(i => i.Movement.y < -inputThreshold))
-                .AddTransitions(Fall, ctx => !ctx.IsGrounded);
-            Idle.AddTransition(Walk, ctx => Math.Abs(ctx.Input.Movement.x) > inputThreshold);
-            Walk.AddTransition(Idle, ctx => Math.Abs(ctx.Input.Movement.x) < inputThreshold);
-
             // Running States
             Idle.AddTransition(Dash, Input(i => Mathf.Abs(i.Smash.x) > inputThreshold));
             new[] {Dash, RunTurn}.AddTransitionTo(Run);
@@ -149,6 +142,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             Run.AddTransition(RunTurn,
                 ctx => Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.x), Mathf.Sign(ctx.Direction)));
             RunBrake.AddTransitionTo(Idle);
+
+            // Ground Movement 
+            new[] {Idle, Walk, Run}
+                .AddTransitions(CrouchStart, Input(i => i.Movement.y < -inputThreshold))
+                .AddTransitions(Fall, ctx => !ctx.IsGrounded);
+            Idle.AddTransition(Walk, ctx => Math.Abs(ctx.Input.Movement.x) > inputThreshold);
+            Walk.AddTransition(Idle, ctx => Math.Abs(ctx.Input.Movement.x) < inputThreshold);
 
             // Crouching States
             CrouchStart.AddTransitionTo(Crouch);

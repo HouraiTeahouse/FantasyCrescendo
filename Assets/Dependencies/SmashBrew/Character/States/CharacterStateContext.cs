@@ -59,7 +59,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         // Will be positive if facing to the right.
         // Will be negative if facing to the left.
         public float Direction { get; set; }
-        public InputContext Input { get; set; }
+        public InputContext Input;
 
         public override string ToString() {
             return "t:{0} d:{5} g:{1} l:{2} h:{3} s:{4} i:{6}".With(
