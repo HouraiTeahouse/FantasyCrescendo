@@ -44,12 +44,6 @@ namespace HouraiTeahouse.SmashBrew {
             //Ensure that the character is walking in the right direction
             //if (!TimeManager.Paused && stick.x > 0 && _character.Direction || (stick.x < 0 && !_character.Direction))
             //    _character.Direction = !_character.Direction;
-
-            Animator.SetFloat(CharacterAnim.HorizontalInput, stick.x);
-            Animator.SetFloat(CharacterAnim.VerticalInput, stick.y);
-            Animator.SetBool(CharacterAnim.AttackInput, altTap.sqrMagnitude > 0 || _controlMapping.Attack(input));
-            Animator.SetBool(CharacterAnim.SpecialInput, _controlMapping.Special(input));
-            Animator.SetBool(CharacterAnim.ShieldInput, _controlMapping.Shield(input));
         }
 
     }

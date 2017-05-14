@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Physics State")]
     [RequireComponent(typeof(CharacterController))]
-    public class PhysicsState : NetworkBehaviour, ICharacterState {
+    public class PhysicsState : CharacterComponent {
 
         // Character Constrants
         [Header("Constants")]
@@ -56,7 +56,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             set { _acceleration = value; }
         }
 
-        public void ResetState() {
+        public override void ResetState() {
             Velocity = Vector2.zero;
             Acceleration = Vector2.zero;
         }
@@ -70,7 +70,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public void SetHorizontalVelocity(float speed) { _velocity.x = speed; }
         public void SetVerticalVelocity(float speed) { _velocity.y = speed; }
 
-        void Awake() { CharacterController = GetComponent<CharacterController>(); }
+        protected override void Awake() { 
+            base.Awake();
+            CharacterController = GetComponent<CharacterController>(); 
+        }
 
         void Update() {
             if (!hasAuthority)

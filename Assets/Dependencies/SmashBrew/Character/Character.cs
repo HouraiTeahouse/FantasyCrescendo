@@ -1,4 +1,7 @@
+using HouraiTeahouse.SmashBrew.States;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 #if UNITY_EDITOR
@@ -14,39 +17,59 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementState))]
-    public class Character : NetworkBehaviour, IHitboxController {
+    public class Character : NetworkBehaviour, IHitboxController, IRegistrar<ICharacterComponent> {
 
-#pragma warning disable 414
-        [SyncVar(hook = "ChangeActive")]
-        bool _isActive;
-#pragma warning restore 414
+        static ILog _log = Log.GetLogger<Character>();
 
         public CharacterController Controller { get; private set; }
         public MovementState Movement { get; private set; }
         public PhysicsState Physics { get; private set; }
+        public Animator Animator { get; private set;}
+        public StateController<CharacterState, CharacterStateContext> StateController { get; private set; }
+        public CharacterStateContext Context { get; private set; }
 
-        void OnEnable() { _isActive = true; }
-        void OnDisable() { _isActive = false; }
+        Dictionary<int, Hitbox> _hitboxMap;
+        List<ICharacterComponent> _components;
+
+        [SerializeField]
+        CharacterControllerBuilder _controller;
+
+        [SerializeField]
+        Animator _animator;
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
-            Reset();
+            gameObject.tag = Config.Tags.PlayerTag;
+            gameObject.layer = Config.Tags.CharacterLayer;
+            if (_controller == null)
+                throw new InvalidOperationException("Cannot start a character without a State Controller!");
+            StateController = _controller.BuildCharacterControllerImpl(
+                new StateControllerBuilder<CharacterState, CharacterStateContext>());
+            StateController.OnStateChange += (b, a) => Log.Debug("{0} changed states: {1} => {2}".With(name, b.Name, a.Name));
+            Context = new CharacterStateContext();
+            _hitboxMap = new Dictionary<int, Hitbox>();
+            _components = new List<ICharacterComponent>();
             Controller = this.SafeGetComponent<CharacterController>();
             Movement = this.SafeGetComponent<MovementState>();
             Physics = this.SafeGetComponent<PhysicsState>();
+            ValidateAnimator();
         }
 
-        void Reset() {
-            gameObject.tag = Config.Tags.PlayerTag;
-            gameObject.layer = Config.Tags.CharacterLayer;
+        void ValidateAnimator() {
+            if (_animator == null)
+                _animator = GetComponentInChildren<Animator>();
+            Animator = _animator;
+            if (Animator == null)
+                throw new InvalidOperationException("No animator found on character: {0}".With(name));
+            foreach (var state in StateController.States) {
+                if (Animator.HasState(0, state.AnimatorHash))
+                    Log.Error("The animator for {0} does not have the state {1} ({2})".With(name, state.Name, state.AnimatorHash));
+            }
         }
 
         void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
-            Argument.NotNull(hitbox);
-            if (_hitboxMap == null)
-                _hitboxMap = new Dictionary<int, Hitbox>();
-            int id = hitbox.ID;
-            if (_hitboxMap.ContainsKey(hitbox.ID))
+            int id = Argument.NotNull(hitbox).ID;
+            if (_hitboxMap.ContainsKey(id))
                 Log.Error("Hitboxes {0} and {1} on {2} have the same id. Ensure that they have different IDs.",
                     hitbox,
                     _hitboxMap[id],
@@ -56,7 +79,17 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         bool IRegistrar<Hitbox>.Unregister(Hitbox obj) {
-            return _hitboxMap != null && _hitboxMap.Remove(Argument.NotNull(obj).ID);
+            return _hitboxMap.Remove(Argument.NotNull(obj).ID);
+        }
+
+        void IRegistrar<ICharacterComponent>.Register(ICharacterComponent component) {
+            if (_components.Contains(Argument.NotNull(component)))
+                return;
+            _components.Add(component);
+        }
+
+        bool IRegistrar<ICharacterComponent>.Unregister(ICharacterComponent component) {
+            return _components.Remove(component);
         }
 
         /// <summary> Retrieves a hitbox given it's ID. </summary>
@@ -73,21 +106,35 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             }
         }
 
+        #region Unity Callbacks
+        void OnEnable() { _isActive = true; }
+        void OnDisable() { _isActive = false; }
+        public override void OnStartServer() { _isActive = true; }
+        void LateUpdate() {
+            foreach (var component in _components)
+                component.UpdateStateContext(Context);
+            StateController.UpdateState(Context);
+        }
+        #endregion
+
         #region Public Properties
-        Dictionary<int, Hitbox> _hitboxMap;
         /// <summary> Gets an immutable collection of hitboxes that belong to </summary>
         public ICollection<Hitbox> Hitboxes {
             get { return _hitboxMap.Values; }
         }
 
         public void ResetCharacter() {
+            StateController.ResetState();
             foreach (IResettable resetable in GetComponentsInChildren<IResettable>().IgnoreNulls())
                 resetable.OnReset();
         }
         #endregion
 
+#pragma warning disable 414
+        [SerializeField, ReadOnly, SyncVar(hook = "ChangeActive")]
+        bool _isActive;
+#pragma warning restore 414
 
-        public override void OnStartServer() { _isActive = true; }
 
         void ChangeActive(bool active) {
             _isActive = active;

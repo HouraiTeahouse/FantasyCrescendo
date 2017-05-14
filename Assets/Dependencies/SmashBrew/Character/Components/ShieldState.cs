@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Shield State")]
-    public sealed class ShieldState : NetworkBehaviour, ICharacterState {
+    public sealed class ShieldState : CharacterComponent {
 
         // Character Constrants
         [Header("Constants")]

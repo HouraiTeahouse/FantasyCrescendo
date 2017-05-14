@@ -1,0 +1,566 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 162cf6fb4522aca44982c6145dd6b664, type: 3}
+  m_Name: Youmu
+  m_EditorClassIdentifier: 
+  _data:
+  - Name: Idle
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Walk
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Crouch
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: CrouchStart
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: CrouchEnd
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Dash
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Run
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: RunBrake
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: RunTurn
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Jump
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: JumpStart
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: JumpAerial
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Land
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Shield.On
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Shield.Perfect
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Shield.Main
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Shield.Off
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Shield.Broken
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Shield.Stunned
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Escape
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: EscapeForward
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: EscapeBackward
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Fall
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: FallHelpless
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: EscapeAir
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: LedgeGrab
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: LedgeIdle
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: LedgeClimb
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: LedgeEscape
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: LedgeAttack
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: LedgeJump
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: LedgeRelease
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: DamageStun
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: DamageStunAir
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: DamageLaunched
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: DamageFall
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: StopCeiling
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: StopWall
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Crash
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Prone
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: ProneStand
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: ProneAttack
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: ProneRollLeft
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: ProneRollRight
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Tech
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: TechRollLeft
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: TechRollRight
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: TechWall
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: TechWallJump
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: Neutral
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: TiltUp
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: TiltSide
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: TiltDown
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SmashUp.Charge
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SmashUp.Attack
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SmashSide.Charge
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SmashSide.Attack
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SmashDown.Charge
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SmashDown.Attack
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: AerialNeutral
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: AerialForward
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: AerialBackward
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: AerialUp
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: AerialDown
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: AerialAttackLand
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SpecialNeutral
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SpecialUp
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SpecialSide
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0
+  - Name: SpecialDown
+    Data:
+      IsActive: 1
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      Invincibility: 0
+      SuperArmor: 0

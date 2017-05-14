@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Damage State")]
-    public class DamageState : NetworkBehaviour, ICharacterState {
+    public class DamageState : CharacterComponent {
 
         //TODO(james7132): Synchronize this across the network
 
@@ -25,7 +25,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public DamageType Type { get; set; }
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             DamageModifiers = new ModifierGroup<object>();
             HealingModifiers = new ModifierGroup<object>();
             Type = DamageType.Percent;
@@ -35,7 +36,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return DamageModifiers.Out.Modifiy(source, baseDamage);
         }
 
-        public void ResetState() { CurrentDamage = DefaultDamage; }
+        public override void ResetState() { CurrentDamage = DefaultDamage; }
 
         public void Damage(float damage) { Damage(null, damage); }
 

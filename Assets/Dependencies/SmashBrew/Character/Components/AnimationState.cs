@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementState))]
     [RequireComponent(typeof(PhysicsState))]
-    public class AnimationState : NetworkBehaviour, ICharacterState {
+    public class AnimationState : CharacterComponent {
 
         [SerializeField]
         Animator _animator;
@@ -20,7 +20,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _animator; }
         }
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             if (_animator == null)
                 _animator = this.SafeGetComponentInChildren<Animator>();
             Movement = this.SafeGetComponent<MovementState>();
@@ -48,17 +49,17 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 return;
             if (Mathf.Approximately(Time.deltaTime, 0))
                 return;
-            _animator.SetBool("grounded", Movement.IsGrounded);
-            _animator.SetBool("ledge", Movement.CurrentLedge != null);
-            _animator.SetBool("crouch", Movement.IsCrounching);
-            _animator.SetBool("jump", _jumpState);
+            // _animator.SetBool("grounded", Movement.IsGrounded);
+            // _animator.SetBool("ledge", Movement.CurrentLedge != null);
+            // _animator.SetBool("crouch", Movement.IsCrounching);
+            // _animator.SetBool("jump", _jumpState);
             _jumpState = false;
             var movement = Physics.Velocity.x;
             if (Mathf.Abs(movement) > Movement.FastWalkSpeed)
                 movement = Sign(movement) * 2;
             else
                 movement = Sign(movement);
-            _animator.SetFloat("horizontal", movement);
+            // _animator.SetFloat("horizontal", movement);
         }
 
         void OnJump() { _jumpState = true; }
@@ -68,7 +69,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 _animator = GetComponentInChildren<Animator>();
         }
 
-        public void ResetState() {
+        public override void ResetState() {
             //TODO(james7132): implement
         }
 

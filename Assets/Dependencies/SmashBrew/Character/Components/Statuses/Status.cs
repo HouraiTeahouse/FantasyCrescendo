@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 
 namespace HouraiTeahouse.SmashBrew.Characters.Statuses {
 
-    public abstract class Status : NetworkBehaviour, ICharacterState {
+    public abstract class Status : CharacterComponent {
 
         //TODO(james7132): Synchronize over the network
 
@@ -33,7 +33,6 @@ namespace HouraiTeahouse.SmashBrew.Characters.Statuses {
         void Start() {
             enabled = false;
         }
-
 
         void Update() {
             float dt = Time.deltaTime;

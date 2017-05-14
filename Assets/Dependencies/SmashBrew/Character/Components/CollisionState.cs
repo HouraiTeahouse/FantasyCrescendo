@@ -5,7 +5,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Collision State")]
-    public class CollisionState : NetworkBehaviour, ICharacterState {
+    public class CollisionState : CharacterComponent {
 
         [Header("Variables")]
         [SyncVar, SerializeField, ReadOnly]
@@ -54,8 +54,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _launchResistance; }
             set { _launchResistance = value; }
         }
-
-        public void ResetState() {}
 
     }
 

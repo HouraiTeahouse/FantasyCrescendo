@@ -13,17 +13,11 @@ namespace HouraiTeahouse.SmashBrew {
         static readonly Func<InputControl, bool> Pressed = c => c.WasPressed;
 
         public InputTarget[] AltStickHorizontalTargets = {InputTarget.RightStickX};
-
         public InputTarget[] AltStickVerticalTargets = {InputTarget.RightStickY};
-
         public InputTarget[] AttackTargets = {InputTarget.Action1};
-
         public InputTarget[] JumpTargets = {InputTarget.Action3, InputTarget.Action4};
-
         public InputTarget[] ShieldTargets = {InputTarget.LeftTrigger, InputTarget.RightTrigger};
-
         public InputTarget[] SpecialTargets = {InputTarget.Action2};
-
         public InputTarget[] StickHorizontalTargets = {InputTarget.LeftStickX};
         public InputTarget[] StickVerticalTargets = {InputTarget.LeftStickY};
 
