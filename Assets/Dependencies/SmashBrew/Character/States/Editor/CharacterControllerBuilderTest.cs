@@ -20,7 +20,82 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             _stateController = instance.BuildCharacterControllerImpl(builder);
             _stateMap = _stateController.States.ToDictionary(s => s.Name, s => s);
             UnityEngine.Object.DestroyImmediate(instance);
-        }        
+        }
+
+        static IEnumerable<object[]> LedgeTestCases() {
+            Func<float, float, bool, bool, CharacterStateContext>
+                context = (x, y, l, a) => {
+                    var ctx = new CharacterStateContext {
+                        NormalizedAnimationTime = 1.0f,
+                        IsGrabbingLedge = l,
+                    };
+                    var input = new InputContext { Movement = new Vector2(x, y) };
+                    if (a)
+                        input.Attack = new ButtonContext { LastFrame = false, Current = true };
+                    ctx.Input = input;
+                    return ctx;
+                };
+            yield return new object[] { "Idle", "LedgeGrab", new CharacterStateContext { 
+                IsGrabbingLedge = true,
+                IsGrounded = true
+            }};
+            foreach (var src in new[] {"Fall", "FallHelpless"}) {
+                yield return new object[] { src, "LedgeGrab", new CharacterStateContext { 
+                    IsGrabbingLedge = true,
+                    IsGrounded = false
+                }};
+            }
+            yield return new object[] {"LedgeGrab", "LedgeIdle", new CharacterStateContext { NormalizedAnimationTime = 1.0f }};
+            yield return new object[] {"LedgeIdle", "LedgeRelease", new CharacterStateContext {
+                Input = new InputContext { Movement = new Vector2(0, -1) }
+            }};
+            yield return new object[] {"LedgeIdle", "LedgeAttack", new CharacterStateContext {
+                Input = new InputContext { Attack = new ButtonContext { LastFrame = false, Current = true }}
+            }};
+            yield return new object[] {"LedgeIdle", "LedgeJump", new CharacterStateContext {
+                Input = new InputContext { Jump = new ButtonContext { LastFrame = false, Current = true }}
+            }};
+        }
+
+        static IEnumerable<object[]> MovementTestCases() {
+            Func<float, float, bool, bool, CharacterStateContext>
+                context = (x, y, d, g) => new CharacterStateContext {
+                    IsGrounded = g,
+                    Direction = d ? 1.0f : -1.0f,
+                    Input = new InputContext {
+                        Movement = new Vector2(x, y),
+                    }
+                };
+            foreach (var dir in new[] {true, false}) {
+                foreach (var src in new[] {"Idle", "Walk"}) {
+                    yield return new object[] {src, "Idle", context(0f, 0f, dir, true)};
+                    yield return new object[] {src, "Walk", context(1f, 0f, dir, true)};
+                    yield return new object[] {src, "Fall", context(0f, 0f, dir, false)};
+                }
+                foreach (var src in new[] {"FallHelpless", "Fall", "EscapeAir"}) {
+                    yield return new object[] {src, "Land", context(0f, 0f, dir, true)};
+                }
+                yield return new object[] {"Idle", "Dash", new CharacterStateContext {
+                    Direction = dir ? 1.0f : -1.0f,
+                    IsGrounded = true,
+                    Input = new InputContext {
+                        Smash = new Vector2(-1, 0)
+                    }
+                }};
+                foreach (var src in new [] {"Idle", "Walk", "Dash", "Run", "RunTurn", "RunBrake", "CrouchStart", "Crouch", "CrouchEnd", "Shield.Main"}) {
+                    yield return new object[] {src, "JumpStart", new CharacterStateContext {
+                        Direction = dir ? 1.0f : -1.0f,
+                        IsGrounded = true,
+                        Input = new InputContext {
+                            Jump = new ButtonContext {
+                                LastFrame = false,
+                                Current = true
+                            }
+                        }
+                    }};
+                }
+            }
+        }
 
         static IEnumerable<object[]> AttackTestCases() {
             Func<float, float, bool, bool, CharacterStateContext>
@@ -56,6 +131,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 yield return new object[] {src, "AerialBackward", context(magnitude, 0f, false, false)};
                 yield return new object[] {src, "AerialForward", context(-magnitude, 0f, false, false)};
             }
+            // TODO(james7132): Dash Attacks
+            // foreach (var src in new[] {"Dash", "Run", "RunTurn", "RunBrake"}) {
+            //     foreach (var dir in new[] {true, false}) {
+            //         yield return new object[] {src, "", context(magnitude, 0f, true, false)};
+            //     }
+            // }
         }
 
         static IEnumerable<object[]> AutomaticTestCases() {
@@ -92,23 +173,36 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return cases.Select(c => new object[] {c.Key, c.Value});
         }
 
-        [Test, TestCaseSource("AutomaticTestCases")]
-        public void automatic_exits(string src, string dst) {
-            var _context = new CharacterStateContext {
-                NormalizedAnimationTime = 1.0f,
-                ShieldHP = 100
-            };
-           _stateController.SetState(_stateMap[src]);
-            _stateController.UpdateState(_context);
-            Assert.AreEqual(dst, _stateController.CurrentState.Name);
-        }        
-
-        [Test, TestCaseSource("AttackTestCases")]
-        public void attack_transitions(string src, string dst, CharacterStateContext context) {
+        void TestTransition(string src, string dst, CharacterStateContext context) {
             _stateController.SetState(_stateMap[src]);
             _stateController.UpdateState(context);
             Assert.AreEqual(dst, _stateController.CurrentState.Name);
         }
+
+        [Test, TestCaseSource("AutomaticTestCases")]
+        public void automatic_exits(string src, string dst) {
+            TestTransition(src, dst, new CharacterStateContext {
+                NormalizedAnimationTime = 1.0f,
+                ShieldHP = 100
+            });
+        }        
+
+        [Test, TestCaseSource("AttackTestCases")]
+        public void attack_transitions(string src, string dst, CharacterStateContext context) {
+            TestTransition(src, dst, context);
+        }
+
+        [Test, TestCaseSource("MovementTestCases")]
+        public void movement_transitions(string src, string dst, CharacterStateContext context) {
+            TestTransition(src, dst, context);
+        }
+
+        [Test, TestCaseSource("LedgeTestCases")]
+        public void ledge_transitions(string src, string dst, CharacterStateContext context) {
+            TestTransition(src, dst, context);
+        }
+
+
 
     }
 }
