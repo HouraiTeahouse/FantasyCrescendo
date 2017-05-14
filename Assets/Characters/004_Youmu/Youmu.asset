@@ -20,14 +20,16 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Walk
     Data:
       EntryPolicy: 0
       MovementSpeed:
-        _min: 0
-        _max: 0
+        _min: 5
+        _max: 5
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Crouch
     Data:
       EntryPolicy: 0
@@ -36,6 +38,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 0
   - Name: CrouchStart
     Data:
       EntryPolicy: 1
@@ -44,6 +47,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 0
   - Name: CrouchEnd
     Data:
       EntryPolicy: 1
@@ -52,38 +56,43 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 0
   - Name: Dash
     Data:
       EntryPolicy: 0
       MovementSpeed:
-        _min: 0
-        _max: 0
+        _min: 7.5
+        _max: 7.5
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Run
     Data:
       EntryPolicy: 0
       MovementSpeed:
-        _min: 0
-        _max: 0
+        _min: 7.5
+        _max: 7.5
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: RunBrake
     Data:
       EntryPolicy: 0
       MovementSpeed:
-        _min: 0
-        _max: 0
+        _min: 3.5
+        _max: 3.5
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: RunTurn
     Data:
       EntryPolicy: 0
       MovementSpeed:
-        _min: 0
-        _max: 0
+        _min: 7.5
+        _max: 7.5
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Jump
     Data:
       EntryPolicy: 0
@@ -92,6 +101,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: JumpStart
     Data:
       EntryPolicy: 0
@@ -100,6 +110,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: JumpAerial
     Data:
       EntryPolicy: 0
@@ -108,6 +119,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Land
     Data:
       EntryPolicy: 0
@@ -116,6 +128,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Shield.On
     Data:
       EntryPolicy: 0
@@ -124,6 +137,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Shield.Perfect
     Data:
       EntryPolicy: 0
@@ -132,6 +146,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Shield.Main
     Data:
       EntryPolicy: 0
@@ -140,6 +155,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Shield.Off
     Data:
       EntryPolicy: 0
@@ -148,6 +164,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Shield.Broken
     Data:
       EntryPolicy: 0
@@ -156,6 +173,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Shield.Stunned
     Data:
       EntryPolicy: 0
@@ -164,6 +182,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Escape
     Data:
       EntryPolicy: 0
@@ -172,6 +191,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: EscapeForward
     Data:
       EntryPolicy: 0
@@ -180,6 +200,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: EscapeBackward
     Data:
       EntryPolicy: 0
@@ -188,30 +209,34 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Fall
     Data:
       EntryPolicy: 0
       MovementSpeed:
-        _min: 0
-        _max: 0
+        _min: 5
+        _max: 5
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: FallHelpless
     Data:
       EntryPolicy: 0
       MovementSpeed:
-        _min: 0
-        _max: 0
+        _min: 5
+        _max: 5
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: EscapeAir
     Data:
       EntryPolicy: 0
       MovementSpeed:
-        _min: 0
-        _max: 0
+        _min: 5
+        _max: 5
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: LedgeGrab
     Data:
       EntryPolicy: 0
@@ -220,6 +245,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: LedgeIdle
     Data:
       EntryPolicy: 0
@@ -228,6 +254,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: LedgeClimb
     Data:
       EntryPolicy: 0
@@ -236,6 +263,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: LedgeEscape
     Data:
       EntryPolicy: 0
@@ -244,6 +272,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: LedgeAttack
     Data:
       EntryPolicy: 0
@@ -252,6 +281,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: LedgeJump
     Data:
       EntryPolicy: 1
@@ -260,6 +290,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: LedgeRelease
     Data:
       EntryPolicy: 0
@@ -268,6 +299,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: DamageStun
     Data:
       EntryPolicy: 0
@@ -276,6 +308,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: DamageStunAir
     Data:
       EntryPolicy: 0
@@ -284,6 +317,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: DamageLaunched
     Data:
       EntryPolicy: 0
@@ -292,6 +326,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: DamageFall
     Data:
       EntryPolicy: 0
@@ -300,6 +335,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: StopCeiling
     Data:
       EntryPolicy: 0
@@ -308,6 +344,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: StopWall
     Data:
       EntryPolicy: 0
@@ -316,6 +353,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Crash
     Data:
       EntryPolicy: 0
@@ -324,6 +362,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Prone
     Data:
       EntryPolicy: 0
@@ -332,6 +371,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: ProneStand
     Data:
       EntryPolicy: 0
@@ -340,6 +380,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: ProneAttack
     Data:
       EntryPolicy: 0
@@ -348,6 +389,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: ProneRollLeft
     Data:
       EntryPolicy: 0
@@ -356,6 +398,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: ProneRollRight
     Data:
       EntryPolicy: 0
@@ -364,6 +407,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Tech
     Data:
       EntryPolicy: 0
@@ -372,6 +416,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: TechRollLeft
     Data:
       EntryPolicy: 0
@@ -380,6 +425,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: TechRollRight
     Data:
       EntryPolicy: 0
@@ -388,6 +434,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: TechWall
     Data:
       EntryPolicy: 0
@@ -396,6 +443,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: TechWallJump
     Data:
       EntryPolicy: 0
@@ -404,6 +452,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: Neutral
     Data:
       EntryPolicy: 0
@@ -412,6 +461,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: TiltUp
     Data:
       EntryPolicy: 0
@@ -420,6 +470,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: TiltSide
     Data:
       EntryPolicy: 0
@@ -428,6 +479,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: TiltDown
     Data:
       EntryPolicy: 0
@@ -436,6 +488,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SmashUp.Charge
     Data:
       EntryPolicy: 0
@@ -444,6 +497,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SmashUp.Attack
     Data:
       EntryPolicy: 0
@@ -452,6 +506,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SmashSide.Charge
     Data:
       EntryPolicy: 0
@@ -460,6 +515,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SmashSide.Attack
     Data:
       EntryPolicy: 0
@@ -468,6 +524,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SmashDown.Charge
     Data:
       EntryPolicy: 0
@@ -476,6 +533,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SmashDown.Attack
     Data:
       EntryPolicy: 0
@@ -484,6 +542,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: AerialNeutral
     Data:
       EntryPolicy: 0
@@ -492,6 +551,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: AerialForward
     Data:
       EntryPolicy: 0
@@ -500,6 +560,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: AerialBackward
     Data:
       EntryPolicy: 0
@@ -508,6 +569,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: AerialUp
     Data:
       EntryPolicy: 0
@@ -516,6 +578,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: AerialDown
     Data:
       EntryPolicy: 0
@@ -524,6 +587,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: AerialAttackLand
     Data:
       EntryPolicy: 0
@@ -532,6 +596,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SpecialNeutral
     Data:
       EntryPolicy: 0
@@ -540,6 +605,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SpecialUp
     Data:
       EntryPolicy: 0
@@ -548,6 +614,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SpecialSide
     Data:
       EntryPolicy: 0
@@ -556,6 +623,7 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1
   - Name: SpecialDown
     Data:
       EntryPolicy: 0
@@ -564,3 +632,4 @@ MonoBehaviour:
         _max: 0
       Invincibility: 0
       SuperArmor: 0
+      CanTurn: 1

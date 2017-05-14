@@ -16,6 +16,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         PhysicsState PhysicsState { get; set; }
         CharacterController CharacterController { get; set; }
+        InputContext _input;
 
         public event Action OnJump;
 
@@ -34,26 +35,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         float _fastFallSpeed = 5f;
 
         [SerializeField]
-        [Range(2f, 10f)]
-        [Tooltip("The minimum walking speed of the character")]
-        float _slowWalkSpeed = 2f;
-
-        [SerializeField]
-        [Range(2f, 10f)]
-        [Tooltip("The maximum walking speed of the character")]
-        float _fastWalkSpeed = 4f;
-
-        [SerializeField]
-        [Range(2f, 10f)]
-        [Tooltip("The running speed of the character")]
-        float _runSpeed = 6f;
-
-        [SerializeField]
-        [Range(2f, 10f)]
-        [Tooltip("The horizontal speed of the character while in the air")]
-        float _airSpeed = 4f;
-
-        [SerializeField]
         float[] _jumpPower = { 5f, 10f };
 
         [SerializeField]
@@ -63,17 +44,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [SerializeField, ReadOnly]
         Transform _currentLedge;
 
-        [SyncVar(hook = "OnChangeDirection"), SerializeField, ReadOnly]
+        [SyncVar(hook = "OnChangeDirection"), ReadOnly]
         bool _direction;
 
-        [SyncVar, SerializeField, ReadOnly]
+        [SyncVar, ReadOnly]
         int _jumpCount;
 
-        [SyncVar, SerializeField, ReadOnly]
+        [SyncVar, ReadOnly]
         bool _isFastFalling;
-
-        [SyncVar, SerializeField, ReadOnly]
-        bool _isCrouching;
 
         public float MaxFallSpeed {
             get { return _maxFallSpeed; }
@@ -81,18 +59,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public float FastFallSpeed {
             get { return _fastFallSpeed; }
-        }
-
-        public float SlowWalkSpeed {
-            get { return _slowWalkSpeed; }
-        }
-
-        public float FastWalkSpeed {
-            get { return _fastWalkSpeed; }
-        }
-
-        public float RunSpeed {
-            get { return _runSpeed; }
         }
 
         public bool Direction {
@@ -128,21 +94,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return CharacterController != null && CharacterController.isGrounded && Physics.Raycast(transform.position, Vector3.down, 0.1f, _stageLayers); }
         }
 
-        public bool IsCrounching {
-            get { return _isCrouching; }
-            set {
-                if (_isCrouching != value && hasAuthority)
-                    CmdSetCrouch(value);
-            }
-        }
-
         /// <summary> Can the Character currently jump? </summary>
         public bool CanJump {
             get { return JumpCount < MaxJumpCount; }
-        }
-
-        public float AirSpeed {
-            get { return _airSpeed; }
         }
 
         public Transform LedgeTarget {
@@ -191,7 +145,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         bool JumpCheck() {
-            bool success = (!IsCrounching && JumpCount > 0 && JumpCount <= MaxJumpCount
+            bool success = (JumpCount > 0 && JumpCount <= MaxJumpCount
                 && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)));
             if (success) {
                 CurrentLedge = null;
@@ -202,7 +156,32 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return success;
         }
 
+        void UpdateInput() {
+            // TODO(james7132): Hook this up to the full input system
+            var movement = Vector2.zero;
+            var smash = Vector2.zero;
+            if (Input.GetKey(KeyCode.A))
+                smash.x += -1;
+            if (Input.GetKey(KeyCode.D)) 
+                smash.x += 1;
+            if (Input.GetKey(KeyCode.W)) 
+                smash.y += 1;
+            if (Input.GetKey(KeyCode.S)) 
+                smash.y += -1;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                movement.x += -1;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
+                movement.x += 1;
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) 
+                movement.y += 1;
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) 
+                movement.y += -1;
+            _input.Movement = movement;
+            _input.Smash = smash;
+        }
+
         void Update() {
+            UpdateInput();
             if (!isLocalPlayer)
                 return;
             if (Mathf.Approximately(Time.deltaTime, 0))
@@ -212,65 +191,24 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             // If currently hanging from a edge
             if (CurrentLedge != null) {
                 LedgeMovement();
-            } else if (CharacterController.isGrounded) {
-                movement = GroundedMovement(movement);
-            } else { 
-                movement = AerialMovement(movement);
+            } else {
+                movement.horizontalSpeed = _input.Movement.x * CurrentState.Data.MovementSpeed.Max;
+                movement.facing = _input.Movement.x > 0;
+                if (IsGrounded) {
+                    IsFastFalling = false;
+                    if (JumpCount != MaxJumpCount)
+                        CmdResetJumps();
+                } else {
+                    if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                        IsFastFalling = true;
+                    LimitFallSpeed();
+                }
+                JumpCheck();
             }
-
-            IsCrounching = IsGrounded && Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
-
-            LimitFallSpeed();
 
             PhysicsState.SetHorizontalVelocity(movement.horizontalSpeed);
-            if (!IsCrounching && Direction != movement.facing)
+            if (Direction != movement.facing) {}
                 CmdSetDirection(movement.facing);
-        }
-
-        MovementInfo GroundedMovement(MovementInfo info) {
-            IsFastFalling = false;
-
-
-            info.horizontalSpeed = 0;
-            if (Input.GetKey(KeyCode.A))
-                info.horizontalSpeed -= RunSpeed;
-            if (Input.GetKey(KeyCode.D))
-                info.horizontalSpeed += RunSpeed;
-
-            if (Mathf.Approximately(info.horizontalSpeed, 0)) {
-                if (Input.GetKey(KeyCode.LeftArrow)) 
-                    info.horizontalSpeed -= FastWalkSpeed;
-                if (Input.GetKey(KeyCode.RightArrow))
-                    info.horizontalSpeed += FastWalkSpeed;
-            }
-
-            if (!Mathf.Approximately(info.horizontalSpeed, 0))
-                info.facing = info.horizontalSpeed > 0;
-
-            if (JumpCount != MaxJumpCount)
-                CmdResetJumps();
-            if (IsCrounching)
-                info.horizontalSpeed = 0f;
-            JumpCheck();
-            return info;
-        }
-
-        MovementInfo AerialMovement(MovementInfo info) {
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-                info.horizontalSpeed = -AirSpeed;
-                info.facing = false;
-            }
-
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-                info.horizontalSpeed = FastWalkSpeed;
-                info.facing = true;
-            }
-
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-                IsFastFalling = true;
-
-            JumpCheck();
-            return info;
         }
 
         void LimitFallSpeed() {
@@ -291,25 +229,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             context.IsGrounded = IsGrounded;
             context.IsGrabbingLedge = CurrentLedge != null;
             context.Direction = Direction ? 1.0f : -1.0f;
-            var movement = Vector2.zero;
-            var smash = Vector2.zero;
-            if (Input.GetKey(KeyCode.A))
-                smash.x += -1;
-            if (Input.GetKey(KeyCode.D)) 
-                smash.x += 1;
-            if (Input.GetKey(KeyCode.W)) 
-                smash.y += 1;
-            if (Input.GetKey(KeyCode.S)) 
-                smash.y += -1;
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-                movement.x += -1;
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
-                movement.x += 1;
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) 
-                movement.y += 1;
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) 
-                movement.y += -1;
-            context.Input.Movement = movement;
+            context.Input = _input;
         }
 
         [Command]
@@ -319,11 +239,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void CmdResetJumps() { JumpCount = MaxJumpCount; }
 
         [Command]
-        void CmdSetCrouch(bool crouching) { _isCrouching = crouching; }
-
-        [Command]
         void CmdSetDirection(bool direction) {
-            if (!IsCrounching)
+            if (CurrentState.Data.CanTurn)
                 _direction = direction;
         }
 

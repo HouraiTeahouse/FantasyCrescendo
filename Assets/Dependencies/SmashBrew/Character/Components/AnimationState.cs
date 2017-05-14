@@ -56,11 +56,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             if (Mathf.Approximately(Time.deltaTime, 0))
                 return;
             _jumpState = false;
-            var movement = Physics.Velocity.x;
-            if (Mathf.Abs(movement) > Movement.FastWalkSpeed)
-                movement = Sign(movement) * 2;
-            else
-                movement = Sign(movement);
         }
 
         void OnJump() { _jumpState = true; }

@@ -21,6 +21,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     public abstract class CharacterComponent : NetworkBehaviour, ICharacterComponent {
 
         protected Character Character { get; private set; }
+        protected CharacterState CurrentState {
+            get { return (Character != null && Character.StateController != null) ? Character.StateController.CurrentState : null; }
+        }
 
         protected virtual void Awake() {
             var registrar = GetComponentInParent<IRegistrar<ICharacterComponent>>();

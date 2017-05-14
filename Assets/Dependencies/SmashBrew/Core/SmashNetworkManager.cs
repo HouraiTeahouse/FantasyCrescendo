@@ -147,8 +147,9 @@ namespace HouraiTeahouse.SmashBrew {
                     playerObj = Instantiate(prefab, startPosition.position, startPosition.rotation);
                 else
                     playerObj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-                NetworkServer.AddPlayerForConnection(conn, playerObj, playerControllerId);
                 var player = PlayerManager.MatchPlayers.Get(playerCount);
+                playerObj.name = "Player {0} ({1},{2})".With(playerCount + 1, selection.Character.name, selection.Pallete);
+                NetworkServer.AddPlayerForConnection(conn, playerObj, playerControllerId);
                 var colorState = playerObj.GetComponentInChildren<ColorState>();
                 if (colorState != null)
                     colorState.Pallete = selection.Pallete;

@@ -15,6 +15,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public Range MovementSpeed;
         public bool Invincibility;
         public bool SuperArmor;
+        public bool CanTurn = true;
         [NonSerialized]
         public SmashAttack SmashAttack;
     }
