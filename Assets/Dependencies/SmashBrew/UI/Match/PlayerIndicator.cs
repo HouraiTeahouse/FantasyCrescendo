@@ -39,7 +39,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             _rTransform.anchoredPosition = viewportPosition.Mult(_cTransform.sizeDelta) - 0.5f * _cTransform.sizeDelta;
 
             if (Component)
-                Component.enabled = _characterController.gameObject.activeInHierarchy;
+                Component.enabled = Player != null && Player.Type.IsActive;
         }
 
         Vector3 GetTargetPosition() {
