@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,8 +8,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
     [RequireComponent(typeof(Text), typeof(PlayerUIColor))]
     public sealed class PlayerIndicator : PlayerUIComponent<Graphic> {
 
-        [SerializeField]
         CharacterController _characterController;
+        Transform _trackingTarget;
         // the canvas's RectTransform
         RectTransform _cTransform;
 
@@ -29,16 +30,11 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         /// <summary> Unity callback. Called once every frame, after all Update calls are processed. </summary>
         void LateUpdate() {
-            if (_characterController == null)
-                return;
-            Bounds bounds = _characterController.bounds;
-            Vector3 worldPosition = bounds.center + new Vector3(0f, bounds.extents.y, 0f) + _positionBias;
-
             //then you calculate the position of the UI element
             //0,0 for the canvas is at the center of the screen, whereas WorldToViewPortPoint treats the lower left corner as 0,0. Because of this,
             // you need to subtract the height / width of the canvas * 0.5 to get the correct position.
 
-            Vector2 viewportPosition = Camera.main.WorldToViewportPoint(worldPosition);
+            Vector2 viewportPosition = Camera.main.WorldToViewportPoint(GetTargetPosition());
             //now you can set the position of the ui element
             _rTransform.anchoredPosition = viewportPosition.Mult(_cTransform.sizeDelta) - 0.5f * _cTransform.sizeDelta;
 
@@ -46,11 +42,24 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 Component.enabled = _characterController.gameObject.activeInHierarchy;
         }
 
+        Vector3 GetTargetPosition() {
+            var position = Vector3.zero;
+            if (_trackingTarget != null)
+                position = _trackingTarget.position;
+            else if (_characterController != null) {
+                Bounds bounds = _characterController.bounds;
+                position = bounds.center + new Vector3(0f, bounds.extents.y, 0f);
+            } 
+            return position + _positionBias;
+        }
+
         protected override void PlayerChange() {
             if (Player == null || Player.PlayerObject == null)
                 _characterController = null;
             else {
                 _characterController = Player.PlayerObject.GetComponent<CharacterController>();
+                _trackingTarget = Player.PlayerObject.GetComponentsInChildren<Transform>()
+                    .FirstOrDefault(t => t.CompareTag("Indicator Tracker"));
             }
         }
 

@@ -742,7 +742,7 @@ GameObject:
   - component: {fileID: 4558956012783636}
   m_Layer: 0
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: Indicator Tracker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4008,19 +4008,11 @@ MonoBehaviour:
   _characterFacingMode: 0
   _maxFallSpeed: 5
   _fastFallSpeed: 10
-  _slowWalkSpeed: 2
-  _fastWalkSpeed: 4
-  _runSpeed: 8
-  _airSpeed: 4
   _jumpPower:
   - 7.5
   - 5
   _ledgeTarget: {fileID: 4342227001516904}
   _currentLedge: {fileID: 0}
-  _direction: 0
-  _jumpCount: 0
-  _isFastFalling: 0
-  _isCrouching: 0
   _stageLayers:
     serializedVersion: 2
     m_Bits: 256
@@ -4268,7 +4260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7efc7c92139c3a1448278e555cf2e189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 95044774644864030}
 --- !u!114 &114700404620700524
 MonoBehaviour:
   m_ObjectHideFlags: 1
