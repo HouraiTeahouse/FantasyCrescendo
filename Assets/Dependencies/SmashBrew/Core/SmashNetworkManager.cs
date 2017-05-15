@@ -22,6 +22,7 @@ namespace HouraiTeahouse.SmashBrew {
         int playerCount = 0;
         Dictionary<PlayerConnection, Player> PlayerMap;
         PlayerManager PlayerManager { get; set; }
+        ITask ClientStarted;
 
         void Awake() {
             PlayerManager = this.SafeGetComponent<PlayerManager>();
@@ -46,6 +47,8 @@ namespace HouraiTeahouse.SmashBrew {
         public override void OnStartClient(NetworkClient client) {
             base.OnStartClient(client);
             DestroyLeftoverPlayers();
+            ClientStarted = new Task();
+            Log.Debug("Started client");
             // Update player when the server says so
             client.RegisterHandler(Messages.UpdatePlayer,
                 msg => {
@@ -53,6 +56,25 @@ namespace HouraiTeahouse.SmashBrew {
                     var player = PlayerManager.MatchPlayers.Get(update.ID);
                     update.UpdatePlayer(player);
                 });
+            Task.All(DataManager.Characters.Select(character => character.Prefab.LoadAsync()
+                .Then(prefab => {
+                    if (prefab == null)
+                        return;
+                    Log.Debug(prefab);
+#if UNITY_EDITOR
+                    var instance = Instantiate(prefab) as GameObject;
+                    ClientScene.RegisterPrefab(prefab, instance.GetComponent<NetworkIdentity>().assetId);
+                    DestroyImmediate(instance);
+#else
+                    ClientScene.RegisterPrefab(prefab);
+#endif
+                })
+            )).Then(() => {
+                foreach (var pref in ClientScene.prefabs)
+                    Log.Info("Registered Network Prefab: {0} ({1})", pref.Value.name, pref.Key);
+                ClientStarted.Resolve();
+                Log.Info("Client initialized.");
+            });
         }
 
         public override void OnClientDisconnect(NetworkConnection conn) {
@@ -62,11 +84,14 @@ namespace HouraiTeahouse.SmashBrew {
         public override void OnClientConnect(NetworkConnection conn) {
             if (!clientLoadedScene) {
                 // Ready/AddPlayer is usually triggered by a scene load completing. if no scene was loaded, then Ready/AddPlayer it here instead.
-                ClientScene.Ready(conn);
-                foreach (var player in PlayerManager.LocalPlayers.Where(p => p.Type.IsActive)) {
-                    ClientScene.AddPlayer(conn, localPlayerCount, PlayerSelectionMessage.FromSelection(player.Selection));
-                    localPlayerCount++;
-                }
+                ClientStarted.Then(() => {
+                    Log.Debug("Client connecting");
+                    ClientScene.Ready(conn);
+                    foreach (var player in PlayerManager.LocalPlayers.Where(p => p.Type.IsActive)) {
+                        ClientScene.AddPlayer(conn, localPlayerCount, PlayerSelectionMessage.FromSelection(player.Selection));
+                        localPlayerCount++;
+                    }
+                });
             }
         }
 

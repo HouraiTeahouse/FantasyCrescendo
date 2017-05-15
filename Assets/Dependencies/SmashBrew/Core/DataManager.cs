@@ -114,10 +114,6 @@ namespace HouraiTeahouse.SmashBrew {
             }
             _characters[data.Id] = data;
             _characterList.Add(data);
-            data.Prefab.LoadAsync().Then(prefab => {
-                ClientScene.RegisterPrefab(prefab);
-                log.Info("Registered {0} ({1}) as a spawnable network character.", data.name, data.Id);
-            });
             log.Info("Registered {0} ({1}) as a valid character.", data.name, data.Id);
         }
 
