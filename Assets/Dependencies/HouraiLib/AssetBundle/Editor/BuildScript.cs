@@ -21,7 +21,6 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 			//@TODO: use append hash... (Make sure pipeline works correctly with it.)
 			BuildPipeline.BuildAssetBundles (outputPath, 
                 BuildAssetBundleOptions.ChunkBasedCompression |
-                BuildAssetBundleOptions.AppendHashToAssetBundleName |
                 BuildAssetBundleOptions.DeterministicAssetBundle |
                 BuildAssetBundleOptions.StrictMode,
                 buildTarget);

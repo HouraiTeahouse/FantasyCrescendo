@@ -6,7 +6,7 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 
     public static class BuilderCommands {
 
-        [MenuItem("Hourai Teahouse/jkBuild/Build Asset Bundles (Windows)")]
+        [MenuItem("Hourai Teahouse/Build/Build Asset Bundles (Windows)")]
         public static void BuildAssetBundlesWindows() {
             BuildScript.BuildAssetBundles(BuildTarget.StandaloneWindows64);
         }
