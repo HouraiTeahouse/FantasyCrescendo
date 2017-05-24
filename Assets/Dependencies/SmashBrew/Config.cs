@@ -110,13 +110,20 @@ namespace HouraiTeahouse.SmashBrew {
     public class TagConfig {
 
         [SerializeField, Tag]
+        [Tooltip("The tag for marking player GameObjects")]
         string _playerTag;
 
         [SerializeField, Tag]
+        [Tooltip("The tag for marking hitboxes")]
         string _hitboxTag;
 
         [SerializeField, Tag]
+        [Tooltip("The tag for marking ledges")]
         string _ledgeTag;
+
+        [SerializeField, Tag]
+        [Tooltip("The tag for mark follow targets for Player Indicators")]
+        string _indicatorTargetTag;
 
         [SerializeField, Layer]
         int _characterLayer;
@@ -130,33 +137,15 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField, Layer]
         int _hurtboxLayer;
 
-        public string PlayerTag {
-            get { return _playerTag; }
-        }
+        public string PlayerTag { get { return _playerTag; } }
+        public string HitboxTag { get { return _hitboxTag; } } 
+        public string LedgeTag { get { return _ledgeTag; } }
+        public string IndicatorTargetTag { get { return _indicatorTargetTag; } }
 
-        public string HitboxTag {
-            get { return _hitboxTag; }
-        }
-
-        public string LedgeTag {
-            get { return _ledgeTag; }
-        }
-
-        public int CharacterLayer {
-            get { return _characterLayer; }
-        }
-
-        public int IntangibleLayer {
-            get { return _intangibleLayer; }
-        }
-
-        public int HitboxLayer {
-            get { return _hitboxLayer; }
-        }
-
-        public int HurtboxLayer {
-            get { return _hurtboxLayer; }
-        }
+        public int CharacterLayer { get { return _characterLayer; } } 
+        public int IntangibleLayer { get { return _intangibleLayer; } }
+        public int HitboxLayer { get { return _hitboxLayer; } }
+        public int HurtboxLayer { get { return _hurtboxLayer; } }
 
     }
 

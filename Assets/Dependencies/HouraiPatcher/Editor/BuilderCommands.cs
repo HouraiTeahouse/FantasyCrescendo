@@ -6,7 +6,7 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 
     public static class BuilderCommands {
 
-        [MenuItem("Hourai Teahouse/Build/Build Asset Bundles (Windows)")]
+        [MenuItem("Hourai Teahouse/jkBuild/Build Asset Bundles (Windows)")]
         public static void BuildAssetBundlesWindows() {
             BuildScript.BuildAssetBundles(BuildTarget.StandaloneWindows64);
         }
@@ -23,6 +23,9 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 
 #if UNITY_CLOUD_BUILD
         public static void BuildCurrentBundles(UnityEngine.CloudBuild.BuildManifestObject manifest) {
+            PlayerSettings.bundleVersion += " {0} Build #{1}".With(
+                manifest.GetValue("cloudBuildTargetName"), 
+                manifest.GetValue("buildNumber"))
             string branch = manifest.GetValue("scmBranch");
             var config = Config.Instance;
             var serializedConfig = new SerializedObject(config);

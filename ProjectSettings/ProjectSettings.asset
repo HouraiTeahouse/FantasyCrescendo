@@ -57,7 +57,7 @@ PlayerSettings:
   androidShowActivityIndicatorOnLoading: -1
   tizenShowActivityIndicatorOnLoading: -1
   iosAppInBackgroundBehavior: 0
-  displayResolutionDialog: 1
+  displayResolutionDialog: 0
   iosAllowHTTPDownload: 1
   allowedAutorotateToPortrait: 1
   allowedAutorotateToPortraitUpsideDown: 1
@@ -69,7 +69,7 @@ PlayerSettings:
   defaultIsFullScreen: 1
   defaultIsNativeResolution: 1
   runInBackground: 1
-  captureSingleScreen: 0
+  captureSingleScreen: 1
   muteOtherAudioSources: 0
   Prepare IOS For Recording: 0
   submitAnalytics: 1
@@ -120,7 +120,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 0
-  bundleVersion: 1.0
+  bundleVersion: 0.3.0-alpha
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -139,7 +139,7 @@ PlayerSettings:
   useHDRDisplay: 0
   applicationIdentifier:
     Android: com.Company.ProductName
-    Standalone: unity.Hourai Teahouse.Fantasy Crescendo
+    Standalone: unity.hourai-teahouse.fantasy-crescendo
     Tizen: com.Company.ProductName
     iOS: com.Company.ProductName
     tvOS: com.Company.ProductName
@@ -228,8 +228,7 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
-  resolutionDialogBanner: {fileID: 2800000, guid: 303096289e9a5b446aba865cc490ee45,
-    type: 3}
+  resolutionDialogBanner: {fileID: 0}
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
