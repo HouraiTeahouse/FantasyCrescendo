@@ -25,7 +25,7 @@ namespace HouraiTeahouse.AssetBundles.Editor {
         public static void BuildCurrentBundles(UnityEngine.CloudBuild.BuildManifestObject manifest) {
             PlayerSettings.bundleVersion += " {0} Build #{1}".With(
                 manifest.GetValue("cloudBuildTargetName"), 
-                manifest.GetValue("buildNumber"))
+                manifest.GetValue("buildNumber"));
             string branch = manifest.GetValue("scmBranch");
             var config = Config.Instance;
             var serializedConfig = new SerializedObject(config);
