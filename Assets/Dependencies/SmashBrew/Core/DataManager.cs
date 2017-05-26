@@ -49,7 +49,6 @@ namespace HouraiTeahouse.SmashBrew {
             var bundlePath = BundleUtility.StoragePath;
             log.Info("Storage Path: {0}", bundlePath);
 
-            AssetBundleUpdater.UpdateGame().Then(() => { 
 #if UNITY_EDITOR
             if (AssetBundleManager.SimulateAssetBundleInEditor) {
                 LoadFromEditor<CharacterData>(AddCharacter);
@@ -83,8 +82,6 @@ namespace HouraiTeahouse.SmashBrew {
                 task.Then(() => LoadTask.Resolve());
                 task.Done();
             }
-        });
-
         }
 
         /// <summary> All Characters that are included with the Game's build. The Data Manager will automatically load all

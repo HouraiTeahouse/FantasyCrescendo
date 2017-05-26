@@ -45,10 +45,6 @@ namespace HouraiTeahouse.AssetBundles {
             return Path.Combine(GetLocalStoragePath(), bundleName);
         }
 
-        public static string GetRemoteBundleUri(string bundleName) {
-            return UriUtility.Combine(Config.Bundles.BaseUrl, AssetBundlesOutputPath, GetPlatformName(), bundleName);
-        }
-
 	    const string AndroidPlatform = "Android";
 	    const string iOSPlatform = "iOS";
 	    const string WebGLPlatform = "WebGL";
