@@ -26,14 +26,6 @@ namespace HouraiTeahouse.AssetBundles.Editor {
             PlayerSettings.bundleVersion += " {0} Build #{1}".With(
                 manifest.GetValue("cloudBuildTargetName"), 
                 manifest.GetValue("buildNumber"));
-            string branch = manifest.GetValue("scmBranch");
-            var config = Config.Instance;
-            var serializedConfig = new SerializedObject(config);
-            serializedConfig.FindProperty("_bundles._branch").stringValue = branch;
-            serializedConfig.ApplyModifiedProperties();
-            AssetDatabase.SaveAssets();
-            Log.Info("Set Bundle Branch to \"{0}\"".With(branch));
-            Log.Info("Base URL set to \"{0}\"".With(BundleUtility.GetRemoteBundleUri("")));
 #else
         public static void BuildCurrentBundles() {
 #endif
