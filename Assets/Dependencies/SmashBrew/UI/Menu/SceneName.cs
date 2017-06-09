@@ -15,9 +15,18 @@ namespace HouraiTeahouse.SmashBrew.UI {
         SceneData _scene;
 
         /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
+        protected override void Start() {
+            base.Start();
+            SetData(_scene);
+        }
+
+        /// <summary>
         ///     <see cref="IDataComponent{CharacterData}.SetData" />
         /// </summary>
-        public void SetData(SceneData data) { Text.text = data == null ? string.Empty : data.Name; }
+        public void SetData(SceneData data) { SetText(data == null ? string.Empty : data.Name); }
 
         /// <summary>
         ///     <see cref="AbstractLocalizedText.Process" />
