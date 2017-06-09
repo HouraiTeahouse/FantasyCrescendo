@@ -58,6 +58,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1024081006587768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4706921540677848}
+  - component: {fileID: 65791717861407054}
+  - component: {fileID: 65952939022683054}
+  - component: {fileID: 114755724226756084}
+  - component: {fileID: 114221692247624126}
+  m_Layer: 9
+  m_Name: Ledge Check
+  m_TagString: Ledge Check
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1024279020927802
 GameObject:
   m_ObjectHideFlags: 1
@@ -266,25 +285,6 @@ GameObject:
   m_Layer: 0
   m_Name: youmu konpaku_hb_damageable_5
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1101695543473290
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4862916602140414}
-  - component: {fileID: 65225327067075354}
-  - component: {fileID: 65157254600869730}
-  - component: {fileID: 114199694606747818}
-  - component: {fileID: 114683694683970124}
-  m_Layer: 9
-  m_Name: Ledge Check
-  m_TagString: Ledge Check
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2852,7 +2852,7 @@ Transform:
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children:
   - {fileID: 4383538953315406}
-  - {fileID: 4862916602140414}
+  - {fileID: 4706921540677848}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3263,6 +3263,19 @@ Transform:
   m_Father: {fileID: 4288579054287254}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4706921540677848
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1024081006587768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.03, y: 1.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4437685227430292}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4712656969081552
 Transform:
   m_ObjectHideFlags: 1
@@ -3587,19 +3600,6 @@ Transform:
   m_Father: {fileID: 4514834674044240}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4862916602140414
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101695543473290}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 1.4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4437685227430292}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4867493030676250
 Transform:
   m_ObjectHideFlags: 1
@@ -3884,30 +3884,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65157254600869730
+--- !u!65 &65791717861407054
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101695543473290}
+  m_GameObject: {fileID: 1024081006587768}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.25, z: 1}
-  m_Center: {x: -0.25, y: 0, z: 0}
---- !u!65 &65225327067075354
+  m_Size: {x: 1.5, y: 1, z: 1}
+  m_Center: {x: 0.75, y: 0, z: 0}
+--- !u!65 &65952939022683054
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101695543473290}
+  m_GameObject: {fileID: 1024081006587768}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.5, z: 1}
-  m_Center: {x: 0.375, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.5, z: 1}
+  m_Center: {x: -0.5, y: 0, z: 0}
 --- !u!95 &95044774644864030
 Animator:
   serializedVersion: 3
@@ -4016,20 +4016,25 @@ MonoBehaviour:
   _stageLayers:
     serializedVersion: 2
     m_Bits: 256
---- !u!114 &114199694606747818
+--- !u!114 &114221692247624126
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101695543473290}
+  m_GameObject: {fileID: 1024081006587768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f2f99a6e1d35604ab2d33f302fece21, type: 3}
+  m_Script: {fileID: 11500000, guid: f9a9a157ddd4a14489c30f6bc1a2ef27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.9862069, g: 1, b: 0, a: 1}
-  includeChildren: 0
-  solid: 0
+  _position: {x: 0, y: 0, z: 0}
+  _rotation: {x: 0, y: 0, z: 0}
+  _lockXPosition: 0
+  _lockYPosition: 0
+  _lockZPosition: 0
+  _lockXRotation: 1
+  _lockYRotation: 0
+  _lockZRotation: 1
 --- !u!114 &114248161020558924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4238,17 +4243,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_VisualizerPrefab: {fileID: 0}
---- !u!114 &114683694683970124
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101695543473290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9a9a157ddd4a14489c30f6bc1a2ef27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114694525718443830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4311,6 +4305,20 @@ MonoBehaviour:
   _reboundLoss: 0.2
   _grounded: 0
   _isFastFalling: 0
+--- !u!114 &114755724226756084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1024081006587768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f2f99a6e1d35604ab2d33f302fece21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.9862069, g: 1, b: 0, a: 1}
+  includeChildren: 0
+  solid: 0
 --- !u!114 &114823963462679722
 MonoBehaviour:
   m_ObjectHideFlags: 1
