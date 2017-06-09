@@ -91,12 +91,14 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary> Loads the scene described by the SceneData </summary>
-        public void Load() {
-            SceneLoader.LoadScene(_scene).Then(() =>
+        public ITask Load() {
+            var task = SceneLoader.LoadScene(_scene);
+            task.Then(() =>
                 Mediator.Global.Publish(new LoadSceneEvent {
                     Scene = this
                 })
             );
+            return task;
         }
 
         /// <summary> Unity Callback. Called when ScriptableObject is loaded. </summary>
