@@ -32,8 +32,9 @@ MonoBehaviour:
     _loopStart: 28800
     _loopEnd: 7444000
   _type: 1
+  _loadPriority: 0
   _icon: Icons/reimu_icon
   _isSelectable: 0
   _isVisible: 0
   _previewImage: Icons/reimu_icon
-  _sceneName: Stages/Hakurei Shrine/Hakurei Shrine Stage
+  _scene: scenes/stages/shrine:Hakurei Shrine Stage

@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f090ca3dfef500b41b142173fba76f1f, type: 3}
-  m_Name: Stage Select
+  m_Name: Test_Stage
   m_EditorClassIdentifier: 
-  _name: Stage Select
+  _name: Debug Stage
   backgroundMusicData: []
-  _type: 2
-  _loadPriority: 0
-  _icon: Icons/marisa_icon
+  _type: 1
+  _loadPriority: 100
+  _icon: 
   _isSelectable: 1
   _isVisible: 1
-  _previewImage: Icons/marisa_icon
-  _scene: 
+  _previewImage: 
+  _scene: scenes/stages/test/scene:Test Stage
