@@ -15,25 +15,25 @@ MonoBehaviour:
   backgroundMusicData:
   - _name: Love Colored Magic
     _artist: Squiggle Glitz
-    _bgm: Audio/BGM/Forest of Magic/Love Colored Magic
+    _bgm: bgm/forest:Love Colored Magic
     _baseWeight: 1
     _loopStart: 2304
     _loopEnd: 4460928
   - _name: Magus Night
     _artist: Pigu
-    _bgm: Audio/BGM/Forest of Magic/Magus Night
+    _bgm: bgm/forest:Magus Night
     _baseWeight: 1
     _loopStart: 276480
     _loopEnd: 6912007
   - _name: Ghostly Eyes
     _artist: Flurrybolt
-    _bgm: Audio/BGM/Forest of Magic/Ghostly Eyes
+    _bgm: bgm/forest:Ghostly Eyes
     _baseWeight: 1
     _loopStart: 0
     _loopEnd: 13011176
   - _name: Doll Judgement
     _artist: crescentia
-    _bgm: Audio/BGM/Forest of Magic/Doll Judgement
+    _bgm: bgm/forest:Doll Judgement
     _baseWeight: 1
     _loopStart: 0
     _loopEnd: -1

@@ -15,26 +15,26 @@ MonoBehaviour:
   backgroundMusicData:
   - _name: Battle Concerto
     _artist: Crescentia
-    _bgm: Audio/BGM/Hakurei Shrine/Battle Concerto
+    _bgm: bgm/shrine:Battle Concerto
     _baseWeight: 1
     _loopStart: 0
     _loopEnd: 7263744
   - _name: Eternal Shrine Maiden
     _artist: Squiggle Glitz
-    _bgm: Audio/BGM/Hakurei Shrine/Eternal Shrine Maiden
+    _bgm: bgm/shrine:Eternal Shrine Maiden
     _baseWeight: 1
     _loopStart: 288000
     _loopEnd: 4281600
   - _name: Dichromatic Lotus Butterfly
     _artist: sladjkf
-    _bgm: Audio/BGM/Hakurei Shrine/Dichromatic Lotus Butterfly
+    _bgm: bgm/shrine:Dichromatic Lotus Butterfly
     _baseWeight: 1
     _loopStart: 28800
     _loopEnd: 7444000
   _type: 1
   _loadPriority: 0
-  _icon: Icons/reimu_icon
+  _icon: icons:reimu_icon
   _isSelectable: 0
   _isVisible: 0
   _previewImage: Icons/reimu_icon
-  _scene: scenes/stages/shrine:Hakurei Shrine Stage
+  _scene: scenes/stages/shrine/scene:Hakurei Shrine Stage

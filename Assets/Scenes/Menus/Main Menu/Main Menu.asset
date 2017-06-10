@@ -15,19 +15,19 @@ MonoBehaviour:
   backgroundMusicData:
   - _name: Did You See That Shadow
     _artist: iceerules
-    _bgm: Audio/BGM/Main Menu/Did You See That Shadow
+    _bgm: bgm/main_menu:Did You See That Shadow
     _baseWeight: 1
     _loopStart: 373195
     _loopEnd: 4608698
   - _name: Memory of Forgathering Dream
     _artist: sladjkf
-    _bgm: Audio/BGM/Main Menu/Memory of Forgathering Dream
+    _bgm: bgm/main_menu:Memory of Forgathering Dream
     _baseWeight: 1
     _loopStart: 96000
     _loopEnd: 4320000
   - _name: Shinkirou Orchestra
     _artist: sladjkf
-    _bgm: Audio/BGM/Main Menu/Shinkirou Orchestra
+    _bgm: bgm/main_menu:Shinkirou Orchestra
     _baseWeight: 1
     _loopStart: 143381
     _loopEnd: 4567061
