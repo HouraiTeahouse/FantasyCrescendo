@@ -193,7 +193,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 LedgeMovement();
             } else {
                 movement.horizontalSpeed = _input.Movement.x * CurrentState.Data.MovementSpeed.Max;
-                movement.facing = _input.Movement.x > 0;
+                if (!Mathf.Approximately(_input.Movement.x, 0f))
+                    movement.facing = _input.Movement.x > 0;
                 if (IsGrounded) {
                     IsFastFalling = false;
                     if (JumpCount != MaxJumpCount)
@@ -207,8 +208,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             }
 
             PhysicsState.SetHorizontalVelocity(movement.horizontalSpeed);
-            if (Direction != movement.facing) {}
-                CmdSetDirection(movement.facing);
+            Direction = movement.facing;
         }
 
         void LimitFallSpeed() {
