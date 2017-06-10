@@ -75,11 +75,26 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 foreach (var src in new[] {"FallHelpless", "Fall", "EscapeAir"}) {
                     yield return new object[] {src, "Land", context(0f, 0f, dir, true)};
                 }
+                var direction = dir ? 1.0f : -1.0f;
                 yield return new object[] {"Idle", "Dash", new CharacterStateContext {
-                    Direction = dir ? 1.0f : -1.0f,
+                    Direction = direction,
                     IsGrounded = true,
                     Input = new InputContext {
                         Smash = new Vector2(-1, 0)
+                    }
+                }};
+                yield return new object[] {"Run", "RunTurn", new CharacterStateContext {
+                    Direction = direction,
+                    IsGrounded = true,
+                    Input = new InputContext {
+                        Movement = new Vector2(-direction, 0f)
+                    }
+                }};
+                yield return new object[] {"Run", "Run", new CharacterStateContext {
+                    Direction = direction,
+                    IsGrounded = true,
+                    Input = new InputContext {
+                        Movement = new Vector2(direction, 0)
                     }
                 }};
                 foreach (var src in new [] {"Idle", "Walk", "Dash", "Run", "RunTurn", "RunBrake", "CrouchStart", "Crouch", "CrouchEnd", "Shield.Main"}) {

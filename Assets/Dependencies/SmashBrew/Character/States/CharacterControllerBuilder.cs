@@ -140,7 +140,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             new[] {Dash, RunTurn}.AddTransitionTo(Run);
             Run.AddTransition(RunBrake, Input(i => Mathf.Abs(i.Movement.x) < inputThreshold));
             Run.AddTransition(RunTurn,
-                ctx => Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.x), Mathf.Sign(ctx.Direction)));
+                ctx => !Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.x), Mathf.Sign(ctx.Direction)));
             RunBrake.AddTransitionTo(Idle);
 
             // Ground Movement 
