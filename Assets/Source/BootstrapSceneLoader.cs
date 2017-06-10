@@ -5,7 +5,7 @@ namespace HouraiTeahouse.SmashBrew {
 
     public class BootstrapSceneLoader : MonoBehaviour {
 
-        void Awake() {
+        void Start() {
             var log = Log.GetLogger(this);
             DataManager.LoadTask.Then(() => {
                 var scenes = DataManager.Scenes.OrderByDescending(s => s.Type).ThenByDescending(s => s.LoadPriority);

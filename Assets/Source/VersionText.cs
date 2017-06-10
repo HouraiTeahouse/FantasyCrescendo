@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace HouraiTeahouse.UI {
 
@@ -11,19 +12,29 @@ namespace HouraiTeahouse.UI {
         Text _text;
 
         [SerializeField]
-        string _displayFormat = "v{}";
+        TMP_Text _textMesh;
+
+        [SerializeField]
+        string _displayFormat = "v{0}";
 
         void Awake() {
             if (_text == null)
                 _text = GetComponent<Text>();
-            Debug.Log(_text);
-            if (_text == null)
+            if (_textMesh == null)
+                _textMesh = GetComponent<TMP_Text>();
+            if (_text == null && _textMesh == null)
                 return;
-            Debug.Log(Application.version);
             if (string.IsNullOrEmpty(_displayFormat))
-                _text.text = Application.version;
+                SetText(Application.version);
             else
-                _text.text = _displayFormat.With(Application.version);
+                SetText(_displayFormat.With(Application.version));
+        }
+
+        void SetText(string text) {
+            if (_text != null)
+                _text.text = text;
+            if (_textMesh != null)
+                _textMesh.text = text;
         }
 
         void Reset() {
