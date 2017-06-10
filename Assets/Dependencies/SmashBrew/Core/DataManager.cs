@@ -34,7 +34,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         [RuntimeInitializeOnLoadMethod]
         static void Initialize() {
-            Task.UnhandledException += (src, args) => Log.Error(args.ExceptionObject);
             _characterList = new List<CharacterData>();
             _characters = new Dictionary<uint, CharacterData>();
             _scenes = new List<SceneData>();
