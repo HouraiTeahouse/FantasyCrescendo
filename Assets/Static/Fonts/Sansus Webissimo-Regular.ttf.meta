@@ -3,16 +3,19 @@ guid: 46c03ad18dd408c4999a3294f9c12de8
 timeCreated: 1440275378
 licenseType: Free
 TrueTypeFontImporter:
-  serializedVersion: 2
+  serializedVersion: 4
   fontSize: 16
   forceTextureCase: -2
-  characterSpacing: 1
-  characterPadding: 0
+  characterSpacing: 0
+  characterPadding: 1
   includeFontData: 1
-  use2xBehaviour: 0
-  fontNames: []
+  fontName: Sansus Webissimo
+  fontNames:
+  - Sansus Webissimo
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
+  ascentCalculationMode: 1
   userData: 
-  assetBundleName: 
+  assetBundleName: fonts
   assetBundleVariant: 
