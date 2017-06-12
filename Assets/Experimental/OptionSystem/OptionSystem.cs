@@ -5,7 +5,7 @@ using System.Text;
 using System;
 using UnityEngine;
 
-namespace HouraiTeahouse {
+namespace HouraiTeahouse.Options {
 
     public interface IParser {
         object Parse(string obj);
@@ -75,7 +75,7 @@ namespace HouraiTeahouse {
             CheckOptionVersion();
             // get all classes that have Options attributes
             var query = from type in Assembly.GetExecutingAssembly().GetTypes()
-                        where type.IsClass && type.GetCustomAttributes(typeof(OptionCategory), true).Length > 0
+                        where type.IsClass && type.GetCustomAttributes(typeof(OptionCategoryAttribute), true).Length > 0
                         select type;
 
             var allPropertiesStr = new StringBuilder();
@@ -131,30 +131,27 @@ namespace HouraiTeahouse {
 
         // Function to save player option changes to memory
         public void SaveAllChanges() {
-            foreach (OptionInfo option in Options) {
+            foreach (OptionInfo option in Options) 
                 option.Save();
-            }
             Log.Info("Options Saved");
         }
 
         public void RevertAllChanges() {
-            foreach (OptionInfo option in Options) {
+            foreach (OptionInfo option in Options)
                 option.ResetValue();
-            }
             Log.Info("Options Reverted");
         }
 
         // Delete all option related entries in registry
         void ClearRegistry() {
-            foreach (OptionInfo option in Options) {
+            foreach (OptionInfo option in Options)
                 option.Delete();
-            }
             _categories.Clear();
             Prefs.Delete(allOptionsKey);
         }
     }
 
-    public class CategoryInfo {
+    public sealed class CategoryInfo {
 
         public object Instance { get; private set; }
         public Type Type { get; private set; }
@@ -165,13 +162,13 @@ namespace HouraiTeahouse {
             _options = new List<OptionInfo>();
             Instance = instance;
             Type = Argument.NotNull(instance).GetType();
-            var categoryAttribute = Type.GetCustomAttributes(true).OfType<OptionCategory>().FirstOrDefault();
+            var categoryAttribute = Type.GetCustomAttributes(true).OfType<OptionCategoryAttribute>().FirstOrDefault();
             if (categoryAttribute != null) {
                 Name = categoryAttribute.Name ?? Type.Name;
             }
 
             foreach (var prop in Type.GetProperties()) {
-                var attribute = prop.GetCustomAttributes(true).OfType<Option>().FirstOrDefault();
+                var attribute = prop.GetCustomAttributes(true).OfType<OptionAttribute>().FirstOrDefault();
                 if (attribute != null) {
                     _options.Add(new OptionInfo(this, attribute, Type, prop));
                 }
@@ -184,10 +181,11 @@ namespace HouraiTeahouse {
 
     }
 
-    public class OptionInfo {
+    public sealed class OptionInfo {
 
+        public string Name { get; private set; }
         public PropertyInfo PropertyInfo { get; private set; }
-        public Option Attribute { get; private set; }
+        public OptionAttribute Attribute { get; private set; }
         public CategoryInfo Category { get; private set; }
         public string Key { get; private set; }
 
@@ -198,11 +196,13 @@ namespace HouraiTeahouse {
             { typeof(bool), new SimpleParser<bool>(bool.Parse) },
         };
 
-        public OptionInfo(CategoryInfo category, Option attr, Type type, PropertyInfo prop) {
+        public OptionInfo(CategoryInfo category, OptionAttribute attr, Type type, PropertyInfo prop) {
+            Name = attr.Name ?? prop.Name;
             Category = category;
             PropertyInfo = prop;
             Attribute = attr;
-            Key = type.FullName + OptionSystem.optionSeperator + prop.Name;
+            Key = Argument.NotNull(type).FullName + OptionSystem.optionSeperator + 
+                  Argument.NotNull(prop).Name;
             if (!Prefs.Exists(Key))
                 Prefs.SetString(Key, prop.PropertyType.IsValueType ?
                     Activator.CreateInstance(prop.PropertyType).ToString() : 
@@ -212,6 +212,10 @@ namespace HouraiTeahouse {
 
         public object GetPropertyValue() {
             return PropertyInfo.GetValue(Category.Instance, null);
+        }
+
+        public T GetPropertyValue<T>() {
+            return (T)GetPropertyValue();
         }
 
         public void SetPropertyValue(object val) {
