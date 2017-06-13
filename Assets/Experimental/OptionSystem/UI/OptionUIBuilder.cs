@@ -33,6 +33,8 @@ namespace HouraiTeahouse.Options.UI {
 
         [Header("Subcomponents")]
         [SerializeField]
+        RectTransform container;
+        [SerializeField]
         RectTransform categoryLabelTemplate;
         [SerializeField]
         RectTransform optionLabelTemplate;
@@ -93,8 +95,11 @@ namespace HouraiTeahouse.Options.UI {
             foreach (CategoryInfo category in optionSystem.Categories) {
                 var categoryLabel = Instantiate(categoryLabelTemplate);
                 categoryLabel.name = category.Name;
-                categoryLabel.transform.SetParent(transform, false);
+                categoryLabel.SetParent(transform, false);
                 categoryLabel.GetComponentInChildren<Text>().text = category.Name;
+                var labelLayout = categoryLabel.gameObject.AddComponent<LayoutElement>();
+                labelLayout.preferredHeight = _optionHeight;
+                labelLayout.flexibleHeight = 0f;
                 foreach (OptionInfo option in category.Options) {
                     var drawer = option.PropertyInfo.GetCustomAttributes(true).OfType<AbstractOptionViewAttribute>().FirstOrDefault();
                     var propertyInfo = option.PropertyInfo;
@@ -112,7 +117,7 @@ namespace HouraiTeahouse.Options.UI {
                     var containerLayout = container.AddComponent<LayoutElement>();
                     containerLayout.preferredHeight = _optionHeight;
                     containerLayout.flexibleHeight = 0f;
-                    container.transform.SetParent(categoryLabel.transform, false);
+                    container.transform.SetParent(transform, false);
                     var optionLabel = Instantiate(optionLabelTemplate);
                     var control = Instantiate(_prefabs[drawerType]);
                     optionLabel.SetParent(container.transform, false);
