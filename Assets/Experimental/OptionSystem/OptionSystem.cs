@@ -90,7 +90,8 @@ namespace HouraiTeahouse.Options {
             }
 
             // Remove excess characters
-            allPropertiesStr.Remove(allPropertiesStr.Length - 1, 1);
+            if (allPropertiesStr.Length > 0)
+                allPropertiesStr.Remove(allPropertiesStr.Length - 1, 1);
             string allProperties = allPropertiesStr.ToString();
             IEnumerable<string> currKeys = allProperties.Split(keySeperator);
             if (Prefs.Exists(allOptionsKey)) {
