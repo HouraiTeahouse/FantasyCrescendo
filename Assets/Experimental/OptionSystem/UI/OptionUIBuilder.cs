@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace HouraiTeahouse.Options.UI {
 
-    // A quick example of a Slider UI Builder for testing purposes only.
     public class OptionUIBuilder : MonoBehaviour, ISerializationCallbackReceiver {
 
         static readonly ILog _log = Log.GetLogger<OptionUIBuilder>();
@@ -33,7 +32,7 @@ namespace HouraiTeahouse.Options.UI {
 
         [Header("Subcomponents")]
         [SerializeField]
-        RectTransform container;
+        RectTransform _container;
         [SerializeField]
         RectTransform categoryLabelTemplate;
         [SerializeField]
@@ -92,14 +91,15 @@ namespace HouraiTeahouse.Options.UI {
 
 
         void Start() {
+            Transform viewContainer = _container;
+            if (viewContainer == null)
+                viewContainer = transform;
             foreach (CategoryInfo category in optionSystem.Categories) {
                 var categoryLabel = Instantiate(categoryLabelTemplate);
-                categoryLabel.name = category.Name;
-                categoryLabel.SetParent(transform, false);
+                SetNameAndText(categoryLabel.gameObject, category.Name);
+                BuildLayout(categoryLabel.gameObject);
+                categoryLabel.SetParent(viewContainer, false);
                 categoryLabel.GetComponentInChildren<Text>().text = category.Name;
-                var labelLayout = categoryLabel.gameObject.AddComponent<LayoutElement>();
-                labelLayout.preferredHeight = _optionHeight;
-                labelLayout.flexibleHeight = 0f;
                 foreach (OptionInfo option in category.Options) {
                     var drawer = option.PropertyInfo.GetCustomAttributes(true).OfType<AbstractOptionViewAttribute>().FirstOrDefault();
                     var propertyInfo = option.PropertyInfo;
@@ -109,27 +109,43 @@ namespace HouraiTeahouse.Options.UI {
                         continue;
                     }
                     var drawerType = drawer.GetType();
-                    if (!_prefabs.ContainsKey(drawerType) || _prefabs[drawerType] == null) {
+                    RectTransform prefab = null;
+                    while (drawerType != null && prefab == null) {
+                        _prefabs.TryGetValue(drawerType, out prefab);
+                        drawerType = drawerType.BaseType;
+                    }
+                    if (prefab == null) {
                         _log.Error("No prefab for drawer {0} could be found.", drawerType);
                         continue;
                     }
                     var container = new GameObject(option.Name, typeof(RectTransform));
-                    var containerLayout = container.AddComponent<LayoutElement>();
-                    containerLayout.preferredHeight = _optionHeight;
-                    containerLayout.flexibleHeight = 0f;
-                    container.transform.SetParent(transform, false);
+                    BuildLayout(container);
+                    container.transform.SetParent(viewContainer, false);
                     var optionLabel = Instantiate(optionLabelTemplate);
-                    var control = Instantiate(_prefabs[drawerType]);
+                    var control = Instantiate(prefab);
                     optionLabel.SetParent(container.transform, false);
                     control.SetParent(container.transform, false);
+                    SetNameAndText(container, option.Name);
                     FillRect(optionLabel, _indent, _labelSize);
                     FillRect(control, _indent + _labelSize, 1 - (_indent + _labelSize));
-                    optionLabel.GetComponentInChildren<Text>().text = option.Name;
                     if (drawer == null)
                         continue;
                     drawer.BuildUI(option, control.gameObject);
                 }
             }
+        }
+
+        void SetNameAndText(GameObject label, string text) {
+            label.name = text;
+            var labelText = label.GetComponentInChildren<Text>();
+            if (labelText != null) 
+                labelText.text = text; 
+        } 
+
+        void BuildLayout(GameObject container) {
+            var layout = container.GetOrAddComponent<LayoutElement>();
+            layout.preferredHeight = _optionHeight;
+            layout.flexibleHeight = 0f;
         }
 
         void FillRect(RectTransform rect, float start, float size) {

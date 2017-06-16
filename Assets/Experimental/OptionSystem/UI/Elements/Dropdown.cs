@@ -6,7 +6,7 @@ namespace HouraiTeahouse.Options.UI {
 
     public class Dropdown : AbstractOptionViewAttribute {
 
-        public List<string> Options { get; set; }
+        public virtual List<string> Options { get; set; }
 
         public Dropdown(params string[] options) {
             Options = options.ToList();

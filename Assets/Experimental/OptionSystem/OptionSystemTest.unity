@@ -435,7 +435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1157454546
 RectTransform:
   m_ObjectHideFlags: 0
@@ -593,7 +593,7 @@ MonoBehaviour:
   _labelSize: 0.35
   _indent: 0.05
   _optionHeight: 30
-  container: {fileID: 0}
+  _container: {fileID: 0}
   categoryLabelTemplate: {fileID: 224782634453239146, guid: 46a679c1d27cbd44190f8f2a2001cdfd,
     type: 2}
   optionLabelTemplate: {fileID: 224500727974078776, guid: 728c65360a86cda4283c5cabb1b581eb,
@@ -609,6 +609,8 @@ MonoBehaviour:
     Prefab: {fileID: 0}
   - Type: HouraiTeahouse.Options.UI.Toggle
     Prefab: {fileID: 224256096582321248, guid: be6c4c74cdaa0fa45b8c9082997b99c1, type: 2}
+  - Type: HouraiTeahouse.Options.UI.ResolutionDropdown
+    Prefab: {fileID: 0}
 --- !u!114 &1331373876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,7 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 2
-  m_AspectRatio: 1
+  m_AspectRatio: 1.3333334
 --- !u!1 &1820264172
 GameObject:
   m_ObjectHideFlags: 0

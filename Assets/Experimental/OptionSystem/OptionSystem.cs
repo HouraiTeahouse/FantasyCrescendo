@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
 using System.Text;
-using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace HouraiTeahouse.Options {
@@ -121,13 +121,21 @@ namespace HouraiTeahouse.Options {
         }
 
         public object Get(Type type) {
+            return GetInfo(type).Instance;
+        }
+
+        public CategoryInfo GetInfo<T>() {
+            return GetInfo(typeof(T));
+        }
+
+        public CategoryInfo GetInfo(Type type)  {
             CategoryInfo category;
             if (!_categories.TryGetValue(type, out category)) {
                 var obj = Activator.CreateInstance(type);
                 category = new CategoryInfo(obj);
                 _categories.Add(type, category);
             }
-            return category.Instance;
+            return category;
         }
 
         // Function to save player option changes to memory
@@ -152,90 +160,4 @@ namespace HouraiTeahouse.Options {
         }
     }
 
-    public sealed class CategoryInfo {
-
-        public object Instance { get; private set; }
-        public Type Type { get; private set; }
-        public string Name { get; private set; }
-        readonly List<OptionInfo> _options;
-
-        public CategoryInfo(object instance) {
-            _options = new List<OptionInfo>();
-            Instance = instance;
-            Type = Argument.NotNull(instance).GetType();
-            var categoryAttribute = Type.GetCustomAttributes(true).OfType<OptionCategoryAttribute>().FirstOrDefault();
-            if (categoryAttribute != null) {
-                Name = categoryAttribute.Name ?? Type.Name;
-            }
-
-            foreach (var prop in Type.GetProperties()) {
-                var attribute = prop.GetCustomAttributes(true).OfType<OptionAttribute>().FirstOrDefault();
-                if (attribute != null) {
-                    _options.Add(new OptionInfo(this, attribute, Type, prop));
-                }
-            }
-        }
-
-        public IEnumerable<OptionInfo> Options {
-            get { return _options.Select(x => x); }
-        }
-
-    }
-
-    public sealed class OptionInfo {
-
-        public string Name { get; private set; }
-        public PropertyInfo PropertyInfo { get; private set; }
-        public OptionAttribute Attribute { get; private set; }
-        public CategoryInfo Category { get; private set; }
-        public string Key { get; private set; }
-
-        static readonly Dictionary<Type, IParser> _parser = new Dictionary<Type, IParser> {
-            { typeof(string), new SimpleParser<string>(s => s) },
-            { typeof(int), new SimpleParser<int>(int.Parse) },
-            { typeof(float), new SimpleParser<float>(float.Parse) },
-            { typeof(bool), new SimpleParser<bool>(bool.Parse) },
-        };
-
-        public OptionInfo(CategoryInfo category, OptionAttribute attr, Type type, PropertyInfo prop) {
-            Name = attr.Name ?? prop.Name;
-            Category = category;
-            PropertyInfo = prop;
-            Attribute = attr;
-            Key = Argument.NotNull(type).FullName + OptionSystem.optionSeperator + 
-                  Argument.NotNull(prop).Name;
-            if (!Prefs.Exists(Key))
-                Prefs.SetString(Key, prop.PropertyType.IsValueType ?
-                    Activator.CreateInstance(prop.PropertyType).ToString() : 
-                    "null");
-            ResetValue();
-        }
-
-        public object GetPropertyValue() {
-            return PropertyInfo.GetValue(Category.Instance, null);
-        }
-
-        public T GetPropertyValue<T>() {
-            return (T)GetPropertyValue();
-        }
-
-        public void SetPropertyValue(object val) {
-            PropertyInfo.SetValue(Category.Instance, val, null);
-        }
-
-        public object GetSavedValue() { return _parser[PropertyInfo.PropertyType].Parse(Prefs.GetString(Key)); }
-
-        public void Save() {
-            Prefs.SetString(Key, GetPropertyValue().ToString());
-        }
-
-        public void ResetValue() {
-            SetPropertyValue(GetSavedValue());
-        }
-
-        internal void Delete() {
-            Prefs.Delete(Key);
-        }
-
-    }
 }
