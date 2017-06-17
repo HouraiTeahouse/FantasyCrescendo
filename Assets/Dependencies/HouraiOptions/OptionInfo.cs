@@ -34,7 +34,7 @@ namespace HouraiTeahouse.Options {
             _listeners = Delegate.RemoveAll(_listeners, callback);
         }
 
-        public OptionInfo(CategoryInfo category, OptionAttribute attr, Type type, PropertyInfo prop) {
+        internal OptionInfo(CategoryInfo category, OptionAttribute attr, Type type, PropertyInfo prop) {
             Name = attr.Name ?? prop.Name;
             Category = category;
             PropertyInfo = prop;
