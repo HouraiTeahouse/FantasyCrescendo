@@ -75,8 +75,10 @@ namespace HouraiTeahouse.Options {
         public void SetPropertyValue(object val) {
             var oldValue = GetPropertyValue();
             PropertyInfo.SetValue(Category.Instance, val, null);
-            if (oldValue != val && _listeners != null)
+            if (oldValue != val && _listeners != null) 
                 _listeners.DynamicInvoke(oldValue, val);
+            if (OptionSystem.Autosave)
+                Save();
         }
 
         public object GetSavedValue() { return _parser[PropertyInfo.PropertyType].Parse(Prefs.GetString(Key)); }

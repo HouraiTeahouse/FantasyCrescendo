@@ -20,6 +20,9 @@ namespace HouraiTeahouse.Options.UI {
         [SerializeField]
         OptionSystem optionSystem;
 
+        [SerializeField]
+        bool _autosave = true;
+
         [Header("Layout")]
         [SerializeField, Range(0f, 1f)]
         float _labelSize = 0.35f;
