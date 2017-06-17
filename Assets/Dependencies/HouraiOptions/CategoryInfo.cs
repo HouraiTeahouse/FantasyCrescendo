@@ -13,7 +13,7 @@ namespace HouraiTeahouse.Options {
         public string Name { get; private set; }
         readonly Dictionary<string, OptionInfo> _options;
 
-        public CategoryInfo(object instance) {
+        internal CategoryInfo(object instance) {
             _options = new Dictionary<string, OptionInfo>();
             Instance = instance;
             Type = Argument.NotNull(instance).GetType();
