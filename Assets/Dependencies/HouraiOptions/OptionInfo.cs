@@ -15,17 +15,15 @@ namespace HouraiTeahouse.Options {
         public string Key { get; private set; }
         Delegate _listeners;
 
-        static readonly Dictionary<Type, IParser> _parser = new Dictionary<Type, IParser> {
-            { typeof(string), new SimpleParser<string>(s => s) },
-            { typeof(int), new SimpleParser<int>(int.Parse) },
-            { typeof(float), new SimpleParser<float>(float.Parse) },
-            { typeof(bool), new SimpleParser<bool>(bool.Parse) },
+        static readonly Dictionary<Type, Func<string, object>> _parser = new Dictionary<Type, Func<string, object>> {
+            { typeof(string), s => s },
+            { typeof(int), s => int.Parse(s) },
+            { typeof(float), s => float.Parse(s) },
+            { typeof(bool), s => bool.Parse(s) },
         };
 
         public void AddListener<T>(Action<T, T> callback) {
             Argument.NotNull(callback);
-            Log.Debug(PropertyInfo.PropertyType);
-            Log.Debug(typeof(T));
             if (!PropertyInfo.PropertyType.IsAssignableFrom(typeof(T)))
                 throw new ArgumentException("Cannot add listener for a type that does not match ");
             _listeners = Delegate.Combine(_listeners, callback);
@@ -41,7 +39,7 @@ namespace HouraiTeahouse.Options {
             Category = category;
             PropertyInfo = prop;
             Attribute = attr;
-            Key = Argument.NotNull(type).FullName + OptionSystem.optionSeperator + 
+            Key = Argument.NotNull(type).FullName + OptionsManager.optionSeperator + 
                   Argument.NotNull(prop).Name;
             var propType = prop.PropertyType;
             if (!Prefs.Exists(Key)) {
@@ -77,11 +75,11 @@ namespace HouraiTeahouse.Options {
             PropertyInfo.SetValue(Category.Instance, val, null);
             if (oldValue != val && _listeners != null) 
                 _listeners.DynamicInvoke(oldValue, val);
-            if (OptionSystem.Autosave)
+            if (OptionsManager.Autosave)
                 Save();
         }
 
-        public object GetSavedValue() { return _parser[PropertyInfo.PropertyType].Parse(Prefs.GetString(Key)); }
+        public object GetSavedValue() { return _parser[PropertyInfo.PropertyType](Prefs.GetString(Key)); }
 
         public void Save() {
             Prefs.SetString(Key, GetPropertyValue().ToString());

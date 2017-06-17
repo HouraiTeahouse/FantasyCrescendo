@@ -24,10 +24,8 @@ namespace HouraiTeahouse.Options {
 
             foreach (var prop in Type.GetProperties()) {
                 var attribute = prop.GetCustomAttributes(true).OfType<OptionAttribute>().FirstOrDefault();
-                if (attribute != null) {
-                    Log.Debug(prop.Name);
+                if (attribute != null)
                     _options.Add(prop.Name, new OptionInfo(this, attribute, Type, prop));
-                }
             }
         }
 
