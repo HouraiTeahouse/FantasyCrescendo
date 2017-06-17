@@ -18,6 +18,10 @@ namespace HouraiTeahouse.Options {
     }
 
     public class OptionSystem : MonoBehaviour {
+
+        [SerializeField]
+        bool _autosave = true;
+
         readonly Dictionary<Type, CategoryInfo> _categories = new Dictionary<Type, CategoryInfo>();
             
         public IEnumerable<CategoryInfo> Categories {
@@ -27,6 +31,8 @@ namespace HouraiTeahouse.Options {
         public IEnumerable<OptionInfo> Options {
             get { return _categories.Values.SelectMany(c => c.Options); }
         }
+
+        public static bool Autosave { get; private set; }
 
         // in registry there will be an entry under this key,
         // which includes all options' key.
@@ -72,6 +78,7 @@ namespace HouraiTeahouse.Options {
 
         // A function to initializa the OptionSystem Object
         void Initialize() {
+            Autosave = _autosave;
             CheckOptionVersion();
             // get all classes that have Options attributes
             var query = from type in Assembly.GetExecutingAssembly().GetTypes()
