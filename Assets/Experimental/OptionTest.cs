@@ -39,9 +39,6 @@ namespace HouraiTeahouse {
     public class OptionTest : MonoBehaviour {
 
         [SerializeField]
-        OptionSystem _optionSystem;
-
-        [SerializeField]
         AudioMixer _audio;
 
         [Serializable]
@@ -59,14 +56,13 @@ namespace HouraiTeahouse {
         VolumeSettings[] _volumeChannels;
 
         void Start() {
-            var category = _optionSystem.GetInfo<AudioOptions>();
+            var category = OptionsManager.Instance.GetInfo<AudioOptions>();
             foreach(var vol in _volumeChannels) {
                 // TODO(james7132): Use logarithmic change for this
                 var name = vol.Name;
                 var option = category.GetInfo(name);
                 _audio.SetFloat(name, vol.GetDbValue(option.GetPropertyValue<float>()));
                 category.GetInfo(name).AddListener<float>((b, a) => {
-                    Log.Debug("{0}, {1}", a, vol.GetDbValue(a));
                     _audio.SetFloat(name, vol.GetDbValue(a));
                 });
             }

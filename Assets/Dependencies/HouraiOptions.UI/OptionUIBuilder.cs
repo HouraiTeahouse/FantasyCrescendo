@@ -18,9 +18,6 @@ namespace HouraiTeahouse.Options.UI {
         }
 
         [SerializeField]
-        OptionSystem optionSystem;
-
-        [SerializeField]
         bool _autosave = true;
 
         [Header("Layout")]
@@ -92,12 +89,11 @@ namespace HouraiTeahouse.Options.UI {
             };
         }
 
-
         void Start() {
             Transform viewContainer = _container;
             if (viewContainer == null)
                 viewContainer = transform;
-            foreach (CategoryInfo category in optionSystem.Categories) {
+            foreach (CategoryInfo category in OptionsManager.Instance.Categories) {
                 var categoryLabel = Instantiate(categoryLabelTemplate);
                 SetNameAndText(categoryLabel.gameObject, category.Name);
                 BuildLayout(categoryLabel.gameObject);

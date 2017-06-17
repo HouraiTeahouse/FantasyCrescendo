@@ -7,17 +7,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Options {
 
-    public interface IParser {
-        object Parse(string obj);
-    }
-
-    public class SimpleParser<T> : IParser {
-        readonly Func<string, T> _parseFunc;
-        public SimpleParser(Func<string, T> parseFun) { _parseFunc = parseFun; }
-        public object Parse(string obj) { return _parseFunc(obj); }
-    }
-
-    public class OptionSystem : MonoBehaviour {
+    public class OptionsManager : MonoBehaviour {
 
         [SerializeField]
         bool _autosave = true;
@@ -33,6 +23,8 @@ namespace HouraiTeahouse.Options {
         }
 
         public static bool Autosave { get; private set; }
+
+        public static OptionsManager Instance { get; private set; }
 
         // in registry there will be an entry under this key,
         // which includes all options' key.
@@ -55,16 +47,6 @@ namespace HouraiTeahouse.Options {
             Initialize();
         }
 
-#if UNITY_EDITOR
-        // Debug call for saving changes,
-        // just for testing purposes
-        void Update() {
-            if (Input.GetKeyDown(KeyCode.S)) {
-                SaveAllChanges();
-            }
-        }
-#endif
-
         void OnApplicationQuit() {
             SaveAllChanges();
         }
@@ -79,6 +61,7 @@ namespace HouraiTeahouse.Options {
         // A function to initializa the OptionSystem Object
         void Initialize() {
             Autosave = _autosave;
+            Instance = this;
             CheckOptionVersion();
             // get all classes that have Options attributes
             var query = from type in Assembly.GetExecutingAssembly().GetTypes()
