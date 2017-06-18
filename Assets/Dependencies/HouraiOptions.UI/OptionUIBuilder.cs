@@ -84,6 +84,10 @@ namespace HouraiTeahouse.Options.UI {
             };
         }
 
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
         void Start() {
             var optionsManager = OptionsManager.Instance;
             optionsManager.LoadAllOptions();
@@ -150,7 +154,7 @@ namespace HouraiTeahouse.Options.UI {
             rect.offsetMax = Vector2.zero;
             rect.offsetMin = Vector2.zero;
         }
+
     }
 
-    
 }
