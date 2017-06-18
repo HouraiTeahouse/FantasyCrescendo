@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 11460476}
   - component: {fileID: 11473446}
   - component: {fileID: 11463294}
-  - component: {fileID: 11482896}
   - component: {fileID: 11458584}
   - component: {fileID: 114000013746611068}
   - component: {fileID: 114358818079837736}
@@ -177,17 +176,6 @@ MonoBehaviour:
     _defaultValue: en
     _key: lang
   localizationDirectory: lang
---- !u!114 &11482896
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3644896509639e4eb7658cb00ec24ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -499,16 +487,16 @@ MonoBehaviour:
   _audio: {fileID: 24100000, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
   _volumeChannels:
   - Name: MasterVolume
-    MinDb: -20
+    MinDb: -80
     MaxDb: 10
   - Name: EffectVolume
-    MinDb: -20
+    MinDb: -80
     MaxDb: 10
   - Name: MusicVolume
-    MinDb: -20
+    MinDb: -80
     MaxDb: 10
   - Name: VoiceVolume
-    MinDb: -20
+    MinDb: -80
     MaxDb: 10
 --- !u!114 &114953722336118826
 MonoBehaviour:

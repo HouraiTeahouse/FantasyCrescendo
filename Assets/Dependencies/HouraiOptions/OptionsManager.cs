@@ -127,7 +127,7 @@ namespace HouraiTeahouse.Options {
         public CategoryInfo GetInfo(Type type)  {
             Argument.NotNull(type);
             if (!IsValidCategory(type))
-                throw new ArgumentException("Category type must be valid!");
+                throw new ArgumentException("Category type must be valid: " + type.ToString());
             CategoryInfo category;
             if (!_categories.TryGetValue(type, out category)) {
                 var obj = Activator.CreateInstance(type);

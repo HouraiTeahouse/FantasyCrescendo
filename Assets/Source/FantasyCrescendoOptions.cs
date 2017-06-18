@@ -28,6 +28,9 @@ namespace HouraiTeahouse {
     [OptionCategory("Video")]
     public class VideoOptions {
 
+        [Option("Quality Level"), QualityLevelDropdown]
+        public string QualityLevel { get; set; }
+
         [Option, ResolutionDropdown]
         public string Resolution { get; set; }
 
@@ -57,16 +60,34 @@ namespace HouraiTeahouse {
         VolumeSettings[] _volumeChannels;
 
         void Start() {
-            var category = OptionsManager.Instance.GetInfo<AudioOptions>();
+            var optionsManager = OptionsManager.Instance;
+            BuildAudioOptions(optionsManager.GetInfo<AudioOptions>());
+            BuildVideoOptions(optionsManager.GetInfo<VideoOptions>());
+        }
+
+        void BuildAudioOptions(CategoryInfo category) {
             foreach(var vol in _volumeChannels) {
-                // TODO(james7132): Use logarithmic change for this
                 var name = vol.Name;
                 var option = category.GetInfo(name);
-                _audio.SetFloat(name, vol.GetDbValue(option.GetPropertyValue<float>()));
-                category.GetInfo(name).AddListener<float>((b, a) => {
-                    _audio.SetFloat(name, vol.GetDbValue(a));
-                });
+                ApplyAndListen<float>(category.GetInfo(name), val => _audio.SetFloat(name, val));
             }
+        }
+
+        void BuildVideoOptions(CategoryInfo category) {
+            ApplyAndListen<string>(category.GetInfo("QualityLevel"), val => {
+                var names = QualitySettings.names;
+                var index = Array.IndexOf(names, val);
+                if (index < 0) {
+                    index = names.Length - 1;
+                }
+                QualitySettings.SetQualityLevel(index, true);
+                Log.Info("Quality Level: {0}", QualitySettings.names[QualitySettings.GetQualityLevel()]); 
+            });
+        }
+
+        void ApplyAndListen<T>(OptionInfo option, Action<T> handler) {
+            handler(option.GetPropertyValue<T>());
+            option.AddListener<T>((b, a) => handler(a));
         }
 
     }
