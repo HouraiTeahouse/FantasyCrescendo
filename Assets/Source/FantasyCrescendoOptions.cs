@@ -44,11 +44,12 @@ namespace HouraiTeahouse {
         [Serializable]
         public class VolumeSettings {
             public string Name;
-            public float MinDb = -30f;
+            public float MinDb = -80f;
             public float MaxDb = 10f;
 
             public float GetDbValue(float normalizedValue) {
-                return Mathf.Lerp(MinDb, MaxDb, normalizedValue);
+                var val = Mathf.Sqrt(Mathf.Sqrt(normalizedValue));
+                return Mathf.Lerp(MinDb, MaxDb, val);
             }
         }
 
