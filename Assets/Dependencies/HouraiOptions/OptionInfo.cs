@@ -42,17 +42,9 @@ namespace HouraiTeahouse.Options {
             Key = Argument.NotNull(type).FullName + OptionsManager.optionSeperator + 
                   Argument.NotNull(prop).Name;
             var propType = prop.PropertyType;
-            if (!Prefs.Exists(Key)) {
-                var val = attr.DefaultValue;
-                if (val == null) {
-                    val = CreateDefaultValue(propType);
-                } else if (val.GetType() != propType) {
-                    Log.Warning("Default value for {0} option does not match target type.", prop);
-                    val = CreateDefaultValue(propType);
-                }
-                Prefs.SetString(Key, val.ToString());
-            }
-            ResetValue();
+            if (!Prefs.Exists(Key))
+                Reset();
+            Revert();
         }
 
         object CreateDefaultValue(Type type) {
@@ -79,18 +71,29 @@ namespace HouraiTeahouse.Options {
                 Save();
         }
 
-        public object GetSavedValue() { return _parser[PropertyInfo.PropertyType](Prefs.GetString(Key)); }
+        public object GetSavedValue() { 
+            return _parser[PropertyInfo.PropertyType](Prefs.GetString(Key)); 
+        }
 
         public void Save() {
             Prefs.SetString(Key, GetPropertyValue().ToString());
         }
 
-        public void ResetValue() {
+        public void Revert() {
             SetPropertyValue(GetSavedValue());
         }
 
-        internal void Delete() {
-            Prefs.Delete(Key);
+        public void Reset() {
+            var propType = PropertyInfo.PropertyType;
+            var val = Attribute.DefaultValue;
+            if (val == null) {
+                val = CreateDefaultValue(propType);
+            } else if (val.GetType() != propType) {
+                Log.Warning("Default value for {0} option does not match target type.", PropertyInfo);
+                val = CreateDefaultValue(propType);
+            }
+            SetPropertyValue(val);
+            Prefs.SetString(Key, val.ToString());
         }
 
     }
