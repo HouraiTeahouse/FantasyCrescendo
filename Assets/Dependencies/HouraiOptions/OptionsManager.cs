@@ -15,7 +15,7 @@ namespace HouraiTeahouse.Options {
         readonly Dictionary<Type, CategoryInfo> _categories = new Dictionary<Type, CategoryInfo>();
             
         public IEnumerable<CategoryInfo> Categories {
-            get { return _categories.Values.Select(x => x); }
+            get { return _categories.Values; }
         }
 
         public IEnumerable<OptionInfo> Options {
@@ -26,83 +26,32 @@ namespace HouraiTeahouse.Options {
 
         public static OptionsManager Instance { get; private set; }
 
-        // in registry there will be an entry under this key,
-        // which includes all options' key.
-        // This exists solely because Unity does not have API
-        // to traverse through all PlayerPrefs.
-        // This is used for removing obsolete options.
-
-        const string allOptionsKey = "OptionNames";
-
-        // A version tracker for deleting old registries
-        // only updates when serialized data format becomes different
-        // for example, when PlayerPrefs value changed from "type,value" to "value" only
-        const int optionVersion = 1;
-        const char keySeperator = ',';
-        internal const char optionSeperator = '*';
-        const string optionVersionKey = "OptionVersion";
+        internal const char optionSeperator = ':';
 
         // OptionSystem's initialization must be done before the MetadataList call
         void Awake() {
-            Initialize();
+            Autosave = _autosave;
+            Instance = this;
         }
 
         void OnApplicationQuit() {
             SaveAllChanges();
         }
 
-        void CheckOptionVersion() {
-            if (!Prefs.Exists(optionVersionKey) || optionVersion != Prefs.GetInt(optionVersionKey)) {
-                ClearRegistry();
-            }
-            Prefs.SetInt(optionVersionKey, optionVersion);
+        public void LoadAllOptions(Assembly assembly = null) {
+            if (assembly == null)
+                assembly = Assembly.GetExecutingAssembly();
+            // get all classes that have Options attributes
+            var categories = from type in assembly.GetTypes()
+                             where IsValidCategory(type)
+                             select type;
+            foreach(var category in categories)
+                GetInfo(category);
         }
 
-        // A function to initializa the OptionSystem Object
-        void Initialize() {
-            Autosave = _autosave;
-            Instance = this;
-            CheckOptionVersion();
-            // get all classes that have Options attributes
-            var query = from type in Assembly.GetExecutingAssembly().GetTypes()
-                        where type.IsClass && type.GetCustomAttributes(typeof(OptionCategoryAttribute), true).Length > 0
-                        select type;
-
-            var allPropertiesStr = new StringBuilder();
-            foreach (var type in query) {
-                string categoryClassName = type.FullName;
-                foreach (var property in type.GetProperties()) {
-                    allPropertiesStr.Append(categoryClassName)
-                        .Append(optionSeperator)
-                        .Append(property.Name)
-                        .Append(keySeperator);
-                }
-            }
-
-            // Remove excess characters
-            if (allPropertiesStr.Length > 0)
-                allPropertiesStr.Remove(allPropertiesStr.Length - 1, 1);
-            string allProperties = allPropertiesStr.ToString();
-            IEnumerable<string> currKeys = allProperties.Split(keySeperator);
-            if (Prefs.Exists(allOptionsKey)) {
-                IEnumerable<string> oldKeys = Prefs.GetString(allOptionsKey).Split(keySeperator);
-                var obsoleteKeys = oldKeys.Except(currKeys);
-                foreach (string key in obsoleteKeys) {
-                    Prefs.Delete(key);
-                }
-            }
-
-            Prefs.SetString(allOptionsKey, allProperties);
-            Prefs.Save();
-
-            var types =
-                currKeys.Select(k => k.Split(optionSeperator)[0])
-                    .Distinct()
-                    .Select(t => Type.GetType(t))
-                    .IgnoreNulls();
-            foreach (Type type in types) {
-                Get(type);
-            }
+        internal static bool IsValidCategory(Type type) {
+            return !type.IsAbstract && type.IsClass && 
+                type.IsDefined(typeof(OptionCategoryAttribute), true);
         }
 
         // Function to case a generic object as its appropriate type
@@ -119,6 +68,9 @@ namespace HouraiTeahouse.Options {
         }
 
         public CategoryInfo GetInfo(Type type)  {
+            Argument.NotNull(type);
+            if (!IsValidCategory(type))
+                throw new ArgumentException("Category type must be valid!");
             CategoryInfo category;
             if (!_categories.TryGetValue(type, out category)) {
                 var obj = Activator.CreateInstance(type);
@@ -132,22 +84,20 @@ namespace HouraiTeahouse.Options {
         public void SaveAllChanges() {
             foreach (OptionInfo option in Options) 
                 option.Save();
-            Log.Info("Options Saved");
         }
 
-        public void RevertAllChanges() {
+        public void RevertAll(Assembly assembly = null) {
+            LoadAllOptions(assembly);
             foreach (OptionInfo option in Options)
-                option.ResetValue();
-            Log.Info("Options Reverted");
+                option.Revert();
         }
 
-        // Delete all option related entries in registry
-        void ClearRegistry() {
+        public void ResetAll(Assembly assembly = null) {
+            PlayerPrefs.DeleteAll();
+            LoadAllOptions(assembly);
             foreach (OptionInfo option in Options)
-                option.Delete();
-            _categories.Clear();
-            Prefs.Delete(allOptionsKey);
+                option.Revert();
         }
+
     }
-
 }

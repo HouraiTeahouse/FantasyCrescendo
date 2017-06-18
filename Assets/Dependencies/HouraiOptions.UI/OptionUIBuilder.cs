@@ -60,7 +60,6 @@ namespace HouraiTeahouse.Options.UI {
         }
 
         void ISerializationCallbackReceiver.OnBeforeSerialize() {
-            var list = new List<ViewMapping>();
             RefreshTypes();
             _mappings = _prefabs.Select(kv => new ViewMapping {
                 Type = kv.Key.FullName,
@@ -71,13 +70,9 @@ namespace HouraiTeahouse.Options.UI {
         void ISerializationCallbackReceiver.OnAfterDeserialize() {
             if (_mappings == null)
                 return;
-            _prefabs = new Dictionary<Type, RectTransform>();
-            foreach(var mapping in _mappings) {
-                var type = Type.GetType(mapping.Type);
-                if (type == null)
-                    continue;
-                _prefabs.Add(type, mapping.Prefab);
-            }
+            _prefabs = _mappings.Where(m => Type.GetType(m.Type) != null)
+                                .ToDictionary(m => Type.GetType(m.Type),
+                                              m => m.Prefab);
         }
 
         static OptionUIBuilder() {
@@ -90,10 +85,12 @@ namespace HouraiTeahouse.Options.UI {
         }
 
         void Start() {
+            var optionsManager = OptionsManager.Instance;
+            optionsManager.LoadAllOptions();
             Transform viewContainer = _container;
             if (viewContainer == null)
                 viewContainer = transform;
-            foreach (CategoryInfo category in OptionsManager.Instance.Categories) {
+            foreach (CategoryInfo category in optionsManager.Categories) {
                 var categoryLabel = Instantiate(categoryLabelTemplate);
                 SetNameAndText(categoryLabel.gameObject, category.Name);
                 BuildLayout(categoryLabel.gameObject);
