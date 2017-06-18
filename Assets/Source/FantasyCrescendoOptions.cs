@@ -36,7 +36,7 @@ namespace HouraiTeahouse {
 
     }
 
-    public class OptionTest : MonoBehaviour {
+    public class FantasyCrescendoOptions : MonoBehaviour {
 
         [SerializeField]
         AudioMixer _audio;

@@ -267,11 +267,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114197818861880450, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
-        type: 2}
-      propertyPath: optionSystem
-      value: 
-      objectReference: {fileID: 2086315699}
     - target: {fileID: 224333767418244732, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
         type: 2}
       propertyPath: m_AnchorMax.x
@@ -296,6 +291,51 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.y
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 224521218508431224, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00001335144
+      objectReference: {fileID: 0}
+    - target: {fileID: 224434350219899968, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224434350219899968, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224434350219899968, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 224434350219899968, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 224393667416696872, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224393667416696872, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 224986356777193546, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224986356777193546, guid: 1c0ac3fc22f04a543b3bedd509e6fc52,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1c0ac3fc22f04a543b3bedd509e6fc52, type: 2}
@@ -648,7 +688,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5353b9d3edaf14b44a00da7d58f6ed80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _optionSystem: {fileID: 2086315699}
   _audio: {fileID: 24100000, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
   _volumeChannels:
   - Name: MasterVolume
