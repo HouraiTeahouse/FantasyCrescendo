@@ -6,10 +6,26 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Options {
 
+    /// <summary>
+    /// Metadata object for a category of options.
+    /// See <see cref="HouraiTeahouse.Options.OptionsManager">.
+    /// </summary>
     public sealed class CategoryInfo {
 
+        /// <summary>
+        /// The object instance holding the current values of the category's
+        /// options. Will be of the type described by <see cref="Type">.
+        /// </summary>
         public object Instance { get; private set; }
+
+        /// <summary>
+        /// The underlying type definition for the option category.
+        /// </summary>
         public Type Type { get; private set; }
+
+        /// <summary>
+        /// The human readable name of the category.
+        /// </summary>
         public string Name { get; private set; }
         readonly Dictionary<string, OptionInfo> _options;
 
@@ -29,10 +45,21 @@ namespace HouraiTeahouse.Options {
             }
         }
 
+        /// <summary>
+        /// Gets an enumeration of OptionInfo describing all the 
+        /// options under the category.
+        /// </summary>
         public IEnumerable<OptionInfo> Options {
             get { return _options.Values; }
         }
 
+        /// <summary>
+        /// Gets a single OptionInfo for a specific option.
+        /// </summary> 
+        /// <param name="name">the name of the option to fetch</param>
+        /// <exception cref="System.Collections.Generic.KeyNotFoundException">
+        ///   Category does not contain an option of name <paramref name="name">
+        /// </exception>
         public OptionInfo GetInfo(string name) {
             return _options[name];
         }
