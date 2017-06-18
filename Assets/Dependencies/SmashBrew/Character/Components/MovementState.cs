@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using HouraiTeahouse.SmashBrew.Stage;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -91,7 +92,38 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         LayerMask _stageLayers = -1;
 
         public bool IsGrounded {
-            get { return CharacterController != null && CharacterController.isGrounded && Physics.Raycast(transform.position, Vector3.down, 0.1f, _stageLayers); }
+            get { 
+                if (PhysicsState != null && PhysicsState.Velocity.y > 0)
+                    return false;
+                var center = Vector3.zero;
+                var radius = 1f;
+                if (CharacterController != null) {
+                    center = CharacterController.center - Vector3.up * (CharacterController.height * 0.50f - CharacterController.radius * 0.5f);
+                    radius = CharacterController.radius * 0.75f;
+                }
+                return Physics.OverlapSphere(transform.TransformPoint(center), radius, _stageLayers).Any();
+            }
+        }
+
+        /// <summary>
+        /// Callback to draw gizmos that are pickable and always drawn.
+        /// </summary>
+        void OnDrawGizmos() {
+            var center = Vector3.zero;
+            var radius = 1f;
+            if (CharacterController != null) {
+                center = CharacterController.center - Vector3.up * (CharacterController.height * 0.5f - CharacterController.radius * 0.5f);
+                radius = CharacterController.radius * 0.75f;
+                var diff = Vector3.up * (CharacterController.height * 0.5f - CharacterController.radius);
+                using (Gizmo.With(Color.red)) {
+                    var rad =  CharacterController.radius * transform.lossyScale.Max();
+                    Gizmos.DrawWireSphere(transform.TransformPoint(CharacterController.center + diff), rad);
+                    Gizmos.DrawWireSphere(transform.TransformPoint(CharacterController.center - diff), rad);
+                }
+            }
+            using (Gizmo.With(Color.blue)) {
+                Gizmos.DrawWireSphere(transform.TransformPoint(center), radius);
+            }
         }
 
         /// <summary> Can the Character currently jump? </summary>
