@@ -65,7 +65,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         void ValidateAnimator() {
             foreach (var state in StateController.States) {
-                if (Animator.HasState(0, state.AnimatorHash))
+                if (!Animator.HasState(0, state.AnimatorHash))
                     Log.Error("The animator for {0} does not have the state {1} ({2})".With(name, state.Name, state.AnimatorHash));
             }
         }
