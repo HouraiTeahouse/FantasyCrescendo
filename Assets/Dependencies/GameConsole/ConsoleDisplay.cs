@@ -1,4 +1,5 @@
 using System.Text;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,9 @@ namespace HouraiTeahouse.Console {
     /// <summary> Displays the most recent logs in the GameConsole on a Text object. REQUIRED COMPONENT: UnityEngine.UI.Text </summary>
     [RequireComponent(typeof(Text))]
     public class ConsoleDisplay : MonoBehaviour {
+
+        [SerializeField]
+        int _limit = 20;
 
         // The Text component used to render the console history
         Text _displayText;
@@ -43,7 +47,8 @@ namespace HouraiTeahouse.Console {
             }
             // Clears the current string
             _textBuilder.Length = 0;
-            foreach (string log in GameConsole.History)
+            var lines = GameConsole.History.SelectMany(log => log.Split('\n'));
+            foreach (string log in lines.Skip(lines.Count() - _limit))
                 _textBuilder.AppendLine(log);
             _displayText.text = _textBuilder.ToString();
         }
