@@ -100,6 +100,8 @@ namespace HouraiTeahouse {
             //};
         }
 
+        public static event Action<string> OnLog;
+
         static LogSettings _settings = new LogSettings();
 #if UNITY_EDITOR
         static readonly Dictionary<LogLevel, string> _colors = new Dictionary<LogLevel, string> {
@@ -175,6 +177,8 @@ namespace HouraiTeahouse {
             Application.SetStackTraceLogType(level, logType);
 #else
             System.Console.WriteLine(prefix + output, objs);
+            if (OnLog != null)
+                OnLog(string.Format(prefix + output, objs));
 #endif
         }
 
