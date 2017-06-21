@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -26,11 +27,16 @@ namespace HouraiTeahouse {
             Destruction,
             // Do the action in response to a a Submit action
             UIEvent,
+            // Do the action in response to a key Press
+            KeyPress
 
         }
 
         [SerializeField]
         Type _trigger;
+
+        [SerializeField]
+        KeyCode[] _keyCodes;
 
         /// <summary>
         ///     <see cref="ISubmitHandler.OnSubmit" />
@@ -62,6 +68,11 @@ namespace HouraiTeahouse {
         protected virtual void Update() {
             if (_trigger == Type.Update)
                 Action();
+            if (_keyCodes.Length > 0)
+                Log.Debug(string.Join(" ", _keyCodes.Select(k => k.ToString()).ToArray()));
+            if (_trigger == Type.KeyPress && _keyCodes.All(Input.GetKey)) {
+                Action();
+            }
         }
 
         /// <summary> Unity callback. Called when the object is enabled. </summary>
