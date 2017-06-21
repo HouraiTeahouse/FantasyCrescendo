@@ -28,6 +28,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public StateController<CharacterState, CharacterStateContext> StateController { get; private set; }
         public CharacterStateContext Context { get; private set; }
 
+        public CharacterControllerBuilder States {
+            get { return _controller; }
+        }
+
         Dictionary<int, Hitbox> _hitboxMap;
         List<ICharacterComponent> _components;
 

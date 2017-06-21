@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
-    [ParallelizableAttribute]
+    [Parallelizable]
     public class CharacterControllerBuilderTest {
 
         StateController<CharacterState, CharacterStateContext> _stateController;
@@ -70,6 +70,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 foreach (var src in new[] {"Idle", "Walk"}) {
                     yield return new object[] {src, "Idle", context(0f, 0f, dir, true)};
                     yield return new object[] {src, "Walk", context(1f, 0f, dir, true)};
+                }
+                foreach (var src in new[] {"Idle", "Walk", "CrouchStart", "Crouch", "CrouchEnd"}) {
                     yield return new object[] {src, "Fall", context(0f, 0f, dir, false)};
                 }
                 foreach (var src in new[] {"FallHelpless", "Fall", "EscapeAir"}) {

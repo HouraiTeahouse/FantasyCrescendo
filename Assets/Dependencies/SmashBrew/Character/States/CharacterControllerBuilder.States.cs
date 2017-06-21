@@ -12,31 +12,31 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         // -----------------------------------------------
         // Ground Movement States
         // -----------------------------------------------
-        protected CharacterState Idle { get; private set; }
-        protected CharacterState Walk { get; private set; }
+        public CharacterState Idle { get; private set; }
+        public CharacterState Walk { get; private set; }
 
         // Crouch States
-        protected CharacterState Crouch { get; private set; }
-        protected CharacterState CrouchStart { get; private set; }
-        protected CharacterState CrouchEnd { get; private set; }
+        public CharacterState Crouch { get; private set; }
+        public CharacterState CrouchStart { get; private set; }
+        public CharacterState CrouchEnd { get; private set; }
 
-        protected CharacterState Dash { get; private set; }
-        protected CharacterState Run { get; private set; }
-        protected CharacterState RunBrake { get; private set; }
-        protected CharacterState RunTurn { get; private set; }
+        public CharacterState Dash { get; private set; }
+        public CharacterState Run { get; private set; }
+        public CharacterState RunBrake { get; private set; }
+        public CharacterState RunTurn { get; private set; }
 
         // -----------------------------------------------
         // Jump States
         // -----------------------------------------------
-        protected CharacterState Jump { get; private set; }
-        protected CharacterState JumpStart { get; private set; }
-        protected CharacterState JumpAerial { get; private set; }
-        protected CharacterState Land { get; private set; }
+        public CharacterState Jump { get; private set; }
+        public CharacterState JumpStart { get; private set; }
+        public CharacterState JumpAerial { get; private set; }
+        public CharacterState Land { get; private set; }
 
         // -----------------------------------------------
         // Shield States
         // -----------------------------------------------
-        protected class ShieldStates {
+        public class ShieldStates {
             public CharacterState On { get; set; }
             public CharacterState Perfect { get; set; }
             public CharacterState Main { get; set; }
@@ -45,43 +45,43 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             public CharacterState Stunned { get; set; }
         }
 
-        protected class SmashAttackStates {
+        public class SmashAttackStates {
             public CharacterState Charge { get; set; }
             public CharacterState Attack { get; set; }
         }
 
-        protected ShieldStates Shield { get; private set; }
+        public ShieldStates Shield { get; private set; }
 
         // Ground Dodge States
-        protected CharacterState Escape { get; private set; }
-        protected CharacterState EscapeForward { get; private set; }
-        protected CharacterState EscapeBackward { get; private set; }
+        public CharacterState Escape { get; private set; }
+        public CharacterState EscapeForward { get; private set; }
+        public CharacterState EscapeBackward { get; private set; }
 
         // -----------------------------------------------
         // Air States
         // -----------------------------------------------
-        protected CharacterState Fall { get; private set; }
-        protected CharacterState FallHelpless { get; private set; }
-        protected CharacterState EscapeAir { get; private set; }
+        public CharacterState Fall { get; private set; }
+        public CharacterState FallHelpless { get; private set; }
+        public CharacterState EscapeAir { get; private set; }
 
         // -----------------------------------------------
         // Ledge States
         // -----------------------------------------------
-        protected CharacterState LedgeGrab { get; private set; }
-        protected CharacterState LedgeIdle { get; private set; }
-        protected CharacterState LedgeClimb { get; private set; }
-        protected CharacterState LedgeEscape { get; private set; }
-        protected CharacterState LedgeAttack { get; private set; }
-        protected CharacterState LedgeJump { get; private set; }
-        protected CharacterState LedgeRelease { get; private set; }
+        public CharacterState LedgeGrab { get; private set; }
+        public CharacterState LedgeIdle { get; private set; }
+        public CharacterState LedgeClimb { get; private set; }
+        public CharacterState LedgeEscape { get; private set; }
+        public CharacterState LedgeAttack { get; private set; }
+        public CharacterState LedgeJump { get; private set; }
+        public CharacterState LedgeRelease { get; private set; }
 
         // -----------------------------------------------
         // Damaged/Launched States
         // -----------------------------------------------
-        protected CharacterState DamageStun { get; private set; }
-        protected CharacterState DamageStunAir { get; private set; }
-        protected CharacterState DamageLaunched { get; private set; }
-        protected CharacterState DamageFall { get; private set; } // tumble equivalent
+        public CharacterState DamageStun { get; private set; }
+        public CharacterState DamageStunAir { get; private set; }
+        public CharacterState DamageLaunched { get; private set; }
+        public CharacterState DamageFall { get; private set; } // tumble equivalent
 
         // -----------------------------------------------
         // Grabbed/Thrown States
@@ -104,53 +104,53 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         // -----------------------------------------------
         // Environmental Collision States
         // -----------------------------------------------
-        protected CharacterState StopCeiling { get; private set; }
-        protected CharacterState StopWall { get; private set; }
-        protected CharacterState Crash { get; private set; }
+        public CharacterState StopCeiling { get; private set; }
+        public CharacterState StopWall { get; private set; }
+        public CharacterState Crash { get; private set; }
 
         // prone
-        protected CharacterState Prone { get; private set; }
-        protected CharacterState ProneStand { get; private set; }
-        protected CharacterState ProneAttack { get; private set; }
-        protected CharacterState ProneRollLeft { get; private set; }
-        protected CharacterState ProneRollRight { get; private set; }
+        public CharacterState Prone { get; private set; }
+        public CharacterState ProneStand { get; private set; }
+        public CharacterState ProneAttack { get; private set; }
+        public CharacterState ProneRollLeft { get; private set; }
+        public CharacterState ProneRollRight { get; private set; }
 
         // teching
-        protected CharacterState Tech { get; private set; }
-        protected CharacterState TechRollLeft { get; private set; }
-        protected CharacterState TechRollRight { get; private set; }
-        protected CharacterState TechWall { get; private set; }
-        protected CharacterState TechWallJump { get; private set; }
+        public CharacterState Tech { get; private set; }
+        public CharacterState TechRollLeft { get; private set; }
+        public CharacterState TechRollRight { get; private set; }
+        public CharacterState TechWall { get; private set; }
+        public CharacterState TechWallJump { get; private set; }
 
         // -----------------------------------------------
         // Attacks
         // -----------------------------------------------
         // Neutral Combo
-        protected CharacterState Neutral { get; private set; }
+        public CharacterState Neutral { get; private set; }
 
         // Tilt Attacks
-        protected CharacterState TiltUp { get; private set; }
-        protected CharacterState TiltSide { get; private set; }
-        protected CharacterState TiltDown { get; private set; }
+        public CharacterState TiltUp { get; private set; }
+        public CharacterState TiltSide { get; private set; }
+        public CharacterState TiltDown { get; private set; }
 
         // Smash Attacks
-        protected SmashAttackStates SmashUp { get; private set; }
-        protected SmashAttackStates SmashSide { get; private set; }
-        protected SmashAttackStates SmashDown { get; private set; }
+        public SmashAttackStates SmashUp { get; private set; }
+        public SmashAttackStates SmashSide { get; private set; }
+        public SmashAttackStates SmashDown { get; private set; }
 
         // Aerial Attacks
-        protected CharacterState AerialNeutral { get; private set; }
-        protected CharacterState AerialForward { get; private set; }
-        protected CharacterState AerialBackward { get; private set; }
-        protected CharacterState AerialUp { get; private set; }
-        protected CharacterState AerialDown { get; private set; }
-        protected CharacterState AerialAttackLand { get; private set; }
+        public CharacterState AerialNeutral { get; private set; }
+        public CharacterState AerialForward { get; private set; }
+        public CharacterState AerialBackward { get; private set; }
+        public CharacterState AerialUp { get; private set; }
+        public CharacterState AerialDown { get; private set; }
+        public CharacterState AerialAttackLand { get; private set; }
 
         // Special Attacks
-        protected CharacterState SpecialNeutral { get; private set; }
-        protected CharacterState SpecialUp { get; private set; }
-        protected CharacterState SpecialSide { get; private set; }
-        protected CharacterState SpecialDown { get; private set; }
+        public CharacterState SpecialNeutral { get; private set; }
+        public CharacterState SpecialUp { get; private set; }
+        public CharacterState SpecialSide { get; private set; }
+        public CharacterState SpecialDown { get; private set; }
 
         /*
         // Grabs

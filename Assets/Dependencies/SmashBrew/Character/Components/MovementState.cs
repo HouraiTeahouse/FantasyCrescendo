@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using HouraiTeahouse.SmashBrew.Stage;
 using UnityEngine;
@@ -16,8 +17,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         PhysicsState PhysicsState { get; set; }
-        CharacterController CharacterController { get; set; }
+        CharacterController MovementCollider { get; set; }
         InputContext _input;
+        HashSet<Collider> _ignoredColliders;
 
         public event Action OnJump;
 
@@ -97,11 +99,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                     return false;
                 var center = Vector3.zero;
                 var radius = 1f;
-                if (CharacterController != null) {
-                    center = CharacterController.center - Vector3.up * (CharacterController.height * 0.50f - CharacterController.radius * 0.5f);
-                    radius = CharacterController.radius * 0.75f;
+                if (MovementCollider != null) {
+                    center = MovementCollider.center - Vector3.up * (MovementCollider.height * 0.50f - MovementCollider.radius * 0.5f);
+                    radius = MovementCollider.radius * 0.75f;
                 }
-                return Physics.OverlapSphere(transform.TransformPoint(center), radius, _stageLayers).Any();
+                return Physics.OverlapSphere(transform.TransformPoint(center), 
+                                             radius, _stageLayers, 
+                                             QueryTriggerInteraction.Ignore)
+                                             .Any(col => !_ignoredColliders.Contains(col));
             }
         }
 
@@ -111,19 +116,28 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void OnDrawGizmos() {
             var center = Vector3.zero;
             var radius = 1f;
-            if (CharacterController != null) {
-                center = CharacterController.center - Vector3.up * (CharacterController.height * 0.5f - CharacterController.radius * 0.5f);
-                radius = CharacterController.radius * 0.75f;
-                var diff = Vector3.up * (CharacterController.height * 0.5f - CharacterController.radius);
+            if (MovementCollider != null) {
+                center = MovementCollider.center - Vector3.up * (MovementCollider.height * 0.5f - MovementCollider.radius * 0.5f);
+                radius = MovementCollider.radius * 0.75f;
+                var diff = Vector3.up * (MovementCollider.height * 0.5f - MovementCollider.radius);
                 using (Gizmo.With(Color.red)) {
-                    var rad =  CharacterController.radius * transform.lossyScale.Max();
-                    Gizmos.DrawWireSphere(transform.TransformPoint(CharacterController.center + diff), rad);
-                    Gizmos.DrawWireSphere(transform.TransformPoint(CharacterController.center - diff), rad);
+                    var rad =  MovementCollider.radius * transform.lossyScale.Max();
+                    Gizmos.DrawWireSphere(transform.TransformPoint(MovementCollider.center + diff), rad);
+                    Gizmos.DrawWireSphere(transform.TransformPoint(MovementCollider.center - diff), rad);
                 }
             }
             using (Gizmo.With(Color.blue)) {
                 Gizmos.DrawWireSphere(transform.TransformPoint(center), radius);
             }
+        }
+
+        public void IgnoreCollider(Collider collider, bool state) {
+            Physics.IgnoreCollision(MovementCollider, collider, state);
+            if (state)
+                _ignoredColliders.Add(collider);
+            else
+                _ignoredColliders.Remove(collider);
+            Log.Debug(_ignoredColliders.Count);
         }
 
         /// <summary> Can the Character currently jump? </summary>
@@ -145,9 +159,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             }
         }
 
+        protected override void Awake() {
+            base.Awake();
+            _ignoredColliders = new HashSet<Collider>();
+        }
+
         void Start() {
             PhysicsState = this.SafeGetComponent<PhysicsState>();
-            CharacterController = this.SafeGetComponent<CharacterController>();
+            MovementCollider = this.SafeGetComponent<CharacterController>();
             JumpCount = MaxJumpCount;
             OnChangeDirection(_direction);
             if (_ledgeTarget == null)
@@ -254,7 +273,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void OnControllerColliderHit(ControllerColliderHit hit) {
             var platform = hit.gameObject.GetComponent<Platform>();
             if (platform != null)
-                platform.CharacterCollision(CharacterController);
+                platform.CharacterCollision(MovementCollider);
             
         }
 
