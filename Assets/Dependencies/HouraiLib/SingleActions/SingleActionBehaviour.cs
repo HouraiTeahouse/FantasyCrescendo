@@ -68,11 +68,8 @@ namespace HouraiTeahouse {
         protected virtual void Update() {
             if (_trigger == Type.Update)
                 Action();
-            if (_keyCodes.Length > 0)
-                Log.Debug(string.Join(" ", _keyCodes.Select(k => k.ToString()).ToArray()));
-            if (_trigger == Type.KeyPress && _keyCodes.All(Input.GetKey)) {
+            if (_trigger == Type.KeyPress && _keyCodes.All(Input.GetKey))
                 Action();
-            }
         }
 
         /// <summary> Unity callback. Called when the object is enabled. </summary>
