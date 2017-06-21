@@ -203,6 +203,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 OnJump.SafeInvoke();
                 PhysicsState.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
                 CmdJump();
+                if (IsGrounded)
+                    Character.StateController.SetState(Character.States.JumpStart);
             }
             return success;
         }
