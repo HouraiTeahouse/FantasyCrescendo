@@ -155,7 +155,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         struct MovementInfo {
-            public float horizontalSpeed;
+            public Vector2 Speed;
             public bool facing;
         }
 
@@ -224,13 +224,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             if (CurrentLedge != null) {
                 LedgeMovement();
             } else {
-                movement.horizontalSpeed = _input.Movement.x * CurrentState.Data.MovementSpeed.Max;
-                if (!Mathf.Approximately(_input.Movement.x, 0f))
-                    movement.facing = _input.Movement.x > 0;
+                movement.Speed.x = _input.Movement.x * CurrentState.Data.MovementSpeed.Max;
                 if (IsGrounded) {
                     IsFastFalling = false;
                     if (JumpCount != MaxJumpCount)
                         CmdResetJumps();
+                    if (!Mathf.Approximately(_input.Movement.x, 0f))
+                        movement.facing = _input.Movement.x > 0;
+                    Direction = movement.facing;
                 } else {
                     if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
                         IsFastFalling = true;
@@ -239,8 +240,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 JumpCheck();
             }
 
-            PhysicsState.SetHorizontalVelocity(movement.horizontalSpeed);
-            Direction = movement.facing;
+            PhysicsState.SetHorizontalVelocity(movement.Speed.x);
         }
 
         void LimitFallSpeed() {
@@ -255,6 +255,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             var platform = hit.gameObject.GetComponent<Platform>();
             if (platform != null)
                 platform.CharacterCollision(CharacterController);
+            
         }
 
         public override void UpdateStateContext(CharacterStateContext context) {
