@@ -177,7 +177,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 {"Escape", "Shield.Main"},
                 {"EscapeForward", "Shield.Main"},
                 {"EscapeBackward", "Shield.Main"},
-                {"Dash", "Run"},
+                {"Dash", "Idle"},
                 {"RunTurn", "Run"},
                 {"LedgeGrab", "LedgeIdle"},
                 {"LedgeJump", "Jump"},
@@ -185,7 +185,15 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 {"JumpAerial", "Jump"},
                 {"CrouchStart", "Crouch"},
             };
-            return cases.Select(c => new object[] {c.Key, c.Value});
+            foreach(var kvp in cases) {
+                yield return new[] {kvp.Key, kvp.Value, null};
+            }
+            yield return new object[] {"Dash", "Run", new CharacterStateContext {
+                NormalizedAnimationTime = 1.0f,
+                Input = new InputContext {
+                    Movement = new Vector2(1.0f, 0.0f)
+                }
+            }};
         }
 
         void TestTransition(string src, string dst, CharacterStateContext context) {
@@ -195,8 +203,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         [Test, TestCaseSource("AutomaticTestCases")]
-        public void automatic_exits(string src, string dst) {
-            TestTransition(src, dst, new CharacterStateContext {
+        public void automatic_exits(string src, string dst, CharacterStateContext context = null) {
+            TestTransition(src, dst, context ?? new CharacterStateContext {
                 NormalizedAnimationTime = 1.0f,
                 ShieldHP = 100
             });
@@ -216,9 +224,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public void ledge_transitions(string src, string dst, CharacterStateContext context) {
             TestTransition(src, dst, context);
         }
-
-
-
     }
 }
 

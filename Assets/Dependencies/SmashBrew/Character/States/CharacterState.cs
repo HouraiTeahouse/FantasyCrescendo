@@ -20,8 +20,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             AnimatorHash = Animator.StringToHash(AnimatorName);
         }
 
-        public CharacterState AddTransitionTo(CharacterState state) {
-            AddTransition(ctx => ctx.NormalizedAnimationTime >= 1.0f ? state : null);
+        public CharacterState AddTransitionTo(CharacterState state, 
+                                              Func<CharacterStateContext, bool> extraCheck = null) {
+            if (extraCheck != null)
+                AddTransition(ctx => ctx.NormalizedAnimationTime >= 1.0f && extraCheck(ctx) ? state : null);
+            else
+                AddTransition(ctx => ctx.NormalizedAnimationTime >= 1.0f ? state : null);
             return this;
         }
 

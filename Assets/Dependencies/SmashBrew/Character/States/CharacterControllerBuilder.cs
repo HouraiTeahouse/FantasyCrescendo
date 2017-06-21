@@ -137,6 +137,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
             // Running States
             Idle.AddTransition(Dash, Input(i => Mathf.Abs(i.Smash.x) > inputThreshold));
+            Dash.AddTransitionTo(Idle, Input(i => Mathf.Abs(i.Movement.x) < inputThreshold));
             new[] {Dash, RunTurn}.AddTransitionTo(Run);
             Run.AddTransition(RunBrake, Input(i => Mathf.Abs(i.Movement.x) < inputThreshold));
             Run.AddTransition(RunTurn,
