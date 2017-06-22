@@ -11,6 +11,24 @@ namespace HouraiTeahouse.SmashBrew.Editor {
 
         SerializedProperty _swaps;
 
+        bool _simulate;
+        int _swapIndex = 0;
+        
+        int SwapIndex {
+            get { return _swapIndex; }
+            set {
+                _swapIndex = value;
+                UpdateMesh();
+            }
+        }
+
+        void UpdateMesh() {
+            if (_simulate)
+                Swap.Pallete = SwapIndex;
+            else
+                Swap.ResetSwaps();
+        }
+
         ColorState Swap {
             get { return target as ColorState; }
         }
@@ -62,14 +80,14 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         }
 
         public override void OnInspectorGUI() {
-            if (Check.Range(Swap.Pallete, Swap.Count))
-                Swap.Pallete = Mathf.Clamp(Swap.Pallete, 0, Swap.Count);
-            Swap.Pallete = EditorGUILayout.Popup("Current Color",
-                Swap.Pallete,
+            if (Check.Range(SwapIndex, Swap.Count))
+                SwapIndex = Mathf.Clamp(SwapIndex, 0, Swap.Count);
+            SwapIndex = EditorGUILayout.Popup("Current Color",
+                SwapIndex,
                 Enumerable.Range(0, Swap.Count)
                     .Select(i => i.ToString())
                     .ToArray());
-            EditorGUILayout.LabelField(string.Format("Swap: {0}", Swap.Pallete), EditorStyles.boldLabel);
+            EditorGUILayout.LabelField(string.Format("Swap: {0}", SwapIndex), EditorStyles.boldLabel);
             for (var i = 0; i < _swaps.arraySize; i++) {
                 SerializedProperty swap = _swaps.GetArrayElementAtIndex(i);
                 using (new EditorGUILayout.HorizontalScope()) {
@@ -80,7 +98,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                         SerializedProperty sets = swap.FindPropertyRelative("MaterialSets");
                         if(sets.arraySize == 0)
                             Add(sets);
-                        DrawArraySet(sets.GetArrayElementAtIndex(Swap.Pallete).FindPropertyRelative("_materials"), sets);
+                        DrawArraySet(sets.GetArrayElementAtIndex(SwapIndex).FindPropertyRelative("_materials"), sets);
                     }
                     if (RemoveButton)
                         Delete(_swaps, i);
@@ -95,24 +113,27 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                     if (GUILayout.Button("Remove Swap"))
                         RemoveSwap();
             }
-            if (GUI.changed)
+            _simulate = EditorGUILayout.Toggle("Simulate", _simulate);
+            if (GUI.changed) {
                 serializedObject.ApplyModifiedProperties();
+                UpdateMesh();
+            }
         }
 
         void AddSwap() {
             for (var i = 0; i < _swaps.arraySize; i++) {
                 SerializedProperty set = _swaps.GetArrayElementAtIndex(i).FindPropertyRelative("MaterialSets");
-                set.InsertArrayElementAtIndex(Swap.Pallete);
+                set.InsertArrayElementAtIndex(SwapIndex);
             }
-            Swap.Pallete++;
+            SwapIndex++;
         }
 
         void RemoveSwap() {
             for (var i = 0; i < _swaps.arraySize; i++) {
                 SerializedProperty set = _swaps.GetArrayElementAtIndex(i).FindPropertyRelative("MaterialSets");
-                set.DeleteArrayElementAtIndex(Swap.Pallete);
+                set.DeleteArrayElementAtIndex(SwapIndex);
             }
-            Swap.Pallete--;
+            SwapIndex--;
         }
 
     }
