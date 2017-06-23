@@ -70,13 +70,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 MaterialSets[palleteSwap].Set(TargetRenderers);
             }
 
-            public void Reset() {
-                foreach (Renderer renderer in TargetRenderers) {
-                    if (renderer != null)
-                        renderer.sharedMaterials = new Material[renderer.sharedMaterials.Length];
-                }
-            }
-
         }
 
         [SerializeField, ReadOnly]
@@ -116,11 +109,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             _color = value;
             foreach (Swap swap in _swaps)
                 swap.Set(value);
-        }
-
-        public void ResetSwaps() {
-            foreach (Swap swap in _swaps)
-                swap.Reset();
         }
 #endif
 
