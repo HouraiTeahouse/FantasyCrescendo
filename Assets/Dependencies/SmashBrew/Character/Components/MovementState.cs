@@ -198,8 +198,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         bool JumpCheck() {
-            bool success = (JumpCount > 0 && JumpCount <= MaxJumpCount
-                && GetKeysDown(KeyCode.W, KeyCode.UpArrow));
+            bool success = (InputState.Jump && JumpCount > 0 && JumpCount <= MaxJumpCount);
             if (success) {
                 CurrentLedge = null;
                 OnJump.SafeInvoke();

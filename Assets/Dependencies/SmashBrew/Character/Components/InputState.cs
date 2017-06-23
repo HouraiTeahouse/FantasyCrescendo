@@ -37,6 +37,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             }
         }
 
+        public bool Jump {
+            get {
+                var val = !IsInvalid && _controlMapping.Jump(Player.Controller);
+                return val || GetKeysDown(KeyCode.W, KeyCode.UpArrow);
+            }
+        }
+
         bool IsInvalid {
             get { return Player == null || Player.Controller == null || _character == null; }
         }
@@ -49,7 +56,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             input.Attack.Update(valid && _controlMapping.Attack(Player.Controller));
             input.Special.Update(valid && _controlMapping.Special(Player.Controller));
             input.Shield.Update(valid && _controlMapping.Shield(Player.Controller));
-            input.Jump.Update(valid && _controlMapping.Jump(Player.Controller));
+            input.Jump.Update(Jump);
             context.Input = input;
         }
 
