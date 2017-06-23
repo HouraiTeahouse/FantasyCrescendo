@@ -188,6 +188,8 @@ namespace HouraiTeahouse.SmashBrew {
                     PlayerControllerID = playerControllerId
                 };
                 PlayerMap[playerConnection] = player;
+                playerObj.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);
+                //player.Changed += () => playerObj.GetComponentInChildren<IDataComponent<Player>>().SetData(player);
             });
         }
 

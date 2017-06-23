@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementState))]
     [RequireComponent(typeof(PhysicsState))]
-    public class AnimationState : CharacterComponent {
+    public class AnimationState : CharacterNetworkComponent {
 
         MovementState Movement { get; set; }
         PhysicsState Physics { get; set; }

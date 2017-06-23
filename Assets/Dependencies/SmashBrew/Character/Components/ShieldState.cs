@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Shield State")]
-    public sealed class ShieldState : CharacterComponent {
+    public sealed class ShieldState : CharacterNetworkComponent, IDataComponent<Player> {
 
         // Character Constrants
         [Header("Constants")]
@@ -59,9 +59,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         GameObject _shieldObj;
         Transform _shieldTransform;
 
-        public void ResetState() { Health = MaxHealth; }
+        public override void ResetState() { Health = MaxHealth; }
 
-        void Awake() {
+        protected override void Awake() {
+            base.Awake();
             // Create Shield Object
             _shieldObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             _shieldObj.name = "Shield";
@@ -80,16 +81,21 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             render.reflectionProbeUsage = ReflectionProbeUsage.Off;
             render.lightProbeUsage = LightProbeUsage.Off;
 
-            // Make sure the Color of the shield matches the HumanPlayer
-            var player = GetComponentInParent<PlayerController>();
-            if (player != null && player.PlayerData != null) {
-                Color shieldColor = player.PlayerData.Color;
-                shieldColor.a = _shieldMaterial.color.a;
-                render.material.color = shieldColor;
-            }
+            SetShieldColor(Color.white);
             _shieldObj.SetActive(false);
 
             //_currentHP = _maxHP;
+        }
+
+        void SetShieldColor(Color color) {
+            var render = _shieldObj.GetComponent<MeshRenderer>();
+            color.a = _shieldMaterial.color.a;
+            render.material.color = color;
+        }
+
+        void IDataComponent<Player>.SetData(Player player) {
+            if (player != null)
+                SetShieldColor(player.Color);
         }
 
         //void FixedUpdate() {

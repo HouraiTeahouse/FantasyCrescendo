@@ -5,7 +5,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Collision State")]
-    public class CollisionState : CharacterComponent {
+    public class CollisionState : CharacterNetworkComponent {
 
         [Header("Variables")]
         [SyncVar, SerializeField, ReadOnly]

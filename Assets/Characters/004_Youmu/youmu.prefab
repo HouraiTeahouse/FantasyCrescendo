@@ -1454,6 +1454,7 @@ GameObject:
   - component: {fileID: 114052966524414852}
   - component: {fileID: 54772860534453672}
   - component: {fileID: 95275432572302026}
+  - component: {fileID: 114840484026881440}
   m_Layer: 9
   m_Name: youmu
   m_TagString: Player
@@ -4361,6 +4362,17 @@ MonoBehaviour:
   _knockbackScaling: 0
   _reflectable: 0
   _absorbable: 0
+--- !u!114 &114840484026881440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1723960368397862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2b94a0636e46c4cb96bd39320a06df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114840894184870562
 MonoBehaviour:
   m_ObjectHideFlags: 1

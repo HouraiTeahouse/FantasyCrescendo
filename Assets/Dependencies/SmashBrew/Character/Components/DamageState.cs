@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Damage State")]
-    public class DamageState : CharacterComponent {
+    public class DamageState : CharacterNetworkComponent {
 
         //TODO(james7132): Synchronize this across the network
 

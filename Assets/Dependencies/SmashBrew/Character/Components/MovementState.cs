@@ -9,8 +9,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Movement State")]
-    [RequireComponent(typeof(PhysicsState))]
-    public class MovementState : CharacterComponent {
+    [RequireComponent(typeof(PhysicsState), typeof(InputState))]
+    public class MovementState : CharacterNetworkComponent {
 
         public enum CharacterFacingMode {
             Rotation, Scale
@@ -18,7 +18,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         PhysicsState PhysicsState { get; set; }
         CharacterController MovementCollider { get; set; }
-        InputContext _input;
+        InputState InputState { get; set; }
         HashSet<Collider> _ignoredColliders;
 
         public event Action OnJump;
@@ -137,7 +137,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 _ignoredColliders.Add(collider);
             else
                 _ignoredColliders.Remove(collider);
-            Log.Debug(_ignoredColliders.Count);
         }
 
         /// <summary> Can the Character currently jump? </summary>
@@ -161,6 +160,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         protected override void Awake() {
             base.Awake();
+            InputState = this.SafeGetComponent<InputState>();
             _ignoredColliders = new HashSet<Collider>();
         }
 
@@ -187,6 +187,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         void LedgeMovement() {
+            if (JumpCount != MaxJumpCount)
+                CmdResetJumps();
             if (JumpCheck()) {
             } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
                 CurrentLedge = null;
@@ -197,7 +199,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         bool JumpCheck() {
             bool success = (JumpCount > 0 && JumpCount <= MaxJumpCount
-                && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)));
+                && GetKeysDown(KeyCode.W, KeyCode.UpArrow));
             if (success) {
                 CurrentLedge = null;
                 OnJump.SafeInvoke();
@@ -209,32 +211,20 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return success;
         }
 
-        void UpdateInput() {
-            // TODO(james7132): Hook this up to the full input system
-            var movement = Vector2.zero;
-            var smash = Vector2.zero;
-            if (Input.GetKey(KeyCode.A))
-                smash.x += -1;
-            if (Input.GetKey(KeyCode.D)) 
-                smash.x += 1;
-            if (Input.GetKey(KeyCode.W)) 
-                smash.y += 1;
-            if (Input.GetKey(KeyCode.S)) 
-                smash.y += -1;
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-                movement.x += -1;
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
-                movement.x += 1;
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) 
-                movement.y += 1;
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) 
-                movement.y += -1;
-            _input.Movement = movement;
-            _input.Smash = smash;
+        bool GetKeys(params KeyCode[] keys) {
+            return keys.Any(Input.GetKey);
+        }
+
+        bool GetKeysDown(params KeyCode[] keys) {
+            return keys.Any(Input.GetKeyDown);
+        }
+
+        float ButtonAxis(bool neg, bool pos) {
+            var val = neg ? -1f : 0f;
+            return val + (pos ? 1f : 0f);
         }
 
         void Update() {
-            UpdateInput();
             if (!isLocalPlayer)
                 return;
             if (Mathf.Approximately(Time.deltaTime, 0))
@@ -245,16 +235,17 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             if (CurrentLedge != null) {
                 LedgeMovement();
             } else {
-                movement.Speed.x = _input.Movement.x * CurrentState.Data.MovementSpeed.Max;
+                var movementInput = InputState.Movement;
+                movement.Speed.x = movementInput.x * CurrentState.Data.MovementSpeed.Max;
                 if (IsGrounded) {
                     IsFastFalling = false;
                     if (JumpCount != MaxJumpCount)
                         CmdResetJumps();
-                    if (!Mathf.Approximately(_input.Movement.x, 0f))
-                        movement.facing = _input.Movement.x > 0;
+                    if (!Mathf.Approximately(movementInput.x, 0f))
+                        movement.facing = movementInput.x > 0;
                     Direction = movement.facing;
                 } else {
-                    if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                    if (GetKeysDown(KeyCode.S, KeyCode.DownArrow))
                         IsFastFalling = true;
                     LimitFallSpeed();
                 }
@@ -276,14 +267,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             var platform = hit.gameObject.GetComponent<Platform>();
             if (platform != null)
                 platform.CharacterCollision(MovementCollider);
-            
         }
 
         public override void UpdateStateContext(CharacterStateContext context) {
             context.IsGrounded = IsGrounded;
             context.IsGrabbingLedge = CurrentLedge != null;
             context.Direction = Direction ? 1.0f : -1.0f;
-            context.Input = _input;
         }
 
         [Command]
