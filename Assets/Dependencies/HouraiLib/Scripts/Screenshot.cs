@@ -29,7 +29,7 @@ namespace HouraiTeahouse {
             if (File.Exists(path))
                 File.Delete(path);
 
-            Application.CaptureScreenshot(Application.platform == RuntimePlatform.IPhonePlayer ? filename : path);
+            ScreenCapture.CaptureScreenshot(Application.platform == RuntimePlatform.IPhonePlayer ? filename : path);
         }
 
     }

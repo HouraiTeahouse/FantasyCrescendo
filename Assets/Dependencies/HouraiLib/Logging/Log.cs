@@ -173,7 +173,7 @@ namespace HouraiTeahouse {
             var level = log == LogLevel.Error ? LogType.Error : LogType.Log;
             StackTraceLogType logType = Application.GetStackTraceLogType(level);
             Application.SetStackTraceLogType(level, settings.StackTrace);
-            UnityEngine.Debug.logger.LogFormat(level, prefix + output, objs);
+            UnityEngine.Debug.unityLogger.LogFormat(level, prefix + output, objs);
             Application.SetStackTraceLogType(level, logType);
 #else
             System.Console.WriteLine(prefix + output, objs);
