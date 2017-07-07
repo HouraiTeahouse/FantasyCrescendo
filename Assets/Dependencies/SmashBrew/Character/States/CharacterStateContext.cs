@@ -27,9 +27,46 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     }
 
+    public enum Direction {
+        Neutral = 0,
+        Up,
+        Down,
+        Left,
+        Right
+    }
+
+    public struct DirectionalInput {
+
+        public const float DeadZone = 0.1f;
+        public Vector2 Value;
+        public Direction Direction {
+            get {
+                var absX = Mathf.Abs(Value.x);
+                var absY = Mathf.Abs(Value.y);
+                if (absX > absY) {
+                    if (Value.x < -DeadZone)
+                        return Direction.Left;
+                    if (Value.x > DeadZone)
+                        return Direction.Right;
+                }
+                if (absX <= absY) {
+                    if (Value.y < -DeadZone)
+                        return Direction.Down;
+                    if (Value.y > DeadZone)
+                        return Direction.Up;
+                }
+                return Direction.Neutral;
+            }
+        }
+
+        public static implicit operator DirectionalInput(Vector2 value) {
+            return new DirectionalInput { Value = value };
+        }
+    }
+
     public struct InputContext {
-        public Vector2 Movement;
-        public Vector2 Smash;
+        public DirectionalInput Movement;
+        public DirectionalInput Smash;
         public ButtonContext Attack;
         public ButtonContext Special;
         public ButtonContext Jump;

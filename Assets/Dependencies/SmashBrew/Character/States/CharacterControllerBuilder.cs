@@ -87,37 +87,64 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             SmashSide.Attack.Data.SmashAttack = SmashAttack.Attack;
             SmashDown.Attack.Data.SmashAttack = SmashAttack.Attack;
 
-            //TODO(james7132): Make this configurable
-            const float inputThreshold = 0.1f;
-
             // Ground Attacks
             new [] {Idle, Walk, CrouchStart, Crouch, CrouchEnd}
-                // Tilt Attacks
-                .AddTransitions(TiltUp, Attack(i => i.Movement.y > inputThreshold))
-                .AddTransitions(TiltDown, Attack(i => i.Movement.y < -inputThreshold))
-                .AddTransitions(TiltSide, Attack(i => Math.Abs(i.Movement.x) > inputThreshold))
                 // Smash Attacks
-                .AddTransitions(SmashUp.Charge, Attack(i => i.Smash.y > inputThreshold))
-                .AddTransitions(SmashSide.Charge, Attack(i => Math.Abs(i.Smash.x) > inputThreshold))
-                .AddTransitions(SmashDown.Charge, Attack(i => i.Smash.y < -inputThreshold))
-                // Neutral Combo
-                .AddTransitions(Neutral, Attack());
+                .AddTransitions<CharacterState, CharacterStateContext>(context => {
+                    var input = context.Input;
+                    if (!input.Attack.WasPressed)
+                        return null;
+                    switch (input.Smash.Direction) {
+                        case Direction.Right:
+                        case Direction.Left:
+                            return SmashSide.Charge;
+                        case Direction.Up:
+                            return SmashUp.Charge;
+                        case Direction.Down:
+                            return SmashDown.Charge;
+                    }
+                    return null;
+                })
+                // Tilt Attacks
+                .AddTransitions<CharacterState, CharacterStateContext>(context => {
+                    var input = context.Input;
+                    if (!input.Attack.WasPressed)
+                        return null;
+                    switch (input.Movement.Direction) {
+                        case Direction.Right:
+                        case Direction.Left:
+                            return TiltSide;
+                        case Direction.Up:
+                            return TiltUp;
+                        case Direction.Down:
+                            return TiltDown;
+                    }
+                    return Neutral;
+                });
             SmashUp.Charge.AddTransitionTo(SmashUp.Attack);
             SmashDown.Charge.AddTransitionTo(SmashDown.Attack);
             SmashSide.Charge.AddTransitionTo(SmashSide.Attack);
             new[] {Neutral, TiltUp, TiltDown, TiltSide, SmashUp.Attack, SmashDown.Attack, SmashSide.Attack}
                 .AddTransitionTo(Idle);
 
-            // Aerial Attacks
             new [] {Fall, Jump, JumpAerial}
-                .AddTransitions(AerialUp, Attack(i => i.Movement.y > inputThreshold))
-                .AddTransitions(AerialDown, Attack(i => i.Movement.y < -inputThreshold))
-                // TODO(james7132): Make these face in the right direction
-                .AddTransitions(AerialForward, ctx => 
-                    Attack(i => i.Movement.x * Mathf.Sign(ctx.Direction) > inputThreshold)(ctx))
-                .AddTransitions(AerialBackward, ctx => 
-                    Attack(i => i.Movement.x * Mathf.Sign(ctx.Direction) < -inputThreshold)(ctx))
-                .AddTransitions(AerialNeutral, Attack());
+                // Aerial Attacks
+                .AddTransitions<CharacterState, CharacterStateContext>(context => {
+                    var input = context.Input;
+                    if (!input.Attack.WasPressed)
+                        return null;
+                    switch (input.Movement.Direction) {
+                        case Direction.Right:
+                            return context.Direction >= 0f ? AerialForward : AerialBackward;
+                        case Direction.Left:
+                            return context.Direction >= 0f ? AerialBackward : AerialForward;
+                        case Direction.Up:
+                            return AerialUp;
+                        case Direction.Down:
+                            return AerialDown;
+                    }
+                    return AerialNeutral;
+                });
             new[] {AerialForward, AerialBackward, AerialDown, AerialUp, AerialNeutral}
                 .AddTransitions(AerialAttackLand, ctx => ctx.IsGrounded)
                 .AddTransitionTo(Fall);
@@ -136,32 +163,32 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             Land.AddTransitionTo(Idle);
 
             // Running States
-            Idle.AddTransition(Dash, Input(i => Mathf.Abs(i.Smash.x) > inputThreshold));
-            Dash.AddTransitionTo(Idle, Input(i => Mathf.Abs(i.Movement.x) < inputThreshold));
+            Idle.AddTransition(Dash, Input(i => i.Smash.Direction == Direction.Left || i.Smash.Direction == Direction.Right));
+            Dash.AddTransitionTo(Idle, Input(i => i.Movement.Direction == Direction.Neutral));
             new[] {Dash, RunTurn}.AddTransitionTo(Run);
-            Run.AddTransition(RunBrake, Input(i => Mathf.Abs(i.Movement.x) < inputThreshold));
+            Run.AddTransition(RunBrake, Input(i => i.Movement.Direction == Direction.Neutral));
             Run.AddTransition(RunTurn,
-                ctx => !Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.x), Mathf.Sign(ctx.Direction)));
+                ctx => !Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.Value.x), Mathf.Sign(ctx.Direction)));
             RunBrake.AddTransitionTo(Idle);
 
             // Ground Movement 
             new[] {Idle, Walk, Run}
-                .AddTransitions(CrouchStart, Input(i => i.Movement.y < -inputThreshold))
+                .AddTransitions(CrouchStart, Input(i => i.Movement.Direction == Direction.Down))
                 .AddTransitions(Fall, ctx => !ctx.IsGrounded);
-            Idle.AddTransition(Walk, ctx => Math.Abs(ctx.Input.Movement.x) > inputThreshold);
-            Walk.AddTransition(Idle, ctx => Math.Abs(ctx.Input.Movement.x) < inputThreshold);
+            Idle.AddTransition(Walk, Input(i => i.Movement.Direction == Direction.Left || i.Movement.Direction == Direction.Right));
+            Walk.AddTransition(Idle, Input(i => i.Movement.Direction == Direction.Neutral));
 
             // Crouching States
             CrouchStart.AddTransitionTo(Crouch);
             CrouchEnd.AddTransitionTo(Idle);
             new[] {CrouchStart, Crouch, CrouchEnd}.AddTransitions(Fall, ctx => !ctx.IsGrounded);
-            Crouch.AddTransition(CrouchEnd, Input(i => i.Movement.y >= -inputThreshold));
+            Crouch.AddTransition(CrouchEnd, Input(i => i.Movement.Value.y >= -inputThreshold));
 
             // Ledge States
             new[] {Idle, Fall, FallHelpless}.AddTransitions(LedgeGrab, ctx => ctx.IsGrabbingLedge);
             LedgeGrab.AddTransitionTo(LedgeIdle);
-            LedgeIdle.AddTransition(LedgeRelease, Input(i => i.Movement.y < -inputThreshold))
-                .AddTransition(LedgeClimb, Input(i => i.Movement.y > inputThreshold))
+            LedgeIdle.AddTransition(LedgeRelease, Input(i => i.Movement.Direction == Direction.Down))
+                .AddTransition(LedgeClimb, Input(i => i.Movement.Direction == Direction.Up))
                 .AddTransition(LedgeJump, Input(i => i.Jump.WasPressed))
                 .AddTransition(LedgeAttack, Attack());
             LedgeJump.AddTransitionTo(Jump);
@@ -178,9 +205,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
             
             // Rolls/Sidesteps
-            Shield.Main.AddTransition(EscapeForward, Input(i => i.Movement.x > inputThreshold))
-                .AddTransition(EscapeBackward, Input(i => i.Movement.x < -inputThreshold))
-                .AddTransition(Escape, Input(i => i.Movement.y < -inputThreshold));
+            Shield.Main.AddTransition(EscapeForward, Input(i => i.Smash.Direction == Direction.Right))
+                .AddTransition(EscapeBackward, Input(i => i.Smash.Direction == Direction.Left))
+                .AddTransition(Escape, Input(i => i.Movement.Direction == Direction.Down));
             new[] {Escape, EscapeForward, EscapeBackward}.AddTransitionTo(Shield.Main);
 
             Builder.WithDefaultState(Idle);
