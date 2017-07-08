@@ -182,7 +182,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             CrouchStart.AddTransitionTo(Crouch);
             CrouchEnd.AddTransitionTo(Idle);
             new[] {CrouchStart, Crouch, CrouchEnd}.AddTransitions(Fall, ctx => !ctx.IsGrounded);
-            Crouch.AddTransition(CrouchEnd, Input(i => i.Movement.Value.y >= -inputThreshold));
+            Crouch.AddTransition(CrouchEnd, Input(i => i.Movement.Direction != Direction.Down));
 
             // Ledge States
             new[] {Idle, Fall, FallHelpless}.AddTransitions(LedgeGrab, ctx => ctx.IsGrabbingLedge);
