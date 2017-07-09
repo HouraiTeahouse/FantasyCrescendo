@@ -44,6 +44,12 @@ namespace HouraiTeahouse.SmashBrew {
             PlayerManager.MatchPlayers.ResetAll();
         }
 
+        IEnumerable<Resource<GameObject>> GetPrefabs(CharacterData character) {
+            yield return character.Prefab;
+            foreach(var prefab in character.ExtraPrefabs)
+                yield return prefab;
+        }
+
         public override void OnStartClient(NetworkClient client) {
             base.OnStartClient(client);
             DestroyLeftoverPlayers();
@@ -56,20 +62,12 @@ namespace HouraiTeahouse.SmashBrew {
                     var player = PlayerManager.MatchPlayers.Get(update.ID);
                     update.UpdatePlayer(player);
                 });
-            Task.All(DataManager.Characters.Select(character => character.Prefab.LoadAsync()
-                .Then(prefab => {
-                    if (prefab == null)
-                        return;
-                    Log.Debug(prefab);
-#if UNITY_EDITOR
-                    var instance = Instantiate(prefab) as GameObject;
-                    ClientScene.RegisterPrefab(prefab, instance.GetComponent<NetworkIdentity>().assetId);
-                    DestroyImmediate(instance);
-#else
+            Task.All(DataManager.Characters.SelectMany(character => GetPrefabs(character))
+                .Distinct()
+                .Select(resource => resource.LoadAsync())
+            ).Then(prefabs => {
+                foreach(var prefab in prefabs.Where(p => p != null))
                     ClientScene.RegisterPrefab(prefab);
-#endif
-                })
-            )).Then(() => {
                 foreach (var pref in ClientScene.prefabs)
                     Log.Info("Registered Network Prefab: {0} ({1})", pref.Value.name, pref.Key);
                 ClientStarted.Resolve();
