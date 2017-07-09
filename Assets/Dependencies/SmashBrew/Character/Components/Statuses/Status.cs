@@ -60,7 +60,7 @@ namespace HouraiTeahouse.SmashBrew.Characters.Statuses {
 
         protected virtual void OnStatusEnd() { }
 
-        public void ResetState() {
+        public override void ResetState() {
             //TODO(james7132): Implement
         }
 

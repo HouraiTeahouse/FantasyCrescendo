@@ -64,7 +64,6 @@ namespace HouraiTeahouse.SmashBrew {
 
     public class PlayerManager : MonoBehaviour {
 
-        int _maxPlayers = -1;
         Player[] _localPlayers;
         Player[] _matchPlayers;
 

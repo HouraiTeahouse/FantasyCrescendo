@@ -7,12 +7,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [DisallowMultipleComponent]
     public class InputState : CharacterComponent, IDataComponent<Player> {
 
-        TapDetector _altTap;
-
-        Character _character;
         PlayerControlMapping _controlMapping;
 
-        TapDetector _tap;
         Player Player { get; set; }
 
         public Vector2 Movement {
@@ -45,7 +41,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         bool IsInvalid {
-            get { return Player == null || Player.Controller == null || _character == null; }
+            get { return Player == null || Player.Controller == null; }
         }
 
         public override void UpdateStateContext(CharacterStateContext context) {
@@ -85,12 +81,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         protected override void Awake() {
             base.Awake();
-            _character = GetComponent<Character>();
             //TODO(james7132): Generalize this 
             _controlMapping = new PlayerControlMapping();
-
-            _tap = new TapDetector(Config.Player.TapTreshold);
-            _altTap = new TapDetector(Config.Player.TapTreshold);
         }
 
     }

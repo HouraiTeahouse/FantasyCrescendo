@@ -17,9 +17,6 @@ namespace HouraiTeahouse.Options.UI {
             public RectTransform Prefab;
         }
 
-        [SerializeField]
-        bool _autosave = true;
-
         [Header("Layout")]
         [SerializeField, Range(0f, 1f)]
         float _labelSize = 0.35f;

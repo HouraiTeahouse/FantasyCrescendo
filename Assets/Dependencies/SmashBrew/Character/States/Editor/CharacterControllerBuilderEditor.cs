@@ -25,9 +25,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 var controller = AnimatorController.CreateAnimatorControllerAtPath("Assets/" + target.GetType().Name + ".controller");
                 var stateMachine = controller.layers[0].stateMachine;
                 var builder = target as CharacterControllerBuilder;
-                foreach (var state in builder.Builder.States) {
-                    var animState = stateMachine.AddState(state.AnimatorName);
-                }
+                foreach (var state in builder.Builder.States)
+                    stateMachine.AddState(state.AnimatorName);
                 const int x = 205;
                 const int y = 45;
                 const int colSize = 15;

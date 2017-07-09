@@ -23,18 +23,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         static IEnumerable<object[]> LedgeTestCases() {
-            Func<float, float, bool, bool, CharacterStateContext>
-                context = (x, y, l, a) => {
-                    var ctx = new CharacterStateContext {
-                        NormalizedAnimationTime = 1.0f,
-                        IsGrabbingLedge = l,
-                    };
-                    var input = new InputContext { Movement = new Vector2(x, y) };
-                    if (a)
-                        input.Attack = new ButtonContext { LastFrame = false, Current = true };
-                    ctx.Input = input;
-                    return ctx;
-                };
             yield return new object[] { "Idle", "LedgeGrab", new CharacterStateContext { 
                 IsGrabbingLedge = true,
                 IsGrounded = true

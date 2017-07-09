@@ -74,6 +74,16 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return ctx => ctx.Input.Special.WasPressed && inputFunc(ctx.Input);
         }
 
+        protected Func<CharacterStateContext, bool> DirectionalInput(params Direction[] directions) {
+            var set = new HashSet<Direction>(directions);
+            return Input(i => set.Contains(i.Movement.Direction));
+        }
+
+        protected Func<CharacterStateContext, bool> DirectionalSmash(params Direction[] directions) {
+            var set = new HashSet<Direction>(directions);
+            return Input(i => set.Contains(i.Smash.Direction));
+        }
+
         public StateController<CharacterState, CharacterStateContext> BuildCharacterControllerImpl(StateControllerBuilder<CharacterState, CharacterStateContext> builder) {
             Builder = builder;
             InjectState(this);
@@ -163,20 +173,20 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             Land.AddTransitionTo(Idle);
 
             // Running States
-            Idle.AddTransition(Dash, Input(i => i.Smash.Direction == Direction.Left || i.Smash.Direction == Direction.Right));
-            Dash.AddTransitionTo(Idle, Input(i => i.Movement.Direction == Direction.Neutral));
+            Idle.AddTransition(Dash, DirectionalSmash(Direction.Left, Direction.Right));
+            Dash.AddTransitionTo(Idle, DirectionalInput(Direction.Neutral));
             new[] {Dash, RunTurn}.AddTransitionTo(Run);
-            Run.AddTransition(RunBrake, Input(i => i.Movement.Direction == Direction.Neutral));
+            Run.AddTransition(RunBrake, DirectionalInput(Direction.Neutral));
             Run.AddTransition(RunTurn,
                 ctx => !Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.Value.x), Mathf.Sign(ctx.Direction)));
             RunBrake.AddTransitionTo(Idle);
 
             // Ground Movement 
             new[] {Idle, Walk, Run}
-                .AddTransitions(CrouchStart, Input(i => i.Movement.Direction == Direction.Down))
+                .AddTransitions(CrouchStart, DirectionalInput(Direction.Down))
                 .AddTransitions(Fall, ctx => !ctx.IsGrounded);
-            Idle.AddTransition(Walk, Input(i => i.Movement.Direction == Direction.Left || i.Movement.Direction == Direction.Right));
-            Walk.AddTransition(Idle, Input(i => i.Movement.Direction == Direction.Neutral));
+            Idle.AddTransition(Walk, DirectionalInput(Direction.Left, Direction.Right));
+            Walk.AddTransition(Idle, DirectionalInput(Direction.Neutral));
 
             // Crouching States
             CrouchStart.AddTransitionTo(Crouch);
@@ -187,8 +197,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             // Ledge States
             new[] {Idle, Fall, FallHelpless}.AddTransitions(LedgeGrab, ctx => ctx.IsGrabbingLedge);
             LedgeGrab.AddTransitionTo(LedgeIdle);
-            LedgeIdle.AddTransition(LedgeRelease, Input(i => i.Movement.Direction == Direction.Down))
-                .AddTransition(LedgeClimb, Input(i => i.Movement.Direction == Direction.Up))
+            LedgeIdle.AddTransition(LedgeRelease, DirectionalInput(Direction.Down))
+                .AddTransition(LedgeClimb, DirectionalInput(Direction.Up))
                 .AddTransition(LedgeJump, Input(i => i.Jump.WasPressed))
                 .AddTransition(LedgeAttack, Attack());
             LedgeJump.AddTransitionTo(Jump);
@@ -205,9 +215,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
             
             // Rolls/Sidesteps
-            Shield.Main.AddTransition(EscapeForward, Input(i => i.Smash.Direction == Direction.Right))
-                .AddTransition(EscapeBackward, Input(i => i.Smash.Direction == Direction.Left))
-                .AddTransition(Escape, Input(i => i.Movement.Direction == Direction.Down));
+            Shield.Main.AddTransition(EscapeForward, DirectionalSmash(Direction.Right))
+                .AddTransition(EscapeBackward, DirectionalSmash(Direction.Left))
+                .AddTransition(Escape, DirectionalInput(Direction.Down));
             new[] {Escape, EscapeForward, EscapeBackward}.AddTransitionTo(Shield.Main);
 
             Builder.WithDefaultState(Idle);

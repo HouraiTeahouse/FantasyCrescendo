@@ -109,13 +109,6 @@ namespace HouraiTeahouse.AssetBundles {
                 return Task.Resolved;
             string basePath = BundleUtility.GetLocalBundlePath("");
             log.Info("Loading local asset bundles from {0}....", basePath);
-            IEnumerable<string> files;
-            try {
-                files = Directory.GetFiles(basePath, "*", SearchOption.AllDirectories);
-            } catch (DirectoryNotFoundException) {
-                log.Error("Base directory {0} cannot be found. Cannot load local bundles.", basePath);
-                return Task.Resolved;
-            }
             var whitelistRegex = whitelist.EmptyIfNull()
                 .Select(r => new Regex(r.Replace("*", "(.*?)"), 
                 RegexOptions.Compiled)).ToArray();

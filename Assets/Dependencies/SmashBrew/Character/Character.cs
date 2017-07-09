@@ -19,8 +19,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [RequireComponent(typeof(MovementState))]
     public class Character : NetworkBehaviour, IHitboxController, IRegistrar<ICharacterComponent> {
 
-        static ILog _log = Log.GetLogger<Character>();
-
         public CharacterController Controller { get; private set; }
         public MovementState Movement { get; private set; }
         public PhysicsState Physics { get; private set; }
