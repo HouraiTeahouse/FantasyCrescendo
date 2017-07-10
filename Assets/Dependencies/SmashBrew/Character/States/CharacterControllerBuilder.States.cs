@@ -67,7 +67,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         // Neutral Combo
-        public CharacterState[] Neutral { get; private set; }
+        public CharacterState Neutral { get; private set; }
 
         // Tilt Attacks
         public CharacterState TiltUp { get; private set; }
@@ -85,6 +85,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public CharacterState AerialBackward { get; private set; }
         public CharacterState AerialUp { get; private set; }
         public CharacterState AerialDown { get; private set; }
+        public CharacterState AerialAttackLand { get; private set; }
 
         // Special Attacks
         public CharacterState SpecialNeutral { get; private set; }
