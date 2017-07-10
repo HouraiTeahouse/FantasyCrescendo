@@ -20,7 +20,11 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         Vector3 _targetPositionBias;
 
         CameraTarget CameraTarget { get; set; }
-        ICollection<Transform> Targets { get; set; }
+
+        List<Transform> _targets;
+        ICollection<Transform> Targets { 
+            get { return _targets ?? (_targets = new List<Transform>()); } 
+        }
 
         public Vector2 Padding {
             get { return _padding; }
@@ -33,7 +37,6 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         }
 
         void Awake() {
-            Targets = new List<Transform>();
             CameraTarget = this.SafeGetComponent<CameraTarget>();
         }
 
