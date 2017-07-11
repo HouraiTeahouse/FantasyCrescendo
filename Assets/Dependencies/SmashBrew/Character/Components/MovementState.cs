@@ -235,7 +235,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 LedgeMovement();
             } else {
                 var movementInput = InputState.Movement;
-                movement.Speed.x = Mathf.Sign(movementInput.x) * CurrentState.Data.MovementSpeed.Lerp(Mathf.Abs(movementInput.x));
+                movement.Speed.x =  movementInput.x * CurrentState.Data.MovementSpeed.Max;
                 if (IsGrounded) {
                     IsFastFalling = false;
                     if (JumpCount != MaxJumpCount)
