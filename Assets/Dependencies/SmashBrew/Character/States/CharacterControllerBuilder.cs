@@ -212,6 +212,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 .AddTransitionTo(Shield.Main);
             Shield.Main.AddTransition(Shield.Broken, ctx => ctx.ShieldHP < 0)
                 .AddTransition(Shield.Off, Input(i => !i.Shield.Current));
+            Shield.Off.AddTransitionTo(Idle);
             new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
             
             // Rolls/Sidesteps
