@@ -37,7 +37,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     public struct DirectionalInput {
 
-        public const float DeadZone = 0.1f;
+        public const float DeadZone = 0.3f;
         public Vector2 Value;
         public Direction Direction {
             get {
