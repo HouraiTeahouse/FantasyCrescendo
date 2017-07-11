@@ -20,13 +20,30 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public override void OnInspectorGUI() {
+            var controllerProperty = serializedObject.FindProperty("_animatorController");
+            EditorGUILayout.PropertyField(controllerProperty);
             filter = EditorGUILayout.TextField("Filter", filter);
-            if (GUILayout.Button("Create Animation Controller")) {
-                var controller = AnimatorController.CreateAnimatorControllerAtPath("Assets/" + target.GetType().Name + ".controller");
+            var text = controllerProperty.objectReferenceValue != null ? "Update Animator Controller" : "Create Animation Controller";
+            if (GUILayout.Button(text)) {
+                var controller = controllerProperty.objectReferenceValue as AnimatorController;
+                Log.Debug(controller);
+                if (controller == null)
+                    controller = AnimatorController.CreateAnimatorControllerAtPath("Assets/" + target.GetType().Name + ".controller");
                 var stateMachine = controller.layers[0].stateMachine;
                 var builder = target as CharacterControllerBuilder;
-                foreach (var state in builder.Builder.States)
-                    stateMachine.AddState(state.AnimatorName);
+                foreach(var state in stateMachine.states)
+                    stateMachine.RemoveState(state.state);
+                foreach (var state in builder.Builder.States) {
+                    var animatorState = stateMachine.AddState(state.AnimatorName);
+                    var clip = state.Data.AnimationClip;
+                    animatorState.motion = clip;
+                    if (clip == null || state.Data.Length <= 0)
+                        animatorState.speed = 1f;
+                    else {
+                        Log.Debug(clip);
+                        animatorState.speed = clip.length / state.Data.Length;
+                    }
+                }
                 const int x = 205;
                 const int y = 45;
                 const int colSize = 15;
@@ -43,11 +60,18 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 var name = element.FindPropertyRelative("Name").stringValue;
                 if (!string.IsNullOrEmpty(filter) && !name.ToUpper().Contains(filter.ToUpper()))
                     continue;
+                var elementData = element.FindPropertyRelative("Data");
+                var clip = elementData.FindPropertyRelative("AnimationClip");
+                var length = elementData.FindPropertyRelative("Length");
+                var animationClip = clip.objectReferenceValue as AnimationClip;
                 EditorGUILayout.PropertyField(
-                    element.FindPropertyRelative("Data"),
+                    elementData,
                     new GUIContent(name),
                     true
                 );
+                var newClip = clip.objectReferenceValue as AnimationClip;
+                if (animationClip != newClip && newClip != null)
+                    length.floatValue = newClip.length;
             }
             if (GUI.changed)
                 serializedObject.ApplyModifiedProperties();

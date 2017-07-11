@@ -16,6 +16,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             public CharacterStateData Data;
         }
 
+        public RuntimeAnimatorController _animatorController;
         public StateData[] _data;
         Dictionary<string, CharacterStateData> _dataMap;
 

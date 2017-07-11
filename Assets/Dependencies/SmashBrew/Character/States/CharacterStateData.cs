@@ -10,9 +10,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [Serializable]
     public class CharacterStateData {
-        public StateEntryPolicy EntryPolicy = StateEntryPolicy.Normal;
+        [Tooltip("Corresponding animation for the state")]
+        public AnimationClip AnimationClip;
+        [Tooltip("Length of time the state lasts")]
+        public float Length;
         [Tooltip("Minimum and maxiumum movement speeds. Interpolated based on input magnitude.")]
         public Range MovementSpeed;
+        public StateEntryPolicy EntryPolicy = StateEntryPolicy.Normal;
         public bool Invincibility;
         public bool SuperArmor;
         public bool CanTurn = true;
