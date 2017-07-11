@@ -240,8 +240,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                     IsFastFalling = false;
                     if (JumpCount != MaxJumpCount)
                         CmdResetJumps();
-                    if (!Mathf.Approximately(movementInput.x, 0f))
-                        movement.facing = movementInput.x > 0;
+                    if (movementInput.x > DirectionalInput.DeadZone)
+                        movement.facing = true;
+                    if (movementInput.x < -DirectionalInput.DeadZone)
+                        movement.facing = false;
                     Direction = movement.facing;
                 } else {
                     if (GetKeysDown(KeyCode.S, KeyCode.DownArrow))
