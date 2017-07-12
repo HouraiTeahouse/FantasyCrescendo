@@ -49,9 +49,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             input.Movement = Movement;
             input.Smash = Smash;
             var valid = !IsInvalid;
-            input.Attack.Update(valid && _controlMapping.Attack(Player.Controller));
-            input.Special.Update(valid && _controlMapping.Special(Player.Controller));
-            input.Shield.Update(valid && _controlMapping.Shield(Player.Controller));
+            input.Attack.Update(valid && (GetKeysDown(KeyCode.E) || _controlMapping.Attack(Player.Controller)));
+            input.Special.Update(valid && (GetKeysDown(KeyCode.S) || _controlMapping.Special(Player.Controller)));
+            input.Shield.Update(valid && (GetKeysDown(KeyCode.LeftShift) || _controlMapping.Shield(Player.Controller)));
             input.Jump.Update(Jump);
             context.Input = input;
         }
