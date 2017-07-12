@@ -68,7 +68,7 @@ namespace HouraiTeahouse {
         void BuildAudioOptions(CategoryInfo category) {
             foreach(var vol in _volumeChannels) {
                 var name = vol.Name;
-                ApplyAndListen<float>(category.GetInfo(name), val => _audio.SetFloat(name, val));
+                ApplyAndListen<float>(category.GetInfo(name), val => _audio.SetFloat(name, vol.GetDbValue(val)));
             }
         }
 
