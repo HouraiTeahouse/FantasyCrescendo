@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HouraiTeahouse.Options {
+namespace HouraiTeahouse.Options.UI {
 
     [AttributeUsage(AttributeTargets.Property)]
     public abstract class AbstractOptionViewAttribute : Attribute {
