@@ -4,6 +4,8 @@
 		_MainTex ("Base (RGB) Alpha (A)", 2D) = "white" {}
 		_SpecColor ("Specular Color", Color) = (0.5, 0.5, 0.5, 1)
 		_Shininess ("Shininess", Range (0.03, 1)) = 0.078125
+		_EmissionLevel("Emission Level", Range(0.0,1.0)) = 0.0
+		_EmissionBrightness("Emission Brightness", Range(-1.0,1.0)) = 0.0
 		_BumpMap ("Normalmap", 2D) = "bump" {}
 		_WaveAndDistance ("Wave, distance and speed", Vector) = (12, 3.6, 1, 1)
 		_Cutoff ("Cutoff", float) = 0.5
@@ -29,6 +31,9 @@
 		sampler2D _BumpMap;
 		half _Shininess;
 		fixed _Cutoff;
+
+		float _EmissionLevel;
+		float _EmissionBrightness;
 		 
 		struct Input {
 			float2 uv_MainTex;
@@ -43,6 +48,7 @@
 			o.Alpha = d.a;
 			clip (o.Alpha - _Cutoff);
 			o.Gloss = d.a;
+			o.Emission = _EmissionLevel *c.rgb + _EmissionBrightness;
 			o.Specular = _Shininess;
 			o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
 		}
