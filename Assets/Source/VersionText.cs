@@ -24,6 +24,11 @@ namespace HouraiTeahouse.UI {
                 _textMesh = GetComponent<TMP_Text>();
             if (_text == null && _textMesh == null)
                 return;
+            // Do not show on non-debug builds
+            if (!Debug.isDebugBuild) {
+              DestroyImmediate(gameObject);
+              return;
+            }
             if (string.IsNullOrEmpty(_displayFormat))
                 SetText(Application.version);
             else
