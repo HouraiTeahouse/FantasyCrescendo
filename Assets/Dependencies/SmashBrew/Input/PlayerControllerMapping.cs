@@ -10,7 +10,7 @@ namespace HouraiTeahouse.SmashBrew {
     public sealed class PlayerControlMapping {
 
         static readonly Func<InputControl, float> Val = c => c.Value;
-        static readonly Func<InputControl, bool> Pressed = c => c.WasPressed;
+        static readonly Func<InputControl, bool> Pressed = c => c.State;
 
         public InputTarget[] AltStickHorizontalTargets = {InputTarget.RightStickX};
         public InputTarget[] AltStickVerticalTargets = {InputTarget.RightStickY};
