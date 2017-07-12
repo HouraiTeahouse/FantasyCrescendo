@@ -6,6 +6,8 @@ namespace HouraiTeahouse {
     [RequireComponent(typeof(AudioSource))]
     public class PlayBGM : SingleActionBehaviour {
 
+        static ILog _log = Log.GetLogger("BGM");
+
         BGMData _currentBGM;
 
         [SerializeField]
@@ -24,11 +26,11 @@ namespace HouraiTeahouse {
         /// <summary> Unity callback. Called on object instantiation </summary>
         protected override void Awake() {
             if (!_group) {
-                Destroy(this);
+                _log.Error("No BGM for {0} specified. No ", name);
+                enabled = false;
                 return;
             }
-            var effect = gameObject.GetOrAddComponent<SoundEffect>();
-            effect.hideFlags = HideFlags.HideInInspector;
+            gameObject.GetOrAddComponent<SoundEffect>().hideFlags = HideFlags.HideInInspector;
             if (!_musicSource)
                 _musicSource = GetComponent<AudioSource>();
             base.Awake();
@@ -40,8 +42,10 @@ namespace HouraiTeahouse {
         /// <summary> Plays a random clip from a </summary>
         /// <param name="bgmGroup"> </param>
         public void Play(BGMGroup bgmGroup) {
-            if (!bgmGroup)
+            if (!bgmGroup) {
+                _musicSource.Stop();
                 return;
+            }
             _group = bgmGroup;
             Play(bgmGroup.GetRandom());
         }

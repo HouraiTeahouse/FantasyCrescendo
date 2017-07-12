@@ -39,9 +39,12 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         void ChangeIgnore(Collider target, bool state) {
             if (target == null || !target.CompareTag(Config.Tags.PlayerTag))
                 return;
-
+            var movementState = target.GetComponentInParent<MovementState>();
             foreach (Collider col in _toIgnore)
-                Physics.IgnoreCollision(col, target, state);
+                if (movementState != null)
+                    movementState.IgnoreCollider(col, state);
+                else
+                    Physics.IgnoreCollision(col, target, state);
         }
 
         /// <summary> Check if the </summary>
@@ -54,8 +57,10 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             if (character == null)
                 return;
             //TODO(james7132): Edit this to use normal input
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
                 ChangeIgnore(col, true);
+                character.StateController.SetState(character.States.Fall);
+            }
         }
 
         /// <summary> Unity callback. Called when another collider enters an attached trigger collider. </summary>

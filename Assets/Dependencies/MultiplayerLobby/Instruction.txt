@@ -1,0 +1,39 @@
+This is a drag'n drop lobby solution for your game! It allow to quickly add the
+capability to create game, either directly or through matchmaker, & join them.
+
+Requirement
+===========
+
+You will need a prefab of your player, using a NetworkBehaviour instead of a monobehaviour
+
+
+How to Use It
+=============
+
+- You will need 2 scenes : one for your lobby, one for your game.
+- Just drag'n drop "Prefabs/LobbyUiCanvas" prefab in your lobby scene
+- Setup the Lobby Scene & Play Scene of the lobby inspector
+/!\ NOTE /!\ : Those scenes need to be in the build windows!
+
+- Setup the Game Player Prefab in the same inspector. This prefab is the one that will be instanciated
+when you go from the lobby to the game.
+
+
+Passing info from lobby to play
+===============================
+
+You can pass info from the LobbyPlayer (by default name & color) to your game prefab using a script subclassing LobbyHook
+and attaching that script to the same object as the lobby.
+
+The function OnLobbyServerSceneLoadedForPlayer will be called ONLY ON THE SERVER with the lobbyPlayer and the gamePLayer, just copy anything you
+need from one to the other. As this function is called only on the server, store them in SyncVar in your gameplayer and setup color and name from that script (in the star function for exemple, 
+or using SyncVar hook)
+
+(In the Meteroids Network Example, check NetworkLobbyHook for an example of how use it)
+
+Known issues
+============
+
+There is a warning about "DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.". You can ignore it.
+It's harmless and normal : we put the LobbyPlayer in the hierarchy of the lobby to display them, and the manager set them internally as don't destroy on load.
+As they are child of the lobby (which is don't destroy on load) they won't be destroy on load anyway.

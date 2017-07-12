@@ -224,7 +224,7 @@ namespace HouraiTeahouse {
         /// <param name="val"> </param>
         /// <returns> </returns>
         public float Lerp(float val) {
-            return _min + val * Width;
+            return Mathf.Lerp(_min, _max, val);
         }
 
         public static implicit operator Range(float f) { return new Range(f); }

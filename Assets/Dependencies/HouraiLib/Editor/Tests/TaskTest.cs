@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace HouraiTeahouse {
 
+    [Parallelizable]
     public class TaskNonGenericTest {
 
         [Test]

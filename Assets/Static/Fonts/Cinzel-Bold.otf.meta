@@ -3,17 +3,19 @@ guid: b0d354953a5226b40942df24fa3028f4
 timeCreated: 1455683922
 licenseType: Free
 TrueTypeFontImporter:
-  serializedVersion: 2
+  serializedVersion: 4
   fontSize: 16
   forceTextureCase: -2
-  characterSpacing: 1
-  characterPadding: 0
+  characterSpacing: 0
+  characterPadding: 1
   includeFontData: 1
-  use2xBehaviour: 0
-  fontNames: []
+  fontName: Cinzel
+  fontNames:
+  - Cinzel
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
+  ascentCalculationMode: 1
   userData: 
-  assetBundleName: 
+  assetBundleName: fonts
   assetBundleVariant: 

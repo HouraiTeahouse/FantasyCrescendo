@@ -4,7 +4,7 @@ using UnityEngine;
 namespace HouraiTeahouse.SmashBrew.UI {
 
     /// <summary> A Component that displays a Character (or a Player's Character) name on a UI Text object </summary>
-    public sealed class NameText : AbstractLocalizedText, IDataComponent<Player>, IDataComponent<CharacterData> {
+    public sealed class NameText : AbstractLocalizedText, IDataComponent<Player>, IDataComponent<CharacterData>, IDataComponent<SceneData> {
 
         [SerializeField]
         [Tooltip("Capitalize the character's name?")]
@@ -13,6 +13,10 @@ namespace HouraiTeahouse.SmashBrew.UI {
         [SerializeField]
         [Tooltip("The character who's name is to be displayed")]
         CharacterData _character;
+
+        [SerializeField]
+        [Tooltip("The scene which name is to be displayed")]
+        SceneData _scene;
 
         Player _player;
 
@@ -23,10 +27,16 @@ namespace HouraiTeahouse.SmashBrew.UI {
         /// <summary>
         ///     <see cref="IDataComponent{CharacterData}.SetData" />
         /// </summary>
+        public void SetData(SceneData data) {
+            if (data != null)
+                NativeText = data.Name;
+        }
+
+        /// <summary>
+        ///     <see cref="IDataComponent{CharacterData}.SetData" />
+        /// </summary>
         public void SetData(CharacterData data) {
-            if (data == null)
-                Text.text = string.Empty;
-            else
+            if (data != null)
                 NativeText = shortName ? data.ShortName : data.FullName;
         }
 
@@ -45,6 +55,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
         protected override void Awake() {
             base.Awake();
             SetData(_character);
+            SetData(_scene);
         }
 
         /// <summary>

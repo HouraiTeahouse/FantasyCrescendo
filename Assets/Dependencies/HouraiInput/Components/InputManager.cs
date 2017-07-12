@@ -6,6 +6,8 @@ namespace HouraiTeahouse.HouraiInput {
 
     public class InputManager : MonoBehaviour {
 
+        static ILog _log = Log.GetLogger<InputManager>();
+
         [SerializeField]
         bool _invertYAxis = false;
 
@@ -35,6 +37,9 @@ namespace HouraiTeahouse.HouraiInput {
                     HInput.AttachDevice(new UnityInputDevice(customProfileInstance));
                 }
             }
+
+            foreach(var device in HInput.Devices)
+                _log.Info("Found Device: {0}", device.Name);
 
             if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);

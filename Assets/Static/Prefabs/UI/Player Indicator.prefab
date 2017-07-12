@@ -5,16 +5,16 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22423068}
-  - 222: {fileID: 22231686}
-  - 114: {fileID: 11429496}
-  - 114: {fileID: 11466766}
-  - 114: {fileID: 11401674}
-  - 114: {fileID: 11486576}
-  - 114: {fileID: 11423900}
-  - 114: {fileID: 11468700}
+  - component: {fileID: 22423068}
+  - component: {fileID: 22231686}
+  - component: {fileID: 11429496}
+  - component: {fileID: 11466766}
+  - component: {fileID: 11401674}
+  - component: {fileID: 11486576}
+  - component: {fileID: 11423900}
+  - component: {fileID: 11468700}
   m_Layer: 5
   m_Name: Player Indicator
   m_TagString: Untagged
@@ -33,6 +33,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf80219d76ecd5b47b060bdf863fd8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _component: {fileID: 0}
   _positionBias: {x: 0, y: 0.5, z: 0}
 --- !u!114 &11423900
 MonoBehaviour:
@@ -46,11 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trigger: 0
-  _parent: {fileID: 0}
-  _tag: GUI
   _child: {fileID: 22423068}
   _keepWorldPosition: 0
+  _parent: {fileID: 0}
   _siblingIndex: 0
+  _tag: GUI
 --- !u!114 &11429496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -123,35 +124,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _component: {fileID: 0}
-  _saturation: 1
-  _value: 1
+  _character: {fileID: 0}
   _alpha: 1
   _alphaBlend: 0
-  _red:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   _blue:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 1
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 1
       outSlope: 0
@@ -162,12 +148,14 @@ MonoBehaviour:
   _green:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 1
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 1
       outSlope: 0
@@ -175,6 +163,27 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _red:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _saturation: 1
+  _useCharacterColor: 0
+  _value: 1
 --- !u!222 &22231686
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -193,6 +202,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
