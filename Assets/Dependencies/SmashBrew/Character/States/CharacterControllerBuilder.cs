@@ -211,7 +211,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             Idle.AddTransition(Shield.On, Input(i => i.Shield.Current));
             Shield.On.AddTransition(Shield.Perfect, ctx => ctx.IsHit)
                 .AddTransitionTo(Shield.Main);
-            Shield.Main.AddTransition(Shield.Broken, ctx => ctx.ShieldHP < 0)
+            Shield.Main.AddTransition(Shield.Broken, ctx => ctx.ShieldHP <= 0)
                 .AddTransition(Shield.Off, Input(i => !i.Shield.Current));
             Shield.Off.AddTransitionTo(Idle);
             new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
