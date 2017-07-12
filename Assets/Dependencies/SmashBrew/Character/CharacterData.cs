@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using System.Collections.ObjectModel;
 using Random = System.Random;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -75,6 +76,12 @@ namespace HouraiTeahouse.SmashBrew {
         [Tooltip("The theme played on the match results screen when the character wins")]
         string _victoryTheme;
 
+        [Header("Networking")]
+        [SerializeField]
+        [Resource(typeof(GameObject))]
+        [Tooltip("Extra prefabs the character uses that need to be registered for spawning across the network.")]
+        string[] _extraPrefabs;
+
         /// <summary> The short name of the character. Usually just their first name. </summary>
         public string ShortName {
             get { return _shortName; }
@@ -104,6 +111,8 @@ namespace HouraiTeahouse.SmashBrew {
 
         /// <summary> Gets the resource for the character's victory theme clip </summary>
         public Resource<AudioClip> VictoryTheme { get; private set; }
+
+        public ReadOnlyCollection<Resource<GameObject>> ExtraPrefabs { get; private set; }
 
         /// <summary> The color used in the character's select image </summary>
         public Color BackgroundColor {
@@ -165,6 +174,9 @@ namespace HouraiTeahouse.SmashBrew {
             HomeStage = Resource.Get<SceneData>(_homeStage);
             Announcer = Resource.Get<AudioClip>(_announcerClip);
             VictoryTheme = Resource.Get<AudioClip>(_victoryTheme);
+            if (_extraPrefabs == null)
+                _extraPrefabs = new string[0];
+            ExtraPrefabs = new ReadOnlyCollection<Resource<GameObject>>(_extraPrefabs.Select(Resource.Get<GameObject>).ToArray());
             RegeneratePortraits();
         }
 
@@ -177,9 +189,14 @@ namespace HouraiTeahouse.SmashBrew {
             RegenerateID();
         }
 
-        void RegeneratePortraits() { _portraitResources = _portraits.Select(Resource.Get<Sprite>).ToArray(); }
+        void RegeneratePortraits() { 
+            _portraitResources = _portraits.Select(Resource.Get<Sprite>).ToArray(); 
+        }
+
         [ContextMenu("Regenerate ID")]
-        void RegenerateID() { _id = (uint)new Random().Next();}
+        void RegenerateID() { 
+            _id = (uint)new Random().Next();
+        }
 
     }
 

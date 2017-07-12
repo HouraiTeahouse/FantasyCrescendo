@@ -268,6 +268,10 @@ namespace HouraiTeahouse.HouraiInput {
 
         public void Vibrate(float intensity) { Vibrate(intensity, intensity); }
 
+        public override string ToString() {
+            return string.Format("InputDevice ({0}, {1})", Name, Meta);
+        }
+
     }
 
 }

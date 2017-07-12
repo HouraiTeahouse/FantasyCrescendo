@@ -63,7 +63,7 @@ namespace HouraiTeahouse.Localization.Editor {
             if (!Directory.Exists(baseFolder))
                 Directory.CreateDirectory(baseFolder);
             foreach (var lang in languageMap) {
-                File.WriteAllText(Path.Combine(baseFolder, lang.Key + LanguageManager.FileExtension), 
+                File.WriteAllText(Path.Combine(baseFolder, lang.Key + LanguageManager.FileExtension),
                     JsonConvert.SerializeObject(lang.Value, Formatting.Indented));
                 Log.Info("Generating language files for: {0}", lang.Key);
             }

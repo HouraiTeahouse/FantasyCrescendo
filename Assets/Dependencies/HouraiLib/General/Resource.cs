@@ -70,14 +70,20 @@ namespace HouraiTeahouse {
             if (IsLoaded)
                 return Asset;
             T loadedObject;
-            if (IsBundled)
+            if (IsBundled) {
 #if UNITY_EDITOR
-                loadedObject = Assets.LoadBundledAsset(_path) as T;
-#else
-                throw new InvalidOperationException("Cannot synchronously load assets from AssetBundles. Path: {0}".With(_path));
+                if (!EditorApplication.isPlayingOrWillChangePlaymode) {
+                    loadedObject = Assets.LoadBundledAsset(_path) as T;
+                }
+                else
 #endif
-            else
+                {
+                    throw new InvalidOperationException(
+                        "Cannot synchronously load assets from AssetBundles. Path: {0}".With(_path));
+                }
+            } else {
                 loadedObject = Resources.Load<T>(_path);
+            }
 #if UNITY_EDITOR
             if (EditorApplication.isPlayingOrWillChangePlaymode)
 #endif

@@ -226,15 +226,17 @@ ModelImporter:
     7400000: Take 001
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
+    resampleCurves: 0
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -246,7 +248,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -256,9 +258,9 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
+    optimizeMeshForGPU: 0
     keepQuads: 0
-    weldVertices: 1
+    weldVertices: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88

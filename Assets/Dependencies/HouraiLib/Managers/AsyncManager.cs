@@ -56,10 +56,7 @@ namespace HouraiTeahouse {
 
         void Start() { Flush(); }
 
-        void Update() {
-            Flush();
-            //Log.Debug(AssetBundleManager.Manifest.State);
-        }
+        void Update() { Flush(); }
 
         static void Flush() {
             if (WaitingSynchronousActions == null)

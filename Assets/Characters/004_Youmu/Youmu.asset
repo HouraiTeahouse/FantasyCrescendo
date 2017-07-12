@@ -1,0 +1,972 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 162cf6fb4522aca44982c6145dd6b664, type: 3}
+  m_Name: Youmu
+  m_EditorClassIdentifier: 
+  _animatorController: {fileID: 9100000, guid: 4b056affd7f818b4e83df535741cd855, type: 2}
+  _data:
+  - Name: Idle
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
+      Length: 4.9583335
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Walk
+    Data:
+      AnimationClip: {fileID: 7400000, guid: fb01eb96bd4199341a5083c7648d097c, type: 3}
+      Length: 1
+      MovementSpeed:
+        _min: 0
+        _max: 5
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Crouch
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
+      Length: 1.9833333
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 0
+  - Name: CrouchStart
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
+      Length: 0.15
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 1
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 0
+  - Name: CrouchEnd
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
+      Length: 0.15
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 1
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 0
+  - Name: Dash
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
+      Length: 0.5
+      MovementSpeed:
+        _min: 7.5
+        _max: 7.5
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Run
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
+      Length: 0.75
+      MovementSpeed:
+        _min: 7.5
+        _max: 7.5
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: RunBrake
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
+      Length: 0.5
+      MovementSpeed:
+        _min: 3.5
+        _max: 3.5
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: RunTurn
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
+      Length: 0.5
+      MovementSpeed:
+        _min: 7.5
+        _max: 7.5
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Jump
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
+      Length: 1
+      MovementSpeed:
+        _min: 0
+        _max: 5
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: JumpStart
+    Data:
+      AnimationClip: {fileID: 7400002, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
+      Length: 0.25
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: JumpAerial
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
+      Length: 0.25
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Land
+    Data:
+      AnimationClip: {fileID: 7400000, guid: a04d73ffa41e4dd4099fbbebfe00a948, type: 3}
+      Length: 0.25
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Shield.On
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
+      Length: 1.9833333
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Shield.Perfect
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
+      Length: 1.9833333
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Shield.Main
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
+      Length: 1.9833333
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Shield.Off
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
+      Length: 1.9833333
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Shield.Broken
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
+      Length: 1.9833333
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Shield.Stunned
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
+      Length: 4.9583335
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Escape
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: EscapeForward
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: EscapeBackward
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Fall
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 6084871001fff60419effbdbc5ff9122, type: 3}
+      Length: 1.1666665
+      MovementSpeed:
+        _min: 0
+        _max: 5
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: FallHelpless
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 6084871001fff60419effbdbc5ff9122, type: 3}
+      Length: 1.1666665
+      MovementSpeed:
+        _min: 5
+        _max: 5
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: EscapeAir
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 6084871001fff60419effbdbc5ff9122, type: 3}
+      Length: 1.1666665
+      MovementSpeed:
+        _min: 5
+        _max: 5
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: LedgeGrab
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 5e538867655a4ab4b96bb3980d620489, type: 3}
+      Length: 1.2333333
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: LedgeIdle
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 5e538867655a4ab4b96bb3980d620489, type: 3}
+      Length: 1.2333333
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: LedgeClimb
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 5e538867655a4ab4b96bb3980d620489, type: 3}
+      Length: 1.2333333
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: LedgeEscape
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: LedgeAttack
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: LedgeJump
+    Data:
+      AnimationClip: {fileID: 7400000, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
+      Length: 3.0416665
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 1
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: LedgeRelease
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: DamageStun
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: DamageStunAir
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: DamageLaunched
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: DamageFall
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: StopCeiling
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: StopWall
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Crash
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Prone
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ProneStand
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ProneAttack
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ProneRollLeft
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ProneRollRight
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Tech
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: TechRollLeft
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: TechRollRight
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: TechWall
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: TechWallJump
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: Neutral
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: TiltUp
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: TiltSide
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: TiltDown
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SmashUp.Charge
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SmashUp.Attack
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SmashSide.Charge
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SmashSide.Attack
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SmashDown.Charge
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SmashDown.Attack
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: AerialNeutral
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: AerialForward
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: AerialBackward
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: AerialUp
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: AerialDown
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: AerialAttackLand
+    Data:
+      AnimationClip: {fileID: 7400000, guid: a04d73ffa41e4dd4099fbbebfe00a948, type: 3}
+      Length: 0.25
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SpecialNeutral
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SpecialUp
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SpecialSide
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: SpecialDown
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabPull
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabRunPull
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabWait
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabInterrupted
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabPummel
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ThrowForward
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ThrowBackward
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ThrowUp
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ThrowDown
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabbedPulled
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabbedWait
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabbedInterrupt
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabbedInterruptJump
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: GrabbedDamaged
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ThrownUp
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ThrownDown
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ThrownForward
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1
+  - Name: ThrownBackward
+    Data:
+      AnimationClip: {fileID: 0}
+      Length: 0
+      MovementSpeed:
+        _min: 0
+        _max: 0
+      EntryPolicy: 0
+      Invincibility: 0
+      SuperArmor: 0
+      CanTurn: 1

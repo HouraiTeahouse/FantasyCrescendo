@@ -21,11 +21,11 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 			//@TODO: use append hash... (Make sure pipeline works correctly with it.)
 			BuildPipeline.BuildAssetBundles (outputPath, 
                 BuildAssetBundleOptions.ChunkBasedCompression |
-                BuildAssetBundleOptions.AppendHashToAssetBundleName |
                 BuildAssetBundleOptions.DeterministicAssetBundle |
                 BuildAssetBundleOptions.StrictMode,
                 buildTarget);
-			CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath), target);
+			CopyAssetBundlesTo(outputPath, Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath));
+            AssetDatabase.Refresh();
 		}
 	
 		public static void WriteServerURL() {
@@ -62,13 +62,15 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 				return;
 			}
 			
-			string targetName = GetBuildTargetName(EditorUserBuildSettings.activeBuildTarget);
+            var target = EditorUserBuildSettings.activeBuildTarget;
+			string targetName = GetBuildTargetName(target);
 			if (targetName == null)
 				return;
 			
 			// Build and copy AssetBundles.
 			BuildAssetBundles();
-			CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath));
+			CopyAssetBundlesTo(Path.Combine(BundleUtility.AssetBundlesOutputPath,  BundleUtility.GetPlatformName(target)),
+                Path.Combine(Application.streamingAssetsPath, BundleUtility.AssetBundlesOutputPath));
 			AssetDatabase.Refresh();
 			
 			BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
@@ -105,25 +107,22 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 			}
 		}
 	
-		public static void CopyAssetBundlesTo(string outputPath, BuildTarget? target = null) {
+		public static void CopyAssetBundlesTo(string src, string dst) {
 			// Clear streaming assets folder.
-			Directory.CreateDirectory(outputPath);
-	
-			string outputFolder = BundleUtility.GetPlatformName(target);
+			Directory.CreateDirectory(dst);
 	
 			// Setup the source folder for assetbundles.
-			var source = Path.Combine(Path.Combine(System.Environment.CurrentDirectory, BundleUtility.AssetBundlesOutputPath), outputFolder);
+			var source = Path.Combine(System.Environment.CurrentDirectory, src);
 			if (!Directory.Exists(source))
 				Log.Info("No assetBundle output folder, try to build the assetBundles first.");
 	
 			// Setup the destination folder for assetbundles.
-			var destination = Path.Combine(outputPath, outputFolder);
-			if (Directory.Exists(destination))
-				FileUtil.DeleteFileOrDirectory(destination);
+			if (Directory.Exists(dst))
+				FileUtil.DeleteFileOrDirectory(dst);
 			
-			FileUtil.CopyFileOrDirectory(source, destination);
-            if (Directory.Exists(destination)) {
-                foreach (var file in Directory.GetFiles(destination, "*.manifest*", SearchOption.AllDirectories))
+			FileUtil.CopyFileOrDirectory(source, dst);
+            if (Directory.Exists(dst)) {
+                foreach (var file in Directory.GetFiles(dst, "*.manifest*", SearchOption.AllDirectories))
                     File.Delete(file);
             }
 		}

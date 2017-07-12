@@ -16,7 +16,7 @@ MonoBehaviour:
   _isSelectable: 1
   _isVisible: 1
   _homeStage: Stages/Forest of Magic
-  _icon: Icons/youmu_icon
+  _icon: icons:youmu_icon
   _portraits:
   - characters/youmu/portraits:youmu_portrait_1
   - characters/youmu/portraits:youmu_portrait_2
@@ -30,3 +30,5 @@ MonoBehaviour:
   _fullName: Youmu Konpaku
   _announcerClip: Characters/004_Youmu/Audio/youmu_announcer
   _victoryTheme: Characters/004_Youmu/Audio/youmu_announcer
+  _extraPrefabs:
+  - characters/youmu/player:Myon

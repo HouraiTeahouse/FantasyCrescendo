@@ -1,4 +1,5 @@
 using System;
+using HouraiTeahouse.AssetBundles;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -9,7 +10,7 @@ namespace HouraiTeahouse.SmashBrew {
         static Config _instance;
 
         /// <summary> The singleton instance of the game's config </summary>
-        static Config Instance {
+        public static Config Instance {
             get {
                 if (_instance)
                     return _instance;
@@ -21,10 +22,6 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public static Config Load() { return Instance; }
-
-        public static BundleConfig Bundles {
-            get { return Instance._bundles; }
-        }
 
         public static PlayerConfig Player {
             get { return Instance._player; }
@@ -79,8 +76,29 @@ namespace HouraiTeahouse.SmashBrew {
     [Serializable]
     public class BundleConfig {
 
+        [SerializeField, Multiline]
+        string _url;
+
         [SerializeField]
-        string BaseDownloadingURL;
+        string _branch;
+
+        const string BranchIdentifier = "%branch%";
+        const string PlatformIdentifier = "%platform%";
+        string _baseUrl = null;
+
+        public string BaseUrl {
+            get {
+                if (!string.IsNullOrEmpty(_baseUrl))
+                    return _baseUrl;
+                _baseUrl = _url.Replace(BranchIdentifier, Branch)
+                    .Replace(PlatformIdentifier, BundleUtility.GetPlatformName());
+                return _baseUrl;
+            }
+        }
+
+        public string Branch {
+            get { return _branch; }
+        }
 
     }
 
@@ -88,13 +106,20 @@ namespace HouraiTeahouse.SmashBrew {
     public class TagConfig {
 
         [SerializeField, Tag]
+        [Tooltip("The tag for marking player GameObjects")]
         string _playerTag;
 
         [SerializeField, Tag]
+        [Tooltip("The tag for marking hitboxes")]
         string _hitboxTag;
 
         [SerializeField, Tag]
+        [Tooltip("The tag for marking ledges")]
         string _ledgeTag;
+
+        [SerializeField, Tag]
+        [Tooltip("The tag for mark follow targets for Player Indicators")]
+        string _indicatorTargetTag;
 
         [SerializeField, Layer]
         int _characterLayer;
@@ -108,33 +133,15 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField, Layer]
         int _hurtboxLayer;
 
-        public string PlayerTag {
-            get { return _playerTag; }
-        }
+        public string PlayerTag { get { return _playerTag; } }
+        public string HitboxTag { get { return _hitboxTag; } } 
+        public string LedgeTag { get { return _ledgeTag; } }
+        public string IndicatorTargetTag { get { return _indicatorTargetTag; } }
 
-        public string HitboxTag {
-            get { return _hitboxTag; }
-        }
-
-        public string LedgeTag {
-            get { return _ledgeTag; }
-        }
-
-        public int CharacterLayer {
-            get { return _characterLayer; }
-        }
-
-        public int IntangibleLayer {
-            get { return _intangibleLayer; }
-        }
-
-        public int HitboxLayer {
-            get { return _hitboxLayer; }
-        }
-
-        public int HurtboxLayer {
-            get { return _hurtboxLayer; }
-        }
+        public int CharacterLayer { get { return _characterLayer; } } 
+        public int IntangibleLayer { get { return _intangibleLayer; } }
+        public int HitboxLayer { get { return _hitboxLayer; } }
+        public int HurtboxLayer { get { return _hurtboxLayer; } }
 
     }
 

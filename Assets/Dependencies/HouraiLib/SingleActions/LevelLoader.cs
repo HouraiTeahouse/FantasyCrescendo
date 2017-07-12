@@ -37,7 +37,6 @@ namespace HouraiTeahouse {
             for (var i = 0; i < SceneManager.sceneCount; i++) {
                 var path = SceneManager.GetSceneAt(i).path;
                 paths.Add(path);
-                Log.Debug(path);
             }
             foreach (string scenePath in _scenes) {
                 if (!_ignoreLoadedScenes && paths.Contains("Assets/{0}.unity".With(scenePath)))

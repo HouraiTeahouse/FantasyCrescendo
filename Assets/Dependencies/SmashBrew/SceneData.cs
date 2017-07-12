@@ -1,3 +1,5 @@
+using HouraiTeahouse.AssetBundles;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -82,16 +84,21 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void Unload() {
-            PreviewImage.Unload();
-            Icon.Unload();
+            if(PreviewImage != null)
+                PreviewImage.Unload();
+            if (Icon != null)
+                Icon.Unload();
         }
 
         /// <summary> Loads the scene described by the SceneData </summary>
-        public void Load() {
-            Mediator.Global.Publish(new LoadSceneEvent {
-                Task = SceneLoader.LoadScene(_scene),
-                Scene = this
-            });
+        public ITask Load() {
+            var task = SceneLoader.LoadScene(_scene);
+            task.Then(() =>
+                Mediator.Global.Publish(new LoadSceneEvent {
+                    Scene = this
+                })
+            );
+            return task;
         }
 
         /// <summary> Unity Callback. Called when ScriptableObject is loaded. </summary>
