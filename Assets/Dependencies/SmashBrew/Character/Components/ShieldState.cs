@@ -27,6 +27,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         float _regenRate = 25;
 
         [SerializeField]
+        float _recoveryCooldown = 0.5f;
+
+        [SerializeField]
         [Tooltip("How much health the shield resets to after being broken.")]
         float _resetHealth = 30f;
 
@@ -58,6 +61,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _resetHealth; }
         }
 
+        public float RecoveryCooldown {
+            get { return _recoveryCooldown; }
+        }
+
         public float ShieldHealth {
             get { return _currentShieldHealth; }
             set { _currentShieldHealth = value; }
@@ -65,6 +72,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         GameObject _shieldObj;
         Transform _shieldTransform;
+        float _lastShieldExitTime = float.NegativeInfinity;
 
         public override void ResetState() { ShieldHealth = MaxShieldHealth; }
 
@@ -106,6 +114,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             //TODO(james7132): Synchronize this across the network
             controller.OnStateChange += (b, a) => {
                 _shieldObj.SetActive(validStates.Contains(a));
+                if (_shieldObj.activeInHierarchy)
+                    //TODO(james7132): Weigh the benefits of using scaled vs unscaled time for this
+                    _lastShieldExitTime = Time.time;
             };
         }
 
@@ -115,7 +126,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 _shieldTransform.localPosition = transform.InverseTransformPoint(_targetBone.position);
                 ShieldHealth = Mathf.Max(0f, ShieldHealth - DepletionRate * Time.deltaTime);
             } else {
-                ShieldHealth = Mathf.Min(MaxShieldHealth, ShieldHealth + RegenRate * Time.deltaTime);
+                // Assure the recovery time has passed
+                if (Time.time > _lastShieldExitTime + RecoveryCooldown)
+                    ShieldHealth = Mathf.Min(MaxShieldHealth, ShieldHealth + RegenRate * Time.deltaTime);
             }
         }
 

@@ -3799,6 +3799,7 @@ MonoBehaviour:
   _maxShieldHealth: 100
   _depletionRate: 15
   _regenRate: 25
+  _recoveryCooldown: 3
   _resetHealth: 30
   _targetBone: {fileID: 4911376193151742}
   _shieldMaterial: {fileID: 2100000, guid: 70c567f44c231184d87f4483cfe45e47, type: 2}
