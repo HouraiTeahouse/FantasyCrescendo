@@ -1405,6 +1405,7 @@ GameObject:
   - component: {fileID: 95275432572302026}
   - component: {fileID: 114840484026881440}
   - component: {fileID: 114554578085764870}
+  - component: {fileID: 114034278491683488}
   m_Layer: 9
   m_Name: youmu
   m_TagString: Player
@@ -3783,6 +3784,25 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114034278491683488
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1723960368397862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7afbe4ca6a2957e47a99ded7485a2313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shieldSize: 1.25
+  _maxShieldHealth: 100
+  _depletionRate: 15
+  _regenRate: 25
+  _resetHealth: 30
+  _targetBone: {fileID: 4911376193151742}
+  _shieldMaterial: {fileID: 2100000, guid: 70c567f44c231184d87f4483cfe45e47, type: 2}
+  _currentShieldHealth: 0
 --- !u!114 &114052966524414852
 MonoBehaviour:
   m_ObjectHideFlags: 1

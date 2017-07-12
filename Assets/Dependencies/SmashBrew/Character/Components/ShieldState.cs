@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
 
@@ -11,8 +12,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         // Character Constrants
         [Header("Constants")]
         [SerializeField]
+        float _shieldSize = 1f;
+
+        [SerializeField]
         [Tooltip("Maximum shield health for the character.")]
-        float _maxHealth = 100;
+        float _maxShieldHealth = 100;
 
         [SerializeField]
         [Tooltip("How much shield health is lost over time.")]
@@ -27,16 +31,19 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         float _resetHealth = 30f;
 
         [SerializeField]
+        Transform _targetBone;
+
+        [SerializeField]
         Material _shieldMaterial;
 
         // Character Variables 
         [Header("Variables")]
         [SyncVar, SerializeField, ReadOnly]
         [Tooltip("How much shield health the character currently has")]
-        float _health;
+        float _currentShieldHealth;
 
         public float MaxHealth {
-            get { return _maxHealth; }
+            get { return _maxShieldHealth; }
         }
 
         public float DepletionRate {
@@ -52,8 +59,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public float Health {
-            get { return _health; }
-            set { _health = value; }
+            get { return _currentShieldHealth; }
+            set { _currentShieldHealth = value; }
         }
 
         GameObject _shieldObj;
@@ -71,7 +78,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             _shieldTransform.localPosition = GetComponent<CharacterController>().center;
 
             // Setup Collider
-            _shieldObj.GetComponent<Collider>().isTrigger = true;
+            foreach (var collider in _shieldObj.GetComponentsInChildren<Collider>())
+                collider.isTrigger = true;
 
             // Setup Renderer
             var render = _shieldObj.GetComponent<MeshRenderer>();
@@ -81,16 +89,37 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             render.reflectionProbeUsage = ReflectionProbeUsage.Off;
             render.lightProbeUsage = LightProbeUsage.Off;
 
-            SetShieldColor(Color.white);
+            SetShieldColor(Color.grey);
             _shieldObj.SetActive(false);
 
-            //_currentHP = _maxHP;
+            _currentShieldHealth = _maxShieldHealth;
+
+            if (Character == null)
+                return;
+            var controller = Character.StateController;
+            var states = Character.States.Shield;
+            var validStates = new HashSet<CharacterState>(new [] { states.On, states.Main, states.Perfect });
+            controller.OnStateChange += (b, a) => {
+                _shieldObj.SetActive(validStates.Contains(a));
+            };
+        }
+
+        void Update() {
+            if (_targetBone != null && _shieldObj.activeInHierarchy) {
+                _shieldTransform.localScale = Vector3.one * _shieldSize * (Health/MaxHealth);
+                _shieldTransform.localPosition = transform.InverseTransformPoint(_targetBone.position);
+                Health = Mathf.Max(0f, Health - DepletionRate * Time.deltaTime);
+            } else {
+                Health = Mathf.Min(MaxHealth, Health + RegenRate * Time.deltaTime);
+            }
         }
 
         void SetShieldColor(Color color) {
             var render = _shieldObj.GetComponent<MeshRenderer>();
             color.a = _shieldMaterial.color.a;
+            color = color * 0.75f;
             render.material.color = color;
+            render.material.SetColor("_RimColor", color);
         }
 
         void IDataComponent<Player>.SetData(Player player) {
@@ -118,7 +147,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         /// <summary> /// Unity Callback. Called from Editor to validate settings.  /// </summary>
-        void OnValidate() { _resetHealth = Mathf.Clamp(_resetHealth, 0f, _maxHealth); }
+        void OnValidate() { _resetHealth = Mathf.Clamp(_resetHealth, 0f, _maxShieldHealth); }
 
     }
 
