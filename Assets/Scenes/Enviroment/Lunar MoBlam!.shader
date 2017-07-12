@@ -5,6 +5,8 @@
 		_BumpScale("Normal Intensity", Range(-7,7)) = 1.0
 		_Glossiness("Glossiness", Range(0,1)) = 0.5
 		_Metallic("Metallic", Range(0,1)) = 0.0
+		_EmissionMap("Emission Map", 2D) = "white" {}
+		_EmissionLevel("Emission Level", Range(0.0,1.0)) = 0.0
 		_TintColorA("Tint Color A", Color) = (1, 1, 1, 1)
 		_TintColorB("Tint Color B", Color) = (1, 1, 1, 1)
 		_TintMask("Tint Mask", 2D) = "black"
@@ -20,15 +22,18 @@
 		float2 uv_MainTex;
 		float2 uv_BumpMap;
 		float2 uv_TintMask;
+		float2 uv_EmissionMap;
 	};
 	sampler2D _MainTex;
 	sampler2D _BumpMap;
 	sampler2D _TintMask;
 	sampler2D _Occlusion;
+	sampler2D _EmissionMap;
 
 	fixed4 _TintColorA;
 	fixed4 _TintColorB;
 	float _BumpScale;
+	float _EmissionLevel;
 
 	half _Glossiness;
 	half _Metallic;
@@ -39,6 +44,7 @@
 		fixed4 albedo = tex2D(_MainTex, IN.uv_MainTex);
 		fixed4 mask = tex2D(_TintMask, IN.uv_TintMask);
 		fixed4 Occ = tex2D(_Occlusion, IN.uv_MainTex);
+		fixed4 emmap = tex2D(_EmissionMap, IN.uv_EmissionMap);
 		fixed maskA = mask.r; // red channel is the first mask
 		fixed maskB = mask.g; // green channel is the second mask
 		fixed3 tint = fixed3(1.0, 1.0, 1.0);
@@ -53,6 +59,7 @@
 		normal.z = normal.z/_BumpScale;
 		//o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
 		o.Albedo = albedo.rgb * Occ.rgb;
+		o.Emission = albedo.rgb * emmap * _EmissionLevel;
 
 		//o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
 		o.Normal = normalize(normal);
