@@ -92,6 +92,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public bool IsGrabbingLedge { get; set; }
         public bool IsHit { get; set; }
         public float ShieldHP { get; set; }
+        public bool CanJump { get; set; }
         // The direction the character is facing in.
         // Will be positive if facing to the right.
         // Will be negative if facing to the left.

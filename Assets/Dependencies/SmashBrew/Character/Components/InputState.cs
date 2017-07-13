@@ -17,9 +17,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         Vector2[] _tapHistory;
         int _tapIndex;
 
+        Vector2 GetControllerMovement() {
+            return IsInvalid ? Vector2.zero : _controlMapping.Stick(Player.Controller);
+        }
+
         public Vector2 Movement {
             get { 
-                var move = IsInvalid ? Vector2.zero : _controlMapping.Stick(Player.Controller);
+                var move = GetControllerMovement();
                 //TODO(james7132): Turn this into an input device
                 move.x += ButtonAxis(GetKeys(KeyCode.A, KeyCode.LeftArrow),
                                      GetKeys(KeyCode.D, KeyCode.RightArrow));
@@ -34,7 +38,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 // TODO(james7132): Do proper smash input detection
                 var smash = _tapHistory.Aggregate((lhs, rhs) => lhs + rhs);
                 smash.x += ButtonAxis(GetKeys(KeyCode.A), GetKeys(KeyCode.D));
-                smash.y += ButtonAxis(GetKeys(KeyCode.W), GetKeys(KeyCode.S));
+                smash.y += ButtonAxis(GetKeys(KeyCode.S), GetKeys(KeyCode.W));
                 return DirectionClamp(smash);
             }
         }
@@ -87,7 +91,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         void Update() {
-            _tapHistory[_tapIndex] = _tapDetector.Process(Movement, Time.deltaTime);
+            _tapHistory[_tapIndex] = _tapDetector.Process(GetControllerMovement(), Time.deltaTime);
             _tapIndex++;
             if (_tapIndex >= _tapHistory.Length)
                 _tapIndex = 0;

@@ -163,9 +163,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
             // Aerial Movement
             new [] {Idle, Walk, Dash, Run, RunTurn, RunBrake, CrouchStart, Crouch, CrouchEnd, Shield.Main} 
-                .AddTransitions(JumpStart, Input(i => i.Jump.WasPressed));
+                .AddTransitions(JumpStart, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump);
             new[] {JumpStart, JumpAerial}.AddTransitionTo(Jump);
-            new[] {Jump, Fall}.AddTransitions(JumpAerial, Input(i => i.Jump.WasPressed))
+            new[] {Jump, Fall}.AddTransitions(JumpAerial, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump)
                               .AddTransitions(EscapeAir, Input(i => i.Shield.WasPressed));
             Jump.AddTransition(Idle, ctx => ctx.NormalizedAnimationTime >= 1.0f && ctx.IsGrounded)
                 .AddTransition(Fall, ctx => ctx.NormalizedAnimationTime >= 1.0f && !ctx.IsGrounded);
@@ -200,7 +200,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             LedgeGrab.AddTransitionTo(LedgeIdle);
             LedgeIdle.AddTransition(LedgeRelease, DirectionalInput(Direction.Down))
                 .AddTransition(LedgeClimb, DirectionalInput(Direction.Up))
-                .AddTransition(LedgeJump, Input(i => i.Jump.WasPressed))
+                .AddTransition(LedgeJump, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump)
                 .AddTransition(LedgeAttack, Attack());
             LedgeJump.AddTransitionTo(Jump);
             new[] {LedgeRelease, LedgeClimb, LedgeEscape}

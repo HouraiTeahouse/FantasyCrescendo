@@ -171,6 +171,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             OnChangeDirection(_direction);
             if (_ledgeTarget == null)
                 _ledgeTarget = transform;
+            if (Character == null)
+                return;
+            var stateController = Character.StateController;
+            var states = Character.States;
+            stateController.OnStateChange += (b, a) => {
+                if (states.Jump == a)
+                    Jump();
+            };
         }
 
         struct MovementInfo {
@@ -189,25 +197,20 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void LedgeMovement() {
             if (JumpCount != MaxJumpCount)
                 CmdResetJumps();
-            if (JumpCheck()) {
-            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
                 CurrentLedge = null;
             } else {
                 SnapToLedge();
             }
         }
 
-        bool JumpCheck() {
-            bool success = (InputState.Jump && JumpCount > 0 && JumpCount <= MaxJumpCount);
-            if (success) {
-                CurrentLedge = null;
-                OnJump.SafeInvoke();
-                PhysicsState.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
-                CmdJump();
-                if (IsGrounded)
-                    Character.StateController.SetState(Character.States.JumpStart);
-            }
-            return success;
+        void Jump() {
+            CurrentLedge = null;
+            OnJump.SafeInvoke();
+            PhysicsState.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
+            CmdJump();
+            //if (IsGrounded)
+            //    Character.StateController.SetState(Character.States.JumpStart);
         }
 
         bool GetKeys(params KeyCode[] keys) {
@@ -250,7 +253,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                         IsFastFalling = true;
                     LimitFallSpeed();
                 }
-                JumpCheck();
             }
 
             PhysicsState.SetHorizontalVelocity(movement.Speed.x);
@@ -274,6 +276,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             context.IsGrounded = IsGrounded;
             context.IsGrabbingLedge = CurrentLedge != null;
             context.Direction = Direction ? 1.0f : -1.0f;
+            context.CanJump = JumpCount > 0 && JumpCount <= MaxJumpCount;
         }
 
         [Command]
