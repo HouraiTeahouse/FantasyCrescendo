@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f090ca3dfef500b41b142173fba76f1f, type: 3}
+  m_Name: Forest of Magic 1
+  m_EditorClassIdentifier: 
+  _name: Netherworld
+  backgroundMusicData:
+  - _name: Love Colored Magic
+    _artist: Squiggle Glitz
+    _bgm: bgm/forest:Love Colored Magic
+    _baseWeight: 1
+    _loopStart: 2304
+    _loopEnd: 4460928
+  - _name: Magus Night
+    _artist: Pigu
+    _bgm: bgm/forest:Magus Night
+    _baseWeight: 1
+    _loopStart: 276480
+    _loopEnd: 6912007
+  - _name: Ghostly Eyes
+    _artist: Flurrybolt
+    _bgm: bgm/forest:Ghostly Eyes
+    _baseWeight: 1
+    _loopStart: 0
+    _loopEnd: 13011176
+  - _name: Doll Judgement
+    _artist: crescentia
+    _bgm: bgm/forest:Doll Judgement
+    _baseWeight: 1
+    _loopStart: 0
+    _loopEnd: -1
+  _type: 1
+  _loadPriority: 0
+  _icon: icons:youmu_icon
+  _isSelectable: 1
+  _isVisible: 1
+  _previewImage: icons:youmu_icon
+  _scene: scenes/stages/netherworld/scene:Netherworld
