@@ -35,9 +35,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 var smash = _tapHistory.Aggregate((lhs, rhs) => lhs + rhs);
                 smash.x += ButtonAxis(GetKeys(KeyCode.A), GetKeys(KeyCode.D));
                 smash.y += ButtonAxis(GetKeys(KeyCode.W), GetKeys(KeyCode.S));
-                var val= DirectionClamp(smash);
-                Log.Debug(val);
-                return val;
+                return DirectionClamp(smash);
             }
         }
 
