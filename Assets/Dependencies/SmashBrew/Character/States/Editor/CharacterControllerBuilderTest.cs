@@ -10,11 +10,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [Parallelizable]
     public class CharacterControllerBuilderTest {
 
-        StateController<CharacterState, CharacterStateContext> _stateController;
-        Dictionary<string, CharacterState> _stateMap;
+        static StateController<CharacterState, CharacterStateContext> _stateController;
+        static Dictionary<string, CharacterState> _stateMap;
 
         [SetUp]
         public void Setup() {
+            if (_stateMap != null && _stateController != null)
+                return;
             var instance = ScriptableObject.CreateInstance<CharacterControllerBuilder>();
             var builder = new StateControllerBuilder<CharacterState, CharacterStateContext>();
             _stateController = instance.BuildCharacterControllerImpl(builder);
@@ -41,6 +43,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 Input = new InputContext { Attack = new ButtonContext { LastFrame = false, Current = true }}
             }};
             yield return new object[] {"LedgeIdle", "LedgeJump", new CharacterStateContext {
+                CanJump = true,
                 Input = new InputContext { Jump = new ButtonContext { LastFrame = false, Current = true }}
             }};
         }
@@ -91,6 +94,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                     yield return new object[] {src, "JumpStart", new CharacterStateContext {
                         Direction = dir ? 1.0f : -1.0f,
                         IsGrounded = true,
+                        CanJump = true,
                         Input = new InputContext {
                             Jump = new ButtonContext {
                                 LastFrame = false,
@@ -176,7 +180,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 {"CrouchStart", "Crouch"},
             };
             foreach(var kvp in cases) {
-                yield return new[] {kvp.Key, kvp.Value, null};
+                yield return new object[] {kvp.Key, kvp.Value, new CharacterStateContext {
+                    NormalizedAnimationTime = 1.0f,
+                    CanJump = true
+                }};
             }
             yield return new object[] {"Dash", "Run", new CharacterStateContext {
                 NormalizedAnimationTime = 1.0f,
