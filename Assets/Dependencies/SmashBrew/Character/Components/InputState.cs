@@ -44,6 +44,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public bool Jump {
             get {
                 var val = !IsInvalid && _controlMapping.Jump(Player.Controller);
+                val |= _controlMapping.TapJump && Smash.y > DirectionalInput.DeadZone;
                 return val || GetKeysDown(KeyCode.W, KeyCode.UpArrow);
             }
         }
