@@ -12,6 +12,7 @@ namespace HouraiTeahouse.SmashBrew {
         static readonly Func<InputControl, float> Val = c => c.Value;
         static readonly Func<InputControl, bool> Pressed = c => c.State;
 
+        public bool TapJump =  true;
         public InputTarget[] AltStickHorizontalTargets = {InputTarget.RightStickX};
         public InputTarget[] AltStickVerticalTargets = {InputTarget.RightStickY};
         public InputTarget[] AttackTargets = {InputTarget.Action1};

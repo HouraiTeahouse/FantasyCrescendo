@@ -7,9 +7,15 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [DisallowMultipleComponent]
     public class InputState : CharacterComponent, IDataComponent<Player> {
 
+        // TODO(james7132): Expose as config option
+        const int TapFrameHistory = 5;
+
         PlayerControlMapping _controlMapping;
 
         Player Player { get; set; }
+        TapDetector _tapDetector;
+        Vector2[] _tapHistory;
+        int _tapIndex;
 
         public Vector2 Movement {
             get { 
@@ -26,10 +32,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public Vector2 Smash {
             get { 
                 // TODO(james7132): Do proper smash input detection
-                var smash = Vector2.zero;
+                var smash = _tapHistory.Aggregate((lhs, rhs) => lhs + rhs);
                 smash.x += ButtonAxis(GetKeys(KeyCode.A), GetKeys(KeyCode.D));
                 smash.y += ButtonAxis(GetKeys(KeyCode.W), GetKeys(KeyCode.S));
-                return DirectionClamp(smash);
+                var val= DirectionClamp(smash);
+                Log.Debug(val);
+                return val;
             }
         }
 
@@ -49,9 +57,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             input.Movement = Movement;
             input.Smash = Smash;
             var valid = !IsInvalid;
-            input.Attack.Update(valid && (Input.GetKey(KeyCode.E) || _controlMapping.Attack(Player.Controller)));
-            input.Special.Update(valid && (Input.GetKey(KeyCode.S) || _controlMapping.Special(Player.Controller)));
-            input.Shield.Update(valid && (Input.GetKey(KeyCode.LeftShift) || _controlMapping.Shield(Player.Controller)));
+            input.Attack.Update(valid && (GetKeys(KeyCode.E) || _controlMapping.Attack(Player.Controller)));
+            input.Special.Update(valid && (GetKeys(KeyCode.S) || _controlMapping.Special(Player.Controller)));
+            input.Shield.Update(valid && (GetKeys(KeyCode.LeftShift) || _controlMapping.Shield(Player.Controller)));
             input.Jump.Update(Jump);
             context.Input = input;
         }
@@ -79,10 +87,20 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return val + (pos ? 1f : 0f);
         }
 
+        void Update() {
+            _tapHistory[_tapIndex] = _tapDetector.Process(Movement, Time.deltaTime);
+            _tapIndex++;
+            if (_tapIndex >= _tapHistory.Length)
+                _tapIndex = 0;
+        }
+
         protected override void Awake() {
             base.Awake();
             //TODO(james7132): Generalize this 
             _controlMapping = new PlayerControlMapping();
+            _tapDetector = new TapDetector(DirectionalInput.DeadZone);
+            _tapHistory = new Vector2[TapFrameHistory];
+            _tapIndex = 0;
         }
 
     }
@@ -93,6 +111,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         Vector2 _acceleration;
         Vector2 _value;
         Vector2 _velocity;
+
+        public Vector2 TapVector { get; private set; }
 
         public TapDetector(float deadZone) { _deadZone = deadZone; }
 
@@ -129,13 +149,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public Vector2 Process(Vector2 input, float deltaT) {
-            if (deltaT == 0f)
+            if (Mathf.Approximately(deltaT, 0f))
                 return Vector2.zero;
             Vector2 v = input - _value;
             _acceleration = v - _velocity;
             _velocity = v;
             _value = input;
-            return MaxComponent(Snap(input, _acceleration));
+            TapVector = MaxComponent(Snap(input, _acceleration));
+            return TapVector;
         }
 
     }
