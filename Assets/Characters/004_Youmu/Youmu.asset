@@ -554,15 +554,15 @@ MonoBehaviour:
       CanTurn: 1
   - Name: Neutral
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400000, guid: e73966a8c42569341bf845661f16f957, type: 3}
+      Length: 0.6666666
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: TiltUp
     Data:
       AnimationClip: {fileID: 0}
@@ -573,7 +573,7 @@ MonoBehaviour:
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: TiltSide
     Data:
       AnimationClip: {fileID: 0}
@@ -584,18 +584,18 @@ MonoBehaviour:
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: TiltDown
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400000, guid: 18ef095d63e2166469dadfbd4570c55c, type: 3}
+      Length: 0.37500003
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: SmashUp.Charge
     Data:
       AnimationClip: {fileID: 0}
@@ -603,10 +603,10 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: SmashUp.Attack
     Data:
       AnimationClip: {fileID: 0}
@@ -614,10 +614,10 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: SmashSide.Charge
     Data:
       AnimationClip: {fileID: 0}
@@ -625,7 +625,7 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       Invincibility: 0
       SuperArmor: 0
       CanTurn: 1
@@ -636,43 +636,43 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       Invincibility: 0
       SuperArmor: 0
       CanTurn: 1
   - Name: SmashDown.Charge
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400002, guid: c559a9c1c353b5b42927632b5a6577ae, type: 3}
+      Length: 1.5
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: SmashDown.Attack
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400000, guid: c559a9c1c353b5b42927632b5a6577ae, type: 3}
+      Length: 0.0625
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: AerialNeutral
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400000, guid: bdf50aa75dfdcb7419351ccdb880b99b, type: 3}
+      Length: 0.7166667
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: AerialForward
     Data:
       AnimationClip: {fileID: 0}
@@ -697,8 +697,8 @@ MonoBehaviour:
       CanTurn: 1
   - Name: AerialUp
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400000, guid: 765e971c19c6a6a4cac69270ff6b340e, type: 3}
+      Length: 0.55833334
       MovementSpeed:
         _min: 0
         _max: 0
@@ -716,7 +716,7 @@ MonoBehaviour:
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: AerialAttackLand
     Data:
       AnimationClip: {fileID: 7400000, guid: a04d73ffa41e4dd4099fbbebfe00a948, type: 3}
@@ -735,10 +735,10 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: SpecialUp
     Data:
       AnimationClip: {fileID: 0}
@@ -746,10 +746,10 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: SpecialSide
     Data:
       AnimationClip: {fileID: 0}
@@ -757,10 +757,10 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: SpecialDown
     Data:
       AnimationClip: {fileID: 0}
@@ -768,10 +768,10 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: GrabPull
     Data:
       AnimationClip: {fileID: 0}
@@ -870,7 +870,7 @@ MonoBehaviour:
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: GrabbedPulled
     Data:
       AnimationClip: {fileID: 0}
@@ -947,7 +947,7 @@ MonoBehaviour:
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: ThrownForward
     Data:
       AnimationClip: {fileID: 0}
