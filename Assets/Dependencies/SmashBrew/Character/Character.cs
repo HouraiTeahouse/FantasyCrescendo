@@ -22,7 +22,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public CharacterController Controller { get; private set; }
         public MovementState Movement { get; private set; }
         public PhysicsState Physics { get; private set; }
-        public Animator Animator { get; private set;}
         public StateController<CharacterState, CharacterStateContext> StateController { get; private set; }
         public CharacterStateContext Context { get; private set; }
 
@@ -35,9 +34,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         [SerializeField]
         CharacterControllerBuilder _controller;
-
-        [SerializeField]
-        Animator _animator;
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
@@ -54,22 +50,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             Controller = this.SafeGetComponent<CharacterController>();
             Movement = this.SafeGetComponent<MovementState>();
             Physics = this.SafeGetComponent<PhysicsState>();
-            if (_animator == null)
-                _animator = GetComponentInChildren<Animator>();
-            Animator = _animator;
-            if (Animator == null)
-                throw new InvalidOperationException("No animator found on character: {0}".With(name));
-        }
-
-        void Start() {
-            ValidateAnimator();
-        }
-
-        void ValidateAnimator() {
-            foreach (var state in StateController.States) {
-                if (!Animator.HasState(0, state.AnimatorHash))
-                    Log.Error("The animator for {0} does not have the state {1} ({2})".With(name, state.Name, state.AnimatorHash));
-            }
         }
 
         void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
