@@ -249,7 +249,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                         movement.facing = false;
                     Direction = movement.facing;
                 } else {
-                    if (GetKeysDown(KeyCode.S, KeyCode.DownArrow))
+                    if (GetKeysDown(KeyCode.S, KeyCode.DownArrow) || InputState.Smash.y < -DirectionalInput.DeadZone)
                         IsFastFalling = true;
                     LimitFallSpeed();
                 }
