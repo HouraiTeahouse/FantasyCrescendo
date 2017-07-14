@@ -21,8 +21,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Walk
@@ -33,8 +32,7 @@ MonoBehaviour:
         _min: 0
         _max: 5
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Crouch
@@ -45,8 +43,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: CrouchStart
@@ -57,8 +54,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: CrouchEnd
@@ -69,8 +65,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: Dash
@@ -81,8 +76,7 @@ MonoBehaviour:
         _min: 7.5
         _max: 7.5
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Run
@@ -93,8 +87,7 @@ MonoBehaviour:
         _min: 7.5
         _max: 7.5
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: RunBrake
@@ -105,8 +98,7 @@ MonoBehaviour:
         _min: 3.5
         _max: 3.5
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: RunTurn
@@ -117,8 +109,7 @@ MonoBehaviour:
         _min: 7.5
         _max: 7.5
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Jump
@@ -129,8 +120,7 @@ MonoBehaviour:
         _min: 0
         _max: 5
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: JumpStart
@@ -141,8 +131,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: JumpAerial
@@ -153,8 +142,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Land
@@ -165,8 +153,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Shield.On
@@ -177,8 +164,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: Shield.Perfect
@@ -189,8 +175,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: Shield.Main
@@ -201,8 +186,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: Shield.Off
@@ -213,8 +197,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: Shield.Broken
@@ -225,8 +208,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: Shield.Stunned
@@ -237,8 +219,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Escape
@@ -249,8 +230,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 2
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: EscapeForward
@@ -261,8 +241,7 @@ MonoBehaviour:
         _min: 16
         _max: 16
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 2
       CanTurn: 0
       IgnoreCharacterDirection: 1
   - Name: EscapeBackward
@@ -273,8 +252,7 @@ MonoBehaviour:
         _min: -16
         _max: -16
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 2
       CanTurn: 0
       IgnoreCharacterDirection: 1
   - Name: Fall
@@ -285,8 +263,7 @@ MonoBehaviour:
         _min: 0
         _max: 5
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: FallHelpless
@@ -297,8 +274,7 @@ MonoBehaviour:
         _min: 5
         _max: 5
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: EscapeAir
@@ -309,8 +285,7 @@ MonoBehaviour:
         _min: 5
         _max: 5
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: LedgeGrab
@@ -321,8 +296,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: LedgeIdle
@@ -333,8 +307,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: LedgeClimb
@@ -345,8 +318,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: LedgeEscape
@@ -357,8 +329,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: LedgeAttack
@@ -369,8 +340,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: LedgeJump
@@ -381,8 +351,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 1
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: LedgeRelease
@@ -393,8 +362,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: DamageStun
@@ -405,8 +373,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: DamageStunAir
@@ -417,8 +384,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: DamageLaunched
@@ -429,8 +395,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: DamageFall
@@ -441,8 +406,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: StopCeiling
@@ -453,8 +417,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: StopWall
@@ -465,8 +428,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Crash
@@ -477,8 +439,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Prone
@@ -489,8 +450,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ProneStand
@@ -501,8 +461,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ProneAttack
@@ -513,8 +472,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ProneRollLeft
@@ -525,8 +483,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ProneRollRight
@@ -537,8 +494,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Tech
@@ -549,8 +505,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: TechRollLeft
@@ -561,8 +516,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: TechRollRight
@@ -573,8 +527,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: TechWall
@@ -585,8 +538,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: TechWallJump
@@ -597,8 +549,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: Neutral
@@ -609,8 +560,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: TiltUp
@@ -621,8 +571,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: TiltSide
@@ -633,8 +582,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: TiltDown
@@ -645,8 +593,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: SmashUp.Charge
@@ -657,8 +604,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 1
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: SmashUp.Attack
@@ -669,8 +615,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 1
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: SmashSide.Charge
@@ -681,8 +626,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 1
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: SmashSide.Attack
@@ -693,8 +637,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 1
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: SmashDown.Charge
@@ -705,8 +648,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: SmashDown.Attack
@@ -717,8 +659,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: AerialNeutral
@@ -729,8 +670,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: AerialForward
@@ -741,8 +681,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: AerialBackward
@@ -753,8 +692,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: AerialUp
@@ -765,8 +703,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: AerialDown
@@ -777,8 +714,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: AerialAttackLand
@@ -789,8 +725,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: SpecialNeutral
@@ -801,8 +736,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 1
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: SpecialUp
@@ -813,8 +747,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 1
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: SpecialSide
@@ -825,8 +758,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 1
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: SpecialDown
@@ -837,8 +769,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 1
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: GrabPull
@@ -849,8 +780,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: GrabRunPull
@@ -861,8 +791,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: GrabWait
@@ -873,8 +802,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: GrabInterrupted
@@ -885,8 +813,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: GrabPummel
@@ -897,8 +824,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ThrowForward
@@ -909,8 +835,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ThrowBackward
@@ -921,8 +846,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ThrowUp
@@ -933,8 +857,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ThrowDown
@@ -945,8 +868,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: GrabbedPulled
@@ -957,8 +879,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: GrabbedWait
@@ -969,8 +890,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: GrabbedInterrupt
@@ -981,8 +901,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: GrabbedInterruptJump
@@ -993,8 +912,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: GrabbedDamaged
@@ -1005,8 +923,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ThrownUp
@@ -1017,8 +934,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ThrownDown
@@ -1029,8 +945,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 0
       IgnoreCharacterDirection: 0
   - Name: ThrownForward
@@ -1041,8 +956,7 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0
   - Name: ThrownBackward
@@ -1053,7 +967,6 @@ MonoBehaviour:
         _min: 0
         _max: 0
       EntryPolicy: 0
-      Invincibility: 0
-      SuperArmor: 0
+      DamageType: 0
       CanTurn: 1
       IgnoreCharacterDirection: 0

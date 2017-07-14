@@ -8,6 +8,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         None, Charge, Attack
     }
 
+    public enum ImmunityType {
+        Normal, Invincible, Intangible, SuperArmor
+    }
+
     [Serializable]
     public class CharacterStateData {
         [Tooltip("Corresponding animation for the state")]
@@ -17,8 +21,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [Tooltip("Minimum and maxiumum movement speeds. Interpolated based on input magnitude.")]
         public Range MovementSpeed;
         public StateEntryPolicy EntryPolicy = StateEntryPolicy.Normal;
-        public bool Invincibility;
-        public bool SuperArmor;
+        public ImmunityType DamageType = ImmunityType.Normal;
         public bool CanTurn = true;
         public bool IgnoreCharacterDirection;
         [NonSerialized]

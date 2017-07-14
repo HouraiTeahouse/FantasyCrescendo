@@ -21,7 +21,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public CharacterController Controller { get; private set; }
         public MovementState Movement { get; private set; }
-        public PhysicsState Physics { get; private set; }
         public StateController<CharacterState, CharacterStateContext> StateController { get; private set; }
         public CharacterStateContext Context { get; private set; }
 
@@ -30,6 +29,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         Dictionary<int, Hitbox> _hitboxMap;
+        List<Hitbox> _hurtboxes;
         List<ICharacterComponent> _components;
 
         [SerializeField]
@@ -43,13 +43,27 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 throw new InvalidOperationException("Cannot start a character without a State Controller!");
             StateController = _controller.BuildCharacterControllerImpl(
                 new StateControllerBuilder<CharacterState, CharacterStateContext>());
-            StateController.OnStateChange += (b, a) => Log.Debug("{0} changed states: {1} => {2}".With(name, b.Name, a.Name));
+            if (Debug.isDebugBuild)
+                StateController.OnStateChange += (b, a) => Log.Debug("{0} changed states: {1} => {2}".With(name, b.Name, a.Name));
+            var  typeMap = new Dictionary<ImmunityType, Hitbox.Type> {
+                {ImmunityType.Normal, Hitbox.Type.Damageable},
+                {ImmunityType.Intangible, Hitbox.Type.Intangible},
+                {ImmunityType.Invincible, Hitbox.Type.Invincible}
+            };
+            StateController.OnStateChange += (b, a) => {
+                if (_hurtboxes == null || _hurtboxes.Count < 0)
+                    return;
+                var hitboxType = Hitbox.Type.Damageable;
+                typeMap.TryGetValue(a.Data.DamageType, out hitboxType);
+                foreach (var hurtbox in _hurtboxes)
+                    hurtbox.CurrentType = hitboxType;
+            };
             Context = new CharacterStateContext();
             _hitboxMap = new Dictionary<int, Hitbox>();
+            _hurtboxes = new List<Hitbox>();
             _components = new List<ICharacterComponent>();
             Controller = this.SafeGetComponent<CharacterController>();
             Movement = this.SafeGetComponent<MovementState>();
-            Physics = this.SafeGetComponent<PhysicsState>();
         }
 
         void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
@@ -59,12 +73,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                     hitbox,
                     _hitboxMap[id],
                     gameObject.name);
-            else
+            else {
                 _hitboxMap.Add(id, hitbox);
+                _hurtboxes.Add(hitbox);
+            }
         }
 
         bool IRegistrar<Hitbox>.Unregister(Hitbox obj) {
-            return _hitboxMap.Remove(Argument.NotNull(obj).ID);
+            return _hitboxMap.Remove(Argument.NotNull(obj).ID) || _hurtboxes.Remove(obj);
         }
 
         void IRegistrar<ICharacterComponent>.Register(ICharacterComponent component) {
