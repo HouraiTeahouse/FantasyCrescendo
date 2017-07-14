@@ -69,8 +69,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get {
                 var val = !IsInvalid && _controlMapping.Jump(Player.Controller);
                 val |= _controlMapping.TapJump && Smash.y > DirectionalInput.DeadZone;
-                if (val)
-                    Log.Debug(Smash.y);
                 return val || GetKeysDown(KeyCode.W, KeyCode.UpArrow);
             }
         }
