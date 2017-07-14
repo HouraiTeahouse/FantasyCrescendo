@@ -54,10 +54,15 @@ namespace HouraiTeahouse.SmashBrew.Stage {
                 return;
 
             var character = col.gameObject.GetComponentInParent<Character>();
+            var inputState = col.gameObject.GetComponentInParent<InputState>();
             if (character == null)
                 return;
+            var smash = Vector2.zero;
+            if (inputState != null)
+                smash = inputState.Smash;
             //TODO(james7132): Edit this to use normal input
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) ||
+                smash.y < -DirectionalInput.DeadZone) {
                 ChangeIgnore(col, true);
                 character.StateController.SetState(character.States.Fall);
             }
