@@ -185,6 +185,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                     CanJump = true
                 }};
             }
+            yield return new object[] {"TiltDown", "Crouch", new CharacterStateContext {
+                NormalizedAnimationTime = 1.0f,
+                Input = new InputContext {
+                    Movement = new Vector2(0.0f, -1.0f)
+                }
+            }};
             yield return new object[] {"Dash", "Run", new CharacterStateContext {
                 NormalizedAnimationTime = 1.0f,
                 Input = new InputContext {

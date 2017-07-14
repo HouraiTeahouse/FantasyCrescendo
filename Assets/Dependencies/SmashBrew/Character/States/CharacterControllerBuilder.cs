@@ -135,6 +135,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             SmashUp.Charge.AddTransitionTo(SmashUp.Attack);
             SmashDown.Charge.AddTransitionTo(SmashDown.Attack);
             SmashSide.Charge.AddTransitionTo(SmashSide.Attack);
+            TiltDown.AddTransitionTo(Crouch, Input(i => i.Movement.Direction == Direction.Down));
             new[] {Neutral, TiltUp, TiltDown, TiltSide, SmashUp.Attack, SmashDown.Attack, SmashSide.Attack}
                 .AddTransitionTo(Idle);
 
