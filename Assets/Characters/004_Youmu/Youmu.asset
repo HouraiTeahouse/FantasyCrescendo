@@ -53,18 +53,18 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 1
+      EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
       CanTurn: 0
   - Name: CrouchEnd
     Data:
-      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
+      AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
       Length: 0.15
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 1
+      EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
       CanTurn: 0
