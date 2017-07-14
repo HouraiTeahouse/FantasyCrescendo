@@ -3,7 +3,7 @@ guid: c3aa84534828a9e4f99d62e23fb9cd6d
 timeCreated: 1458787007
 licenseType: Free
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 21
   fileIDToRecycleName:
     100000: B_Arm_Left_Forearm
     100002: B_Arm_Left_Shoulder
@@ -372,6 +372,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 1
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -398,6 +400,7 @@ ModelImporter:
     - Ctrl_Master/Ctrl_Hips/B_Pelvis/B_Leg_Right_Thigh/B_Leg_Right_Shin/B_Leg_Right_Foot
     - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Right_Shoulder
     - Ctrl_Master/Ctrl_Hips/B_Pelvis/Ctrl_Waist/B_Torso_Lower/Ctrl_Chest/B_Torso_Upper/B_Arm_Left_Shoulder
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 0
   meshes:
@@ -405,7 +408,10 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 1
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -421,9 +427,11 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -434,7 +442,10 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1
