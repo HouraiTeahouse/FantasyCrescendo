@@ -20,6 +20,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public bool Invincibility;
         public bool SuperArmor;
         public bool CanTurn = true;
+        public bool IgnoreCharacterDirection;
         [NonSerialized]
         public SmashAttack SmashAttack;
     }

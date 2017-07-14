@@ -238,7 +238,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 LedgeMovement();
             } else {
                 var movementInput = InputState.Movement;
-                movement.Speed.x =  movementInput.x * CurrentState.Data.MovementSpeed.Max;
                 if (IsGrounded) {
                     IsFastFalling = false;
                     if (JumpCount != MaxJumpCount)
@@ -248,6 +247,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                     if (movementInput.x < -DirectionalInput.DeadZone)
                         movement.facing = false;
                     Direction = movement.facing;
+                    var dir = 1f;
+                    if (!CurrentState.Data.IgnoreCharacterDirection)
+                        dir = Direction ? 1f : -1f;
+                    movement.Speed.x =  dir * Mathf.Abs(movementInput.x) * CurrentState.Data.MovementSpeed.Max;
                 } else {
                     if (GetKeysDown(KeyCode.S, KeyCode.DownArrow) || InputState.Smash.y < -DirectionalInput.DeadZone)
                         IsFastFalling = true;

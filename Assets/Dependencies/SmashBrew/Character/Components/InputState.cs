@@ -4,6 +4,26 @@ using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
+    internal static class VectorUtil {
+
+        static int Sign(float x) {
+            if (x > 0)
+                return 1;
+            if (x < 0)
+                return -1;
+            return 0;
+        }
+
+        public static Vector2 Snap(Vector2 newV, Vector2 oldV) {
+            if (Sign(newV.x) != Sign(oldV.x))
+                oldV.x = 0f;
+            if (Sign(newV.y) != Sign(oldV.y))
+                oldV.y = 0f;
+            return oldV;
+        }
+
+    }
+
     [DisallowMultipleComponent]
     public class InputState : CharacterComponent, IDataComponent<Player> {
 
@@ -36,9 +56,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public Vector2 Smash {
             get { 
                 // TODO(james7132): Do proper smash input detection
-                var smash = _tapHistory.Aggregate((lhs, rhs) => lhs + rhs);
+                var smash = _tapHistory.Aggregate((lhs, rhs) => 
+                    new Vector2(AbsMax(lhs.x, rhs.x), AbsMax(lhs.y, rhs.y)));
                 smash.x += ButtonAxis(GetKeys(KeyCode.A), GetKeys(KeyCode.D));
                 smash.y += ButtonAxis(GetKeys(KeyCode.S), GetKeys(KeyCode.W));
+                smash = VectorUtil.Snap(Movement, smash);
                 return DirectionClamp(smash);
             }
         }
@@ -47,12 +69,18 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get {
                 var val = !IsInvalid && _controlMapping.Jump(Player.Controller);
                 val |= _controlMapping.TapJump && Smash.y > DirectionalInput.DeadZone;
+                if (val)
+                    Log.Debug(Smash.y);
                 return val || GetKeysDown(KeyCode.W, KeyCode.UpArrow);
             }
         }
 
         bool IsInvalid {
             get { return Player == null || Player.Controller == null; }
+        }
+
+        float AbsMax(float a, float b) {
+            return Mathf.Abs(a) > Mathf.Abs(b) ? a : b;
         }
 
         public override void UpdateStateContext(CharacterStateContext context) {
@@ -119,14 +147,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public TapDetector(float deadZone) { _deadZone = deadZone; }
 
-        int Sign(float x) {
-            if (x > 0)
-                return 1;
-            if (x < 0)
-                return -1;
-            return 0;
-        }
-
         Vector2 DeadZone(Vector2 v) {
             if (Mathf.Abs(v.x) < _deadZone)
                 v.x = 0f;
@@ -135,13 +155,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return v;
         }
 
-        Vector2 Snap(Vector2 newV, Vector2 oldV) {
-            if (Sign(newV.x) != Sign(oldV.x))
-                oldV.x = 0f;
-            if (Sign(newV.y) != Sign(oldV.x))
-                oldV.y = 0f;
-            return oldV;
-        }
 
         Vector2 MaxComponent(Vector2 src) {
             if (Mathf.Abs(src.y) > Mathf.Abs(src.x))
@@ -158,7 +171,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             _acceleration = v - _velocity;
             _velocity = v;
             _value = input;
-            TapVector = MaxComponent(Snap(input, _acceleration));
+            TapVector = MaxComponent(VectorUtil.Snap(input, _acceleration));
             return TapVector;
         }
 
