@@ -158,59 +158,59 @@ MonoBehaviour:
       CanTurn: 1
   - Name: Shield.On
     Data:
-      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
-      Length: 1.9833333
+      AnimationClip: {fileID: 7400002, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
+      Length: 0.25
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: Shield.Perfect
     Data:
-      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
-      Length: 1.9833333
+      AnimationClip: {fileID: 7400000, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
+      Length: 0.041666687
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: Shield.Main
     Data:
-      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
-      Length: 1.9833333
+      AnimationClip: {fileID: 7400000, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
+      Length: 0.041666687
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: Shield.Off
     Data:
-      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
-      Length: 1.9833333
+      AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
+      Length: 0.15
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: Shield.Broken
     Data:
-      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
-      Length: 1.9833333
+      AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
+      Length: 0.15
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       Invincibility: 0
       SuperArmor: 0
-      CanTurn: 1
+      CanTurn: 0
   - Name: Shield.Stunned
     Data:
       AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
