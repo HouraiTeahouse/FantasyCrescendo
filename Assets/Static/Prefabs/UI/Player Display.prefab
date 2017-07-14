@@ -344,6 +344,8 @@ GameObject:
   m_Component:
   - component: {fileID: 22445206}
   - component: {fileID: 11419288}
+  - component: {fileID: 223486267690587658}
+  - component: {fileID: 114201659680463372}
   m_Layer: 5
   m_Name: Player Display
   m_TagString: Untagged
@@ -611,6 +613,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: 1000
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11419288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -629,6 +632,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: 0.25
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11419312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -999,6 +1003,7 @@ MonoBehaviour:
   m_PreferredHeight: -0
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11446336
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1113,6 +1118,7 @@ MonoBehaviour:
   m_PreferredHeight: -0
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11449396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1131,6 +1137,7 @@ MonoBehaviour:
   m_PreferredHeight: -0
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11449716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1175,6 +1182,7 @@ MonoBehaviour:
   m_PreferredHeight: 22.9
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11450736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1235,6 +1243,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11455190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1302,30 +1311,15 @@ MonoBehaviour:
   _number: 0
   _text: {fileID: 11446336}
   _gradient:
-    key0:
-      serializedVersion: 2
-      rgba: 4294967295
-    key1:
-      serializedVersion: 2
-      rgba: 4278255615
-    key2:
-      serializedVersion: 2
-      rgba: 255
-    key3:
-      serializedVersion: 2
-      rgba: 69
-    key4:
-      serializedVersion: 2
-      rgba: 0
-    key5:
-      serializedVersion: 2
-      rgba: 0
-    key6:
-      serializedVersion: 2
-      rgba: 0
-    key7:
-      serializedVersion: 2
-      rgba: 0
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 0, a: 1}
+    key2: {r: 1, g: 0, b: 0, a: 0}
+    key3: {r: 0.27058825, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
     ctime1: 10409
     ctime2: 25636
@@ -1416,6 +1410,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11469694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1460,6 +1455,7 @@ MonoBehaviour:
   m_PreferredHeight: -0
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &11474010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1636,6 +1632,7 @@ MonoBehaviour:
   m_PreferredHeight: 63.828945
   m_FlexibleWidth: -1
   m_FlexibleHeight: 1.8
+  m_LayoutPriority: 1
 --- !u!114 &11482460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1714,8 +1711,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 11430216}
+  _textMesh: {fileID: 0}
   _capitalize: 1
   _character: {fileID: 0}
+  _scene: {fileID: 0}
   shortName: 1
 --- !u!114 &11495666
 MonoBehaviour:
@@ -1735,6 +1734,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: 100
+  m_LayoutPriority: 1
 --- !u!114 &11498848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1753,6 +1753,7 @@ MonoBehaviour:
   m_PreferredHeight: -0
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!222 &22202870
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -2228,6 +2229,18 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
+--- !u!114 &114201659680463372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cafa41d89d916040bbb9fe7190f49dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _show: 0
 --- !u!114 &114228716860573050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2312,3 +2325,23 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
+--- !u!223 &223486267690587658
+Canvas:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197896}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0

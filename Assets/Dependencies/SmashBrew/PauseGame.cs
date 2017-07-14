@@ -20,6 +20,7 @@ namespace HouraiTeahouse.SmashBrew {
                 if (player != null && !player.Controller.GetControl(_pauseButton).WasPressed)
                     return;
                 SmashTimeManager.PausedPlayer = null;
+                Log.Info("Game unpaused by {0}.", player);
             }
             else {
                 var playerManager = PlayerManager.Instance;
@@ -27,6 +28,7 @@ namespace HouraiTeahouse.SmashBrew {
                     if (player.Controller == null || !player.Controller.GetControl(_pauseButton).WasPressed)
                         continue;
                     SmashTimeManager.PausedPlayer = player;
+                    Log.Info("Game paused by {0}.", player);
                     break;
                 }
             }

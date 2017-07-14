@@ -8,6 +8,8 @@ namespace HouraiTeahouse {
     /// game from the Editor. </summary>
     public class TimeManager : Singleton<TimeManager> {
 
+        static ILog _log = Log.GetLogger<TimeManager>();
+
         static float _timeScale = 1f;
         static bool _paused;
 
