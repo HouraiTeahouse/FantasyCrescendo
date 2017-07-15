@@ -29,8 +29,8 @@ namespace HouraiTeahouse.AssetBundles.Editor {
 #if UNITY_CLOUD_BUILD
         public static void BuildCurrentBundles(UnityEngine.CloudBuild.BuildManifestObject manifest) {
             PlayerSettings.bundleVersion += " {0} Build #{1}".With(
-                manifest.GetValue("cloudBuildTargetName"), 
-                manifest.GetValue("buildNumber"));
+                manifest.GetValue<string>("cloudBuildTargetName"), 
+                manifest.GetValue<string>("buildNumber"));
 #else
         public static void BuildCurrentBundles() {
 #endif
