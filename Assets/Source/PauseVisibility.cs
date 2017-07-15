@@ -24,7 +24,6 @@ namespace HouraiTeahouse.FantasyCrescendo {
         /// </summary>
         void OnDestroy() {
             SmashTimeManager.OnPause -= OnPause;
-            OnPause();
         }
 
         void OnPause() {
