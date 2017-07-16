@@ -12,6 +12,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         Normal, Invincible, Intangible, SuperArmor
     }
 
+    public enum MovementType {
+        Normal, Fixed, DirectionalInfluenceOnly
+    }
+
     [Serializable]
     public class CharacterStateData {
         [Tooltip("Corresponding animation for the state")]
@@ -22,8 +26,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public Range MovementSpeed;
         public StateEntryPolicy EntryPolicy = StateEntryPolicy.Normal;
         public ImmunityType DamageType = ImmunityType.Normal;
+        public MovementType MovementType = MovementType.Normal;
         public bool CanTurn = true;
-        public bool IgnoreCharacterDirection;
         [NonSerialized]
         public SmashAttack SmashAttack;
     }

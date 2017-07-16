@@ -22,8 +22,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Walk
     Data:
       AnimationClip: {fileID: 7400000, guid: fb01eb96bd4199341a5083c7648d097c, type: 3}
@@ -33,8 +33,8 @@ MonoBehaviour:
         _max: 5
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Crouch
     Data:
       AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
@@ -44,8 +44,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: CrouchStart
     Data:
       AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
@@ -55,8 +55,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: CrouchEnd
     Data:
       AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
@@ -66,8 +66,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: Dash
     Data:
       AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
@@ -77,8 +77,8 @@ MonoBehaviour:
         _max: 7.5
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Run
     Data:
       AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
@@ -88,8 +88,8 @@ MonoBehaviour:
         _max: 7.5
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: RunBrake
     Data:
       AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
@@ -99,8 +99,8 @@ MonoBehaviour:
         _max: 3.5
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: RunTurn
     Data:
       AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
@@ -110,8 +110,8 @@ MonoBehaviour:
         _max: 7.5
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Jump
     Data:
       AnimationClip: {fileID: 7400000, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
@@ -121,8 +121,8 @@ MonoBehaviour:
         _max: 5
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: JumpStart
     Data:
       AnimationClip: {fileID: 7400002, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
@@ -132,8 +132,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: JumpAerial
     Data:
       AnimationClip: {fileID: 7400000, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
@@ -143,8 +143,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Land
     Data:
       AnimationClip: {fileID: 7400000, guid: a04d73ffa41e4dd4099fbbebfe00a948, type: 3}
@@ -154,8 +154,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Shield.On
     Data:
       AnimationClip: {fileID: 7400002, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
@@ -165,8 +165,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: Shield.Perfect
     Data:
       AnimationClip: {fileID: 7400000, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
@@ -176,8 +176,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: Shield.Main
     Data:
       AnimationClip: {fileID: 7400000, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
@@ -187,8 +187,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: Shield.Off
     Data:
       AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
@@ -198,8 +198,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: Shield.Broken
     Data:
       AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
@@ -209,8 +209,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: Shield.Stunned
     Data:
       AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
@@ -220,8 +220,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Escape
     Data:
       AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
@@ -231,8 +231,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 2
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: EscapeForward
     Data:
       AnimationClip: {fileID: 7400000, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
@@ -242,8 +242,8 @@ MonoBehaviour:
         _max: 16
       EntryPolicy: 0
       DamageType: 2
+      MovementType: 1
       CanTurn: 0
-      IgnoreCharacterDirection: 1
   - Name: EscapeBackward
     Data:
       AnimationClip: {fileID: 7400000, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
@@ -253,8 +253,8 @@ MonoBehaviour:
         _max: -16
       EntryPolicy: 0
       DamageType: 2
+      MovementType: 1
       CanTurn: 0
-      IgnoreCharacterDirection: 1
   - Name: Fall
     Data:
       AnimationClip: {fileID: 7400000, guid: 6084871001fff60419effbdbc5ff9122, type: 3}
@@ -264,8 +264,8 @@ MonoBehaviour:
         _max: 5
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 2
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: FallHelpless
     Data:
       AnimationClip: {fileID: 7400000, guid: 6084871001fff60419effbdbc5ff9122, type: 3}
@@ -275,8 +275,8 @@ MonoBehaviour:
         _max: 5
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 2
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: EscapeAir
     Data:
       AnimationClip: {fileID: 7400000, guid: 6084871001fff60419effbdbc5ff9122, type: 3}
@@ -286,8 +286,8 @@ MonoBehaviour:
         _max: 5
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: LedgeGrab
     Data:
       AnimationClip: {fileID: 7400000, guid: 5e538867655a4ab4b96bb3980d620489, type: 3}
@@ -297,8 +297,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: LedgeIdle
     Data:
       AnimationClip: {fileID: 7400000, guid: 5e538867655a4ab4b96bb3980d620489, type: 3}
@@ -308,8 +308,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: LedgeClimb
     Data:
       AnimationClip: {fileID: 7400000, guid: 5e538867655a4ab4b96bb3980d620489, type: 3}
@@ -319,8 +319,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: LedgeEscape
     Data:
       AnimationClip: {fileID: 0}
@@ -330,8 +330,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: LedgeAttack
     Data:
       AnimationClip: {fileID: 0}
@@ -341,8 +341,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: LedgeJump
     Data:
       AnimationClip: {fileID: 7400000, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
@@ -352,8 +352,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 1
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: LedgeRelease
     Data:
       AnimationClip: {fileID: 0}
@@ -363,8 +363,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: DamageStun
     Data:
       AnimationClip: {fileID: 0}
@@ -374,8 +374,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: DamageStunAir
     Data:
       AnimationClip: {fileID: 0}
@@ -385,8 +385,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: DamageLaunched
     Data:
       AnimationClip: {fileID: 0}
@@ -396,8 +396,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: DamageFall
     Data:
       AnimationClip: {fileID: 0}
@@ -407,8 +407,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: StopCeiling
     Data:
       AnimationClip: {fileID: 0}
@@ -418,8 +418,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: StopWall
     Data:
       AnimationClip: {fileID: 0}
@@ -429,8 +429,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Crash
     Data:
       AnimationClip: {fileID: 0}
@@ -440,8 +440,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Prone
     Data:
       AnimationClip: {fileID: 0}
@@ -451,8 +451,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ProneStand
     Data:
       AnimationClip: {fileID: 0}
@@ -462,8 +462,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ProneAttack
     Data:
       AnimationClip: {fileID: 0}
@@ -473,8 +473,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ProneRollLeft
     Data:
       AnimationClip: {fileID: 0}
@@ -484,8 +484,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ProneRollRight
     Data:
       AnimationClip: {fileID: 0}
@@ -495,8 +495,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Tech
     Data:
       AnimationClip: {fileID: 0}
@@ -506,8 +506,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: TechRollLeft
     Data:
       AnimationClip: {fileID: 0}
@@ -517,8 +517,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: TechRollRight
     Data:
       AnimationClip: {fileID: 0}
@@ -528,8 +528,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: TechWall
     Data:
       AnimationClip: {fileID: 0}
@@ -539,8 +539,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: TechWallJump
     Data:
       AnimationClip: {fileID: 0}
@@ -550,8 +550,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: Neutral
     Data:
       AnimationClip: {fileID: 7400000, guid: e73966a8c42569341bf845661f16f957, type: 3}
@@ -561,8 +561,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: TiltUp
     Data:
       AnimationClip: {fileID: 0}
@@ -572,8 +572,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: TiltSide
     Data:
       AnimationClip: {fileID: 7400000, guid: 54996c9ce217a924b8d0757bca18d606, type: 3}
@@ -583,8 +583,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: TiltDown
     Data:
       AnimationClip: {fileID: 7400000, guid: 18ef095d63e2166469dadfbd4570c55c, type: 3}
@@ -594,8 +594,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: SmashUp.Charge
     Data:
       AnimationClip: {fileID: 0}
@@ -605,8 +605,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 1
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: SmashUp.Attack
     Data:
       AnimationClip: {fileID: 0}
@@ -616,8 +616,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 1
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: SmashSide.Charge
     Data:
       AnimationClip: {fileID: 0}
@@ -627,8 +627,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 1
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: SmashSide.Attack
     Data:
       AnimationClip: {fileID: 0}
@@ -638,8 +638,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 1
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: SmashDown.Charge
     Data:
       AnimationClip: {fileID: 7400002, guid: c559a9c1c353b5b42927632b5a6577ae, type: 3}
@@ -649,8 +649,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: SmashDown.Attack
     Data:
       AnimationClip: {fileID: 7400000, guid: c559a9c1c353b5b42927632b5a6577ae, type: 3}
@@ -660,8 +660,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: AerialNeutral
     Data:
       AnimationClip: {fileID: 7400000, guid: bdf50aa75dfdcb7419351ccdb880b99b, type: 3}
@@ -671,8 +671,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: AerialForward
     Data:
       AnimationClip: {fileID: 0}
@@ -682,8 +682,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: AerialBackward
     Data:
       AnimationClip: {fileID: 0}
@@ -693,8 +693,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: AerialUp
     Data:
       AnimationClip: {fileID: 7400000, guid: 765e971c19c6a6a4cac69270ff6b340e, type: 3}
@@ -704,8 +704,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: AerialDown
     Data:
       AnimationClip: {fileID: 0}
@@ -715,8 +715,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: AerialAttackLand
     Data:
       AnimationClip: {fileID: 7400000, guid: a04d73ffa41e4dd4099fbbebfe00a948, type: 3}
@@ -726,8 +726,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: SpecialNeutral
     Data:
       AnimationClip: {fileID: 0}
@@ -737,8 +737,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 1
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: SpecialUp
     Data:
       AnimationClip: {fileID: 0}
@@ -748,8 +748,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 1
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: SpecialSide
     Data:
       AnimationClip: {fileID: 0}
@@ -759,8 +759,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 1
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: SpecialDown
     Data:
       AnimationClip: {fileID: 0}
@@ -770,8 +770,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 1
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: GrabPull
     Data:
       AnimationClip: {fileID: 0}
@@ -781,8 +781,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: GrabRunPull
     Data:
       AnimationClip: {fileID: 0}
@@ -792,8 +792,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: GrabWait
     Data:
       AnimationClip: {fileID: 0}
@@ -803,8 +803,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: GrabInterrupted
     Data:
       AnimationClip: {fileID: 0}
@@ -814,8 +814,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: GrabPummel
     Data:
       AnimationClip: {fileID: 0}
@@ -825,8 +825,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ThrowForward
     Data:
       AnimationClip: {fileID: 0}
@@ -836,8 +836,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ThrowBackward
     Data:
       AnimationClip: {fileID: 0}
@@ -847,8 +847,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ThrowUp
     Data:
       AnimationClip: {fileID: 0}
@@ -858,8 +858,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ThrowDown
     Data:
       AnimationClip: {fileID: 0}
@@ -869,8 +869,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: GrabbedPulled
     Data:
       AnimationClip: {fileID: 0}
@@ -880,8 +880,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: GrabbedWait
     Data:
       AnimationClip: {fileID: 0}
@@ -891,8 +891,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: GrabbedInterrupt
     Data:
       AnimationClip: {fileID: 0}
@@ -902,8 +902,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: GrabbedInterruptJump
     Data:
       AnimationClip: {fileID: 0}
@@ -913,8 +913,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: GrabbedDamaged
     Data:
       AnimationClip: {fileID: 0}
@@ -924,8 +924,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ThrownUp
     Data:
       AnimationClip: {fileID: 0}
@@ -935,8 +935,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ThrownDown
     Data:
       AnimationClip: {fileID: 0}
@@ -946,8 +946,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 0
-      IgnoreCharacterDirection: 0
   - Name: ThrownForward
     Data:
       AnimationClip: {fileID: 0}
@@ -957,8 +957,8 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0
   - Name: ThrownBackward
     Data:
       AnimationClip: {fileID: 0}
@@ -968,5 +968,5 @@ MonoBehaviour:
         _max: 0
       EntryPolicy: 0
       DamageType: 0
+      MovementType: 0
       CanTurn: 1
-      IgnoreCharacterDirection: 0

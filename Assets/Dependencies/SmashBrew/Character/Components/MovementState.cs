@@ -252,13 +252,25 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                         IsFastFalling = true;
                     LimitFallSpeed();
                 }
-                var dir = 1f;
-                if (!CurrentState.Data.IgnoreCharacterDirection)
-                    dir = Direction ? 1f : -1f;
-                movement.Speed.x =  dir * Mathf.Abs(movementInput.x) * CurrentState.Data.MovementSpeed.Max;
+                movement = ApplyControlledMovement(movement, movementInput);
             }
-
             PhysicsState.SetHorizontalVelocity(movement.Speed.x);
+        }
+
+        MovementInfo ApplyControlledMovement(MovementInfo movement, Vector2 movementInput) {
+            switch(CurrentState.Data.MovementType) {
+                case MovementType.Normal:
+                case MovementType.Fixed:
+                    var dir = 1f;
+                    if (CurrentState.Data.MovementType != MovementType.Fixed)
+                        dir = Direction ? 1f : -1f;
+                    movement.Speed.x =  dir * Mathf.Abs(movementInput.x) * CurrentState.Data.MovementSpeed.Max;
+                    break;
+                case MovementType.DirectionalInfluenceOnly:
+                    movement.Speed.x = movementInput.x * CurrentState.Data.MovementSpeed.Max;
+                    break;
+            }
+            return movement;
         }
 
         void LimitFallSpeed() {
