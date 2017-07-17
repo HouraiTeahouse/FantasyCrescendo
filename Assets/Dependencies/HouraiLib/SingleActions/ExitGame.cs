@@ -6,7 +6,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
     /// game. </summary>
     public sealed class ExitGame : SingleActionBehaviour {
 
-        protected override void Action() { Application.Quit(); }
+        public override void Action() { Application.Quit(); }
 
     }
 

@@ -16,7 +16,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
     
     [RequireComponent(typeof(PlayerManager))]
-    public class SmashNetworkManager : NetworkManager {
+    public class SmashNetworkManager : NetworkLobbyManager {
 
         short localPlayerCount = 0;
         int playerCount = 0;
@@ -24,13 +24,16 @@ namespace HouraiTeahouse.SmashBrew {
         PlayerManager PlayerManager { get; set; }
         ITask ClientStarted;
 
+        public class Messages {
+            public const short UpdatePlayer = MsgType.Highest + 1;
+        }
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         void Awake() {
             PlayerManager = this.SafeGetComponent<PlayerManager>();
             PlayerMap = new Dictionary<PlayerConnection, Player>();
-        }
-
-        public class Messages {
-            public const short UpdatePlayer = MsgType.Highest + 1;
         }
 
         void DestroyLeftoverPlayers() {

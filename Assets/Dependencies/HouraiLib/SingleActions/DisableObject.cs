@@ -18,7 +18,7 @@ namespace HouraiTeahouse {
         [SerializeField]
         GameObject[] _objects;
 
-        protected override void Action() {
+        public override void Action() {
             foreach (GameObject o in _objects) {
                 switch (_method) {
                     case Method.Enable:

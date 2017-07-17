@@ -154,7 +154,6 @@ namespace HouraiTeahouse {
         }
 
         static void WriteLog(LogLevel log, object source, params object[] objs) {
-            var settings = Settings.GetTypeSettings(log);
             if (!Settings.GetTypeSettings(log).Enabled)
                 return;
             var date = DateTime.Now.ToString(_settings.TimeFormat);
@@ -170,6 +169,7 @@ namespace HouraiTeahouse {
             else
                 output = source == null ? "Null" : source.ToString();
 #if UNITY_EDITOR
+            var settings = Settings.GetTypeSettings(log);
             var level = log == LogLevel.Error ? LogType.Error : LogType.Log;
             StackTraceLogType logType = Application.GetStackTraceLogType(level);
             Application.SetStackTraceLogType(level, settings.StackTrace);

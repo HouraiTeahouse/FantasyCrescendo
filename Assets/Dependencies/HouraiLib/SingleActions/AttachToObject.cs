@@ -32,7 +32,7 @@ namespace HouraiTeahouse {
         /// <summary>
         ///     <see cref="SingleActionBehaviour.Action" />
         /// </summary>
-        protected override void Action() {
+        public override void Action() {
             Transform child = _child;
             Transform parent = _parent;
             if (!parent) {
