@@ -41,11 +41,10 @@ namespace HouraiTeahouse {
 
     public class FantasyCrescendoOptions : MonoBehaviour {
 
-        [SerializeField]
-        AudioMixer _audio;
-
         [Serializable]
         public class VolumeSettings {
+            [NonSerialized]
+            public OptionInfo Option;
             public string Name;
             public float MinDb = -80f;
             public float MaxDb = 10f;
@@ -56,19 +55,49 @@ namespace HouraiTeahouse {
             }
         }
 
+        [Header("Audio")]
+        [SerializeField]
+        AudioMixer _audio;
+
+        [SerializeField]
+        string _masterVol = "MasterVolume";
+
         [SerializeField]
         VolumeSettings[] _volumeChannels;
 
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
         void Start() {
             var optionsManager = OptionsManager.Instance;
             BuildAudioOptions(optionsManager.GetInfo<AudioOptions>());
             BuildVideoOptions(optionsManager.GetInfo<VideoOptions>());
         }
 
+        /// <summary>
+        /// Callback sent to all game objects when the player gets or loses focus.
+        /// </summary>
+        /// <param name="focusStatus">The focus state of the application.</param>
+        void OnApplicationFocus(bool focusStatus) {
+            // Mute the game when focus is lost.
+            // Unmute when it is regained.
+            if (focusStatus) {
+                foreach (var channel in _volumeChannels)
+                    if (channel.Name == _masterVol)
+                        _audio.SetFloat(channel.Name, channel.GetDbValue((float)channel.Option.GetPropertyValue()));
+            } else {
+                foreach (var channel in _volumeChannels)
+                    if (channel.Name == _masterVol)
+                        _audio.SetFloat(channel.Name, channel.GetDbValue(0f));
+            }
+        }
+
         void BuildAudioOptions(CategoryInfo category) {
             foreach(var vol in _volumeChannels) {
                 var name = vol.Name;
-                ApplyAndListen<float>(category.GetInfo(name), val => _audio.SetFloat(name, vol.GetDbValue(val)));
+                vol.Option = category.GetInfo(name);
+                ApplyAndListen<float>(vol.Option, val => _audio.SetFloat(name, vol.GetDbValue(val)));
             }
         }
 
