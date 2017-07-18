@@ -169,8 +169,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             MovementCollider = this.SafeGetComponent<CharacterController>();
             JumpCount = MaxJumpCount;
             OnChangeDirection(_direction);
-            if (_ledgeTarget == null)
-                _ledgeTarget = transform;
+            _ledgeTarget = this.CachedGetComponent(_ledgeTarget, () => transform);
             if (Character == null)
                 return;
             var stateController = Character.StateController;

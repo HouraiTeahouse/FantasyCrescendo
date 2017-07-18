@@ -49,6 +49,31 @@ namespace HouraiTeahouse {
             return attempt;
         }
 
+        public static T Apply<T>(this GameObject gameObject, Action<T> action, bool includeChildren = false) {
+            Argument.NotNull(gameObject);
+            Argument.NotNull(action);
+            var component = includeChildren ? gameObject.GetComponentInChildren<T>() : gameObject.GetComponent<T>();
+            if (component != null)
+                action(component);
+            return component;
+        }
+
+        public static T[] ApplyAll<T>(this GameObject gameObject, Action<T> action, bool includeChildren = false) {
+            Argument.NotNull(gameObject);
+            Argument.NotNull(action);
+            var components = includeChildren ? gameObject.GetComponentsInChildren<T>() : gameObject.GetComponents<T>();
+            foreach (var component in components) {
+                if (component == null)
+                    continue;
+                try {
+                    action(component);
+                } catch (Exception e) {
+                    Log.Error(e);
+                }
+            }
+            return components;
+        }
+
         /// <summary> Gets all Components of a certain type that are attached to a set of GameObjects. </summary>
         /// <typeparam name="T"> the type of component to retrieve, can be an interface </typeparam>
         /// <param name="gameObjects"> the GameObjects to retrieve </param>

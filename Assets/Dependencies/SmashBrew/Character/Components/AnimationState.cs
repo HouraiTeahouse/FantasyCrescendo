@@ -19,8 +19,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         protected override void Awake() {
             base.Awake();
-            if (Animator == null)
-                Animator = GetComponentInChildren<Animator>();
+            Animator = this.CachedGetComponent(Animator, () => GetComponentInChildren<Animator>());
             if (Animator == null)
                 throw new InvalidOperationException("No animator found on character: {0}".With(name));
             if (Character != null)
