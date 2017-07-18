@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
         [SerializeField]
         RectTransform _spacePrefab;
 
+        Action[] _callbacks;
+
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
             if (!_container) {
@@ -37,15 +40,36 @@ namespace HouraiTeahouse.SmashBrew.UI {
             initialSpace.name = _spacePrefab.name;
             _finalSpace.name = _spacePrefab.name;
 
-            foreach (var player in PlayerManager.Instance.MatchPlayers) {
+            var players = PlayerManager.Instance.MatchPlayers;
+
+            _callbacks = new Action[players.Count];
+
+            var i = 0;
+            foreach (var player in players) {
                 RectTransform display = Instantiate(_prefab);
                 display.transform.SetParent(_container.transform, false);
                 LayoutRebuilder.MarkLayoutForRebuild(display);
                 display.GetComponentsInChildren<IDataComponent<Player>>().SetData(player);
                 display.name = "Player {0} Display".With(player.ID + 1);
                 display.gameObject.SetActive(player.Type.IsActive);
-                player.Changed += () => display.gameObject.SetActive(player.Type.IsActive);
+                _callbacks[i] = () => display.gameObject.SetActive(player.Type.IsActive);
+                player.Changed += _callbacks[i];
                 _finalSpace.transform.SetAsLastSibling();
+                i++;
+            }
+        }
+
+        /// <summary>
+        /// This function is called when the MonoBehaviour will be destroyed.
+        /// </summary>
+        void OnDestroy() {
+            if (_callbacks == null)
+                return;
+            var players = PlayerManager.Instance.MatchPlayers;
+            var i = 0;
+            foreach (var player in players) {
+                player.Changed -= _callbacks[i];
+                i++;
             }
         }
 
