@@ -29,13 +29,17 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         Dictionary<int, Hitbox> _hitboxMap;
+        Dictionary<int, CharacterState> _stateMap;
         List<Hitbox> _hurtboxes;
         List<ICharacterComponent> _components;
 
         [SerializeField]
         CharacterControllerBuilder _controller;
 
-        /// <summary> Unity callback. Called on object instantiation. </summary>
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         void Awake() {
             gameObject.tag = Config.Tags.PlayerTag;
             gameObject.layer = Config.Tags.CharacterLayer;
@@ -45,6 +49,17 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 new StateControllerBuilder<CharacterState, CharacterStateContext>());
             if (Debug.isDebugBuild)
                 StateController.OnStateChange += (b, a) => Log.Debug("{0} changed states: {1} => {2}".With(name, b.Name, a.Name));
+            Context = new CharacterStateContext();
+            _hitboxMap = new Dictionary<int, Hitbox>();
+            _hurtboxes = new List<Hitbox>();
+            _components = new List<ICharacterComponent>();
+            _stateMap = StateController.States.ToDictionary(s => s.AnimatorHash);
+            Controller = this.SafeGetComponent<CharacterController>();
+            Movement = this.SafeGetComponent<MovementState>();
+            EstablishImmunityChanges();
+        }
+
+        void EstablishImmunityChanges() {
             var  typeMap = new Dictionary<ImmunityType, Hitbox.Type> {
                 {ImmunityType.Normal, Hitbox.Type.Damageable},
                 {ImmunityType.Intangible, Hitbox.Type.Intangible},
@@ -58,12 +73,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 foreach (var hurtbox in _hurtboxes)
                     hurtbox.CurrentType = hitboxType;
             };
-            Context = new CharacterStateContext();
-            _hitboxMap = new Dictionary<int, Hitbox>();
-            _hurtboxes = new List<Hitbox>();
-            _components = new List<ICharacterComponent>();
-            Controller = this.SafeGetComponent<CharacterController>();
-            Movement = this.SafeGetComponent<MovementState>();
         }
 
         void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
@@ -108,10 +117,25 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         #region Unity Callbacks
+
         void OnEnable() { _isActive = true; }
+
         void OnDisable() { _isActive = false; }
-        public override void OnStartServer() { _isActive = true; }
+
+        // public override void OnStartAuthority() {
+        //     // Update server when the local client has changed.
+        //     StateController.OnStateChange += (b, a) => CmdChangeState(a.AnimatorHash);
+        // }
+
+        // public override void OnStartServer() {
+        //     _isActive = true;
+        //     // Update clients when a state has changed server-side.
+        //     StateController.OnStateChange += (b, a) => RpcUpdateState(a.AnimatorHash);
+        // }
+
         void LateUpdate() {
+            if (!hasAuthority)
+                return;
             foreach (var component in _components)
                 component.UpdateStateContext(Context);
             StateController.UpdateState(Context);
@@ -136,10 +160,31 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         bool _isActive;
 #pragma warning restore 414
 
+        // Network Callbacks
 
         void ChangeActive(bool active) {
             _isActive = active;
             gameObject.SetActive(active);
+        }
+
+        [Command]
+        void CmdChangeState(int stateHash) {
+            CharacterState state;
+            if (!_stateMap.TryGetValue(stateHash, out state)) {
+                Log.Error("Client attempted to set state to one with hash {0}, which has no matching server state.");
+                return;
+            }
+            StateController.SetState(state);
+        }
+
+        [ClientRpc]
+        void RpcUpdateState(int stateHash) {
+            CharacterState state;
+            if (!_stateMap.TryGetValue(stateHash, out state)) {
+                Log.Error("Server attempted to set state to one with hash {0}, which has no matching client state.");
+                return;
+            }
+            StateController.SetState(state);
         }
 
     }
