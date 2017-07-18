@@ -213,10 +213,10 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.03448276
+  m_SyncRotationAxis: 0
+  m_RotationSyncCompression: 2
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
   m_VelocityThreshold: 0.0001
@@ -254,7 +254,7 @@ MonoBehaviour:
     i14: 79
     i15: 222
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!198 &198109321139971882
 ParticleSystem:
   m_ObjectHideFlags: 1
