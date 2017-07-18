@@ -16,7 +16,7 @@ namespace HouraiTeahouse.SmashBrew {
     }
     
     [RequireComponent(typeof(PlayerManager))]
-    public class SmashNetworkManager : NetworkLobbyManager {
+    public class SmashNetworkManager : NetworkManager {
 
         short localPlayerCount = 0;
         int playerCount = 0;
