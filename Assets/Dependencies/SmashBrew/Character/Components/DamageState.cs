@@ -6,14 +6,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Damage State")]
-    public class DamageState : CharacterNetworkComponent {
-
-        //TODO(james7132): Synchronize this across the network
+    public class DamageState : CharacterNetworkComponent, IDamageable {
 
         [SyncVar, SerializeField]
         float _currentDamage;
 
-        /// <summary> The current internal damage value. Used for knockback calculations. </summary>
+        /// <summary> 
+        /// The current internal damage value. Used for knockback calculations. 
+        /// </summary>
         public float CurrentDamage {
             get { return _currentDamage; }
             set { _currentDamage = value; }

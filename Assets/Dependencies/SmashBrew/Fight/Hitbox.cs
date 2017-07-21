@@ -100,7 +100,9 @@ namespace HouraiTeahouse.SmashBrew {
             };
         }
 
-        static void DrawEffect(Hitbox src, Hitbox dst) { throw new NotImplementedException(); }
+       static void DrawEffect(Hitbox src, Hitbox dst) { 
+            // TODO(james7132): Implement
+        }
 
         public static void Resolve(Hitbox src, Hitbox dst) {
             ReactionMatrix[src.DefaultType, dst.DefaultType](src, dst);
@@ -195,6 +197,7 @@ namespace HouraiTeahouse.SmashBrew {
             var otherHitbox = other.GetComponent<Hitbox>();
             if (otherHitbox == null || !ReactionMatrix.ContainsKey(CurrentType, otherHitbox.CurrentType))
                 return;
+            // Log.Debug("{0} {1}", this, other);
             HitboxResolver.AddCollision(this, otherHitbox);
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
@@ -17,7 +18,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary> A global list of collisions since the last resolution, sorted by joint priority </summary>
-        static readonly PriorityList<HitboxCollision> _collisions = new PriorityList<HitboxCollision>();
+        static readonly List<HitboxCollision> _collisions = new List<HitboxCollision>();
 
         [SerializeField]
         [Tooltip("How often to resolve hitbox collsions, in seconds")]
@@ -36,14 +37,22 @@ namespace HouraiTeahouse.SmashBrew {
             Argument.NotNull(src);
             Argument.NotNull(dst);
             // The priority on the collision is the product of the priority on both hitboxes and their 
-            _collisions.Add(new HitboxCollision {Destination = dst, Source = src},
-                (int) src.DefaultType * (int) dst.DefaultType * src.Priority * dst.Priority);
+            _collisions.Add(new HitboxCollision {
+                Destination = dst, 
+                Source = src
+            });
         }
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
         void Awake() {
             _timer = Time.realtimeSinceStartup;
             _targetedCollisions = new Dictionary<IStrikable, HitboxCollision>();
+        }
+
+        static int CollisionPriority(HitboxCollision collision) {
+            var src = collision.Source;
+            var dst = collision.Destination;
+            return (int) src.DefaultType * (int) dst.DefaultType * src.Priority * dst.Priority;
         }
 
         /// <summary> Unity callback. Called repeatedly on a fixed timestep. </summary>
@@ -56,18 +65,20 @@ namespace HouraiTeahouse.SmashBrew {
             if (_collisions.Count <= 0)
                 return;
             _targetedCollisions.Clear();
-            foreach (HitboxCollision collision in _collisions) {
+            foreach (HitboxCollision collision in _collisions.OrderByDescending(CollisionPriority)) {
                 AddStrikable(collision.Destination.Damageable, collision);
                 AddStrikable(collision.Destination.Knockbackable, collision);
             }
             _collisions.Clear();
-            foreach (HitboxCollision collision in _targetedCollisions.Values)
+            foreach (HitboxCollision collision in _targetedCollisions.Values) {
                 collision.Resolve();
+            }
         }
 
         void AddStrikable(IStrikable strikable, HitboxCollision collision) {
             if (strikable == null)
                 return;
+            Log.Debug("{0} {1}", strikable, collision);
             _targetedCollisions[strikable] = collision;
         }
 
