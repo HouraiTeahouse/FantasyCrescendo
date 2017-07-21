@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace HouraiTeahouse {
 
+    public class MenuOpenedEvent {
+        public string MenuName;
+    }
+
     public class MenuManager : MonoBehaviour, IRegistrar<Menu> {
 
         static Stack<string> _menuBreadcrumnbs;
@@ -43,10 +47,13 @@ namespace HouraiTeahouse {
         public void ChangeMenu(Menu menu) {
             if (_currentMenu)
                 _currentMenu.gameObject.SetActive(false);
-            if (menu) {
+            if (menu != null) {
                 menu.gameObject.SetActive(true);
                 if (!_availableMenus.ContainsValue(menu))
                     _availableMenus.Add(menu.Name, menu);
+                Mediator.Global.Publish(new MenuOpenedEvent {
+                    MenuName = menu.Name
+                });
             }
             _currentMenu = menu;
         }

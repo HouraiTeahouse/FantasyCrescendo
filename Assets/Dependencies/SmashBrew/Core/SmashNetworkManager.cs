@@ -3,6 +3,7 @@ using System.Linq;
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Analytics;
 
 namespace HouraiTeahouse.SmashBrew {
 
@@ -133,6 +134,10 @@ namespace HouraiTeahouse.SmashBrew {
             var startPosition = GetStartPosition();
             var character = selection.Character;
             bool random = character == null;
+            Analytics.CustomEvent("characterSelected", new Dictionary<string, object> {
+                { "character", character != null ? character.name : "Random" },
+                { "color" , selection.Pallete },
+            });
             if (random) {
                 Log.Info("No character was specfied, randomly selecting character and pallete...");
                 selection.Character = DataManager.Characters.Random();

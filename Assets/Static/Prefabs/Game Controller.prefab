@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114473108247565442}
   - component: {fileID: 114402875125216558}
   - component: {fileID: 114635569538057442}
+  - component: {fileID: 114388632571067428}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: GameController
@@ -421,15 +422,17 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
-  m_ShowLobbyGUI: 1
-  m_MaxPlayers: 4
-  m_MaxPlayersPerConnection: 1
-  m_MinPlayers: 0
-  m_LobbyPlayerPrefab: {fileID: 0}
-  m_GamePlayerPrefab: {fileID: 0}
-  m_LobbyScene: 
-  m_PlayScene: 
-  lobbySlots: []
+--- !u!114 &114388632571067428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6cbded255b1fa943b81281279570602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114402875125216558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -459,6 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audio: {fileID: 24100000, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
+  _masterVol: MasterVolume
   _volumeChannels:
   - Name: MasterVolume
     MinDb: -80

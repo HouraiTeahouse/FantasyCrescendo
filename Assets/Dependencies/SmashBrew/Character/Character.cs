@@ -122,10 +122,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         void OnDisable() { _isActive = false; }
 
-        // public override void OnStartAuthority() {
-        //     // Update server when the local client has changed.
-        //     StateController.OnStateChange += (b, a) => CmdChangeState(a.AnimatorHash);
-        // }
+        public override void OnStartAuthority() {
+            // Update server when the local client has changed.
+            StateController.OnStateChange += (b, a) => CmdChangeState(a.AnimatorHash);
+        }
 
         // public override void OnStartServer() {
         //     _isActive = true;
