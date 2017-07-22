@@ -2,11 +2,10 @@
 using UnityEngine.UI;
 using TMPro;
 
-
 namespace HouraiTeahouse.Localization {
 
     /// <summary> An abstract MonoBehaviour class that localizes the strings displayed on UI Text objects. </summary>
-    public abstract class AbstractLocalizedText : MonoBehaviour {
+    public abstract class AbstractLocalizedText : MonoBehaviour, ITextAcceptor {
 
         [SerializeField]
         Text _text;
@@ -15,6 +14,10 @@ namespace HouraiTeahouse.Localization {
         TMP_Text _textMesh;
 
         string _nativeText;
+
+        public int Priority { 
+            get { return 100; }
+        }
 
         /// <summary> The UI Text object to display the localized string onto </summary>
         public Text Text {
@@ -119,6 +122,10 @@ namespace HouraiTeahouse.Localization {
         /// <param name="val"> the pre-processed localized string </param>
         /// <returns> the post-processed localized string </returns>
         protected virtual string Process(string val) { return val; }
+
+        void ITextAcceptor.SetText(string text) {
+            NativeText = text;
+        }
 
     }
 }

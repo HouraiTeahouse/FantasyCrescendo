@@ -1,10 +1,13 @@
-﻿using System;
+﻿using HouraiTeahouse.Options;
+using HouraiTeahouse.Options.UI;
+using HouraiTeahouse.Localization;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
-using HouraiTeahouse.Options;
-using HouraiTeahouse.Options.UI;
 
 namespace HouraiTeahouse {
 
@@ -36,6 +39,35 @@ namespace HouraiTeahouse {
 
         [Option, Dropdown("MSAA", "TSAA", "FXAA")]
         public string Antialiasing { get; set; }
+
+    }
+
+    [OptionCategory("Localization")]
+    public class LocalizationOptions {
+
+        [Option("Language"), LanguageSelectDropdown]
+        public string GameLanguage { get; set; }
+
+    }
+
+    public class LanguageSelectDropdown : Dropdown {
+
+        readonly string[] _identifiers;
+
+        public LanguageSelectDropdown()  {
+            _identifiers = LanguageManager.Instance.AvailableLanguages.ToArray();
+            Options = _identifiers.Select(lang => Language.GetName(lang)).ToList();
+        }
+
+        public override int GetInitialIndex(string value) {
+            return Array.IndexOf(_identifiers, value);
+        }
+
+        public override void SaveValue(OptionInfo option, string selectionValue, int index) {
+            var manager = LanguageManager.Instance;
+            if (manager != null)
+                manager.LoadLanguage(_identifiers[index]);
+        }
 
     }
 
@@ -73,6 +105,11 @@ namespace HouraiTeahouse {
             var optionsManager = OptionsManager.Instance;
             BuildAudioOptions(optionsManager.GetInfo<AudioOptions>());
             BuildVideoOptions(optionsManager.GetInfo<VideoOptions>());
+            var lang = optionsManager.GetInfo<LocalizationOptions>().GetInfo("GameLanguage");
+            LanguageManager.Storage = new HouraiOptionLangaugeStorage(lang);
+            var manager = LanguageManager.Instance;
+            if (manager != null)
+                manager.LoadLanguage(lang.GetPropertyValue<string>());
         }
 
         /// <summary>
@@ -84,7 +121,7 @@ namespace HouraiTeahouse {
             // Unmute when it is regained.
             if (focusStatus) {
                 foreach (var channel in _volumeChannels)
-                    if (channel.Name == _masterVol)
+                    if (channel.Name == _masterVol && channel.Option != null)
                         _audio.SetFloat(channel.Name, channel.GetDbValue((float)channel.Option.GetPropertyValue()));
             } else {
                 foreach (var channel in _volumeChannels)
@@ -118,6 +155,30 @@ namespace HouraiTeahouse {
             option.AddListener<T>((b, a) => handler(a));
         }
 
+    }
+
+    public class HouraiOptionLangaugeStorage : ILanguageStorageDelegate {
+
+        readonly OptionInfo _option;
+
+        public event Action<string> OnChangeLangauge;
+
+        public HouraiOptionLangaugeStorage(OptionInfo option) {
+            _option = Argument.NotNull(option);
+        }
+
+        public string GetStoredLangaugeId(string defaultLangauge) {
+            return _option.GetPropertyValue<string>();
+        }
+
+        public void SetStoredLanguageId(string language) {
+            if (_option.GetPropertyValue<string>() != language) {
+                _option.SetPropertyValue(language);
+                _option.Save();
+                OnChangeLangauge.SafeInvoke(language);
+            }
+        }
+        
     }
 
 }
