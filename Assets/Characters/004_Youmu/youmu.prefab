@@ -1407,6 +1407,7 @@ GameObject:
   - component: {fileID: 114554578085764870}
   - component: {fileID: 114034278491683488}
   - component: {fileID: 114589106090885552}
+  - component: {fileID: 114186268236199496}
   m_Layer: 9
   m_Name: youmu
   m_TagString: Player
@@ -3816,7 +3817,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b790f0ad0dfeec44cb2d83621cfe0b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentDamage: 0
 --- !u!114 &114114736474692494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3879,6 +3879,17 @@ MonoBehaviour:
   _stageLayers:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &114186268236199496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1723960368397862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f208226e24ac5d46bdc105af8f0fa50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114221692247624126
 MonoBehaviour:
   m_ObjectHideFlags: 1
