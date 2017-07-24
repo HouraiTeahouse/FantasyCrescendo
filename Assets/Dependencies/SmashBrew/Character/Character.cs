@@ -32,10 +32,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         Dictionary<int, CharacterState> _stateMap;
         List<Hitbox> _hurtboxes;
         List<ICharacterComponent> _components;
+        HashSet<object> _hitHistory;
 
         [SerializeField]
         CharacterControllerBuilder _controller;
-
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
@@ -54,13 +54,21 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             _hurtboxes = new List<Hitbox>();
             _components = new List<ICharacterComponent>();
             _stateMap = StateController.States.ToDictionary(s => s.AnimatorHash);
+            _hitHistory = new HashSet<object>();
             Controller = this.SafeGetComponent<CharacterController>();
             Movement = this.SafeGetComponent<MovementState>();
             EstablishImmunityChanges();
         }
 
+        public bool CheckHistory(object obj) {
+            var result = _hitHistory.Contains(obj);
+            if (!result)
+                _hitHistory.Add(obj);
+            return result;
+        }
+
         void EstablishImmunityChanges() {
-            var  typeMap = new Dictionary<ImmunityType, Hitbox.Type> {
+            var typeMap = new Dictionary<ImmunityType, Hitbox.Type> {
                 {ImmunityType.Normal, Hitbox.Type.Damageable},
                 {ImmunityType.Intangible, Hitbox.Type.Intangible},
                 {ImmunityType.Invincible, Hitbox.Type.Invincible}
@@ -72,6 +80,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 typeMap.TryGetValue(a.Data.DamageType, out hitboxType);
                 foreach (var hurtbox in _hurtboxes)
                     hurtbox.CurrentType = hitboxType;
+            };
+            StateController.OnStateChange += (b, a) => {
+                if (_hitboxMap == null || _hitboxMap.Count < 0)
+                    return;
+                foreach (var hitbox in _hitboxMap.Values)
+                    hitbox.ResetState();
+                _hitHistory.Clear();
             };
         }
 
@@ -111,7 +126,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public void ResetAllHitboxes() {
             foreach (Hitbox hitbox in Hitboxes.IgnoreNulls()) {
-                if (hitbox.ResetType())
+                if (hitbox.ResetState())
                     Log.Info("{0} {1}", this, hitbox);
             }
         }

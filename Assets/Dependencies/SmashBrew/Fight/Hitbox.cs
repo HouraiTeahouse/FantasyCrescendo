@@ -44,173 +44,13 @@ namespace HouraiTeahouse.SmashBrew {
         //AudioSource _soundEffect;
         Collider[] _colliders;
 
+        HashSet<object> _history;
+
         IRegistrar<Hitbox> _registrar;
 
         [SerializeField]
         [HideInInspector]
         Material _material;
-
-        static Hitbox() {
-            ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
-            _hitboxes = new List<Hitbox>();
-            ReactionMatrix[Type.Offensive, Type.Damageable] = delegate(Hitbox src, Hitbox dst) {
-                if (dst.Damageable != null)
-                    dst.Damageable.Damage(src, src.BaseDamage);
-                if (dst.Knockbackable != null) {
-                    var angle = Mathf.Deg2Rad * src.Angle;
-                    dst.Knockbackable.Knockback(src, new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
-                }
-                DrawEffect(src, dst);
-            };
-            ReactionMatrix[Type.Offensive, Type.Absorb] = ExecuteInterface<IAbsorbable>(h => h.Absorbable,
-                (a, o) => a.Absorb(o));
-            ReactionMatrix[Type.Offensive, Type.Reflective] = ExecuteInterface<IReflectable>(h => h.Reflectable,
-                (a, o) => a.Reflect(o));
-            ReactionMatrix[Type.Offensive, Type.Invincible] = DrawEffect;
-        }
-
-        /// <summary> Whether hitboxes should be drawn or not. </summary>
-        public static bool DrawHitboxes { get; set; }
-
-        // Represents the source Character that owns this Hitbox
-        // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
-        // If this is a Damageable type Hitbox (AKA a Hurtbox) this is the character that the damage and knockback is applied to.
-        public Character Source { get; set; }
-
-        public IDamageable Damageable { get; private set; }
-
-        public IKnockbackable Knockbackable { get; private set; }
-
-        public IRegistrar<Hitbox> Registrar {
-            get { return _registrar; }
-            set {
-                if (_registrar != null)
-                    _registrar.Unregister(this);
-                _registrar = value;
-                if (value != null)
-                    value.Register(this);
-            }
-        }
-
-        static Action<Hitbox, Hitbox> ExecuteInterface<T>(Predicate<Hitbox> check, Action<T, object> action) {
-            return delegate(Hitbox src, Hitbox dst) {
-                if (!check(src))
-                    return;
-                foreach (T component in src.GetComponents<T>())
-                    action(component, dst);
-            };
-        }
-
-       static void DrawEffect(Hitbox src, Hitbox dst) { 
-            // TODO(james7132): Implement
-        }
-
-        public static void Resolve(Hitbox src, Hitbox dst) {
-            ReactionMatrix[src.DefaultType, dst.DefaultType](src, dst);
-        }
-
-        #region Unity Callbacks
-
-        void Initialize() {
-            if (_initialized)
-                return;
-            // Draw Hitboxes in Debug builds
-            DrawHitboxes = Debug.isDebugBuild;
-            _initialized = true;
-        }
-
-        /// <summary> Unity callback. Called on object instantiation. </summary>
-        void Awake() {
-            Initialize();
-            CurrentType = DefaultType;
-            Registrar = GetComponentInParent<IRegistrar<Hitbox>>();
-            Source = GetComponentInParent<Character>();
-            Damageable = GetComponentInParent<IDamageable>();
-            Knockbackable = GetComponentInParent<IKnockbackable>();
-            //_effect = GetComponent<ParticleSystem>();
-            //_soundEffect = GetComponent<AudioSource>();
-
-            gameObject.tag = Config.Tags.HitboxTag;
-            switch (CurrentType) {
-                case Type.Damageable:
-                case Type.Shield:
-                    gameObject.layer = Config.Tags.HurtboxLayer;
-                    break;
-                default:
-                    gameObject.layer = Config.Tags.HitboxLayer;
-                    break;
-            }
-            _colliders = GetComponents<Collider>();
-            foreach (Collider col in _colliders)
-                col.isTrigger = true;
-        }
-
-        void OnEnable() { _hitboxes.Add(this); }
-        void OnDisable() { _hitboxes.Remove(this); }
-
-#if UNITY_EDITOR
-        bool gizmoInitialized;
-
-        void OnDrawGizmos() {
-            if (!EditorApplication.isPlayingOrWillChangePlaymode && !gizmoInitialized) {
-                ResetType();
-                gizmoInitialized = true;
-            }
-            if (IsActive)
-                Gizmo.DrawColliders(GetComponents<Collider>(), Config.Debug.GetHitboxColor(CurrentType));
-        }
-#endif
-
-        public void DrawHitbox() {
-            if (!DrawHitboxes)
-                return;
-            if (_colliders == null)
-                _colliders = GetComponents<Collider>();
-            Color color = Config.Debug.GetHitboxColor(CurrentType);
-            foreach (Collider col in _colliders)
-                DrawCollider(col, color);
-        }
-
-        void Reset() { _id = new Random().Next(int.MaxValue); }
-
-        void DrawCollider(Collider col, Color color) {
-            if (col == null)
-                return;
-            Mesh mesh = null;
-            if (col is SphereCollider)
-                mesh = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Sphere);
-            else if (col is BoxCollider)
-                mesh = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Cube);
-            else if (col is CapsuleCollider)
-                mesh = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Capsule);
-            else if (col is MeshCollider)
-                mesh = ((MeshCollider) col).sharedMesh;
-            if (mesh == null)
-                return;
-            _material.SetColor("_Color", color);
-            _material.SetPass(0);
-            Graphics.DrawMeshNow(mesh, Gizmo.GetColliderMatrix(col));
-        }
-
-        void OnTriggerEnter(Collider other) {
-            if (!other.CompareTag(Config.Tags.HitboxTag))
-                return;
-            var otherHitbox = other.GetComponent<Hitbox>();
-            if (otherHitbox == null || !ReactionMatrix.ContainsKey(CurrentType, otherHitbox.CurrentType))
-                return;
-            // Log.Debug("{0} {1}", this, other);
-            HitboxResolver.AddCollision(this, otherHitbox);
-        }
-
-        public bool ResetType() {
-            bool val = CurrentType != DefaultType;
-            CurrentType = DefaultType;
-            return val;
-        }
-
-        #endregion
-
-        #region Serializable Fields
 
         Type currentType;
 
@@ -230,18 +70,14 @@ namespace HouraiTeahouse.SmashBrew {
         float _baseKnockback;
 
         [SerializeField]
-        float _knockbackScaling;
+        float _knockbackScaling = 1f;
 
         [SerializeField]
         bool _reflectable;
 
         [SerializeField]
         bool _absorbable;
-
-        #endregion
-
-        #region Public Access Properties
-
+        
         public int ID {
             get { return _id; }
             set { _id = value; }
@@ -304,7 +140,208 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        #endregion
+        /// <summary> Whether hitboxes should be drawn or not. </summary>
+        public static bool DrawHitboxes { get; set; }
+
+        // Represents the source Character that owns this Hitbox
+        // If this is a Offensive type hitbox, this ensures that the Character doesn't damage themselves
+        // If this is a Damageable type Hitbox (AKA a Hurtbox) this is the character that the damage and knockback is applied to.
+        public Character Source { get; set; }
+
+        public IDamageable Damageable { get; private set; }
+
+        public IKnockbackable Knockbackable { get; private set; }
+
+        public IRegistrar<Hitbox> Registrar {
+            get { return _registrar; }
+            set {
+                if (_registrar != null)
+                    _registrar.Unregister(this);
+                _registrar = value;
+                if (value != null)
+                    value.Register(this);
+            }
+        }
+
+        static Hitbox() {
+            ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
+            _hitboxes = new List<Hitbox>();
+            ReactionMatrix[Type.Offensive, Type.Damageable] = delegate(Hitbox src, Hitbox dst) {
+                if (dst.Damageable != null)
+                    dst.Damageable.Damage(src, src.BaseDamage);
+                if (dst.Knockbackable != null) {
+                    var angle = Mathf.Deg2Rad * src.Angle;
+                    dst.Knockbackable.Knockback(src, new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
+                }
+                DrawEffect(src, dst);
+            };
+            ReactionMatrix[Type.Offensive, Type.Absorb] = ExecuteInterface<IAbsorbable>(h => h.Absorbable,
+                (a, o) => a.Absorb(o));
+            ReactionMatrix[Type.Offensive, Type.Reflective] = ExecuteInterface<IReflectable>(h => h.Reflectable,
+                (a, o) => a.Reflect(o));
+            ReactionMatrix[Type.Offensive, Type.Invincible] = DrawEffect;
+        }
+
+        static Action<Hitbox, Hitbox> ExecuteInterface<T>(Predicate<Hitbox> check, Action<T, object> action) {
+            return delegate(Hitbox src, Hitbox dst) {
+                if (!check(src))
+                    return;
+                foreach (T component in src.GetComponents<T>())
+                    action(component, dst);
+            };
+        }
+
+       static void DrawEffect(Hitbox src, Hitbox dst) { 
+            // TODO(james7132): Implement
+        }
+
+        public static void Resolve(Hitbox src, Hitbox dst) {
+            ReactionMatrix[src.DefaultType, dst.DefaultType](src, dst);
+        }
+
+        void Initialize() {
+            if (_initialized)
+                return;
+            // Draw Hitboxes in Debug builds
+            DrawHitboxes = Debug.isDebugBuild;
+            _initialized = true;
+        }
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        void Awake() {
+            Initialize();
+            CurrentType = DefaultType;
+            Registrar = GetComponentInParent<IRegistrar<Hitbox>>();
+            Source = GetComponentInParent<Character>();
+            Damageable = GetComponentInParent<IDamageable>();
+            Knockbackable = GetComponentInParent<IKnockbackable>();
+            _history = new HashSet<object>();
+            //_effect = GetComponent<ParticleSystem>();
+            //_soundEffect = GetComponent<AudioSource>();
+
+            gameObject.tag = Config.Tags.HitboxTag;
+            switch (CurrentType) {
+                case Type.Damageable:
+                case Type.Shield:
+                    gameObject.layer = Config.Tags.HurtboxLayer;
+                    break;
+                default:
+                    gameObject.layer = Config.Tags.HitboxLayer;
+                    break;
+            }
+            _colliders = GetComponents<Collider>();
+            foreach (Collider col in _colliders)
+                col.isTrigger = true;
+        }
+
+        /// <summary>
+        /// This function is called when the object becomes enabled and active.
+        /// </summary>
+        void OnEnable() {
+            _hitboxes.Add(this); 
+            _history.Clear();
+        }
+
+        /// <summary>
+        /// This function is called when the behaviour becomes disabled or inactive.
+        /// </summary>
+        void OnDisable() {
+            _hitboxes.Remove(this); 
+            _history.Clear();
+        }
+
+#if UNITY_EDITOR
+        bool gizmoInitialized;
+
+        /// <summary>
+        /// Callback to draw gizmos that are pickable and always drawn.
+        /// </summary>
+        void OnDrawGizmos() {
+            if (!EditorApplication.isPlayingOrWillChangePlaymode && !gizmoInitialized) {
+                ResetState();
+                gizmoInitialized = true;
+            }
+            if (IsActive)
+                Gizmo.DrawColliders(GetComponents<Collider>(), Config.Debug.GetHitboxColor(CurrentType));
+        }
+#endif
+
+        public bool CheckHistory(object obj) {
+            var result = _history.Contains(obj);
+            if (!result)
+                _history.Add(obj);
+            if (Source != null) {
+                var charHistory = Source.CheckHistory(obj);
+                return result || charHistory;
+            }
+            return result;
+        }
+
+        public void ClearHistory() {
+            _history.Clear();
+        }
+
+        public void DrawHitbox() {
+            if (!DrawHitboxes)
+                return;
+            if (_colliders == null)
+                _colliders = GetComponents<Collider>();
+            Color color = Config.Debug.GetHitboxColor(CurrentType);
+            foreach (Collider col in _colliders)
+                DrawCollider(col, color);
+        }
+
+        /// <summary>
+        /// Reset is called when the user hits the Reset button in the Inspector's
+        /// context menu or when adding the component the first time.
+        /// </summary>
+        void Reset() {
+            _id = new Random().Next(int.MaxValue); 
+        }
+
+        void DrawCollider(Collider col, Color color) {
+            if (col == null)
+                return;
+            Mesh mesh = null;
+            if (col is SphereCollider)
+                mesh = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Sphere);
+            else if (col is BoxCollider)
+                mesh = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Cube);
+            else if (col is CapsuleCollider)
+                mesh = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Capsule);
+            else if (col is MeshCollider)
+                mesh = ((MeshCollider) col).sharedMesh;
+            if (mesh == null)
+                return;
+            _material.SetColor("_Color", color);
+            _material.SetPass(0);
+            Graphics.DrawMeshNow(mesh, Gizmo.GetColliderMatrix(col));
+        }
+
+        /// <summary>
+        /// OnTriggerEnter is called when the Collider other enters the trigger.
+        /// </summary>
+        /// <param name="other">The other Collider involved in this collision.</param>
+        void OnTriggerEnter(Collider other) { 
+            if (!other.CompareTag(Config.Tags.HitboxTag))
+                return;
+            var otherHitbox = other.GetComponent<Hitbox>();
+            if (otherHitbox == null || !ReactionMatrix.ContainsKey(CurrentType, otherHitbox.CurrentType))
+                return;
+            if (CheckHistory(other) || CheckHistory(otherHitbox) || CheckHistory(otherHitbox.Damageable) || CheckHistory(otherHitbox.Knockbackable))
+                return;
+            HitboxResolver.AddCollision(this, otherHitbox);
+        }
+
+        public bool ResetState() {
+            bool val = CurrentType != DefaultType;
+            CurrentType = DefaultType;
+            ClearHistory();
+            return val;
+        }
+
     }
 
 }
