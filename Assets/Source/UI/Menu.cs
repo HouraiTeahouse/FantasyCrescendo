@@ -15,7 +15,6 @@ namespace HouraiTeahouse {
         /// Awake is called when the script instance is being loaded.
         /// </summary>
         void Awake() {
-            Log.Debug("HELLO");
             var manager = MenuManager.Instance;
             if (manager == null) {
                 Log.Error("No MenuManager available for {0} to register itself onto.", name);

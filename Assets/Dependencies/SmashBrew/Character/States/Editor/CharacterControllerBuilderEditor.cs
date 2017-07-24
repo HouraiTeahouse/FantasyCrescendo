@@ -26,7 +26,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             var text = controllerProperty.objectReferenceValue != null ? "Update Animator Controller" : "Create Animation Controller";
             if (GUILayout.Button(text)) {
                 var controller = controllerProperty.objectReferenceValue as AnimatorController;
-                Log.Debug(controller);
                 if (controller == null)
                     controller = AnimatorController.CreateAnimatorControllerAtPath("Assets/" + target.GetType().Name + ".controller");
                 var stateMachine = controller.layers[0].stateMachine;
@@ -39,10 +38,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                     animatorState.motion = clip;
                     if (clip == null || state.Data.Length <= 0)
                         animatorState.speed = 1f;
-                    else {
-                        Log.Debug(clip);
+                    else 
                         animatorState.speed = clip.length / state.Data.Length;
-                    }
                 }
                 const int x = 205;
                 const int y = 45;

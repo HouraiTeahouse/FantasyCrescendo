@@ -1222,7 +1222,7 @@ MonoBehaviour:
   _damage: 5
   _angle: 45
   _baseKnockback: 0
-  _knockbackScaling: 0
+  _knockbackScaling: 0.1
   _reflectable: 0
   _absorbable: 0
 --- !u!33 &359708464
@@ -1587,14 +1587,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 596643619
+  _id: 726211986
   _material: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
   type: 2
   _priority: 100
   _damage: 5
   _angle: 45
   _baseKnockback: 0
-  _knockbackScaling: 0
+  _knockbackScaling: 1
   _reflectable: 0
   _absorbable: 0
 --- !u!33 &1706310648

@@ -66,7 +66,8 @@ namespace HouraiTeahouse.SmashBrew {
                 return;
             _targetedCollisions.Clear();
             foreach (HitboxCollision collision in _collisions.OrderByDescending(CollisionPriority)) {
-                AddStrikable(collision.Destination.Damageable, collision);
+                if (AddStrikable(collision.Destination.Damageable, collision))
+                    continue;
                 AddStrikable(collision.Destination.Knockbackable, collision);
             }
             _collisions.Clear();
@@ -75,11 +76,11 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        void AddStrikable(IStrikable strikable, HitboxCollision collision) {
+        bool AddStrikable(IStrikable strikable, HitboxCollision collision) {
             if (strikable == null)
-                return;
-            Log.Debug("{0} {1}", strikable, collision);
+                return false;
             _targetedCollisions[strikable] = collision;
+            return true;
         }
 
     }

@@ -8,7 +8,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [AddComponentMenu("Smash Brew/Character/Damage State")]
     public class DamageState : CharacterNetworkComponent, IDamageable {
 
-        [SyncVar, SerializeField]
+        [SyncVar]
         float _currentDamage;
 
         /// <summary> 
@@ -16,7 +16,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         /// </summary>
         public float CurrentDamage {
             get { return _currentDamage; }
-            set { _currentDamage = value; }
+            set { 
+                if (!isServer)
+                    return;
+                _currentDamage = value; 
+            }
         }
         public float DefaultDamage { get; set; }
 

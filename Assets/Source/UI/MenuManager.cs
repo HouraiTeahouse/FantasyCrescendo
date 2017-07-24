@@ -26,7 +26,6 @@ namespace HouraiTeahouse {
         }
 
         void Start() {
-            Log.Debug("EVAL");
             if (_menuBreadcrumnbs == null) {
                 _menuBreadcrumnbs = new Stack<string>();
             } else {
