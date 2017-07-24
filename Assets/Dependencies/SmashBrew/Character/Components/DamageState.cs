@@ -20,15 +20,15 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
         public float DefaultDamage { get; set; }
 
-        public ModifierGroup<object> DamageModifiers { get; private set; }
-        public ModifierGroup<object> HealingModifiers { get; private set; }
+        public ModifierGroup<object, float> DamageModifiers { get; private set; }
+        public ModifierGroup<object, float> HealingModifiers { get; private set; }
 
         public DamageType Type { get; set; }
 
         protected override void Awake() {
             base.Awake();
-            DamageModifiers = new ModifierGroup<object>();
-            HealingModifiers = new ModifierGroup<object>();
+            DamageModifiers = new ModifierGroup<object, float>();
+            HealingModifiers = new ModifierGroup<object, float>();
             Type = DamageType.Percent;
         }
 

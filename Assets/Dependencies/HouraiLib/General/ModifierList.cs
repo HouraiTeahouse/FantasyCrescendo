@@ -2,38 +2,22 @@ using System;
 
 namespace HouraiTeahouse {
 
-    public delegate float Modifier<in T>(T source, float damage);
-
-    /// <summary> A ordered list of modifiers. </summary>
-    public class ModifierList : PriorityList<Func<float, float>> {
-
-        /// <summary> Modifies a base value based on the provided modifiers. </summary>
-        /// <param name="baseValue"> the base value before modification1 </param>
-        /// <returns> the final modified value </returns>
-        public float Modifiy(float baseValue) {
-            if (Count <= 0)
-                return baseValue;
-            float value = baseValue;
-            foreach (Func<float, float> mod in this)
-                value = mod(value);
-            return value;
-        }
-
-    }
+    public delegate TBase Modifier<in TSource, TBase>(TSource source, TBase damage);
 
     /// <summary> An ordered list of modifiers. </summary>
-    /// <typeparam name="T"> the modifier parameter type </typeparam>
-    public class ModifierList<T> : PriorityList<Modifier<T>> {
+    /// <typeparam name="TSource"> the modifier parameter type </typeparam>
+    /// <typeparam name="TBase"> the type that is being modified </typeparam>
+    public class ModifierList<TSource, TBase> : PriorityList<Modifier<TSource, TBase>> {
 
         /// <summary> Modifies a base value based on the provided modifiers </summary>
         /// <param name="source"> the modifier argument </param>
         /// <param name="baseValue"> the value before modifiication </param>
         /// <returns> the modified value </returns>
-        public float Modifiy(T source, float baseValue) {
+        public TBase Modifiy(TSource source, TBase baseValue) {
             if (Count <= 0)
                 return baseValue;
-            float value = baseValue;
-            foreach (Modifier<T> mod in this)
+            TBase value = baseValue;
+            foreach (Modifier<TSource, TBase> mod in this)
                 value = mod(source, value);
             return value;
         }

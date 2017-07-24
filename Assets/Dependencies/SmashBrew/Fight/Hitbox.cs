@@ -56,9 +56,10 @@ namespace HouraiTeahouse.SmashBrew {
             ReactionMatrix[Type.Offensive, Type.Damageable] = delegate(Hitbox src, Hitbox dst) {
                 if (dst.Damageable != null)
                     dst.Damageable.Damage(src, src.BaseDamage);
-                if (dst.Knockbackable != null)
-                    //TODO : FIX
-                    dst.Knockbackable.Knockback(src, Vector2.one);
+                if (dst.Knockbackable != null) {
+                    var angle = Mathf.Deg2Rad * src.Angle;
+                    dst.Knockbackable.Knockback(src, new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
+                }
                 DrawEffect(src, dst);
             };
             ReactionMatrix[Type.Offensive, Type.Absorb] = ExecuteInterface<IAbsorbable>(h => h.Absorbable,
@@ -222,7 +223,7 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         float _damage = 5f;
 
-        [SerializeField]
+        [SerializeField, Range(0, 360)]
         float _angle = 45f;
 
         [SerializeField]

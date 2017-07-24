@@ -28,6 +28,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public ImmunityType DamageType = ImmunityType.Normal;
         public MovementType MovementType = MovementType.Normal;
         public bool CanTurn = true;
+        public float KnockbackResistance;
         [NonSerialized]
         public SmashAttack SmashAttack;
     }
