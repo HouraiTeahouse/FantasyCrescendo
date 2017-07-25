@@ -8,6 +8,8 @@ namespace HouraiTeahouse.SmashBrew.Stage {
 
         Camera _camera;
 
+        public static CameraController Instance { get; private set;}
+
         [SerializeField]
         CameraTarget _target;
 
@@ -17,7 +19,10 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         }
 
         /// <summary> Unity callback. Called on object instantiation. </summary>
-        void Awake() { _camera = GetComponent<Camera>(); }
+        void Awake() { 
+            _camera = this.SafeGetComponent<Camera>(); 
+            Instance = this;
+        }
 
         /// <summary> Unity callback. Called once per frame after all Updates are processed. </summary>
         void LateUpdate() {

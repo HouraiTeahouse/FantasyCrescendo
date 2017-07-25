@@ -29,7 +29,9 @@ namespace HouraiTeahouse.SmashBrew {
             if (TimeManager.Paused) {
                 Assert.IsNotNull(SmashTimeManager.PausedPlayer);
                 Player player = SmashTimeManager.PausedPlayer;
-                if (player != null && !player.Controller.GetControl(_pauseButton).WasPressed)
+                var unpause = player != null && player.Controller.GetControl(_pauseButton).WasPressed;
+                unpause |= Input.GetKeyDown(KeyCode.Return) && player == playerManager.LocalPlayers.Where(p => p.Type.IsActive).First();
+                if (!unpause)
                     return;
                 SmashTimeManager.PausedPlayer = null;
                 Log.Info("Game unpaused by {0}.", player);
@@ -41,6 +43,11 @@ namespace HouraiTeahouse.SmashBrew {
                     SmashTimeManager.PausedPlayer = player;
                     Log.Info("Game paused by {0}.", player);
                     break;
+                }
+                if (Input.GetKeyDown(KeyCode.Return)) {
+                    var player = playerManager.LocalPlayers.Where(p => p.Type.IsActive).First();
+                    SmashTimeManager.PausedPlayer = player;
+                    Log.Info("Game paused by {0}.", player);
                 }
             }
         }
