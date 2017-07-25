@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [RequireComponent(typeof(DamageState))]
     public class KnockbackState : CharacterComponent, IKnockbackable {
 
-        PhysicsState PhysicsState { get; set;}
-        DamageState DamageState { get; set;}
+        public PhysicsState PhysicsState { get; private set;}
+        public DamageState DamageState { get; private set;}
+
+        public event Action<object, Vector2> OnHit;
 
         public ModifierGroup<object, Vector2> Modifiers { get; private set; }
         public ModifierList<object, float> KnockbackDamageModifiers { get; private set; }
@@ -56,6 +59,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             multiplier *= hitbox.Scaling;
             multiplier += baseKnockback;
             PhysicsState.Velocity = Modifiers.In.Modifiy(source, multiplier * unit);
+            OnHit.SafeInvoke(source, PhysicsState.Velocity);
         }
 
     }

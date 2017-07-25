@@ -23,6 +23,10 @@ namespace HouraiTeahouse.SmashBrew {
 
         public static Config Load() { return Instance; }
 
+        public static FightConfig Fight {
+            get { return Instance._fight; }
+        }
+
         public static PlayerConfig Player {
             get { return Instance._player; }
         }
@@ -53,6 +57,9 @@ namespace HouraiTeahouse.SmashBrew {
         #region Serialized Fields
 
         [SerializeField]
+        FightConfig _fight;
+
+        [SerializeField]
         BundleConfig _bundles;
 
         [SerializeField]
@@ -71,6 +78,24 @@ namespace HouraiTeahouse.SmashBrew {
         TagConfig _tags;
 
         #endregion
+    }
+
+    [Serializable]
+    public class FightConfig {
+
+        [SerializeField]
+        float _baseHitstun = 1/20f;
+
+        [SerializeField]
+        float _hitstunScaling = 1/60f;
+
+        [SerializeField]
+        float _maxHitstun = 1/3f;
+
+        public float CalculateHitstun(float damage) {
+            return Mathf.Min(_baseHitstun + (damage * _hitstunScaling), _maxHitstun);
+        }
+
     }
 
     [Serializable]

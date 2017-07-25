@@ -1407,7 +1407,7 @@ GameObject:
   - component: {fileID: 114554578085764870}
   - component: {fileID: 114034278491683488}
   - component: {fileID: 114589106090885552}
-  - component: {fileID: 114186268236199496}
+  - component: {fileID: 114401750378440996}
   m_Layer: 9
   m_Name: youmu
   m_TagString: Player
@@ -3879,17 +3879,6 @@ MonoBehaviour:
   _stageLayers:
     serializedVersion: 2
     m_Bits: 256
---- !u!114 &114186268236199496
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1723960368397862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f208226e24ac5d46bdc105af8f0fa50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114221692247624126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3978,6 +3967,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 11400000, guid: f46a6259e558c834481662b143ec2a1e, type: 2}
   _isActive: 0
+--- !u!114 &114401750378440996
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1723960368397862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c03ce037ccf06419902b9c8633dfdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114426394287539468
 MonoBehaviour:
   m_ObjectHideFlags: 1

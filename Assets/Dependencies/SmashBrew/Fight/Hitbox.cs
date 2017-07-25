@@ -167,7 +167,6 @@ namespace HouraiTeahouse.SmashBrew {
             ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
             _hitboxes = new List<Hitbox>();
             ReactionMatrix[Type.Offensive, Type.Damageable] = delegate(Hitbox src, Hitbox dst) {
-                Log.Debug(dst);
                 if (dst.Damageable != null)
                     dst.Damageable.Damage(src, src.BaseDamage);
                 if (dst.Knockbackable != null) {
@@ -281,7 +280,8 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void ClearHistory() {
-            _history.Clear();
+            if (_history != null)
+                _history.Clear();
         }
 
         public void DrawHitbox() {

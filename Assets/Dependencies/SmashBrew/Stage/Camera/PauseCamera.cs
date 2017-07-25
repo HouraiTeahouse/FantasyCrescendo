@@ -73,14 +73,10 @@ namespace HouraiTeahouse.SmashBrew.Stage {
             Vector3 translation = controller.DPad.Vector.Mult(_translationSpeed);
             Vector3 rotation = controller.LeftStick.Vector.Mult(_rotationSpeed);
             float inOut = 0f;
-            if (controller.Action3) {
-                Log.Debug("HELLO");
+            if (controller.Action3) 
                 inOut -= 1f;
-            }
-            if (controller.Action4) {
-                Log.Debug("GOODBYE");
+            if (controller.Action4)
                 inOut += 1f;
-            }
             var dt = Time.unscaledDeltaTime;
             rotation = new Vector3(rotation.y, -rotation.x);
             rotation *= dt;
