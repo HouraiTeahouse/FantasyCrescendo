@@ -3,7 +3,7 @@ v0.3.0-alpha
 General Patch Notes
 	Known Issues:
 		* Youmu still has a few missing animations, several of her states copy other animations as placeholders.
-		* Youmu's down smash is broken.
+		* Youmu's smash attacks are broken.
 		* Exiting ledge grabbing is extremely buggy. Climbing, falling, and attacking out of a ledge can lead 
 	      to unexpected behavior.
 	    * No character select screen is available: only one character is available currently.
@@ -16,11 +16,18 @@ General Patch Notes
 		          direction.
 		* Menus: A basic placeholder stage select menu has been added.
 		* Menus: An options menu has been added.
+		* Menus: A credits menu has been added.
 		* Options: Game quality is now an in-game option.
 		* Options: Volume controls for master, music, and sound effecs are now in game options.
 		* Controls: Gamepad controls have been re-enabled.
 		* Networking: Network play has been added.
 		* Engine: Game pausing has been added. Pausing will not work in networked games.
+		* Engine: A player controlled free-pan/rotate camera has been added while the game is paused.
+		* Engine: Shielding has been implemented.
+		* Engine: Rolling and sidestepping has been implemented.
+		* Engine: Damage via hitboxes has been implemented.
+		* Engine: Knockback via hitboxes has been implemented.
+		* Engine: Hitstun via hitboxes has been implemented (Partial/WIP).
 		* Misc: A game reset effect has been added. Press Ctrl + R from any point to return to the stage select 
 		        menu.
 		* Misc: A screenshot button has been added. Press F12 to take a screenshot. Saves to the game's directory.
