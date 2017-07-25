@@ -10,7 +10,7 @@ using UnityEditor;
 namespace HouraiTeahouse.SmashBrew {
 
     [DisallowMultipleComponent]
-    public sealed class Hitbox : MonoBehaviour {
+    public sealed class Hitbox : MonoBehaviour, IResettable {
 
         static bool _initialized = false;
 
@@ -341,6 +341,10 @@ namespace HouraiTeahouse.SmashBrew {
             CurrentType = DefaultType;
             ClearHistory();
             return val;
+        }
+
+        void IResettable.OnReset() {
+            ResetState();
         }
 
     }

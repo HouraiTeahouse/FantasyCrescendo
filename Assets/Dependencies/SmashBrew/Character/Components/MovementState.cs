@@ -19,6 +19,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         PhysicsState PhysicsState { get; set; }
         CharacterController MovementCollider { get; set; }
         InputState InputState { get; set; }
+        HitState HitState { get; set; }
         HashSet<Collider> _ignoredColliders;
 
         public event Action OnJump;
@@ -56,6 +57,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [SyncVar, ReadOnly]
         bool _isFastFalling;
 
+        [SerializeField]
+        LayerMask _stageLayers = -1;
+
         public float MaxFallSpeed {
             get { return _maxFallSpeed; }
         }
@@ -89,9 +93,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _isFastFalling; }
             private set { _isFastFalling = value; }
         }
-
-        [SerializeField]
-        LayerMask _stageLayers = -1;
 
         public bool IsGrounded {
             get { 
@@ -167,6 +168,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void Start() {
             PhysicsState = this.SafeGetComponent<PhysicsState>();
             MovementCollider = this.SafeGetComponent<CharacterController>();
+            HitState = GetComponent<HitState>();
             JumpCount = MaxJumpCount;
             OnChangeDirection(_direction);
             _ledgeTarget = this.CachedGetComponent(_ledgeTarget, () => transform);
@@ -230,7 +232,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 return;
             if (Mathf.Approximately(Time.deltaTime, 0))
                 return;
-
+            if (HitState != null && HitState.Hitstun > 0)
+                return;
             var movement = new MovementInfo { facing = Direction };
             // If currently hanging from a edge
             if (CurrentLedge != null) {

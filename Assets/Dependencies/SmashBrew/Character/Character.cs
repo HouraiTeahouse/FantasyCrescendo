@@ -165,6 +165,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         public void ResetCharacter() {
             StateController.ResetState();
+            _hitHistory.Clear();
             foreach (IResettable resetable in GetComponentsInChildren<IResettable>().IgnoreNulls())
                 resetable.OnReset();
         }

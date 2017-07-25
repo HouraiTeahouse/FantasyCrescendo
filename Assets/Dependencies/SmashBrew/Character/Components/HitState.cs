@@ -50,6 +50,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             context.Hitstun = Hitstun;
         }
 
+        public override void ResetState() {
+            Hitstun = 0f;
+        }
+
     }
 
 }

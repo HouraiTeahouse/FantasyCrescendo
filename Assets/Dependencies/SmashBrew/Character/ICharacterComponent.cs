@@ -18,7 +18,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     }
 
-    public abstract class CharacterNetworkComponent : NetworkBehaviour, ICharacterComponent {
+    public abstract class CharacterNetworkComponent : NetworkBehaviour, ICharacterComponent, IResettable {
 
         protected Character Character { get; private set; }
         protected CharacterState CurrentState {
@@ -38,9 +38,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public virtual void UpdateStateContext(CharacterStateContext context) {
         }
 
+        void IResettable.OnReset() {
+            ResetState();
+        }
+
     }
 
-    public abstract class CharacterComponent : BaseBehaviour, ICharacterComponent {
+    public abstract class CharacterComponent : BaseBehaviour, ICharacterComponent, IResettable {
 
         protected Character Character { get; private set; }
         protected CharacterState CurrentState {
@@ -59,6 +63,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public virtual void UpdateStateContext(CharacterStateContext context) {
+        }
+
+        void IResettable.OnReset() {
+            ResetState();
         }
 
     }

@@ -64,11 +64,17 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public void SetHorizontalVelocity(float speed) { _velocity.x = speed; }
         public void SetVerticalVelocity(float speed) { _velocity.y = speed; }
 
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         protected override void Awake() { 
             base.Awake();
             CharacterController = GetComponent<CharacterController>(); 
         }
 
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
         void Update() {
             if (!hasAuthority)
                 return;
@@ -79,6 +85,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             CharacterController.Move(Velocity * Time.deltaTime);
         }
 
+        /// <summary>
+        /// LateUpdate is called every frame, if the Behaviour is enabled.
+        /// It is called after all Update functions have been called.
+        /// </summary>
         void LateUpdate() {
             transform.SetZ(0);
         }
