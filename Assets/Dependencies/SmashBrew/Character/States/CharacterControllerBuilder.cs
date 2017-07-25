@@ -140,6 +140,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 .AddTransitionTo(Idle);
 
             new [] {Fall, Jump, JumpAerial}
+                .AddTransitions(Land, ctx => ctx.IsGrounded)
                 // Aerial Attacks
                 .AddTransitions<CharacterState, CharacterStateContext>(context => {
                     var input = context.Input;
