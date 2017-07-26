@@ -8,6 +8,15 @@ namespace HouraiTeahouse.FantasyCrescendo  {
 
     public class ShowNetworkManagerHUD : MonoBehaviour {
 
+        NetworkManagerHUD[] huds;
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        void Awake() {
+            huds = FindObjectsOfType(typeof(NetworkManagerHUD)).OfType<NetworkManagerHUD>().ToArray();
+        }
+
         /// <summary>
         /// This function is called when the object becomes enabled and active.
         /// </summary>
@@ -23,7 +32,7 @@ namespace HouraiTeahouse.FantasyCrescendo  {
         }
 
         void State(bool state) {
-            foreach (var hud in FindObjectsOfType(typeof(NetworkManagerHUD)).OfType<NetworkManagerHUD>())
+            foreach (var hud in huds)
                 hud.enabled = state;
         }
 
