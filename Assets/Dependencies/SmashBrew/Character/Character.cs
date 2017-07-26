@@ -74,19 +74,19 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 {ImmunityType.Invincible, Hitbox.Type.Invincible}
             };
             StateController.OnStateChange += (b, a) => {
+                if (_hitboxMap == null || _hitboxMap.Count < 0)
+                    return;
+                foreach (var hitbox in _hitboxMap.Values)
+                    hitbox.ResetState();
+                _hitHistory.Clear();
+            };
+            StateController.OnStateChange += (b, a) => {
                 if (_hurtboxes == null || _hurtboxes.Count < 0)
                     return;
                 var hitboxType = Hitbox.Type.Damageable;
                 typeMap.TryGetValue(a.Data.DamageType, out hitboxType);
                 foreach (var hurtbox in _hurtboxes)
                     hurtbox.CurrentType = hitboxType;
-            };
-            StateController.OnStateChange += (b, a) => {
-                if (_hitboxMap == null || _hitboxMap.Count < 0)
-                    return;
-                foreach (var hitbox in _hitboxMap.Values)
-                    hitbox.ResetState();
-                _hitHistory.Clear();
             };
         }
 

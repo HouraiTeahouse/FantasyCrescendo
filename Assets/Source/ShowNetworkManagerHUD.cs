@@ -32,8 +32,10 @@ namespace HouraiTeahouse.FantasyCrescendo  {
         }
 
         void State(bool state) {
-            foreach (var hud in huds)
-                hud.enabled = state;
+            foreach (var hud in huds) {
+                if (hud != null)
+                    hud.enabled = state;
+            }
         }
 
     }

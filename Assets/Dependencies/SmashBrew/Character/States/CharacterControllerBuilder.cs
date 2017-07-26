@@ -226,9 +226,20 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
             
             // Rolls/Sidesteps
-            Shield.Main.AddTransition(EscapeForward, DirectionalSmash(Direction.Right))
-                .AddTransition(EscapeBackward, DirectionalSmash(Direction.Left))
-                .AddTransition(Escape, DirectionInput(Direction.Down));
+            Shield.Main
+            .AddTransition(EscapeForward, ctx => {
+                if (ctx.Direction > 0f)
+                    return DirectionalSmash(Direction.Right)(ctx);
+                else
+                    return DirectionalSmash(Direction.Left)(ctx);
+            })
+            .AddTransition(EscapeBackward, ctx => {
+                if (ctx.Direction > 0f)
+                    return DirectionalSmash(Direction.Left)(ctx);
+                else
+                    return DirectionalSmash(Direction.Right)(ctx);
+                })
+            .AddTransition(Escape, DirectionInput(Direction.Down));
             new[] {Escape, EscapeForward, EscapeBackward}.AddTransitionTo(Shield.Main);
 
             Builder.WithDefaultState(Idle);

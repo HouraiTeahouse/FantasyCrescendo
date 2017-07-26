@@ -179,6 +179,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             stateController.OnStateChange += (b, a) => {
                 if (states.Jump == a)
                     Jump();
+                if (states.EscapeForward == b && isServer)
+                    _direction = !_direction;
             };
         }
 
@@ -262,10 +264,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         MovementInfo ApplyControlledMovement(MovementInfo movement, Vector2 movementInput) {
             switch(CurrentState.Data.MovementType) {
                 case MovementType.Normal:
-                case MovementType.Fixed:
                     var dir = 1f;
-                    if (CurrentState.Data.MovementType != MovementType.Fixed)
-                        dir = Direction ? 1f : -1f;
+                    dir = Direction ? 1f : -1f;
                     movement.Speed.x =  dir * Mathf.Abs(movementInput.x) * CurrentState.Data.MovementSpeed.Max;
                     break;
                 case MovementType.DirectionalInfluenceOnly:

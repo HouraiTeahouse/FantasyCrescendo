@@ -13,7 +13,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     }
 
     public enum MovementType {
-        Normal, Fixed, DirectionalInfluenceOnly
+        Normal, DirectionalInfluenceOnly
     }
 
     [Serializable]
