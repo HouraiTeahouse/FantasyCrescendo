@@ -663,12 +663,12 @@ MonoBehaviour:
       KnockbackResistance: 0
   - Name: SmashUp.Attack
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400000, guid: 1e692717d005f7944b8729b30ac94573, type: 3}
+      Length: 0.85
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 1
+      EntryPolicy: 0
       DamageType: 0
       MovementType: 0
       CanTurn: 0
@@ -680,7 +680,7 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 1
+      EntryPolicy: 2
       DamageType: 0
       MovementType: 0
       CanTurn: 1
@@ -704,7 +704,7 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       DamageType: 0
       MovementType: 0
       CanTurn: 0
@@ -712,7 +712,7 @@ MonoBehaviour:
   - Name: SmashDown.Attack
     Data:
       AnimationClip: {fileID: 7400000, guid: c559a9c1c353b5b42927632b5a6577ae, type: 3}
-      Length: 0.0625
+      Length: 0.8
       MovementSpeed:
         _min: 0
         _max: 0
@@ -740,15 +740,15 @@ MonoBehaviour:
       MovementSpeed:
         _min: 0
         _max: 0
-      EntryPolicy: 0
+      EntryPolicy: 1
       DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
   - Name: AerialBackward
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400000, guid: df44469fae4300e4090822720904b539, type: 3}
+      Length: 0.7916667
       MovementSpeed:
         _min: 0
         _max: 0

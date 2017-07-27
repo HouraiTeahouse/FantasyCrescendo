@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using UnityEngine;
+using HouraiTeahouse.SmashBrew.States;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
@@ -86,6 +87,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
     }
 
+
     public class CharacterStateContext {
         public float NormalizedAnimationTime { get; set; }
         public bool IsGrounded { get; set; }
@@ -105,6 +107,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 NormalizedAnimationTime, IsGrounded, IsGrabbingLedge,
                 IsHit, ShieldHP, Direction, Input
             );
+        }
+
+        public CharacterStateContext Clone() {
+            return MemberwiseClone() as CharacterStateContext;
         }
 
     }

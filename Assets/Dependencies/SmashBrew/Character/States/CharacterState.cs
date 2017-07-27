@@ -29,6 +29,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return this;
         }
 
+        public override State<CharacterStateContext> Passthrough(CharacterStateContext context) {
+            var altContext = context.Clone();
+            altContext.NormalizedAnimationTime = float.PositiveInfinity;
+            return EvaluateTransitions(altContext);
+        }
+
         public override StateEntryPolicy GetEntryPolicy (CharacterStateContext context) {
             return Data.EntryPolicy;
         }

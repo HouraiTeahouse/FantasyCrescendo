@@ -30,6 +30,10 @@ namespace HouraiTeahouse.SmashBrew.States {
             return this;
         }
 
+        public virtual State<T> Passthrough(T context) {
+            return EvaluateTransitions(context);
+        }
+
         public State<T> EvaluateTransitions(T context) {
             return _transitions.Select(func => func(context))
                 .FirstOrDefault(state => state != null && state.GetEntryPolicy(context) != StateEntryPolicy.Blocked);
