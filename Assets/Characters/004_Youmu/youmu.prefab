@@ -1393,7 +1393,6 @@ GameObject:
   - component: {fileID: 114840894184870562}
   - component: {fileID: 114426394287539468}
   - component: {fileID: 114614639156191798}
-  - component: {fileID: 114181163160762076}
   - component: {fileID: 114340516524939838}
   - component: {fileID: 114694525718443830}
   - component: {fileID: 114713669127492092}
@@ -1402,7 +1401,6 @@ GameObject:
   - component: {fileID: 114248161020558924}
   - component: {fileID: 114052966524414852}
   - component: {fileID: 54772860534453672}
-  - component: {fileID: 95275432572302026}
   - component: {fileID: 114840484026881440}
   - component: {fileID: 114554578085764870}
   - component: {fileID: 114034278491683488}
@@ -3769,23 +3767,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95275432572302026
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1723960368397862}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114034278491683488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3838,25 +3819,6 @@ MonoBehaviour:
   _knockbackScaling: 0
   _reflectable: 0
   _absorbable: 0
---- !u!114 &114181163160762076
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1723960368397862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Animator: {fileID: 95044774644864030}
-  m_ParameterSendBits: 31
-  param0: 
-  param1: 
-  param2: 
-  param3: 
-  param4: 
-  param5: 
 --- !u!114 &114182895714346794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3966,7 +3928,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controller: {fileID: 11400000, guid: f46a6259e558c834481662b143ec2a1e, type: 2}
-  _isActive: 0
 --- !u!114 &114401750378440996
 MonoBehaviour:
   m_ObjectHideFlags: 1

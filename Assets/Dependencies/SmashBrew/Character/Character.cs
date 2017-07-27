@@ -4,16 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
     /// <summary> General character class for handling the physics and animations of individual characters </summary>
-#if UNITY_EDITOR
-    [InitializeOnLoad]
-#endif
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementState))]
@@ -137,19 +131,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         void OnDisable() { _isActive = false; }
 
-        public override void OnStartAuthority() {
-            // Update server when the local client has changed.
-            StateController.OnStateChange += (b, a) => CmdChangeState(a.AnimatorHash);
-        }
-
-        // public override void OnStartServer() {
-        //     _isActive = true;
-        //     // Update clients when a state has changed server-side.
-        //     StateController.OnStateChange += (b, a) => RpcUpdateState(a.AnimatorHash);
-        // }
-
         void LateUpdate() {
-            if (!hasAuthority)
+            if (!isLocalPlayer)
                 return;
             foreach (var component in _components)
                 component.UpdateStateContext(Context);
@@ -172,7 +155,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         #endregion
 
 #pragma warning disable 414
-        [SerializeField, ReadOnly, SyncVar(hook = "ChangeActive")]
+        [SyncVar(hook = "ChangeActive")]
         bool _isActive;
 #pragma warning restore 414
 
@@ -181,26 +164,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void ChangeActive(bool active) {
             _isActive = active;
             gameObject.SetActive(active);
-        }
-
-        [Command]
-        void CmdChangeState(int stateHash) {
-            CharacterState state;
-            if (!_stateMap.TryGetValue(stateHash, out state)) {
-                Log.Error("Client attempted to set state to one with hash {0}, which has no matching server state.");
-                return;
-            }
-            StateController.SetState(state);
-        }
-
-        [ClientRpc]
-        void RpcUpdateState(int stateHash) {
-            CharacterState state;
-            if (!_stateMap.TryGetValue(stateHash, out state)) {
-                Log.Error("Server attempted to set state to one with hash {0}, which has no matching client state.");
-                return;
-            }
-            StateController.SetState(state);
         }
 
     }
