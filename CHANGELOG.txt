@@ -2,11 +2,18 @@ v0.3.0-alpha
 ------------
 General Patch Notes
 	Known Issues:
-		* Youmu still has a few missing animations, several of her states copy other animations as placeholders.
-		* Youmu's smash attacks are broken.
 		* Exiting ledge grabbing is extremely buggy. Climbing, falling, and attacking out of a ledge can lead 
 	      to unexpected behavior.
 	    * No character select screen is available: only one character is available currently.
+	    * Youmu: Neutral combo is not implemented yet. 
+	    * Youmu: Special attacks are not implemented yet.
+	    * Youmu: Some tilt attacks do not have animations yet.
+		* Youmu: Smash attacks are cause animation errors and are in general very unstable.
+		* Youmu: Still missing a few other animations, several of her states copy other animations as   
+		         placeholders.
+		* Attacks are currently purely visual. They do not spawn hitboxes yet.
+		* Network animation synchronization is very simple right now. Remote player's animations may be very  
+	      jerky or laggy.
 
 	New Additions:
 		* Characters: Youmu Konpaku is now playable.
@@ -24,6 +31,9 @@ General Patch Notes
 		* Engine: Game pausing has been added. Pausing will not work in networked games.
 		* Engine: A player controlled free-pan/rotate camera has been added while the game is paused.
 		* Engine: Shielding has been implemented.
+		* Engine: Tilt attacks have beem implented.
+		* Engine: Smash attacks have been implemented (though may be very buggy right now).
+		* Engine: Aerial attacks have been implemented.
 		* Engine: Rolling and sidestepping has been implemented.
 		* Engine: Damage via hitboxes has been implemented.
 		* Engine: Knockback via hitboxes has been implemented.
