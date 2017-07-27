@@ -48,10 +48,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         IRegistrar<Hitbox> _registrar;
 
-        [SerializeField]
-        [HideInInspector]
-        Material _material;
-
         Type currentType;
 
         [SerializeField]
@@ -316,8 +312,8 @@ namespace HouraiTeahouse.SmashBrew {
                 mesh = ((MeshCollider) col).sharedMesh;
             if (mesh == null)
                 return;
-            _material.SetColor("_Color", color);
-            _material.SetPass(0);
+            Config.Debug.HitboxMaterial.SetColor("_Color", color);
+            Config.Debug.HitboxMaterial.SetPass(0);
             Graphics.DrawMeshNow(mesh, Gizmo.GetColliderMatrix(col));
         }
 

@@ -72,6 +72,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         GameObject _shieldObj;
         Transform _shieldTransform;
+        Hitbox _shieldHitbox;
         float _lastShieldExitTime = float.NegativeInfinity;
 
         public override void ResetState() { ShieldHealth = MaxShieldHealth; }
@@ -80,6 +81,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             context.ShieldHP = ShieldHealth;
         }
 
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         protected override void Awake() {
             base.Awake();
             // Create Shield Object
@@ -101,6 +105,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             render.reflectionProbeUsage = ReflectionProbeUsage.Off;
             render.lightProbeUsage = LightProbeUsage.Off;
 
+            _shieldHitbox = _shieldObj.AddComponent<Hitbox>();
+            _shieldHitbox.CurrentType = Hitbox.Type.Shield;
+            _shieldHitbox.DefaultType = Hitbox.Type.Shield;
+
             SetShieldColor(Color.grey);
             _shieldObj.SetActive(false);
 
@@ -120,8 +128,13 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             };
         }
 
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
         void Update() {
             if (_targetBone != null && _shieldObj.activeInHierarchy) {
+                _shieldHitbox.CurrentType = Hitbox.Type.Shield;
+                _shieldHitbox.DefaultType = Hitbox.Type.Shield;
                 _shieldTransform.localScale = Vector3.one * _shieldSize * (ShieldHealth/MaxShieldHealth);
                 _shieldTransform.localPosition = transform.InverseTransformPoint(_targetBone.position);
                 ShieldHealth = Mathf.Max(0f, ShieldHealth - DepletionRate * Time.deltaTime);

@@ -174,6 +174,9 @@ namespace HouraiTeahouse.SmashBrew {
     public class DebugConfig : ISerializationCallbackReceiver {
 
         [SerializeField]
+        Material _hitboxMaterial;
+
+        [SerializeField]
         Color _inactiveHitboxColor = Color.black;
 
         [SerializeField]
@@ -198,6 +201,10 @@ namespace HouraiTeahouse.SmashBrew {
         Color ReflectHitboxColor = new Color(0, 0.25f, 0.5f, 1);
 
         EnumMap<Hitbox.Type, Color> _colorMap;
+
+        internal Material HitboxMaterial {
+            get { return _hitboxMaterial; }
+        }
 
         public void OnBeforeSerialize() { }
 
