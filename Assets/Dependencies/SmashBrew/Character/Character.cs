@@ -132,7 +132,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void OnDisable() { _isActive = false; }
 
         void LateUpdate() {
-            if (!isLocalPlayer)
+            if (!isLocalPlayer || SmashTimeManager.Paused)
                 return;
             foreach (var component in _components)
                 component.UpdateStateContext(Context);
