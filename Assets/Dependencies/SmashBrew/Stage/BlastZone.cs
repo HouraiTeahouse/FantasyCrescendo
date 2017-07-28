@@ -1,42 +1,46 @@
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
-using HouraiTeahouse.Events;
+using UnityEngine.Networking;
 
-namespace HouraiTeahouse.SmashBrew {
-    /// <summary>
-    /// The Blast Zone script.
-    /// Publishes PlayerDieEvents in response to Players leaving it's bounds.
-    /// </summary>
-    [RequireComponent(typeof (Collider))]
-    public sealed class BlastZone : MonoBehaviour {
-        private Collider _col;
-        private Mediator _eventManager;
+namespace HouraiTeahouse.SmashBrew.Stage {
 
-        /// <summary>
-        /// Unity Callback. Called on object instantiation.
-        /// </summary>
+    /// <summary> The Blast Zone script. Publishes PlayerDieEvents in response to Players leaving it's bounds. </summary>
+    [RequireComponent(typeof(Collider))]
+    [AddComponentMenu("Smash Brew/Stage/Blast Zone")]
+    public sealed class BlastZone : NetworkBehaviour {
+
+        Collider _col;
+        Mediator _eventManager;
+
+        /// <summary> Unity Callback. Called on object instantiation. </summary>
         void Awake() {
-            _eventManager = GlobalMediator.Instance;
+            _eventManager = Mediator.Global;
             _col = GetComponent<Collider>();
             // Make sure that the colliders are triggers
             foreach (Collider col in gameObject.GetComponents<Collider>())
                 col.isTrigger = true;
         }
 
-        /// <summary>
-        /// Unity Callback. Called on Trigger Collider entry.
-        /// </summary>
-        /// <param name="other">the other collider that entered the c</param>
+        /// <summary> Unity Callback. Called on Trigger Collider entry. </summary>
+        /// <param name="other"> the other collider that entered the c </param>
         void OnTriggerExit(Collider other) {
             // Filter only for player characters
-            Player player = Player.GetPlayer(other);
+            var character = other.GetComponentInParent<Character>();
+            var networkIdentity = other.GetComponent<NetworkIdentity>();
+            if (!isServer || character == null || networkIdentity == null)
+                return;
+            Player player = Player.Get(other);
             if (player == null)
                 return;
 
             Vector3 position = other.transform.position;
             if (_col.ClosestPointOnBounds(position) == position)
                 return;
-
-            _eventManager.Publish(new PlayerDieEvent {Player = player, Revived = false});
+            
+            player.PlayerObject.SetActive(false);
+            _eventManager.Publish(new PlayerDieEvent { Player = player, Revived = false });
         }
+
     }
+
 }

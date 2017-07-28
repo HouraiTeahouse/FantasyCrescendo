@@ -1,15 +1,15 @@
 using UnityEngine;
-using System.Collections;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Matches {
+
+    [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Matches/Sudden Death Match")]
     public sealed class SuddenDeathMatch : MatchRule {
-        protected override void Awake() {
-            base.Awake();
-        }
 
+        protected override void Start() { base.Start(); }
 
-        public override Player GetWinner() {
-            return null;
-        }
+        public override Player GetWinner() { return null; }
+
     }
+
 }

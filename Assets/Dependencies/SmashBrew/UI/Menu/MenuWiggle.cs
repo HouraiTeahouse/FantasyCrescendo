@@ -1,24 +1,25 @@
-using UnityEngine;
 using HouraiTeahouse.HouraiInput;
+using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
+
     public class MenuWiggle : MonoBehaviour {
-        [SerializeField] private InputTarget _horizontalAxis = InputTarget.RightStickX;
 
-        [SerializeField] private InputTarget _verticalAxis = InputTarget.RightStickY;
+        [SerializeField]
+        InputTarget _horizontalAxis = InputTarget.RightStickX;
 
-        [SerializeField] private Vector2 _scale = new Vector2(30, 30);
+        [SerializeField]
+        Vector2 _scale = new Vector2(30, 30);
 
-        /// <summary>
-        /// Unity Callback. Called once every frame.
-        /// </summary>
+        [SerializeField]
+        InputTarget _verticalAxis = InputTarget.RightStickY;
+
+        /// <summary> Unity Callback. Called once every frame. </summary>
         void Update() {
             Vector2 distortion = Vector2.zero;
-            foreach (InputDevice device in HInput.Devices) {
-                if (device == null)
-                    continue;
-                float x = device.GetControl(_verticalAxis);
-                float y = device.GetControl(_horizontalAxis);
+            foreach (InputDevice device in HInput.Devices.IgnoreNulls()) {
+                float x = device[_verticalAxis];
+                float y = device[_horizontalAxis];
                 if (Mathf.Abs(distortion.x) < Mathf.Abs(x))
                     distortion.x = x;
                 if (Mathf.Abs(distortion.y) < Mathf.Abs(y))
@@ -29,5 +30,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             distortion.y *= _scale.y;
             transform.rotation = Quaternion.Euler(distortion);
         }
+
     }
+
 }

@@ -1,35 +1,28 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-
 namespace HouraiTeahouse.HouraiInput {
+
     public sealed class AutoDiscover : Attribute {
+
     }
 
-
     public class UnityInputDeviceProfile {
-        public string Name { get; protected set; }
-        public string Meta { get; protected set; }
 
-        public InputMapping[] AnalogMappings { get; protected set; }
-        public InputMapping[] ButtonMappings { get; protected set; }
-
-        protected string[] SupportedPlatforms;
+        static readonly HashSet<Type> HiddenTypes = new HashSet<Type>();
         protected string[] JoystickNames;
         protected string[] JoystickRegex;
 
         protected string LastResortRegex;
-
-        private static readonly HashSet<Type> HiddenTypes = new HashSet<Type>();
+        float lowerDeadZone;
 
         float sensitivity;
-        float lowerDeadZone;
-        float upperDeadZone;
 
+        protected string[] SupportedPlatforms;
+        float upperDeadZone;
 
         public UnityInputDeviceProfile() {
             Name = "";
@@ -42,6 +35,12 @@ namespace HouraiTeahouse.HouraiInput {
             AnalogMappings = new InputMapping[0];
             ButtonMappings = new InputMapping[0];
         }
+
+        public string Name { get; protected set; }
+        public string Meta { get; protected set; }
+
+        public InputMapping[] AnalogMappings { get; protected set; }
+        public InputMapping[] ButtonMappings { get; protected set; }
 
         public float Sensitivity {
             get { return sensitivity; }
@@ -68,33 +67,8 @@ namespace HouraiTeahouse.HouraiInput {
 
         public bool IsJoystick {
             get {
-                return (LastResortRegex != null) ||
-                       (JoystickNames != null && JoystickNames.Length > 0) ||
-                       (JoystickRegex != null && JoystickRegex.Length > 0);
+                return (LastResortRegex != null) || !JoystickNames.IsNullOrEmpty() || !JoystickRegex.IsNullOrEmpty();
             }
-        }
-
-        public bool HasJoystickName(string joystickName) {
-            if (!IsJoystick)
-                return false;
-            if (JoystickNames != null && JoystickNames.Contains(joystickName, StringComparer.OrdinalIgnoreCase)) 
-                return true;
-            return JoystickRegex != null && JoystickRegex.Any(t => Regex.IsMatch(joystickName, t, RegexOptions.IgnoreCase));
-        }
-
-
-        public bool HasLastResortRegex(string joystickName) {
-            if (!IsJoystick)
-                return false;
-            return LastResortRegex != null && Regex.IsMatch(joystickName, LastResortRegex, RegexOptions.IgnoreCase);
-        }
-
-        public bool HasJoystickOrRegexName(string joystickName) {
-            return HasJoystickName(joystickName) || HasLastResortRegex(joystickName);
-        }
-
-        public static void Hide(Type type) {
-            HiddenTypes.Add(type);
         }
 
         public bool IsHidden {
@@ -112,19 +86,35 @@ namespace HouraiTeahouse.HouraiInput {
         public int ButtonCount {
             get { return ButtonMappings.Length; }
         }
+
+        public bool HasJoystickName(string joystickName) {
+            if (!IsJoystick)
+                return false;
+            if (JoystickNames != null && JoystickNames.Contains(joystickName, StringComparer.OrdinalIgnoreCase))
+                return true;
+            return JoystickRegex != null
+                && JoystickRegex.Any(t => Regex.IsMatch(joystickName, t, RegexOptions.IgnoreCase));
+        }
+
+        public bool HasLastResortRegex(string joystickName) {
+            if (!IsJoystick)
+                return false;
+            return LastResortRegex != null && Regex.IsMatch(joystickName, LastResortRegex, RegexOptions.IgnoreCase);
+        }
+
+        public bool HasJoystickOrRegexName(string joystickName) {
+            return HasJoystickName(joystickName) || HasLastResortRegex(joystickName);
+        }
+
+        public static void Hide(Type type) { HiddenTypes.Add(type); }
+
         #region InputSource Helpers
 
-        protected static InputSource Button(int index) {
-            return new UnityButtonSource(index);
-        }
+        protected static InputSource Button(int index) { return new UnityButtonSource(index); }
 
-        protected static InputSource Analog(int index) {
-            return new UnityAnalogSource(index);
-        }
+        protected static InputSource Analog(int index) { return new UnityAnalogSource(index); }
 
-        protected static InputSource KeyCodeButton(KeyCode keyCodeList) {
-            return new UnityKeyCodeSource(keyCodeList);
-        }
+        protected static InputSource KeyCodeButton(KeyCode keyCodeList) { return new UnityKeyCodeSource(keyCodeList); }
 
         protected static InputSource KeyCodeComboButton(params KeyCode[] keyCodeList) {
             return new UnityKeyCodeComboSource(keyCodeList);
@@ -182,8 +172,10 @@ namespace HouraiTeahouse.HouraiInput {
 
         protected static InputSource MouseXAxis = new UnityMouseAxisSource("x");
         protected static InputSource MouseYAxis = new UnityMouseAxisSource("y");
+
         protected static InputSource MouseScrollWheel = new UnityMouseAxisSource("z");
 
         #endregion
     }
+
 }

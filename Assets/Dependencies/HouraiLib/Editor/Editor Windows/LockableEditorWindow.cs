@@ -3,27 +3,21 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
-    /// <summary>
-    /// Creates a EditorWindow that has the small padlock button at the top
-    /// like the Inspector.
-    /// 
-    /// The state of the padlock can be accessed through the Locked property.
-    /// </summary>
+    /// <summary> Creates a EditorWindow that has the small padlock button at the top like the Inspector. The state of the
+    /// padlock can be accessed through the Locked property. </summary>
     public abstract class LockableEditorWindow : EditorWindow, IHasCustomMenu {
 
-        private GUIStyle lockButtonStyle;
-        private bool locked;
+        GUIStyle lockButtonStyle;
+        bool locked;
 
-        /// <summary>
-        /// Whether the EditorWindow is currently locked or not.
-        /// </summary>
+        /// <summary> Whether the EditorWindow is currently locked or not. </summary>
         public bool IsLocked {
             get { return locked; }
             set { locked = value; }
         }
 
-        void IHasCustomMenu.AddItemsToMenu(GenericMenu menu) {
-            menu.AddItem(new GUIContent("Lock"), locked, () => { locked = !locked; });
+        public virtual void AddItemsToMenu(GenericMenu menu) {
+            //menu.AddItem(new GUIContent("Lock"), locked, () => { locked = !locked; });
         }
 
         void ShowButton(Rect position) {

@@ -7,43 +7,34 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Localization.Editor {
 
-    /// <summary>
-    /// A custom Editor for LanguageManager.
-    /// </summary>
+    /// <summary> A custom Editor for LanguageManager. </summary>
     [CustomEditor(typeof(LanguageManager))]
     internal class LanguageManagerEditor : ScriptlessEditor {
 
-        private string[] availableLanguages;
-        private string[] display;
-        private int _index;
-
-        private Regex _splitCamelCase;
-
-        protected override void OnEnable() {
-            base.OnEnable();
-            _splitCamelCase = new Regex(".([A-Z])");
-        }
+        string[] _availableLanguages;
+        string[] _display;
+        int _index;
 
         /// <summary>
-        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
+        ///     <see cref="UnityEditor.Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
             var langManager = target as LanguageManager;
 
-            if (availableLanguages == null) {
-                availableLanguages = langManager.AvailableLanguages.ToArray();
-                display = availableLanguages.Select(lang => _splitCamelCase.Replace(lang, " $1")).ToArray();
+            if (_availableLanguages == null) {
+                _availableLanguages = langManager.AvailableLanguages.ToArray();
+                _display = _availableLanguages.Select(Language.GetName).ToArray();
                 Language language = langManager.CurrentLangauge;
-                if(language != null)
-                    _index = Array.LastIndexOf(availableLanguages, langManager.CurrentLangauge.Name);
+                if (language != null)
+                    _index = Array.LastIndexOf(_availableLanguages, langManager.CurrentLangauge.Name);
             }
 
             GUI.enabled = EditorApplication.isPlayingOrWillChangePlaymode;
             int oldIndex = _index;
-            _index = EditorGUILayout.Popup("Current Language", _index, display);
+            _index = EditorGUILayout.Popup("Current Language", _index, _display);
             if (_index != oldIndex)
-                langManager.LoadLanguage(availableLanguages[_index]);
+                langManager.LoadLanguage(_availableLanguages[_index]);
             GUI.enabled = true;
         }
 

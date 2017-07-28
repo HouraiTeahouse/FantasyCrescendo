@@ -2,37 +2,46 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-    /// <summary>
-    /// A CharacterUIComponent that displays the portrait of a character on a RawImage object
-    /// </summary>
+
+    /// <summary> A CharacterUIComponent that displays the portrait of a character on a RawImage object </summary>
     public sealed class PortraitDisplay : CharacterUIComponent<RawImage> {
-        private RectTransform _rectTransform;
 
-        [SerializeField, Tooltip("Should the character's portrait be cropped?")] private bool _cropped;
+        [SerializeField]
+        [Tooltip("Should the character's portrait be cropped?")]
+        bool _cropped;
 
-        [SerializeField, Tooltip("Tint to cover the potrait, should the character be disabled")] private Color
-            _disabledTint = Color.gray;
+        Rect _cropRect;
 
-        [SerializeField, Tooltip("An offset to move the crop rect")] private Vector2 _rectBias;
+        Color? _defaultColor = null;
 
-        private Color _defaultColor;
-        private Rect _cropRect;
+        Color DefaultColor {
+            get {
+                if (_defaultColor == null)
+                    _defaultColor = Component.color;
+                return _defaultColor.Value;
+            }
+            set { _defaultColor = value; }
+        }
 
-        /// <summary>
-        /// Unity Callback. Called on object instantiation.
-        /// </summary>
+        [SerializeField]
+        [Tooltip("Tint to cover the potrait, should the character be disabled")]
+        Color _disabledTint = Color.gray;
+
+        [SerializeField]
+        [Tooltip("An offset to move the crop rect")]
+        Vector2 _rectBias;
+
+        RectTransform _rectTransform;
+
+        /// <summary> Unity Callback. Called on object instantiation. </summary>
         protected override void Awake() {
             base.Awake();
             _rectTransform = Component.GetComponent<RectTransform>();
-            _defaultColor = Component.color;
+            DefaultColor = Component.color;
         }
 
-        /// <summary>
-        /// <see cref="UIBehaviour.OnRectTransformDimensionsChange"/>
-        /// </summary>
-        protected override void OnRectTransformDimensionsChange() {
-            SetRect();
-        }
+        // See UIBehaviour.OnRectTransformDimensionsChange
+        protected override void OnRectTransformDimensionsChange() { SetRect(); }
 
         void SetRect() {
             if (_rectTransform == null || Component == null || Component.texture == null)
@@ -48,23 +57,25 @@ namespace HouraiTeahouse.SmashBrew.UI {
             Component.uvRect = texture.PixelToUVRect(imageRect);
         }
 
-        /// <summary>
-        /// <see cref="IDataComponent{T}.SetData"/>
-        /// </summary>
         public override void SetData(CharacterData data) {
             base.SetData(data);
             if (Component == null || data == null || data.PalleteCount <= 0)
                 return;
-            int portrait = Player != null ? Player.Pallete : 0;
-            if (data.GetPortrait(portrait).Load() == null)
-                return;
-            Texture2D texture = data.GetPortrait(portrait).Asset.texture;
-            _cropRect = _cropped ? data.CropRect(texture) : texture.PixelRect();
-            _cropRect.x += _rectBias.x * texture.width;
-            _cropRect.y += _rectBias.y * texture.height;
-            Component.texture = texture;
-            Component.color = data.IsSelectable ? _defaultColor : _disabledTint;
-            SetRect();
+            int portrait = Player != null ? Player.Selection.Pallete : 0;
+            data.GetPortrait(portrait).LoadAsync().Then(sprite => {
+                if (!sprite) {
+                    Component.enabled = false;
+                    return;
+                }
+                Texture2D texture = data.GetPortrait(portrait).Asset.texture;
+                _cropRect = _cropped ? data.CropRect(texture) : texture.PixelRect();
+                _cropRect.position += _rectBias.Mult(texture.Size());
+                Component.texture = texture;
+                Component.color = data.IsSelectable ? DefaultColor : _disabledTint;
+                SetRect();
+            }).Done();
         }
+
     }
+
 }

@@ -1,5 +1,7 @@
 namespace HouraiTeahouse.HouraiInput {
+
     public enum InputTarget {
+
         None = 0,
 
         // Standardized.
@@ -28,7 +30,6 @@ namespace HouraiTeahouse.HouraiInput {
         LeftBumper,
         RightBumper,
 
-
         // Not standardized, but provided for convenience.
         //
         Back,
@@ -47,7 +48,6 @@ namespace HouraiTeahouse.HouraiInput {
         TouchPadTap,
         TouchPadXAxis,
         TouchPadYAxis,
-
 
         // Not standardized.
         //
@@ -92,5 +92,7 @@ namespace HouraiTeahouse.HouraiInput {
         Button17,
         Button18,
         Button19
+
     }
+
 }

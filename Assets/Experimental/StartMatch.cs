@@ -1,12 +1,16 @@
 using HouraiTeahouse;
-using UnityEngine;
 using HouraiTeahouse.HouraiInput;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StartMatch : MonoBehaviour {
-    [SerializeField] private InputTarget button;
 
-    [SerializeField, Scene] private string scene;
+    [SerializeField]
+    InputTarget button;
+
+    [SerializeField]
+    [Scene]
+    string scene;
 
     // Update is called once per frame
     void Update() {
@@ -14,4 +18,5 @@ public class StartMatch : MonoBehaviour {
             if (device.GetControl(button).WasPressed)
                 SceneManager.LoadScene(scene);
     }
+
 }

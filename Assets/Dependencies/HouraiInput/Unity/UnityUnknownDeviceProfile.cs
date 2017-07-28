@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-
 namespace HouraiTeahouse.HouraiInput {
+
     public class UnityUnknownDeviceProfile : UnityInputDeviceProfile {
+
         public UnityUnknownDeviceProfile(string joystickName) {
             Name = "Unknown Device";
             if (joystickName != "") {
@@ -19,7 +16,7 @@ namespace HouraiTeahouse.HouraiInput {
             JoystickNames = new[] {joystickName};
 
             AnalogMappings = new InputMapping[UnityInputDevice.MaxAnalogs];
-            for (int i = 0; i < UnityInputDevice.MaxAnalogs; i++) {
+            for (var i = 0; i < UnityInputDevice.MaxAnalogs; i++) {
                 AnalogMappings[i] = new InputMapping {
                     Handle = "Analog " + i,
                     Source = Analog(i),
@@ -28,7 +25,7 @@ namespace HouraiTeahouse.HouraiInput {
             }
 
             ButtonMappings = new InputMapping[UnityInputDevice.MaxButtons];
-            for (int i = 0; i < UnityInputDevice.MaxButtons; i++) {
+            for (var i = 0; i < UnityInputDevice.MaxButtons; i++) {
                 ButtonMappings[i] = new InputMapping {
                     Handle = "Button " + i,
                     Source = Button(i),
@@ -37,9 +34,10 @@ namespace HouraiTeahouse.HouraiInput {
             }
         }
 
-
         public override bool IsKnown {
             get { return false; }
         }
+
     }
+
 }

@@ -1,93 +1,99 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.Editor {
 
-    /// <summary>
-    /// Custom PropertyDrawer for ResourcePathAttribute.
-    /// </summary>
-    [CustomPropertyDrawer(typeof (ResourceAttribute))]
-    internal class ResourceAttributeDrawer : PropertyDrawer {
+    /// <summary> Custom PropertyDrawer for ResourcePathAttribute. </summary>
+    //TODO(jame7132): Move this to the Resource Attribute file
+    [CustomPropertyDrawer(typeof(ResourceAttribute))]
+    internal class ResourceAttributeDrawer : BasePropertyDrawer<ResourceAttribute> {
 
-        private class Data {
-            private Object _object;
-            private string _path;
+        class Data {
+
+            Object _object;
+            string _path;
             public readonly GUIContent Content;
 
             public Data(SerializedProperty property, GUIContent content) {
                 _path = property.stringValue;
-                _object = Resources.Load(_path);
+                _object = Assets.IsBundlePath(_path) ? Assets.LoadBundledAsset(_path) : Resources.Load(_path);
                 Content = new GUIContent(content);
                 UpdateContent(content);
             }
 
+            bool Valid {
+                get { return !_path.IsNullOrEmpty(); }
+            }
+
             public void Draw(Rect position, SerializedProperty property, Type type) {
                 EditorGUI.BeginChangeCheck();
-                Object obj = EditorGUI.ObjectField(position, Content, _object, type, false);
-                if (EditorGUI.EndChangeCheck()) {
-                    Update(obj);
-                    property.stringValue = _path;
-                    EditorUtility.SetDirty(property.serializedObject.targetObject);
-                }
+                Object obj;
+                using (hGUI.Color(Valid ? GUI.color : Color.red))
+                    obj = EditorGUI.ObjectField(position, Content, _object, type, false);
+                if (!EditorGUI.EndChangeCheck())
+                    return;
+                Update(obj);
+                property.stringValue = _path;
+                EditorUtility.SetDirty(property.serializedObject.targetObject);
             }
 
             public void UpdateContent(GUIContent label) {
-                bool validPath = !string.IsNullOrEmpty(_path);
-                Content.text = string.Format("{0} ({1})", label.text, validPath ? "\u2713" : "\u2715");
                 string message;
-                if (!_object)
+                if (!_object) {
                     message = "No object specified";
-                else if (!validPath)
-                    message = "Not in a Resources folder. Will not be saved.";
-                else
-                    message = string.Format("Path: {0}", _path);
+                } else if (!Valid) {
+                    message = "Not in Resources folder or Asset Bundle. Will not be saved.";
+                } else if (_path.IndexOf(Resource.BundleSeperator) >= 0) {
+                    string[] splits = _path.Split(Resource.BundleSeperator);
+                    message = "Asset Bundle: {0}\nPath:{1}".With(splits[0], splits[1]);
+                } else {
+                    message = "Path: {0}".With(_path);
+                }
 
-                if (string.IsNullOrEmpty(label.tooltip))
-                    Content.tooltip = message;
-                else
-                    Content.tooltip = string.Format("{0}\n{1}", label.tooltip, message);
+                Content.tooltip = label.tooltip.IsNullOrEmpty() ? message : "{0}\n{1}".With(label.tooltip, message);
             }
 
-           void Update(Object obj) {
+            void Update(Object obj) {
                 _object = obj;
-                _path = AssetUtil.GetResourcePath(_object);
+                var bundleName = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(_object)).assetBundleName;
+                if (Assets.IsResource(_object))
+                    _path = Assets.GetResourcePath(_object);
+                else if (!string.IsNullOrEmpty(bundleName))
+                    _path = "{0}:{1}".With(bundleName, _object.name);
+                else
+                    _path = string.Empty;
             }
+
         }
 
-        private readonly Dictionary<string, Data> _data;
-        private ResourceAttribute _resourceAttribute;
+        readonly Dictionary<string, Data> _data;
 
-        public ResourceAttributeDrawer() {
-           _data = new Dictionary<string, Data>(); 
-        }
+        public ResourceAttributeDrawer() { _data = new Dictionary<string, Data>(); }
 
         /// <summary>
-        /// <see cref="PropertyDrawer.OnGUI"/>
+        ///     <see cref="PropertyDrawer.OnGUI" />
         /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             if (property.propertyType != SerializedPropertyType.String) {
                 EditorGUI.PropertyField(position, property, label);
                 return;
             }
-            if (_resourceAttribute == null)
-                _resourceAttribute = attribute as ResourceAttribute;
 
             string propertyPath = property.propertyPath;
             Data data;
-            bool changed = !_data.ContainsKey(propertyPath);
-            if (changed) 
+            if (!_data.TryGetValue(propertyPath, out data)) {
                 data = new Data(property, label);
-            else 
-                data = _data[propertyPath];
+                _data[propertyPath] = data;
+            }
 
-            EditorGUI.BeginProperty(position, data.Content, property);
-            data.UpdateContent(label);
-            data.Draw(position, property, _resourceAttribute.TypeRestriction);
-            _data[propertyPath] = data;
-            EditorGUI.EndProperty();
+            using (hGUI.Property(data.Content, position, property)) {
+                data.UpdateContent(label);
+                data.Draw(position, property, attribute.TypeRestriction);
+                _data[propertyPath] = data;
+            }
         }
 
     }

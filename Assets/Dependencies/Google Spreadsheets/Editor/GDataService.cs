@@ -1,18 +1,8 @@
-﻿// To prepare a Google Spreadsheet for this:
-// make sure the spreadsheet has been published to web (FILE >> PUBLISH TO WEB), which is NOT the same as sharing to web
-
-// To use in a different script:
-// 1) include "using Google.GData.Client;"
-// 2) include "using Google.GData.Spreadsheets;"
-// 3) call "GDocService.GetSpreadsheet( string spreadsheetKey );", see DebugTest section for sample usage
-
-using UnityEngine;
-using Google.GData.Spreadsheets;
-
-// for "InsecureSecurityPolicy" class at the end
-using System.Net;
+﻿using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using Google.GData.Spreadsheets;
+// for "InsecureSecurityPolicy" class at the end
 
 public class GDocService {
 
@@ -25,24 +15,25 @@ public class GDocService {
 
         var service = new SpreadsheetsService("UnityConnect");
 
-        var listQuery = new ListQuery("https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/default/public/values");
+        var listQuery =
+            new ListQuery("https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/default/public/values");
 
         return service.Query(listQuery);
     }
+
 }
 
 // from http://answers.unity3d.com/questions/249052/accessing-google-apis-in-unity.html
 public class InsecureSecurityCertificatePolicy {
-    public static bool Validator(
-        object sender,
-        X509Certificate certificate,
-        X509Chain chain,
-        SslPolicyErrors policyErrors) {
+
+    public static bool Validator(object sender,
+                                 X509Certificate certificate,
+                                 X509Chain chain,
+                                 SslPolicyErrors policyErrors) {
         // Just accept and move on...
         return true;
     }
 
-    public static void Instate() {
-        ServicePointManager.ServerCertificateValidationCallback = Validator;
-    }
+    public static void Instate() { ServicePointManager.ServerCertificateValidationCallback = Validator; }
+
 }

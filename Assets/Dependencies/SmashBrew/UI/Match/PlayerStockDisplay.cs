@@ -1,39 +1,48 @@
+using HouraiTeahouse.SmashBrew.Matches;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-    /// <summary>
-    /// A behaviour used to display a Player's remaining stock
-    /// </summary>
+
+    /// <summary> A behaviour used to display a Player's remaining stock </summary>
     //TODO: Change to be event based 
-    public class PlayerStockDisplay : MonoBehaviour, IDataComponent<Player> {
-        [SerializeField,
-         Tooltip("The Text object used to display the additional stock beyond shown by the simple indicators")] private
-            NumberText ExcessDisplay;
+    public class PlayerStockDisplay : PlayerUIComponent {
 
-        [SerializeField, Tooltip("The standard indicators to show current stock values")] private GameObject[]
-            standardIndicators;
+        [SerializeField]
+        StockMatch _stockMatch;
 
-        private StockMatch _stockMatch;
-        private Player _player;
+        [SerializeField]
+        [Tooltip("The Text object used to display the additional stock beyond shown by the simple indicators")]
+        NumberText ExcessDisplay;
 
-        /// <summary>
-        /// Unity Callback. Called before the object's first frame.
-        /// </summary>
-        void Start() {
-            _stockMatch = FindObjectOfType<StockMatch>();
-            DisableCheck();
+        [SerializeField]
+        [Tooltip("The standard indicators to show current stock values")]
+        GameObject[] standardIndicators;
+
+        /// <summary> Unity Callback. Called before the object's first frame. </summary>
+        protected override void Start() {
+            base.Start();
+            Refresh();
         }
 
-        /// <summary>
-        /// Unity Callback. Called once per frame.
-        /// </summary>
         void Update() {
-            DisableCheck();
-
-            if (_stockMatch == null)
+            if (_stockMatch != null)
                 return;
+            _stockMatch = FindObjectOfType<StockMatch>();
+            if(_stockMatch != null) {
+                _stockMatch.StockChanged += Refresh;
+                Refresh();
+            }
+        }
 
-            int stock = _stockMatch[_player];
+        void Refresh() {
+            if (_stockMatch == null || !_stockMatch.IsActive || Player == null) {
+                ExcessDisplay.gameObject.SetActive(false);
+                foreach (GameObject standardIndicator in standardIndicators)
+                    standardIndicator.SetActive(false);
+                return;
+            }
+
+            int stock = _stockMatch[Player];
             bool excess = stock > standardIndicators.Length;
             if (ExcessDisplay)
                 ExcessDisplay.gameObject.SetActive(excess);
@@ -51,22 +60,6 @@ namespace HouraiTeahouse.SmashBrew.UI {
             }
         }
 
-        void DisableCheck() {
-            if (_stockMatch != null && _stockMatch.enabled || _player == null)
-                return;
-            if (ExcessDisplay)
-                ExcessDisplay.gameObject.SetActive(false);
-            foreach (var indicator in standardIndicators)
-                if (indicator)
-                    indicator.SetActive(false);
-            enabled = false;
-        }
-
-        /// <summary>
-        /// <see cref="IDataComponent{T}.SetData"/>
-        /// </summary>
-        public void SetData(Player data) {
-            _player = data;
-        }
     }
+
 }

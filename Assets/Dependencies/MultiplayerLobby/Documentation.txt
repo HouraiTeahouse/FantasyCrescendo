@@ -1,0 +1,65 @@
+This file explains a bit how the lobby is created & setup so you can personalize it.
+
+
+The main prefab is in "Prefabs/LobbyManager". This is a canvas with the LobbyManager script on it.
+It have multiple child that setup the UI & different "screens" of the lobby (i.e. Server List, Player Lsit etc...)
+
+Everything above the "Unity UI Lobby" section in the Manager Inspector is from UnityEngine.Networking.NetworkLobbyManager, so see the doc
+for it to see an explaination for all of them.
+
+Prematch countdown is the time between all players being ready & the game starting.
+
+The Lobbymanager script have reference to all the different screens for easy access.
+*if you totally replace one of those screens, set its reference there*
+
+Screens : 
+=========
+
+TopPanel
+--------
+
+As the name imply, this the top panel of the Lobby. It handle showing/hiding (esp when in game as esc. can show it back to "exit" the server)
+
+
+MainPanel
+---------
+This is the panel that the player see first, on which they decide either to create a game throught matchmaker or directly.
+It just take diverse references :
+ - the lobby amnager
+ - the Server List (i.e. the matchmaker panel)
+ - the Lobby Panel (i.e. the actual lobby were player are listed)
+ - &nboth input field (for match name & ip to join) to be able to watch for their modification
+
+Server List
+------------
+
+ The server list panel will display all the match created throught the matchmaker.
+ It just take reference to 
+	- the UI rect where to add the server entry
+	- the prefab for those server entry (see Prefabs/ServerInfoEntry)
+	- The prefab to display when no server are found (see Prefabs/NoServerFound)
+
+Lobby panel
+-----------
+
+The Lobby Panel is what is actually called the "lobby" : a list of player currently connected to the servers.
+
+For that the scropt LobbyPlayerList need UI rect where to place those players
+_Direct Play warning is only here as the prefab to display when you are in the lobby using directly IP (& not the matchmaker)_
+
+InfoPanel
+---------
+
+It's simply a popup used to display thing.
+
+Countdown Panel
+---------------
+
+Same but for the pre match countdown.
+
+
+Prefabs
+=======
+
+The two prefabs that are important to look at for personalisation are PlayerInfo and ServerInfo. They are use to display
+the entry in the list (repsectivly of player in the lobby & of servers) & have a script atatched to them to handle that.

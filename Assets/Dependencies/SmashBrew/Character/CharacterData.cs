@@ -1,242 +1,139 @@
-using System;
 using System.Linq;
-using HouraiTeahouse.SmashBrew.UI;
 using UnityEngine;
+using System.Collections.ObjectModel;
+using Random = System.Random;
 
 namespace HouraiTeahouse.SmashBrew {
-    public enum TouhouGame {
-        HighlyResponsiveToPrayers = 0,
-        StoryOfEasternWonderland,
-        PhantasmagoriaOfDimDream,
-        LotusLandStory,
-        MysticSquare,
-        EmbodimentOfScarletDevil,
-        PerfectCherryBlossom,
-        ImmaterialAndMissingPower,
-        ImperishableNight,
-        PhantasmagoriaOfFlowerView,
-        ShootTheBullet,
-        MountainOfFaith,
-        ScarletWeatherRhapsody,
-        SubterraneanAnimism,
-        UndefinedFantasticObject,
-        Hisoutensoku,
-        DoubleSpoiler,
-        FairyWars,
-        TenDesires,
-        HopelessMasquerade,
-        ImpossibleSpellCard,
-        UrbanLegendInLimbo,
-        LegacyOfLunaticKingdom,
-        Other
-    }
 
-    public enum TouhouStage {
-        PlayableCharacter = 0,
-        Stage1,
-        Stage2,
-        Stage3,
-        Stage4,
-        Stage5,
-        Stage6,
-        Extra,
-        Other
-    }
-
-    /// <summary>
-    /// A ScriptableObject 
-    /// </summary>
-    /// <seealso cref="DataManager"/>
-    /// <seealso cref="SceneData"/>
+    /// <summary> A ScriptableObject </summary>
+    /// <seealso cref="DataManager" />
+    /// <seealso cref="SceneData" />
     [CreateAssetMenu(fileName = "New Character", menuName = "SmashBrew/Character Data")]
-    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:CharacterData")]
-    public class CharacterData : ScriptableObject {
+    public class CharacterData : ExtendableObject, IGameData {
+
+        [SerializeField]
+        [ReadOnly]
+        [Tooltip("The unique ID used for this character")]
+        uint _id;
+
         [Header("General Data")]
         [SerializeField]
-        private TouhouGame _sourceGame = TouhouGame.Other;
+        [Tooltip(" Is the Character selectable from the character select screen?")]
+        bool _isSelectable;
 
         [SerializeField]
-        private TouhouStage _sourceStage = TouhouStage.Other;
+        [Tooltip("Is the Character viewable in the character select screen?")]
+        bool _isVisible;
 
-        [SerializeField, Resource(typeof (GameObject))]
-        [Tooltip("The prefab of the Character to spawn.")]
-        private string _prefab;
-
-        [SerializeField, Resource(typeof (SceneData))]
+        [SerializeField]
+        [Resource(typeof(SceneData))]
         [Tooltip("The Character's associated stage.")]
-        private string _homeStage;
-
-        [SerializeField, Tooltip(" Is the Character selectable from the character select screen?")]
-        private bool _isSelectable;
-
-        [SerializeField, Tooltip("Is the Character viewable in the character select screen?")]
-        private bool _isVisible;
-
-        [Header("Localization Data")] 
-        [SerializeField, Tooltip("The localization key used for the character's shortened name")]
-        private string _shortNameKey;
-
-        [SerializeField, Tooltip("The localization key used for the character's full name.")]
-        private string _fullNameKey;
+        string _homeStage;
 
         [Header("2D Art Data")]
-        [SerializeField, Resource(typeof (Sprite))]
-        private string[] _portraits;
-        private Resource<Sprite>[] _portraitResources;
-
         [SerializeField]
-        private Color _backgroundColor = Color.white;
+        [Resource(typeof(Sprite))]
+        [Tooltip("The icon used to represent the character.")]
+        string _icon;
+
+        [SerializeField, Resource(typeof(Sprite))]
+        string[] _portraits;
+
+        Resource<Sprite>[] _portraitResources;
 
         [SerializeField]
         [Tooltip("The center of the crop for smaller cropped views")]
-        private Vector2 _cropPositon;
+        Vector2 _cropPositon;
 
         [SerializeField]
         [Range(0f, 1f)]
         [Tooltip("The size of the crop. In normalized coordinates.")]
-        private float _cropSize;
+        float _cropSize;
 
-        [SerializeField, Resource(typeof (Sprite))]
-        [Tooltip("The icon used to represent the character.")]
-        private string _icon;
+        [SerializeField]
+        Color _backgroundColor = Color.white;
+
+        [SerializeField]
+        [Resource(typeof(GameObject))]
+        [Tooltip("The prefab of the Character to spawn.")]
+        string _prefab;
+
+        [Header("Text Data")]
+        [SerializeField]
+        string _shortName;
+
+        [SerializeField]
+        string _fullName;
 
         [Header("Audio Data")]
-        [SerializeField, Resource(typeof (AudioClip))]
+        [SerializeField]
+        [Resource(typeof(AudioClip))]
         [Tooltip("The audio clip played for the Character's announer")]
-        private string _announcerClip;
+        string _announcerClip;
 
-        [SerializeField, Resource(typeof (AudioClip))]
+        [SerializeField]
+        [Resource(typeof(AudioClip))]
         [Tooltip("The theme played on the match results screen when the character wins")]
-        private string _victoryTheme;
+        string _victoryTheme;
 
-        /// <summary>
-        /// The source game the character is from
-        /// </summary>
-        public TouhouGame SourceGame {
-            get { return _sourceGame; }
-        }
+        [Header("Networking")]
+        [SerializeField]
+        [Resource(typeof(GameObject))]
+        [Tooltip("Extra prefabs the character uses that need to be registered for spawning across the network.")]
+        string[] _extraPrefabs;
 
-        /// <summary>
-        /// The source stage the character is from
-        /// </summary>
-        public TouhouStage SourceStage {
-            get { return _sourceStage; }
-        }
-
-        /// <summary>
-        /// The short name of the character. Usually just their first name.
-        /// </summary>
+        /// <summary> The short name of the character. Usually just their first name. </summary>
         public string ShortName {
-            get { return _shortNameKey; }
+            get { return _shortName; }
         }
 
-        /// <summary>
-        /// The full name of the character.
-        /// </summary>
+        /// <summary> The full name of the character. </summary>
         public string FullName {
-            get { return _fullNameKey; }
+            get { return _fullName; }
         }
 
-        /// <summary>
-        /// Is the Character selectable from the character select screen?
-        /// </summary>
-        public bool IsSelectable {
-            get { return _isSelectable && _isVisible; }
-        }
-
-        /// <summary>
-        /// Is the Character viewable in the character select screen?
-        /// </summary>
-        public bool IsVisible {
-            get { return _isVisible; }
-        }
-
-        /// <summary>
-        /// Gets how many palletes 
-        /// </summary>
+        /// <summary> Gets how many palletes </summary>
         public int PalleteCount {
             get { return _portraits == null ? 0 : _portraits.Length; }
         }
 
-        /// <summary>
-        /// Gets the resource for the character's icon
-        /// </summary>
+        /// <summary> Gets the resource for the character's icon </summary>
         public Resource<Sprite> Icon { get; private set; }
 
-        /// <summary>
-        /// Get the resource for the character's home stage
-        /// </summary>
+        /// <summary> Get the resource for the character's home stage </summary>
         public Resource<SceneData> HomeStage { get; private set; }
 
-        /// <summary>
-        /// Gets the resource for the character's prefab
-        /// </summary>
+        /// <summary> Gets the resource for the character's prefab </summary>
         public Resource<GameObject> Prefab { get; private set; }
 
-        /// <summary>
-        /// Gets the resource for the character's announcer clip 
-        /// </summary>
+        /// <summary> Gets the resource for the character's announcer clip </summary>
         public Resource<AudioClip> Announcer { get; private set; }
 
-        /// <summary>
-        /// Gets the resource for the character's victory theme clip 
-        /// </summary>
+        /// <summary> Gets the resource for the character's victory theme clip </summary>
         public Resource<AudioClip> VictoryTheme { get; private set; }
 
-        /// <summary>
-        /// Gets the crop rect relative to a texture 
-        /// </summary>
-        /// <param name="texture">the texture to get the rect relative to</param>
-        /// <returns>the crop rect</returns>
-        public Rect CropRect(Texture texture) {
-            if (!texture)
-                return new Rect(0, 0, 1, 1);
-            return texture.UVToPixelRect(new Rect(_cropPositon.x, _cropPositon.y, _cropSize, _cropSize));
-        }
+        public ReadOnlyCollection<Resource<GameObject>> ExtraPrefabs { get; private set; }
 
-        /// <summary>
-        /// The color used in the character's select image
-        /// </summary>
+        /// <summary> The color used in the character's select image </summary>
         public Color BackgroundColor {
             get { return _backgroundColor; }
         }
 
-        /// <summary>
-        /// Gets the resource for the sprite portrait for a certain pallete.
-        /// </summary>
-        /// <param name="pallete">the pallete color to choose</param>
-        /// <exception cref="ArgumentException">thrown if <paramref name="pallete"/> is less than 0 or greater than <see cref="PalleteCount"/></exception>
-        /// <returns></returns>
-        public Resource<Sprite> GetPortrait(int pallete) {
-            if (pallete < 0 || pallete >= PalleteCount)
-                throw new ArgumentException();
-            if (_portraits.Length != _portraitResources.Length)
-                RegeneratePortraits();
-            return _portraitResources[pallete];
+        /// <summary> Is the Character selectable from the character select screen? </summary>
+        public bool IsSelectable {
+            get { return _isSelectable && _isVisible; }
         }
 
-        /// <summary>
-        /// Unity Callback. Called when the asset instance is loaded into memory.
-        /// </summary>
-        void OnEnable() {
-            if (_portraits == null)
-                return;
-            Icon = new Resource<Sprite>(_icon);
-            Prefab = new Resource<GameObject>(_prefab);
-            HomeStage = new Resource<SceneData>(_homeStage);
-            Announcer = new Resource<AudioClip>(_announcerClip);
-            VictoryTheme = new Resource<AudioClip>(_victoryTheme);
-            RegeneratePortraits();
+        /// <summary> Is the Character viewable in the character select screen? </summary>
+        public bool IsVisible {
+            get { return _isVisible; }
         }
 
-        /// <summary>
-        /// Unity callback. Called when the asset instance is unloaded from memory.
-        /// </summary>
-        void OnDisable() {
-            UnloadAll();
+        public uint Id {
+            get { return _id; }
         }
 
-        public void UnloadAll() {
+        public void Unload() {
             Icon.Unload();
             Prefab.Unload();
             HomeStage.Unload();
@@ -245,10 +142,62 @@ namespace HouraiTeahouse.SmashBrew {
                 portrait.Unload();
         }
 
-        void RegeneratePortraits() {
-            _portraitResources = new Resource<Sprite>[_portraits.Length];
-            for (var i = 0; i < _portraits.Length; i++)
-                _portraitResources[i] = new Resource<Sprite>(_portraits[i]);
+        /// <summary> Gets the crop rect relative to a texture </summary>
+        /// <param name="texture"> the texture to get the rect relative to </param>
+        /// <returns> the crop rect </returns>
+        public Rect CropRect(Texture texture) {
+            if (!texture)
+                return new Rect(0, 0, 1, 1);
+            float extents = _cropSize / 2;
+            return
+                texture.UVToPixelRect(new Rect(_cropPositon.x - extents, _cropPositon.y - extents, _cropSize, _cropSize));
         }
+
+        /// <summary> Gets the resource for the sprite portrait for a certain pallete. </summary>
+        /// <param name="pallete"> the pallete color to choose </param>
+        /// <exception cref="ArgumentException"> <paramref name="pallete" /> is less than 0 or greater than
+        /// <see cref="PalleteCount" /> </exception>
+        /// <returns> </returns>
+        public Resource<Sprite> GetPortrait(int pallete) {
+            Argument.Check("pallete", Check.Range(pallete, PalleteCount));
+            if (_portraitResources == null || _portraits.Length != _portraitResources.Length)
+                RegeneratePortraits();
+            return _portraitResources[pallete];
+        }
+
+        /// <summary> Unity Callback. Called when the asset instance is loaded into memory. </summary>
+        void OnEnable() {
+            if (_portraits == null)
+                return;
+            Icon = Resource.Get<Sprite>(_icon);
+            Prefab = Resource.Get<GameObject>(_prefab);
+            HomeStage = Resource.Get<SceneData>(_homeStage);
+            Announcer = Resource.Get<AudioClip>(_announcerClip);
+            VictoryTheme = Resource.Get<AudioClip>(_victoryTheme);
+            if (_extraPrefabs == null)
+                _extraPrefabs = new string[0];
+            ExtraPrefabs = new ReadOnlyCollection<Resource<GameObject>>(_extraPrefabs.Select(Resource.Get<GameObject>).ToArray());
+            RegeneratePortraits();
+        }
+
+        /// <summary> Unity callback. Called when the asset instance is unloaded from memory. </summary>
+        void OnDisable() {
+            Unload();
+        }
+
+        void Reset() {
+            RegenerateID();
+        }
+
+        void RegeneratePortraits() { 
+            _portraitResources = _portraits.Select(Resource.Get<Sprite>).ToArray(); 
+        }
+
+        [ContextMenu("Regenerate ID")]
+        void RegenerateID() { 
+            _id = (uint)new Random().Next();
+        }
+
     }
+
 }

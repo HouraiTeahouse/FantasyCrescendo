@@ -1,9 +1,21 @@
-using System;
 using UnityEngine;
 
-
 namespace HouraiTeahouse.HouraiInput {
+
     public class TwoAxisInputControl {
+
+        public static float StateThreshold = 0.0f;
+        bool lastState;
+
+        bool thisState;
+
+        internal TwoAxisInputControl() {
+            Left = new OneAxisInputControl();
+            Right = new OneAxisInputControl();
+            Up = new OneAxisInputControl();
+            Down = new OneAxisInputControl();
+        }
+
         public float X { get; protected set; }
         public float Y { get; protected set; }
 
@@ -14,19 +26,17 @@ namespace HouraiTeahouse.HouraiInput {
 
         public ulong UpdateTick { get; protected set; }
 
-        bool thisState;
-        bool lastState;
-
-        public static float StateThreshold = 0.0f;
-
-
-        internal TwoAxisInputControl() {
-            Left = new OneAxisInputControl();
-            Right = new OneAxisInputControl();
-            Up = new OneAxisInputControl();
-            Down = new OneAxisInputControl();
+        public bool State {
+            get { return thisState; }
         }
 
+        public bool HasChanged {
+            get { return thisState != lastState; }
+        }
+
+        public Vector2 Vector {
+            get { return new Vector2(X, Y); }
+        }
 
         internal void Update(float x, float y, ulong updateTick) {
             lastState = thisState;
@@ -53,34 +63,14 @@ namespace HouraiTeahouse.HouraiInput {
             }
         }
 
+        public static implicit operator bool(TwoAxisInputControl control) { return control.thisState; }
 
-        public bool State {
-            get { return thisState; }
-        }
-
-
-        public bool HasChanged {
-            get { return thisState != lastState; }
-        }
-
-
-        public Vector2 Vector {
-            get { return new Vector2(X, Y); }
-        }
-
-
-        public static implicit operator bool(TwoAxisInputControl control) {
-            return control.thisState;
-        }
-
-
-        public static implicit operator Vector2(TwoAxisInputControl control) {
-            return control.Vector;
-        }
-
+        public static implicit operator Vector2(TwoAxisInputControl control) { return control.Vector; }
 
         public static implicit operator Vector3(TwoAxisInputControl control) {
             return new Vector3(control.X, control.Y);
         }
+
     }
+
 }

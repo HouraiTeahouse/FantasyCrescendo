@@ -1,15 +1,15 @@
-using UnityEngine;
 using HouraiTeahouse.SmashBrew.UI;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace HouraiTeahouse.SmashBrew {
-    /// <summary>
-    /// A CharacterUIComponent that creates a playable AudioSOurce that will play the Character's
-    /// announcer audio clip
-    /// </summary>
+
+    /// <summary> A CharacterUIComponent that creates a playable AudioSOurce that will play the Character's announcer audio
+    /// clip </summary>
     public sealed class AnnouncerAudio : CharacterUIComponent<AudioSource>, ISubmitHandler {
+
         /// <summary>
-        /// <see cref="ISubmitHandler.OnSubmit"/>
+        ///     <see cref="ISubmitHandler.OnSubmit" />
         /// </summary>
         public void OnSubmit(BaseEventData eventData) {
             if (Component)
@@ -17,13 +17,15 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         /// <summary>
-        /// <see cref="IDataComponent{T}.SetData"/>
+        ///     <see cref="IDataComponent{T}.SetData" />
         /// </summary>
         public override void SetData(CharacterData data) {
             base.SetData(data);
             if (Component == null || data == null)
                 return;
-            Component.clip = data.Announcer.Load();
+            data.Announcer.LoadAsync().Then(clip => Component.clip = clip).Done();
         }
+
     }
+
 }

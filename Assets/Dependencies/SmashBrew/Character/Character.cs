@@ -1,360 +1,171 @@
+using HouraiTeahouse.SmashBrew.States;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using HouraiTeahouse.Events;
-using HouraiTeahouse.SmashBrew.Util;
-using UnityConstants;
-#if UNITY_EDITOR
-using UnityEditor;
+using UnityEngine;
+using UnityEngine.Networking;
 
-#endif
+namespace HouraiTeahouse.SmashBrew.Characters {
 
-namespace HouraiTeahouse.SmashBrew {
-    /// <summary>
-    /// General character class for handling the physics and animations of individual characters
-    /// </summary>
-#if UNITY_EDITOR
-    [InitializeOnLoad]
-#endif
+    /// <summary> General character class for handling the physics and animations of individual characters </summary>
     [DisallowMultipleComponent]
-    [RequireComponent(typeof (Rigidbody), typeof (CapsuleCollider))]
-    public sealed partial class Character : HouraiBehaviour, IDamageable, IHealable, IKnockbackable {
-        private enum FacingMode {
-            Rotation,
-            Scale
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(MovementState))]
+    public class Character : NetworkBehaviour, IHitboxController, IRegistrar<ICharacterComponent> {
+
+        public CharacterController Controller { get; private set; }
+        public MovementState Movement { get; private set; }
+        public StateController<CharacterState, CharacterStateContext> StateController { get; private set; }
+        public CharacterStateContext Context { get; private set; }
+
+        public CharacterControllerBuilder States {
+            get { return _controller; }
         }
 
-        #region Public Properties
+        Dictionary<int, Hitbox> _hitboxMap;
+        Dictionary<int, CharacterState> _stateMap;
+        List<Hitbox> _hurtboxes;
+        List<ICharacterComponent> _components;
+        HashSet<object> _hitHistory;
 
-        public Mediator CharacterEvents { get; private set; }
+        [SerializeField]
+        CharacterControllerBuilder _controller;
 
         /// <summary>
-        /// Gets how many bones the Character has.
+        /// Awake is called when the script instance is being loaded.
         /// </summary>
-        public int BoneCount {
-            get { return _bones.Length; }
+        void Awake() {
+            gameObject.tag = Config.Tags.PlayerTag;
+            gameObject.layer = Config.Tags.CharacterLayer;
+            if (_controller == null)
+                throw new InvalidOperationException("Cannot start a character without a State Controller!");
+            StateController = _controller.BuildCharacterControllerImpl(
+                new StateControllerBuilder<CharacterState, CharacterStateContext>());
+            if (Debug.isDebugBuild)
+                StateController.OnStateChange += (b, a) => Log.Debug("{0} changed states: {1} => {2}".With(name, b.Name, a.Name));
+            Context = new CharacterStateContext();
+            _hitboxMap = new Dictionary<int, Hitbox>();
+            _hurtboxes = new List<Hitbox>();
+            _components = new List<ICharacterComponent>();
+            _stateMap = StateController.States.ToDictionary(s => s.AnimatorHash);
+            _hitHistory = new HashSet<object>();
+            Controller = this.SafeGetComponent<CharacterController>();
+            Movement = this.SafeGetComponent<MovementState>();
+            EstablishImmunityChanges();
         }
 
-        /// <summary>
-        /// Gets whether the Character is currently on solid Ground.
-        /// Assumed to be in the air when false.
-        /// </summary>
-        public bool IsGrounded {
-            get { return _ground.Count > 0; }
+        public bool CheckHistory(object obj) {
+            var result = _hitHistory.Contains(obj);
+            if (!result)
+                _hitHistory.Add(obj);
+            return result;
         }
 
-        /// <summary>
-        /// Gets or sets whether the Character is currently fast falling or not
-        /// </summary>
-        public bool IsFastFalling { get; set; }
-
-        public float FallSpeed {
-            get { return IsFastFalling ? _fastFallSpeed : _maxFallSpeed; }
-        }
-
-        /// <summary>
-        /// The direction the character is currently facing.
-        /// If set to true, the character faces the right.
-        /// If set to false, the character faces the left.
-        /// 
-        /// The method in which the character is flipped depends on what the Facing Mode parameter is set to.
-        /// </summary>
-        public bool Direction {
-            get {
-                if (_facingMode == FacingMode.Rotation)
-                    return transform.eulerAngles.y > 179f;
-                return transform.localScale.x > 0;
-            }
-            set {
-                if (_facing == value)
+        void EstablishImmunityChanges() {
+            var typeMap = new Dictionary<ImmunityType, Hitbox.Type> {
+                {ImmunityType.Normal, Hitbox.Type.Damageable},
+                {ImmunityType.Intangible, Hitbox.Type.Intangible},
+                {ImmunityType.Invincible, Hitbox.Type.Invincible}
+            };
+            StateController.OnStateChange += (b, a) => {
+                if (_hitboxMap == null || _hitboxMap.Count < 0)
                     return;
+                foreach (var hitbox in _hitboxMap.Values)
+                    hitbox.ResetState();
+                _hitHistory.Clear();
+            };
+            StateController.OnStateChange += (b, a) => {
+                if (_hurtboxes == null || _hurtboxes.Count < 0)
+                    return;
+                var hitboxType = Hitbox.Type.Damageable;
+                typeMap.TryGetValue(a.Data.DamageType, out hitboxType);
+                foreach (var hurtbox in _hurtboxes)
+                    hurtbox.CurrentType = hitboxType;
+            };
+        }
 
-                _facing = value;
-                if (_facingMode == FacingMode.Rotation)
-                    transform.Rotate(0f, 180f, 0f);
-                else
-                    transform.localScale *= -1;
+        void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
+            int id = Argument.NotNull(hitbox).ID;
+            if (_hitboxMap.ContainsKey(id))
+                Log.Error("Hitboxes {0} and {1} on {2} have the same id. Ensure that they have different IDs.",
+                    hitbox,
+                    _hitboxMap[id],
+                    gameObject.name);
+            else {
+                _hitboxMap.Add(id, hitbox);
+                _hurtboxes.Add(hitbox);
             }
         }
 
-        /// <summary>
-        /// Gets or sets the magnitude of gravity applied to the Character.
-        /// </summary>
-        public float Gravity {
-            get { return _gravity; }
-            set { _gravity = Mathf.Abs(value); }
+        bool IRegistrar<Hitbox>.Unregister(Hitbox obj) {
+            return _hitboxMap.Remove(Argument.NotNull(obj).ID) || _hurtboxes.Remove(obj);
         }
 
-        /// <summary>
-        /// Gets how many remaining jumps the Character currently has.
-        /// </summary>
-        public int JumpCount { get; private set; }
-
-        /// <summary>
-        /// Gets the maximum number of jumps the Character can preform.
-        /// </summary>
-        public int MaxJumpCount {
-            get { return _jumpHeights == null ? 0 : _jumpHeights.Length; }
+        void IRegistrar<ICharacterComponent>.Register(ICharacterComponent component) {
+            if (_components.Contains(Argument.NotNull(component)))
+                return;
+            _components.Add(component);
         }
 
-        /// <summary>
-        /// Can the Character currently jump?
-        /// </summary>
-        public bool CanJump {
-            get { return JumpCount < MaxJumpCount; }
+        bool IRegistrar<ICharacterComponent>.Unregister(ICharacterComponent component) {
+            return _components.Remove(component);
         }
 
-        #endregion
-
-        #region Runtime Variables
-
-        private Transform[] _bones;
-        private HashSet<Collider> _ground;
-        private bool _facing;
-
-        private bool _jumpQueued;
-
-        #endregion
-
-        #region Serialized Variables
-
-        [SerializeField]
-        private GameObject _rootBone;
-
-        [SerializeField]
-        private FacingMode _facingMode;
-
-        [Header("Physics")]
-        [SerializeField, Tooltip("The acceleration downward per second applied")]
-        private float _gravity = 9.86f;
-
-        [SerializeField]
-        private float _maxFallSpeed = 5f;
-
-        [SerializeField, Tooltip("The fast falling speed applied")]
-        private float _fastFallSpeed = 9f;
-
-        [SerializeField, Tooltip("The heights of each jump")]
-        private float[] _jumpHeights = {1.5f, 1.5f};
-
-        [SerializeField]
-        private Renderer[] _weapons;
-
-        [SerializeField]
-        private ParticleSystem[] _particles;
-
-        #endregion
-
-        #region Public Events
-
-        public event Action<Attack.Type, Attack.Direction, int> OnAttack;
-
-        #endregion
-
-        #region Required Components
-
-        public CapsuleCollider MovementCollider { get; private set; }
-
-        #endregion
-
-        #region Public Action Methods
-
-        public Transform GetBone(int boneIndex) {
-            if (boneIndex < 0 || boneIndex >= BoneCount)
-                return transform;
-            return _bones[boneIndex];
+        /// <summary> Retrieves a hitbox given it's ID. </summary>
+        /// <param name="id"> the ID to look for </param>
+        /// <returns> the hitbox if found, null otherwise. </returns>
+        public Hitbox GetHitbox(int id) {
+            return _hitboxMap.GetOrDefault(id);
         }
 
-        public void Move(float speed) {
-            Vector3 vel = Rigidbody.velocity;
-            vel.x = speed;
-
-            if (Direction)
-                vel.x *= -1;
-
-            Rigidbody.velocity = vel;
+        public void ResetAllHitboxes() {
+            foreach (Hitbox hitbox in Hitboxes.IgnoreNulls()) {
+                if (hitbox.ResetState())
+                    Log.Info("{0} {1}", this, hitbox);
+            }
         }
-
-        public void Jump() {
-            if (CanJump)
-                _jumpQueued = true;
-        }
-
-        /// <summary>
-        /// Actually applies the force to jump.
-        /// </summary>
-        void JumpImpl() {
-            // Apply upward force to jump
-            Rigidbody.AddForce(Vector3.up * Mathf.Sqrt(2 * Gravity * _jumpHeights[JumpCount]), ForceMode.VelocityChange);
-
-            JumpCount++;
-
-            CharacterEvents.Publish(new PlayerJumpEvent { Ground = IsGrounded, RemainingJumps = MaxJumpCount - JumpCount });
-        }
-
-        public void SetWeaponVisibilty(int weapon, bool state) {
-            if (_weapons[weapon])
-                _weapons[weapon].enabled = state;
-        }
-
-        public void SetParticleVisibilty(int particle, bool state) {
-            if(state)
-                _particles[particle].Play();
-            else
-                _particles[particle].Stop();
-        }
-
-        #endregion
-
-        #region Internal Methods
-
-        internal void Attack(Attack.Type type, Attack.Direction direction, int index) {
-            if (OnAttack != null)
-                OnAttack(type, direction, index);
-        }
-
-        #endregion
 
         #region Unity Callbacks
 
-        /// <summary>
-        /// Unity callback. Called on object instantiation.
-        /// </summary>
-        protected override void Awake() {
-            base.Awake();
-            CharacterEvents = new Mediator();
-            Reset();
+        void OnEnable() { _isActive = true; }
 
-            GameObject root = gameObject;
-            if (_rootBone)
-                root = _rootBone;
-            _bones = root.GetComponentsInChildren<Transform>();
+        void OnDisable() { _isActive = false; }
 
-            MovementCollider = GetComponent<CapsuleCollider>();
-            _ground = new HashSet<Collider>();
-
-            DamageModifiers = new ModifierGroup<object>();
-            HealingModifiers = new ModifierGroup<object>();
-            KnockbackModifiers = new ModifierGroup<Vector2>();
-
-            foreach (ParticleSystem particle in _particles)
-               if(particle) 
-                    particle.Stop();
-
-            foreach(var weapon in _weapons)
-                if (weapon)
-                    weapon.enabled = false;
-
-            // Initialize all animation behaviours
-            BaseAnimationBehaviour.InitializeAll(Animator);
-        }
-
-        void AnimationUpdate() {
-            Animator.SetBool(CharacterAnim.Grounded, IsGrounded);
-            Animator.SetBool(CharacterAnim.Jump, _jumpQueued);
-
-            _jumpQueued = false;
-        }
-
-       void FixedUpdate() {
-            Rigidbody.AddForce(-Vector3.up * _gravity, ForceMode.Acceleration);
-
-            Vector3 velocity = Rigidbody.velocity;
-
-            //if (!IsFastFalling && InputSource != null && InputSource.Movement.y < 0)
-            //    _fastFall = true;
-
-            if (IsFastFalling || velocity.y < -FallSpeed)
-                velocity.y = -FallSpeed;
-           if (IsGrounded) {
-               IsFastFalling = false;
-               JumpCount = 0;
-           }
-            Rigidbody.velocity = velocity;
-            gameObject.layer = (velocity.magnitude > Config.Instance.TangibleSpeedCap)
-                ? Layers.Intangible
-                : Layers.Character;
-
-            AnimationUpdate();
-        }
-
-        void OnCollisionEnter(Collision col) {
-            GroundCheck(col);
-        }
-
-        void GroundCheck(Collision collison) {
-            ContactPoint[] points = collison.contacts;
-            if (points.Length <= 0)
+        void LateUpdate() {
+            if (!isLocalPlayer || SmashTimeManager.Paused)
                 return;
-
-            float r2 = MovementCollider.radius * MovementCollider.radius;
-            Vector3 bottom = transform.TransformPoint(MovementCollider.center - Vector3.up * MovementCollider.height / 2);
-            foreach (ContactPoint contact in points)
-                if ((contact.point - bottom).sqrMagnitude < r2)
-                    _ground.Add(contact.otherCollider);
+            foreach (var component in _components)
+                component.UpdateStateContext(Context);
+            StateController.UpdateState(Context);
         }
-
-        void OnCollisionStay(Collision col) {
-            GroundCheck(col);
-        }
-
-        void OnCollisionExit(Collision col) {
-            _ground.Remove(col.collider);
-        }
-
-        void Reset() {
-            MovementCollider = GetComponent<CapsuleCollider>();
-            MovementCollider.isTrigger = false;
-
-            gameObject.tag = Tags.Player;
-            gameObject.layer = Layers.Character;
-
-            Rigidbody rb = Rigidbody;
-            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            rb.isKinematic = false;
-            rb.useGravity = false;
-
-            Animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
-#if UNITY_EDITOR
-            if (EditorApplication.isPlayingOrWillChangePlaymode)
-                return;
-
-            foreach (Type component in GetRequiredComponents())
-                if (!gameObject.GetComponent(component))
-                    gameObject.AddComponent(component);
-#endif
-        }
-
-#if UNITY_EDITOR
-
-        /// <summary>
-        /// Editor only function that gets all of the required component types a Character needs.
-        /// </summary>
-        /// <returns>an array of all of the concrete component types marked with RequiredCharacterComponent</returns>
-        public static Type[] GetRequiredComponents() {
-            var componentType = typeof (Component);
-            var requiredComponentType = typeof (RequiredCharacterComponentAttribute);
-            // Use reflection to find required Components for Characters and statuses
-            // Enumerate all concrete Component types
-            return (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                from assemblyType in domainAssembly.GetTypes()
-                where
-                    assemblyType != null &&
-                    !assemblyType.IsAbstract &&
-                    componentType.IsAssignableFrom(assemblyType) &&
-                    assemblyType.IsDefined(requiredComponentType, true)
-                select assemblyType).ToArray();
-        }
-#endif
-
-        void OnAnimatorMove() {
-            //TODO: Merge Physics and Animation Movements here
-
-            //_rigidbody.velocity = _animator.deltaPosition / Time.deltaTime;
-        }
-
         #endregion
+
+        #region Public Properties
+        /// <summary> Gets an immutable collection of hitboxes that belong to </summary>
+        public ICollection<Hitbox> Hitboxes {
+            get { return _hitboxMap.Values; }
+        }
+
+        public void ResetCharacter() {
+            StateController.ResetState();
+            _hitHistory.Clear();
+            foreach (IResettable resetable in GetComponentsInChildren<IResettable>().IgnoreNulls())
+                resetable.OnReset();
+        }
+        #endregion
+
+#pragma warning disable 414
+        [SyncVar(hook = "ChangeActive")]
+        bool _isActive;
+#pragma warning restore 414
+
+        // Network Callbacks
+
+        void ChangeActive(bool active) {
+            _isActive = active;
+            gameObject.SetActive(active);
+        }
+
     }
+
 }

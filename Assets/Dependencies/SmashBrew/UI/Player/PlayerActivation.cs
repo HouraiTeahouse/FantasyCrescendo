@@ -2,27 +2,39 @@ using System;
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
+
     public class PlayerActivation : PlayerUIComponent {
+
         [Serializable]
-        private class ActivateTarget {
-            private enum Mode {
+        class ActivateTarget {
+
+            enum Mode {
+
                 Assign,
                 And,
                 Or,
                 Xor
+
             }
 
-            [SerializeField] private Behaviour Behaviour;
-            [SerializeField] private Mode EditMode;
-            [SerializeField] private bool IncludeCharacterCheck;
-            [SerializeField] private bool Invert;
+            [SerializeField]
+            Behaviour Behaviour;
+
+            [SerializeField]
+            Mode EditMode;
+
+            [SerializeField]
+            bool IncludeCharacterCheck;
+
+            [SerializeField]
+            bool Invert;
 
             public void Edit(Player player) {
                 if (!Behaviour)
                     return;
-                bool playerActive = player != null && player.IsActive;
+                bool playerActive = player != null && player.Type.IsActive;
                 if (IncludeCharacterCheck)
-                    playerActive &= player.SelectedCharacter != null;
+                    playerActive &= player.Selection.Character != null;
                 if (Invert)
                     playerActive = !playerActive;
                 switch (EditMode) {
@@ -40,14 +52,18 @@ namespace HouraiTeahouse.SmashBrew.UI {
                         break;
                 }
             }
+
         }
 
-        [SerializeField] private ActivateTarget[] _targets;
+        [SerializeField]
+        ActivateTarget[] _targets;
 
-        protected override void OnPlayerChange() {
-            base.OnPlayerChange();
-            foreach (var target in _targets)
+        protected override void PlayerChange() {
+            base.PlayerChange();
+            foreach (ActivateTarget target in _targets)
                 target.Edit(Player);
         }
+
     }
+
 }

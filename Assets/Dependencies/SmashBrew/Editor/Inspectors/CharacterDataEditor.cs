@@ -1,30 +1,29 @@
-using UnityEngine;
 using HouraiTeahouse.Editor;
 using UnityEditor;
+using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
-    /// <summary>
-    /// A custom Editor for CharacterData
-    /// </summary>
+    /// <summary> A custom Editor for CharacterData </summary>
     [CustomEditor(typeof(CharacterData))]
-    internal class CharacterDataEditor : ScriptlessEditor {
+    internal class CharacterDataEditor : ExtendableObjectEditor {
 
-        private int _previewSelect;
-        private bool _crop;
+        int _previewSelect;
+        bool _crop;
 
         /// <summary>
-        /// <see cref="Editor.OnInspectorGUI"/>
+        ///     <see cref="Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
-            DrawDefaultInspector();
+            base.OnInspectorGUI();
             string message;
             MessageType type;
-            if (!AssetUtil.IsResource(target)) {
+            if (!Assets.IsResource(target)) {
                 message =
                     "This game cannot find this Character Data if it is not in a Resources folder. Please move it to a Resources (sub)folder.";
                 type = MessageType.Error;
-            } else {
+            }
+            else {
                 message = "This Character Data is correctly placed. The game can find it.";
                 type = MessageType.Info;
             }
@@ -32,7 +31,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
         }
 
         /// <summary>
-        /// <see cref="Editor.HasPreviewGUI"/>
+        ///     <see cref="Editor.HasPreviewGUI" />
         /// </summary>
         public override bool HasPreviewGUI() {
             if (targets.Length != 1)
@@ -42,27 +41,26 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 return false;
             if (_previewSelect < 0 || _previewSelect >= data.PalleteCount)
                 _previewSelect = 0;
-            //Debug.Log(data.GetPortrait(_previewSelect).Load());
             return data.GetPortrait(_previewSelect).Load() != null;
         }
 
         /// <summary>
-        /// <see cref="Editor.DrawPreview"/>
+        ///     <see cref="Editor.DrawPreview" />
         /// </summary>
         public override void DrawPreview(Rect previewArea) {
             var data = target as CharacterData;
             if (data == null || data.PalleteCount < 1)
                 return;
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button("\u25c4", EditorStyles.miniButton))
-                _previewSelect++;
-            if (GUILayout.Button(_crop ? "Crop" : "Full", EditorStyles.miniButton))
-                _crop = !_crop;
-            if (GUILayout.Button("\u25ba", EditorStyles.miniButton))
-                _previewSelect++;
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
+            using (hGUI.Horizontal()) {
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("\u25c4", EditorStyles.miniButton))
+                    _previewSelect++;
+                if (GUILayout.Button(_crop ? "Crop" : "Full", EditorStyles.miniButton))
+                    _crop = !_crop;
+                if (GUILayout.Button("\u25ba", EditorStyles.miniButton))
+                    _previewSelect++;
+                GUILayout.FlexibleSpace();
+            }
             if (_previewSelect >= data.PalleteCount)
                 _previewSelect = 0;
             if (_previewSelect < 0)
@@ -71,18 +69,20 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             if (_crop) {
                 Rect drawRect = previewArea;
                 Rect crop = data.CropRect(texture);
-                var midPoint = new Vector2(drawRect.x + drawRect.width/2, drawRect.y + drawRect.height/2);
-                float drawAspect = drawRect.width/drawRect.height;
-                float cropAspect = crop.width/crop.height;
+                var midPoint = new Vector2(drawRect.x + drawRect.width / 2, drawRect.y + drawRect.height / 2);
+                float drawAspect = drawRect.width / drawRect.height;
+                float cropAspect = crop.width / crop.height;
                 if (drawAspect > cropAspect) {
-                    drawRect.width = drawRect.height*cropAspect;
-                    drawRect.x = midPoint.x - drawRect.width/2;
-                } else {
-                    drawRect.height = drawRect.width/cropAspect;
-                    drawRect.y = midPoint.y - drawRect.height/2;
+                    drawRect.width = drawRect.height * cropAspect;
+                    drawRect.x = midPoint.x - drawRect.width / 2;
+                }
+                else {
+                    drawRect.height = drawRect.width / cropAspect;
+                    drawRect.y = midPoint.y - drawRect.height / 2;
                 }
                 GUI.DrawTextureWithTexCoords(drawRect, texture, crop);
-            } else {
+            }
+            else {
                 GUI.DrawTexture(previewArea, texture, ScaleMode.ScaleToFit);
             }
         }

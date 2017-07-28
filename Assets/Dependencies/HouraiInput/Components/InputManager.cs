@@ -3,46 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse.HouraiInput {
+
     public class InputManager : MonoBehaviour {
-        [SerializeField]
-        private bool _logDebugInfo = false;
-        [SerializeField]
-        private bool _invertYAxis = false;
-        [SerializeField]
-        private bool _enableXInput = false;
-        [SerializeField]
-        private bool _useFixedUpdate = false;
-        [SerializeField]
-        private bool _dontDestroyOnLoad = false;
-        [SerializeField]
-        private List<string> _customProfiles = new List<string>();
 
-        private void OnEnable() {
-            if (_logDebugInfo)
-                Logger.OnLogMessage += HandleOnLogMessage;
+        static ILog _log = Log.GetLogger<InputManager>();
 
+        [SerializeField]
+        bool _invertYAxis = false;
+
+        [SerializeField]
+        bool _enableXInput = false;
+
+        [SerializeField]
+        bool _useFixedUpdate = false;
+
+        [SerializeField]
+        bool _dontDestroyOnLoad = false;
+
+        [SerializeField]
+        List<string> _customProfiles = new List<string>();
+
+        void OnEnable() {
             HInput.InvertYAxis = _invertYAxis;
             HInput.EnableXInput = _enableXInput;
             HInput.SetupInternal();
 
             foreach (string className in _customProfiles) {
                 Type classType = Type.GetType(className);
-                if (classType == null) {
-                    Debug.LogError("Cannot find class for custom profile: " + className);
-                }
+                if (classType == null)
+                    Log.Error("Cannot find class for custom profile: {0}", className);
                 else {
                     var customProfileInstance = Activator.CreateInstance(classType) as UnityInputDeviceProfile;
                     HInput.AttachDevice(new UnityInputDevice(customProfileInstance));
                 }
             }
 
+            foreach(var device in HInput.Devices)
+                _log.Info("Found Device: {0}", device.Name);
+
             if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
         }
 
-        private void OnDisable() {
-            HInput.ResetInternal();
-        }
+        void OnDisable() { HInput.ResetInternal(); }
 
 #if UNITY_ANDROID && INCONTROL_OUYA && !UNITY_EDITOR
 		void Start() {
@@ -58,32 +61,18 @@ namespace HouraiTeahouse.HouraiInput {
 		}
 #endif
 
-        private void Update() {
-            if (!_useFixedUpdate || Mathf.Approximately(Time.timeScale, 0.0f)) 
+        void Update() {
+            if (!_useFixedUpdate || Mathf.Approximately(Time.timeScale, 0.0f))
                 HInput.UpdateInternal();
         }
 
-        private void FixedUpdate() {
+        void FixedUpdate() {
             if (_useFixedUpdate)
                 HInput.UpdateInternal();
         }
 
-        private void OnApplicationFocus(bool focusState) {
-            HInput.OnApplicationFocus(focusState);
-        }
+        void OnApplicationFocus(bool focusState) { HInput.OnApplicationFocus(focusState); }
 
-        private static void HandleOnLogMessage(LogMessage logMessage) {
-            switch (logMessage.type) {
-                case LogMessageType.Info:
-                    Debug.Log(logMessage.text);
-                    break;
-                case LogMessageType.Warning:
-                    Debug.LogWarning(logMessage.text);
-                    break;
-                case LogMessageType.Error:
-                    Debug.LogError(logMessage.text);
-                    break;
-            }
-        }
     }
+
 }

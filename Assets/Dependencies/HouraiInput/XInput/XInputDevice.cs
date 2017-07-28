@@ -1,19 +1,13 @@
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using XInputDotNetPure;
 
-
 namespace HouraiTeahouse.HouraiInput {
+
     public class XInputDevice : InputDevice {
-        public int DeviceIndex { get; private set; }
+
         GamePadState state;
 
-
-        public XInputDevice(int deviceIndex)
-            : base("XInput Controller") {
+        public XInputDevice(int deviceIndex) : base("XInput Controller") {
             DeviceIndex = deviceIndex;
             SortOrder = deviceIndex;
 
@@ -49,6 +43,11 @@ namespace HouraiTeahouse.HouraiInput {
             QueryState();
         }
 
+        public int DeviceIndex { get; private set; }
+
+        public bool IsConnected {
+            get { return state.IsConnected; }
+        }
 
         public override void Update(ulong updateTick, float deltaTime) {
             QueryState();
@@ -72,33 +71,23 @@ namespace HouraiTeahouse.HouraiInput {
             UpdateWithState(InputTarget.Action4, state.Buttons.Y == ButtonState.Pressed, updateTick);
 
             UpdateWithState(InputTarget.LeftBumper, state.Buttons.LeftShoulder == ButtonState.Pressed, updateTick);
-            UpdateWithState(InputTarget.RightBumper, state.Buttons.RightShoulder == ButtonState.Pressed,
-                updateTick);
+            UpdateWithState(InputTarget.RightBumper, state.Buttons.RightShoulder == ButtonState.Pressed, updateTick);
 
-            UpdateWithState(InputTarget.LeftStickButton, state.Buttons.LeftStick == ButtonState.Pressed,
-                updateTick);
-            UpdateWithState(InputTarget.RightStickButton, state.Buttons.RightStick == ButtonState.Pressed,
-                updateTick);
+            UpdateWithState(InputTarget.LeftStickButton, state.Buttons.LeftStick == ButtonState.Pressed, updateTick);
+            UpdateWithState(InputTarget.RightStickButton, state.Buttons.RightStick == ButtonState.Pressed, updateTick);
 
             UpdateWithState(InputTarget.Start, state.Buttons.Start == ButtonState.Pressed, updateTick);
             UpdateWithState(InputTarget.Back, state.Buttons.Back == ButtonState.Pressed, updateTick);
         }
 
-
         public override void Vibrate(float leftMotor, float rightMotor) {
             GamePad.SetVibration((PlayerIndex) DeviceIndex, leftMotor, rightMotor);
         }
 
+        void QueryState() { state = GamePad.GetState((PlayerIndex) DeviceIndex, GamePadDeadZone.Circular); }
 
-        void QueryState() {
-            state = GamePad.GetState((PlayerIndex) DeviceIndex, GamePadDeadZone.Circular);
-        }
-
-
-        public bool IsConnected {
-            get { return state.IsConnected; }
-        }
     }
+
 }
 
 #endif

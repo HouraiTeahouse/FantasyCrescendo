@@ -2,20 +2,39 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-    /// <summary>
-    /// A custom layout group created for controlling the layout of the
-    /// individual character select squares on the character select screen
-    /// </summary>
+
+    /// <summary> A custom layout group created for controlling the layout of the individual character select squares on the
+    /// character select screen </summary>
     public class CharacterLayoutGroup : LayoutGroup, ILayoutSelfController {
-        [SerializeField, Tooltip("The spacing between child elements, in pixels")] private Vector2 _spacing;
 
-        [SerializeField, Tooltip("The target aspect ratio for the overall layout")] private float _selfAspectRatio;
+        [SerializeField]
+        [Tooltip("The target aspect ratio for the individual children")]
+        float _childAspectRatio;
 
-        [SerializeField, Tooltip("The target aspect ratio for the individual children")] private float _childAspectRatio;
+        [SerializeField]
+        [Tooltip("The target aspect ratio for the overall layout")]
+        float _selfAspectRatio;
 
+        [SerializeField]
+        [Tooltip("The spacing between child elements, in pixels")]
+        Vector2 _spacing;
 
         /// <summary>
-        /// <see cref="LayoutGroup.CalculateLayoutInputHorizontal"/>
+        ///     <see cref="LayoutGroup.SetLayoutHorizontal" />
+        /// </summary>
+        public override void SetLayoutHorizontal() {
+            SetLayout(true);
+        }
+
+        /// <summary>
+        ///     <see cref="LayoutGroup.SetLayoutVertical" />
+        /// </summary>
+        public override void SetLayoutVertical() {
+            SetLayout(false);
+        }
+
+        /// <summary>
+        ///     <see cref="LayoutGroup.CalculateLayoutInputHorizontal" />
         /// </summary>
         public override void CalculateLayoutInputHorizontal() {
             base.CalculateLayoutInputHorizontal();
@@ -23,30 +42,14 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         /// <summary>
-        /// <see cref="LayoutGroup.CalculateLayoutInputVertical"/>
+        ///     <see cref="LayoutGroup.CalculateLayoutInputVertical" />
         /// </summary>
         public override void CalculateLayoutInputVertical() {
             SetLayoutInputForAxis(padding.vertical, padding.vertical, -1, 1);
         }
 
-        /// <summary>
-        /// <see cref="LayoutGroup.SetLayoutHorizontal"/>
-        /// </summary>
-        public override void SetLayoutHorizontal() {
-            SetLayout(true);
-        }
-
-        /// <summary>
-        /// <see cref="LayoutGroup.SetLayoutVertical"/>
-        /// </summary>
-        public override void SetLayoutVertical() {
-            SetLayout(false);
-        }
-
-        /// <summary>
-        /// Builds the full layout of all children along one axis.
-        /// </summary>
-        /// <param name="axis">which axis to build on, true if vertical, false if horizontal</param>
+        /// <summary> Builds the full layout of all children along one axis. </summary>
+        /// <param name="axis"> which axis to build on, true if vertical, false if horizontal </param>
         void SetLayout(bool axis) {
             // Givens
             // Child Aspect Ratio
@@ -58,8 +61,8 @@ namespace HouraiTeahouse.SmashBrew.UI {
             }
 
             // Calculated
-            int bestRows = 1;
-            int bestCols = 1;
+            var bestRows = 1;
+            var bestCols = 1;
             Vector2 itemSize = Vector2.zero;
             bool isPrime = count <= 3;
             int effectiveCount = count;
@@ -75,10 +78,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
                         continue;
                     isPrime |= rows != 1 && rows != effectiveCount;
                     int cols = effectiveCount / rows;
-                    Vector2 effectiveSpace = availableSpace -
-                                             new Vector2(Mathf.Max(0, cols - 1) * _spacing.x,
-                                                 Mathf.Max(0, rows - 1) * _spacing.y);
-                    Vector2 size = new Vector2(effectiveSpace.x / cols, effectiveSpace.y / rows);
+                    Vector2 effectiveSpace = availableSpace
+                        - new Vector2(Mathf.Max(0, cols - 1) * _spacing.x, Mathf.Max(0, rows - 1) * _spacing.y);
+                    var size = new Vector2(effectiveSpace.x / cols, effectiveSpace.y / rows);
                     float area = Mathf.Abs(rows * size.x - cols * size.y * _childAspectRatio);
                     if (area >= maxArea)
                         continue;
@@ -88,20 +90,19 @@ namespace HouraiTeahouse.SmashBrew.UI {
                     itemSize = size;
                 }
                 effectiveCount++;
-            } while (!isPrime);
+            }
+            while (!isPrime);
 
             Vector2 delta = itemSize + _spacing;
 
             // Only set the sizes when invoked for horizontal axis, not the positions.
 
             if (axis) {
-                for (int i = 0; i < rectChildren.Count; i++) {
-                    RectTransform rect = rectChildren[i];
-
-                    m_Tracker.Add(this, rect,
-                        DrivenTransformProperties.Anchors |
-                        DrivenTransformProperties.AnchoredPosition |
-                        DrivenTransformProperties.SizeDelta);
+                foreach (RectTransform rect in rectChildren) {
+                    m_Tracker.Add(this,
+                        rect,
+                        DrivenTransformProperties.Anchors | DrivenTransformProperties.AnchoredPosition
+                            | DrivenTransformProperties.SizeDelta);
 
                     rect.anchorMin = Vector2.up;
                     rect.anchorMax = Vector2.up;
@@ -111,8 +112,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
             }
 
             Vector2 center = rectTransform.rect.size / 2;
-            Vector2 extents = 0.5f * new Vector2(bestCols * itemSize.x + Mathf.Max(0, bestCols - 1) * _spacing.x,
-                bestRows * itemSize.y + Mathf.Max(0, bestRows - 1) * _spacing.y);
+            Vector2 extents = 0.5f
+                * new Vector2(bestCols * itemSize.x + Mathf.Max(0, bestCols - 1) * _spacing.x,
+                    bestRows * itemSize.y + Mathf.Max(0, bestRows - 1) * _spacing.y);
             Vector2 start = center - extents;
 
             for (var i = 0; i < bestRows; i++) {
@@ -131,5 +133,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 }
             }
         }
+
     }
+
 }

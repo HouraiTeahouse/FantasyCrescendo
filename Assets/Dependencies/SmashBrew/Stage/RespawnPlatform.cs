@@ -1,57 +1,92 @@
-using HouraiTeahouse.Events;
+using HouraiTeahouse.SmashBrew.Characters;
+using HouraiTeahouse.SmashBrew.Characters.Statuses;
 using UnityEngine;
+using UnityEngine.Networking;
 
-namespace HouraiTeahouse.SmashBrew {
-    public class RespawnPlatform : EventHandlerBehaviour<PlayerRespawnEvent> {
-        [SerializeField] private float _invicibilityTimer;
+namespace HouraiTeahouse.SmashBrew.Stage {
 
-        [SerializeField] private float _platformTimer;
+    [AddComponentMenu("Smash Brew/Stage/Respawn")]
+    public class RespawnPlatform : NetworkBehaviour {
 
-        [SerializeField] private bool _facing;
+        Character _character;
+
+        [SerializeField]
+        bool _facing;
+
+        [SerializeField]
+        float _invicibilityTimer;
+
+        Invincibility _invincibility;
+
+        [SerializeField]
+        float _platformTimer;
+
+        [SyncVar, SerializeField, ReadOnly]
+        float _timer;
+
+        [SyncVar(hook = "OccupationChanged"), SerializeField, ReadOnly]
+        bool _isOccupied;
 
         public bool Occupied {
-            get { return _character; }
+            get { return _isOccupied; }
+            private set { OccupationChanged(value); }
         }
 
-        private Character _character;
-        private Invincibility _invincibility;
-        private float _timer;
+        /// <summary> Unity callback. Called on object instantiation. </summary>
+        void Awake() {
+            Mediator.Global.Subscribe<PlayerRespawnEvent>(OnEvent);
+        }
 
-        /// <summary>
-        /// Unity callback. Called on object instantiation.
-        /// </summary>
-        protected override void Awake() {
-            base.Awake();
+        void OnDestroy() {
+            Mediator.Global.Unsubscribe<PlayerRespawnEvent>(OnEvent);
+        }
+
+        public override void OnStartServer() {
             gameObject.SetActive(false);
+            _isOccupied = false;
         }
 
-        protected override void OnEvent(PlayerRespawnEvent eventArgs) {
+        public override void OnStartClient() {
+            gameObject.SetActive(_isOccupied);
+        }
+
+        void OccupationChanged(bool isOccupied) {
+            _isOccupied = isOccupied;
+            gameObject.SetActive(_isOccupied);
+        }
+
+        void OnEvent(PlayerRespawnEvent eventArgs) {
             if (Occupied || eventArgs.Consumed)
                 return;
             eventArgs.Consumed = true;
-            _character = eventArgs.Player.PlayerObject;
-            _character.Rigidbody.velocity = Vector3.zero;
-            _character.transform.position = transform.position;
-            _character.Direction = _facing;
+            //TODO(james7132): Fix this
+            _character = eventArgs.Player.PlayerObject.GetComponentInChildren<Character>();
+            _character.Movement.RpcMove(transform.position);
+            _character.ResetCharacter();
             _invincibility = Status.Apply<Invincibility>(_character, _invicibilityTimer + _platformTimer);
             _timer = 0f;
-            gameObject.SetActive(true);
+            eventArgs.Player.PlayerObject.SetActive(true);
+            Occupied = true;
+            _isOccupied = true;
         }
 
-        /// <summary>
-        /// Unity callback. Called once per frame.
-        /// </summary>
+        /// <summary> Unity callback. Called once per frame. </summary>
         void Update() {
-            if (_character == null)
+            if (!isServer || _character == null)
                 return;
 
             _timer += Time.deltaTime;
 
             // TODO: Find better alternative to this hack
-            if (_timer > _platformTimer || (_character.Rigidbody.velocity.magnitude > 0.5f)) {
+            if (_timer > _platformTimer) {
                 _invincibility.Duration -= _platformTimer;
+                _character.ResetCharacter();
+
+                Occupied = false;
                 gameObject.SetActive(false);
             }
         }
+
     }
+
 }

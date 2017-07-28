@@ -1,28 +1,22 @@
-using HouraiTeahouse.Editor;
 using UnityEditor;
-using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew.Editor {
+namespace HouraiTeahouse.SmashBrew.Characters {
 
-    /// <summary>
-    /// A custom Editor for Character
-    /// </summary>
+
     [CustomEditor(typeof(Character))]
-    internal class CharacterEditor : ScriptlessEditor {
+    public class CharacterEditor : UnityEditor.Editor  {
 
-        /// <summary>
-        /// <see cref="Editor.OnInspectorGUI"/>
-        /// </summary>
         public override void OnInspectorGUI() {
-            base.OnInspectorGUI();
-
-            EditorGUILayout.LabelField("Damage", EditorStyles.boldLabel);
-            var character = target as Character;
-            GUI.enabled = character != null && EditorApplication.isPlayingOrWillChangePlaymode;
-            character.CurrentDamage = EditorGUILayout.FloatField("Current Damage", character.CurrentDamage);
-            character.DefaultDamage = EditorGUILayout.FloatField("Default Damage", character.DefaultDamage);
-            GUI.enabled = true;
+            if (EditorApplication.isPlayingOrWillChangePlaymode) {
+                var state = string.Empty;
+                var controller = (target as Character).StateController;
+                if (controller != null && controller.CurrentState != null)
+                    state = controller.CurrentState.Name;
+                EditorGUILayout.LabelField("Current State", state);
+            }
+            DrawDefaultInspector();
         }
 
     }
+
 }

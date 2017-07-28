@@ -1,76 +1,74 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using Google.GData.Spreadsheets;
 using HouraiTeahouse.Editor;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Assertions;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace HouraiTeahouse.Localization.Editor {
 
-    /// <summary>
-    /// A Editor-Only ScriptableObject for pulling localization data from Google Spreadsheets
-    /// and creating the approriate Langauge assets.
-    /// </summary>
-    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localization_Generator")]
+    /// <summary> A Editor-Only ScriptableObject for pulling localization data from Google Spreadsheets and creating the
+    /// approriate Langauge assets. </summary>
     public class LocalizationGenerator : ScriptableObject {
 
-        [MenuItem("Hourai/Localization/Generate")]
+        [SerializeField]
+        [Tooltip("The public Google Spreadsheets link to pull data from")]
+        string GoogleLink;
+
+        [SerializeField]
+        [Tooltip("The default language to use")]
+        string _defaultLanguage;
+
+        [SerializeField]
+        [Tooltip("Columns in the spreadsheet to ignore")]
+        string[] _ignoreColumns;
+
+        [SerializeField]
+        [Tooltip("The folder to save all of the generated assets into.")]
+        Object _saveFolder;
+
+        [MenuItem("Hourai Teahouse/Localization/Generate")]
         static void Create() {
-            var generatorPath = AssetUtil.FindAssetPaths<LocalizationGenerator>();
-            LocalizationGenerator generator;
-            if (generatorPath.Length <= 0)
-                AssetUtil.CreateAssetInProjectWindow<LocalizationGenerator>();
-            else {
-                generator = AssetDatabase.LoadAssetAtPath<LocalizationGenerator>(generatorPath[0]);
-                if(generator)
-                    generator.Generate();
-            }
+            var generator = Assets.LoadOrCreate<LocalizationGenerator>();
+            Assert.IsNotNull(generator);
+            if (generator)
+                generator.Generate();
         }
-        
-        [SerializeField, Tooltip("The public Google Spreadsheets link to pull data from")]
-        private string GoogleLink;
 
-        [SerializeField, Tooltip("Columns in the spreadsheet to ignore")]
-        private string[] _ignoreColumns;
-
-        [SerializeField, Tooltip("The folder to save all of the generated assets into.")]
-        private Object _saveFolder;
-
-        /// <summary>
-        /// Reads the Google Spreadsheet and generates/updates the StringSet asset files
-        /// </summary>
+        /// <summary> Reads the Google Spreadsheet and generates/updates the StringSet asset files </summary>
         public void Generate() {
             ListFeed test = GDocService.GetSpreadsheet(GoogleLink);
-            var languageMap = new Dictionary<string, StringSet>();
-            var keys = CreateInstance<StringSet>();
-            languageMap.Add("Keys", keys);
+            var languageMap = new Dictionary<string, Dictionary<string, string>>();
             var ignore = new HashSet<string>(_ignoreColumns);
             foreach (ListEntry row in test.Entries) {
-                keys.Add(row.Title.Text);
+                var keyEntry =
+                    row.Elements.OfType<ListEntry.Custom>()
+                        .FirstOrDefault(e => e.LocalName.ToLower() == _defaultLanguage.ToLower());
+                if (keyEntry == null)
+                    continue;
+                var key = keyEntry.Value;
                 foreach (ListEntry.Custom element in row.Elements) {
                     string lang = element.LocalName;
                     if (ignore.Contains(lang))
                         continue;
                     if (!languageMap.ContainsKey(lang))
-                        languageMap[lang] = CreateInstance<StringSet>();
-                    languageMap[lang].Add(element.Value);
+                        languageMap[lang] = new Dictionary<string, string>();
+                    languageMap[lang].Add(key, element.Value);
                 }
             }
-            string folderPath = _saveFolder ? AssetDatabase.GetAssetPath(_saveFolder) : "Assets/Resources/Lang";
+            var baseFolder = Path.Combine(Application.streamingAssetsPath, "lang");
+            if (!Directory.Exists(baseFolder))
+                Directory.CreateDirectory(baseFolder);
             foreach (var lang in languageMap) {
-                var method = "Generating";
-                string path = string.Format("{0}/{1}.asset", folderPath, lang.Key);
-                var language = AssetDatabase.LoadAssetAtPath<StringSet>(path);
-                if (language) {
-                    method = "Updating";
-                    language.Copy(lang.Value);
-                    EditorUtility.SetDirty(language);
-               }
-                else
-                    AssetDatabase.CreateAsset(lang.Value, path);
-                Debug.Log(string.Format("{0} language files for: {1}", method, lang.Key));
+                File.WriteAllText(Path.Combine(baseFolder, lang.Key + LanguageManager.FileExtension),
+                    JsonConvert.SerializeObject(lang.Value, Formatting.Indented));
+                Log.Info("Generating language files for: {0}", lang.Key);
             }
-            EditorApplication.SaveAssets();
             AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
     }

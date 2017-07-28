@@ -6,42 +6,43 @@ using UnityEngine.EventSystems;
 namespace HouraiTeahouse.SmashBrew.UI {
 
     public interface IPlayerClickable {
+
         void Click(Player player);
+
     }
 
     public class CharacterSelectInputModule : PointerInputModule {
 
         [SerializeField]
-        private InputTarget _horizontal = InputTarget.LeftStickX;
+        InputTarget _cancel = InputTarget.Action2;
 
         [SerializeField]
-        private InputTarget _vertical = InputTarget.LeftStickY;
+        InputTarget _changeLeft = InputTarget.Action3;
 
         [SerializeField]
-        private InputTarget _submit = InputTarget.Action1;
+        InputTarget _changeRight = InputTarget.Action4;
+
+        PointerEventData _eventData;
 
         [SerializeField]
-        private InputTarget _cancel = InputTarget.Action2;
+        InputTarget _horizontal = InputTarget.LeftStickX;
+
+        List<PlayerPointer> _pointers;
 
         [SerializeField]
-        private InputTarget _changeLeft = InputTarget.Action3;
+        InputTarget _submit = InputTarget.Action1;
 
         [SerializeField]
-        private InputTarget _changeRight = InputTarget.Action4;
-
-        private List<PlayerPointer> _pointers;
-        private PointerEventData _eventData;
+        InputTarget _vertical = InputTarget.LeftStickY;
 
         internal static CharacterSelectInputModule Instance { get; private set; }
 
         internal void AddPointer(PlayerPointer pointer) {
-            if(pointer)
+            if (pointer)
                 _pointers.Add(pointer);
         }
 
-        internal void RemovePointer(PlayerPointer pointer) {
-            _pointers.Remove(pointer);
-        }
+        internal void RemovePointer(PlayerPointer pointer) { _pointers.Remove(pointer); }
 
         protected override void Awake() {
             base.Awake();
@@ -57,9 +58,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
                 if (controller == null)
                     continue;
                 // Move the controller
-                pointer.Move(new Vector2(controller.GetControl(_horizontal), controller.GetControl(_vertical)));
+                pointer.Move(new Vector2(controller[_horizontal], controller[_vertical]));
                 ProcessPointerSubmit(pointer, i, controller);
-                CharacterChange(pointer, player, controller);
+                CharacterChange(player, controller);
             }
         }
 
@@ -69,20 +70,21 @@ namespace HouraiTeahouse.SmashBrew.UI {
             EventSystem.current.RaycastAll(_eventData, m_RaycastResultCache);
             RaycastResult result = FindFirstRaycast(m_RaycastResultCache);
             ProcessMove(_eventData);
-            bool success = false;
+            var success = false;
             _eventData.clickCount = 0;
-            if (controller.GetControl(_submit).WasPressed) {
+            if (controller[_submit].WasPressed) {
                 _eventData.pressPosition = _eventData.position;
                 _eventData.clickCount = 1;
                 _eventData.clickTime = Time.unscaledTime;
                 _eventData.pointerPressRaycast = result;
                 if (m_RaycastResultCache.Count > 0) {
                     _eventData.selectedObject = result.gameObject;
-                    _eventData.pointerPress = ExecuteEvents.ExecuteHierarchy(result.gameObject, _eventData,
+                    _eventData.pointerPress = ExecuteEvents.ExecuteHierarchy(result.gameObject,
+                        _eventData,
                         ExecuteEvents.submitHandler);
                     _eventData.rawPointerPress = result.gameObject;
-                    Debug.Log(result.gameObject.GetComponents<IPlayerClickable>().Length);
-                    foreach (var clickable in result.gameObject.GetComponentsInParent<IPlayerClickable>())
+                    foreach (IPlayerClickable clickable in
+                        result.gameObject.GetComponentsInParent<IPlayerClickable>())
                         clickable.Click(pointer.Player);
                     success = true;
                 }
@@ -95,15 +97,18 @@ namespace HouraiTeahouse.SmashBrew.UI {
             }
         }
 
-        void CharacterChange(PlayerPointer pointer, Player player, InputDevice controller) {
-            if (!player.SelectedCharacter)
+        void CharacterChange(Player player, InputDevice controller) {
+            PlayerSelection selection = player.Selection;
+            if (!selection.Character)
                 return;
-            if (controller.GetControl(_changeLeft).WasPressed)
-                player.Pallete--;
-            if (controller.GetControl(_changeRight).WasPressed)
-                player.Pallete++;
-            if (controller.GetControl(_cancel).WasPressed) {
+            if (controller[_changeRight].WasPressed)
+                selection.Pallete--;
+            if (controller[_changeLeft].WasPressed)
+                selection.Pallete++;
+            if (controller[_cancel].WasPressed) {
             }
         }
+
     }
+
 }

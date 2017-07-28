@@ -8,6 +8,9 @@ TagManager:
   - GUI
   - Hitbox
   - Spawn
+  - Ledge Check
+  - UICamera
+  - Indicator Tracker
   layers:
   - Default
   - TransparentFX
@@ -22,9 +25,9 @@ TagManager:
   - Hitbox
   - Hurtbox
   - Intangible
+  - props1
   - 
-  - 
-  - 
+  - grass
   - 
   - 
   - 

@@ -1,31 +1,19 @@
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 namespace HouraiTeahouse {
+
     public interface ITimeObject {
+
         float LocalTimeScale { get; set; }
+
     }
 
     [DisallowMultipleComponent]
     public sealed class TimeModifier : MonoBehaviour, ITimeObject {
-        private float _localTimeScale = 1f;
 
-        private Animator[] _animators;
-
-        //TODO: Figure out how to get this working with particle system
-        //private ParticleSystem[] particles;
-
-        public float LocalTimeScale {
-            get { return _localTimeScale; }
-            set {
-                _localTimeScale = value;
-                if (_animators.Length <= 0)
-                    return;
-                Debug.Log(value);
-                foreach (Animator animator in _animators.Where(animator => animator != null))
-                    animator.speed = value;
-            }
-        }
+        Animator[] _animators;
+        float _localTimeScale = 1f;
 
         public float EffectiveTimeScale {
             get { return Time.timeScale * _localTimeScale; }
@@ -39,6 +27,21 @@ namespace HouraiTeahouse {
             get { return Time.fixedDeltaTime * _localTimeScale; }
         }
 
+        //TODO: Figure out how to get this working with particle system
+        //ParticleSystem[] particles;
+
+        public float LocalTimeScale {
+            get { return _localTimeScale; }
+            set {
+                _localTimeScale = value;
+                if (_animators == null || _animators.Length <= 0)
+                    return;
+                foreach (Animator animator in
+                    _animators.Where(animator => animator != null))
+                    animator.speed = value;
+            }
+        }
+
         void Awake() {
             _animators = GetComponentsInChildren<Animator>();
             if (_animators.Length <= 0)
@@ -47,5 +50,7 @@ namespace HouraiTeahouse {
             //if (particles.Length <= 0)
             //    particles = null;
         }
+
     }
+
 }

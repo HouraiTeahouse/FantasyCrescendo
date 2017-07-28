@@ -1,69 +1,85 @@
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew {
-    /// <summary>
-    /// An abstract class for controlling the global status of the game while under a certain game mode.
-    /// </summary>
+
+    /// <summary> An abstract class for controlling the global status of the game while under a certain game mode. </summary>
     public abstract class GameMode {
-        private static GameMode _current;
+
+        static GameMode _current;
+
+        static readonly List<GameMode> _gameModes;
 
         /// <summary>
-        /// The current game mode.
+        /// Event called when a new game mode is registered
         /// </summary>
-        public static GameMode Current {
-            get {
-                if (_current == null)
-                    _current = Config.Instance.StandardVersus;
-                return _current;
-            }
-            set {
-                if (value == null)
-                    _current = Config.Instance.StandardVersus;
-                else
-                    _current = value;
+        public static event Action<GameMode> OnRegister;
+
+        public static event Action<GameMode> OnChangeGameMode;
+
+        static GameMode() { _gameModes = new List<GameMode>(); }
+
+        public static IEnumerable<GameMode> All {
+            get { return _gameModes.Select(x => x); }
+        }
+
+        public static void Register(GameMode mode) {
+            Argument.NotNull(mode);
+            if(!_gameModes.Contains(mode)) {
+                _gameModes.Add(mode);
+                OnRegister.SafeInvoke(mode);
             }
         }
 
-        /// <summary>
-        /// The maximum number of chosen players in a match under this game mode.
-        /// This does not affect the number of game-inserted number of players in the match.
-        /// </summary>
+        /// <summary> The current game mode. </summary>
+        public static GameMode Current {
+            get { return _current ?? (_current = Config.GameModes.StandardVersus); }
+            set {
+                var old = _current;
+                _current = value ?? Config.GameModes.StandardVersus;
+                if (old != _current)
+                    OnChangeGameMode.SafeInvoke(_current);
+            }
+        }
+
+        /// <summary> The maximum number of chosen players in a match under this game mode. This does not affect the number of
+        /// game-inserted number of players in the match. </summary>
         public abstract int MaxPlayers { get; }
 
-        /// <summary>
-        /// The minimum number of chosen players in a match to start playing the game mode.
-        /// </summary>
+        /// <summary> The minimum number of chosen players in a match to start playing the game mode. </summary>
         public abstract int MinPlayers { get; }
 
-        /// <summary>
-        /// Whether choosing CPU characters is OK for the game mode
-        /// </summary>
+        /// <summary> Whether choosing CPU characters is OK for the game mode </summary>
         public abstract bool CPUsAllowed { get; }
 
-        /// <summary>
-        /// All of the characters that cannot be selected for this  
-        /// </summary>
+        /// <summary> All of the characters that cannot be selected for this </summary>
         public abstract ReadOnlyCollection<CharacterData> ExcludedCharacters { get; }
 
-        /// <summary>
-        /// All of the stages that cannot be selected for the game mode
-        /// </summary>
+        /// <summary> All of the stages that cannot be selected for the game mode </summary>
         public abstract ReadOnlyCollection<SceneData> ExcludedStages { get; }
+
     }
 
     [Serializable]
     public sealed class SerializedGameMode : GameMode {
-        [SerializeField] private int _minimumPlayers = 1;
 
-        [SerializeField] private int _maximumPlayers = 4;
+        [SerializeField]
+        bool _cpusAllowed = true;
 
-        [SerializeField] private bool _cpusAllowed = true;
+        [SerializeField]
+        CharacterData[] _excludedCharacters;
 
-        [SerializeField] private CharacterData[] _excludedCharacters;
+        [SerializeField]
+        SceneData[] _excludedStages;
 
-        [SerializeField] private SceneData[] _excludedStages;
+        [SerializeField]
+        int _maximumPlayers = 4;
+
+        [SerializeField]
+        int _minimumPlayers = 1;
 
         public override int MaxPlayers {
             get { return _maximumPlayers; }
@@ -84,8 +100,11 @@ namespace HouraiTeahouse.SmashBrew {
         public override ReadOnlyCollection<SceneData> ExcludedStages {
             get { return new ReadOnlyCollection<SceneData>(_excludedStages); }
         }
+
     }
 
     public abstract class MultiMatchGameMode : GameMode {
+
     }
+
 }

@@ -1,11 +1,14 @@
-using System.Collections.Generic;
-using UnityConstants;
 using System.Linq;
+using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew {
+namespace HouraiTeahouse.SmashBrew.Stage { 
+
+    [AddComponentMenu("Smash Brew/Stage/Platform")]
     public sealed class Platform : MonoBehaviour {
+
         public enum HardnessSetting {
+
             // Both ways + can be knocked through 
             Supersoft = 0,
             // Both ways
@@ -13,84 +16,69 @@ namespace HouraiTeahouse.SmashBrew {
             // Only can be jumped through from the bottom
             // Cannot be fallen through
             Semisoft = 2
+
         }
 
-        [SerializeField, Tooltip("The hardness of the platform")] private HardnessSetting _hardness =
-            HardnessSetting.Soft;
+        [SerializeField]
+        [Tooltip("The hardness of the platform")]
+        HardnessSetting _hardness = HardnessSetting.Soft;
+
+        Collider[] _toIgnore;
 
         public HardnessSetting Hardness {
             get { return _hardness; }
             set { _hardness = value; }
         }
 
-        private Collider[] _toIgnore;
+        /// <summary> Unity callback. Called on object instantiation. </summary>
+        void Awake() { _toIgnore = GetComponentsInChildren<Collider>().Where(col => col != null && !col.isTrigger).ToArray(); }
 
-        /// <summary>
-        /// Unity callback. Called on object instantiation.
-        /// </summary>
-        void Awake() {
-            _toIgnore = GetComponentsInChildren<Collider>().Where(col => col && col.isTrigger).ToArray();
-        }
-
-        /// <summary>
-        /// Changes the ignore state of 
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="state"></param>
+        /// <summary> Changes the ignore state of </summary>
+        /// <param name="target"> </param>
+        /// <param name="state"> </param>
         void ChangeIgnore(Collider target, bool state) {
-            if (target == null || !target.CompareTag(Tags.Player))
+            if (target == null || !target.CompareTag(Config.Tags.PlayerTag))
                 return;
-
+            var movementState = target.GetComponentInParent<PhysicsState>();
             foreach (Collider col in _toIgnore)
-                Physics.IgnoreCollision(col, target, state);
+                if (movementState != null)
+                    movementState.IgnoreCollider(col, state);
+                else
+                    Physics.IgnoreCollision(col, target, state);
         }
 
-        /// <summary>
-        /// Check if the 
-        /// </summary>
-        /// <param name="col"></param>
-        static void Check(Component col) {
-            if (!col.CompareTag(Tags.Player))
+        /// <summary> Check if the </summary>
+        /// <param name="col"> </param>
+        void Check(Collider col) {
+            if (!col.CompareTag(Config.Tags.PlayerTag))
                 return;
 
-            // TODO: Reimplement
-
-            //var character = col.gameObject.GetComponentInParent<Character>();
-            //if (character == null || character.InputSource == null)
-            //    return;
-
-            //if (character.InputSource.Crouch)
-            //    ChangeIgnore(col, true);
+            var character = col.gameObject.GetComponentInParent<Character>();
+            var inputState = col.gameObject.GetComponentInParent<InputState>();
+            if (character == null)
+                return;
+            var smash = Vector2.zero;
+            if (inputState != null)
+                smash = inputState.Smash;
+            //TODO(james7132): Edit this to use normal input
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) ||
+                smash.y < -DirectionalInput.DeadZone) {
+                ChangeIgnore(col, true);
+                character.StateController.SetState(character.States.Fall);
+            }
         }
 
-        /// <summary>
-        /// Unity callback. Called when another collider enters an attached trigger collider.
-        /// </summary>
-        void OnTriggerEnter(Collider other) {
-            ChangeIgnore(other, true);
-        }
+        /// <summary> Unity callback. Called when another collider enters an attached trigger collider. </summary>
+        void OnTriggerEnter(Collider other) { ChangeIgnore(other, true); }
 
-        /// <summary>
-        /// Unity callback. Called when another collider exits an attached trigger collider.
-        /// </summary>
-        void OnTriggerExit(Collider other) {
-            ChangeIgnore(other, false);
-        }
+        /// <summary> Unity callback. Called when another collider exits an attached trigger collider. </summary>
+        void OnTriggerExit(Collider other) { ChangeIgnore(other, false); }
 
-        /// <summary>
-        /// Unity callback. Called every physics loop for each for each .
-        /// </summary>
-        void OnCollisionStay(Collision col) {
+        public void CharacterCollision(CharacterController controller) {
             if (Hardness <= HardnessSetting.Soft)
-                Check(col.collider);
+                Check(controller);
         }
 
-        /// <summary>
-        /// Unity callback. Called when another collider enters an attached trigger collider.
-        /// </summary>
-        void OnCollisionEnter(Collision col) {
-            if (Hardness <= HardnessSetting.Soft)
-                Check(col.collider);
-        }
     }
+
 }

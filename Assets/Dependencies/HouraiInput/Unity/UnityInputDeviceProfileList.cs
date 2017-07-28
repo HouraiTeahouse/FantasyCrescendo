@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
 
-
 namespace HouraiTeahouse.HouraiInput {
+
     public class UnityInputDeviceProfileList : ScriptableObject {
+
         public static string[] Profiles = new string[] {
             "HouraiTeahouse.HouraiInput.SmashBrewKeyboardProfile",
             "HouraiTeahouse.HouraiInput.AmazonFireTVRemote",
@@ -72,5 +72,7 @@ namespace HouraiTeahouse.HouraiInput {
             "HouraiTeahouse.HouraiInput.XboxOneProfile",
             "HouraiTeahouse.HouraiInput.XboxOneWinProfile",
         };
+
     }
+
 }

@@ -4,17 +4,20 @@ using HouraiTeahouse.SmashBrew.UI;
 using UnityEngine;
 
 namespace HouraiTeahouse {
+
     public class SpawnPlayerPointer : PlayerUIComponent {
-        [SerializeField] private RectTransform _pointer;
 
-        [SerializeField, Tag] private string _tag;
+        RectTransform _cTransform;
+        RectTransform _currentPointer;
 
-        private RectTransform _cTransform;
-        private RectTransform _currentPointer;
+        [SerializeField]
+        RectTransform _pointer;
 
-        /// <summary>
-        /// Unity callback. Called on object instaniation.
-        /// </summary>
+        [SerializeField]
+        [Tag]
+        string _tag;
+
+        /// <summary> Unity callback. Called on object instaniation. </summary>
         protected override void Awake() {
             base.Awake();
             GameObject go = GameObject.FindWithTag(_tag);
@@ -34,19 +37,19 @@ namespace HouraiTeahouse {
             _currentPointer.localScale = Vector3.one;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary> </summary>
         protected override void OnDestroy() {
             base.OnDestroy();
             if (_currentPointer)
                 Destroy(_currentPointer.gameObject);
         }
 
-        protected override void OnPlayerChange() {
-            base.OnPlayerChange();
+        protected override void PlayerChange() {
+            base.PlayerChange();
             if (_currentPointer)
                 _currentPointer.GetComponentsInChildren<IDataComponent<Player>>().SetData(Player);
         }
+
     }
+
 }

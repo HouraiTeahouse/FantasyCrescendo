@@ -1,6 +1,3 @@
-using HouraiTeahouse.SmashBrew;
-using HouraiTeahouse.SmashBrew.UI;
-
 namespace HouraiTeahouse.SmashBrew.UI {
 
     public abstract class PlayerClickableUI : PlayerUIComponent, IPlayerClickable {
@@ -18,13 +15,13 @@ namespace HouraiTeahouse.SmashBrew.UI {
         }
 
         protected abstract void OnPlayerClick(Player player);
+
     }
 
     public class PlayerCycleType : PlayerClickableUI {
 
-        protected override void OnPlayerClick(Player player) {
-            player.CycleType();
-        }
+        protected override void OnPlayerClick(Player player) { player.CycleType(); }
+
     }
 
 }

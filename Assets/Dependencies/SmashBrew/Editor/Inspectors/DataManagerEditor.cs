@@ -1,64 +1,39 @@
-using System;
 using System.Linq;
 using HouraiTeahouse.Editor;
 using UnityEditor;
-using UnityEditorInternal;
-using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.Editor {
 
-    /// <summary>
-    /// A custom Editor for DataManager
-    /// </summary>
+    /// <summary> A custom Editor for DataManager </summary>
     [CustomEditor(typeof(DataManager))]
     public class DataManagerEditor : ScriptlessEditor {
 
-        private SerializedProperty characters;
-        private SerializedProperty scenes;
-        private ReorderableList characterList;
-        private ReorderableList sceneList;
+        bool charactersFoldout;
+        bool scenesFoldout;
 
         /// <summary>
-        /// <see cref="UnityEditor.Editor.OnEnable"/>
-        /// </summary>
-        protected override void OnEnable() {
-            base.OnEnable();
-            characters = serializedObject.FindProperty("_characters");
-            scenes = serializedObject.FindProperty("_scenes");
-            characterList = new ReorderableList(serializedObject, characters, true, false, true, true);
-            sceneList = new ReorderableList(serializedObject, scenes, true, false, true, true);
-            InitializeList(characterList);
-            InitializeList(sceneList);
-        }
-
-        void InitializeList(ReorderableList list) {
-            list.drawElementCallback = delegate(Rect rect, int index, bool active, bool focused) {
-                rect.y += 2;
-                rect.height -= 4;
-                EditorGUI.PropertyField(rect, list.serializedProperty.GetArrayElementAtIndex(index), new GUIContent(string.Format("ID: {0}", index.ToString("D3"))));
-            };
-            list.drawHeaderCallback = delegate(Rect rect) {
-                EditorGUI.LabelField(rect, list.serializedProperty.displayName);
-            };
-            list.onAddCallback = delegate(ReorderableList reorderableList) {
-                SerializedProperty property = reorderableList.serializedProperty;
-                property.InsertArrayElementAtIndex(property.arraySize);
-            };
-        }
-
-        /// <summary>
-        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
+        ///     <see cref="UnityEditor.Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("_dontDestroyOnLoad"));
-            characterList.DoLayoutList();
-            sceneList.DoLayoutList();
-            if (GUILayout.Button("Refresh")) {
-                int stageCount = Enum.GetValues(typeof (TouhouStage)).Length;
-                characters.SetArray(Resources.LoadAll<CharacterData>("").OrderBy(character => stageCount * (int)character.SourceGame + (int)character.SourceStage));
-                scenes.SetArray(Resources.LoadAll<SceneData>(""));
-                serializedObject.ApplyModifiedProperties();
+            DrawDefaultInspector();
+            if (!EditorApplication.isPlayingOrWillChangePlaymode)
+                return;
+            charactersFoldout = EditorGUILayout.Foldout(charactersFoldout, "Loaded Characters");
+            if (charactersFoldout) {
+                EditorGUI.indentLevel++;
+                foreach (var character in DataManager.Characters.OrderBy(c => c.FullName))
+                    EditorGUILayout.LabelField(character.FullName, character.Id.ToString());
+                EditorGUI.indentLevel--;
+            }
+            scenesFoldout = EditorGUILayout.Foldout(scenesFoldout, "Loaded Scenes");
+            if (scenesFoldout) {
+                EditorGUI.indentLevel++;
+                foreach (var scene in DataManager.Scenes.OrderBy(c => c.name))
+                    EditorGUILayout.LabelField(scene.Name, scene.Type.ToString());
+                EditorGUI.indentLevel--;
             }
         }
+
     }
+
 }

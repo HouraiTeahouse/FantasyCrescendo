@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse {
+
     public static class TransformExtensions {
+
         public static void SetX(this Transform transform, float x, bool local = false) {
             transform.SetPositionLocation(0, x, local);
         }
@@ -16,34 +18,35 @@ namespace HouraiTeahouse {
             transform.SetPositionLocation(2, z, local);
         }
 
-        /// <summary>
-        /// Copys the position and rotation of another transform onto one.
-        /// </summary>
-        /// <param name="transform"></param>
-        /// <param name="target"></param>
-        /// <exception cref="ArgumentNullException">thrown if <paramref name="transform"/>
-        ///  or <paramref name="target"/> are null</exception>
+        public static void Reset(this Transform transform) {
+            Argument.NotNull(transform).localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+        }
+
+        /// <summary> Copys the position and rotation of another transform onto one. </summary>
+        /// <param name="transform"> </param>
+        /// <param name="target"> </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transform" />
+        /// or <paramref name="target" /> are null </exception>
         public static void Copy(this Transform transform, Transform target) {
-            if (!transform || !target)
-                throw new ArgumentNullException();
+            Argument.NotNull(transform);
+            Argument.NotNull(target);
             transform.position = target.position;
             transform.rotation = target.rotation;
         }
 
-        /// <summary>
-        /// Finds the lowest common ancestor between two Transforms.
-        /// Returns null if either are null or both are not part of the same Transform hiearchy.
-        /// </summary>
-        /// <param name="transform">the first transform</param>
-        /// <param name="other">the second transform</param>
-        /// <returns>the lowest common ancestor between the two transforms</returns>
+        /// <summary> Finds the lowest common ancestor between two Transforms. Returns null if either are null or both are not part
+        /// of the same Transform hiearchy. </summary>
+        /// <param name="transform"> the first transform </param>
+        /// <param name="other"> the second transform </param>
+        /// <returns> the lowest common ancestor between the two transforms </returns>
         public static Transform FindCommonAncestor(this Transform transform, Transform other) {
             if (!transform || !other || transform.root != other.root)
                 return null;
             var s1 = new HashSet<Transform>();
             var s2 = new HashSet<Transform>();
-            var t1 = transform;
-            var t2 = other;
+            Transform t1 = transform;
+            Transform t2 = other;
             while (t1 || t2) {
                 if (t1) {
                     if (s2.Contains(t1))
@@ -62,8 +65,7 @@ namespace HouraiTeahouse {
         }
 
         static void SetPositionLocation(this Transform transform, int component, float value, bool local) {
-            if (!transform)
-                throw new ArgumentNullException();
+            Argument.NotNull(transform);
             Vector3 position = local ? transform.localPosition : transform.position;
             position[component] = value;
             if (local)
@@ -71,5 +73,7 @@ namespace HouraiTeahouse {
             else
                 transform.position = position;
         }
+
     }
+
 }

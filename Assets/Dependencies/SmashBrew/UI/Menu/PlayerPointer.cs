@@ -1,11 +1,15 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-    public class PlayerPointer : PlayerUIComponent {
-        private RectTransform _rectTransform;
-        private CharacterSelectInputModule _inputModule;
 
-        [SerializeField] private float _movementSpeed = 20;
+    public class PlayerPointer : PlayerUIComponent {
+
+        CharacterSelectInputModule _inputModule;
+
+        [SerializeField]
+        float _movementSpeed = 20;
+
+        RectTransform _rectTransform;
 
         protected override void Start() {
             base.Start();
@@ -20,17 +24,19 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         protected override void OnDestroy() {
             base.OnDestroy();
-            if(_inputModule)
+            if (_inputModule)
                 _inputModule.RemovePointer(this);
         }
 
         public void Move(Vector2 movement) {
-            if (!Player.IsActive && movement != Vector2.zero)
+            if (!Player.Type.IsActive && movement != Vector2.zero)
                 Player.CycleType();
-            Bounds bounds = new Bounds(Vector3.zero,
-                (_rectTransform.parent as RectTransform).rect.size - 0.5f * _rectTransform.sizeDelta);
+            var bounds = new Bounds(Vector3.zero,
+                ((RectTransform) _rectTransform.parent).rect.size - 0.5f * _rectTransform.sizeDelta);
             _rectTransform.anchoredPosition =
                 bounds.ClosestPoint(_rectTransform.anchoredPosition + _movementSpeed * movement * Time.deltaTime);
         }
+
     }
+
 }

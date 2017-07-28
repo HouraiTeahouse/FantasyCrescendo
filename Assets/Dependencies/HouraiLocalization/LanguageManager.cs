@@ -1,292 +1,200 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using System.Globalization;
+using System.IO;
 using System.Linq;
-#if HOURAI_EVENTS
-using HouraiTeahouse.Events;
-
-#endif
+using Newtonsoft.Json;
+using UnityEngine;
 
 namespace HouraiTeahouse.Localization {
-#if HOURAI_EVENTS
-    public class LanguageEvent {
+
+    public class LanguageChanged {
+
         public Language NewLanguage;
+
     }
-#endif
 
-    /// <summary>
-    /// Singleton MonoBehaviour that manages all of localization system.
+    public interface ILanguageStorageDelegate {
+        event Action<string> OnChangeLangauge;
+
+        string GetStoredLangaugeId(string defaultLangauge);
+        void SetStoredLanguageId(string language);
+    }
+
+    public class PlayerPrefLanguageStorageDelegate : ILanguageStorageDelegate {
+
+        readonly string _playerPrefKey;
+
+        public event Action<string> OnChangeLangauge;
+
+        public PlayerPrefLanguageStorageDelegate(string key) {
+            _playerPrefKey = Argument.NotNull(key);
+        }
+
+        public string GetStoredLangaugeId(string defaultLangauge) {
+            if (!Prefs.Exists(_playerPrefKey)) 
+                SetStoredLanguageId(defaultLangauge);
+            return Prefs.GetString(_playerPrefKey);
+        }
+
+        public void SetStoredLanguageId(string language) {
+            if (Prefs.Exists(_playerPrefKey) || Prefs.GetString(_playerPrefKey) != language) {
+                Prefs.SetString(_playerPrefKey, language);
+                OnChangeLangauge.SafeInvoke(language);
+            }
+        }
+
+    }
+
+    /// <summary> 
+    /// Singleton MonoBehaviour that manages all of localization system. 
     /// </summary>
-    [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Language_Manager")]
-    public sealed class LanguageManager : MonoBehaviour {
-        [SerializeField, Tooltip("The Resources directory to load the Language files from")] private string
-            localizaitonResourceDirectory = "Lang/";
+    public sealed class LanguageManager : Singleton<LanguageManager> {
 
-        [SerializeField, Tooltip("The PlayerPrefs key to store the Player's language in")] private string
-            _langPlayerPrefKey = "lang";
+        internal static readonly ILog log = Log.GetLogger("Language");
+        public const string FileExtension = ".json";
+        Language _currentLanguage;
+        string _storageDirectory;
+        HashSet<string> _languages;
 
-        [SerializeField, Tooltip("Destroy this object on scene changes?")] private bool _dontDestroyOnLoad = false;
+        static ILanguageStorageDelegate _storageDelegate;
 
-        [SerializeField, Tooltip("The default language to use if the Player's current language is not supported")]
-        [Resource(typeof (StringSet))]
-        private string _defaultLanguage;
+        static LanguageManager() {
+            Storage = new PlayerPrefLanguageStorageDelegate("lang");
+        }
 
-        [SerializeField, Tooltip("The set of keys to use")]
-        private StringSet _keys;
+        static void StorageChangeLangauge(string language) {
+            if (Instance == null)
+                return;
+            Instance.LoadLanguage(language);
+        }
 
-        private Language _currentLanguage;
+        public static ILanguageStorageDelegate Storage {
+            get { return _storageDelegate; }
+            set { 
+                Argument.NotNull(value);
+                if (_storageDelegate != null)
+                    _storageDelegate.OnChangeLangauge -= StorageChangeLangauge;
+                _storageDelegate = value;
+                if (_storageDelegate != null)
+                    _storageDelegate.OnChangeLangauge += StorageChangeLangauge;
+            }
+        }
 
 #if HOURAI_EVENTS
-        private Mediator _eventManager;
+        Mediator _eventManager;
 #endif
 
-        /// <summary>
-        /// The currently used language.
-        /// </summary>
+        [SerializeField]
+        [Tooltip("The default language to use if the Player's current language is not supported")]
+        string _defaultLanguage = "en";
+
+        [SerializeField]
+        [Tooltip("Destroy this object on scene changes?")]
+        bool _dontDestroyOnLoad = false;
+
+        [SerializeField]
+        [Tooltip("The Resources directory to load the Language files from")]
+        string localizationDirectory = "lang";
+
+        /// <summary> The currently used language. </summary>
         public Language CurrentLangauge {
             get { return _currentLanguage; }
         }
 
-        /// <summary>
-        /// The Singleton instance of LanguamgeManager.
-        /// </summary>
-        public static LanguageManager Instance { get; private set; }
-
-        /// <summary>
-        /// An event that is called every time the language is changed.
-        /// </summary>
-        public event Action<Language> OnChangeLanguage;
-
-        private HashSet<string> _languages;
-        private HashSet<string> _keySet;
-
-        /// <summary>
-        /// All available languages currently supported by the system.
-        /// </summary>
+        /// <summary> All available languages currently supported by the system. </summary>
         public IEnumerable<string> AvailableLanguages {
             get {
                 if (_languages != null)
                     return _languages;
-                return new string[0];
+                return Enumerable.Empty<string>();
             }
         }
 
-        /// <summary>
-        /// Gets an enumeration of all of the localizable keys.  
-        /// </summary>
+        /// <summary> Gets an enumeration of all of the localizable keys. </summary>
         public IEnumerable<string> Keys {
-            get {
-                foreach (var key in _keySet)
-                    yield return key;
-            }
+            get { return CurrentLangauge.Keys; }
         }
 
-        /// <summary>
-        /// Is the provided key localizable?
-        /// </summary>
-        /// <param name="key">the key to check</param>
-        /// <returns>True if the key will return a localized string, false otherwise.</returns>
-        public bool HasKey(string key) {
-            return _keySet.Contains(key);
+        /// <summary> Localizes a key based on the currently loaded language. </summary>
+        /// <param name="key"> the localization key to use. </param>
+        /// <returns> the localized string </returns>
+        public string this[string key] {
+            get { return CurrentLangauge[key]; }
         }
 
-        void SetLanguage(string name, StringSet set) {
-            if (_currentLanguage.Name == name)
+        /// <summary> An event that is called every time the language is changed. </summary>
+        public event Action<Language> OnChangeLanguage;
+
+        void SetLanguage(string langName, IDictionary<string, string> values) {
+            if (_currentLanguage.Name == langName)
                 return;
-            _currentLanguage.Update(_keys, set);
-            _currentLanguage.Name = set.name;
-            if (OnChangeLanguage != null)
-                OnChangeLanguage(_currentLanguage);
+            _currentLanguage.Update(values);
+            _currentLanguage.Name = langName;
+            OnChangeLanguage.SafeInvoke(_currentLanguage);
 #if HOURAI_EVENTS
-            _eventManager.Publish(new LanguageEvent {NewLanguage = _currentLanguage});
+            _eventManager.Publish(new LanguageChanged {NewLanguage = _currentLanguage});
 #endif
+            log.Info("Set language to {0}", Language.GetName(langName));
         }
 
-        /// <summary>
-        /// Converts a SystemLanugage value into a CultureInfo.
-        /// </summary>
-        /// <param name="language">the SystemLanugage value to map</param>
-        /// <returns>the corresponding CultureInfo</returns>
-        public static CultureInfo GetCultureInfo(SystemLanguage language) {
-            switch (language) {
-                case SystemLanguage.Afrikaans:
-                    return new CultureInfo("af");
-                case SystemLanguage.Arabic:
-                    return new CultureInfo("ar");
-                case SystemLanguage.Basque:
-                    return new CultureInfo("eu");
-                case SystemLanguage.Belarusian:
-                    return new CultureInfo("be");
-                case SystemLanguage.Bulgarian:
-                    return new CultureInfo("bg");
-                case SystemLanguage.Catalan:
-                    return new CultureInfo("ca");
-                case SystemLanguage.Chinese:
-                    return new CultureInfo("zh-cn");
-                case SystemLanguage.Czech:
-                    return new CultureInfo("cs");
-                case SystemLanguage.Danish:
-                    return new CultureInfo("da");
-                case SystemLanguage.Dutch:
-                    return new CultureInfo("nl");
-                case SystemLanguage.English:
-                    return new CultureInfo("en");
-                case SystemLanguage.Estonian:
-                    return new CultureInfo("et");
-                case SystemLanguage.Faroese:
-                    return new CultureInfo("fo");
-                case SystemLanguage.Finnish:
-                    return new CultureInfo("fi");
-                case SystemLanguage.French:
-                    return new CultureInfo("fr");
-                case SystemLanguage.German:
-                    return new CultureInfo("de");
-                case SystemLanguage.Greek:
-                    return new CultureInfo("el");
-                case SystemLanguage.Hebrew:
-                    return new CultureInfo("he");
-                case SystemLanguage.Icelandic:
-                    return new CultureInfo("is");
-                case SystemLanguage.Indonesian:
-                    return new CultureInfo("id");
-                case SystemLanguage.Italian:
-                    return new CultureInfo("it");
-                case SystemLanguage.Japanese:
-                    return new CultureInfo("ja");
-                case SystemLanguage.Korean:
-                    return new CultureInfo("ko");
-                case SystemLanguage.Latvian:
-                    return new CultureInfo("lv");
-                case SystemLanguage.Lithuanian:
-                    return new CultureInfo("lt");
-                case SystemLanguage.Norwegian:
-                    return new CultureInfo("no");
-                case SystemLanguage.Polish:
-                    return new CultureInfo("pl");
-                case SystemLanguage.Portuguese:
-                    return new CultureInfo("pt");
-                case SystemLanguage.Romanian:
-                    return new CultureInfo("ro");
-                case SystemLanguage.Russian:
-                    return new CultureInfo("ru");
-                case SystemLanguage.SerboCroatian:
-                    return new CultureInfo("hr");
-                case SystemLanguage.Slovak:
-                    return new CultureInfo("sk");
-                case SystemLanguage.Slovenian:
-                    return new CultureInfo("sl");
-                case SystemLanguage.Spanish:
-                    return new CultureInfo("es");
-                case SystemLanguage.Swedish:
-                    return new CultureInfo("sv");
-                case SystemLanguage.Thai:
-                    return new CultureInfo("th");
-                case SystemLanguage.Turkish:
-                    return new CultureInfo("tr");
-                case SystemLanguage.Ukrainian:
-                    return new CultureInfo("uk");
-                case SystemLanguage.Vietnamese:
-                    return new CultureInfo("vi");
-                case SystemLanguage.ChineseSimplified:
-                    return new CultureInfo("zh-chs");
-                case SystemLanguage.ChineseTraditional:
-                    return new CultureInfo("zh-cht");
-                case SystemLanguage.Hungarian:
-                    return new CultureInfo("hu");
-                default:
-                    return CultureInfo.InvariantCulture;
-            }
+        string GetLanguagePath(string identifier) {
+            return Path.Combine(_storageDirectory, identifier + FileExtension);
         }
 
-        /// <summary>
-        /// Unity Callback. Called once on object instantation.
-        /// </summary>
-        void Awake() {
-            Instance = this;
+        protected override void Awake() {
+            base.Awake();
 
             _currentLanguage = new Language();
 #if HOURAI_EVENTS
-            _eventManager = GlobalMediator.Instance;
+            _eventManager = Mediator.Global;
 #endif
 
-            var languages = new List<StringSet>(Resources.LoadAll<StringSet>(localizaitonResourceDirectory));
-            languages.Remove(_keys);
-            _languages = new HashSet<string>(languages.Select(lang => lang.name));
-            _keySet = new HashSet<string>(_keys);
+            _storageDirectory = Path.Combine(Application.streamingAssetsPath, localizationDirectory);
+            var languages = Directory.GetFiles(_storageDirectory);
+            _languages = new HashSet<string>(from file in languages
+                                             where file.EndsWith(FileExtension)
+                                             select Path.GetFileNameWithoutExtension(file));
 
-            string currentLang;
-            if (!Prefs.HasKey(_langPlayerPrefKey)) {
-                currentLang = Application.systemLanguage.ToString();
-                if (!_languages.Contains(currentLang) || Application.systemLanguage == SystemLanguage.Unknown)
-                    currentLang = Resources.Load<StringSet>(_defaultLanguage).name;
-                Prefs.SetString(_langPlayerPrefKey, currentLang);
+            SystemLanguage systemLang = Application.systemLanguage;
+            string currentLang = Storage.GetStoredLangaugeId(systemLang.ToIdentifier());
+            if (!_languages.Contains(currentLang) || systemLang == SystemLanguage.Unknown) {
+                log.Info("No language data for \"{0}\" found. Loading default language: {1}", _defaultLanguage, currentLang);
+                currentLang = _defaultLanguage;
             }
-            else {
-                currentLang = Prefs.GetString(_langPlayerPrefKey);
-            }
-
-            foreach (StringSet lang in languages) {
-                if (lang.name == currentLang)
-                    SetLanguage(lang.name, lang);
-                else
-                    Resources.UnloadAsset(lang);
-            }
+            LoadLanguage(currentLang);
+            Storage.SetStoredLanguageId(currentLang);
 
             if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
         }
 
-        /// <summary>
-        /// Unity Callback. Called on object destruction.
-        /// </summary>
-        void OnDestroy() {
-            Save();
-        }
+        /// <summary> Unity Callback. Called on object destruction. </summary>
+        void OnDestroy() { Save(); }
 
-        /// <summary>
-        /// Unity Callback. Called when entire application exits.
-        /// </summary>
-        void OnApplicationQuit() {
-            Save();
-        }
+        /// <summary> Unity Callback. Called when entire application exits. </summary>
+        void OnApplicationQuit() { Save(); }
 
-        /// <summary>
-        /// Saves the current language preferences to PlayerPrefs to keep it persistent.
-        /// </summary>
+        /// <summary> Saves the current language preferences to PlayerPrefs to keep it persistent. </summary>
         void Save() {
-            if (CurrentLangauge == null)
-                PlayerPrefs.DeleteKey(_langPlayerPrefKey);
-            else
-                Prefs.SetString(_langPlayerPrefKey, CurrentLangauge.Name);
+            Storage.SetStoredLanguageId(CurrentLangauge.Name);
         }
 
-        /// <summary>
-        /// Localizes a key based on the currently loaded language.
-        /// </summary>
-        /// <param name="key">the localization key to use.</param>
-        /// <returns>the localized string</returns>
-        public string this[string key] {
-            get { return CurrentLangauge[key]; }
-        }
-
-        /// <summary>
-        /// Loads a new language given the Microsoft language identifier.
-        /// </summary>
-        /// <param name="identifier">the Microsoft identifier for a lanuguage</param>
-        /// <exception cref="ArgumentNullException">throw if <paramref name="identifier"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">thrown if the language specified by <paramref name="identifier"/> is not currently supported.</exception>
-        /// <returns>the localization language</returns>
+        /// <summary> Loads a new language given the Microsoft language identifier. </summary>
+        /// <param name="identifier"> the Microsoft identifier for a lanuguage </param>
+        /// <returns> the localization language </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="identifier" /> is null. </exception>
+        /// <exception cref="InvalidOperationException"> the language specified by <paramref name="identifier" /> is not currently
+        /// supported. </exception>
         public Language LoadLanguage(string identifier) {
-            if (identifier == null)
-                throw new ArgumentNullException("identifier");
+            Argument.NotNull(identifier);
+            identifier = identifier.ToLower();
             if (!_languages.Contains(identifier))
-                throw new InvalidOperationException(string.Format("Language with identifier of {0} is not supported.",
-                    identifier));
-            var languageValues = Resources.Load<StringSet>(localizaitonResourceDirectory + identifier);
-            SetLanguage(languageValues.name, languageValues);
-            Resources.UnloadAsset(languageValues);
+                throw new InvalidOperationException("Language with identifier of {0} is not supported.".With(identifier));
+            var languageValues = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(GetLanguagePath(identifier)));
+            SetLanguage(identifier, languageValues);
             return CurrentLangauge;
         }
+
     }
+
 }

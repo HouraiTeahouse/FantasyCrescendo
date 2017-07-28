@@ -1,11 +1,14 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.SmashBrew.UI {
-    public class PlayerObjectName : PlayerUIComponent {
-        [SerializeField] private string _format;
 
-        protected override void OnPlayerChange() {
-            name = string.Format(_format, Player.PlayerNumber + 1);
-        }
+    public class PlayerObjectName : PlayerUIComponent {
+
+        [SerializeField]
+        string _format;
+
+        protected override void PlayerChange() { name = _format.With(Player.ID + 1); }
+
     }
+
 }

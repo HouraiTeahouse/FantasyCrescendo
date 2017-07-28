@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Hidden/BlendModesOverlay" {
 	Properties {
 		_MainTex ("Screen Blended", 2D) = "" {}
@@ -14,7 +16,10 @@ Shader "Hidden/BlendModesOverlay" {
 	};
 			
 	sampler2D _Overlay;
+	half4 _Overlay_ST;
+
 	sampler2D _MainTex;
+	half4 _MainTex_ST;
 	
 	half _Intensity;
 	half4 _MainTex_TexelSize;
@@ -22,19 +27,19 @@ Shader "Hidden/BlendModesOverlay" {
 		
 	v2f vert( appdata_img v ) { 
 		v2f o;
-		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+		o.pos = UnityObjectToClipPos(v.vertex);
 		
-		o.uv[0] = float2(
+		o.uv[0] = UnityStereoScreenSpaceUVAdjust(float2(
 			dot(v.texcoord.xy, _UV_Transform.xy),
 			dot(v.texcoord.xy, _UV_Transform.zw)
-		);
+		), _Overlay_ST);
 		
 		#if UNITY_UV_STARTS_AT_TOP
 		if(_MainTex_TexelSize.y<0.0)
 			o.uv[0].y = 1.0-o.uv[0].y;
 		#endif
 		
-		o.uv[1] =  v.texcoord.xy;	
+		o.uv[1] = UnityStereoScreenSpaceUVAdjust(v.texcoord.xy, _MainTex_ST);
 		return o;
 	}
 	

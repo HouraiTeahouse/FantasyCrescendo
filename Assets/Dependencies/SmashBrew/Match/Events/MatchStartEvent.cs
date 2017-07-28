@@ -1,7 +1,8 @@
-namespace HouraiTeahouse.SmashBrew {
-    /// <summary>
-    /// Event declaring the start of an event
-    /// </summary>
+namespace HouraiTeahouse.SmashBrew.Matches {
+
+    /// <summary> Events declaring the start of an event </summary>
     public class MatchStartEvent {
+
     }
+
 }

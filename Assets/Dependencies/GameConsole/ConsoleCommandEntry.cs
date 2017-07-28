@@ -2,25 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.Console {
-    /// <summary>
-    /// Turns a Text UI object into a entry line for GameConsole.
-    /// Automatically reads, displays, and enters keyboard entered commands into the console.
-    /// REQUIRED COMPONENT: UnityEngine.UI.Text
-    /// </summary>
-    [RequireComponent(typeof (Text))]
+
+    /// <summary> Turns a Text UI object into a entry line for GameConsole. Automatically reads, displays, and enters keyboard
+    /// entered commands into the console. REQUIRED COMPONENT: UnityEngine.UI.Text </summary>
+    [RequireComponent(typeof(Text))]
     public class ConsoleCommandEntry : MonoBehaviour {
-        private Text _text;
 
-        /// <summary>
-        /// Unity Callback. Called on instantiation.
-        /// </summary>
-        void Awake() {
-            _text = GetComponent<Text>();
-        }
+        Text _text;
 
-        /// <summary>
-        /// Unity Callback. Called once per frame.
-        /// </summary>
+        /// <summary> Unity Callback. Called on instantiation. </summary>
+        void Awake() { _text = GetComponent<Text>(); }
+
+        /// <summary> Unity Callback. Called once per frame. </summary>
         void Update() {
             // Do nothing if not enabled.
             if (!isActiveAndEnabled)
@@ -44,5 +37,7 @@ namespace HouraiTeahouse.Console {
                 _text.text += input;
             }
         }
+
     }
+
 }

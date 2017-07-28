@@ -1,14 +1,16 @@
 using UnityEngine;
 
 namespace HouraiTeahouse.HouraiInput {
+
     public class UnityKeyCodeAxisSource : InputSource {
-        public KeyCode NegativeKeyCode { get; set; }
-        public KeyCode PositiveKeyCode { get; set; }
 
         public UnityKeyCodeAxisSource(KeyCode negativeKeyCode, KeyCode positiveKeyCode) {
             NegativeKeyCode = negativeKeyCode;
             PositiveKeyCode = positiveKeyCode;
         }
+
+        public KeyCode NegativeKeyCode { get; set; }
+        public KeyCode PositiveKeyCode { get; set; }
 
         public float GetValue(InputDevice inputDevice) {
             var axisValue = 0;
@@ -19,8 +21,8 @@ namespace HouraiTeahouse.HouraiInput {
             return axisValue;
         }
 
-        public bool GetState(InputDevice inputDevice) {
-            return !Mathf.Approximately(GetValue(inputDevice), 0.0f);
-        }
+        public bool GetState(InputDevice inputDevice) { return !Mathf.Approximately(GetValue(inputDevice), 0.0f); }
+
     }
+
 }

@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace HouraiTeahouse.Editor {
 
-    /// <summary>
-    /// Custom Editor for AudioSourceControl.
-    /// </summary>
+    /// <summary> Custom Editor for AudioSourceControl. </summary>
     [CustomEditor(typeof(AudioSourceControl))]
     internal class AudioSourceControlInspector : ScriptlessEditor {
 
         /// <summary>
-        /// <see cref="UnityEditor.Editor.OnInspectorGUI"/>
+        ///     <see cref="UnityEditor.Editor.OnInspectorGUI" />
         /// </summary>
         public override void OnInspectorGUI() {
             var source = (target as MonoBehaviour).GetComponent<AudioSource>();
@@ -20,11 +18,12 @@ namespace HouraiTeahouse.Editor {
                 source.Play();
             if (GUILayout.Button("Pause"))
                 source.Pause();
-            if(GUILayout.Button("Stop"))
+            if (GUILayout.Button("Stop"))
                 source.Stop();
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
         }
 
     }
+
 }

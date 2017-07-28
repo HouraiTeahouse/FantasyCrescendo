@@ -1,20 +1,17 @@
 using UnityEngine;
 
-
 namespace HouraiTeahouse.HouraiInput {
+
     public class UnityKeyCodeSource : InputSource {
-        private readonly KeyCode _keyCode;
 
-        public UnityKeyCodeSource(KeyCode keycode = KeyCode.None) {
-            _keyCode = keycode;
-        }
+        readonly KeyCode _keyCode;
 
-        public float GetValue(InputDevice inputDevice) {
-            return GetState(inputDevice) ? 1.0f : 0.0f;
-        }
+        public UnityKeyCodeSource(KeyCode keycode = KeyCode.None) { _keyCode = keycode; }
 
-        public bool GetState(InputDevice inputDevice) {
-            return Input.GetKey(_keyCode);
-        }
+        public float GetValue(InputDevice inputDevice) { return GetState(inputDevice) ? 1.0f : 0.0f; }
+
+        public bool GetState(InputDevice inputDevice) { return Input.GetKey(_keyCode); }
+
     }
+
 }

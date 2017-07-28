@@ -1,36 +1,37 @@
-using HouraiTeahouse.Events;
 using UnityEngine;
+using UnityEngine.Networking;
 
-namespace HouraiTeahouse.SmashBrew {
-    /// <summary>
-    /// The Match Singleton.
-    /// 
-    /// Manages the current state of the match and all of the defined Match rules.
-    /// </summary>
-    public class Match : MonoBehaviour {
-        private Mediator _eventManager;
+namespace HouraiTeahouse.SmashBrew.Matches {
 
-        /// <summary>
-        /// Unity Callback. Called on object instantiation.
-        /// </summary>
-        void Awake() {
-            _eventManager = GlobalMediator.Instance;
+    /// <summary> The Match Singleton. Manages the current state of the match and all of the defined Match rules. </summary>
+    [DisallowMultipleComponent]
+    [AddComponentMenu("Smash Brew/Matches/Match")]
+    public class Match : NetworkBehaviour {
+
+        Mediator _eventManager;
+        [SyncVar]
+        bool _isRunning;
+
+        /// <summary> Unity Callback. Called on object instantiation. </summary>
+        void Awake() { _eventManager = Mediator.Global; }
+
+        public override void OnStartServer() {
+            _eventManager.Publish(new MatchStartEvent());
+            _isRunning = true;
         }
 
-        /// <summary>
-        /// Ends the match.
-        /// </summary>
-        /// <param name="noContest">is the match ending prematurely? If set to true, no
-        ///     winner will be declared.</param>
-        public void FinishMatch(bool noContest = false) {
-            var rules = FindObjectsOfType<MatchRule>();
+        /// <summary> Ends the match. </summary>
+        /// <param name="noContest"> is the match ending prematurely? If set to true, no winner will be declared. </param>
+        public void FinishMatch(bool noContest) {
+            if (!_isRunning)
+                return;
+            MatchRule[] rules = FindObjectsOfType<MatchRule>();
 
             var result = MatchResult.HasWinner;
             Player winner = null;
             foreach (MatchRule rule in rules) {
                 if (rule == null)
                     continue;
-                rule.enabled = false;
                 Player ruleWinner = rule.GetWinner();
                 if (ruleWinner == null || noContest)
                     continue;
@@ -49,21 +50,9 @@ namespace HouraiTeahouse.SmashBrew {
                 winner = null;
             }
             _eventManager.Publish(new MatchEndEvent(result, winner));
+            _isRunning = false;
         }
 
-        /// <summary>
-        /// Gets whether there is currently a Match underway.
-        /// </summary>
-        public bool InMatch { get; private set; }
-
-        /// <summary>
-        /// Unity Callback. Called before the object's first frame.
-        /// </summary>
-        void Start() {
-            // Don't restart a match if it is still in progress
-            if (InMatch)
-                return;
-            _eventManager.Publish(new MatchStartEvent());
-        }
     }
+
 }
