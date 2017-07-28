@@ -103,7 +103,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             CharacterController.Move(Velocity * Time.deltaTime);
             if (!grounded)
                 return;
-            CharacterController.Move(Vector3.down * Config.Physics.GroundSnapDistance);
+            var originalPos = transform.position;
+            var collision = CharacterController.Move(Vector3.down * Config.Physics.GroundSnapDistance);
+            if (collision == CollisionFlags.None)
+                transform.position = originalPos;
         }
 
         /// <summary>
