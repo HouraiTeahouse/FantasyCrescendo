@@ -292,6 +292,9 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         float _tapTreshold = 0.3f;
 
+        [SerializeField]
+        float _maxLedgeHangTime = 8f;
+
         public Color CPUColor {
             get { return _cpuColor; }
         }
@@ -304,6 +307,10 @@ namespace HouraiTeahouse.SmashBrew {
         /// <summary> Minimum acceleration (normalized controller units/second) for a tap to be considered a tap </summary>
         public float TapTreshold {
             get { return _tapTreshold; }
+        }
+
+        public float MaxLedgeHangTime {
+            get { return _maxLedgeHangTime; }
         }
 
         public Color GetColor(int playerNumber, bool isCPU = false) {

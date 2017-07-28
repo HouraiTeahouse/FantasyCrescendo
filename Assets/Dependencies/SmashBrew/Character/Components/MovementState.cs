@@ -91,7 +91,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             private set { _isFastFalling = value; }
         }
 
-
         /// <summary> Can the Character currently jump? </summary>
         public bool CanJump {
             get { return JumpCount < MaxJumpCount; }
@@ -102,13 +101,16 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         Transform _currentLedge;
+        float _grabTime;
         public Transform CurrentLedge {
             get { return _currentLedge; }
             set {
                 bool grabbed = _currentLedge == null && value != null;
                 _currentLedge = value;
-                if (grabbed)
+                if (grabbed) {
                     SnapToLedge();
+                    _grabTime = Time.time;
+                }
             }
         }
 
@@ -216,24 +218,29 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             // If currently hanging from a edge
             if (CurrentLedge != null) {
                 LedgeMovement();
-            } else {
-                var movementInput = InputState.Movement;
-                if (PhysicsState.IsGrounded) {
-                    IsFastFalling = false;
-                    if (JumpCount != MaxJumpCount)
-                        CmdResetJumps();
-                    if (movementInput.x > DirectionalInput.DeadZone)
-                        movement.facing = true;
-                    if (movementInput.x < -DirectionalInput.DeadZone)
-                        movement.facing = false;
-                    Direction = movement.facing;
+                if (Time.time > _grabTime + Config.Player.MaxLedgeHangTime) {
+                    CurrentLedge = null;
                 } else {
-                    if (GetKeysDown(KeyCode.S, KeyCode.DownArrow) || InputState.Smash.y < -DirectionalInput.DeadZone)
-                        IsFastFalling = true;
-                    LimitFallSpeed();
+                    PhysicsState.SetHorizontalVelocity(movement.Speed.x);
+                    return;
                 }
-                movement = ApplyControlledMovement(movement, movementInput);
+            } 
+            var movementInput = InputState.Movement;
+            if (PhysicsState.IsGrounded) {
+                IsFastFalling = false;
+                if (JumpCount != MaxJumpCount)
+                    CmdResetJumps();
+                if (movementInput.x > DirectionalInput.DeadZone)
+                    movement.facing = true;
+                if (movementInput.x < -DirectionalInput.DeadZone)
+                    movement.facing = false;
+                Direction = movement.facing;
+            } else {
+                if (GetKeysDown(KeyCode.S, KeyCode.DownArrow) || InputState.Smash.y < -DirectionalInput.DeadZone)
+                    IsFastFalling = true;
+                LimitFallSpeed();
             }
+            movement = ApplyControlledMovement(movement, movementInput);
             PhysicsState.SetHorizontalVelocity(movement.Speed.x);
         }
 
