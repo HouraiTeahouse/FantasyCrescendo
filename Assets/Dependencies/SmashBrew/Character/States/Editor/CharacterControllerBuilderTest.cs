@@ -40,9 +40,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 Input = new InputContext { Movement = new Vector2(0, -1) }
             }};
             yield return new object[] {"LedgeIdle", "LedgeAttack", new CharacterStateContext {
+                IsGrabbingLedge = true,
                 Input = new InputContext { Attack = new ButtonContext { LastFrame = false, Current = true }}
             }};
             yield return new object[] {"LedgeIdle", "LedgeJump", new CharacterStateContext {
+                IsGrabbingLedge = true,
                 CanJump = true,
                 Input = new InputContext { Jump = new ButtonContext { LastFrame = false, Current = true }}
             }};

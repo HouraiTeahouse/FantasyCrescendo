@@ -60,6 +60,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [SerializeField]
         LayerMask _stageLayers = -1;
 
+        [SerializeField]
+        Transform _skeletonRoot;
+
         public float MaxFallSpeed {
             get { return _maxFallSpeed; }
         }
@@ -179,6 +182,17 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             stateController.OnStateChange += (b, a) => {
                 if (states.Jump == a)
                     Jump();
+                if (states.LedgeRelease == a)  {
+                    IsFastFalling = false;
+                    CurrentLedge = null;
+                }
+                if (states.LedgeAttack == b || states.LedgeClimb == b) {
+                    CurrentLedge = null;
+                    transform.position = _skeletonRoot.position;
+                    _skeletonRoot.position = transform.position;
+                    MovementCollider.Move(Vector3.down * MovementCollider.height);
+                    Character.StateController.SetState(Character.States.Idle);
+                }
                 if (states.EscapeForward == b && isServer)
                     _direction = !_direction;
             };
@@ -200,7 +214,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void LedgeMovement() {
             if (JumpCount != MaxJumpCount)
                 CmdResetJumps();
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || InputState.Smash.y <= -DirectionalInput.DeadZone) {
                 CurrentLedge = null;
             } else {
                 SnapToLedge();
@@ -234,6 +248,11 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 return;
             if (HitState != null && HitState.Hitstun > 0)
                 return;
+            if (CurrentState.Data.MovementType == MovementType.Locked) {
+                PhysicsState.SetHorizontalVelocity(0f);
+                PhysicsState.SetVerticalVelocity(0f);
+                return;
+            }
             var movement = new MovementInfo { facing = Direction };
             // If currently hanging from a edge
             if (CurrentLedge != null) {

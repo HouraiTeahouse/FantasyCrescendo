@@ -1,5 +1,7 @@
 # v0.3.0-alpha
+
 ## General Patch Notes
+
 ###New Additions:
 * Characters: Youmu Konpaku is now playable.
 * Stages: Forest of Magic is now selectable.
@@ -46,8 +48,6 @@
 * Localization: Added Chinese (Traditional) as an available game language.
 
 ### Known Issues:
-* ([#152](https://github.com/HouraiTeahouse/FantasyCrescendo/issues/152), [#153](https://github.com/HouraiTeahouse/FantasyCrescendo/issues/153)) Exiting ledge grabbing is extremely buggy. Climbing, falling, and attacking out of a ledge can lead 
-  to unexpected behavior.
 * UI: No character select screen is available: only one character is available currently.
 * ([#144](https://github.com/HouraiTeahouse/FantasyCrescendo/issues/144)) UI: No custom network lobby UI is currently available. The debug UI is used instead. 
 * ([#104](https://github.com/HouraiTeahouse/FantasyCrescendo/issues/104)) Youmu: Neutral combo is not implemented yet.
@@ -65,6 +65,7 @@
 * Network: Network animation synchronization is very simple right now. Remote player's animations may be very jerky or laggy.
 
 ##Technical Patch Notes:
+
 ###New Additions:
 * Added dependency on HouraiOptions
 * Debug builds will have an additional Debug Stage added to the stage select screen.

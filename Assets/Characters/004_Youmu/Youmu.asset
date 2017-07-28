@@ -130,7 +130,7 @@ MonoBehaviour:
         _max: 5
       EntryPolicy: 0
       DamageType: 0
-      MovementType: 2
+      MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
   - Name: JumpStart
@@ -286,7 +286,7 @@ MonoBehaviour:
         _max: 5
       EntryPolicy: 0
       DamageType: 0
-      MovementType: 0
+      MovementType: 1
       CanTurn: 1
       KnockbackResistance: 0
   - Name: FallHelpless
@@ -335,19 +335,19 @@ MonoBehaviour:
       EntryPolicy: 0
       DamageType: 0
       MovementType: 0
-      CanTurn: 1
+      CanTurn: 0
       KnockbackResistance: 0
   - Name: LedgeClimb
     Data:
-      AnimationClip: {fileID: 7400000, guid: 5e538867655a4ab4b96bb3980d620489, type: 3}
-      Length: 1.2333333
+      AnimationClip: {fileID: 7400000, guid: 1dd4206191c7cec468dfbf521362a338, type: 3}
+      Length: 1.5416667
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       DamageType: 0
-      MovementType: 0
-      CanTurn: 1
+      MovementType: 2
+      CanTurn: 0
       KnockbackResistance: 0
   - Name: LedgeEscape
     Data:
@@ -359,19 +359,19 @@ MonoBehaviour:
       EntryPolicy: 0
       DamageType: 0
       MovementType: 0
-      CanTurn: 1
+      CanTurn: 0
       KnockbackResistance: 0
   - Name: LedgeAttack
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400000, guid: 1dd4206191c7cec468dfbf521362a338, type: 3}
+      Length: 1.5416667
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       DamageType: 0
-      MovementType: 0
-      CanTurn: 1
+      MovementType: 2
+      CanTurn: 0
       KnockbackResistance: 0
   - Name: LedgeJump
     Data:
@@ -383,19 +383,19 @@ MonoBehaviour:
       EntryPolicy: 1
       DamageType: 0
       MovementType: 0
-      CanTurn: 1
+      CanTurn: 0
       KnockbackResistance: 0
   - Name: LedgeRelease
     Data:
-      AnimationClip: {fileID: 0}
-      Length: 0
+      AnimationClip: {fileID: 7400000, guid: 6084871001fff60419effbdbc5ff9122, type: 3}
+      Length: 0.25
       MovementSpeed:
         _min: 0
         _max: 0
       EntryPolicy: 0
       DamageType: 0
-      MovementType: 0
-      CanTurn: 1
+      MovementType: 1
+      CanTurn: 0
       KnockbackResistance: 0
   - Name: DamageStun
     Data:
@@ -743,7 +743,7 @@ MonoBehaviour:
       EntryPolicy: 1
       DamageType: 0
       MovementType: 0
-      CanTurn: 1
+      CanTurn: 0
       KnockbackResistance: 0
   - Name: AerialBackward
     Data:

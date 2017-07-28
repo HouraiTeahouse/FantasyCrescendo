@@ -207,12 +207,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             // Ledge States
             new[] {Idle, Fall, FallHelpless}.AddTransitions(LedgeGrab, ctx => ctx.IsGrabbingLedge);
             LedgeGrab.AddTransitionTo(LedgeIdle);
-            LedgeIdle.AddTransition(LedgeRelease, DirectionInput(Direction.Down))
+            LedgeIdle.AddTransition(LedgeRelease, ctx => !ctx.IsGrabbingLedge)
                 .AddTransition(LedgeClimb, DirectionInput(Direction.Up))
                 .AddTransition(LedgeJump, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump)
                 .AddTransition(LedgeAttack, Attack());
             LedgeJump.AddTransitionTo(Jump);
-            new[] {LedgeRelease, LedgeClimb, LedgeEscape}
+            new[] {LedgeRelease, LedgeClimb, LedgeEscape, LedgeAttack}
                 .AddTransitions(Idle, ctx => ctx.NormalizedAnimationTime >= 1.0f && ctx.IsGrounded)
                 .AddTransitions(Fall, ctx => ctx.NormalizedAnimationTime >= 1.0f && !ctx.IsGrounded);
 
