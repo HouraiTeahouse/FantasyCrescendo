@@ -158,6 +158,9 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField, Layer]
         int _hurtboxLayer;
 
+        [SerializeField]
+        LayerMask _stageLayer;
+
         public string PlayerTag { get { return _playerTag; } }
         public string HitboxTag { get { return _hitboxTag; } } 
         public string LedgeTag { get { return _ledgeTag; } }
@@ -167,6 +170,7 @@ namespace HouraiTeahouse.SmashBrew {
         public int IntangibleLayer { get { return _intangibleLayer; } }
         public int HitboxLayer { get { return _hitboxLayer; } }
         public int HurtboxLayer { get { return _hurtboxLayer; } }
+        public LayerMask StageMask { get { return _stageLayer; } }
 
     }
 
@@ -314,11 +318,13 @@ namespace HouraiTeahouse.SmashBrew {
     public class PhysicsConfig {
 
         [SerializeField]
+        float _groundSnapDistance = 1f;
+
+        [SerializeField]
         float _tangibleSpeedCap = 3f;
 
-        public float TangibleSpeedCap {
-            get { return _tangibleSpeedCap; }
-        }
+        public float GroundSnapDistance { get { return _groundSnapDistance; } }
+        public float TangibleSpeedCap { get { return _tangibleSpeedCap; } }
 
     }
 

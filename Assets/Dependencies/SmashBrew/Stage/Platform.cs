@@ -39,7 +39,7 @@ namespace HouraiTeahouse.SmashBrew.Stage {
         void ChangeIgnore(Collider target, bool state) {
             if (target == null || !target.CompareTag(Config.Tags.PlayerTag))
                 return;
-            var movementState = target.GetComponentInParent<MovementState>();
+            var movementState = target.GetComponentInParent<PhysicsState>();
             foreach (Collider col in _toIgnore)
                 if (movementState != null)
                     movementState.IgnoreCollider(col, state);

@@ -73,8 +73,11 @@ MonoBehaviour:
     _playerTag: Player
     _hitboxTag: Hitbox
     _ledgeTag: Ledge Check
-    _indicatorTargetTag: 
+    _indicatorTargetTag: Indicator Tracker
     _characterLayer: 9
     _intangibleLayer: 12
     _hitboxLayer: 10
     _hurtboxLayer: 11
+    _stageLayer:
+      serializedVersion: 2
+      m_Bits: 256

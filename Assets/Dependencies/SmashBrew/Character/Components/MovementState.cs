@@ -20,7 +20,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         CharacterController MovementCollider { get; set; }
         InputState InputState { get; set; }
         HitState HitState { get; set; }
-        HashSet<Collider> _ignoredColliders;
 
         public event Action OnJump;
 
@@ -44,21 +43,16 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [SerializeField]
         Transform _ledgeTarget;
 
-        [Header("Variables")]
-        [SerializeField, ReadOnly]
-        Transform _currentLedge;
 
-        [SyncVar(hook = "OnChangeDirection"), ReadOnly]
+        [Header("Variables")]
+        [SyncVar(hook = "OnChangeDirection")]
         bool _direction;
 
-        [SyncVar, ReadOnly]
+        [SyncVar]
         int _jumpCount;
 
-        [SyncVar, ReadOnly]
+        [SyncVar]
         bool _isFastFalling;
-
-        [SerializeField]
-        LayerMask _stageLayers = -1;
 
         [SerializeField]
         Transform _skeletonRoot;
@@ -97,51 +91,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             private set { _isFastFalling = value; }
         }
 
-        public bool IsGrounded {
-            get { 
-                if (PhysicsState != null && PhysicsState.Velocity.y > 0)
-                    return false;
-                var center = Vector3.zero;
-                var radius = 1f;
-                if (MovementCollider != null) {
-                    center = MovementCollider.center - Vector3.up * (MovementCollider.height * 0.50f - MovementCollider.radius * 0.5f);
-                    radius = MovementCollider.radius * 0.75f;
-                }
-                return Physics.OverlapSphere(transform.TransformPoint(center), 
-                                             radius, _stageLayers, 
-                                             QueryTriggerInteraction.Ignore)
-                                             .Any(col => !_ignoredColliders.Contains(col));
-            }
-        }
-
-        /// <summary>
-        /// Callback to draw gizmos that are pickable and always drawn.
-        /// </summary>
-        void OnDrawGizmos() {
-            var center = Vector3.zero;
-            var radius = 1f;
-            if (MovementCollider != null) {
-                center = MovementCollider.center - Vector3.up * (MovementCollider.height * 0.5f - MovementCollider.radius * 0.5f);
-                radius = MovementCollider.radius * 0.75f;
-                var diff = Vector3.up * (MovementCollider.height * 0.5f - MovementCollider.radius);
-                using (Gizmo.With(Color.red)) {
-                    var rad =  MovementCollider.radius * transform.lossyScale.Max();
-                    Gizmos.DrawWireSphere(transform.TransformPoint(MovementCollider.center + diff), rad);
-                    Gizmos.DrawWireSphere(transform.TransformPoint(MovementCollider.center - diff), rad);
-                }
-            }
-            using (Gizmo.With(Color.blue)) {
-                Gizmos.DrawWireSphere(transform.TransformPoint(center), radius);
-            }
-        }
-
-        public void IgnoreCollider(Collider collider, bool state) {
-            Physics.IgnoreCollision(MovementCollider, collider, state);
-            if (state)
-                _ignoredColliders.Add(collider);
-            else
-                _ignoredColliders.Remove(collider);
-        }
 
         /// <summary> Can the Character currently jump? </summary>
         public bool CanJump {
@@ -152,6 +101,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _ledgeTarget; }
         }
 
+        Transform _currentLedge;
         public Transform CurrentLedge {
             get { return _currentLedge; }
             set {
@@ -162,12 +112,18 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             }
         }
 
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         protected override void Awake() {
             base.Awake();
             InputState = this.SafeGetComponent<InputState>();
-            _ignoredColliders = new HashSet<Collider>();
         }
 
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
         void Start() {
             PhysicsState = this.SafeGetComponent<PhysicsState>();
             MovementCollider = this.SafeGetComponent<CharacterController>();
@@ -241,6 +197,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return val + (pos ? 1f : 0f);
         }
 
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
         void Update() {
             if (!isLocalPlayer)
                 return;
@@ -259,7 +218,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 LedgeMovement();
             } else {
                 var movementInput = InputState.Movement;
-                if (IsGrounded) {
+                if (PhysicsState.IsGrounded) {
                     IsFastFalling = false;
                     if (JumpCount != MaxJumpCount)
                         CmdResetJumps();
@@ -307,7 +266,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public override void UpdateStateContext(CharacterStateContext context) {
-            context.IsGrounded = IsGrounded;
             context.IsGrabbingLedge = CurrentLedge != null;
             context.Direction = Direction ? 1.0f : -1.0f;
             context.CanJump = JumpCount > 0 && JumpCount <= MaxJumpCount;
