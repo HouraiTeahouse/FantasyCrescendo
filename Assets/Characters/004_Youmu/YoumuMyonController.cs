@@ -43,7 +43,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
                 return;
             var currentPos = _myonInstance.transform.position;
             var targetPos = _targetBone.position;
-            float distance = Vector3.Distance(_myonInstance.position, _targetBone.position);
+            float distance = Vector3.Distance(_myonInstance.transform.position, _targetBone.position);
             targetPos = Vector3.Lerp(currentPos, targetPos,  Time.smoothDeltaTime*distance* _movementSpeed);
             _myonInstance.transform.position = targetPos;
         }
