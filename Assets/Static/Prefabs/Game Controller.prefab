@@ -15,16 +15,17 @@ GameObject:
   - component: {fileID: 11463294}
   - component: {fileID: 11458584}
   - component: {fileID: 114000013746611068}
-  - component: {fileID: 114358818079837736}
   - component: {fileID: 114966787956079878}
   - component: {fileID: 114264198699108660}
   - component: {fileID: 114199648949486878}
   - component: {fileID: 114953722336118826}
   - component: {fileID: 114473108247565442}
   - component: {fileID: 114402875125216558}
+  - component: {fileID: 114635569538057442}
+  - component: {fileID: 114388632571067428}
   m_Layer: 0
   m_Name: Game Controller
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,9 +136,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultLanguage: en
   _dontDestroyOnLoad: 1
-  _langPlayerPref:
-    _defaultValue: en
-    _key: lang
   localizationDirectory: lang
 --- !u!1001 &100100000
 Prefab:
@@ -362,11 +360,11 @@ MonoBehaviour:
   m_LogLevel: 2
   m_PlayerPrefab: {fileID: 0}
   m_AutoCreatePlayer: 0
-  m_PlayerSpawnMethod: 0
+  m_PlayerSpawnMethod: 1
   m_OfflineScene: 
   m_OnlineScene: 
   m_SpawnPrefabs: []
-  m_CustomConfig: 0
+  m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
     m_PacketSize: 1500
@@ -408,7 +406,7 @@ MonoBehaviour:
     m_MaxTimerTimeout: 12000
     m_MinNetSimulatorTimeout: 1
     m_MaxNetSimulatorTimeout: 12000
-  m_Channels: 
+  m_Channels: 0500000000000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1
@@ -421,7 +419,7 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
---- !u!114 &114358818079837736
+--- !u!114 &114388632571067428
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -429,13 +427,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 189600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 227461547, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: a6cbded255b1fa943b81281279570602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 114264198699108660}
-  showGUI: 1
-  offsetX: 0
-  offsetY: 0
 --- !u!114 &114402875125216558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -465,6 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audio: {fileID: 24100000, guid: 41a5798365caae34abc8f0a349706cbf, type: 2}
+  _masterVol: MasterVolume
   _volumeChannels:
   - Name: MasterVolume
     MinDb: -80
@@ -478,6 +473,21 @@ MonoBehaviour:
   - Name: VoiceVolume
     MinDb: -80
     MaxDb: 10
+--- !u!114 &114635569538057442
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189600}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 227461547, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  showGUI: 1
+  offsetX: 0
+  offsetY: 0
 --- !u!114 &114953722336118826
 MonoBehaviour:
   m_ObjectHideFlags: 1

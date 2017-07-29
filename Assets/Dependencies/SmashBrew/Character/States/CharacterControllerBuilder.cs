@@ -75,7 +75,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return ctx => ctx.Input.Special.WasPressed && inputFunc(ctx.Input);
         }
 
-        protected Func<CharacterStateContext, bool> DirectionalInput(params Direction[] directions) {
+        protected Func<CharacterStateContext, bool> DirectionInput(params Direction[] directions) {
             var set = new HashSet<Direction>(directions);
             return Input(i => set.Contains(i.Movement.Direction));
         }
@@ -135,10 +135,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             SmashUp.Charge.AddTransitionTo(SmashUp.Attack);
             SmashDown.Charge.AddTransitionTo(SmashDown.Attack);
             SmashSide.Charge.AddTransitionTo(SmashSide.Attack);
+            TiltDown.AddTransitionTo(Crouch, Input(i => i.Movement.Direction == Direction.Down));
             new[] {Neutral, TiltUp, TiltDown, TiltSide, SmashUp.Attack, SmashDown.Attack, SmashSide.Attack}
                 .AddTransitionTo(Idle);
 
             new [] {Fall, Jump, JumpAerial}
+                .AddTransitions(Land, ctx => ctx.IsGrounded)
                 // Aerial Attacks
                 .AddTransitions<CharacterState, CharacterStateContext>(context => {
                     var input = context.Input;
@@ -173,21 +175,28 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             new[] {Fall, FallHelpless, EscapeAir}.AddTransitions(Land, ctx => ctx.IsGrounded);
             Land.AddTransitionTo(Idle);
 
+            Func<Func<InputContext, DirectionalInput>, Func<CharacterStateContext, bool>>
+                movementContext = func => {
+                    return ctx => !DirectionInput(Direction.Down)(ctx) && 
+                                   Input(i => Mathf.Abs(func(i).Value.x) > DirectionalInput.DeadZone)(ctx);
+                };
+
             // Running States
-            Idle.AddTransition(Dash, DirectionalSmash(Direction.Left, Direction.Right));
-            Dash.AddTransitionTo(Idle, DirectionalInput(Direction.Neutral));
+            Idle.AddTransition(Dash, movementContext(i => i.Smash));
+            Dash.AddTransitionTo(Idle, DirectionInput(Direction.Neutral));
             new[] {Dash, RunTurn}.AddTransitionTo(Run);
-            Run.AddTransition(RunBrake, DirectionalInput(Direction.Neutral));
+            Run.AddTransition(RunBrake, DirectionInput(Direction.Neutral));
             Run.AddTransition(RunTurn,
                 ctx => !Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.Value.x), Mathf.Sign(ctx.Direction)));
             RunBrake.AddTransitionTo(Idle);
 
             // Ground Movement 
             new[] {Idle, Walk, Run}
-                .AddTransitions(CrouchStart, DirectionalInput(Direction.Down))
+                .AddTransitions(CrouchStart, DirectionInput(Direction.Down))
                 .AddTransitions(Fall, ctx => !ctx.IsGrounded);
-            Idle.AddTransition(Walk, DirectionalInput(Direction.Left, Direction.Right));
-            Walk.AddTransition(Idle, DirectionalInput(Direction.Neutral));
+
+            Idle.AddTransition(Walk, movementContext(i => i.Movement));
+            Walk.AddTransition(Idle, DirectionInput(Direction.Neutral));
 
             // Crouching States
             CrouchStart.AddTransitionTo(Crouch);
@@ -198,12 +207,12 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             // Ledge States
             new[] {Idle, Fall, FallHelpless}.AddTransitions(LedgeGrab, ctx => ctx.IsGrabbingLedge);
             LedgeGrab.AddTransitionTo(LedgeIdle);
-            LedgeIdle.AddTransition(LedgeRelease, DirectionalInput(Direction.Down))
-                .AddTransition(LedgeClimb, DirectionalInput(Direction.Up))
+            LedgeIdle.AddTransition(LedgeRelease, ctx => !ctx.IsGrabbingLedge)
+                .AddTransition(LedgeClimb, DirectionInput(Direction.Up))
                 .AddTransition(LedgeJump, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump)
                 .AddTransition(LedgeAttack, Attack());
             LedgeJump.AddTransitionTo(Jump);
-            new[] {LedgeRelease, LedgeClimb, LedgeEscape}
+            new[] {LedgeRelease, LedgeClimb, LedgeEscape, LedgeAttack}
                 .AddTransitions(Idle, ctx => ctx.NormalizedAnimationTime >= 1.0f && ctx.IsGrounded)
                 .AddTransitions(Fall, ctx => ctx.NormalizedAnimationTime >= 1.0f && !ctx.IsGrounded);
 
@@ -217,9 +226,20 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
             
             // Rolls/Sidesteps
-            Shield.Main.AddTransition(EscapeForward, DirectionalSmash(Direction.Right))
-                .AddTransition(EscapeBackward, DirectionalSmash(Direction.Left))
-                .AddTransition(Escape, DirectionalInput(Direction.Down));
+            Shield.Main
+            .AddTransition(EscapeForward, ctx => {
+                if (ctx.Direction > 0f)
+                    return DirectionalSmash(Direction.Right)(ctx);
+                else
+                    return DirectionalSmash(Direction.Left)(ctx);
+            })
+            .AddTransition(EscapeBackward, ctx => {
+                if (ctx.Direction > 0f)
+                    return DirectionalSmash(Direction.Left)(ctx);
+                else
+                    return DirectionalSmash(Direction.Right)(ctx);
+                })
+            .AddTransition(Escape, DirectionInput(Direction.Down));
             new[] {Escape, EscapeForward, EscapeBackward}.AddTransitionTo(Shield.Main);
 
             Builder.WithDefaultState(Idle);

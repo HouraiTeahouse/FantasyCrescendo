@@ -97,7 +97,7 @@ namespace HouraiTeahouse {
         }
 
         /// <summary> The action to execute. </summary>
-        protected abstract void Action();
+        public abstract void Action();
 
     }
 

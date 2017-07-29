@@ -19,7 +19,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         PhysicsState PhysicsState { get; set; }
         CharacterController MovementCollider { get; set; }
         InputState InputState { get; set; }
-        HashSet<Collider> _ignoredColliders;
+        HitState HitState { get; set; }
 
         public event Action OnJump;
 
@@ -43,18 +43,19 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [SerializeField]
         Transform _ledgeTarget;
 
-        [Header("Variables")]
-        [SerializeField, ReadOnly]
-        Transform _currentLedge;
 
-        [SyncVar(hook = "OnChangeDirection"), ReadOnly]
+        [Header("Variables")]
+        [SyncVar(hook = "OnChangeDirection")]
         bool _direction;
 
-        [SyncVar, ReadOnly]
+        [SyncVar]
         int _jumpCount;
 
-        [SyncVar, ReadOnly]
+        [SyncVar]
         bool _isFastFalling;
+
+        [SerializeField]
+        Transform _skeletonRoot;
 
         public float MaxFallSpeed {
             get { return _maxFallSpeed; }
@@ -90,55 +91,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             private set { _isFastFalling = value; }
         }
 
-        [SerializeField]
-        LayerMask _stageLayers = -1;
-
-        public bool IsGrounded {
-            get { 
-                if (PhysicsState != null && PhysicsState.Velocity.y > 0)
-                    return false;
-                var center = Vector3.zero;
-                var radius = 1f;
-                if (MovementCollider != null) {
-                    center = MovementCollider.center - Vector3.up * (MovementCollider.height * 0.50f - MovementCollider.radius * 0.5f);
-                    radius = MovementCollider.radius * 0.75f;
-                }
-                return Physics.OverlapSphere(transform.TransformPoint(center), 
-                                             radius, _stageLayers, 
-                                             QueryTriggerInteraction.Ignore)
-                                             .Any(col => !_ignoredColliders.Contains(col));
-            }
-        }
-
-        /// <summary>
-        /// Callback to draw gizmos that are pickable and always drawn.
-        /// </summary>
-        void OnDrawGizmos() {
-            var center = Vector3.zero;
-            var radius = 1f;
-            if (MovementCollider != null) {
-                center = MovementCollider.center - Vector3.up * (MovementCollider.height * 0.5f - MovementCollider.radius * 0.5f);
-                radius = MovementCollider.radius * 0.75f;
-                var diff = Vector3.up * (MovementCollider.height * 0.5f - MovementCollider.radius);
-                using (Gizmo.With(Color.red)) {
-                    var rad =  MovementCollider.radius * transform.lossyScale.Max();
-                    Gizmos.DrawWireSphere(transform.TransformPoint(MovementCollider.center + diff), rad);
-                    Gizmos.DrawWireSphere(transform.TransformPoint(MovementCollider.center - diff), rad);
-                }
-            }
-            using (Gizmo.With(Color.blue)) {
-                Gizmos.DrawWireSphere(transform.TransformPoint(center), radius);
-            }
-        }
-
-        public void IgnoreCollider(Collider collider, bool state) {
-            Physics.IgnoreCollision(MovementCollider, collider, state);
-            if (state)
-                _ignoredColliders.Add(collider);
-            else
-                _ignoredColliders.Remove(collider);
-        }
-
         /// <summary> Can the Character currently jump? </summary>
         public bool CanJump {
             get { return JumpCount < MaxJumpCount; }
@@ -148,29 +100,39 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             get { return _ledgeTarget; }
         }
 
+        Transform _currentLedge;
+        float _grabTime;
         public Transform CurrentLedge {
             get { return _currentLedge; }
             set {
                 bool grabbed = _currentLedge == null && value != null;
                 _currentLedge = value;
-                if (grabbed)
+                if (grabbed) {
                     SnapToLedge();
+                    _grabTime = Time.time;
+                }
             }
         }
 
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         protected override void Awake() {
             base.Awake();
             InputState = this.SafeGetComponent<InputState>();
-            _ignoredColliders = new HashSet<Collider>();
         }
 
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
         void Start() {
             PhysicsState = this.SafeGetComponent<PhysicsState>();
             MovementCollider = this.SafeGetComponent<CharacterController>();
+            HitState = GetComponent<HitState>();
             JumpCount = MaxJumpCount;
             OnChangeDirection(_direction);
-            if (_ledgeTarget == null)
-                _ledgeTarget = transform;
+            _ledgeTarget = this.CachedGetComponent(_ledgeTarget, () => transform);
             if (Character == null)
                 return;
             var stateController = Character.StateController;
@@ -178,6 +140,19 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             stateController.OnStateChange += (b, a) => {
                 if (states.Jump == a)
                     Jump();
+                if (states.LedgeRelease == a)  {
+                    IsFastFalling = false;
+                    CurrentLedge = null;
+                }
+                if (states.LedgeAttack == b || states.LedgeClimb == b) {
+                    CurrentLedge = null;
+                    transform.position = _skeletonRoot.position;
+                    _skeletonRoot.position = transform.position;
+                    MovementCollider.Move(Vector3.down * MovementCollider.height);
+                    Character.StateController.SetState(Character.States.Idle);
+                }
+                if (states.EscapeForward == b && isServer)
+                    _direction = !_direction;
             };
         }
 
@@ -197,7 +172,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void LedgeMovement() {
             if (JumpCount != MaxJumpCount)
                 CmdResetJumps();
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || InputState.Smash.y <= -DirectionalInput.DeadZone) {
                 CurrentLedge = null;
             } else {
                 SnapToLedge();
@@ -209,8 +184,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             OnJump.SafeInvoke();
             PhysicsState.SetVerticalVelocity(_jumpPower[MaxJumpCount - JumpCount]);
             CmdJump();
-            //if (IsGrounded)
-            //    Character.StateController.SetState(Character.States.JumpStart);
         }
 
         bool GetKeys(params KeyCode[] keys) {
@@ -226,36 +199,63 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return val + (pos ? 1f : 0f);
         }
 
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
         void Update() {
             if (!isLocalPlayer)
                 return;
             if (Mathf.Approximately(Time.deltaTime, 0))
                 return;
-
+            if (HitState != null && HitState.Hitstun > 0)
+                return;
+            if (CurrentState.Data.MovementType == MovementType.Locked) {
+                PhysicsState.SetHorizontalVelocity(0f);
+                PhysicsState.SetVerticalVelocity(0f);
+                return;
+            }
             var movement = new MovementInfo { facing = Direction };
             // If currently hanging from a edge
             if (CurrentLedge != null) {
                 LedgeMovement();
-            } else {
-                var movementInput = InputState.Movement;
-                movement.Speed.x =  movementInput.x * CurrentState.Data.MovementSpeed.Max;
-                if (IsGrounded) {
-                    IsFastFalling = false;
-                    if (JumpCount != MaxJumpCount)
-                        CmdResetJumps();
-                    if (movementInput.x > DirectionalInput.DeadZone)
-                        movement.facing = true;
-                    if (movementInput.x < -DirectionalInput.DeadZone)
-                        movement.facing = false;
-                    Direction = movement.facing;
+                if (Time.time > _grabTime + Config.Player.MaxLedgeHangTime) {
+                    CurrentLedge = null;
                 } else {
-                    if (GetKeysDown(KeyCode.S, KeyCode.DownArrow))
-                        IsFastFalling = true;
-                    LimitFallSpeed();
+                    PhysicsState.SetHorizontalVelocity(movement.Speed.x);
+                    return;
                 }
+            } 
+            var movementInput = InputState.Movement;
+            if (PhysicsState.IsGrounded) {
+                IsFastFalling = false;
+                if (JumpCount != MaxJumpCount)
+                    CmdResetJumps();
+                if (movementInput.x > DirectionalInput.DeadZone)
+                    movement.facing = true;
+                if (movementInput.x < -DirectionalInput.DeadZone)
+                    movement.facing = false;
+                Direction = movement.facing;
+            } else {
+                if (GetKeysDown(KeyCode.S, KeyCode.DownArrow) || InputState.Smash.y < -DirectionalInput.DeadZone)
+                    IsFastFalling = true;
+                LimitFallSpeed();
             }
-
+            movement = ApplyControlledMovement(movement, movementInput);
             PhysicsState.SetHorizontalVelocity(movement.Speed.x);
+        }
+
+        MovementInfo ApplyControlledMovement(MovementInfo movement, Vector2 movementInput) {
+            switch(CurrentState.Data.MovementType) {
+                case MovementType.Normal:
+                    var dir = 1f;
+                    dir = Direction ? 1f : -1f;
+                    movement.Speed.x =  dir * Mathf.Abs(movementInput.x) * CurrentState.Data.MovementSpeed.Max;
+                    break;
+                case MovementType.DirectionalInfluenceOnly:
+                    movement.Speed.x = movementInput.x * CurrentState.Data.MovementSpeed.Max;
+                    break;
+            }
+            return movement;
         }
 
         void LimitFallSpeed() {
@@ -273,7 +273,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
 
         public override void UpdateStateContext(CharacterStateContext context) {
-            context.IsGrounded = IsGrounded;
             context.IsGrabbingLedge = CurrentLedge != null;
             context.Direction = Direction ? 1.0f : -1.0f;
             context.CanJump = JumpCount > 0 && JumpCount <= MaxJumpCount;

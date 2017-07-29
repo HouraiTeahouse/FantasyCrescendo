@@ -1,16 +1,19 @@
 using HouraiTeahouse.SmashBrew.Matches;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.SmashBrew.UI {
 
     /// <summary> The GUI display for the Match timer. </summary>
-    [RequireComponent(typeof(Text))]
     public sealed class MatchTimerGUI : MonoBehaviour {
 
         /// <summary> The UI Text object to display the time on. </summary>
         [SerializeField]
         Text _displayText;
+
+        [SerializeField]
+        TextMeshProUGUI _textMesh;
 
         /// <summary> The TimeMatch reference to check for. </summary>
         [SerializeField]
@@ -18,10 +21,19 @@ namespace HouraiTeahouse.SmashBrew.UI {
 
         int currentDisplayedTime;
 
+        void SetText(string text) {
+            if (_displayText != null)
+                _displayText.text = text;
+            if (_textMesh != null)
+                _textMesh.text = text;
+        }
+
         /// <summary> Unity callback. Called once before object's first frame. </summary>
         void Start() {
-            if (!_displayText)
+            if (_displayText == null)
                 _displayText = GetComponent<Text>();
+            if (_textMesh == null)
+                _textMesh = GetComponent<TextMeshProUGUI>();
             if (!_timeMatch)
                 _timeMatch = FindObjectOfType<TimeMatch>();
             enabled = _displayText && _timeMatch && _timeMatch.isActiveAndEnabled;
@@ -37,7 +49,7 @@ namespace HouraiTeahouse.SmashBrew.UI {
             currentDisplayedTime = remainingTime;
             int seconds = remainingTime % 60;
             int minutes = remainingTime / 60;
-            _displayText.text = "{0}:{1}".With(minutes.ToString(format), seconds.ToString(format));
+            SetText("{0}:{1}".With(minutes.ToString(format), seconds.ToString(format)));
         }
 
     }

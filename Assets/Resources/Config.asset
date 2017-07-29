@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Name: Config
   m_EditorClassIdentifier: 
   _extensions: []
+  _fight:
+    _baseHitstun: 0.05
+    _hitstunScaling: 0.016666668
+    _maxHitstun: 0.33333334
   _bundles:
     _url: https://houraiteahouse.net/game/fantasy-crescendo/%branch%
     _branch: develop
@@ -56,9 +60,10 @@ MonoBehaviour:
     _tapPersistence: 0.083333336
     _tapTreshold: 0.3
   _debug:
+    _hitboxMaterial: {fileID: 2100000, guid: b191c33901a90a14a8a7f608a167c36a, type: 2}
     _inactiveHitboxColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.5019608}
     _offensiveHitboxColor: {r: 1, g: 0, b: 0, a: 0.5019608}
-    _damageableHitboxColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.5019608}
+    _damageableHitboxColor: {r: 1, g: 0.92156863, b: 0, a: 0.5019608}
     _intangibleHitboxColor: {r: 0, g: 0, b: 1, a: 0.5019608}
     _invincibleHitboxColor: {r: 0, g: 1, b: 0, a: 0.5019608}
     _shieldHitboxColor: {r: 0, g: 1, b: 1, a: 0.5019608}
@@ -68,7 +73,11 @@ MonoBehaviour:
     _playerTag: Player
     _hitboxTag: Hitbox
     _ledgeTag: Ledge Check
+    _indicatorTargetTag: Indicator Tracker
     _characterLayer: 9
     _intangibleLayer: 12
     _hitboxLayer: 10
     _hurtboxLayer: 11
+    _stageLayer:
+      serializedVersion: 2
+      m_Bits: 256

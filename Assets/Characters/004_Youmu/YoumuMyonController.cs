@@ -19,7 +19,8 @@ namespace HouraiTeahouse.FantasyCrescendo {
         float _movementSpeed = 1f;
 
 
-        Transform _myonInstance;
+        [SyncVar]
+        NetworkIdentity _myonInstance;
 
         void Awake() {
             if (_targetBone == null)
@@ -30,23 +31,21 @@ namespace HouraiTeahouse.FantasyCrescendo {
             Resource.Get<GameObject>(_myonPrefab).LoadAsync().Then(prefab => {
                 if (prefab == null)
                     return;
-                _myonInstance = Instantiate(prefab).transform;
-                NetworkServer.Spawn(_myonInstance.gameObject);
-                _myonInstance.position = _targetBone.position;
+                var myon = Instantiate(prefab).GetComponent<NetworkIdentity>();
+                myon.transform.position = _targetBone.position;
+                NetworkServer.SpawnWithClientAuthority(myon.gameObject, connectionToClient);
+                _myonInstance = myon;
             });
         }
 
         void Update() {
-            if (!isServer || _myonInstance == null)
+            if (!hasAuthority && _myonInstance == null)
                 return;
-            var currentPos = _myonInstance.position;
+            var currentPos = _myonInstance.transform.position;
             var targetPos = _targetBone.position;
             float distance = Vector3.Distance(_myonInstance.position, _targetBone.position);
-            //Debug.Log("Distance" + distance);
             targetPos = Vector3.Lerp(currentPos, targetPos,  Time.smoothDeltaTime*distance* _movementSpeed);
-            //targetPos = Vector3.Lerp(currentPos, targetPos, _movementSpeed);
-            
-            _myonInstance.position = targetPos;
+            _myonInstance.transform.position = targetPos;
         }
 
     }

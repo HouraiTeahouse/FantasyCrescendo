@@ -23,6 +23,10 @@ namespace HouraiTeahouse.SmashBrew {
 
         public static Config Load() { return Instance; }
 
+        public static FightConfig Fight {
+            get { return Instance._fight; }
+        }
+
         public static PlayerConfig Player {
             get { return Instance._player; }
         }
@@ -53,6 +57,9 @@ namespace HouraiTeahouse.SmashBrew {
         #region Serialized Fields
 
         [SerializeField]
+        FightConfig _fight;
+
+        [SerializeField]
         BundleConfig _bundles;
 
         [SerializeField]
@@ -71,6 +78,24 @@ namespace HouraiTeahouse.SmashBrew {
         TagConfig _tags;
 
         #endregion
+    }
+
+    [Serializable]
+    public class FightConfig {
+
+        [SerializeField]
+        float _baseHitstun = 1/20f;
+
+        [SerializeField]
+        float _hitstunScaling = 1/60f;
+
+        [SerializeField]
+        float _maxHitstun = 1/3f;
+
+        public float CalculateHitstun(float damage) {
+            return Mathf.Min(_baseHitstun + (damage * _hitstunScaling), _maxHitstun);
+        }
+
     }
 
     [Serializable]
@@ -133,6 +158,9 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField, Layer]
         int _hurtboxLayer;
 
+        [SerializeField]
+        LayerMask _stageLayer;
+
         public string PlayerTag { get { return _playerTag; } }
         public string HitboxTag { get { return _hitboxTag; } } 
         public string LedgeTag { get { return _ledgeTag; } }
@@ -142,11 +170,15 @@ namespace HouraiTeahouse.SmashBrew {
         public int IntangibleLayer { get { return _intangibleLayer; } }
         public int HitboxLayer { get { return _hitboxLayer; } }
         public int HurtboxLayer { get { return _hurtboxLayer; } }
+        public LayerMask StageMask { get { return _stageLayer; } }
 
     }
 
     [Serializable]
     public class DebugConfig : ISerializationCallbackReceiver {
+
+        [SerializeField]
+        Material _hitboxMaterial;
 
         [SerializeField]
         Color _inactiveHitboxColor = Color.black;
@@ -173,6 +205,10 @@ namespace HouraiTeahouse.SmashBrew {
         Color ReflectHitboxColor = new Color(0, 0.25f, 0.5f, 1);
 
         EnumMap<Hitbox.Type, Color> _colorMap;
+
+        internal Material HitboxMaterial {
+            get { return _hitboxMaterial; }
+        }
 
         public void OnBeforeSerialize() { }
 
@@ -256,6 +292,9 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         float _tapTreshold = 0.3f;
 
+        [SerializeField]
+        float _maxLedgeHangTime = 8f;
+
         public Color CPUColor {
             get { return _cpuColor; }
         }
@@ -270,6 +309,10 @@ namespace HouraiTeahouse.SmashBrew {
             get { return _tapTreshold; }
         }
 
+        public float MaxLedgeHangTime {
+            get { return _maxLedgeHangTime; }
+        }
+
         public Color GetColor(int playerNumber, bool isCPU = false) {
             if (isCPU)
                 return _cpuColor;
@@ -282,11 +325,13 @@ namespace HouraiTeahouse.SmashBrew {
     public class PhysicsConfig {
 
         [SerializeField]
+        float _groundSnapDistance = 1f;
+
+        [SerializeField]
         float _tangibleSpeedCap = 3f;
 
-        public float TangibleSpeedCap {
-            get { return _tangibleSpeedCap; }
-        }
+        public float GroundSnapDistance { get { return _groundSnapDistance; } }
+        public float TangibleSpeedCap { get { return _tangibleSpeedCap; } }
 
     }
 

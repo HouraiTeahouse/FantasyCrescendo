@@ -3,6 +3,7 @@ using System.Linq;
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Analytics;
 
 namespace HouraiTeahouse.SmashBrew {
 
@@ -24,13 +25,16 @@ namespace HouraiTeahouse.SmashBrew {
         PlayerManager PlayerManager { get; set; }
         ITask ClientStarted;
 
+        public class Messages {
+            public const short UpdatePlayer = MsgType.Highest + 1;
+        }
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         void Awake() {
             PlayerManager = this.SafeGetComponent<PlayerManager>();
             PlayerMap = new Dictionary<PlayerConnection, Player>();
-        }
-
-        public class Messages {
-            public const short UpdatePlayer = MsgType.Highest + 1;
         }
 
         void DestroyLeftoverPlayers() {
@@ -130,6 +134,10 @@ namespace HouraiTeahouse.SmashBrew {
             var startPosition = GetStartPosition();
             var character = selection.Character;
             bool random = character == null;
+            Analytics.CustomEvent("characterSelected", new Dictionary<string, object> {
+                { "character", character != null ? character.name : "Random" },
+                { "color" , selection.Pallete },
+            });
             if (random) {
                 Log.Info("No character was specfied, randomly selecting character and pallete...");
                 selection.Character = DataManager.Characters.Random();

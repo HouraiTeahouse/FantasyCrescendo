@@ -13,7 +13,41 @@ namespace HouraiTeahouse.Localization {
 
     }
 
-    /// <summary> Singleton MonoBehaviour that manages all of localization system. </summary>
+    public interface ILanguageStorageDelegate {
+        event Action<string> OnChangeLangauge;
+
+        string GetStoredLangaugeId(string defaultLangauge);
+        void SetStoredLanguageId(string language);
+    }
+
+    public class PlayerPrefLanguageStorageDelegate : ILanguageStorageDelegate {
+
+        readonly string _playerPrefKey;
+
+        public event Action<string> OnChangeLangauge;
+
+        public PlayerPrefLanguageStorageDelegate(string key) {
+            _playerPrefKey = Argument.NotNull(key);
+        }
+
+        public string GetStoredLangaugeId(string defaultLangauge) {
+            if (!Prefs.Exists(_playerPrefKey)) 
+                SetStoredLanguageId(defaultLangauge);
+            return Prefs.GetString(_playerPrefKey);
+        }
+
+        public void SetStoredLanguageId(string language) {
+            if (Prefs.Exists(_playerPrefKey) || Prefs.GetString(_playerPrefKey) != language) {
+                Prefs.SetString(_playerPrefKey, language);
+                OnChangeLangauge.SafeInvoke(language);
+            }
+        }
+
+    }
+
+    /// <summary> 
+    /// Singleton MonoBehaviour that manages all of localization system. 
+    /// </summary>
     public sealed class LanguageManager : Singleton<LanguageManager> {
 
         internal static readonly ILog log = Log.GetLogger("Language");
@@ -21,6 +55,30 @@ namespace HouraiTeahouse.Localization {
         Language _currentLanguage;
         string _storageDirectory;
         HashSet<string> _languages;
+
+        static ILanguageStorageDelegate _storageDelegate;
+
+        static LanguageManager() {
+            Storage = new PlayerPrefLanguageStorageDelegate("lang");
+        }
+
+        static void StorageChangeLangauge(string language) {
+            if (Instance == null)
+                return;
+            Instance.LoadLanguage(language);
+        }
+
+        public static ILanguageStorageDelegate Storage {
+            get { return _storageDelegate; }
+            set { 
+                Argument.NotNull(value);
+                if (_storageDelegate != null)
+                    _storageDelegate.OnChangeLangauge -= StorageChangeLangauge;
+                _storageDelegate = value;
+                if (_storageDelegate != null)
+                    _storageDelegate.OnChangeLangauge += StorageChangeLangauge;
+            }
+        }
 
 #if HOURAI_EVENTS
         Mediator _eventManager;
@@ -33,10 +91,6 @@ namespace HouraiTeahouse.Localization {
         [SerializeField]
         [Tooltip("Destroy this object on scene changes?")]
         bool _dontDestroyOnLoad = false;
-
-        [SerializeField]
-        [Tooltip("The PlayerPrefs key to store the Player's language in")]
-        PrefString _langPlayerPref;
 
         [SerializeField]
         [Tooltip("The Resources directory to load the Language files from")]
@@ -102,13 +156,13 @@ namespace HouraiTeahouse.Localization {
                                              select Path.GetFileNameWithoutExtension(file));
 
             SystemLanguage systemLang = Application.systemLanguage;
-            string currentLang = _langPlayerPref.HasKey() ? _langPlayerPref : systemLang.ToIdentifier();
+            string currentLang = Storage.GetStoredLangaugeId(systemLang.ToIdentifier());
             if (!_languages.Contains(currentLang) || systemLang == SystemLanguage.Unknown) {
                 log.Info("No language data for \"{0}\" found. Loading default language: {1}", _defaultLanguage, currentLang);
                 currentLang = _defaultLanguage;
             }
             LoadLanguage(currentLang);
-            _langPlayerPref.Value = currentLang;
+            Storage.SetStoredLanguageId(currentLang);
 
             if (_dontDestroyOnLoad)
                 DontDestroyOnLoad(this);
@@ -122,10 +176,7 @@ namespace HouraiTeahouse.Localization {
 
         /// <summary> Saves the current language preferences to PlayerPrefs to keep it persistent. </summary>
         void Save() {
-            if (CurrentLangauge == null)
-                _langPlayerPref.DeleteKey();
-            else
-                _langPlayerPref.Value = CurrentLangauge.Name;
+            Storage.SetStoredLanguageId(CurrentLangauge.Name);
         }
 
         /// <summary> Loads a new language given the Microsoft language identifier. </summary>

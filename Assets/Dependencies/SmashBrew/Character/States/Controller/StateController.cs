@@ -32,7 +32,15 @@ namespace HouraiTeahouse.SmashBrew.States {
         }
 
         public T UpdateState(TContext context) {
-            var nextState = CurrentState.EvaluateTransitions(context) as T;
+            return UpdateState(context, false);
+        }
+
+        T UpdateState(TContext context, bool passthrough) {
+            T nextState;
+            if (passthrough)
+                nextState = CurrentState.Passthrough(context) as T;
+            else
+                nextState = CurrentState.EvaluateTransitions(context) as T;
             if (nextState != null) {
                 switch (nextState.GetEntryPolicy(context)) {
                     case StateEntryPolicy.Normal:
@@ -40,7 +48,7 @@ namespace HouraiTeahouse.SmashBrew.States {
                         break;
                     case StateEntryPolicy.Passthrough:
                         SetState(nextState);
-                        UpdateState(context);
+                        UpdateState(context, true);
                         break;
                     case StateEntryPolicy.Blocked:
                         break;

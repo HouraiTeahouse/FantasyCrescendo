@@ -29,7 +29,7 @@ namespace HouraiTeahouse {
         /// <summary>
         ///     <see cref="SingleActionBehaviour.Action" />
         /// </summary>
-        protected override void Action() { Load(); }
+        public override void Action() { Load(); }
 
         /// <summary> Loads the scenes </summary>
         public void Load() {

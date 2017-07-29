@@ -16,7 +16,7 @@ namespace HouraiTeahouse {
 
         public System.Action<Object> OnCreate;
 
-        protected override void Action() {
+        public override void Action() {
             if (!_object)
                 return;
             Object obj = Instantiate(_object);

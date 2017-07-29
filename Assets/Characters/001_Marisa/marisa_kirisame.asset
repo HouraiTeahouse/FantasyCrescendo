@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _extensions: []
   _id: 160396511
-  _isSelectable: 1
-  _isVisible: 1
+  _isSelectable: 0
+  _isVisible: 0
   _homeStage: Stages/Forest of Magic
   _icon: Icons/marisa_icon
   _portraits:
@@ -30,3 +30,4 @@ MonoBehaviour:
   _fullName: Marisa Kirisame
   _announcerClip: Characters/001_Marisa/Audio/marisa_announcer
   _victoryTheme: Characters/001_Marisa/Audio/marisa_announcer
+  _extraPrefabs: []

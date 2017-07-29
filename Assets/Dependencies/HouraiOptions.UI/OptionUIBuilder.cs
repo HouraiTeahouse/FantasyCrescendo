@@ -96,7 +96,7 @@ namespace HouraiTeahouse.Options.UI {
                 SetNameAndText(categoryLabel.gameObject, category.Name);
                 BuildLayout(categoryLabel.gameObject);
                 categoryLabel.SetParent(viewContainer, false);
-                categoryLabel.GetComponentInChildren<Text>().text = category.Name;
+                categoryLabel.gameObject.SetUIText(category.Name);
                 foreach (OptionInfo option in category.Options) {
                     var drawer = option.PropertyInfo.GetCustomAttributes(true).OfType<AbstractOptionViewAttribute>().FirstOrDefault();
                     var propertyInfo = option.PropertyInfo;
@@ -134,9 +134,7 @@ namespace HouraiTeahouse.Options.UI {
 
         void SetNameAndText(GameObject label, string text) {
             label.name = text;
-            var labelText = label.GetComponentInChildren<Text>();
-            if (labelText != null) 
-                labelText.text = text; 
+            label.gameObject.SetUIText(text);
         } 
 
         void BuildLayout(GameObject container) {

@@ -6,29 +6,33 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [DisallowMultipleComponent]
     [AddComponentMenu("Smash Brew/Character/Damage State")]
-    public class DamageState : CharacterNetworkComponent {
+    public class DamageState : CharacterNetworkComponent, IDamageable {
 
-        //TODO(james7132): Synchronize this across the network
-
-        [SyncVar, SerializeField]
+        [SyncVar]
         float _currentDamage;
 
-        /// <summary> The current internal damage value. Used for knockback calculations. </summary>
+        /// <summary> 
+        /// The current internal damage value. Used for knockback calculations. 
+        /// </summary>
         public float CurrentDamage {
             get { return _currentDamage; }
-            set { _currentDamage = value; }
+            set { 
+                if (!isServer)
+                    return;
+                _currentDamage = value; 
+            }
         }
         public float DefaultDamage { get; set; }
 
-        public ModifierGroup<object> DamageModifiers { get; private set; }
-        public ModifierGroup<object> HealingModifiers { get; private set; }
+        public ModifierGroup<object, float> DamageModifiers { get; private set; }
+        public ModifierGroup<object, float> HealingModifiers { get; private set; }
 
         public DamageType Type { get; set; }
 
         protected override void Awake() {
             base.Awake();
-            DamageModifiers = new ModifierGroup<object>();
-            HealingModifiers = new ModifierGroup<object>();
+            DamageModifiers = new ModifierGroup<object, float>();
+            HealingModifiers = new ModifierGroup<object, float>();
             Type = DamageType.Percent;
         }
 

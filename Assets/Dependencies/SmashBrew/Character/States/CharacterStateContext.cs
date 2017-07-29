@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using UnityEngine;
+using HouraiTeahouse.SmashBrew.States;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
@@ -86,6 +87,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         }
     }
 
+
     public class CharacterStateContext {
         public float NormalizedAnimationTime { get; set; }
         public bool IsGrounded { get; set; }
@@ -93,6 +95,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         public bool IsHit { get; set; }
         public float ShieldHP { get; set; }
         public bool CanJump { get; set; }
+        public float Hitstun { get; set; }
         // The direction the character is facing in.
         // Will be positive if facing to the right.
         // Will be negative if facing to the left.
@@ -104,6 +107,10 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 NormalizedAnimationTime, IsGrounded, IsGrabbingLedge,
                 IsHit, ShieldHP, Direction, Input
             );
+        }
+
+        public CharacterStateContext Clone() {
+            return MemberwiseClone() as CharacterStateContext;
         }
 
     }

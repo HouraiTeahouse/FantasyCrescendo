@@ -29,8 +29,26 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             return this;
         }
 
+        public override State<CharacterStateContext> Passthrough(CharacterStateContext context) {
+            var altContext = context.Clone();
+            altContext.NormalizedAnimationTime = float.PositiveInfinity;
+            return EvaluateTransitions(altContext);
+        }
+
         public override StateEntryPolicy GetEntryPolicy (CharacterStateContext context) {
             return Data.EntryPolicy;
+        }
+
+        public static bool operator ==(CharacterState lhs, CharacterState rhs) {
+            if (object.ReferenceEquals(lhs, null) && object.ReferenceEquals(rhs, null))
+                return true;
+            if (object.ReferenceEquals(lhs, null) ^ object.ReferenceEquals(rhs, null))
+                return false;
+            return lhs.AnimatorHash == rhs.AnimatorHash;
+        }
+
+        public static bool operator !=(CharacterState lhs, CharacterState rhs) {
+            return !(lhs == rhs);
         }
 
     }

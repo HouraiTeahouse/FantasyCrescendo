@@ -78,7 +78,7 @@ namespace HouraiTeahouse {
         /// <summary>
         ///     <see cref="SingleActionBehaviour.Action" />
         /// </summary>
-        protected override void Action() { Play(); }
+        public override void Action() { Play(); }
 
     }
 
