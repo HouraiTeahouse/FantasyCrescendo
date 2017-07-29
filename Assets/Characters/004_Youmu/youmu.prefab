@@ -1412,7 +1412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1727526144861280
 GameObject:
   m_ObjectHideFlags: 1
@@ -4066,9 +4066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myonPrefab: characters/youmu/player:Myon
   _targetBone: {fileID: 4284787823048586}
-  _movementSpeed: 0.07
-  _softDistance: 2.28
-  _break: 2.99
+  _movementSpeed: 1
 --- !u!114 &114563119572702368
 MonoBehaviour:
   m_ObjectHideFlags: 1
