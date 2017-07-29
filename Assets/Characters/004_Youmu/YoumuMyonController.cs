@@ -16,7 +16,8 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
         [SerializeField]
         [Range(0f, 1f)]
-        float _movementSpeed = 0.75f;
+        float _movementSpeed = 1f;
+
 
         [SyncVar]
         NetworkIdentity _myonInstance;
@@ -40,10 +41,10 @@ namespace HouraiTeahouse.FantasyCrescendo {
         void Update() {
             if (!hasAuthority && _myonInstance == null)
                 return;
-            // TODO(james7132): Include Time.deltaTime into this computation
             var currentPos = _myonInstance.transform.position;
             var targetPos = _targetBone.position;
-            targetPos = Vector3.Lerp(currentPos, targetPos, _movementSpeed);
+            float distance = Vector3.Distance(_myonInstance.position, _targetBone.position);
+            targetPos = Vector3.Lerp(currentPos, targetPos,  Time.smoothDeltaTime*distance* _movementSpeed);
             _myonInstance.transform.position = targetPos;
         }
 
