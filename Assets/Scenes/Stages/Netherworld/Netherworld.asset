@@ -13,30 +13,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Netherworld
   backgroundMusicData:
-  - _name: Love Colored Magic
-    _artist: Squiggle Glitz
-    _bgm: bgm/forest:Love Colored Magic
-    _baseWeight: 1
-    _loopStart: 2304
-    _loopEnd: 4460928
-  - _name: Magus Night
-    _artist: Pigu
-    _bgm: bgm/forest:Magus Night
-    _baseWeight: 1
-    _loopStart: 276480
-    _loopEnd: 6912007
-  - _name: Ghostly Eyes
-    _artist: Flurrybolt
-    _bgm: bgm/forest:Ghostly Eyes
-    _baseWeight: 1
-    _loopStart: 0
-    _loopEnd: 13011176
-  - _name: Doll Judgement
+  - _name: Bloom Nobly, Ink-Black Cherry Blossoms
     _artist: crescentia
-    _bgm: bgm/forest:Doll Judgement
+    _bgm: bgm/netherworld:Bloom_Nobly_Ink-Black_Cherry_Blossoms
     _baseWeight: 1
-    _loopStart: 0
-    _loopEnd: -1
+    _loopStart: 1013209
+    _loopEnd: 12664885
+  - _name: Mary the Magician
+    _artist: crescentia
+    _bgm: bgm/netherworld:Mary_the_Magician
+    _baseWeight: 1
+    _loopStart: 1247796
+    _loopEnd: 11508876
   _type: 1
   _loadPriority: 0
   _icon: icons:youmu_icon
