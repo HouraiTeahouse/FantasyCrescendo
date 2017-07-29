@@ -16,7 +16,8 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
         [SerializeField]
         [Range(0f, 1f)]
-        float _movementSpeed = 0.75f;
+        float _movementSpeed = 1f;
+
 
         Transform _myonInstance;
 
@@ -40,7 +41,11 @@ namespace HouraiTeahouse.FantasyCrescendo {
                 return;
             var currentPos = _myonInstance.position;
             var targetPos = _targetBone.position;
-            targetPos = Vector3.Lerp(currentPos, targetPos, _movementSpeed);
+            float distance = Vector3.Distance(_myonInstance.position, _targetBone.position);
+            //Debug.Log("Distance" + distance);
+            targetPos = Vector3.Lerp(currentPos, targetPos,  Time.smoothDeltaTime*distance* _movementSpeed);
+            //targetPos = Vector3.Lerp(currentPos, targetPos, _movementSpeed);
+            
             _myonInstance.position = targetPos;
         }
 
