@@ -3833,13 +3833,9 @@ MonoBehaviour:
   _maxFallSpeed: 5
   _fastFallSpeed: 10
   _jumpPower:
-  - 7.5
+  - 10
   - 5
   _ledgeTarget: {fileID: 4342227001516904}
-  _currentLedge: {fileID: 0}
-  _stageLayers:
-    serializedVersion: 2
-    m_Bits: 256
   _skeletonRoot: {fileID: 4914860541019148}
 --- !u!114 &114221692247624126
 MonoBehaviour:
@@ -4108,7 +4104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7efc7c92139c3a1448278e555cf2e189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transitionTime: 0.1
+  _transitionTime: 0.05
   _animator: {fileID: 95044774644864030}
 --- !u!114 &114700404620700524
 MonoBehaviour:
@@ -4153,11 +4149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weight: 1
-  _gravity: 9.86
-  _velocity: {x: 0, y: 0}
-  _acceleration: {x: 0, y: 0}
-  _grounded: 0
-  _isFastFalling: 0
+  _gravity: 20
 --- !u!114 &114755724226756084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4487,7 +4479,7 @@ SkinnedMeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: 7ebe81e8c654d384192b5102d589934d, type: 2}
   - {fileID: 2100000, guid: 4a8b71a84ffd2a44ebd27d7f33e26840, type: 2}
-  - {fileID: 2100000, guid: 7ebe81e8c654d384192b5102d589934d, type: 2}
+  - {fileID: 2100000, guid: 4a8b71a84ffd2a44ebd27d7f33e26840, type: 2}
   - {fileID: 2100000, guid: f720970af611d6440816693a33b9557e, type: 2}
   - {fileID: 2100000, guid: 4a8b71a84ffd2a44ebd27d7f33e26840, type: 2}
   - {fileID: 2100000, guid: 853c4026bc226524eb90c0db8fc4e53f, type: 2}
