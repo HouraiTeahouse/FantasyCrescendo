@@ -8167,6 +8167,24 @@ MonoBehaviour:
   color: {r: 1, g: 0.7241379, b: 0, a: 1}
   includeChildren: 0
   solid: 0
+--- !u!1 &1026744774 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100148, guid: cef866f8661b3044b8ead91f4c5e3295, type: 3}
+  m_PrefabInternal: {fileID: 1499839091}
+--- !u!64 &1026744775
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1026744774}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300138, guid: cef866f8661b3044b8ead91f4c5e3295, type: 3}
 --- !u!1 &1045975303
 GameObject:
   m_ObjectHideFlags: 0
