@@ -108,8 +108,15 @@ namespace HouraiTeahouse {
             var lang = optionsManager.GetInfo<LocalizationOptions>().GetInfo("GameLanguage");
             LanguageManager.Storage = new HouraiOptionLangaugeStorage(lang);
             var manager = LanguageManager.Instance;
-            if (manager != null)
-                manager.LoadLanguage(lang.GetPropertyValue<string>());
+            if (manager == null)
+                return;
+            var storedValue = lang.GetPropertyValue<string>();
+            if (storedValue != null && storedValue != "null")
+                manager.LoadLanguage(storedValue);
+            else {
+                Log.Debug(manager.CurrentLangauge.Name);
+                lang.SetPropertyValue(manager.CurrentLangauge.Name);
+            }
         }
 
         /// <summary>
