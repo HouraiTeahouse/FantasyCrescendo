@@ -75,6 +75,15 @@ ModelImporter:
     100134: Cylinder002
     100136: woodenPlatform
     100138: Box101
+    100140: StaircaseLeft
+    100142: FloatingPlatform
+    100144: LowerPlatform
+    100146: StaircaseRight
+    100148: 14uv
+    100150: LongStair
+    100152: LongStair003
+    100154: LongStair2
+    100156: lowerRoad
     400000: //RootNode
     400002: Box029
     400004: Box053
@@ -145,6 +154,15 @@ ModelImporter:
     400134: Cylinder002
     400136: woodenPlatform
     400138: Box101
+    400140: StaircaseLeft
+    400142: FloatingPlatform
+    400144: LowerPlatform
+    400146: StaircaseRight
+    400148: 14uv
+    400150: LongStair
+    400152: LongStair003
+    400154: LongStair2
+    400156: lowerRoad
     2300000: //RootNode
     2300002: Box029
     2300004: Box053
@@ -211,6 +229,15 @@ ModelImporter:
     2300126: Cylinder002
     2300128: woodenPlatform
     2300130: Box101
+    2300132: StaircaseLeft
+    2300134: FloatingPlatform
+    2300136: LowerPlatform
+    2300138: StaircaseRight
+    2300140: 14uv
+    2300142: LongStair
+    2300144: LongStair003
+    2300146: LongStair2
+    2300148: lowerRoad
     3300000: //RootNode
     3300002: Box029
     3300004: Box053
@@ -277,6 +304,15 @@ ModelImporter:
     3300126: Cylinder002
     3300128: woodenPlatform
     3300130: Box101
+    3300132: StaircaseLeft
+    3300134: FloatingPlatform
+    3300136: LowerPlatform
+    3300138: StaircaseRight
+    3300140: 14uv
+    3300142: LongStair
+    3300144: LongStair003
+    3300146: LongStair2
+    3300148: lowerRoad
     4300000: Box029
     4300002: Box053
     4300004: Box054
@@ -342,9 +378,18 @@ ModelImporter:
     4300124: Cylinder001
     4300126: Cylinder002
     4300128: Box101
+    4300130: StaircaseLeft
+    4300132: StaircaseRight
+    4300134: LowerPlatform
+    4300136: FloatingPlatform
+    4300138: 14uv
+    4300140: LongStair
+    4300142: lowerRoad
+    4300144: LongStair2
+    4300146: LongStair003
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -367,18 +412,18 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
     importVisibility: 0
-    importBlendShapes: 0
+    importBlendShapes: 1
     importCameras: 0
     importLights: 0
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
