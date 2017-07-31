@@ -50,6 +50,9 @@ namespace HouraiTeahouse.SmashBrew {
         bool _isVisible = true;
 
         [SerializeField]
+        bool _isDebug;
+
+        [SerializeField]
         [Resource(typeof(Sprite))]
         [Tooltip("The image shown on menus to represent the scene.")]
         string _previewImage;
@@ -76,11 +79,15 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public bool IsSelectable {
-            get { return _isSelectable && _isVisible; }
+            get { return _isSelectable && IsVisible; }
         }
 
         public bool IsVisible {
-            get { return _isVisible; }
+            get { 
+                if (!Debug.isDebugBuild)
+                    return !_isDebug && _isVisible;
+                return _isVisible; 
+            }
         }
 
         public void Unload() {

@@ -19,7 +19,9 @@ namespace HouraiTeahouse.SmashBrew.UI {
         [SerializeField]
         bool _includeDebugScenes;
 
-        protected override IEnumerable<SceneData> GetData() { return DataManager.Scenes; }
+        protected override IEnumerable<SceneData> GetData() { 
+            return DataManager.Scenes.Where(s => s.IsVisible);
+        }
 
         protected override bool CanShowData(SceneData data) {
             if (_requireSelectable && !data.IsSelectable)
