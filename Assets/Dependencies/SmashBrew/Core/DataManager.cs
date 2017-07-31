@@ -13,6 +13,32 @@ using UnityEditor;
 
 namespace HouraiTeahouse.SmashBrew {
 
+    public class GameDataCollection<T> : ReadOnlyCollection<T> where T : IGameData {
+        
+        public GameDataCollection(IList<T> list) : base(list){
+        }
+
+        public uint GroupHash {
+            get {
+                uint sum = 0;
+                unchecked {
+                    for (var i = 0; i < Count; i++)
+                        if (this[i].IsSelectable)
+                            sum += this[i].Id;
+                }
+                return sum;
+            }
+        }
+
+        public string GroupHash64String {
+            get {
+                return Convert.ToBase64String(BitConverter.GetBytes(GroupHash)).Replace("=", "");
+            }
+        }
+
+
+    }
+
     /// <summary> A manager of all of the game data loaded into the game. </summary>
     public sealed class DataManager : MonoBehaviour {
 
@@ -41,13 +67,18 @@ namespace HouraiTeahouse.SmashBrew {
             AssetBundleManager.AddHandler<CharacterData>(AddCharacter);
             AssetBundleManager.AddHandler<SceneData>(AddScene);
 
-            Characters = new ReadOnlyCollection<CharacterData>(_characterList);
-            Scenes = new ReadOnlyCollection<SceneData>(_scenes);
+            Characters = new GameDataCollection<CharacterData>(_characterList);
+            Scenes = new GameDataCollection<SceneData>(_scenes);
 
             SceneManager.sceneLoaded += SceneLoad;
 
             var bundlePath = BundleUtility.StoragePath;
             log.Info("Storage Path: {0}", bundlePath);
+
+            LoadTask.Then(() => {
+                log.Info("Character Group Hash: {0}", Characters.GroupHash64String);
+                log.Info("Scene Group Hash: {0}", Scenes.GroupHash64String);
+            });
 
 #if UNITY_EDITOR
             if (AssetBundleManager.SimulateAssetBundleInEditor) {
@@ -79,18 +110,24 @@ namespace HouraiTeahouse.SmashBrew {
                 }
 
                 var task = AssetBundleManager.LoadLocalBundles(whitelist, blacklist);
-                task.Then(() => LoadTask.Resolve());
+                task.Then(() => {
+                    LoadTask.Resolve();
+                });
                 task.Done();
             }
         }
 
-        /// <summary> All Characters that are included with the Game's build. The Data Manager will automatically load all
-        /// CharacterData instances from Resources. </summary>
-        public static ReadOnlyCollection<CharacterData> Characters { get; private set; }
+        /// <summary> 
+        /// All Characters that are included with the Game's build. The Data Manager will automatically load all
+        /// CharacterData instances from Resources. 
+        /// </summary>
+        public static GameDataCollection<CharacterData> Characters { get; private set; }
 
-        /// <summary> All Scenes and their metadata included with the game's build. The DataManager will automatically load all
-        /// SceneData instances from Resources. </summary>
-        public static ReadOnlyCollection<SceneData> Scenes { get; private set; }
+        /// <summary> 
+        /// All Scenes and their metadata included with the game's build. The DataManager will automatically load all
+        /// SceneData instances from Resources. 
+        /// </summary>
+        public static GameDataCollection<SceneData> Scenes { get; private set; }
 
 #if UNITY_EDITOR
         static void LoadFromEditor<T>(Action<T> loadFunc) where T : Object {

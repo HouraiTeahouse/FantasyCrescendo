@@ -2,10 +2,13 @@ using HouraiTeahouse.AssetBundles;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = System.Random;
 
 namespace HouraiTeahouse.SmashBrew {
 
     public interface IGameData {
+
+        uint Id { get; }
 
         // Is the data selectable?
         bool IsSelectable { get; }
@@ -26,6 +29,11 @@ namespace HouraiTeahouse.SmashBrew {
 
     [CreateAssetMenu(fileName = "New Stage", menuName = "SmashBrew/Scene Data")]
     public class SceneData : BGMGroup, IGameData {
+
+        [SerializeField]
+        [ReadOnly]
+        [Tooltip("The unique ID used for this scene")]
+        uint _id;
 
         [Header("Load Data")]
         [SerializeField]
@@ -62,6 +70,8 @@ namespace HouraiTeahouse.SmashBrew {
         [Scene]
         [Tooltip("The internal name of the scene. Must be in build settings.")]
         string _scene;
+
+        public uint Id { get { return _id; } }
 
         /// <summary> The image shown on menus to represent the scene. </summary>
         public Resource<Sprite> PreviewImage { get; private set; }
@@ -119,6 +129,15 @@ namespace HouraiTeahouse.SmashBrew {
         protected override void OnDisable() {
             base.OnDisable();
             Unload();
+        }
+
+        void Reset() {
+            RegenerateID();
+        }
+
+        [ContextMenu("Regenerate ID")]
+        void RegenerateID() { 
+            _id = (uint)new Random().Next();
         }
 
     }

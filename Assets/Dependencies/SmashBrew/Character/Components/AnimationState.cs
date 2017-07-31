@@ -64,6 +64,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [Command]
         void CmdChangeState(int animHash, float normalizedTime) {
             //TODO(james7132): Make proper verfications server side
+            if (_states == null)
+                return;
             if (!_states.ContainsKey(animHash)) {
                 Log.Error("Client attempted to set state to one with hash {0}, which has no matching server state.", animHash);
                 return;
