@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 namespace HouraiTeahouse {
 
     /// <summary> A MonoBehaviour that does only one action, which can be set to do so on a variety of triggers. </summary>
-    public abstract class SingleActionBehaviour : MonoBehaviour, ISubmitHandler {
+    public abstract class SingleActionBehaviour : MonoBehaviour, ISubmitHandler, ISelectHandler, IPointerEnterHandler {
 
         enum Type {
 
@@ -25,8 +25,10 @@ namespace HouraiTeahouse {
             Collision,
             // Do the action when the object is destroyed
             Destruction,
-            // Do the action in response to a a Submit action
-            UIEvent,
+            // Do the action in response to a Submit action
+            UISubmitted,
+            // Do the action in response to a Select Action
+            UISelected,
             // Do the action in response to a key Press
             KeyPress
 
@@ -41,8 +43,24 @@ namespace HouraiTeahouse {
         /// <summary>
         ///     <see cref="ISubmitHandler.OnSubmit" />
         /// </summary>
-        public void OnSubmit(BaseEventData eventData) {
-            if (_trigger == Type.UIEvent)
+        void ISubmitHandler.OnSubmit(BaseEventData eventData) {
+            if (_trigger == Type.UISubmitted)
+                Action();
+        }
+
+        /// <summary>
+        ///     <see cref="ISelectHandler.OnSelect" />
+        /// </summary>
+        void ISelectHandler.OnSelect(BaseEventData eventData) {
+            if (_trigger == Type.UISelected)
+                Action();
+        }
+
+        /// <summary>
+        ///     <see cref="ISelectHandler.OnSubmit" />
+        /// </summary>
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
+            if (_trigger == Type.UISelected)
                 Action();
         }
 
