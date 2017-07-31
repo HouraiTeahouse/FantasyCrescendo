@@ -88,11 +88,13 @@ namespace HouraiTeahouse.SmashBrew {
             LocalPlayers = new PlayerSet();
             MatchPlayers = new PlayerSet();
             //TODO(james7132): Have this filled out externally.
-            var player = LocalPlayers.Get(0);
-            player.Type = PlayerType.HumanPlayer;
-            player.Selection = new PlayerSelection {
-                Character = DataManager.Characters.FirstOrDefault(c => c.IsSelectable)
-            };
+            DataManager.LoadTask.Then(() => {
+                var player = LocalPlayers.Get(0);
+                player.Type = PlayerType.HumanPlayer;
+                player.Selection = new PlayerSelection {
+                    Character = DataManager.Characters.FirstOrDefault(c => c.IsSelectable)
+                };
+            });
         }
 
     }

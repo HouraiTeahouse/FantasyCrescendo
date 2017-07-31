@@ -8,6 +8,10 @@ namespace HouraiTeahouse.Localization {
     [HelpURL("http://wiki.houraiteahouse.net/index.php/Dev:Localization#Localized_Text")]
     public sealed class LocalizedText : AbstractLocalizedText {
 
+        public enum CaseSetting {
+            Leave, Uppercase, Lowercase
+        }
+
         /// <summary> The format for the localization string to be displayed in. </summary>
         /// <see cref="string.Format" />
         [SerializeField]
@@ -16,6 +20,9 @@ namespace HouraiTeahouse.Localization {
         /// <summary> The serialized localization key </summary>
         [SerializeField]
         string _key;
+
+        [SerializeField]
+        CaseSetting _caseSetting = CaseSetting.Leave;
 
         /// <summary> Gets or sets the localization key of the LocalizedText </summary>
         public string Key {
@@ -34,7 +41,18 @@ namespace HouraiTeahouse.Localization {
         /// <summary>
         ///     <see cref="AbstractLocalizedText" />
         /// </summary>
-        protected override string Process(string val) { return _format.IsNullOrEmpty() ? val : _format.With(val); }
+        protected override string Process(string val) { 
+            val = _format.IsNullOrEmpty() ? val : _format.With(val); 
+            switch(_caseSetting) {
+                case CaseSetting.Uppercase:
+                    val = val.ToUpper();
+                    break;
+                case CaseSetting.Lowercase:
+                    val = val.ToLower();
+                    break;
+            }
+            return val;
+        }
 
     }
 
