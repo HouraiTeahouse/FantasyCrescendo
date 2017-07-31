@@ -79,20 +79,20 @@ namespace HouraiTeahouse.SmashBrew {
             }
         }
 
-        [SerializeField]
-        PlayerSelection[] testCharacters;
-
-        /// <summary> Unity callback. Called on object instantiation. </summary>
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         void Awake() {
             Instance = this;
             Config.Load();
             LocalPlayers = new PlayerSet();
             MatchPlayers = new PlayerSet();
-            for (var i = 0; i < testCharacters.Length; i++) {
-                var player = LocalPlayers.Get(i);
-                player.Type = PlayerType.HumanPlayer;
-                player.Selection = testCharacters[i];
-            }
+            //TODO(james7132): Have this filled out externally.
+            var player = LocalPlayers.Get(0);
+            player.Type = PlayerType.HumanPlayer;
+            player.Selection = new PlayerSelection {
+                Character = DataManager.Characters.FirstOrDefault(c => c.IsSelectable)
+            };
         }
 
     }
