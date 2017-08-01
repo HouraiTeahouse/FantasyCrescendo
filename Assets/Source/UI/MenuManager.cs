@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace HouraiTeahouse {
 
     public class MenuManager : MonoBehaviour, IRegistrar<Menu> {
 
+        static ILog log = Log.GetLogger<MenuManager>();
         static Stack<string> _menuBreadcrumnbs;
 
         public static MenuManager Instance { get; private set; }
@@ -36,14 +38,12 @@ namespace HouraiTeahouse {
                         ChangeMenu(_availableMenus[currentName]);
                 }
             }
-            if (_currentMenu != null)
-                _menuBreadcrumnbs.Push(_currentMenu.Name);
             foreach (Menu inactiveMenu in _availableMenus.Values)
                 if (inactiveMenu && inactiveMenu != _currentMenu)
                     inactiveMenu.gameObject.SetActive(false);
         }
 
-        public void ChangeMenu(Menu menu) {
+        void ChangeMenuInternal(Menu menu) {
             if (_currentMenu)
                 _currentMenu.gameObject.SetActive(false);
             if (menu != null) {
@@ -57,9 +57,26 @@ namespace HouraiTeahouse {
             _currentMenu = menu;
         }
 
+        public void ChangeMenu(Menu menu) {
+            _menuBreadcrumnbs.Push(_currentMenu.Name);
+            ChangeMenuInternal(menu);
+        }
+
+        public void PopMenu() {
+            if (_menuBreadcrumnbs.Count <= 0)
+                throw new InvalidOperationException("Cannot return to a menu that does not exist! Attempted to pop menu when no preivous menu was defined");
+            var previousMenu = _menuBreadcrumnbs.Pop();
+            Menu menu;
+            while (!_availableMenus.TryGetValue(previousMenu, out menu) && _menuBreadcrumnbs.Count > 0) {
+                previousMenu = _menuBreadcrumnbs.Pop();
+            }
+            if (menu != null)
+                ChangeMenuInternal(menu);
+        }
+
         public void Register(Menu obj) {
             if (obj == null) {
-                Log.Error("Attempted to register null menu.");
+                log.Error("Attempted to register null menu.");
                 return;
             }
             if (_availableMenus == null)
@@ -67,11 +84,11 @@ namespace HouraiTeahouse {
             Menu altRegistry;
             string menuName = obj.Name;
             if (_availableMenus.TryGetValue(menuName, out altRegistry) && obj != altRegistry) {
-                Log.Error("Cannot register multple menus under the name of {0}. ", obj.Name);
+                log.Error("Cannot register multple menus under the name of {0}. ", obj.Name);
                 return;
             }
             _availableMenus.Add(menuName, obj);
-            Log.Info("Registered {0} as a valid menu under the name of {1}", obj, obj.Name);
+            log.Info("Registered {0} as a valid menu under the name of {1}", obj, obj.Name);
         }
 
         public bool Unregister(Menu obj) {
