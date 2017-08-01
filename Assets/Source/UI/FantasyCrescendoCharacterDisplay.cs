@@ -19,11 +19,10 @@ namespace HouraiTeahouse.FantasyCrescendo {
             var characters = DataManager.Characters;
             if (characters == null)
                 return;
-            var test = characters.Where(c => c.PalleteCount >= 1)
+            characters.Where(c => c.PalleteCount >= 1)
                 .ToArray()
-                .Random();
-            Log.Debug(test);
-            test.GetPortrait(0)
+                .Random()
+                .GetPortrait(0)
                 .LoadAsync()
                 .Then(sprite => {
                     if (_image == null)
