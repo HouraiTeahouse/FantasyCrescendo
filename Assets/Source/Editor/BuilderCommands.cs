@@ -12,7 +12,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
     public static class BuildCommands {
 
-        [MenuItem("Hourai Teahouse/Test")]
+        [MenuItem("Hourai Teahouse/Clear Character Materials")]
         static void ClearCharacterMaterials() {
             Log.Info("Clearing character materials.");
             var characters = Assets.LoadAll<CharacterData>().Select(c => c.Prefab).Distinct();
@@ -27,7 +27,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
                 Log.Info("Cleared materials for {0}", prefab.name);
             }
             AssetDatabase.SaveAssets();
-            Log.Info("Finished clearing materials.");
+            Log.Info("Finished clearing ");
         }
 
 #if UNITY_CLOUD_BUILD
