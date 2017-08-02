@@ -36,7 +36,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
             PlayerSettings.bundleVersion += " {0} Build #{1}".With(
                 manifest.GetValue<string>("cloudBuildTargetName"), 
                 manifest.GetValue<string>("buildNumber"));
-            Log.Info("Changed version to {0}", Players.bundleVersion);
+            Log.Info("Changed version to {0}", PlayerSettings.bundleVersion);
 #else
         public static void Prebuild() {
             Log.Info("Starting pre-build cleanup...");
