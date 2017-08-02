@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 #if UNITY_EDITOR
 using System.Linq;
@@ -19,6 +20,8 @@ namespace HouraiTeahouse {
         [SerializeField]
         BGMData[] backgroundMusicData;
 
+        public ReadOnlyCollection<BGMData> MusicData { get; private set; }
+
         public bool IsInitialized { get; private set; }
 
         public string Name {
@@ -27,6 +30,7 @@ namespace HouraiTeahouse {
 
         protected virtual void OnEnable() {
             IsInitialized = false;
+            MusicData = new ReadOnlyCollection<BGMData>(backgroundMusicData);
             _selection = new WeightedRNG<BGMData>();
         }
 
@@ -81,6 +85,14 @@ namespace HouraiTeahouse {
         string _artist;
 
         [SerializeField]
+        [Tooltip("The original name of the song.")]
+        string _originalName;
+
+        [SerializeField]
+        [Tooltip("The origin source of the song")]
+        string _originSource;
+
+        [SerializeField]
         [Resource(typeof(AudioClip))]
         string _bgm;
 
@@ -101,7 +113,26 @@ namespace HouraiTeahouse {
             _baseWeight = weight;
         }
 
-        public Resource<AudioClip> BGM { get; private set; }
+        public string Name {
+            get { return _name; }
+        }
+
+        public string Artist {
+            get { return _artist; }
+        }
+
+        public string OriginalName {
+            get { return _originalName; }
+        }
+
+        public string OriginSource {
+            get { return _originSource; }
+        }
+
+        public Resource<AudioClip> BGM { 
+            get { return Resource.Get<AudioClip>(_bgm); }
+        }
+
         public float Weight { get; private set; }
 
         public int LoopStart {
@@ -115,7 +146,6 @@ namespace HouraiTeahouse {
         string GetKey(string stageName) { return string.Format("{0}{1}{2}_{3}", stageName, Delimiter, _bgm, Suffix); }
 
         public void Initialize(string stageName) {
-            BGM = Resource.Get<AudioClip>(_bgm);
             string key = GetKey(stageName);
             if (Prefs.Exists(key))
                 Weight = Prefs.GetFloat(key);

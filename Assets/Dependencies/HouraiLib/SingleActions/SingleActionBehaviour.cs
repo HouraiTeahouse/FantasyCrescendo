@@ -9,8 +9,10 @@ namespace HouraiTeahouse {
 
         enum Type {
 
+            None = -1,
+
             // Do the action on instantiation 
-            Instantiation,
+            Instantiation = 0,
             // Do the action in response to being enabled
             OnEnable,
             // Do the action in response to being disabled 
@@ -35,7 +37,7 @@ namespace HouraiTeahouse {
         }
 
         [SerializeField]
-        Type _trigger;
+        Type _trigger = Type.None;
 
         [SerializeField]
         KeyCode[] _keyCodes;
