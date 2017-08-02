@@ -55,7 +55,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
             [SerializeField]
             [Tooltip("The set of renderers to apply the materials to")]
-            Renderer[] TargetRenderers;
+            public Renderer[] TargetRenderers;
 
             /// <summary>
             /// The count of available swaps for this material swap set
@@ -109,6 +109,14 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             _color = value;
             foreach (Swap swap in _swaps)
                 swap.Set(value);
+        }
+
+        public void ClearRenderers() {
+            var renderers = _swaps.SelectMany(s => s.TargetRenderers).Distinct();
+            foreach (var renderer in renderers) {
+                var materials = renderer.sharedMaterials;
+                renderer.sharedMaterials = new Material[materials.Length];
+            }
         }
 #endif
 

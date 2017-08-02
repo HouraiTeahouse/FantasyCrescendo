@@ -51,6 +51,14 @@ namespace HouraiTeahouse.Editor {
             return from guid in GetAssetGUIDs<T>() select AssetDatabase.GUIDToAssetPath(guid);
         }
 
+        public static IEnumerable<T> LoadAll<T>(string nameFilter = null) where T : Object {
+            foreach (var path in GetAssetPaths<T>(nameFilter)) {
+                var obj = AssetDatabase.LoadAssetAtPath<T>(path);
+                if (obj != null)
+                    yield return obj;
+            }
+        }
+
         public static T LoadOrDefault<T>(string nameFilter = null) where T : Object {
             return AssetDatabase.LoadAssetAtPath<T>(GetAssetPaths<T>(nameFilter).FirstOrDefault());
         }
