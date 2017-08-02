@@ -39,8 +39,9 @@ namespace HouraiTeahouse {
                 }
             }
             foreach (Menu inactiveMenu in _availableMenus.Values)
-                if (inactiveMenu && inactiveMenu != _currentMenu)
+                if (inactiveMenu != null)
                     inactiveMenu.gameObject.SetActive(false);
+            _currentMenu.gameObject.SetActive(true);
         }
 
         void ChangeMenuInternal(Menu menu) {
