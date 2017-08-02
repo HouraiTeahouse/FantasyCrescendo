@@ -15,18 +15,24 @@ MonoBehaviour:
   backgroundMusicData:
   - _name: Did You See That Shadow
     _artist: iceerules
+    _originalName: 
+    _originSource: 
     _bgm: bgm/main_menu:Did You See That Shadow
     _baseWeight: 1
     _loopStart: 373195
     _loopEnd: 4608698
   - _name: Memory of Forgathering Dream
     _artist: sladjkf
+    _originalName: 
+    _originSource: 
     _bgm: bgm/main_menu:Memory of Forgathering Dream
     _baseWeight: 1
     _loopStart: 96000
     _loopEnd: 4320000
   - _name: Shinkirou Orchestra
     _artist: sladjkf
+    _originalName: 
+    _originSource: 
     _bgm: bgm/main_menu:Shinkirou Orchestra
     _baseWeight: 1
     _loopStart: 143381
@@ -35,8 +41,8 @@ MonoBehaviour:
   _type: 2
   _loadPriority: 0
   _icon: Icons/marisa_icon
-  _isSelectable: 0
-  _isVisible: 0
+  _isSelectable: 1
+  _isVisible: 1
   _isDebug: 0
   _previewImage: Icons/marisa_icon
   _scene: scenes/menus/main/scene:Main Menu

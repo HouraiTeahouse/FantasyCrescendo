@@ -15,6 +15,8 @@ MonoBehaviour:
   backgroundMusicData:
   - _name: Selection
     _artist: Pigu & Squiggle Glitz
+    _originalName: 
+    _originSource: 
     _bgm: bgm/main_menu:Selection
     _baseWeight: 1
     _loopStart: 572422
@@ -23,8 +25,8 @@ MonoBehaviour:
   _type: 2
   _loadPriority: 0
   _icon: Icons/marisa_icon
-  _isSelectable: 1
-  _isVisible: 1
+  _isSelectable: 0
+  _isVisible: 0
   _isDebug: 0
   _previewImage: Icons/marisa_icon
   _scene: 
