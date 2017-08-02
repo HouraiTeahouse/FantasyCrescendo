@@ -31,12 +31,12 @@ namespace HouraiTeahouse.FantasyCrescendo {
         }
 
 #if UNITY_CLOUD_BUILD
-        public static void BuildCurrentBundles(UnityEngine.CloudBuild.BuildManifestObject manifest) {
+        public static void Prebuild(UnityEngine.CloudBuild.BuildManifestObject manifest) {
             PlayerSettings.bundleVersion += " {0} Build #{1}".With(
                 manifest.GetValue<string>("cloudBuildTargetName"), 
                 manifest.GetValue<string>("buildNumber"));
 #else
-        public static void BuildCurrentBundles() {
+        public static void Prebuild() {
 #endif
             ClearCharacterMaterials();
             BuildScript.BuildAssetBundles();
