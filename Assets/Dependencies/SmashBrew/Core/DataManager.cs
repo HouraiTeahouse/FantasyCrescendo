@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using HouraiTeahouse.AssetBundles;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -128,6 +129,34 @@ namespace HouraiTeahouse.SmashBrew {
         /// SceneData instances from Resources. 
         /// </summary>
         public static GameDataCollection<SceneData> Scenes { get; private set; }
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        void Awake() {
+            var networkManager = SmashNetworkManager.Instance;
+            if (networkManager == null)
+                return;
+            networkManager.ClientStarted += client => {
+                return LoadTask.Then(() => {
+                    return Task.All(Characters.SelectMany(character => GetPrefabs(character))
+                        .Distinct()
+                        .Select(resource => resource.LoadAsync())
+                    ).Then(prefabs => {
+                        foreach(var prefab in prefabs.Where(p => p != null))
+                            ClientScene.RegisterPrefab(prefab);
+                        foreach (var pref in ClientScene.prefabs)
+                            Log.Info("Registered Network Prefab: {0} ({1})", pref.Value.name, pref.Key);
+                    });
+                });
+            };
+        }
+        
+        static IEnumerable<Resource<GameObject>> GetPrefabs(CharacterData character) {
+            yield return character.Prefab;
+            foreach(var prefab in character.ExtraPrefabs)
+                yield return prefab;
+        }
 
 #if UNITY_EDITOR
         static void LoadFromEditor<T>(Action<T> loadFunc) where T : Object {
