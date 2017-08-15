@@ -35,20 +35,12 @@ namespace HouraiTeahouse.SmashBrew {
             get { return _hitboxes; }
         }
 
-        [SerializeField]
-        [ReadOnly]
-        int _id;
-
         //TODO: Add triggers for on hit effects and SFX
         //ParticleSystem _effect;
         //AudioSource _soundEffect;
         Collider[] _colliders;
 
         HashSet<object> _history;
-
-        IRegistrar<Hitbox> _registrar;
-
-        Type currentType;
 
         [SerializeField]
         Type type = Type.Offensive;
@@ -74,21 +66,16 @@ namespace HouraiTeahouse.SmashBrew {
         [SerializeField]
         bool _absorbable;
         
-        public int ID {
-            get { return _id; }
-            set { _id = value; }
-        }
-
         public bool IsActive {
             get { return CurrentType != Type.Inactive; }
         }
 
-        public Type DefaultType {
+        public Type CurrentType {
             get { return type; }
             set { type = value; }
         }
 
-        public Type CurrentType { get; set; }
+        public Type DefaultType { get; private set; }
 
         public int Priority {
             get { return _priority; }
@@ -148,17 +135,6 @@ namespace HouraiTeahouse.SmashBrew {
 
         public IKnockbackable Knockbackable { get; private set; }
 
-        public IRegistrar<Hitbox> Registrar {
-            get { return _registrar; }
-            set {
-                if (_registrar != null)
-                    _registrar.Unregister(this);
-                _registrar = value;
-                if (value != null)
-                    value.Register(this);
-            }
-        }
-
         static Hitbox() {
             ReactionMatrix = new Table2D<Type, Action<Hitbox, Hitbox>>();
             _hitboxes = new List<Hitbox>();
@@ -192,7 +168,7 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public static void Resolve(Hitbox src, Hitbox dst) {
-            ReactionMatrix[src.DefaultType, dst.DefaultType](src, dst);
+            ReactionMatrix[src.CurrentType, dst.CurrentType](src, dst);
         }
 
         void Initialize() {
@@ -208,8 +184,7 @@ namespace HouraiTeahouse.SmashBrew {
         /// </summary>
         void Awake() {
             Initialize();
-            CurrentType = DefaultType;
-            Registrar = GetComponentInParent<IRegistrar<Hitbox>>();
+            DefaultType = CurrentType;
             Source = GetComponentInParent<Character>();
             Damageable = GetComponentInParent<IDamageable>();
             Knockbackable = GetComponentInParent<IKnockbackable>();
@@ -255,6 +230,8 @@ namespace HouraiTeahouse.SmashBrew {
         /// Callback to draw gizmos that are pickable and always drawn.
         /// </summary>
         void OnDrawGizmos() {
+            if (!isActiveAndEnabled)
+                return;
             if (!EditorApplication.isPlayingOrWillChangePlaymode && !gizmoInitialized) {
                 ResetState();
                 gizmoInitialized = true;
@@ -281,21 +258,23 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public void DrawHitbox() {
+            #if UNITY_EDITOR
+            if (!DrawHitboxes && EditorApplication.isPlayingOrWillChangePlaymode)
+            #else
             if (!DrawHitboxes)
+            #endif
+                return;
+            if (CurrentType == Type.Inactive)
                 return;
             if (_colliders == null)
-                _colliders = GetComponents<Collider>();
+                _colliders = GetComponentsInChildren<Collider>();
             Color color = Config.Debug.GetHitboxColor(CurrentType);
+            #if UNITY_EDITOR
+            foreach (Collider col in GetComponentsInChildren<Collider>())
+            #else
             foreach (Collider col in _colliders)
+            #endif
                 DrawCollider(col, color);
-        }
-
-        /// <summary>
-        /// Reset is called when the user hits the Reset button in the Inspector's
-        /// context menu or when adding the component the first time.
-        /// </summary>
-        void Reset() {
-            _id = new Random().Next(int.MaxValue); 
         }
 
         void DrawCollider(Collider col, Color color) {
@@ -333,8 +312,8 @@ namespace HouraiTeahouse.SmashBrew {
         }
 
         public bool ResetState() {
-            bool val = CurrentType != DefaultType;
-            CurrentType = DefaultType;
+            bool val = CurrentType != CurrentType;
+            CurrentType = CurrentType;
             ClearHistory();
             return val;
         }

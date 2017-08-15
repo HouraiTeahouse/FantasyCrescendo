@@ -2,7 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Timeline;
+using UnityEngine.Playables;
 using UnityEngine.Networking;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
@@ -13,6 +18,9 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
         [SerializeField]
         float _transitionTime = 0.1f;
+
+        [SerializeField]
+        PlayableDirector _director;
 
         [SerializeField]
         Animator _animator;

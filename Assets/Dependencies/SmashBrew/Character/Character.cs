@@ -11,7 +11,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MovementState))]
-    public class Character : NetworkBehaviour, IHitboxController, IRegistrar<ICharacterComponent> {
+    public class Character : NetworkBehaviour, IRegistrar<ICharacterComponent> {
 
         public CharacterController Controller { get; private set; }
         public MovementState Movement { get; private set; }
@@ -82,23 +82,6 @@ namespace HouraiTeahouse.SmashBrew.Characters {
                 foreach (var hurtbox in _hurtboxes)
                     hurtbox.CurrentType = hitboxType;
             };
-        }
-
-        void IRegistrar<Hitbox>.Register(Hitbox hitbox) {
-            int id = Argument.NotNull(hitbox).ID;
-            if (_hitboxMap.ContainsKey(id))
-                Log.Error("Hitboxes {0} and {1} on {2} have the same id. Ensure that they have different IDs.",
-                    hitbox,
-                    _hitboxMap[id],
-                    gameObject.name);
-            else {
-                _hitboxMap.Add(id, hitbox);
-                _hurtboxes.Add(hitbox);
-            }
-        }
-
-        bool IRegistrar<Hitbox>.Unregister(Hitbox obj) {
-            return _hitboxMap.Remove(Argument.NotNull(obj).ID) || _hurtboxes.Remove(obj);
         }
 
         void IRegistrar<ICharacterComponent>.Register(ICharacterComponent component) {

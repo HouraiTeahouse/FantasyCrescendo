@@ -35,8 +35,7 @@ namespace HouraiTeahouse.SmashBrew.Editor {
                 Undo.RegisterCreatedObjectUndo(hbGo, "Create Hitbox GameObject");
                 var collider = Undo.AddComponent<SphereCollider>(hbGo);
                 var hb = Undo.AddComponent<Hitbox>(hbGo);
-                hb.DefaultType = type;
-                hb.ID = idGen.Next();
+                hb.CurrentType = type;
                 hitboxes.Add(hb);
                 Undo.SetTransformParent(hb.transform, go.transform, "Parent Hitbox");
                 hb.transform.Reset();
@@ -61,7 +60,6 @@ namespace HouraiTeahouse.SmashBrew.Editor {
             Undo.SetCurrentGroupName(string.Format("Generate {0} Hitbox{1}",
                 type,
                 hitboxes.Count > 0 ? "es" : string.Empty));
-            EventsEditorWindow.GetWindow().Repaint();
         }
 
     }

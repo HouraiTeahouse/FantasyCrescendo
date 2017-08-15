@@ -107,7 +107,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
             _shieldHitbox = _shieldObj.AddComponent<Hitbox>();
             _shieldHitbox.CurrentType = Hitbox.Type.Shield;
-            _shieldHitbox.DefaultType = Hitbox.Type.Shield;
+            _shieldHitbox.CurrentType = Hitbox.Type.Shield;
 
             SetShieldColor(Color.grey);
             _shieldObj.SetActive(false);
@@ -134,7 +134,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         void Update() {
             if (_targetBone != null && _shieldObj.activeInHierarchy) {
                 _shieldHitbox.CurrentType = Hitbox.Type.Shield;
-                _shieldHitbox.DefaultType = Hitbox.Type.Shield;
+                _shieldHitbox.CurrentType = Hitbox.Type.Shield;
                 _shieldTransform.localScale = Vector3.one * _shieldSize * (ShieldHealth/MaxShieldHealth);
                 _shieldTransform.localPosition = transform.InverseTransformPoint(_targetBone.position);
                 ShieldHealth = Mathf.Max(0f, ShieldHealth - DepletionRate * Time.deltaTime);

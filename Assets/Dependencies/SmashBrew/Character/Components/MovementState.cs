@@ -43,6 +43,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
         [SerializeField]
         Transform _ledgeTarget;
 
+        [SerializeField]
+        float _rotationOffset;
 
         [Header("Variables")]
         [SyncVar(hook = "OnChangeDirection")]
@@ -297,7 +299,7 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             _direction = direction;
             if (FacingMode == CharacterFacingMode.Rotation) {
                 var euler = transform.localEulerAngles;
-                euler.y = direction ? 0 : 180;
+                euler.y = (direction ? 0 : 180) + _rotationOffset;
                 transform.localEulerAngles = euler;
             } else {
                 var scale = transform.localScale;

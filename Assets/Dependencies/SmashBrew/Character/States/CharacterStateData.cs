@@ -1,6 +1,7 @@
+using HouraiTeahouse.SmashBrew.States;
 using System;
 using UnityEngine;
-using HouraiTeahouse.SmashBrew.States;
+using UnityEngine.Timeline;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
@@ -18,6 +19,8 @@ namespace HouraiTeahouse.SmashBrew.Characters {
 
     [Serializable]
     public class CharacterStateData {
+        [Tooltip("Corresponding timeline controller")]
+        public TimelineAsset Timeline;
         [Tooltip("Corresponding animation for the state")]
         public AnimationClip AnimationClip;
         [Tooltip("Length of time the state lasts")]

@@ -1,9 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Animations;
+using UnityEngine.Timeline;
+using UnityEngine.Playables;
 using HouraiTeahouse.SmashBrew.States;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
@@ -19,36 +23,60 @@ namespace HouraiTeahouse.SmashBrew.Characters {
             EditorUtility.SetDirty(builder);
         }
 
+        AnimationTrack GetOrCreateAnimationTrack(string name, TimelineAsset timeline, Action<AnimationTrack> prepareFunc = null) {
+            var track = timeline.GetRootTracks().OfType<AnimationTrack>()
+                                                .FirstOrDefault(t => t != null && t.name == name);
+            if (track != null) {
+                prepareFunc.SafeInvoke(track);
+            } else {
+                track = timeline.CreateTrack<AnimationTrack>(null, name);
+            }
+            return track;
+        }
+
         public override void OnInspectorGUI() {
-            var controllerProperty = serializedObject.FindProperty("_animatorController");
-            EditorGUILayout.PropertyField(controllerProperty);
+            var prefabProperty = serializedObject.FindProperty("_prefab");
+            EditorGUILayout.PropertyField(prefabProperty);
             filter = EditorGUILayout.TextField("Filter", filter);
-            var text = controllerProperty.objectReferenceValue != null ? "Update Animator Controller" : "Create Animation Controller";
+            var text = prefabProperty.objectReferenceValue != null ? "Update Animator Controller" : "Create Animation Controller";
             if (GUILayout.Button(text)) {
-                var controller = controllerProperty.objectReferenceValue as AnimatorController;
-                if (controller == null)
-                    controller = AnimatorController.CreateAnimatorControllerAtPath("Assets/" + target.GetType().Name + ".controller");
-                var stateMachine = controller.layers[0].stateMachine;
+                var directory = Path.GetDirectoryName(AssetDatabase.GetAssetPath(target));
                 var builder = target as CharacterControllerBuilder;
-                foreach(var state in stateMachine.states)
-                    stateMachine.RemoveState(state.state);
+                var prefab = prefabProperty.objectReferenceValue as GameObject;
+                var director = prefab == null ? null : prefab.GetComponentInChildren<PlayableDirector>();
+                var animator = prefab == null ? null : prefab.GetComponentInChildren<Animator>();
+                var animatorGo = animator == null ? null : animator.gameObject;
                 foreach (var state in builder.Builder.States) {
-                    var animatorState = stateMachine.AddState(state.AnimatorName);
-                    var clip = state.Data.AnimationClip;
-                    animatorState.motion = clip;
-                    if (clip == null || state.Data.Length <= 0)
-                        animatorState.speed = 1f;
-                    else 
-                        animatorState.speed = clip.length / state.Data.Length;
+                    TimelineAsset timeline = state.Data.Timeline;
+                    if (state.Data.Timeline == null) {
+                        timeline = ScriptableObject.CreateInstance<TimelineAsset>();
+                        AssetDatabase.CreateAsset(timeline, Path.Combine(directory, builder.name + "_" + state.Name + ".playable"));
+                        state.Data.Timeline = timeline;
+                    }
+                    if (state.Data.AnimationClip == null)
+                        continue;
+                    var baseAnimationTrack = GetOrCreateAnimationTrack("base_animation", timeline, track => {
+                        foreach (var timelineClip in track.GetClips())
+                            timeline.DeleteClip(timelineClip);
+                    });
+                    var hitboxAnimationTrack = GetOrCreateAnimationTrack("hitbox_animation", timeline);
+
+                    // Create base animation clip
+                    var baseClip = baseAnimationTrack.CreateClip(state.Data.AnimationClip);
+                    baseClip.displayName = state.Data.AnimationClip.name + "_Animation";
+
+                    if (director != null && animator != null) {
+                        director.SetGenericBinding(baseAnimationTrack, animatorGo);
+                        director.SetGenericBinding(hitboxAnimationTrack, animatorGo);
+                    }
+
+                    EditorUtility.SetDirty(timeline);
+                    EditorUtility.SetDirty(baseAnimationTrack);
+                    EditorUtility.SetDirty(hitboxAnimationTrack);
                 }
-                const int x = 205;
-                const int y = 45;
-                const int colSize = 15;
-                var states = stateMachine.states;
-                for (var i = 0; i < states.Length; i++) {
-                    states[i].position = new Vector2((i/ colSize) * x, (i % colSize) * y);
-                }
-                stateMachine.states = states;
+                EditorUtility.SetDirty(prefab);
+                EditorUtility.SetDirty(target);
+                AssetDatabase.SaveAssets();
             }
             EditorGUILayout.Space();
             var data = serializedObject.FindProperty("_data");

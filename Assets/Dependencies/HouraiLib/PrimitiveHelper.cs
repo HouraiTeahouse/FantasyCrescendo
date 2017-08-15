@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public static class PrimitiveHelper {
 
@@ -25,7 +28,14 @@ public static class PrimitiveHelper {
     static Mesh CreatePrimitiveMesh(PrimitiveType type) {
         GameObject gameObject = GameObject.CreatePrimitive(type);
         Mesh mesh = gameObject.GetComponent<MeshFilter>().sharedMesh;
+        #if UNITY_EDITOR
+        if (!EditorApplication.isPlayingOrWillChangePlaymode)
+            Object.DestroyImmediate(gameObject);
+        else
+            Object.Destroy(gameObject);
+        #else
         Object.Destroy(gameObject);
+        #endif
 
         PrimitiveMeshes[type] = mesh;
         return mesh;

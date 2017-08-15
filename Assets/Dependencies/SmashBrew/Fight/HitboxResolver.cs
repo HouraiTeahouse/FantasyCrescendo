@@ -52,7 +52,7 @@ namespace HouraiTeahouse.SmashBrew {
         static int CollisionPriority(HitboxCollision collision) {
             var src = collision.Source;
             var dst = collision.Destination;
-            return (int) src.DefaultType * (int) dst.DefaultType * src.Priority * dst.Priority;
+            return (int) src.CurrentType * (int) dst.CurrentType * src.Priority * dst.Priority;
         }
 
         /// <summary> Unity callback. Called repeatedly on a fixed timestep. </summary>
