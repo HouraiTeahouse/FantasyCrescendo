@@ -2,7 +2,7 @@ using System.Linq;
 using HouraiTeahouse.Editor;
 using UnityEditor;
 
-namespace HouraiTeahouse.SmashBrew.Editor {
+namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> A custom Editor for DataManager </summary>
     [CustomEditor(typeof(DataManager))]

@@ -3,7 +3,7 @@ using HouraiTeahouse.SmashBrew.Stage;
 using UnityEditor;
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew.Editor {
+namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> A custom Editor for Platfoorms </summary>
     [CanEditMultipleObjects]

@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
-namespace HouraiTeahouse.SmashBrew.Editor {
+namespace HouraiTeahouse.SmashBrew {
 
     class EditorCommands {
 

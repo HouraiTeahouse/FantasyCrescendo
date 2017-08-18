@@ -2,7 +2,7 @@ using HouraiTeahouse.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew.Editor {
+namespace HouraiTeahouse.SmashBrew {
 
     /// <summary> A custom Editor for CharacterData </summary>
     [CustomEditor(typeof(CharacterData))]

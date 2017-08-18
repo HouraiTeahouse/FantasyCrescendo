@@ -2,7 +2,6 @@ using UnityEditor;
 
 namespace HouraiTeahouse.SmashBrew.Characters {
 
-
     [CustomEditor(typeof(Character))]
     public class CharacterEditor : UnityEditor.Editor  {
 

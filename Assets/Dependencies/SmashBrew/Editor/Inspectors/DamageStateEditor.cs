@@ -1,7 +1,7 @@
 using HouraiTeahouse.SmashBrew.Characters;
 using UnityEditor;
 
-namespace HouraiTeahouse.SmashBrew.Editor {
+namespace HouraiTeahouse.SmashBrew {
 
     [CustomEditor(typeof(DamageState))]
     public class DamageStateEditor : UnityEditor.Editor {

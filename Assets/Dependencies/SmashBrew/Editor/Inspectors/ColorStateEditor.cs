@@ -4,7 +4,7 @@ using HouraiTeahouse.SmashBrew.Characters;
 using UnityEditor;
 using UnityEngine;
 
-namespace HouraiTeahouse.SmashBrew.Editor {
+namespace HouraiTeahouse.SmashBrew {
 
     [CustomEditor(typeof(ColorState))]
     public class ColorStateEditor : ScriptlessEditor {
