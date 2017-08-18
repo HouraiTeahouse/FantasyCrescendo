@@ -35,15 +35,6 @@ namespace HouraiTeahouse.FantasyCrescendo.UI {
             _aspectRatioFitter.aspectRatio = rect.AspectRatio();
         }
 
-        /// <summary>
-        /// Reset is called when the user hits the Reset button in the Inspector's
-        /// context menu or when adding the component the first time.
-        /// </summary>
-        protected override void Reset() {
-            base.Reset();
-            _aspectRatioFitter = GetComponentInChildren<AspectRatioFitter>();
-        }
-
     }
 
 }
