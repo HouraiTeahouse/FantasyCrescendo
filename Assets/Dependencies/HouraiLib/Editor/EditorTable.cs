@@ -57,11 +57,22 @@ namespace HouraiTeahouse {
             });
             rect.y += LabelPadding;
             foreach (var element in set) {
+                Log.Debug((element as SerializedObject).targetObject.name);
                 var isUnityObject = element is UnityEngine.Object;
                 EditorGUI.BeginChangeCheck();
                 DrawRow(ref rect, area.width, (col, colRect) => col.Draw(colRect, element));
-                if (EditorGUI.EndChangeCheck() && isUnityObject)
+                if (!EditorGUI.EndChangeCheck())
+                    continue;
+                if (isUnityObject) {
                     EditorUtility.SetDirty(element as UnityEngine.Object);
+                } else {
+                    var serializedProperty = element as SerializedProperty;
+                    var serializedObject = element as SerializedObject;
+                    if (serializedObject == null && serializedProperty != null)
+                        serializedObject = serializedProperty.serializedObject;
+                    if (serializedObject != null)
+                        serializedObject.ApplyModifiedProperties();
+                }
             }
         }
 

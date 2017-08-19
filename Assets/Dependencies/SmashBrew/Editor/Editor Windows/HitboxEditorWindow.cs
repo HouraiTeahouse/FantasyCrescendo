@@ -5,12 +5,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using HouraiTeahouse.Editor;
+using UnityEditorInternal;
 
 namespace HouraiTeahouse.SmashBrew {
 
     public class HitboxEditorWindow : LockableEditorWindow {
 
-        EditorTable<Hitbox> table;
+        EditorTable<SerializedObject> table;
         GameObject[] _roots;
 
         [MenuItem("Window/SmashBrew Hitbox Window")]
@@ -18,51 +19,42 @@ namespace HouraiTeahouse.SmashBrew {
             EditorWindow.GetWindow<HitboxEditorWindow>("Hitbox").Show();
         }
 
-        void BuildTable() {
-            table = new EditorTable<Hitbox>();
-            var nameCol = table.AddColumn((rect, hitbox) => {
-                hitbox.enabled = EditorGUI.ToggleLeft(rect, hitbox.name, hitbox.enabled);
+        EditorTable<SerializedObject>.Column CreatePropertyColumn(string propertyName, bool onlyOffensive = true) {
+            return table.AddColumn((rect, serializedObject) => {
+                var hitbox = serializedObject.targetObject as Hitbox;
+                if (hitbox.CurrentType == Hitbox.Type.Offensive || !onlyOffensive)
+                    EditorGUI.PropertyField(rect, serializedObject.FindProperty(propertyName), GUIContent.none);
             });
-            var typeCol = table.AddColumn((rect, hitbox) => {
+        }
+
+        void BuildTable() {
+            table = new EditorTable<SerializedObject>();
+            var enabledCol = CreatePropertyColumn("m_Enabled", false);
+            var nameCol = table.AddColumn((rect, serializedObject) => {
+                EditorGUI.LabelField(rect, serializedObject.targetObject.name);
+            });
+            var typeCol = table.AddColumn((rect, serializedObject) => {
+                var hitbox = serializedObject.targetObject as Hitbox;
                 var type = hitbox.CurrentType;
                 var color = GUI.color;
                 GUI.color = Config.Debug.GetHitboxColor(type);
                 hitbox.CurrentType = (Hitbox.Type)EditorGUI.EnumPopup(rect, GUIContent.none, type);
                 GUI.color = color;
             });
-            var damageCol = table.AddColumn((rect, hitbox) => {
-                if (hitbox.CurrentType == Hitbox.Type.Offensive)
-                    hitbox.Priority = EditorGUI.IntField(rect, GUIContent.none, hitbox.Priority);
-            });
-            var baseKnockbackCol = table.AddColumn((rect, hitbox) => {
-                if (hitbox.CurrentType == Hitbox.Type.Offensive)
-                    hitbox.BaseKnockback = EditorGUI.FloatField(rect, GUIContent.none, hitbox.BaseKnockback);
-            });
-            var knockbackScalingCol = table.AddColumn((rect, hitbox) => {
-                if (hitbox.CurrentType == Hitbox.Type.Offensive)
-                    hitbox.Scaling = EditorGUI.FloatField(rect, GUIContent.none, hitbox.Scaling);
-            });
-            var priorityCol = table.AddColumn((rect, hitbox) => {
-                if (hitbox.CurrentType == Hitbox.Type.Offensive)
-                    hitbox.Priority = EditorGUI.IntField(rect, GUIContent.none, hitbox.Priority);
-            });
-            var angleCol = table.AddColumn((rect, hitbox) => {
-                if (hitbox.CurrentType == Hitbox.Type.Offensive)
-                    hitbox.Angle = EditorGUI.Slider(rect, GUIContent.none, hitbox.Angle, 0f, 360f);
-            });
-            var reflectCol = table.AddColumn((rect, hitbox) => {
-                if (hitbox.CurrentType == Hitbox.Type.Offensive)
-                    hitbox.Reflectable = EditorGUI.ToggleLeft(rect, GUIContent.none, hitbox.Reflectable);
-            });
-            var absorbCol = table.AddColumn((rect, hitbox) => {
-                if (hitbox.CurrentType == Hitbox.Type.Offensive)
-                    hitbox.Reflectable = EditorGUI.ToggleLeft(rect, GUIContent.none, hitbox.Reflectable);
-            });
+            var damageCol = CreatePropertyColumn("_damage");
+            var baseKnockbackCol = CreatePropertyColumn("_baseKnockback");
+            var knockbackScalingCol = CreatePropertyColumn("_knockbackScaling");
+            var priorityCol = CreatePropertyColumn("_priority");
+            var angleCol = CreatePropertyColumn("_angle");
+            var reflectCol = CreatePropertyColumn("_reflectable");
+            var absorbCol = CreatePropertyColumn("_absorbable");
             table.Padding = new Vector2(5f, 2f);
             table.LabelStyle = EditorStyles.toolbar;
             table.LabelPadding = 2.5f;
+            enabledCol.Name = "";
+            enabledCol.Width = 0.05f;
             nameCol.Name = "Hitbox";
-            nameCol.Width = 0.2f;
+            nameCol.Width = 0.15f;
             typeCol.Name = "Type";
             typeCol.Width = 0.1f;
             damageCol.Name = "Damage";
@@ -100,7 +92,15 @@ namespace HouraiTeahouse.SmashBrew {
             pos.y = 0f;
             table.Draw(pos, _roots.EmptyIfNull().SelectMany(g => g.GetComponentsInChildren<Hitbox>(true))
                                              .Distinct()
-                                             .OrderByDescending(h => h.name));
+                                             .OrderByDescending(h => h.name)
+                                             .Select(h => new SerializedObject(h)));
+            // Force Repaint the animation view if something changed.
+            if (GUI.changed)
+                InternalEditorUtility.RepaintAllViews();
+        }
+
+        void Update() {
+            Repaint();
         }
 
     }

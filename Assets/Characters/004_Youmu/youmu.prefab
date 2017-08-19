@@ -3999,12 +3999,17 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1172154447746476}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  _isActive: 1
+  _isHitbox: 1
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4023,7 +4028,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4132,12 +4142,17 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1859388099563800}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  _isActive: 1
+  _isHitbox: 1
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4200,7 +4215,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4219,7 +4239,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4233,12 +4258,17 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1377782085541002}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  _isActive: 1
+  _isHitbox: 1
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4257,7 +4287,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4276,7 +4311,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4309,7 +4349,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4365,7 +4410,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4422,7 +4472,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4441,7 +4496,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4503,7 +4563,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -4522,7 +4587,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
