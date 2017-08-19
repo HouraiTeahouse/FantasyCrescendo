@@ -52,9 +52,9 @@ namespace HouraiTeahouse.SmashBrew {
             table.LabelStyle = EditorStyles.toolbar;
             table.LabelPadding = 2.5f;
             enabledCol.Name = "";
-            enabledCol.Width = 0.05f;
+            enabledCol.Width = 0.01f;
             nameCol.Name = "Hitbox";
-            nameCol.Width = 0.15f;
+            nameCol.Width = 0.19f;
             typeCol.Name = "Type";
             typeCol.Width = 0.1f;
             damageCol.Name = "Damage";
