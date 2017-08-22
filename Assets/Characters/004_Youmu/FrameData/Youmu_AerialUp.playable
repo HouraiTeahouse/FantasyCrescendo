@@ -41,7 +41,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0.033333335
-        value: {x: -0.008, y: -0.21, z: -0.652}
+        value: {x: -0.008, y: -0.2, z: -0.8}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -60,7 +60,7 @@ AnimationClip:
         tangentMode: 0
       - serializedVersion: 2
         time: 0.033333335
-        value: {x: -0.006, y: -0.107, z: -0.26}
+        value: {x: 0, y: -0.15, z: -0.5}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -159,7 +159,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0.033333335
-        value: 0.18
+        value: 0.15
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -208,6 +208,94 @@ AnimationClip:
     path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_hb_offensive_11
     classID: 135
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      - serializedVersion: 2
+        time: 0.033333335
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      - serializedVersion: 2
+        time: 0.15
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Enabled
+    path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_ring1/youmu_hb_offensive_21
+    classID: 114
+    script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0.033333335
+        value: 0.15
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Radius
+    path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_ring1/youmu_hb_offensive_21
+    classID: 135
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      - serializedVersion: 2
+        time: 0.033333335
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      - serializedVersion: 2
+        time: 0.15
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Enabled
+    path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/youmu_hb_offensive_16
+    classID: 114
+    script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0.033333335
+        value: 0.15
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Radius
+    path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/youmu_hb_offensive_16
+    classID: 135
+    script: {fileID: 0}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
@@ -252,6 +340,20 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
+      path: 3123003361
+      attribute: 3305885265
+      script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
+      typeID: 114
+      customType: 24
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1313922298
+      attribute: 3305885265
+      script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
+      typeID: 114
+      customType: 24
+      isPPtrCurve: 0
+    - serializedVersion: 2
       path: 4214276351
       attribute: 1
       script: {fileID: 0}
@@ -267,6 +369,20 @@ AnimationClip:
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 356426195
+      attribute: 1984117138
+      script: {fileID: 0}
+      typeID: 135
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 3123003361
+      attribute: 1984117138
+      script: {fileID: 0}
+      typeID: 135
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1313922298
       attribute: 1984117138
       script: {fileID: 0}
       typeID: 135
@@ -399,7 +515,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0.033333335
-        value: -0.21
+        value: -0.2
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -415,7 +531,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0.033333335
-        value: -0.652
+        value: -0.8
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -437,7 +553,7 @@ AnimationClip:
         tangentMode: 136
       - serializedVersion: 2
         time: 0.033333335
-        value: -0.006
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -459,7 +575,7 @@ AnimationClip:
         tangentMode: 136
       - serializedVersion: 2
         time: 0.033333335
-        value: -0.107
+        value: -0.15
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -481,7 +597,7 @@ AnimationClip:
         tangentMode: 136
       - serializedVersion: 2
         time: 0.033333335
-        value: -0.26
+        value: -0.5
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -497,7 +613,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0.033333335
-        value: 0.18
+        value: 0.15
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -544,6 +660,94 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_Radius
     path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_hb_offensive_11
+    classID: 135
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      - serializedVersion: 2
+        time: 0.033333335
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      - serializedVersion: 2
+        time: 0.15
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Enabled
+    path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_ring1/youmu_hb_offensive_21
+    classID: 114
+    script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0.033333335
+        value: 0.15
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Radius
+    path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_ring1/youmu_hb_offensive_21
+    classID: 135
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      - serializedVersion: 2
+        time: 0.033333335
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      - serializedVersion: 2
+        time: 0.15
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Enabled
+    path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/youmu_hb_offensive_16
+    classID: 114
+    script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0.033333335
+        value: 0.15
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Radius
+    path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/youmu_hb_offensive_16
     classID: 135
     script: {fileID: 0}
   m_EulerEditorCurves: []

@@ -1297,8 +1297,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 596643619
-  type: 2
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -2324,8 +2328,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfe52ab2f1046e4ba7bdead40232213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 726211986
-  type: 2
+  _isActive: 1
+  _isHitbox: 0
+  _isIntangible: 0
+  _isInvincible: 0
+  _absorbing: 0
+  _reflector: 0
   _priority: 100
   _damage: 5
   _angle: 45
@@ -2474,11 +2482,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 114514099343161452, guid: 923f4d76cfbcb0f43a17dd0af544d115,
+    - target: {fileID: 320095843162283168, guid: 923f4d76cfbcb0f43a17dd0af544d115,
         type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: m_PlayableAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d6681b28510553447888dacd21564aba,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 923f4d76cfbcb0f43a17dd0af544d115, type: 2}
   m_IsPrefabParent: 0
