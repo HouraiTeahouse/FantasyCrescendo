@@ -5,7 +5,8 @@ public enum HitboxType {
   Offensive,
   Damageable,
   Invincible,
-  Intangible
+  Intangible,
+  Shield
 
 }
 
