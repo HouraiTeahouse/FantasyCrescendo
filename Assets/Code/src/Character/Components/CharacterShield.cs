@@ -1,3 +1,4 @@
+using HouraiTeahouse.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -48,7 +49,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
       Debug.Log("AWAKE");
     }
 
-    public void Initialize(PlayerConfig config) {
+    public ITask Initialize(PlayerConfig config, bool isView) {
       SetShieldColor(Config.Get<VisualConfig>().GetPlayerColor(config.PlayerID));
 
       //if (Character == null)
@@ -63,6 +64,8 @@ namespace HouraiTeahouse.FantasyCrescendo {
               ////TODO(james7132): Weigh the benefits of using scaled vs unscaled time for this
               //_lastShieldExitTime = Time.time;
       //};
+
+      return Task.Resolved;
     }
 
     public void Presimulate(PlayerState state) {

@@ -1,15 +1,16 @@
+using HouraiTeahouse.Tasks;
 using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class PlayerSimulation : ISimulation<PlayerState, PlayerInput> {
+public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<PlayerState, PlayerInput> {
 
   GameObject Model;
   ICharacterSimulation[] PresimulateComponents;
   ISimulation<PlayerState, PlayerInput>[] SimulationComponents;
 
-  public PlayerSimulation(PlayerConfig config) {
+  public ITask Initialize(PlayerConfig config) {
     var selection = config.Selection;
     var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
     Model = Object.Instantiate(character.Prefab);
@@ -19,13 +20,14 @@ public class PlayerSimulation : ISimulation<PlayerState, PlayerInput> {
 
     PlayerUtil.DestroyAll(Model, typeof(Renderer), typeof(MeshFilter));
 
-    foreach (var component in Model.GetComponentsInChildren<ICharacterComponent>()) {
-      component.Initialize(config);
-    }
+    var task = Model.Broadcast<ICharacterComponent>(
+        component => component.Initialize(config, false));
 
     SimulationComponents = Model.GetComponentsInChildren<ISimulation<PlayerState, PlayerInput>>();
     PresimulateComponents = SimulationComponents.OfType<ICharacterSimulation>()
                                                 .ToArray();
+
+    return task;
   }
 
   public void Presimulate(PlayerState state) {

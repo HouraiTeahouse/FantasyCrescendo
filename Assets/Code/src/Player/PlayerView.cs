@@ -1,14 +1,15 @@
+using HouraiTeahouse.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class PlayerView : IStateView<PlayerState> {
+public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> {
 
   GameObject View;
 
   IStateView<PlayerState>[] ViewComponents;
 
-  public PlayerView(PlayerConfig config) {
+  public ITask Initialize(PlayerConfig config) {
     var selection = config.Selection;
     var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
     View = Object.Instantiate(character.Prefab);
@@ -18,11 +19,12 @@ public class PlayerView : IStateView<PlayerState> {
 
     PlayerUtil.DestroyAll(View, typeof(Collider));
 
-    foreach (var component in View.GetComponentsInChildren<ICharacterComponent>()) {
-      component.Initialize(config);
-    }
+    var task = View.Broadcast<ICharacterComponent>(
+        component => component.Initialize(config, true));
 
     ViewComponents = View.GetComponentsInChildren<IStateView<PlayerState>>();
+
+    return task;
   }
 
   public void ApplyState(PlayerState state) {

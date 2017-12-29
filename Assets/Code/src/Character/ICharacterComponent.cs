@@ -1,9 +1,10 @@
+using HouraiTeahouse.Tasks;
+
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public interface ICharacterComponent {
 
-  //TODO(james7132): Make this return a future
-  void Initialize(PlayerConfig config);
+  ITask Initialize(PlayerConfig config, bool isView = false);
 
 }
 
