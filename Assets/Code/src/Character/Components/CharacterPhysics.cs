@@ -1,3 +1,4 @@
+using HouraiTeahouse.Tasks;
 using System.Linq;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
 
   public bool IsGrounded { get; private set; }
 
-  public void Initialize(PlayerConfig config) {
+  public ITask Initialize(PlayerConfig config, bool isView) {
     if (CharacterController == null) {
       CharacterController = GetComponent<CharacterController>();
     }
@@ -21,6 +22,7 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
     rigidbody.useGravity = false;
     rigidbody.isKinematic = true;
     rigidbody.hideFlags = HideFlags.HideInInspector;
+    return Task.Resolved;
   }
 
   public void Presimulate(PlayerState state) {

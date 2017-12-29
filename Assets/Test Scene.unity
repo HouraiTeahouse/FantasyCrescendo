@@ -112,6 +112,34 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &85372442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 85372443}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &85372443
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 85372442}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &103228956
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,16 +254,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Config:
     PlayerConfigs:
-    - Selection:
+    - PlayerID: 0
+      Selection:
         CharacterID: 3548088660
         Pallete: 0
-    - Selection:
+    - PlayerID: 1
+      Selection:
         CharacterID: 3548088660
         Pallete: 0
-    - Selection:
+    - PlayerID: 2
+      Selection:
         CharacterID: 3548088660
         Pallete: 0
-    - Selection:
+    - PlayerID: 3
+      Selection:
         CharacterID: 3548088660
         Pallete: 0
 --- !u!4 &515664143
@@ -266,6 +298,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eced8acc9876143699a398b6b82408b0, type: 2}
   - {fileID: 11400000, guid: 5e880f14252814f4fa2087507048cb7a, type: 2}
   - {fileID: 11400000, guid: 55cda8d2eaa1c4be8b4cb8d136a6a981, type: 2}
+  Configs: []
 --- !u!1 &1456909151
 GameObject:
   m_ObjectHideFlags: 0

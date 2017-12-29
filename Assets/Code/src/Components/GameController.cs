@@ -1,3 +1,4 @@
+using HouraiTeahouse.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -15,8 +16,18 @@ public class GameController : MonoBehaviour {
   void Start() {
     inputSource = new TestInputSource(Config);
     state = CreateInitialState();
-    simulation = new GameSimulation(Config);
-    view = new GameView(Config);
+
+    var gameView = new GameView();
+    var gameSim = new GameSimulation();
+
+    Task.All(
+      gameSim.Initialize(Config),
+      gameView.Initialize(Config)).Then(() =>{
+        Debug.Log("INITIALIZED");
+      });
+
+    simulation = gameSim;
+    view = gameView;
   }
 
   GameState CreateInitialState() {

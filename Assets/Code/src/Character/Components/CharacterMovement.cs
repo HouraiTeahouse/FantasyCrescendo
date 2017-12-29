@@ -1,3 +1,4 @@
+using HouraiTeahouse.Tasks;
 using System;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class CharacterMovement : MonoBehaviour, ICharacterSimulation {
   AerialMovement Aerial;
   LedgeMovement Ledge;
 
-  public void Initialize(PlayerConfig config) {
+  public ITask Initialize(PlayerConfig config, bool isView) {
     if (Physics == null) {
       Physics = GetComponent<CharacterPhysics>();
     }
@@ -20,6 +21,7 @@ public class CharacterMovement : MonoBehaviour, ICharacterSimulation {
     Ground = Ground ?? new GroundMovement();
     Aerial = Aerial ?? new AerialMovement();
     Ledge = Ledge ?? new LedgeMovement();
+    return Task.Resolved;
   }
 
   public void Presimulate(PlayerState state) {
