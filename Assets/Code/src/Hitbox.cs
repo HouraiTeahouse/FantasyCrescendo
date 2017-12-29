@@ -4,7 +4,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class Hitbox : MonoBehaviour {
 
-  public HitboxType Type;
+  public HitboxEntry Data;
 
   public float Radius = 0.5f;
   public Vector3 Offset;
@@ -13,14 +13,12 @@ public class Hitbox : MonoBehaviour {
     return transform.TransformPoint(Offset);
   }
 
-  //public IEnumerable<HitboxCollision>
-
   void OnDrawGizmos() {
     if (!isActiveAndEnabled) {
       return;
     }
     var oldColor = Gizmos.color;
-    Gizmos.color = HitboxUtil.GetHitboxColor(Type);
+    Gizmos.color = HitboxUtil.GetHitboxColor(Data.Type);
     Gizmos.DrawWireSphere(GetCenter(), Radius);
     Gizmos.color = oldColor;
   }

@@ -24,6 +24,21 @@ public static class HitboxUtil {
     return Color.grey;
   }
 
+  public static IEnumerable<HitboxCollision> CreateCollisions(
+      IEnumerable<HitboxEntry> source,
+      IEnumerable<HitboxEntry> dest) {
+    foreach (var sourceEntry in source) {
+      foreach (var destEntry in dest) {
+        if (sourceEntry.CollidesWith(destEntry)){
+          yield return new HitboxCollision {
+            Source = sourceEntry,
+            Destination = destEntry
+          };
+        }
+      }
+    }
+  }
+
 }
 
 }

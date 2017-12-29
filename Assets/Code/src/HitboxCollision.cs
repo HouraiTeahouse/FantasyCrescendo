@@ -3,8 +3,13 @@ using UnityEngine;
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public struct HitboxCollision {
-  public Hitbox Source;
-  public Collider Destination;
+  public HitboxEntry Source;
+  public HitboxEntry Destination;
+
+  public int Priority {
+    get { return Source.Priority; }
+  }
+
 }
 
 }
