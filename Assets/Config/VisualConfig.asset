@@ -8,9 +8,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a16366b738b940268931ec61af436f0, type: 3}
-  m_Name: PhysicsConfig
+  m_Script: {fileID: 11500000, guid: ddfa477fb03f749b9977c37f9842b38e, type: 3}
+  m_Name: VisualConfig
   m_EditorClassIdentifier: 
-  StageLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  PlayerColors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}

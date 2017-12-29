@@ -27,9 +27,11 @@ public class GameController : MonoBehaviour {
     return initialState;
   }
 
+  void FixedUpdate() {
+    state = simulation.Simulate(state, inputSource.SampleInput());
+  }
+
   void Update() {
-    var input = inputSource.SampleInput();
-    state = simulation.Simulate(state, input);
     view.ApplyState(state);
   }
 

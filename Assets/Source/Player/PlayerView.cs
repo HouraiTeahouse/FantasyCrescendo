@@ -9,9 +9,12 @@ public class PlayerView : IStateView<PlayerState> {
   IStateView<PlayerState>[] ViewComponents;
 
   public PlayerView(PlayerConfig config) {
-    var character = Registry.Get<CharacterData>().Get(config.Selection.CharacterID);
+    var selection = config.Selection;
+    var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
     View = Object.Instantiate(character.Prefab);
-    View.name = character.name + " (Player View)";
+    View.name = string.Format("Player {0} View ({1}, {2})",
+                              config.PlayerID + 1, character.name,
+                              selection.Pallete);
 
     PlayerUtil.DestroyAll(View, typeof(Collider));
 

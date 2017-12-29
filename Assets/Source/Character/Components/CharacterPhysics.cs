@@ -26,7 +26,6 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
   public void Presimulate(PlayerState state) {
     transform.position = state.Position;
     IsGrounded = IsCharacterGrounded(state);
-    Debug.Log(IsGrounded);
   }
 
   public PlayerState Simulate(PlayerState state, PlayerInput input) {

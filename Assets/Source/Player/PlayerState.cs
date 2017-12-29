@@ -4,19 +4,28 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public struct PlayerState {
 
-  public Vector2 Position;
-  public Vector2 Velocity;
+  // One Player Total: 44 bytes
+  // 4 Player: 176 bytes
+  //
+  // 60 times one: 2640 bytes
+  // 60 times four: 10560 bytes
+
+  public Vector2 Position;                            // 8 bytes
+  public Vector2 Velocity;                            // 8 bytes
 
   // Direction: True => Right, False => Left
-  public bool Direction;
+  public bool Direction;                              // One bit
 
-  public int StateHash;
-  public int NormalizedStateTime;
+  public int StateHash;                               // 1-4 bytes
+  public float NormalizedStateTime;                   // 4 bytes
 
-  public float Damage;
-  public ushort Hitstun;
+  public float ShieldHealth;                          // 4 bytes
+  public int ShieldRecoveryCooldown;                  // 1-4 bytes
 
-  public uint Stocks;
+  public float Damage;                                // 4 bytes
+  public int Hitstun;                                 // 1-4 bytes
+
+  public uint Stocks;                                 // 1-4 bytes
 
 }
 

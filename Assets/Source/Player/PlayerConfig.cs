@@ -6,6 +6,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [Serializable]
 public struct PlayerConfig {
 
+  public uint PlayerID;
   public PlayerSelection Selection;
 
   public bool IsValid {
