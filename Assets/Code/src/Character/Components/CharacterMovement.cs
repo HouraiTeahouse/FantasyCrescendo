@@ -41,6 +41,22 @@ public class CharacterMovement : MonoBehaviour, ICharacterSimulation {
     }
   }
 
+  public bool CanJump(PlayerState state) {
+    return state.RemainingJumps > 0;
+  }
+
+  public float GetJumpPower(PlayerState state) {
+    return JumpPower[JumpPower.Length - state.RemainingJumps];
+  }
+
+  public void Jump(ref PlayerState state) {
+    Debug.LogFormat("{0} {1}", state.RemainingJumps, CanJump(state));
+    if (CanJump(state)) {
+      state.Velocity.y = GetJumpPower(state);
+      state.RemainingJumps--;
+    }
+  }
+
 }
 
 [Serializable]
@@ -51,11 +67,14 @@ internal class GroundMovement {
                           CharacterMovement movement) {
     state.RemainingJumps = movement.MaxJumpCount;
     var inputMovement = input.Current.Movement;
-    state.Velocity = inputMovement;
+    state.Velocity.x = inputMovement.x;
     if (inputMovement.x > 0 && !state.Direction) {
       state.Direction = false;
     } else if (inputMovement.x < 0 && state.Direction) {
       state.Direction = true;
+    }
+    if (input.Jump.WasPressed) {
+      movement.Jump(ref state);
     }
     return state;
   }
@@ -69,11 +88,9 @@ internal class AerialMovement {
                           PlayerInputContext input,
                           CharacterMovement movement) {
     var inputMovement = input.Current.Movement;
-    state.Velocity = inputMovement;
-    if (inputMovement.x > 0 && !state.Direction) {
-      state.Direction = false;
-    } else if (inputMovement.x < 0 && state.Direction) {
-      state.Direction = true;
+    state.Velocity.x = inputMovement.x;
+    if (input.Jump.WasPressed) {
+      movement.Jump(ref state);
     }
     return state;
   }
@@ -86,13 +103,6 @@ internal class LedgeMovement {
   public PlayerState Move(PlayerState state,
                           PlayerInputContext input,
                           CharacterMovement movement) {
-    var inputMovement = input.Current.Movement;
-    state.Velocity = inputMovement;
-    if (inputMovement.x > 0 && !state.Direction) {
-      state.Direction = false;
-    } else if (inputMovement.x < 0 && state.Direction) {
-      state.Direction = true;
-    }
     return state;
   }
 
