@@ -8,6 +8,8 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
 
   public CharacterController CharacterController;
 
+  public float Gravity = 9.86f;
+
   public bool IsGrounded { get; private set; }
 
   public ITask Initialize(PlayerConfig config, bool isView) {
@@ -31,6 +33,7 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
   }
 
   public PlayerState Simulate(PlayerState state, PlayerInput input) {
+    ApplyGravity(ref state);
     CharacterController.Move(state.Velocity);
     state.Position = transform.position;
     return state;
@@ -39,6 +42,15 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
   public void ApplyState(PlayerState state) {
     transform.position = state.Position;
     transform.localEulerAngles = (state.Direction ? 0 : 180) * Vector3.up;
+  }
+
+  void ApplyGravity(ref PlayerState state) {
+    Debug.Log(IsGrounded);
+    if (!IsGrounded) {
+      state.Velocity.y -= Gravity * Time.fixedDeltaTime;
+    } else {
+      state.Velocity.x = 0f;
+    }
   }
 
   bool IsCharacterGrounded(PlayerState state) {
