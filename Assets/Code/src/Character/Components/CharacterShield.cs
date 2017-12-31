@@ -69,10 +69,10 @@ namespace HouraiTeahouse.FantasyCrescendo {
     }
 
     public void Presimulate(PlayerState state) {
-      AdjustShieldSize(state);
+      ApplyState(state);
     }
 
-    public PlayerState Simulate(PlayerState state, PlayerInput input) {
+    public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
       //var machineState = GetState(state.StateHash);
       //var shieldActive = machineState != null && validStates.Contains(machineState);
       var wasActive = false;
@@ -96,14 +96,10 @@ namespace HouraiTeahouse.FantasyCrescendo {
     }
 
     public void ApplyState(PlayerState state) {
-      AdjustShieldSize(state);
+      _shieldTransform.localScale = Vector3.one * ShieldSize * (state.ShieldHealth / MaxShieldHealth);
       if (TargetBone != null) {
         _shieldTransform.localPosition = transform.InverseTransformPoint(TargetBone.position);
       }
-    }
-
-    void AdjustShieldSize(PlayerState state) {
-      _shieldTransform.localScale = Vector3.one * ShieldSize * (state.ShieldHealth / MaxShieldHealth);
     }
 
     //public override void ResetState(ref CharacterStateSummary state) {

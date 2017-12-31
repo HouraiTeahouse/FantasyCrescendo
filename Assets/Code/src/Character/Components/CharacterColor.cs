@@ -6,6 +6,9 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public class CharacterColor : MonoBehaviour, ICharacterComponent {
 
   public ITask Initialize(PlayerConfig config, bool isView) {
+    if (!isView) {
+      return Task.Resolved;
+    }
     //TODO(james7132): Load materials properly here.
     var color = Config.Get<VisualConfig>().GetPlayerColor(config.PlayerID);
     foreach (var renderer in GetComponentsInChildren<Renderer>()) {

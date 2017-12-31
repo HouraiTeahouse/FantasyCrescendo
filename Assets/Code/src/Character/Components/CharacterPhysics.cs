@@ -35,7 +35,7 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
     IsGrounded = IsCharacterGrounded(state);
   }
 
-  public PlayerState Simulate(PlayerState state, PlayerInput input) {
+  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     ApplyGravity(ref state);
     LimitFallSpeed(ref state);
 

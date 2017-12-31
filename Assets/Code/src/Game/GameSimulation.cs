@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState, GameInput> {
+public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState, GameInputContext> {
 
   PlayerSimulation[] PlayerSimulations;
 
@@ -20,7 +20,7 @@ public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState,
     return Task.All(tasks);
   }
 
-  public GameState Simulate(GameState state, GameInput input) {
+  public GameState Simulate(GameState state, GameInputContext input) {
     Assert.IsTrue(input.IsValid);
     Assert.AreEqual(PlayerSimulations.Length, state.PlayerStates.Length);
     Assert.AreEqual(PlayerSimulations.Length, input.PlayerInputs.Length);

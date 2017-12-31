@@ -14,7 +14,7 @@ public class GameManager : NetworkBehaviour {
   void Start() {
     var gameView = new GameView();
     var gameSim = new GameSimulation();
-    var controller = new GameController();
+    var controller = new GameController(Config);
 
     controller.CurrentState = CreateInitialState();
     controller.InputSource = new TestInputSource(Config);

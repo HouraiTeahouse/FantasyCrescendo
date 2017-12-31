@@ -17,6 +17,8 @@ public struct PlayerState {
   public bool Direction;                              // One bit
   public bool IsFastFalling;                          // One bit
 
+  public int RemainingJumps;                          // 1-4 bytes
+
   public int StateHash;                               // 1-4 bytes
   public float NormalizedStateTime;                   // 4 bytes
 
