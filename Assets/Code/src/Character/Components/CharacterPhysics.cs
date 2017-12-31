@@ -31,12 +31,13 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
   }
 
   public void Presimulate(PlayerState state) {
-    transform.position = state.Position;
+    ApplyState(state);
     IsGrounded = IsCharacterGrounded(state);
   }
 
   public PlayerState Simulate(PlayerState state, PlayerInput input) {
     ApplyGravity(ref state);
+    LimitFallSpeed(ref state);
 
     CharacterController.Move(state.Velocity);
     state.Position = transform.position;
@@ -52,7 +53,7 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
     if (!IsGrounded) {
       state.Velocity.y -= Gravity * Time.fixedDeltaTime;
     } else {
-      state.Velocity.x = 0f;
+      state.Velocity.y = Mathf.Max(0f, state.Velocity.y);
     }
   }
 
@@ -62,8 +63,8 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
     }
     if (state.IsFastFalling) {
       state.Velocity.y = -FastFallSpeed;
-    } else {
-      state.Velocity.y = -Mathf.Max(Mathf.Abs(state.Velocity.y), MaxFallSpeed);
+    } else if (state.Velocity.y < -MaxFallSpeed) {
+      state.Velocity.y = -MaxFallSpeed;
     }
   }
 
