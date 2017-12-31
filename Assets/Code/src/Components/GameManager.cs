@@ -1,24 +1,24 @@
 using HouraiTeahouse.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class GameController : MonoBehaviour {
+public class GameManager : NetworkBehaviour {
 
   public GameConfig Config;
 
-  GameState state;
-  InputHistory<GameInput> inputHistory;
-  IInputSource<GameInput> inputSource;
-  ISimulation<GameState, GameInput> simulation;
+  AbstractGameController gameController;
   IStateView<GameState> view;
 
   void Start() {
-    inputSource = new TestInputSource(Config);
-    state = CreateInitialState();
-
     var gameView = new GameView();
     var gameSim = new GameSimulation();
+    var controller = new GameController();
+
+    controller.CurrentState = CreateInitialState();
+    controller.InputSource = new TestInputSource(Config);
+    controller.Simulation = gameSim;
 
     Task.All(
       gameSim.Initialize(Config),
@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
         Debug.Log("INITIALIZED");
       });
 
-    simulation = gameSim;
+    gameController = controller;
     view = gameView;
   }
 
@@ -39,11 +39,11 @@ public class GameController : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    state = simulation.Simulate(state, inputSource.SampleInput());
+    gameController.Update();
   }
 
   void Update() {
-    view.ApplyState(state);
+    view.ApplyState(gameController.CurrentState);
   }
 
 }
