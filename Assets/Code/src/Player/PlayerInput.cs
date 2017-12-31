@@ -21,7 +21,84 @@ public struct PlayerInput {
   public bool Shield;                           // 1 bit
   public bool Grab;                             // 1 bit
 
+}
+
+public class PlayerInputContext {
+
+  public PlayerInput Previous;
+  public PlayerInput Current;
+
+  public void Update(PlayerInput input) {
+    Previous = Current;
+    Current = input;
+  }
+
+  public bool IsValid {
+    get { return Previous.IsValid && Current.IsValid; }
+  }
+
+  public ButtonContext Attack {
+    get {
+      return new ButtonContext {
+        Previous = Previous.Attack,
+        Current  = Current.Attack
+      };
+    }
+  }
+
+  public ButtonContext Special {
+    get {
+      return new ButtonContext {
+        Previous = Previous.Special,
+        Current = Current.Special
+      };
+    }
+  }
+
+  public ButtonContext Jump {
+    get {
+      return new ButtonContext {
+        Previous = Previous.Jump,
+        Current = Current.Jump
+      };
+    }
+  }
+
+  public ButtonContext Shield {
+    get {
+      return new ButtonContext {
+        Previous = Previous.Shield,
+        Current = Current.Shield
+      };
+    }
+  }
+
+  public ButtonContext Grab {
+    get {
+      return new ButtonContext {
+        Previous = Previous.Grab,
+        Current = Current.Grab
+      };
+    }
+  }
 
 }
+
+public struct ButtonContext {
+
+  public bool Previous;
+  public bool Current;
+
+  public bool WasPressed {
+    get { return !Previous && Current; }
+  }
+
+  public bool WasReleased {
+    get { return Previous && !Current; }
+  }
+
+}
+
+
 
 }

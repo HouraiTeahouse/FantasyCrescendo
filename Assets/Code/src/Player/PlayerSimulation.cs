@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<PlayerState, PlayerInput> {
+public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<PlayerState, PlayerInputContext> {
 
   GameObject Model;
   ICharacterSimulation[] PresimulateComponents;
-  ISimulation<PlayerState, PlayerInput>[] SimulationComponents;
+  ISimulation<PlayerState, PlayerInputContext>[] SimulationComponents;
 
   public ITask Initialize(PlayerConfig config) {
     var selection = config.Selection;
@@ -23,7 +23,7 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
     var task = Model.Broadcast<ICharacterComponent>(
         component => component.Initialize(config, false));
 
-    SimulationComponents = Model.GetComponentsInChildren<ISimulation<PlayerState, PlayerInput>>();
+    SimulationComponents = Model.GetComponentsInChildren<ISimulation<PlayerState, PlayerInputContext>>();
     PresimulateComponents = SimulationComponents.OfType<ICharacterSimulation>()
                                                 .ToArray();
 
@@ -36,7 +36,7 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
     }
   }
 
-  public PlayerState Simulate(PlayerState state, PlayerInput input) {
+  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     //Assert.IsTrue(input.IsValid);
     foreach (var component in SimulationComponents) {
       state = component.Simulate(state, input);

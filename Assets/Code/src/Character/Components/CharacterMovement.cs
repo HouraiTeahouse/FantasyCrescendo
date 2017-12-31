@@ -9,6 +9,12 @@ public class CharacterMovement : MonoBehaviour, ICharacterSimulation {
 
   public CharacterPhysics Physics;
 
+  public float[] JumpPower;
+
+  public int MaxJumpCount {
+    get { return JumpPower.Length; }
+  }
+
   GroundMovement Ground;
   AerialMovement Aerial;
   LedgeMovement Ledge;
@@ -27,19 +33,12 @@ public class CharacterMovement : MonoBehaviour, ICharacterSimulation {
   public void Presimulate(PlayerState state) {
   }
 
-  public PlayerState Simulate(PlayerState state, PlayerInput input) {
-    state.Velocity = input.Movement;
-    if (input.Movement.x > 0 && !state.Direction) {
-      state.Direction = false;
-    } else if (input.Movement.x < 0 && state.Direction) {
-      state.Direction = true;
+  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+    if (Physics.IsGrounded) {
+      return Ground.Move(state, input, this);
+    } else {
+      return Aerial.Move(state, input, this);
     }
-    return state;
-    //if (Physics.IsGrounded) {
-      //return Ground.Move(state, input);
-    //} else {
-      //return Aerial.Move(state, input);
-    //}
   }
 
 }
@@ -47,7 +46,17 @@ public class CharacterMovement : MonoBehaviour, ICharacterSimulation {
 [Serializable]
 internal class GroundMovement {
 
-  public PlayerState Move(PlayerState state, PlayerInput input) {
+  public PlayerState Move(PlayerState state,
+                          PlayerInputContext input,
+                          CharacterMovement movement) {
+    state.RemainingJumps = movement.MaxJumpCount;
+    var inputMovement = input.Current.Movement;
+    state.Velocity = inputMovement;
+    if (inputMovement.x > 0 && !state.Direction) {
+      state.Direction = false;
+    } else if (inputMovement.x < 0 && state.Direction) {
+      state.Direction = true;
+    }
     return state;
   }
 
@@ -56,7 +65,16 @@ internal class GroundMovement {
 [Serializable]
 internal class AerialMovement {
 
-  public PlayerState Move(PlayerState state, PlayerInput input) {
+  public PlayerState Move(PlayerState state,
+                          PlayerInputContext input,
+                          CharacterMovement movement) {
+    var inputMovement = input.Current.Movement;
+    state.Velocity = inputMovement;
+    if (inputMovement.x > 0 && !state.Direction) {
+      state.Direction = false;
+    } else if (inputMovement.x < 0 && state.Direction) {
+      state.Direction = true;
+    }
     return state;
   }
 
@@ -65,7 +83,16 @@ internal class AerialMovement {
 [Serializable]
 internal class LedgeMovement {
 
-  public PlayerState Move(PlayerState state, PlayerInput input) {
+  public PlayerState Move(PlayerState state,
+                          PlayerInputContext input,
+                          CharacterMovement movement) {
+    var inputMovement = input.Current.Movement;
+    state.Velocity = inputMovement;
+    if (inputMovement.x > 0 && !state.Direction) {
+      state.Direction = false;
+    } else if (inputMovement.x < 0 && state.Direction) {
+      state.Direction = true;
+    }
     return state;
   }
 
