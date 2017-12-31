@@ -10,6 +10,9 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
 
   public float Gravity = 9.86f;
 
+  public float MaxFallSpeed = 7.5f;
+  public float FastFallSpeed = 10f;
+
   public bool IsGrounded { get; private set; }
 
   public ITask Initialize(PlayerConfig config, bool isView) {
@@ -34,6 +37,7 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
 
   public PlayerState Simulate(PlayerState state, PlayerInput input) {
     ApplyGravity(ref state);
+
     CharacterController.Move(state.Velocity);
     state.Position = transform.position;
     return state;
@@ -45,11 +49,21 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
   }
 
   void ApplyGravity(ref PlayerState state) {
-    Debug.Log(IsGrounded);
     if (!IsGrounded) {
       state.Velocity.y -= Gravity * Time.fixedDeltaTime;
     } else {
       state.Velocity.x = 0f;
+    }
+  }
+
+  void LimitFallSpeed(ref PlayerState state) {
+    if (IsGrounded) {
+      return;
+    }
+    if (state.IsFastFalling) {
+      state.Velocity.y = -FastFallSpeed;
+    } else {
+      state.Velocity.y = -Mathf.Max(Mathf.Abs(state.Velocity.y), MaxFallSpeed);
     }
   }
 
