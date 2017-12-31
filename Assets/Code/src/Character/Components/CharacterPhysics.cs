@@ -39,7 +39,7 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
     ApplyGravity(ref state);
     LimitFallSpeed(ref state);
 
-    CharacterController.Move(state.Velocity);
+    CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
     state.Position = transform.position;
     return state;
   }

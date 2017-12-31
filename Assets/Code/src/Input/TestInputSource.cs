@@ -16,6 +16,8 @@ public class TestInputSource : IInputSource<GameInput> {
   public GameInput SampleInput() {
     var playerInput = new PlayerInput {
       Movement = new Vector2(ButtonAxis(KeyCode.A, KeyCode.D), ButtonAxis(KeyCode.S, KeyCode.W)),
+      //TODO(james7132): Make Tap Jump Configurable
+      Jump = Input.GetKey(KeyCode.W),
       IsValid = true
     };
     var inputValue = input.Clone();
