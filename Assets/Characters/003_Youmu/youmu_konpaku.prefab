@@ -182,6 +182,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Physics: {fileID: 114424149413010172}
+  JumpPower:
+  - 7
+  - 7
 --- !u!114 &114424149413010172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,6 +198,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterController: {fileID: 143969617390973670}
   Gravity: 9.86
+  MaxFallSpeed: 7.5
+  FastFallSpeed: 10
 --- !u!114 &114752305556272700
 MonoBehaviour:
   m_ObjectHideFlags: 1
