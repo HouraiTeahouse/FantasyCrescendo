@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 515664145}
   - component: {fileID: 515664142}
   - component: {fileID: 515664144}
+  - component: {fileID: 515664146}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -397,10 +398,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eced8acc9876143699a398b6b82408b0, type: 2}
   - {fileID: 11400000, guid: 5e880f14252814f4fa2087507048cb7a, type: 2}
   - {fileID: 11400000, guid: 55cda8d2eaa1c4be8b4cb8d136a6a981, type: 2}
-  Configs:
-  - {fileID: 11400000, guid: 13fa65e7c87ac4cc09aecb7e1d1d7ffd, type: 2}
-  - {fileID: 11400000, guid: a2e81b0ad88c34e529dc9b5773df482f, type: 2}
-  - {fileID: 11400000, guid: b7afe6661d3c847dab3f997b18e6a2c5, type: 2}
 --- !u!114 &515664145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,6 +430,21 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &515664146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 515664141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea7448df476a4858b258482547ebda1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Configs:
+  - {fileID: 11400000, guid: 13fa65e7c87ac4cc09aecb7e1d1d7ffd, type: 2}
+  - {fileID: 11400000, guid: a2e81b0ad88c34e529dc9b5773df482f, type: 2}
+  - {fileID: 11400000, guid: b7afe6661d3c847dab3f997b18e6a2c5, type: 2}
 --- !u!1 &883327364
 GameObject:
   m_ObjectHideFlags: 0
