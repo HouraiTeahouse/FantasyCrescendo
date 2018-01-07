@@ -13,15 +13,7 @@ public struct GameInput {
     PlayerInputs = new PlayerInput[config.PlayerConfigs.Length];
   }
 
-  public bool IsValid {
-    get {
-      bool isValid = true;
-      for (int i = 0; i < PlayerInputs.Length; i++) {
-        isValid &= PlayerInputs[i].IsValid;
-      }
-      return isValid;
-    }
-  }
+  public bool IsValid => PlayerInputs.IsAllValid();
 
   public GameInput Predict(GameInput baseInput) {
     var clone = Clone();
