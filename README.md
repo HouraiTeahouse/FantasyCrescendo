@@ -1,4 +1,42 @@
 # Backroll
+<p align="center">
+    <a href="https://github.com/HouraiTeahouse/FantasyCrescendo/blob/develop/LICENSE">
+        <img src="https://img.shields.io/github/license/HouraiTeahouse/FantasyCrescendo.svg" alt="License">
+    </a>
+    <a href="https://discordapp.com/invite/VuZhs9V">
+        <img src="https://img.shields.io/badge/discord-hourai--teahouse-738bd7.svg" alt="Join the Hourai Teahouse Discord Chat">
+    </a>
+</p>
 
 An Experimental Rewrite of Fantasy Crescendo from the ground up to support
 various types of net-enabled gameplay.
+
+## Setup
+This project uses git submodules extensively to manage remote dependencies 
+(due to a general lack of a user-facing package manager for Unity3D).To 
+properly clone the entire project use `git clone --recursive ...` to check 
+out all submodules and dependencies. If using an older version of git or to
+check out and initialize in a normally cloned repo, use the following command:
+`git submodule update --init --recursive`. This command is also used to update
+submodules that may have been updated by remote changes.
+
+## Contributing
+This is an open project, intended to be a community driven project. 
+Contributions are very welcome. Code based contributions can be received and 
+reviewed publicly on this repository. Non-code assets like BGM or 3D models 
+are best sent through and collaborated on in our development Discord server,
+linked above. For more information, please read 
+[CONTRIBUTING.md](./.github/CONTRIBUTING.md).
+
+## License
+First and foremost, *Fantasy Crescendo ~ Rumble Dream Ensemble* is a derivative
+of Touhou project. Thus, we ask that any redistirbution or derivative of this
+project adhere to the guidelines created by ZUN, 
+[viewable in English here](http://en.touhouwiki.net/wiki/Touhou_Wiki:Copyrights).
+
+Furthermore, original *Fantasy Crescendo* content is licensed under two seperate 
+liscenses depending what content is in question:  
+- The software (all text files) are under the Version 2 of the GPL or any later 
+  version. See [LICENSE](./LICENSE) for more information.
+- The content, everything else, is evaluated on a per item basis. Please contact 
+  the original creator before reproducing or editing any of the game assets.
