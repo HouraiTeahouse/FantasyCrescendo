@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public struct PlayerInput {
+public struct PlayerInput : IValidatable {
 
   // One Player Total: 17 bytes
   // Four Player Total: 68 bytes
@@ -21,9 +21,11 @@ public struct PlayerInput {
   public bool Shield;                           // 1 bit
   public bool Grab;                             // 1 bit
 
+  bool IValidatable.IsValid => IsValid;
+
 }
 
-public class PlayerInputContext {
+public class PlayerInputContext : IValidatable {
 
   public PlayerInput Previous;
   public PlayerInput Current;
@@ -33,9 +35,7 @@ public class PlayerInputContext {
     Current = input;
   }
 
-  public bool IsValid {
-    get { return Previous.IsValid && Current.IsValid; }
-  }
+  public bool IsValid => Previous.IsValid && Current.IsValid;
 
   public ButtonContext Attack {
     get {
