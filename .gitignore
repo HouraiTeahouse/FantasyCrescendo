@@ -8,6 +8,10 @@
 bundles/
 Assets/StreamingAssets/bundles*
 
+# Ignore meta files of remote dependencies
+Assets/Code/deps/*.meta
+Assets/Tools/*.meta
+
 # Ignore any changes made to the sample .gitconfig
 .gitconfig
 
