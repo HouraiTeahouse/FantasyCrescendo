@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98904ecb30f94d3c82a0ac3452af1fe, type: 3}
+  m_Name: yuugi_hoshiguma
+  m_EditorClassIdentifier: 
+  _id: 3284981304
+  ShortName: 
+  LongName: 
+  Prefab: {fileID: 1872841189430122, guid: fa54f9d6ec1777d46bd04770b250df37, type: 2}
+  Icon: {fileID: 21300000, guid: 8226612046010b3469fd1893d4f106a6, type: 3}
+  Portraits:
+  - {fileID: 21300000, guid: 71c2cb04c59ab15449f94f3b4f35d4a3, type: 3}
+  - {fileID: 21300000, guid: 933b1cc324d3af5449f430966a98936d, type: 3}
+  - {fileID: 21300000, guid: aa2daeca6566f7943be8199b5f9fc22f, type: 3}
+  - {fileID: 21300000, guid: ff9d92580a898654a8ac0d16c95d7a7a, type: 3}

@@ -14,6 +14,8 @@ public class CharacterData : ScriptableObject, IIdentifiable {
   public string ShortName;
   public string LongName;
   public GameObject Prefab;
+  public Sprite Icon;
+  public Sprite[] Portraits;
 
   public uint Id {
     get { return _id; }
