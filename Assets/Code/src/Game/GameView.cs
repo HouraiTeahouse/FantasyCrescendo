@@ -9,7 +9,7 @@ public class GameView : IInitializable<GameConfig>, IStateView<GameState> {
   public PlayerView[] PlayerViews;
 
   public ITask Initialize(GameConfig config) {
-    PlayerViews = new PlayerView[config.PlayerConfigs.Length];
+    PlayerViews = new PlayerView[config.PlayerCount];
     var tasks = new List<ITask>();
     var viewFactories = Object.FindObjectsOfType<PlayerViewFactory>();
     for (int i = 0; i < PlayerViews.Length; i++) {
