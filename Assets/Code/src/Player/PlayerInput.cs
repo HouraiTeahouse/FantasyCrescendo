@@ -2,6 +2,10 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// A data object representing the complete input of one player for a given
+/// tick.
+/// </summary>
 public struct PlayerInput : IValidatable {
 
   // One Player Total: 17 bytes
@@ -25,6 +29,10 @@ public struct PlayerInput : IValidatable {
 
 }
 
+/// <summary>
+/// A data object for managing the state and change of a single
+/// player's input over two ticks of gameplay.
+/// </summary>
 public class PlayerInputContext : IValidatable {
 
   public PlayerInput Previous;
@@ -84,6 +92,10 @@ public class PlayerInputContext : IValidatable {
 
 }
 
+/// <summary>
+/// A simple data object for managing the state and change of a single
+/// button over two ticks of gameplay.
+/// </summary>
 public struct ButtonContext {
 
   public bool Previous;

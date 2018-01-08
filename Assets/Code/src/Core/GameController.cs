@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 namespace HouraiTeahouse.FantasyCrescendo {
 
 /// <summary>
-/// An AbstractGameController implementation that runs a normal local game.
+/// An IGameController implementation that runs a normal local game.
 /// </summary>
 public class GameController : IGameController<GameState> {
 

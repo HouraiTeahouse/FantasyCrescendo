@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// A UI component for changing a Unity UI component's color to match that
+/// of a given player. The color is defined by the registered VisualConfig.
+/// </summary>
 public class PlayerColor : MonoBehaviour, IInitializable<PlayerConfig> {
 
   public Graphic Graphic;

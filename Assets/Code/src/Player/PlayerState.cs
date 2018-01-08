@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// A complete representation of a player's state at a given tick.
+/// </summary>
 public struct PlayerState {
 
   // One Player Total: 44 bytes
