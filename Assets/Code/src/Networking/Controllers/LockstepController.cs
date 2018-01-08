@@ -32,7 +32,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
   //public LockstepClientController(INetworkClient client) : base(client) {
     //cachedInputSet = new GameInput[0];
-    //Client.RecievedInputs += (time, inputs) => {
+    //Client.ReceivedInputs += (time, inputs) => {
       //if (time < Timestep){
         //return;
       //}

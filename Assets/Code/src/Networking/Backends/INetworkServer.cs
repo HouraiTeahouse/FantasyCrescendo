@@ -8,7 +8,7 @@ public interface INetworkServer : IDisposable {
   int ClientCount { get; }
 
   // Signature: Client ID, Timestamp, Inputs
-  event Action<int, uint, IEnumerable<GameInput>> RecievedInputs;
+  event Action<int, uint, IEnumerable<GameInput>> ReceivedInputs;
 
   void BroadcastInput(uint startTimestamp, IEnumerable<GameInput> input);
   void BroadcastState(uint timestamp, GameState state);
