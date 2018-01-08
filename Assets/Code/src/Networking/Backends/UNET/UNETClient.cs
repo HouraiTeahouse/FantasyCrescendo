@@ -7,16 +7,16 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class UNETClient : INetworkClient {
 
-  public event Action<uint, IEnumerable<GameInput>> RecievedInputs;
-  public event Action<uint, GameState> RecievedState;
+  public event Action<uint, IEnumerable<GameInput>> ReceivedInputs;
+  public event Action<uint, GameState> ReceivedState;
 
   readonly NetworkClient unetClient;
 
   public UNETClient(NetworkClient client) {
     unetClient = client;
 
-    unetClient.RegisterHandler(MessageCode.UpdateState, OnRecievedState);
-    unetClient.RegisterHandler(MessageCode.UpdateInput, OnRecievedInput);
+    unetClient.RegisterHandler(MessageCode.UpdateState, OnReceivedState);
+    unetClient.RegisterHandler(MessageCode.UpdateInput, OnReceivedInput);
   }
 
   public void SendInput(uint startTimestamp, IEnumerable<GameInput> input) {
@@ -26,20 +26,20 @@ public class UNETClient : INetworkClient {
     });
   }
 
-  void OnRecievedState(NetworkMessage message) {
-    if (RecievedState == null) {
+  void OnReceivedState(NetworkMessage message) {
+    if (ReceivedState == null) {
       return;
     }
     var serverState = message.ReadMessage<ServerStateMessage>();
-    RecievedState(serverState.Timestamp, serverState.State);
+    ReceivedState(serverState.Timestamp, serverState.State);
   }
 
-  void OnRecievedInput(NetworkMessage message) {
-    if (RecievedInputs == null) {
+  void OnReceivedInput(NetworkMessage message) {
+    if (ReceivedInputs == null) {
       return;
     }
     var inputs = message.ReadMessage<InputSetMessage>();
-    RecievedInputs(inputs.StartTimestamp, inputs.Inputs);
+    ReceivedInputs(inputs.StartTimestamp, inputs.Inputs);
   }
 
   public void Dispose() {
