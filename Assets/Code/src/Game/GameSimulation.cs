@@ -11,7 +11,7 @@ public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState,
 
   public ITask Initialize(GameConfig config) {
     Assert.IsTrue(config.IsValid);
-    PlayerSimulations = new PlayerSimulation[config.PlayerConfigs.Length];
+    PlayerSimulations = new PlayerSimulation[config.PlayerCount];
     var tasks = new List<ITask>();
     for (int i = 0; i < PlayerSimulations.Length; i++) {
       PlayerSimulations[i] = new PlayerSimulation();

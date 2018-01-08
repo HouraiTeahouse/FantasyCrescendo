@@ -10,7 +10,7 @@ public struct GameInput {
   public PlayerInput[] PlayerInputs;
 
   public GameInput(GameConfig config) {
-    PlayerInputs = new PlayerInput[config.PlayerConfigs.Length];
+    PlayerInputs = new PlayerInput[config.PlayerCount];
   }
 
   public bool IsValid => PlayerInputs.IsAllValid();
