@@ -8,9 +8,13 @@ public class GameManager : NetworkBehaviour {
 
   public GameConfig Config;
 
-  AbstractGameController gameController;
+  IGameController<GameState> gameController;
   IStateView<GameState> view;
 
+  /// <summary>
+  /// Start is called on the frame when a script is enabled just before
+  /// any of the Update methods is called the first time.
+  /// </summary>
   void Start() {
     var gameView = new GameView();
     var gameSim = new GameSimulation();
@@ -38,10 +42,16 @@ public class GameManager : NetworkBehaviour {
     return initialState;
   }
 
+  /// <summary>
+  /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
+  /// </summary>
   void FixedUpdate() {
     gameController.Update();
   }
 
+  /// <summary>
+  /// Update is called every frame, if the MonoBehaviour is enabled.
+  /// </summary>
   void Update() {
     view.ApplyState(gameController.CurrentState);
   }
