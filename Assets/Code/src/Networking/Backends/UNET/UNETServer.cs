@@ -8,14 +8,14 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public class UNETServer : INetworkServer {
 
   public UNETServer() {
-    NetworkServer.RegisterHandler(MessageCode.UpdateInput, OnRecievedClientInput);
+    NetworkServer.RegisterHandler(MessageCode.UpdateInput, OnReceivedClientInput);
   }
 
   public int ClientCount {
     get { return NetworkServer.connections.Count; }
   }
 
-  public event Action<int, uint, IEnumerable<GameInput>> RecievedInputs;
+  public event Action<int, uint, IEnumerable<GameInput>> ReceivedInputs;
 
   public void BroadcastInput(uint startTimestamp, IEnumerable<GameInput> input) {
     NetworkServer.SendUnreliableToAll(MessageCode.UpdateInput, new InputSetMessage {
@@ -31,12 +31,12 @@ public class UNETServer : INetworkServer {
     });
   }
 
-  void OnRecievedClientInput(NetworkMessage message) {
-    if (RecievedInputs == null) {
+  void OnReceivedClientInput(NetworkMessage message) {
+    if (ReceivedInputs == null) {
       return;
     }
     var inputSet = message.ReadMessage<InputSetMessage>();
-    RecievedInputs(message.conn.connectionId,
+    ReceivedInputs(message.conn.connectionId,
                    inputSet.StartTimestamp,
                    inputSet.Inputs);
   }
