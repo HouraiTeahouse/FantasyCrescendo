@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98904ecb30f94d3c82a0ac3452af1fe, type: 3}
+  m_Name: sakuya_izayoi
+  m_EditorClassIdentifier: 
+  _id: 2838213749
+  ShortName: 
+  LongName: 
+  Prefab: {fileID: 1872841189430122, guid: 8307ba3f983b4204f928c16c255e9e57, type: 2}
+  Icon: {fileID: 21300000, guid: f45398a8ed80bee41b4432d4895cb18d, type: 3}
+  Portraits:
+  - {fileID: 21300000, guid: dbfc01b93c5702341931efc372d8027b, type: 3}
+  - {fileID: 21300000, guid: 8558cce18de1b744a8f0655ed8a4a683, type: 3}
+  - {fileID: 21300000, guid: 16d1f11948b7e244aa4bcbdca2d78fd7, type: 3}
+  - {fileID: 21300000, guid: 879ac156e473ea645a7f9f91489c8ea6, type: 3}
