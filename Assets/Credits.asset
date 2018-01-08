@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5e9a596a0dc964a9abf257f828b609, type: 3}
+  m_Name: Credits
+  m_EditorClassIdentifier: 
+  Categories:
+  - Name: Producer
+    Contributors:
+    - james7132
+  - Name: 2D Character Artist
+    Contributors:
+    - ProfitShame
+  - Name: 3D Character Artist
+    Contributors:
+    - David Rice
+  - Name: 3D Environment Artist
+    Contributors:
+    - Gabo7
+  - Name: Visual Effects
+    Contributors:
+    - Gabo7
+  - Name: Sound Effects
+    Contributors:
+    - Shredster7
+  - Name: Gameplay Design
+    Contributors:
+    - d3_crescentia
+    - LightLunas
+    - SypherPhoenix
+  - Name: Character Animation
+    Contributors:
+    - nineball
+    - Automn
+    - Coolpool2
+    - Roysiphus
+    - Dylan tam
+    - lije
+  - Name: Game Music
+    Contributors:
+    - d3_crescentia
+    - iceerules
+    - sladjkf
+    - pigdevil2010
+    - Princess Sylvysprit
+    - spaztron64
+    - Peacock Roy
+    - KungFuCthulu
+    - Yakikaze
+  - Name: Game Programming
+    Contributors:
+    - james7132
+    - DracoGideon
+    - iampotato
+    - NosGenerated
+    - Kaze_Senshi
+    - magus
+  - Name: User Interface Design
+    Contributors:
+    - Nana
+    - Rokugurin
+    - Peacock Roy
+    - Shredster7
+    - HyperWaddleDee
+    - se_b_o
+  - Name: Support System Programming
+    Contributors:
+    - james7132
+    - MosesOfEygpt
+  - Name: Localization
+    Contributors:
+    - Anseriform
+    - Spotty Len
+    - swirlingmurk
+    - Sombres
+    - Babbe
+    - spaztron64
+    - Granpapa777
+    - LightLunas
+    - xicmiah
+    - Mr. Hat
+    - EasternMouse
+    - Nradoto
+    - Gabo7
+    - Mako
+    - Indigo
+    - Abenson
+    - DracoGideon
+    - Automn
+  - Name: Promotion
+    Contributors:
+    - Nana
+    - moobiful
+  - Name: Special Thanks
+    Contributors:
+    - ZUN
+    - Team Shanghai Alice
