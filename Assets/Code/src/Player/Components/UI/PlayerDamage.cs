@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// A UI Component that allows displaying a players current damage.
+/// </summary>
 public class PlayerDamage : MonoBehaviour, IStateView<PlayerState> {
 
   public Text DisplayText;

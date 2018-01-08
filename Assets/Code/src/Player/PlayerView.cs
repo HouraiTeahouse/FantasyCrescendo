@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// Manages the visual display of a single player's state within a multiplayer match.
+/// </summary>
 public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> {
 
   GameObject View;

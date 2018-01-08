@@ -4,6 +4,9 @@ using Random = System.Random;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// A data object representing a playable character.
+/// </summary>
 [CreateAssetMenu(fileName = "New Chararacter", menuName = "Character")]
 public class CharacterData : ScriptableObject, IIdentifiable {
 

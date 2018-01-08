@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// A data object for configuring a single player within a multiplayer match.
+/// </summary>
 [Serializable]
 public struct PlayerConfig : IValidatable {
 
@@ -13,6 +16,10 @@ public struct PlayerConfig : IValidatable {
 
 }
 
+/// <summary>
+/// A data object for managing the human selected elements of a player's
+/// configuration.
+/// </summary>
 [Serializable]
 public struct PlayerSelection : IValidatable {
 

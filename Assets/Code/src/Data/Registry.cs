@@ -5,6 +5,14 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// A type-safe global object registry.
+/// </summary>
+/// <remarks> 
+/// Only supports types that implement IIdentifiable.
+/// Objects are referred to by their IDs, and the ID for a given
+/// object is assumed to be globally unique.
+/// </remarks>
 public static class Registry {
 
   static Dictionary<Type, object> Registries;
@@ -13,6 +21,10 @@ public static class Registry {
     Registries = new Dictionary<Type, object>();
   }
 
+  /// <summary>
+  /// Retrieves or creates a new registry for given type.
+  /// </summary>
+  /// <returns>the retrieved registry for the type.</returns>
   public static Registry<T> Get<T>() where T : IIdentifiable {
     object storedObject = null;
     Registries.TryGetValue(typeof(T), out storedObject);
@@ -24,6 +36,9 @@ public static class Registry {
     return registry;
   }
 
+  /// <summary>
+  /// Clears all registries of all types and the values they store.
+  /// </summary>
   public static void ClearAll() {
     Registries.Clear();
   }

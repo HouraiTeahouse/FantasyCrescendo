@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// 
+/// </summary>
 public abstract class AbstractPlayerViewFactory : MonoBehaviour, IPlayerViewFactory {
 
   public abstract IEnumerable<IStateView<PlayerState>> CreatePlayerViews(PlayerConfig config);
