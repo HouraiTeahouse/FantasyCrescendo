@@ -46,7 +46,6 @@ namespace HouraiTeahouse.FantasyCrescendo {
       _shieldRenderers = _shieldObj.GetComponentsInChildren<Renderer>();
       //_shieldTransform.localPosition = GetComponent<CharacterController>().center;
       _shieldObj.SetActive(false);
-      Debug.Log("AWAKE");
     }
 
     public ITask Initialize(PlayerConfig config, bool isView) {
