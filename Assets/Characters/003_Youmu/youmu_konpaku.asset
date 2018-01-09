@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Name: youmu_konpaku
   m_EditorClassIdentifier: 
   _id: 3548088660
-  ShortName: 
-  LongName: 
-  Prefab: {fileID: 1872841189430122, guid: 92835b23f42164713aace3b4869d11fe, type: 2}
-  Icon: {fileID: 21300000, guid: 1edc8c82bdc999843819716f41e225aa, type: 3}
-  Portraits:
-  - {fileID: 21300000, guid: 5e4efdf01c4da32448097f4ec6bd6852, type: 3}
-  - {fileID: 21300000, guid: 3e7d3018e03cf304db0e9d9098c6d44c, type: 3}
-  - {fileID: 21300000, guid: 77ab5eec8917b5842bd85479054e8b7d, type: 3}
-  - {fileID: 21300000, guid: b6b5a580d58afa54c9b87fe4d8475a75, type: 3}
+  ShortName: Youmu
+  LongName: Youmu Konpaku
+  IsSelectable: 1
+  IsVisible: 1
+  _prefab: characters/youmu/player:youmu_konpaku
+  _icon: icons:youmu_icon
+  _portraits:
+  - characters/youmu/portraits:youmu_portrait_1
+  - characters/youmu/portraits:youmu_portrait_2
+  - characters/youmu/portraits:youmu_portrait_3
+  - characters/youmu/portraits:youmu_portrait_4

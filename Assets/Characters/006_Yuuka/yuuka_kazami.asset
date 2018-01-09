@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Name: yuuka_kazami
   m_EditorClassIdentifier: 
   _id: 2871670446
-  ShortName: 
-  LongName: 
-  Prefab: {fileID: 1872841189430122, guid: 221d64b60426798499fed0dc2346242f, type: 2}
-  Icon: {fileID: 21300000, guid: d5e591e73e371c94eaead06a769c126a, type: 3}
-  Portraits:
-  - {fileID: 21300000, guid: f190d62cf51254144b0ae884acda60cb, type: 3}
-  - {fileID: 21300000, guid: 9bc4cf0538f1fc8448c63cceeec8ea8b, type: 3}
-  - {fileID: 21300000, guid: 9ff3b1721e754b344ad07d429246513c, type: 3}
-  - {fileID: 21300000, guid: 2a25524599be084408e17cfa4db64929, type: 3}
+  ShortName: Yuuka
+  LongName: Yuuka Kazami
+  IsSelectable: 0
+  IsVisible: 1
+  _prefab: 
+  _icon: icons:yuuka_icon
+  _portraits:
+  - characters/yuuka/portraits:yuuka_portrait_1
+  - characters/yuuka/portraits:yuuka_portrait_2
+  - characters/yuuka/portraits:yuuka_portrait_3
+  - characters/yuuka/portraits:yuuka_portrait_4

@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Name: wriggle_nightbug
   m_EditorClassIdentifier: 
   _id: 3548088660
-  ShortName: 
-  LongName: 
-  Prefab: {fileID: 1872841189430122, guid: 92835b23f42164713aace3b4869d11fe, type: 2}
-  Icon: {fileID: 21300000, guid: 995d1afc8c30d1e4ebe2c2e6d8adb861, type: 3}
-  Portraits:
-  - {fileID: 21300000, guid: 50442d71d0af4bd4680b6c2518f39c95, type: 3}
-  - {fileID: 21300000, guid: 1543d2eb5d83d4d49a6320017e62a48f, type: 3}
-  - {fileID: 21300000, guid: ab0717136d1ef844a9e1b2b4d22f745c, type: 3}
-  - {fileID: 21300000, guid: 12a0652144bb3d84cac19dfd4afc7534, type: 3}
+  ShortName: Wriggle
+  LongName: Wriggle Nightbug
+  IsSelectable: 0
+  IsVisible: 1
+  _prefab: 
+  _icon: icons:wriggle_icon
+  _portraits:
+  - characters/wriggle/portraits:wriggle_portrait_1
+  - characters/wriggle/portraits:wriggle_portrait_2
+  - characters/wriggle/portraits:wriggle_portrait_3
+  - characters/wriggle/portraits:wriggle_portrait_4
