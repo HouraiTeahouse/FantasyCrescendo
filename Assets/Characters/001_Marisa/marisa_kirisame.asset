@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Name: marisa_kirisame
   m_EditorClassIdentifier: 
   _id: 3660741799
-  ShortName: 
-  LongName: 
-  Prefab: {fileID: 1691111975606094, guid: 67383cdeffcf042798527d11c40f1931, type: 2}
-  Icon: {fileID: 21300000, guid: 082733759d540bd4a94fc9ca4ae2c2dd, type: 3}
-  Portraits:
-  - {fileID: 21300000, guid: a44678091daad23459c4a01c2be02741, type: 3}
-  - {fileID: 21300000, guid: 1096dcd85679e3642bed3a2224d0dfac, type: 3}
-  - {fileID: 21300000, guid: e54a17584c8c96646996a3e0fdc5f696, type: 3}
-  - {fileID: 21300000, guid: 9432ea51c4b5fcd4b83b748bc92cd781, type: 3}
+  ShortName: Marisa
+  LongName: Marisa Kirisame
+  IsSelectable: 0
+  IsVisible: 1
+  _prefab: 
+  _icon: icons:marisa_icon
+  _portraits:
+  - characters/marisa/portraits:marisa_portrait_1
+  - characters/marisa/portraits:marisa_portrait_2
+  - characters/marisa/portraits:marisa_portrait_3
+  - characters/marisa/portraits:marisa_portrait_4
