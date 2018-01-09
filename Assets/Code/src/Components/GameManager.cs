@@ -28,7 +28,10 @@ public class GameManager : NetworkBehaviour {
       gameSim.Initialize(Config),
       gameView.Initialize(Config)).Then(() =>{
         Debug.Log("INITIALIZED");
+        enabled = true;
       });
+
+    enabled = false;
 
     gameController = controller;
     view = gameView;
