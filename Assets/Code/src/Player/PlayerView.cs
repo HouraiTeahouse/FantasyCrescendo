@@ -47,6 +47,9 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
   }
 
   public void ApplyState(PlayerState state) {
+    if (ViewComponents == null) {
+      return;
+    }
     foreach (var component in ViewComponents) {
       component.ApplyState(state);
     }
