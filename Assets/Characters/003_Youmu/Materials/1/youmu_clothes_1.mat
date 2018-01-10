@@ -11,6 +11,7 @@ Material:
   m_ShaderKeywords: _EMISSION _NORMALMAP
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -66,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BumpScale: 2.03
+    - _BumpScale: 0.75
     - _Cutoff: 0.5
     - _Cutoff2: 0.5
     - _DetailNormalMapScale: 1
@@ -78,9 +79,9 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimConstant: 0.186
-    - _RimPower: 3
-    - _Shininess: 0.421
+    - _RimConstant: 0.525
+    - _RimPower: 4.54
+    - _Shininess: 0.03
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -89,5 +90,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.14, g: 0.14, b: 0.14, a: 1}
-    - _RimColor: {r: 0.14413926, g: 0.22794116, b: 0.18632916, a: 0}
-    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.14413926, g: 0.22794116, b: 0.18632916, a: 1}
+    - _SpecColor: {r: 0, g: 0, b: 0, a: 0}

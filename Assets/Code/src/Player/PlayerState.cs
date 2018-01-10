@@ -28,10 +28,15 @@ public struct PlayerState {
   public float ShieldHealth;                          // 4 bytes
   public int ShieldRecoveryCooldown;                  // 1-4 bytes
 
+  public int GrabbedLedgeID;                          // 1 byte
+
   public float Damage;                                // 4 bytes
   public int Hitstun;                                 // 1-4 bytes
 
-  public uint Stocks;                                 // 1-4 bytes
+  public int Stocks;                                 // 1-4 bytes
+
+  public bool IsGrabbingLedge => GrabbedLedgeID != 0;
+  public bool IsHit => Hitstun > 0;
 
 }
 
