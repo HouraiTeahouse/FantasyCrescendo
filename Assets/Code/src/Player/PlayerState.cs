@@ -22,6 +22,8 @@ public struct PlayerState {
 
   public int RemainingJumps;                          // 1-4 bytes
 
+  public int RespawnTimeRemaining;                    // 1-4 bytes
+
   public int StateHash;                               // 1-4 bytes
   public float NormalizedStateTime;                   // 4 bytes
 
