@@ -45,6 +45,9 @@ public class PlayerInputContext : IValidatable {
 
   public bool IsValid => Previous.IsValid && Current.IsValid;
 
+  public DirectionalInput Movement => Current.Movement;
+  public DirectionalInput Smash => Current.Smash;
+
   public ButtonContext Attack {
     get {
       return new ButtonContext {
@@ -101,16 +104,34 @@ public struct ButtonContext {
   public bool Previous;
   public bool Current;
 
-  public bool WasPressed {
-    get { return !Previous && Current; }
-  }
+  public bool WasPressed => !Previous && Current;
+  public bool WasReleased => Previous && !Current;
 
-  public bool WasReleased {
-    get { return Previous && !Current; }
+}
+
+public struct DirectionalInput {
+
+  // TODO(james7132): Move this to a Config
+  public const float DeadZone = 0.3f;
+
+  public Vector2 Value;
+  public Direction Direction => Direction.Neutral;
+
+  public static implicit operator DirectionalInput(Vector2 dir) {
+    return new DirectionalInput {
+      Value = dir
+    };
   }
 
 }
 
+public enum Direction {
+  Neutral,
+  Up,
+  Down,
+  Left,
+  Right
+}
 
 
 }

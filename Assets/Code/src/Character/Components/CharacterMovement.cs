@@ -11,9 +11,7 @@ public class CharacterMovement : MonoBehaviour, ICharacterSimulation {
 
   public float[] JumpPower;
 
-  public int MaxJumpCount {
-    get { return JumpPower.Length; }
-  }
+  public int MaxJumpCount =>  JumpPower?.Length ?? 0;
 
   GroundMovement Ground;
   AerialMovement Aerial;
