@@ -9,6 +9,8 @@ public class VisualConfig : ScriptableObject {
     Color.red, Color.blue, Color.yellow, Color.green
   };
 
+  public GameObject RespawnPlatformPrefab;
+
   public Color GetPlayerColor(uint playerId) {
     if (PlayerColors == null) return Color.grey;
     return PlayerColors[playerId % PlayerColors.Length];

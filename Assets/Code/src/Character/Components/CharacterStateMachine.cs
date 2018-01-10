@@ -26,7 +26,12 @@ public class CharacterStateMachine : MonoBehaviour, ICharacterSimulation, IChara
 
   public void Presimulate(PlayerState state) => ApplyState(state);
 
-  public void ApplyState(PlayerState state) => StateController.SetState(stateMap[state.StateHash]);
+  public void ApplyState(PlayerState state) {
+    CharacterState controllerState;
+    if (stateMap.TryGetValue(state.StateHash, out controllerState)) {
+      StateController.SetState(controllerState);
+    }
+  }
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     context.State = state;
