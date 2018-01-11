@@ -8,7 +8,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// <summary>
 /// A data object representing a playable character.
 /// </summary>
-[CreateAssetMenu(fileName = "New Chararacter", menuName = "Character")]
+[CreateAssetMenu(menuName = "Fantasy Crescendo/Character")]
 public class CharacterData : ScriptableObject, IIdentifiable {
 
   [SerializeField] uint _id;
