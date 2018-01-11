@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -14,13 +15,23 @@ public class DataLoader : MonoBehaviour {
   public CharacterData[] Characters;
 
   /// <summary>
+  /// Scenes to load at startup.
+  /// </summary>
+  public CharacterData[] Scenes;
+
+  /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   void Awake() {
-    var registry = Registry.Get<CharacterData>();
-    foreach (var character in Characters) {
-      registry.Add(character);
-      Debug.LogFormat("Registered character: {0}", character.name);
+    LoadAll("character", Characters);
+    LoadAll("scene", Scenes);
+  }
+
+  void LoadAll<T>(string type, IEnumerable<T> data) where T : Object, IIdentifiable {
+    var registry = Registry.Get<T>();
+    foreach (var datum in data) {
+      registry.Add(datum);
+      Debug.Log($"Registered {type}: {datum.name}");
     }
   }
 
