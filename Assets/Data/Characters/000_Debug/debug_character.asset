@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98904ecb30f94d3c82a0ac3452af1fe, type: 3}
+  m_Name: marisa_kirisame
+  m_EditorClassIdentifier: 
+  _id: 3660741799
+  ShortName: Marisa
+  LongName: Marisa Kirisame
+  IsSelectable: 0
+  IsVisible: 1
+  _prefab: 
+  _icon: icons:marisa_icon
+  _portraits:
+  - characters/marisa/portraits:marisa_portrait_1
+  - characters/marisa/portraits:marisa_portrait_2
+  - characters/marisa/portraits:marisa_portrait_3
+  - characters/marisa/portraits:marisa_portrait_4
