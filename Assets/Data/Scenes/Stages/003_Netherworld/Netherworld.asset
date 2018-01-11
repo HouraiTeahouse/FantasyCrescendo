@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11ce1ec9da907c4abb2805992df2836, type: 3}
+  m_Name: Netherworld
+  m_EditorClassIdentifier: 
+  Name: 
+  IsStage: 1
+  IsSelectable: 1
+  IsVisible: 1
+  IsDebug: 0
+  _scene: 
+  Music:
+  - {fileID: 11400000, guid: 042bdef5bc24eda4cb2f4c7a1d76d9f3, type: 2}
+  - {fileID: 11400000, guid: 6dcd25a76398f464299cddcb299afd32, type: 2}

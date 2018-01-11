@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Name: ForestOfMagic
   m_EditorClassIdentifier: 
   Name: 
+  IsStage: 1
   IsSelectable: 1
   IsVisible: 1
+  IsDebug: 0
   _scene: 
-  Music: []
+  Music:
+  - {fileID: 11400000, guid: cd2bd088745641d44a30d42c0206a03f, type: 2}
+  - {fileID: 11400000, guid: a493e7e3573521f46ac9c6c3add510fa, type: 2}
+  - {fileID: 11400000, guid: 6e50217d6e9d14d4d89dfe6a8baff78e, type: 2}
+  - {fileID: 11400000, guid: 20eee8d76ff5101418044c47e791d0c1, type: 2}
