@@ -27,6 +27,21 @@ public struct PlayerInput : IValidatable {
 
   bool IValidatable.IsValid => IsValid;
 
+  public void Merge(PlayerInput other) {
+    IsValid = IsValid || other.IsValid;
+    Movement = MergeDirection(Movement, other.Movement);
+    Smash = MergeDirection(Smash, other.Smash);
+    Attack = Attack || other.Attack;
+    Special = Special || other.Special;
+    Jump = Jump || other.Jump;
+    Shield = Shield || other.Shield;
+    Grab = Grab|| other.Grab;
+  }
+
+  Vector2 MergeDirection(Vector2 a, Vector2 b) {
+    return new Vector2(Mathf.Clamp(a.x + b.x, -1, 1), Mathf.Clamp(a.y + b.y, -1, 1));
+  }
+
 }
 
 /// <summary>

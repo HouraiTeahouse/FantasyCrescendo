@@ -21,7 +21,7 @@ public class GameManager : NetworkBehaviour {
     var controller = new GameController(Config);
 
     controller.CurrentState = CreateInitialState();
-    controller.InputSource = new TestInputSource(Config);
+    controller.InputSource = new InControlInputSource(Config);
     controller.Simulation = gameSim;
 
     Task.All(
