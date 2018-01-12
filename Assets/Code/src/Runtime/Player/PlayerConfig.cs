@@ -9,7 +9,17 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [Serializable]
 public struct PlayerConfig : IValidatable {
 
+  /// <summary>
+  /// The Player ID of the player. Determines what is visually displayed
+  /// to denote the player.
+  /// </summary>
   public uint PlayerID;
+
+  /// <summary>
+  /// The local player number. Mainly used to determine what local input 
+  /// device to read the input from.
+  /// </summary>
+  public uint LocalPlayerID;
   public PlayerSelection Selection;
 
   public bool IsValid => Selection.IsValid;

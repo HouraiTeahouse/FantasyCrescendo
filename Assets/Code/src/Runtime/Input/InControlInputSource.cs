@@ -26,7 +26,7 @@ public class InControlInputSource : IInputSource<GameInput> {
     var newInput = input.Clone();
     for (var i = 0; i < config.PlayerConfigs.Length; i++) {
       var playerConfig = config.PlayerConfigs[i];
-      var playerId = playerConfig.PlayerID;
+      var playerId = playerConfig.LocalPlayerID;
       if (playerId >= allDevices.Count) {
         newInput.PlayerInputs[i] = new PlayerInput { IsValid = true };
         continue;
