@@ -9,7 +9,7 @@ using UnityEditor;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class CharacterColor : MonoBehaviour, ICharacterComponent {
+public class CharacterColor : MonoBehaviour, IPlayerComponent {
 
   [HideInInspector, SerializeField]
   Material DefaultMaterial;

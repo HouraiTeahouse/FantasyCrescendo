@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class CharacterStateMachine : MonoBehaviour, ICharacterSimulation, ICharacterView {
+public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public CharacterControllerBuilder States;
   public CharacterPhysics Physics;
@@ -42,6 +42,11 @@ public class CharacterStateMachine : MonoBehaviour, ICharacterSimulation, IChara
     StateController.UpdateState(context);
 
     state.StateHash = StateController.CurrentState.AnimatorHash;
+    return state;
+  }
+
+  public PlayerState ResetState(PlayerState state) {
+    state.StateHash = StateController.DefaultState.AnimatorHash;
     return state;
   }
 
