@@ -9,13 +9,10 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// A data object representing a playable character.
 /// </summary>
 [CreateAssetMenu(menuName = "Fantasy Crescendo/Character")]
-public class CharacterData : ScriptableObject, IIdentifiable {
+public class CharacterData : GameDataBase {
 
-  [SerializeField] uint _id;
   public string ShortName;
   public string LongName;
-  public bool IsSelectable = true;
-  public bool IsVisible = true;
 
   [SerializeField, Resource(typeof(GameObject))] string _prefab;
   [SerializeField, Resource(typeof(Sprite))] string _icon;
@@ -26,15 +23,6 @@ public class CharacterData : ScriptableObject, IIdentifiable {
 
   public IAsset<Sprite> GetPortrait(int index) {
     return Asset.Get<Sprite>(_portraits[index % _portraits.Length]);
-  }
-
-  public uint Id {
-    get { return _id; }
-  }
-
-  void Reset() {
-    var newId = new Random().Next();
-    _id = (uint)newId + (uint)Int32.MaxValue;
   }
 
 }

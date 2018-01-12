@@ -11,11 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98904ecb30f94d3c82a0ac3452af1fe, type: 3}
   m_Name: debug_character
   m_EditorClassIdentifier: 
-  _id: 0
-  ShortName: Debug
-  LongName: Debug Character
+  _id: 2177011008
   IsSelectable: 0
   IsVisible: 1
+  IsDebug: 0
+  ShortName: Debug
+  LongName: Debug Character
   _prefab: 
   _icon: icons:marisa_icon
   _portraits:
