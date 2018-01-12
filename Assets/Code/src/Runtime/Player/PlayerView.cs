@@ -28,7 +28,7 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
 
       PlayerUtil.DestroyAll(View, typeof(Collider));
 
-      var task = View.Broadcast<ICharacterComponent>(
+      var task = View.Broadcast<IPlayerComponent>(
           component => component.Initialize(config, true));
 
       var viewComponents = new List<IStateView<PlayerState>>();

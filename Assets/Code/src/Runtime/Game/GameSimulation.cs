@@ -7,7 +7,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState, GameInputContext> {
 
-  PlayerSimulation[] PlayerSimulations;
+  public PlayerSimulation[] PlayerSimulations;
 
   public ITask Initialize(GameConfig config) {
     Assert.IsTrue(config.IsValid);
@@ -33,6 +33,13 @@ public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState,
         PlayerSimulations[i].Simulate(state.PlayerStates[i], input.PlayerInputs[i]);
     }
     return newState;
+  }
+
+  public GameState ResetState(GameState state) {
+    for (int i = 0; i < state.PlayerStates.Length; i++) {
+      state.PlayerStates[i] = PlayerSimulations[i].ResetState(state.PlayerStates[i]);
+    }
+    return state;
   }
 
 }

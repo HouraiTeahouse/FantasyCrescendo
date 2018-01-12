@@ -26,7 +26,8 @@ public class GameManager : NetworkBehaviour {
 
     Task.All(
       gameSim.Initialize(Config),
-      gameView.Initialize(Config)).Then(() =>{
+      gameView.Initialize(Config)).Then(() => {
+        controller.CurrentState = gameSim.ResetState(controller.CurrentState);
         enabled = true;
       });
 

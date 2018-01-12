@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HouraiTeahouse.FantasyCrescendo {
 
 [RequireComponent(typeof(CharacterPhysics))]
-public class CharacterMovement : MonoBehaviour, ICharacterSimulation {
+public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
 
   public CharacterPhysics Physics;
 
@@ -27,6 +27,8 @@ public class CharacterMovement : MonoBehaviour, ICharacterSimulation {
     Ledge = Ledge ?? new LedgeMovement();
     return Task.Resolved;
   }
+  
+  public PlayerState ResetState(PlayerState state) => state;
 
   public void Presimulate(PlayerState state) {
   }

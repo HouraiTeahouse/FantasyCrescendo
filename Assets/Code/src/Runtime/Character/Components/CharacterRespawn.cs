@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class CharacterRespawn : MonoBehaviour, ICharacterView {
+public class CharacterRespawn : MonoBehaviour, IPlayerView {
 
   public Vector3 Offset;
 

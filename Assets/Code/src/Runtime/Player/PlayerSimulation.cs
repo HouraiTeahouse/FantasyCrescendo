@@ -8,7 +8,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<PlayerState, PlayerInputContext> {
 
   GameObject Model;
-  ICharacterSimulation[] PresimulateComponents;
+  IPlayerSimulation[] PlayerSimulationComponents;
   ISimulation<PlayerState, PlayerInputContext>[] SimulationComponents;
 
   public ITask Initialize(PlayerConfig config) {
@@ -21,21 +21,20 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
 
       PlayerUtil.DestroyAll(Model, typeof(Renderer), typeof(MeshFilter));
 
-      var task = Model.Broadcast<ICharacterComponent>(
+      var task = Model.Broadcast<IPlayerComponent>(
           component => component.Initialize(config, false));
 
       SimulationComponents = Model.GetComponentsInChildren<ISimulation<PlayerState, PlayerInputContext>>();
-      PresimulateComponents = SimulationComponents.OfType<ICharacterSimulation>()
-                                                  .ToArray();
+      PlayerSimulationComponents = SimulationComponents.OfType<IPlayerSimulation>().ToArray();
       return task;
     });
   }
 
   public void Presimulate(PlayerState state) {
-    if (PresimulateComponents == null) {
+    if (PlayerSimulationComponents == null) {
       return;
     }
-    foreach (var component in PresimulateComponents) {
+    foreach (var component in PlayerSimulationComponents) {
       component.Presimulate(state);
     }
   }
@@ -47,6 +46,13 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
     //Assert.IsTrue(input.IsValid);
     foreach (var component in SimulationComponents) {
       state = component.Simulate(state, input);
+    }
+    return state;
+  }
+
+  public PlayerState ResetState(PlayerState state) {
+    foreach (var component in PlayerSimulationComponents) {
+      state = component.ResetState(state);
     }
     return state;
   }

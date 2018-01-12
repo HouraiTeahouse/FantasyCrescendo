@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterView {
+public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public CharacterController CharacterController;
 
@@ -48,6 +48,8 @@ public class CharacterPhysics : MonoBehaviour, ICharacterSimulation, ICharacterV
     transform.position = state.Position;
     transform.localEulerAngles = (state.Direction ? 0 : 180) * Vector3.up;
   }
+
+  public PlayerState ResetState(PlayerState state) => state;
 
   void ApplyGravity(ref PlayerState state) {
     if (!IsGrounded) {
