@@ -10,6 +10,8 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [Serializable]
 public struct GameConfig : IValidatable {
 
+  public uint StageID;
+
   /// <summary>
   /// Individual configurations for each participating player.
   /// </summary>
@@ -17,8 +19,8 @@ public struct GameConfig : IValidatable {
   /// Note that each player's player ID does not directly correspond with
   /// the array index for the player's config. All players in the game 
   /// with a valid configuration are assumed to be active. For example, 
-  /// the player at index 1 may not be /// P2. Player 2 may be inactive 
-  /// and the player may be P3 or P4 instead.
+  /// the player at index 1 may not be P2. Player 2 may be inactive and 
+  /// the player may be P3 or P4 instead.
   /// </remarks>
   public PlayerConfig[] PlayerConfigs;
 

@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4619880170444376}
+  - component: {fileID: 114715350892547174}
   - component: {fileID: 114974252137424500}
   - component: {fileID: 114423664066748220}
   - component: {fileID: 114546086463323548}
@@ -83,7 +84,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 991f6c51973167948a2c4b9b460948b1, type: 2}
   - {fileID: 11400000, guid: ddda9688b0cc33d4780de52f17f43a6e, type: 2}
   - {fileID: 11400000, guid: 9d7acf7eda72f984aa955015999cf66b, type: 2}
-  - {fileID: 11400000, guid: 33fc6222b735c99448a116796f2e00fc, type: 2}
 --- !u!114 &114546086463323548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,6 +101,19 @@ MonoBehaviour:
   useFixedUpdate: 1
   dontDestroyOnLoad: 0
   customProfiles: []
+--- !u!114 &114715350892547174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996456345168662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c456241125f850143b53afd86fa1dfa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 588782954
+  _dontDestroyOnLoad: 1
 --- !u!114 &114851974053767234
 MonoBehaviour:
   m_ObjectHideFlags: 1
