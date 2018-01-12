@@ -17,7 +17,7 @@ public class DataLoader : MonoBehaviour {
   /// <summary>
   /// Scenes to load at startup.
   /// </summary>
-  public CharacterData[] Scenes;
+  public SceneData[] Scenes;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.

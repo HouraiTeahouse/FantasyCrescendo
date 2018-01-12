@@ -1,18 +1,14 @@
 ﻿using HouraiTeahouse.Loadables;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 [CreateAssetMenu(menuName = "Fantasy Crescendo/Scene (Stage)")]
-public class SceneData : ScriptableObject {
-  public string Name;
+public class SceneData : GameDataBase {
 
   public bool IsStage = true;
-  public bool IsSelectable = true;
-  public bool IsVisible = true;
-  public bool IsDebug;
+
+  public string Name;
 
   [SerializeField, Scene] string _scene;
 
