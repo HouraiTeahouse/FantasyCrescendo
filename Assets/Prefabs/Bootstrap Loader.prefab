@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a2771b7b10e0f4c8fdcd37ac52c1c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadOnAwake: 1
   Mode: 1
   _scenes:
   - scene/stage_bootstrap:Assets/Data/Scenes/Stages/StageBootstrap.unity
