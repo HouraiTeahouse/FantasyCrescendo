@@ -10,6 +10,11 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public class DataLoader : MonoBehaviour {
 
   /// <summary>
+  /// The supported game mode types.
+  /// </summary>
+  public GameMode[] GameModes;
+
+  /// <summary>
   /// Characters to load at startup.
   /// </summary>
   public CharacterData[] Characters;
@@ -23,6 +28,7 @@ public class DataLoader : MonoBehaviour {
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   void Awake() {
+    LoadAll("game mode", GameModes);
     LoadAll("character", Characters);
     LoadAll("scene", Scenes);
   }
@@ -31,7 +37,7 @@ public class DataLoader : MonoBehaviour {
     var registry = Registry.Get<T>();
     foreach (var datum in data) {
       registry.Add(datum);
-      Debug.Log($"Registered {type}: {datum.name}");
+      Debug.Log($"Registered {type}: {datum.name} ({datum.Id})");
     }
   }
 

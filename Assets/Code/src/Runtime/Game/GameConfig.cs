@@ -13,6 +13,18 @@ public struct GameConfig : IValidatable {
   public uint StageID;
 
   /// <summary>
+  /// The number of stocks each player starts off with. If set to zero, the 
+  /// match will not be a stock match.
+  /// </summary>
+  public uint Stocks;
+
+  /// <summary>
+  /// The amount of time the match will last for in ticks. If zero the game
+  /// will not have a time limit.
+  /// </summary>
+  public uint Time;
+
+  /// <summary>
   /// Individual configurations for each participating player.
   /// </summary>
   /// <remarks>
