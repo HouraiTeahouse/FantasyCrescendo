@@ -36,6 +36,18 @@ public static class Registry {
     return registry;
   }
 
+  public static void Register(Type targetType, IIdentifiable obj) {
+    object registry = null;
+    Registries.TryGetValue(targetType, out registry);
+    if (registry == null) {
+      var registryType = typeof(Registry<>).MakeGenericType(targetType);
+      registry = Activator.CreateInstance(registryType);
+      Registries.Add(targetType, registry);
+    }
+    var addMethod = registry.GetType().GetMethod("Add");
+    addMethod.Invoke(registry, new [] { obj });
+  }
+
   /// <summary>
   /// Clears all registries of all types and the values they store.
   /// </summary>
@@ -49,7 +61,7 @@ public class Registry<T> : ICollection<T> where T : IIdentifiable {
 
   readonly Dictionary<uint, T> Entries;
 
-  internal Registry() {
+  public Registry() {
     Entries = new Dictionary<uint, T>();
   }
 
