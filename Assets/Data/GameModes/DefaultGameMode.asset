@@ -8,14 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11ce1ec9da907c4abb2805992df2836, type: 3}
-  m_Name: DebugStage
+  m_Script: {fileID: 11500000, guid: 76253e42313939b45ae3a8d388fbfadd, type: 3}
+  m_Name: DefaultGameMode
   m_EditorClassIdentifier: 
-  _id: 3682038897
+  _id: 2251353257
   IsSelectable: 1
   IsVisible: 1
-  IsDebug: 1
-  IsStage: 1
-  Name: Debug Stage
-  _scene: scene/debug/scene:Assets/Data/Scenes/Stages/000_Debug/DebugStage.unity
-  Music: []
+  IsDebug: 0

@@ -1,63 +1,50 @@
 using HouraiTeahouse.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class GameManager : NetworkBehaviour {
+public class GameManager : MonoBehaviour {
+
+  public static GameManager Instance { get; private set; }
 
   public GameConfig Config;
 
-  IGameController<GameState> gameController;
-  IStateView<GameState> view;
+  public IGameController<GameState> GameController;
+  public IStateView<GameState> View;
+
+  ITask MatchTask;
 
   /// <summary>
-  /// Start is called on the frame when a script is enabled just before
-  /// any of the Update methods is called the first time.
+  /// Awake is called when the script instance is being loaded.
   /// </summary>
-  void Start() {
-    var gameView = new GameView();
-    var gameSim = new GameSimulation();
-    var controller = new GameController(Config);
-
-    controller.CurrentState = CreateInitialState();
-    controller.InputSource = new InControlInputSource(Config);
-    controller.Simulation = gameSim;
-
-    Task.All(
-      gameSim.Initialize(Config),
-      gameView.Initialize(Config)).Then(() => {
-        controller.CurrentState = gameSim.ResetState(controller.CurrentState);
-        enabled = true;
-      });
-
+  void Awake() {
+    Instance = this;
     enabled = false;
-
-    gameController = controller;
-    view = gameView;
-  }
-
-  GameState CreateInitialState() {
-    var initialState = new GameState(Config);
-    for (int i = 0; i < initialState.PlayerStates.Length; i++) {
-      initialState.PlayerStates[i].Position = new Vector3(i * 2 - 3, 1, 0);
-    }
-    return initialState;
   }
 
   /// <summary>
   /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
   /// </summary>
   void FixedUpdate() {
-    gameController.Update();
+    GameController?.Update();
   }
 
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
   void Update() {
-    view.ApplyState(gameController.CurrentState);
+    View?.ApplyState(GameController.CurrentState);
   }
+
+  public ITask<MatchResult> RunMatch() {
+    MatchTask = new Task();
+    return MatchTask.Then(() => {
+      // TODO(james7132): Properly evaluate the match result here.
+      return new MatchResult();
+    });
+  }
+
+  public void EndMatch() => MatchTask?.Resolve();
 
 }
 

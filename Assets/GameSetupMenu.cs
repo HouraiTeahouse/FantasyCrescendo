@@ -17,9 +17,12 @@ public class GameSetupMenu : MonoBehaviour {
   }
 
   public Dropdown StageDropdwon;
+  public Dropdown GameModeDropdown;
   public int ColorCount;
   public PlayerSelectionMenu[] PlayerMenus;
   public GameConfig Config;
+
+  GameMode GameMode;
 
   /// <summary>
   /// Start is called on the frame when a script is enabled just before
@@ -28,6 +31,7 @@ public class GameSetupMenu : MonoBehaviour {
   void Start() {
     var characters = Registry.Get<CharacterData>().Where(c => c.IsSelectable && c.IsVisible).ToArray();
     var stages = Registry.Get<SceneData>().Where(scene => scene.IsSelectable && scene.IsVisible && scene.IsStage).ToArray();
+    var gameModes = Registry.Get<GameMode>().Where(c => c.IsSelectable && c.IsVisible).ToArray();
 
     var characterOptionData = characters.Select(character => 
       new Dropdown.OptionData { text = character.LongName }
@@ -39,6 +43,10 @@ public class GameSetupMenu : MonoBehaviour {
 
     StageDropdwon.options = stages.Select(scene => 
       new Dropdown.OptionData { text = scene.Name }
+    ).ToList();
+
+    GameModeDropdown.options = gameModes.Select(mode => 
+      new Dropdown.OptionData { text = mode.GetType().Name.Replace("GameMode", "") }
     ).ToList();
 
     Config.PlayerConfigs = new PlayerConfig[PlayerMenus.Length];
@@ -64,9 +72,14 @@ public class GameSetupMenu : MonoBehaviour {
     }
 
     StageDropdwon.onValueChanged.AddListener(index => {
+      Debug.Log($"{index} {stages.Length}");
       Config.StageID = stages[index].Id;
     });
+    GameModeDropdown.onValueChanged.AddListener(index => {
+      GameMode = gameModes[index];
+    });
     Config.StageID = stages.First().Id;
+    GameMode = gameModes.First();
   }
 
   public void LaunchGame() {
@@ -77,8 +90,8 @@ public class GameSetupMenu : MonoBehaviour {
     }
     Config.PlayerConfigs = playerConfigs.ToArray();
 
-    //TODO (james7132): Load game properly
     Debug.Log("GAME START");
+    GameMode.CreateMatch().RunMatch(Config);
   }
 
 }

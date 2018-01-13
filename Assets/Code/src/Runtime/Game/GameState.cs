@@ -7,6 +7,8 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// </summary>
 public struct GameState {
 
+  public uint Time;
+
   public PlayerState[] PlayerStates;
 
   /// <summary>
@@ -15,6 +17,10 @@ public struct GameState {
   /// <param name="config">the configuration for the game.</param>
   public GameState(GameConfig config) {
     PlayerStates = new PlayerState[config.PlayerCount];
+    Time = config.Time;
+    for (var i = 0; i < PlayerStates.Length; i++) {
+      PlayerStates[i].Stocks = config.Stocks;
+    }
   }
 
   /// <summary>
