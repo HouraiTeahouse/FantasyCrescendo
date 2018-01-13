@@ -19,7 +19,6 @@ public class StageConfig : ScriptableObject {
         _scenes = new ReadOnlyCollection<IScene>(
           _additionalStageScenes.Select(Scene.Get).ToArray()
         );
-        Debug.LogError(_scenes.Count);
       }
       return _scenes;
     }
