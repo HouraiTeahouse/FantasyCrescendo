@@ -1,6 +1,8 @@
 ﻿using HouraiTeahouse.Tasks;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -13,7 +15,10 @@ public abstract class AbstractMatch {
       Assert.IsTrue(stage != null && stage.IsStage);
       sceneLoad = stage.GameScene.LoadAsync();
     }
-    return sceneLoad.Then(() => {
+    var additionalScenes = Config.Get<StageConfig>().AdditionalStageScenes;
+    return sceneLoad
+    .ThenAll(() => additionalScenes.Select(s => s.LoadAsync(LoadSceneMode.Additive)))
+    .Then(() => {
       var gameManager = Object.FindObjectOfType<GameManager>();
       gameManager.Config = config;
       return InitializeMatch(gameManager, config).Then(() => {
