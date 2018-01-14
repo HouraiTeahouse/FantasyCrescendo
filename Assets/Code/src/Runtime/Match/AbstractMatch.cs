@@ -9,6 +9,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public abstract class AbstractMatch {
 
   public async Task<MatchResult> RunMatch(GameConfig config, bool loadScene = true) {
+    await DataLoader.LoadTask.Task;
     Task sceneLoad = Task.CompletedTask;
     if (loadScene) {
       var stage = Registry.Get<SceneData>().Get(config.StageID);

@@ -7,12 +7,12 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class CharacterCamera : MonoBehaviour, IPlayerComponent {
 
+  static MatchCameraTarget _target;
+  static MatchCameraTarget Target => _target ?? (_target = FindObjectOfType<MatchCameraTarget>());
+
   public Task Initialize(PlayerConfig config, bool isView = false) {
-    if (isView) {
-      var matchCameraTarget = FindObjectOfType<MatchCameraTarget>();
-      if (matchCameraTarget != null) {
-        matchCameraTarget.RegisterTarget(transform);
-      }
+    if (isView && Target != null ) {
+      _target.RegisterTarget(transform);
     }
     return Task.CompletedTask;
   }
@@ -21,9 +21,8 @@ public class CharacterCamera : MonoBehaviour, IPlayerComponent {
   /// This function is called when the MonoBehaviour will be destroyed.
   /// </summary>
   void OnDestroy() {
-    var matchCameraTarget = FindObjectOfType<MatchCameraTarget>();
-    if (matchCameraTarget != null) {
-      matchCameraTarget.UnregisterTarget(transform);
+    if (Target != null) {
+      _target.UnregisterTarget(transform);
     }
   }
 
