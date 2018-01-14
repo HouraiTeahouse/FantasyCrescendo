@@ -1,4 +1,4 @@
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -48,7 +48,7 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     _shieldObj.SetActive(false);
   }
 
-  public ITask Initialize(PlayerConfig config, bool isView) {
+  public Task Initialize(PlayerConfig config, bool isView) {
     SetShieldColor(Config.Get<VisualConfig>().GetPlayerColor(config.PlayerID));
 
     //if (Character == null)
@@ -64,7 +64,7 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
             //_lastShieldExitTime = Time.time;
     //};
 
-    return Task.Resolved;
+    return Task.CompletedTask;
   }
 
   public void Presimulate(PlayerState state) {

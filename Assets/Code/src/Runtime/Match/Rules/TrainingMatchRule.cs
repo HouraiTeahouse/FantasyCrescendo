@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -9,7 +9,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// </summary>
 public sealed class TrainingMatchRule : IMatchRule {
 
-  public ITask Initalize(GameConfig config) => Task.Resolved;
+  public Task Initalize(GameConfig config) => Task.CompletedTask;
 
   public GameState Simulate(GameState state, GameInput input) => state;
 

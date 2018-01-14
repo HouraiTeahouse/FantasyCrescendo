@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.Tasks;
+﻿using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +11,7 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView {
 
   GameObject platform;
 
-  public ITask Initialize(PlayerConfig config, bool isView = false) {
+  public Task Initialize(PlayerConfig config, bool isView = false) {
     if (isView) {
       var prefab = Config.Get<VisualConfig>().RespawnPlatformPrefab;
       if (prefab != null) {
@@ -21,7 +21,7 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView {
         platform.transform.localPosition = Offset;
       }
     }
-    return Task.Resolved;
+    return Task.CompletedTask;
   }
 
   public void ApplyState(PlayerState state) {

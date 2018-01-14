@@ -1,7 +1,7 @@
-using HouraiTeahouse.Tasks;
 using HouraiTeahouse.Loadables; 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -24,19 +24,21 @@ public class CharacterColor : MonoBehaviour, IPlayerComponent {
       [Tooltip("The materials to apply to the renderers")]
       public string[] Materials;
 
-      public ITask Set(Renderer[] targets) {
+      public async Task Set(Renderer[] targets) {
         if (targets == null) {
-          return Task.Resolved;
+          return;
         }
+        Material[] materials;
 #if UNITY_EDITOR
         if (!EditorApplication.isPlaying) {
-          var materials = Materials.Select(path => Asset.Get<Material>(path).Load());
-          ApplyMaterials(materials.ToArray(), targets);
-          return Task.Resolved;
+          materials = Materials.Select(path => Asset.Get<Material>(path).Load()).ToArray();
+          ApplyMaterials(materials, targets);
+          return;
         }
 #endif
         var materialTasks = Materials.Select(path => Asset.Get<Material>(path).LoadAsync());
-        return Task.All(materialTasks).Then(materials => ApplyMaterials(materials, targets));
+        materials = await Task.WhenAll(materialTasks);
+        ApplyMaterials(materials, targets);
       }
 
       void ApplyMaterials(Material[] materials, Renderer[] targets) {
@@ -59,11 +61,11 @@ public class CharacterColor : MonoBehaviour, IPlayerComponent {
     /// </summary>
     public int Count => MaterialSets?.Length ?? 0;
 
-    public ITask Set(uint palleteSwap) {
+    public async Task Set(uint palleteSwap) {
       if (palleteSwap >= MaterialSets.Length) {
-        return Task.Resolved;
+        return;
       }
-      return MaterialSets[palleteSwap].Set(TargetRenderers);
+      await MaterialSets[palleteSwap].Set(TargetRenderers);
     }
 
   }
@@ -72,15 +74,15 @@ public class CharacterColor : MonoBehaviour, IPlayerComponent {
 
   public int Count => Swaps?.Length > 0 ? Swaps?.Max(swap => swap.Count) ?? 0 : 0;
 
-  public ITask Initialize(PlayerConfig config, bool isView) {
+  public async Task Initialize(PlayerConfig config, bool isView) {
     if (!isView || Swaps == null) {
-      return Task.Resolved;
+      return;
     }
-    return SetColor(config.Selection.Pallete);
+    await SetColor(config.Selection.Pallete);
   }
 
-  public ITask SetColor(uint color) {
-    return Task.All(Swaps.Select(swap => swap.Set(color)));
+  public async Task SetColor(uint color) {
+    await Task.WhenAll(Swaps.Select(swap => swap.Set(color)));
   }
 
   /// <summary>

@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.Tasks;
+﻿using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -8,32 +8,28 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public abstract class AbstractMatch {
 
-  public ITask<MatchResult> RunMatch(GameConfig config, bool loadScene = true) {
-    ITask sceneLoad = Task.Resolved;
+  public async Task<MatchResult> RunMatch(GameConfig config, bool loadScene = true) {
+    Task sceneLoad = Task.CompletedTask;
     if (loadScene) {
       var stage = Registry.Get<SceneData>().Get(config.StageID);
       Assert.IsTrue(stage != null && stage.IsStage);
-      sceneLoad = stage.GameScene.LoadAsync();
+      await stage.GameScene.LoadAsync();
     }
     var additionalScenes = Config.Get<StageConfig>().AdditionalStageScenes;
-    return sceneLoad
-    .ThenAll(() => additionalScenes.Select(s => s.LoadAsync(LoadSceneMode.Additive)))
-    .Then(() => {
-      var gameManager = Object.FindObjectOfType<GameManager>();
-      gameManager.Config = config;
-      return InitializeMatch(gameManager, config).Then(() => {
-        return gameManager.RunMatch();
-      });
-    });
+    await Task.WhenAll(additionalScenes.Select(s => s.LoadAsync(LoadSceneMode.Additive)));
+    var gameManager = Object.FindObjectOfType<GameManager>();
+    gameManager.Config = config;
+    await InitializeMatch(gameManager, config);
+    return await gameManager.RunMatch();
   }
 
-  public abstract ITask InitializeMatch(GameManager manager, GameConfig config);
+  public abstract Task InitializeMatch(GameManager manager, GameConfig config);
 
 }
 
 public class DefaultMatch : AbstractMatch {
 
-  public override ITask InitializeMatch(GameManager gameManager, GameConfig config) {
+  public override async Task InitializeMatch(GameManager gameManager, GameConfig config) {
     var gameView = new GameView();
     var gameSim = new GameSimulation();
     var controller = new GameController(config);
@@ -46,10 +42,9 @@ public class DefaultMatch : AbstractMatch {
     gameManager.View = gameView;
     gameManager.enabled = false;
 
-    return Task.All(gameSim.Initialize(config), gameView.Initialize(config)).Then(() => {
-      controller.CurrentState = gameSim.ResetState(controller.CurrentState);
-      gameManager.enabled = true;
-    });
+    await Task.WhenAll(gameSim.Initialize(config), gameView.Initialize(config));
+    controller.CurrentState = gameSim.ResetState(controller.CurrentState);
+    gameManager.enabled = true;
   }
 
   GameState CreateInitialState(GameConfig config) {

@@ -1,4 +1,4 @@
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -15,8 +15,8 @@ public static class Messaging {
     return components;
   }
 
-  public static ITask Broadcast<T>(this GameObject gameObject, Func<T, ITask> message) {
-    return Task.All(gameObject.GetComponentsInChildren<T>().Select(message));
+  public static Task Broadcast<T>(this GameObject gameObject, Func<T, Task> message) {
+    return Task.WhenAll(gameObject.GetComponentsInChildren<T>().Select(message));
   }
 
 }

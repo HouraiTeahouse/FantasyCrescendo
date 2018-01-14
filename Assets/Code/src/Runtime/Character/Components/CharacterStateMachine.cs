@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.Tasks;
+﻿using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +18,10 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
   Dictionary<int, CharacterState> stateMap;
   CharacterContext context = new CharacterContext();
 
-  public ITask Initialize(PlayerConfig config, bool isView = false) {
+  public Task Initialize(PlayerConfig config, bool isView = false) {
     StateController = States.BuildCharacterControllerImpl(new StateControllerBuilder<CharacterState, CharacterContext>());
     stateMap = StateController.States.ToDictionary(s => s.AnimatorHash, s => s);
-    return Task.Resolved;
+    return Task.CompletedTask;
   }
 
   public void Presimulate(PlayerState state) => ApplyState(state);

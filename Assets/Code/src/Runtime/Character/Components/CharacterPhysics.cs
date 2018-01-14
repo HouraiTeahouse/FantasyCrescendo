@@ -1,5 +1,5 @@
-using HouraiTeahouse.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -15,7 +15,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public bool IsGrounded { get; private set; }
 
-  public ITask Initialize(PlayerConfig config, bool isView) {
+  public Task Initialize(PlayerConfig config, bool isView) {
     if (CharacterController == null) {
       CharacterController = GetComponent<CharacterController>();
     }
@@ -27,7 +27,8 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     rigidbody.useGravity = false;
     rigidbody.isKinematic = true;
     rigidbody.hideFlags = HideFlags.HideInInspector;
-    return Task.Resolved;
+
+    return Task.CompletedTask;
   }
 
   public void Presimulate(PlayerState state) {

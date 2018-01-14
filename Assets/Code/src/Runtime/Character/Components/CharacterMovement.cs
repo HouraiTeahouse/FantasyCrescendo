@@ -1,5 +1,5 @@
-using HouraiTeahouse.Tasks;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -17,7 +17,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   AerialMovement Aerial;
   LedgeMovement Ledge;
 
-  public ITask Initialize(PlayerConfig config, bool isView) {
+  public Task Initialize(PlayerConfig config, bool isView) {
     if (Physics == null) {
       Physics = GetComponent<CharacterPhysics>();
     }
@@ -25,7 +25,8 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     Ground = Ground ?? new GroundMovement();
     Aerial = Aerial ?? new AerialMovement();
     Ledge = Ledge ?? new LedgeMovement();
-    return Task.Resolved;
+
+    return Task.CompletedTask;
   }
   
   public PlayerState ResetState(PlayerState state) => state;

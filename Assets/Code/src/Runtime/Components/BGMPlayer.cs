@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -22,13 +21,11 @@ public class BGMPlayer : MonoBehaviour {
     }
   }
 
-  public void PlayBGM(BGM bgm) {
-    bgm.Clip.LoadAsync().Then(clip => {
-      if (AudioSource != null) {
-        AudioSource.clip = clip;
-        AudioSource.Play();
-      }
-    });
+  public async Task PlayBGM(BGM bgm) {
+    if (AudioSource == null) return;
+    var clip = await bgm.Clip.LoadAsync();
+    AudioSource.clip = clip;
+    AudioSource.Play();
   }
 
   BGM RandomBGM(BGM[] bgmSet) => bgmSet[Mathf.FloorToInt(Random.Range(0, bgmSet.Length))];
