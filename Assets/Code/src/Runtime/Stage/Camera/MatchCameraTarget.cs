@@ -10,16 +10,13 @@ public class MatchCameraTarget : MonoBehaviour {
   public Vector2 FoVRange;
   public Vector2 Padding;
   public Vector3 TargetPositionBias;
-
-  List<Transform> _targets;
-  ICollection<Transform> Targets {
-      get { return  _targets ?? (_targets = new List<Transform>());}
-  }
+  public List<Transform> Targets;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   void Awake() {
+    Targets = Targets ?? new List<Transform>();
     if (CameraTarget == null) {
       CameraTarget = GetComponentInChildren<CameraTarget>();
     }
