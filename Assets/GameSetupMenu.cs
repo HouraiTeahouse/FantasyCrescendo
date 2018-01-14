@@ -28,7 +28,9 @@ public class GameSetupMenu : MonoBehaviour {
   /// Start is called on the frame when a script is enabled just before
   /// any of the Update methods is called the first time.
   /// </summary>
-  void Start() {
+  async void Start() {
+    await DataLoader.LoadTask.Task;
+
     var characters = Registry.Get<CharacterData>().Where(c => c.IsSelectable && c.IsVisible).ToArray();
     var stages = Registry.Get<SceneData>().Where(scene => scene.IsSelectable && scene.IsVisible && scene.IsStage).ToArray();
     var gameModes = Registry.Get<GameMode>().Where(c => c.IsSelectable && c.IsVisible).ToArray();
@@ -82,7 +84,7 @@ public class GameSetupMenu : MonoBehaviour {
     GameMode = gameModes.First();
   }
 
-  public void LaunchGame() {
+  public async void LaunchGame() {
     var playerConfigs = new List<PlayerConfig>();
     for (int i = 0; i < PlayerMenus.Length; i++) {
       if (!PlayerMenus[i].ActiveToggle.isOn) continue;
@@ -91,7 +93,7 @@ public class GameSetupMenu : MonoBehaviour {
     Config.PlayerConfigs = playerConfigs.ToArray();
 
     Debug.Log("GAME START");
-    GameMode.CreateMatch().RunMatch(Config);
+    await GameMode.CreateMatch().RunMatch(Config);
   }
 
 }
