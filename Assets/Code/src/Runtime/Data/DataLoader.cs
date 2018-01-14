@@ -37,7 +37,7 @@ public class DataLoader : MonoBehaviour {
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
-  void Awake() {
+  async void Awake() {
 #if UNITY_EDITOR
     foreach (var type in ValidImportTypes) {
       RegisterAll(LoadAllInEditor(type));
@@ -45,12 +45,14 @@ public class DataLoader : MonoBehaviour {
     LoadTask.SetResult(new object());
 #else
     RegisterAll(GameModes);
-    GetAllValidPaths(BundleSearch)
-      .ThenAll(paths => paths.Select(path => {
-          return AssetBundleManager.LoadAssetBundleAsync(path)
-            .Then(LoadMainAsset)
-            .Then(obj => ProcessLoadedAsset(obj, path));
-      })).Then(() => LoadTask.SetResult(new object()));
+    var paths = await GetAllValidPaths(BundleSearch);
+    var bundles = paths.Select(async path => {
+      var bundle = await AssetBundleManager.LoadAssetBundleAsync(path);
+      var asset = await LoadMainAsset(bundle);
+      ProcessLoadedAsset(asset, path);
+    });
+    await Task.WhenAll(bundles);
+    LoadTask.SetResult(new object());
 #endif
   }
 
