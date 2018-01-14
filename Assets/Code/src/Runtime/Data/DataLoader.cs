@@ -40,7 +40,7 @@ public class DataLoader : MonoBehaviour {
 #if UNITY_EDITOR
   void Awake() {
     foreach (var type in ValidImportTypes) {
-      RegisterAll(LoadAllInEditor(type));
+      RegisterAll(EditorAssetUtil.LoadAll(type));
     }
     LoadTask.SetResult(new object());
   }
@@ -55,14 +55,6 @@ public class DataLoader : MonoBehaviour {
     });
     await Task.WhenAll(bundles);
     LoadTask.SetResult(new object());
-  }
-#endif
-
-#if UNITY_EDITOR
-  IEnumerable<Object> LoadAllInEditor(Type type) {
-    var allGUIDs = AssetDatabase.FindAssets($"t:{type.Name}");
-    return allGUIDs.Select(guid => AssetDatabase.GUIDToAssetPath(guid))
-      .Select(path => AssetDatabase.LoadAssetAtPath<Object>(path));
   }
 #endif
 
