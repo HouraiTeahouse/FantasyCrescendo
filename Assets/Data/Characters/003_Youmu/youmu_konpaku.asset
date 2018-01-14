@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Name: youmu_konpaku
   m_EditorClassIdentifier: 
   _id: 3548088660
-  ShortName: Youmu
-  LongName: Youmu Konpaku
   IsSelectable: 1
   IsVisible: 1
+  IsDebug: 0
+  ShortName: Youmu
+  LongName: Youmu Konpaku
   _prefab: characters/youmu/player:youmu_konpaku
   _icon: icons:youmu_icon
   _portraits:
@@ -23,3 +24,5 @@ MonoBehaviour:
   - characters/youmu/portraits:youmu_portrait_2
   - characters/youmu/portraits:youmu_portrait_3
   - characters/youmu/portraits:youmu_portrait_4
+  _homeStage: scene/netherworld/info:Netherworld
+  _victoryTheme: bgm/netherworld:Mary_the_Magician
