@@ -11,7 +11,7 @@ public sealed class TrainingMatchRule : IMatchRule {
 
   public Task Initalize(GameConfig config) => Task.CompletedTask;
 
-  public GameState Simulate(GameState state, GameInput input) => state;
+  public GameState Simulate(GameState state, GameInputContext input) => state;
 
   public uint? GetWinner(GameState state) => null;
 

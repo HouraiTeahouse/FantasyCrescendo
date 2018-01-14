@@ -3,7 +3,7 @@
 public enum MatchResolution {
   HasWinner,
   Tie,
-  Timeout
+  NoContest
 }
 
 }

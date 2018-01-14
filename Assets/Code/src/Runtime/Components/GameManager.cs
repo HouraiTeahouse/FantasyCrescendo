@@ -25,16 +25,12 @@ public class GameManager : MonoBehaviour {
   /// <summary>
   /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
   /// </summary>
-  void FixedUpdate() {
-    GameController?.Update();
-  }
+  void FixedUpdate() => GameController?.Update();
 
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
-  void Update() {
-    View?.ApplyState(GameController.CurrentState);
-  }
+  void Update() => View?.ApplyState(GameController.CurrentState);
 
   public Task<MatchResult> RunMatch() {
     MatchTask = new TaskCompletionSource<MatchResult>();

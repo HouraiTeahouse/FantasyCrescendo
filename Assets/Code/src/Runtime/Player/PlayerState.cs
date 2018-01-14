@@ -13,6 +13,11 @@ public struct PlayerState {
   // 60 times one: 2640 bytes
   // 60 times four: 10560 bytes
 
+  // TODO(james7132): Generalize this
+  public bool IsActive => Stocks > 0;
+  public bool IsGrabbingLedge => GrabbedLedgeID != 0;
+  public bool IsHit => Hitstun > 0;
+
   public Vector2 Position;                            // 8 bytes
   public Vector2 Velocity;                            // 8 bytes
 
@@ -36,9 +41,6 @@ public struct PlayerState {
   public int Hitstun;                                 // 1-4 bytes
 
   public uint Stocks;                                 // 1-4 bytes
-
-  public bool IsGrabbingLedge => GrabbedLedgeID != 0;
-  public bool IsHit => Hitstun > 0;
 
 }
 
