@@ -1516,6 +1516,7 @@ GameObject:
   - component: {fileID: 114442081878316268}
   - component: {fileID: 320255256925329766}
   - component: {fileID: 114071214708862820}
+  - component: {fileID: 114303514114498256}
   m_Layer: 8
   m_Name: youmu_konpaku
   m_TagString: Player
@@ -3343,6 +3344,17 @@ MonoBehaviour:
   JumpPower:
   - 7
   - 7
+--- !u!114 &114303514114498256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872841189430122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0604f7dd030b1c54faf43b0a38e3890f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114424149413010172
 MonoBehaviour:
   m_ObjectHideFlags: 1
