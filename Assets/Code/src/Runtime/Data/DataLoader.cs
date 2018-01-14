@@ -1,4 +1,4 @@
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 using HouraiTeahouse.Loadables;
 using HouraiTeahouse.Loadables.AssetBundles;
 using System;
@@ -19,7 +19,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// </summary>
 public class DataLoader : MonoBehaviour {
 
-  public static ITask LoadTask = new Task();
+  public static TaskCompletionSource<object> LoadTask = new TaskCompletionSource<object>();
 
   /// <summary>
   /// The supported game mode types.
@@ -38,22 +38,19 @@ public class DataLoader : MonoBehaviour {
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   void Awake() {
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
     foreach (var type in ValidImportTypes) {
       RegisterAll(LoadAllInEditor(type));
     }
-    LoadTask.Resolve();
+    LoadTask.SetResult(new object());
 #else
     RegisterAll(GameModes);
     GetAllValidPaths(BundleSearch)
-      .Then(paths => {
-        foreach (var path in paths) {
-          AssetBundleManager.LoadAssetBundleAsync(path)
+      .ThenAll(paths => paths.Select(path => {
+          return AssetBundleManager.LoadAssetBundleAsync(path)
             .Then(LoadMainAsset)
             .Then(obj => ProcessLoadedAsset(obj, path));
-        }
-        LoadTask.Resolve();
-      });
+      })).Then(() => LoadTask.SetResult(new object()));
 #endif
   }
 
@@ -83,18 +80,19 @@ public class DataLoader : MonoBehaviour {
     return false;
   }
 
-  ITask<IEnumerable<string>> GetAllValidPaths(string[] searchPatterns) {
-    return Task.All(searchPatterns.Select(pattern => AssetBundleManager.GetValidBundlePaths(pattern)))
-      .Then(allSets => allSets.SelectMany(s => s).Distinct());
+  async Task<IEnumerable<string>> GetAllValidPaths(string[] searchPatterns) {
+    var allSets = await Task.WhenAll(searchPatterns.Select(pattern => AssetBundleManager.GetValidBundlePaths(pattern)));
+    return allSets.SelectMany(s => s).Distinct();
   }
 
-  ITask<Object> LoadMainAsset(LoadedAssetBundle bundle) {
+  async Task<Object> LoadMainAsset(LoadedAssetBundle bundle) {
     var assetBundle = bundle.AssetBundle;
     if (assetBundle.mainAsset != null) {
-      return Task.FromResult(assetBundle.mainAsset);
+      return assetBundle.mainAsset;
     } else {
       var mainPath = assetBundle.GetAllAssetNames()[0];
-      return assetBundle.LoadAssetAsync<Object>(mainPath).ToTask().Then(request => request.asset);
+      var request = await assetBundle.LoadAssetAsync<Object>(mainPath).ToTask();
+      return request.asset;
     }
   }
 

@@ -1,10 +1,10 @@
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public interface IPlayerComponent {
 
-  ITask Initialize(PlayerConfig config, bool isView = false);
+  Task Initialize(PlayerConfig config, bool isView = false);
 
 }
 

@@ -1,5 +1,5 @@
 ﻿using HouraiTeahouse.Loadables;
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,9 +22,9 @@ public class SceneLoader : MonoBehaviour {
     }
   }
 
-  public void LoadScenes() {
-    Task.All(_scenes.Select(Scene.Get).Select(s => s.LoadAsync(Mode)))
-      .Then(() => Debug.Log("Scenes loaded!"));
+  public async void LoadScenes() {
+    await Task.WhenAll(_scenes.Select(Scene.Get).Select(s => s.LoadAsync(Mode)));
+    Debug.Log("Scenes loaded!");
   }
 
 }

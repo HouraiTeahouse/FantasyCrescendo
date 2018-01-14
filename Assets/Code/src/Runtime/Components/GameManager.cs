@@ -1,4 +1,4 @@
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
   public IGameController<GameState> GameController;
   public IStateView<GameState> View;
 
-  ITask MatchTask;
+  TaskCompletionSource<MatchResult> MatchTask;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
@@ -36,15 +36,13 @@ public class GameManager : MonoBehaviour {
     View?.ApplyState(GameController.CurrentState);
   }
 
-  public ITask<MatchResult> RunMatch() {
-    MatchTask = new Task();
-    return MatchTask.Then(() => {
-      // TODO(james7132): Properly evaluate the match result here.
-      return new MatchResult();
-    });
+  public Task<MatchResult> RunMatch() {
+    MatchTask = new TaskCompletionSource<MatchResult>();
+    // TODO(james7132): Properly evaluate the match result here.
+    return MatchTask.Task;
   }
 
-  public void EndMatch() => MatchTask?.Resolve();
+  public void EndMatch() => MatchTask?.SetResult(new MatchResult());
 
 }
 

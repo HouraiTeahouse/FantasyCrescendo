@@ -1,4 +1,4 @@
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -11,23 +11,22 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
   IPlayerSimulation[] PlayerSimulationComponents;
   ISimulation<PlayerState, PlayerInputContext>[] SimulationComponents;
 
-  public ITask Initialize(PlayerConfig config) {
+  public async Task Initialize(PlayerConfig config) {
     var selection = config.Selection;
     var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
-    return character.Prefab.LoadAsync().Then(prefab => {
-      Assert.IsNotNull(prefab);
-      Model = Object.Instantiate(prefab);
-      Model.name = $"Player {config.PlayerID + 1} Simulation ({character.name}, {selection.Pallete})";
+    var prefab = await character.Prefab.LoadAsync();
+    Assert.IsNotNull(prefab);
+    Model = Object.Instantiate(prefab);
+    Model.name = $"Player {config.PlayerID + 1} Simulation ({character.name}, {selection.Pallete})";
 
-      PlayerUtil.DestroyAll(Model, typeof(Renderer), typeof(MeshFilter));
+    PlayerUtil.DestroyAll(Model, typeof(Renderer), typeof(MeshFilter));
 
-      var task = Model.Broadcast<IPlayerComponent>(
-          component => component.Initialize(config, false));
+    var task = Model.Broadcast<IPlayerComponent>(
+        component => component.Initialize(config, false));
 
-      SimulationComponents = Model.GetComponentsInChildren<ISimulation<PlayerState, PlayerInputContext>>();
-      PlayerSimulationComponents = SimulationComponents.OfType<IPlayerSimulation>().ToArray();
-      return task;
-    });
+    SimulationComponents = Model.GetComponentsInChildren<ISimulation<PlayerState, PlayerInputContext>>();
+    PlayerSimulationComponents = SimulationComponents.OfType<IPlayerSimulation>().ToArray();
+    await task;
   }
 
   public void Presimulate(PlayerState state) {

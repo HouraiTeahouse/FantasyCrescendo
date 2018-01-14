@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -19,31 +19,31 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
     this.viewFactories = viewFactories;
   }
 
-  public ITask Initialize(PlayerConfig config) {
+  public async Task Initialize(PlayerConfig config) {
     var selection = config.Selection;
     var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
-    return character.Prefab.LoadAsync().Then(prefab => {
-      View = Object.Instantiate(prefab);
-      View.name = $"Player {config.PlayerID + 1} View ({character.name}, {selection.Pallete})";
+    var prefab = await character.Prefab.LoadAsync();
 
-      PlayerUtil.DestroyAll(View, typeof(Collider));
+    View = Object.Instantiate(prefab);
+    View.name = $"Player {config.PlayerID + 1} View ({character.name}, {selection.Pallete})";
 
-      var task = View.Broadcast<IPlayerComponent>(
-          component => component.Initialize(config, true));
+    PlayerUtil.DestroyAll(View, typeof(Collider));
 
-      var viewComponents = new List<IStateView<PlayerState>>();
-      // TODO(james7132): Move character view components to it's own factory
-      viewComponents.AddRange(View.GetComponentsInChildren<IStateView<PlayerState>>());
-      foreach (var factory in viewFactories) {
-        if (factory != null) {
-          viewComponents.AddRange(factory.CreatePlayerViews(config));
-        }
+    var task = View.Broadcast<IPlayerComponent>(
+        component => component.Initialize(config, true));
+
+    var viewComponents = new List<IStateView<PlayerState>>();
+    // TODO(james7132): Move character view components to it's own factory
+    viewComponents.AddRange(View.GetComponentsInChildren<IStateView<PlayerState>>());
+    foreach (var factory in viewFactories) {
+      if (factory != null) {
+        viewComponents.AddRange(factory.CreatePlayerViews(config));
       }
+    }
 
-      ViewComponents = viewComponents.ToArray();
+    ViewComponents = viewComponents.ToArray();
 
-      return task;
-    });
+    await task;
   }
 
   public void ApplyState(PlayerState state) {

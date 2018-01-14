@@ -1,4 +1,4 @@
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,15 +9,15 @@ public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState,
 
   public PlayerSimulation[] PlayerSimulations;
 
-  public ITask Initialize(GameConfig config) {
+  public Task Initialize(GameConfig config) {
     Assert.IsTrue(config.IsValid);
     PlayerSimulations = new PlayerSimulation[config.PlayerCount];
-    var tasks = new List<ITask>();
+    var tasks = new List<Task>();
     for (int i = 0; i < PlayerSimulations.Length; i++) {
       PlayerSimulations[i] = new PlayerSimulation();
       tasks.Add(PlayerSimulations[i].Initialize(config.PlayerConfigs[i]));
     }
-    return Task.All(tasks);
+    return Task.WhenAll(tasks);
   }
 
   public GameState Simulate(GameState state, GameInputContext input) {

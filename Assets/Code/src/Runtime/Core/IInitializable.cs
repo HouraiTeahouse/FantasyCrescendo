@@ -1,4 +1,4 @@
-using HouraiTeahouse.Tasks;
+using System.Threading.Tasks;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -12,7 +12,7 @@ public interface IInitializable<T> {
   /// </summary>
   /// <param name="config">the configuration options for initialization.</param>
   /// <returns>a promise that will be resolved on completion of initialization.</returns>
-  ITask Initialize(T config);
+  Task Initialize(T config);
 
 }
 
