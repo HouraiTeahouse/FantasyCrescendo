@@ -9,7 +9,7 @@ public class TimeStockMatchRule : StockMatchRule {
     return state;
   }
 
-  public virtual MatchResolution? GetResolution(GameState state) {
+  public override MatchResolution? GetResolution(GameState state) {
     MatchResolution? resolution = null;
     if (state.Time <= 0) {
       resolution = MatchResolution.Timeout;
