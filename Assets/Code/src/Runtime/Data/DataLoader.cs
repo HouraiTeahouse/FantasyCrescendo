@@ -37,13 +37,15 @@ public class DataLoader : MonoBehaviour {
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
-  async void Awake() {
 #if UNITY_EDITOR
+  void Awake() {
     foreach (var type in ValidImportTypes) {
       RegisterAll(LoadAllInEditor(type));
     }
     LoadTask.SetResult(new object());
+  }
 #else
+  async void Awake() {
     RegisterAll(GameModes);
     var paths = await GetAllValidPaths(BundleSearch);
     var bundles = paths.Select(async path => {
@@ -53,8 +55,8 @@ public class DataLoader : MonoBehaviour {
     });
     await Task.WhenAll(bundles);
     LoadTask.SetResult(new object());
-#endif
   }
+#endif
 
 #if UNITY_EDITOR
   IEnumerable<Object> LoadAllInEditor(Type type) {
