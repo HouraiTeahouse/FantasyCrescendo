@@ -2,15 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IMatchRule : MonoBehaviour {
+namespace HouraiTeahouse.FantasyCrescendo {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public interface IMatchRule : ISimulation<GameState, GameInputContext> {
+}
+
 }

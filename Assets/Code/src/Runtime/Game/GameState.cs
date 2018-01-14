@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -31,6 +32,12 @@ public struct GameState {
     GameState clone = this;
     clone.PlayerStates = (PlayerState[]) PlayerStates.Clone();
     return clone;
+  }
+
+  public override bool Equals(object obj) {
+    if (!(obj is GameState)) return false;
+    var state = (GameState)obj;
+    return Time == state.Time && Enumerable.SequenceEqual(PlayerStates, state.PlayerStates);
   }
 
 }
