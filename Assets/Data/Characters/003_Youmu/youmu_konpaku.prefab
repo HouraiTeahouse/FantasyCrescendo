@@ -1517,6 +1517,7 @@ GameObject:
   - component: {fileID: 320255256925329766}
   - component: {fileID: 114071214708862820}
   - component: {fileID: 114303514114498256}
+  - component: {fileID: 114502081682064662}
   m_Layer: 8
   m_Name: youmu_konpaku
   m_TagString: Player
@@ -3383,6 +3384,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   States: {fileID: 11400000, guid: 02d1957d12506104cbaa782e5cba7bf8, type: 2}
   Physics: {fileID: 114424149413010172}
+--- !u!114 &114502081682064662
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872841189430122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b3a182e0e5bff4d9956a165c940264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetTransform: {fileID: 4407231380858698}
+  PositionBias: {x: 0, y: 0.5, z: 0}
 --- !u!114 &114752305556272700
 MonoBehaviour:
   m_ObjectHideFlags: 1
