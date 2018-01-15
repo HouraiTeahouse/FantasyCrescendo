@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -13,9 +14,9 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
 
   IStateView<PlayerState>[] ViewComponents;
 
-  readonly IEnumerable<IPlayerViewFactory> viewFactories;
+  readonly IEnumerable<IViewFactory<PlayerState, PlayerConfig>> viewFactories;
 
-  public PlayerView(IEnumerable<IPlayerViewFactory> viewFactories) {
+  public PlayerView(IEnumerable<IViewFactory<PlayerState, PlayerConfig>> viewFactories) {
     this.viewFactories = viewFactories;
   }
 
@@ -29,21 +30,17 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
 
     PlayerUtil.DestroyAll(View, typeof(Collider));
 
-    var task = View.Broadcast<IPlayerComponent>(
-        component => component.Initialize(config, true));
+    var task = View.Broadcast<IPlayerComponent>( component => component.Initialize(config, true));
 
     var viewComponents = new List<IStateView<PlayerState>>();
-    // TODO(james7132): Move character view components to it's own factory
-    viewComponents.AddRange(View.GetComponentsInChildren<IStateView<PlayerState>>());
-    foreach (var factory in viewFactories) {
-      if (factory != null) {
-        viewComponents.AddRange(factory.CreatePlayerViews(config));
-      }
-    }
-
-    ViewComponents = viewComponents.ToArray();
-
+    var viewTasks = from factory in viewFactories
+                    where factory != null
+                    select factory.CreateViews(config);
+    var views = (await Task.WhenAll(viewTasks)).SelectMany(v => v);
     await task;
+
+    // TODO(james7132): Move character view components to it's own factory
+    ViewComponents = View.GetComponentsInChildren<IStateView<PlayerState>>().Concat(views).ToArray();
   }
 
   public void ApplyState(PlayerState state) {
