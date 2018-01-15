@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
   void Update() => View?.ApplyState(GameController.CurrentState);
 
   public Task<MatchResult> RunMatch() {
+    Debug.Log("Running match...");
     MatchTask = new TaskCompletionSource<MatchResult>();
     // TODO(james7132): Properly evaluate the match result here.
     return MatchTask.Task;

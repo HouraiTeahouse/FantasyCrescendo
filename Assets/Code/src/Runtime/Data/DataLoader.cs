@@ -42,8 +42,6 @@ public class DataLoader : MonoBehaviour {
     foreach (var type in ValidImportTypes) {
       RegisterAll(EditorAssetUtil.LoadAll(type));
     }
-    LoadTask.SetResult(new object());
-  }
 #else
   async void Awake() {
     RegisterAll(GameModes);
@@ -54,9 +52,10 @@ public class DataLoader : MonoBehaviour {
       ProcessLoadedAsset(asset, path);
     });
     await Task.WhenAll(bundles);
-    LoadTask.SetResult(new object());
-  }
 #endif
+    LoadTask.SetResult(new object());
+    Debug.Log("Finished loading data");
+  }
 
   void RegisterAll(IEnumerable<Object> data) {
     foreach (var datum in data) {
