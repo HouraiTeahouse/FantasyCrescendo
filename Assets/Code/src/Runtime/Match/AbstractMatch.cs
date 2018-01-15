@@ -43,9 +43,17 @@ public class DefaultMatch : AbstractMatch {
     gameManager.View = gameView;
     gameManager.enabled = false;
 
-    await Task.WhenAll(gameSim.Initialize(config), gameView.Initialize(config));
+    var simTask = gameSim.Initialize(config).ContinueWith(task => {
+      Debug.Log("Simulation initialized.");
+    });
+    var viewTask = gameView.Initialize(config).ContinueWith(task => {
+      Debug.Log("View initialized.");
+    });
+
+    await Task.WhenAll(viewTask, simTask);
     controller.CurrentState = gameSim.ResetState(controller.CurrentState);
     gameManager.enabled = true;
+    Debug.Log("Match initialized.");
   }
 
   GameState CreateInitialState(GameConfig config) {

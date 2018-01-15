@@ -31,6 +31,8 @@ public class GameSetupMenu : MonoBehaviour {
   async void Start() {
     await DataLoader.LoadTask.Task;
 
+    Debug.Log("Building Setup Menu");
+
     var characters = Registry.Get<CharacterData>().Where(c => c.IsSelectable && c.IsVisible).ToArray();
     var stages = Registry.Get<SceneData>().Where(scene => scene.IsSelectable && scene.IsVisible && scene.IsStage).ToArray();
     var gameModes = Registry.Get<GameMode>().Where(c => c.IsSelectable && c.IsVisible).ToArray();
@@ -69,7 +71,7 @@ public class GameSetupMenu : MonoBehaviour {
 
       Config.PlayerConfigs[i].PlayerID = i;
       Config.PlayerConfigs[i].LocalPlayerID = i;
-      Config.PlayerConfigs[i].Selection.CharacterID = characters.First().Id;
+      Config.PlayerConfigs[i].Selection.CharacterID = characters.FirstOrDefault()?.Id ?? 0;
       Config.PlayerConfigs[i].Selection.Pallete = 0;
     }
 
@@ -80,8 +82,8 @@ public class GameSetupMenu : MonoBehaviour {
     GameModeDropdown.onValueChanged.AddListener(index => {
       GameMode = gameModes[index];
     });
-    Config.StageID = stages.First().Id;
-    GameMode = gameModes.First();
+    Config.StageID = stages.FirstOrDefault()?.Id ?? 0;
+    GameMode = gameModes.FirstOrDefault();
   }
 
   public async void LaunchGame() {
