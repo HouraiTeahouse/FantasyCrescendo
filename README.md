@@ -1,15 +1,20 @@
-# Backroll
+![logo](./Assets/Assets/Sprites/logo.png)
 <p align="center">
     <a href="https://github.com/HouraiTeahouse/FantasyCrescendo/blob/develop/LICENSE">
         <img src="https://img.shields.io/github/license/HouraiTeahouse/FantasyCrescendo.svg" alt="License">
     </a>
     <a href="https://discordapp.com/invite/VuZhs9V">
-        <img src="https://img.shields.io/badge/discord-hourai--teahouse-738bd7.svg" alt="Join the Hourai Teahouse Discord Chat">
+        <img src="https://discordapp.com/api/guilds/151219753434742784/widget.png" alt="Join the Hourai Teahouse Discord Chat">
     </a>
 </p>
 
 An Experimental Rewrite of Fantasy Crescendo from the ground up to support
 various types of net-enabled gameplay.
+
+## About
+*Fantasy Crescendo* is a collaborative community project to create a *[Touhou Project](https://en.touhouwiki.net/wiki/Touhou_Project)* fangame akin to that of Super Smash Bros.
+
+This project does not only consist of code contributions, and many of the assets included are custom art, music, sound effects, and 3D designs created by community submissions. For a full list of credits, see the [credits](./CREDITS.md) file in the repository.
 
 ## Setup
 This project uses git submodules extensively to manage remote dependencies 
