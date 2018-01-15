@@ -27,6 +27,16 @@ public static class PlayerUtil {
     }
   }
 
+  public static PlayerRespawnEvent RespawnPlayer(PlayerDiedEvent evt) {
+    if (evt.Respawned) return null;
+    var respawnEvent = new PlayerRespawnEvent();
+    respawnEvent.Copy(evt);
+    Mediator.Global.Publish(respawnEvent);
+    evt.Copy(respawnEvent);
+    evt.Respawned = true;
+    return respawnEvent;
+  }
+
 }
 
 }

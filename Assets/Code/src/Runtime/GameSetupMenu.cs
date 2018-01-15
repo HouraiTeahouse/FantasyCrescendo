@@ -20,7 +20,7 @@ public class GameSetupMenu : MonoBehaviour {
   public Dropdown GameModeDropdown;
   public int ColorCount;
   public PlayerSelectionMenu[] PlayerMenus;
-  public GameConfig Config;
+  public MatchConfig Config;
 
   GameMode GameMode;
 
@@ -95,7 +95,7 @@ public class GameSetupMenu : MonoBehaviour {
     Config.PlayerConfigs = playerConfigs.ToArray();
 
     Debug.Log("GAME START");
-    await GameMode.CreateMatch().RunMatch(Config);
+    await GameMode.RunGame(Config);
   }
 
 }

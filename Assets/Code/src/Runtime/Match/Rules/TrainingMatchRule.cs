@@ -9,13 +9,23 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// </summary>
 public sealed class TrainingMatchRule : IMatchRule {
 
-  public Task Initalize(GameConfig config) => Task.CompletedTask;
+  MediatorContext Events;
 
-  public GameState Simulate(GameState state, GameInputContext input) => state;
+  public Task Initialize(MatchConfig config) {
+    Events = Mediator.Global.CreateContext();
+    Events.Subscribe<PlayerDiedEvent>(OnPlayerDied);
+    return Task.CompletedTask;
+  }
 
-  public uint? GetWinner(GameState state) => null;
+  public MatchState Simulate(MatchState state, MatchInputContext input) => state;
 
-  public MatchResolution? GetResolution(GameState state) => null;
+  public uint? GetWinner(MatchState state) => null;
+
+  public MatchResolution? GetResolution(MatchState state) => null;
+
+  public void Dispose() => Events?.Dispose();
+
+  void OnPlayerDied(PlayerDiedEvent evt) => PlayerUtil.RespawnPlayer(evt);
 
 }
 

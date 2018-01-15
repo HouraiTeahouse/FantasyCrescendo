@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public abstract class AbstractMatch {
+public abstract class Match {
 
-  public async Task<MatchResult> RunMatch(GameConfig config, bool loadScene = true) {
+  public async Task<MatchResult> RunMatch(MatchConfig config, bool loadScene = true) {
     await DataLoader.LoadTask.Task;
     Task sceneLoad = Task.CompletedTask;
     if (loadScene) {
@@ -16,30 +16,30 @@ public abstract class AbstractMatch {
       Assert.IsTrue(stage != null && stage.IsStage);
       await stage.GameScene.LoadAsync();
     }
-    var additionalScenes = Config.Get<StageConfig>().AdditionalStageScenes;
+    var additionalScenes = Config.Get<SceneConfig>().AdditionalStageScenes;
     await Task.WhenAll(additionalScenes.Select(s => s.LoadAsync(LoadSceneMode.Additive)));
-    var gameManager = Object.FindObjectOfType<GameManager>();
+    var gameManager = Object.FindObjectOfType<MatchManager>();
     gameManager.Config = config;
     await InitializeMatch(gameManager, config);
     return await gameManager.RunMatch();
   }
 
-  public abstract Task InitializeMatch(GameManager manager, GameConfig config);
+  protected abstract Task InitializeMatch(MatchManager manager, MatchConfig config);
 
 }
 
-public class DefaultMatch : AbstractMatch {
+public class DefaultMatch : Match {
 
-  public override async Task InitializeMatch(GameManager gameManager, GameConfig config) {
+  protected override async Task InitializeMatch(MatchManager gameManager, MatchConfig config) {
     var gameView = new GameView();
-    var gameSim = new GameSimulation();
+    var gameSim = CreateSimulation(config);
     var controller = new GameController(config);
 
     controller.CurrentState = CreateInitialState(config);
     controller.InputSource = new InControlInputSource(config);
     controller.Simulation = gameSim;
 
-    gameManager.GameController = controller;
+    gameManager.MatchController = controller;
     gameManager.View = gameView;
     gameManager.enabled = false;
 
@@ -56,8 +56,14 @@ public class DefaultMatch : AbstractMatch {
     Debug.Log("Match initialized.");
   }
 
-  GameState CreateInitialState(GameConfig config) {
-    var initialState = new GameState(config);
+  IMatchSimulation CreateSimulation(MatchConfig config) {
+    var ruleSimulation = new MatchRuleSimulation(MatchRuleFactory.CreateRules(config));
+    var playerSimulation = new MatchPlayerSimulation();
+    return new MatchSimulation(new IMatchSimulation[] { playerSimulation, ruleSimulation });
+  }
+
+  MatchState CreateInitialState(MatchConfig config) {
+    var initialState = new MatchState(config);
     for (int i = 0; i < initialState.PlayerStates.Length; i++) {
       initialState.PlayerStates[i].Position = new Vector3(i * 2 - 3, 1, 0);
     }

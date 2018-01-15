@@ -5,10 +5,10 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public interface INetworkClient : IDisposable {
 
-  event Action<uint, IEnumerable<GameInput>> ReceivedInputs;
-  event Action<uint, GameState> ReceivedState;
+  event Action<uint, IEnumerable<MatchInput>> ReceivedInputs;
+  event Action<uint, MatchState> ReceivedState;
 
-  void SendInput(uint startTimestamp, IEnumerable<GameInput> inputs);
+  void SendInput(uint startTimestamp, IEnumerable<MatchInput> inputs);
 
 }
 

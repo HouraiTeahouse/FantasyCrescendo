@@ -7,8 +7,8 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class UNETClient : INetworkClient {
 
-  public event Action<uint, IEnumerable<GameInput>> ReceivedInputs;
-  public event Action<uint, GameState> ReceivedState;
+  public event Action<uint, IEnumerable<MatchInput>> ReceivedInputs;
+  public event Action<uint, MatchState> ReceivedState;
 
   readonly NetworkClient unetClient;
 
@@ -19,7 +19,7 @@ public class UNETClient : INetworkClient {
     unetClient.RegisterHandler(MessageCode.UpdateInput, OnReceivedInput);
   }
 
-  public void SendInput(uint startTimestamp, IEnumerable<GameInput> input) {
+  public void SendInput(uint startTimestamp, IEnumerable<MatchInput> input) {
     unetClient.SendUnreliable(MessageCode.UpdateInput, new InputSetMessage {
         StartTimestamp = startTimestamp,
         Inputs = input.ToArray()

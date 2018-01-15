@@ -5,23 +5,23 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public struct GameInput {
+public struct MatchInput {
 
   public PlayerInput[] PlayerInputs;
 
-  public GameInput(GameConfig config) {
+  public MatchInput(MatchConfig config) {
     PlayerInputs = new PlayerInput[config.PlayerCount];
   }
 
   public bool IsValid => PlayerInputs.IsAllValid();
 
-  public GameInput Predict(GameInput baseInput) {
+  public MatchInput Predict(MatchInput baseInput) {
     var clone = Clone();
     ForceValid(clone.PlayerInputs, true);
     return clone;
   }
 
-  public void MergeWith(GameInput otherInput) {
+  public void MergeWith(MatchInput otherInput) {
     Assert.AreEqual(PlayerInputs.Length, otherInput.PlayerInputs.Length);
     for (int i = 0; i < PlayerInputs.Length; i++) {
       if (!PlayerInputs[i].IsValid && otherInput.PlayerInputs[i].IsValid) {
@@ -40,19 +40,19 @@ public struct GameInput {
     }
   }
 
-  public GameInput Clone() {
-    GameInput clone = this;
+  public MatchInput Clone() {
+    MatchInput clone = this;
     clone.PlayerInputs = (PlayerInput[]) PlayerInputs.Clone();
     return clone;
   }
 
 }
 
-public class GameInputContext {
+public class MatchInputContext {
 
   public PlayerInputContext[] PlayerInputs;
 
-  public GameInputContext(GameInput input) {
+  public MatchInputContext(MatchInput input) {
     Reset(input);
   }
 
@@ -66,7 +66,7 @@ public class GameInputContext {
     }
   }
 
-  public void Reset(GameInput current) {
+  public void Reset(MatchInput current) {
     PlayerInputs = new PlayerInputContext[current.PlayerInputs.Length];
     for (int i = 0; i < PlayerInputs.Length; i++) {
       PlayerInputs[i] = new PlayerInputContext {
@@ -75,12 +75,12 @@ public class GameInputContext {
     }
   }
 
-  public void Reset(GameInput previous, GameInput current) {
+  public void Reset(MatchInput previous, MatchInput current) {
     Reset(previous);
     Update(current);
   }
 
-  public void Update(GameInput input) {
+  public void Update(MatchInput input) {
     for (int i = 0; i < input.PlayerInputs.Length; i++) {
       PlayerInputs[i].Update(input.PlayerInputs[i]);
     }

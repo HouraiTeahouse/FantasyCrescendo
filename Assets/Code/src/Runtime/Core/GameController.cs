@@ -5,17 +5,17 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// <summary>
 /// An IGameController implementation that runs a normal local game.
 /// </summary>
-public class GameController : IGameController<GameState> {
+public class GameController : IGameController<MatchState> {
 
   public uint Timestep { get; set; }
-  public GameState CurrentState { get; set; }
-  public ISimulation<GameState, GameInputContext> Simulation { get; set; }
-  public IInputSource<GameInput> InputSource { get; set; }
+  public MatchState CurrentState { get; set; }
+  public ISimulation<MatchState, MatchInputContext> Simulation { get; set; }
+  public IInputSource<MatchInput> InputSource { get; set; }
 
-  readonly GameInputContext inputContext;
+  readonly MatchInputContext inputContext;
 
-  public GameController(GameConfig config) {
-    inputContext = new GameInputContext(new GameInput(config));
+  public GameController(MatchConfig config) {
+    inputContext = new MatchInputContext(new MatchInput(config));
   }
 
   public void Update() {
