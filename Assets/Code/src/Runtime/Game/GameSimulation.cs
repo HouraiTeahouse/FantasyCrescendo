@@ -48,7 +48,10 @@ public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState,
   }
 
   void OnPlayerDied(PlayerDiedEvent evt) {
-    var shouldRespawn = true;
+    var state = evt.PlayerState;
+    state.Stocks = Mathf.Max(0, state.Stocks - 1);
+    evt.PlayerState = state;
+    var shouldRespawn = state.Stocks > 0;
     if (!shouldRespawn) return;
     var respawnEvent = new PlayerRespawnEvent();
     respawnEvent.Copy(evt);

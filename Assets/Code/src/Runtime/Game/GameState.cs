@@ -20,7 +20,7 @@ public struct GameState {
     PlayerStates = new PlayerState[config.PlayerCount];
     Time = config.Time;
     for (var i = 0; i < PlayerStates.Length; i++) {
-      PlayerStates[i].Stocks = config.Stocks;
+      PlayerStates[i].Stocks = (int)config.Stocks;
     }
   }
 

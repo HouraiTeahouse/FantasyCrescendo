@@ -1510,6 +1510,7 @@ GameObject:
   - component: {fileID: 4721612826610312}
   - component: {fileID: 114492919615002904}
   - component: {fileID: 143969617390973670}
+  - component: {fileID: 114667196964099884}
   - component: {fileID: 114424149413010172}
   - component: {fileID: 114250758504073034}
   - component: {fileID: 114752305556272700}
@@ -3430,6 +3431,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetTransform: {fileID: 4407231380858698}
   PositionBias: {x: 0, y: 0.5, z: 0}
+--- !u!114 &114667196964099884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872841189430122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10dfda9777e16b34a9c02e112214a1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetObjects:
+  - {fileID: 1872841189430122}
+  Invert: 0
 --- !u!114 &114752305556272700
 MonoBehaviour:
   m_ObjectHideFlags: 1
