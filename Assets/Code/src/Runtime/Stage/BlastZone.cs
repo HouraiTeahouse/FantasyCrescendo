@@ -6,7 +6,7 @@ public class BlastZone : MonoBehaviour {
 
   public Bounds Bounds;
 
-  public GameState Simulate(GameState state) {
+  public MatchState Simulate(MatchState state) {
     for (uint i = 0; i < state.PlayerStates.Length; i++) {
       var playerState = state.PlayerStates[i];
       if (Bounds.Contains(playerState.Position)) continue;

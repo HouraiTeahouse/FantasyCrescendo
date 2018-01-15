@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -7,7 +6,10 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [CreateAssetMenu(menuName = "Game Modes/Training Game Mode")]
 public class TrainingGameMode : GameMode {
 
-  public override AbstractMatch CreateMatch() => new DefaultMatch();
+  public override async Task RunGame(MatchConfig config, bool loadStage = true) {
+    await new DefaultMatch().RunMatch(config, loadStage);
+    await Config.Get<SceneConfig>().MainMenuScene.LoadAsync();
+  }
 
 }
 

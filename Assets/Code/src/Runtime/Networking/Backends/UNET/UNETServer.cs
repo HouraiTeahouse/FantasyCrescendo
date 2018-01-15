@@ -15,16 +15,16 @@ public class UNETServer : INetworkServer {
     get { return NetworkServer.connections.Count; }
   }
 
-  public event Action<int, uint, IEnumerable<GameInput>> ReceivedInputs;
+  public event Action<int, uint, IEnumerable<MatchInput>> ReceivedInputs;
 
-  public void BroadcastInput(uint startTimestamp, IEnumerable<GameInput> input) {
+  public void BroadcastInput(uint startTimestamp, IEnumerable<MatchInput> input) {
     NetworkServer.SendUnreliableToAll(MessageCode.UpdateInput, new InputSetMessage {
         StartTimestamp = startTimestamp,
         Inputs = input.ToArray()
     });
   }
 
-  public void BroadcastState(uint timestamp, GameState state) {
+  public void BroadcastState(uint timestamp, MatchState state) {
     NetworkServer.SendUnreliableToAll(MessageCode.UpdateState, new ServerStateMessage {
         Timestamp = timestamp,
         State = state

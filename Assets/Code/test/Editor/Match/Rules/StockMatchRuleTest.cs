@@ -7,9 +7,9 @@ using NUnit.Framework;
 
 public class StockMatchRuleTest {
 
-  GameState CreateGameState(int[] stocks) {
+  MatchState CreateGameState(int[] stocks) {
     var states = stocks.Select(s => new PlayerState { Stocks = s }).ToArray();
-    return new GameState { PlayerStates = states };
+    return new MatchState { PlayerStates = states };
   }
 
 	[Test]

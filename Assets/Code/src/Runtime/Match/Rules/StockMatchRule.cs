@@ -11,13 +11,19 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// </summary>
 public class StockMatchRule : IMatchRule {
 
-  public Task Initalize(GameConfig config) => Task.CompletedTask;
+  MediatorContext Events;
 
-  public virtual GameState Simulate(GameState state, GameInputContext input) {
+  public Task Initialize(MatchConfig config) {
+    Events = Mediator.Global.CreateContext();
+    Events.Subscribe<PlayerDiedEvent>(OnPlayerDied);
+    return Task.CompletedTask;
+  }
+
+  public virtual MatchState Simulate(MatchState state, MatchInputContext input) {
     return state;
   }
 
-  public virtual MatchResolution? GetResolution(GameState state) {
+  public virtual MatchResolution? GetResolution(MatchState state) {
     var livingCount = state.PlayerStates.Count(player => player.Stocks > 0);
     switch(livingCount) {
       case 0: return MatchResolution.Tie;
@@ -26,7 +32,7 @@ public class StockMatchRule : IMatchRule {
     }
   }
 
-  public virtual uint? GetWinner(GameState state) {
+  public virtual uint? GetWinner(MatchState state) {
     uint? winner = null;
     int maxStocks = int.MinValue;
     for (uint i = 0; i < state.PlayerStates.Length; i++) {
@@ -41,6 +47,17 @@ public class StockMatchRule : IMatchRule {
     }
     return winner;
   }
+
+  void OnPlayerDied(PlayerDiedEvent evt) {
+    var state = evt.PlayerState;
+    state.Stocks = Mathf.Max(0, state.Stocks - 1);
+    evt.PlayerState = state;
+    if (state.Stocks > 0) {
+      PlayerUtil.RespawnPlayer(evt);
+    }
+  }
+
+  public void Dispose() => Events?.Dispose();
 
 }
 

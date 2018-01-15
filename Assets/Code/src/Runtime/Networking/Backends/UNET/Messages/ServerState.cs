@@ -5,7 +5,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public class ServerStateMessage : MessageBase {
 
   public uint Timestamp;
-  public GameState State;
+  public MatchState State;
 
 }
 

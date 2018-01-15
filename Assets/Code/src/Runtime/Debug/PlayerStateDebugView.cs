@@ -3,10 +3,14 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class CharacterStateView : MonoBehaviour, IPlayerView {
+public class PlayerStateDebugView : MonoBehaviour, IPlayerView {
 
   public PlayerConfig Config;
   public PlayerState State;
+
+#if !UNITY_EDITOR
+  void Awake() => DestroyImmediate(this);
+#endif
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
     Config = config;

@@ -4,12 +4,12 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class TimeStockMatchRule : StockMatchRule {
 
-  public override GameState Simulate(GameState state, GameInputContext input) {
+  public override MatchState Simulate(MatchState state, MatchInputContext input) {
     state.Time--;
     return state;
   }
 
-  public override MatchResolution? GetResolution(GameState state) {
+  public override MatchResolution? GetResolution(MatchState state) {
     MatchResolution? resolution = null;
     if (state.Time <= 0) {
       return GetWinner(state) != null ? MatchResolution.HasWinner : MatchResolution.Tie;

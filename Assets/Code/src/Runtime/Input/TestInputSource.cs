@@ -2,18 +2,18 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class TestInputSource : IInputSource<GameInput> {
+public class TestInputSource : IInputSource<MatchInput> {
 
-  GameInput input;
+  MatchInput input;
 
-  public TestInputSource(GameConfig config) {
-    input = new GameInput(config);
+  public TestInputSource(MatchConfig config) {
+    input = new MatchInput(config);
     for (int i = 0; i < input.PlayerInputs.Length; i++) {
       input.PlayerInputs[i].IsValid = true;
     }
   }
 
-  public GameInput SampleInput() {
+  public MatchInput SampleInput() {
     var playerInput = new PlayerInput {
       Movement = new Vector2(ButtonAxis(KeyCode.A, KeyCode.D), ButtonAxis(KeyCode.S, KeyCode.W)),
       //TODO(james7132): Make Tap Jump Configurable

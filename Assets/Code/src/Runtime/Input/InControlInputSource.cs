@@ -5,23 +5,23 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class InControlInputSource : IInputSource<GameInput> {
+public class InControlInputSource : IInputSource<MatchInput> {
 
-  GameConfig config;
-  GameInput input;
+  MatchConfig config;
+  MatchInput input;
   // TODO(james7132): Support multiple with player level configurations.
   PlayerControllerMapping controllerMapping;
 
-  public InControlInputSource(GameConfig config) {
+  public InControlInputSource(MatchConfig config) {
     this.config = config;
     controllerMapping = new PlayerControllerMapping();
-    input = new GameInput(config);
+    input = new MatchInput(config);
     for (int i = 0; i < input.PlayerInputs.Length; i++) {
       input.PlayerInputs[i].IsValid = true;
     }
   }
   
-  public GameInput SampleInput() {
+  public MatchInput SampleInput() {
     var allDevices = InputManager.Devices;
     var newInput = input.Clone();
     for (var i = 0; i < config.PlayerConfigs.Length; i++) {

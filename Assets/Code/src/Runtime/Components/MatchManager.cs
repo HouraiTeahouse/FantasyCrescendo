@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class GameManager : MonoBehaviour {
+public class MatchManager : MonoBehaviour {
 
-  public static GameManager Instance { get; private set; }
+  public static MatchManager Instance { get; private set; }
 
-  public GameConfig Config;
+  public MatchConfig Config;
 
-  public IGameController<GameState> GameController;
-  public IStateView<GameState> View;
+  public IGameController<MatchState> MatchController;
+  public IStateView<MatchState> View;
 
   TaskCompletionSource<MatchResult> MatchTask;
 
@@ -25,12 +25,12 @@ public class GameManager : MonoBehaviour {
   /// <summary>
   /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
   /// </summary>
-  void FixedUpdate() => GameController?.Update();
+  void FixedUpdate() => MatchController?.Update();
 
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
-  void Update() => View?.ApplyState(GameController.CurrentState);
+  void Update() => View?.ApplyState(MatchController.CurrentState);
 
   public Task<MatchResult> RunMatch() {
     Debug.Log("Running match...");
@@ -39,7 +39,10 @@ public class GameManager : MonoBehaviour {
     return MatchTask.Task;
   }
 
-  public void EndMatch() => MatchTask?.SetResult(new MatchResult());
+  public void EndMatch(MatchResult result) {
+    if (MatchTask == null || MatchTask.TrySetResult(result)) return;
+    Debug.Log($"Match over. Winner: {result.WinningPlayerID}, Resolution {result.Resolution}");
+  }
 
 }
 

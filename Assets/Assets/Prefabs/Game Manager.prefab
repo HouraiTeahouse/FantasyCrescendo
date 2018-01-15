@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4196703080495454}
   - component: {fileID: 114070187349190498}
+  - component: {fileID: 114286316001963736}
   m_Layer: 0
   m_Name: EditorQuickMatch
   m_TagString: EditorOnly
@@ -83,6 +84,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameManager: {fileID: 114727785565368142}
   GameMode: {fileID: 11400000, guid: ce1f27b7856194045a3e3c7c1a9fae24, type: 2}
+--- !u!114 &114286316001963736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1211042657356302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3d44b457986994e925d76e255c87b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Manager: {fileID: 114727785565368142}
+  State:
+    Time: 0
+    PlayerStates: []
 --- !u!114 &114727785565368142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Config:
     StageID: 0
-    Stocks: 5
+    Stocks: 1
     Time: 10800
     PlayerConfigs:
     - PlayerID: 0
@@ -108,14 +124,4 @@ MonoBehaviour:
       LocalPlayerID: 1
       Selection:
         CharacterID: 3548088660
-        Pallete: 1
-    - PlayerID: 2
-      LocalPlayerID: 2
-      Selection:
-        CharacterID: 3548088660
         Pallete: 2
-    - PlayerID: 3
-      LocalPlayerID: 3
-      Selection:
-        CharacterID: 3548088660
-        Pallete: 3

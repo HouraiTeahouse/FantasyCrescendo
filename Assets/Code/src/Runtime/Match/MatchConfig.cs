@@ -8,7 +8,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// A data object for configuring a game between multiple players.
 /// </summary>
 [Serializable]
-public struct GameConfig : IValidatable {
+public struct MatchConfig : IValidatable {
 
   public uint StageID;
 
