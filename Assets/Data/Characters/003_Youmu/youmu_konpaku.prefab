@@ -1508,6 +1508,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4721612826610312}
+  - component: {fileID: 114492919615002904}
   - component: {fileID: 143969617390973670}
   - component: {fileID: 114424149413010172}
   - component: {fileID: 114250758504073034}
@@ -3384,6 +3385,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   States: {fileID: 11400000, guid: 02d1957d12506104cbaa782e5cba7bf8, type: 2}
   Physics: {fileID: 114424149413010172}
+--- !u!114 &114492919615002904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872841189430122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d500e3286ff6dc04c9857c885a762d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Config:
+    PlayerID: 0
+    LocalPlayerID: 0
+    Selection:
+      CharacterID: 0
+      Pallete: 0
+  State:
+    Position: {x: 0, y: 0}
+    Velocity: {x: 0, y: 0}
+    Direction: 0
+    IsFastFalling: 0
+    RemainingJumps: 0
+    RespawnTimeRemaining: 0
+    StateHash: 0
+    NormalizedStateTime: 0
+    ShieldHealth: 0
+    ShieldRecoveryCooldown: 0
+    GrabbedLedgeID: 0
+    Damage: 0
+    Hitstun: 0
+    Stocks: 0
 --- !u!114 &114502081682064662
 MonoBehaviour:
   m_ObjectHideFlags: 1
