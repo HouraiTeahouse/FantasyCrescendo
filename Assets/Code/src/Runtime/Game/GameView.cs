@@ -11,7 +11,7 @@ public class GameView : IInitializable<GameConfig>, IStateView<GameState> {
   public Task Initialize(GameConfig config) {
     PlayerViews = new PlayerView[config.PlayerCount];
     var tasks = new List<Task>();
-    var viewFactories = Object.FindObjectsOfType<AbstractPlayerViewFactory>();
+    var viewFactories = Object.FindObjectsOfType<AbstractViewFactory<PlayerState, PlayerConfig>>();
     for (int i = 0; i < PlayerViews.Length; i++) {
       PlayerViews[i] = new PlayerView(viewFactories);
       tasks.Add(PlayerViews[i].Initialize(config.PlayerConfigs[i]));

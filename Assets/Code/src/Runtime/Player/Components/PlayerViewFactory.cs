@@ -1,27 +1,21 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-/// <summary>
-/// 
-/// </summary>
-public abstract class AbstractPlayerViewFactory : MonoBehaviour, IPlayerViewFactory {
-
-  public abstract IEnumerable<IStateView<PlayerState>> CreatePlayerViews(PlayerConfig config);
-
-}
-
-public class PlayerViewFactory : AbstractPlayerViewFactory {
+public class PlayerViewFactory : AbstractViewFactory<PlayerState, PlayerConfig> {
 
   public GameObject Prefab;
 
-  public override IEnumerable<IStateView<PlayerState>> CreatePlayerViews(PlayerConfig config) {
+  public override async Task<IStateView<PlayerState>[]> CreateViews(PlayerConfig config) {
     var view = Instantiate(Prefab);
     view.name = $"{Prefab.name} ({config.PlayerID + 1})";
+    var taskList = new List<Task>();
     foreach (var initializer in view.GetComponentsInChildren<IInitializable<PlayerConfig>>()) {
-      initializer.Initialize(config);
+      taskList.Add(initializer.Initialize(config));
     }
+    await Task.WhenAll(taskList);
     OnCreateView(config, view);
     return view.GetComponentsInChildren<IStateView<PlayerState>>();
   }
