@@ -11,7 +11,7 @@ public class PlayerName : MonoBehaviour, IInitializable<PlayerConfig> {
 
   public Task Initialize(PlayerConfig config) {
     if (Text != null) {
-      Text.text = string.Format(Format, config.PlayerID);
+      Text.text = string.Format(Format, config.PlayerID + 1);
     }
     return Task.CompletedTask;
   }
