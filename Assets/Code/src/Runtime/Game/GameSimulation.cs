@@ -1,16 +1,25 @@
-using System.Threading.Tasks;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState, GameInputContext> {
+public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState, GameInputContext>, IDisposable {
 
   public PlayerSimulation[] PlayerSimulations;
 
+  //TODO(james7132): Move this to somewhere more sane.
+  MediatorContext Events;
+  BlastZone BlastZone;
+
   public Task Initialize(GameConfig config) {
     Assert.IsTrue(config.IsValid);
+    Events = Mediator.Global.CreateContext();
+    Events.Subscribe<PlayerDiedEvent>(OnPlayerDied);
+    BlastZone = Object.FindObjectOfType<BlastZone>();
     PlayerSimulations = new PlayerSimulation[config.PlayerCount];
     var tasks = new List<Task>();
     for (int i = 0; i < PlayerSimulations.Length; i++) {
@@ -32,7 +41,19 @@ public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState,
       newState.PlayerStates[i] =
         PlayerSimulations[i].Simulate(state.PlayerStates[i], input.PlayerInputs[i]);
     }
+    if (BlastZone != null) {
+      newState = BlastZone.Simulate(newState);
+    }
     return newState;
+  }
+
+  void OnPlayerDied(PlayerDiedEvent evt) {
+    var shouldRespawn = true;
+    if (!shouldRespawn) return;
+    var respawnEvent = new PlayerRespawnEvent();
+    respawnEvent.Copy(evt);
+    Mediator.Global.Publish(respawnEvent);
+    evt.Copy(respawnEvent);
   }
 
   public GameState ResetState(GameState state) {
@@ -41,6 +62,8 @@ public class GameSimulation : IInitializable<GameConfig>, ISimulation<GameState,
     }
     return state;
   }
+
+  public void Dispose() => Events?.Dispose();
 
 }
 

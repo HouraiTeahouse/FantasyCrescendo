@@ -16,6 +16,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   GroundMovement Ground;
   AerialMovement Aerial;
   LedgeMovement Ledge;
+  RespawnMovement Respawn;
 
   public Task Initialize(PlayerConfig config, bool isView) {
     if (Physics == null) {
@@ -25,6 +26,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     Ground = Ground ?? new GroundMovement();
     Aerial = Aerial ?? new AerialMovement();
     Ledge = Ledge ?? new LedgeMovement();
+    Respawn = Respawn ?? new RespawnMovement();
 
     return Task.CompletedTask;
   }
@@ -35,23 +37,24 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   }
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
-    if (Physics.IsGrounded) {
-      return Ground.Move(state, input, this);
-    } else {
-      return Aerial.Move(state, input, this);
+    ICharacterMovement mover = Aerial;
+    if (state.IsRespawning) {
+      mover = Respawn;
+    } else if (state.IsGrabbingLedge) {
+      mover = Ledge;
+    } else if (Physics.IsGrounded) {
+      mover = Ground;
     }
+    return mover.Move(state, input, this);
   }
 
-  public bool CanJump(PlayerState state) {
-    return state.RemainingJumps > 0;
-  }
+  public bool CanJump(PlayerState state) => state.RemainingJumps > 0;
 
   public float GetJumpPower(PlayerState state) {
     return JumpPower[JumpPower.Length - state.RemainingJumps];
   }
 
   public void Jump(ref PlayerState state) {
-    Debug.LogFormat("{0} {1}", state.RemainingJumps, CanJump(state));
     if (CanJump(state)) {
       state.Velocity.y = GetJumpPower(state);
       state.RemainingJumps--;
@@ -60,8 +63,14 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
 
 }
 
+public interface ICharacterMovement {
+  PlayerState Move(PlayerState state,
+                   PlayerInputContext input,
+                   CharacterMovement movement);
+}
+
 [Serializable]
-internal class GroundMovement {
+internal class GroundMovement : ICharacterMovement {
 
   public PlayerState Move(PlayerState state,
                           PlayerInputContext input,
@@ -83,7 +92,7 @@ internal class GroundMovement {
 }
 
 [Serializable]
-internal class AerialMovement {
+internal class AerialMovement : ICharacterMovement {
 
   public PlayerState Move(PlayerState state,
                           PlayerInputContext input,
@@ -99,11 +108,23 @@ internal class AerialMovement {
 }
 
 [Serializable]
-internal class LedgeMovement {
+internal class LedgeMovement : ICharacterMovement {
 
   public PlayerState Move(PlayerState state,
                           PlayerInputContext input,
                           CharacterMovement movement) {
+    return state;
+  }
+
+}
+
+[Serializable]
+internal class RespawnMovement : ICharacterMovement {
+
+  public PlayerState Move(PlayerState state,
+                          PlayerInputContext input,
+                          CharacterMovement movement) {
+    state.Velocity = Vector3.zero;
     return state;
   }
 

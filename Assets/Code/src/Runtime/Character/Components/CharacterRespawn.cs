@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class CharacterRespawn : MonoBehaviour, IPlayerView {
+public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
 
   public Vector3 Offset;
 
@@ -23,6 +23,20 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView {
     }
     return Task.CompletedTask;
   }
+
+  public void Presimulate(PlayerState state) {
+  }
+
+  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+    if (state.RespawnTimeRemaining > 0) {
+      state.RespawnTimeRemaining--;
+    } else {
+      state.RespawnTimeRemaining = 0;
+    }
+    return state;
+  }
+
+  public PlayerState ResetState(PlayerState state) => state;
 
   public void ApplyState(PlayerState state) {
     if (platform == null) return;
