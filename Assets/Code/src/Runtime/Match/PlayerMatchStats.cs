@@ -1,5 +1,8 @@
-﻿namespace HouraiTeahouse.FantasyCrescendo {
+﻿using System;
 
+namespace HouraiTeahouse.FantasyCrescendo {
+
+[Serializable]
 public struct PlayerMatchStats {
   public PlayerConfig Config;
 
