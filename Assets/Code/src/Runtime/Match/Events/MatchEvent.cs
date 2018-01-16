@@ -1,10 +1,10 @@
 ﻿namespace HouraiTeahouse.FantasyCrescendo {
     
-public abstract class GameEvent {
-  public MatchState GameState;
+public abstract class MatchEvent {
+  public MatchState MatchState;
 
-  public void Copy(GameEvent evt) {
-    GameState = evt.GameState;
+  public void Copy(MatchEvent evt) {
+    MatchState = evt.MatchState;
   }
 }
 
