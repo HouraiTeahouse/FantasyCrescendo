@@ -1,9 +1,10 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class PlayerDisplayFactory : PlayerViewFactory<PlayerState> {
+public class PlayerMatchResultDisplayFactory : PlayerViewFactory<PlayerMatchStats> {
 
   public RectTransform Container;
 
