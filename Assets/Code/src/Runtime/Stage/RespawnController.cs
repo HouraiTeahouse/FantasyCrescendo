@@ -23,7 +23,7 @@ public class RespawnController : MonoBehaviour {
     foreach (var respawnPosition in RespawnPositions) {
       if (respawnPosition == null) continue;
       var bounds = new Bounds(respawnPosition.position, RespawnBounds);
-      if (evt.GameState.PlayerStates.Any(state => bounds.Contains(state.Position))) {
+      if (evt.MatchState.PlayerStates.Any(state => bounds.Contains(state.Position))) {
         continue;
       }
       playerState.Position = respawnPosition.position;

@@ -12,7 +12,7 @@ public class BlastZone : MonoBehaviour {
       if (Bounds.Contains(playerState.Position)) continue;
       Mediator.Global.Publish(new PlayerDiedEvent {
         PlayerID = i,
-        GameState = state
+        MatchState = state
       });
     }
     return state;
