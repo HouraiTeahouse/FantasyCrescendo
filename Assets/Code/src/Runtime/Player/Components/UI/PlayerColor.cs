@@ -10,13 +10,13 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// </summary>
 public class PlayerColor : MonoBehaviour, IInitializable<PlayerConfig> {
 
-  public Graphic Graphic;
+  public Graphic[] Graphics;
 
   public Task Initialize(PlayerConfig config) {
-    if (Graphic != null) {
-      Graphic.color = Config.Get<VisualConfig>().GetPlayerColor(config.PlayerID);
-    } else {
-      Debug.LogWarning($"{name} has a PlayerColor without a Graphic display.");
+    var color = Config.Get<VisualConfig>().GetPlayerColor(config.PlayerID);
+    foreach (var graphic in Graphics) {
+      if (graphic == null) continue;
+      graphic.color = color;
     }
     return Task.CompletedTask;
   }

@@ -18,11 +18,13 @@ MonoBehaviour:
   ShortName: Youmu
   LongName: Youmu Konpaku
   _prefab: characters/youmu/player:youmu_konpaku
+  _homeStage: scene/netherworld/info:Netherworld
+  _victoryTheme: bgm/netherworld:Mary_the_Magician
   _icon: icons:youmu_icon
   _portraits:
   - characters/youmu/portraits:youmu_portrait_1
   - characters/youmu/portraits:youmu_portrait_2
   - characters/youmu/portraits:youmu_portrait_3
   - characters/youmu/portraits:youmu_portrait_4
-  _homeStage: scene/netherworld/info:Netherworld
-  _victoryTheme: bgm/netherworld:Mary_the_Magician
+  PortraitCropCenter: {x: 0.5, y: 0.8}
+  PortraitCropSize: 0.22

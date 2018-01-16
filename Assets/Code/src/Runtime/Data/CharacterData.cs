@@ -19,10 +19,21 @@ public class CharacterData : GameDataBase {
   public string LongName;
 
   [SerializeField, Resource(typeof(GameObject))] string _prefab;
-  [SerializeField, Resource(typeof(Sprite))] string _icon;
-  [SerializeField, Resource(typeof(Sprite))] string[] _portraits;
   [SerializeField, Resource(typeof(SceneData))] string _homeStage;
   [SerializeField, Resource(typeof(AudioClip))] string _victoryTheme;
+  [Header("Visuals")]
+  [SerializeField, Resource(typeof(Sprite))] string _icon;
+  [SerializeField, Resource(typeof(Sprite))] string[] _portraits;
+  public Vector2 PortraitCropCenter;
+  public float PortraitCropSize;
+
+  public Rect PortraitCropRect {
+    get {
+      var size = Vector2.one * PortraitCropSize;
+      var extents = size / 2;
+      return new Rect(PortraitCropCenter - extents, size);
+    }
+  }
 
   public IAsset<GameObject> Prefab => Asset.Get<GameObject>(_prefab);
   public IAsset<Sprite> Icon => Asset.Get<Sprite>(_icon);
