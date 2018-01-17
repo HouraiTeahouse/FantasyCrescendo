@@ -40,14 +40,20 @@ public class MatchManager : MonoBehaviour {
   /// </summary>
   void Update() => View?.ApplyState(MatchController.CurrentState);
 
-  public Task<MatchResult> RunMatch() {
+  public async Task<MatchResult> RunMatch() {
     Debug.Log("Running match...");
     MatchTask = new TaskCompletionSource<MatchResult>();
     Mediator.Global.Publish(new MatchStartEvent {
+      MatchConfig = Config,
       MatchState = MatchController.CurrentState
     });
     // TODO(james7132): Properly evaluate the match result here.
-    return MatchTask.Task;
+    var result = await MatchTask.Task;
+    await Mediator.Global.PublishAsync(new MatchEndEvent {
+      MatchConfig = Config,
+      MatchState = MatchController.CurrentState
+    });
+    return result;
   }
 
   public void SetPaused(bool paused) {
@@ -56,18 +62,16 @@ public class MatchManager : MonoBehaviour {
     IsPaused = paused;
     if (changed) {
       Mediator.Global.Publish(new MatchPauseStateChangedEvent {
+        MatchConfig = Config,
         MatchState = MatchController.CurrentState,
         Paused = paused
       });
     }
   }
 
-  public async Task EndMatch(MatchResult result) {
+  public void EndMatch(MatchResult result) {
     if (MatchTask == null || !MatchTask.TrySetResult(result)) return;
     Debug.Log($"Match over. Winner: {result.WinningPlayerID}, Resolution {result.Resolution}");
-    await Mediator.Global.PublishAsync(new MatchEndEvent {
-      MatchState = MatchController.CurrentState
-    });
   }
 
 }
