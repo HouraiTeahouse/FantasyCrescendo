@@ -20,7 +20,8 @@ public abstract class Match {
     await Task.WhenAll(additionalScenes.Select(s => s.LoadAsync(LoadSceneMode.Additive)));
     var gameManager = Object.FindObjectOfType<MatchManager>();
     gameManager.Config = config;
-    await InitializeMatch(gameManager, config);
+    await LoadingScreen.Await(InitializeMatch(gameManager, config));
+    await LoadingScreen.AwaitAll();
     return await gameManager.RunMatch();
   }
 
