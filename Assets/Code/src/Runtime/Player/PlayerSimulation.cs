@@ -43,10 +43,7 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
       return state;
     }
     //Assert.IsTrue(input.IsValid);
-    foreach (var component in SimulationComponents) {
-      state = component.Simulate(state, input);
-    }
-    return state;
+    return SimulationComponents.Simulate(state, input);
   }
 
   public PlayerState ResetState(PlayerState state) {

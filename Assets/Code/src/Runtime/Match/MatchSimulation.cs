@@ -23,10 +23,7 @@ public class MatchSimulation : IMatchSimulation {
   }
 
   public MatchState Simulate(MatchState state, MatchInputContext input) {
-    foreach (var component in SimulationComponents) {
-      state = component.Simulate(state, input);
-    }
-    return state;
+    return SimulationComponents.Simulate(state, input);
   }
 
   public MatchState ResetState(MatchState state) {

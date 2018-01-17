@@ -65,7 +65,7 @@ public class DataLoader : MonoBehaviour {
 
   bool Register(Object data) {
     foreach (var type in ValidImportTypes) {
-      var dataObj = data as IIdentifiable;
+      var dataObj = data as IEntity;
       if (dataObj != null && type.IsInstanceOfType(data)) {
         Registry.Register(type, dataObj);
         Debug.Log($"Registered {type.Name}: {data.name} ({dataObj.Id})");
@@ -92,7 +92,7 @@ public class DataLoader : MonoBehaviour {
   }
 
   void ProcessLoadedAsset(Object asset, string path) {
-    var identifiable = asset as IIdentifiable;
+    var identifiable = asset as IEntity;
     if (identifiable == null || !Register(asset)) {
       Resources.UnloadAsset(asset);
       AssetBundleManager.UnloadAssetBundle(path);

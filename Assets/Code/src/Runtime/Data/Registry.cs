@@ -25,7 +25,7 @@ public static class Registry {
   /// Retrieves or creates a new registry for given type.
   /// </summary>
   /// <returns>the retrieved registry for the type.</returns>
-  public static Registry<T> Get<T>() where T : IIdentifiable {
+  public static Registry<T> Get<T>() where T : IEntity {
     object storedObject = null;
     Registries.TryGetValue(typeof(T), out storedObject);
     var registry = storedObject as Registry<T>;
@@ -36,7 +36,7 @@ public static class Registry {
     return registry;
   }
 
-  public static void Register(Type targetType, IIdentifiable obj) {
+  public static void Register(Type targetType, IEntity obj) {
     object registry = null;
     Registries.TryGetValue(targetType, out registry);
     if (registry == null) {
@@ -57,7 +57,7 @@ public static class Registry {
 
 }
 
-public class Registry<T> : ICollection<T> where T : IIdentifiable {
+public class Registry<T> : ICollection<T> where T : IEntity {
 
   readonly Dictionary<uint, T> Entries;
 
