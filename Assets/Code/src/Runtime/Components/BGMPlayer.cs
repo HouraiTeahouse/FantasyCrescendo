@@ -8,23 +8,35 @@ public class BGMPlayer : MonoBehaviour {
   public AudioSource AudioSource;
   public SceneData Scene;
   public BGM BGM;
+  public bool PlayOnAwake;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
-  void Awake() {
+  async void Awake() {
     if (Scene != null && Scene.Music.Length > 0) {
       BGM = RandomBGM(Scene.Music);
     }
     if (BGM != null) {
-      PlayBGM(BGM);
+      await LoadingScreen.Await(LoadBGM(BGM));
+    }
+    if (PlayOnAwake) {
+      await PlayBGM(BGM);
+    } else {
+      Mediator.Global.CreateUnityContext(this).Subscribe<MatchStartEvent>(async evt => {
+        await PlayBGM(BGM);
+      });
     }
   }
 
-  public async void PlayBGM(BGM bgm) {
+  public async Task LoadBGM(BGM bgm) {
     if (AudioSource == null) return;
     var clip = await bgm.Clip.LoadAsync();
     AudioSource.clip = clip;
+  }
+
+  public async Task PlayBGM(BGM bgm) {
+    await LoadBGM(bgm);
     AudioSource.Play();
   }
 
