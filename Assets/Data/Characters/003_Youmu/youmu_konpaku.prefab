@@ -3360,7 +3360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae5aecbb1f9fa746a2e08effce003a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Director: {fileID: 0}
+  Director: {fileID: 320255256925329766}
 --- !u!114 &114303514114498256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3796,7 +3796,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1872841189430122}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 0}
+  m_PlayableAsset: {fileID: 11400000, guid: 2eb91958e5a6cb94fae2044509f2004c, type: 2}
   m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1

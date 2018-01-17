@@ -71,6 +71,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
 
   public void ApplyControlledMovement(ref PlayerState state, Vector2 movementInput) {
     var data = StateMachine.StateData;
+    Debug.Log(StateMachine.StateController.CurrentState.Name);
     switch (data.MovementType) {
       case MovementType.Normal:
         var dir = state.Direction ? 1f : -1f;
@@ -130,9 +131,7 @@ internal class LedgeMovement : CharacterMover {
 
   public override bool ShouldMove(PlayerState state) => state.IsGrabbingLedge;
 
-  public override PlayerState Move(PlayerState state, PlayerInputContext input) {
-    return state;
-  }
+  public override PlayerState Move(PlayerState state, PlayerInputContext input) => state;
 
 }
 
