@@ -19,7 +19,7 @@ public class GameView : IInitializable<MatchConfig>, IStateView<MatchState> {
   async Task InitializePlayers(MatchConfig config) {
     PlayerViews = new PlayerView[config.PlayerCount];
     var tasks = new List<Task>();
-    var viewFactories = Object.FindObjectsOfType<AbstractViewFactory<PlayerState, PlayerConfig>>();
+    var viewFactories = Object.FindObjectsOfType<ViewFactory<PlayerState, PlayerConfig>>();
     for (int i = 0; i < PlayerViews.Length; i++) {
       PlayerViews[i] = new PlayerView(viewFactories);
       tasks.Add(PlayerViews[i].Initialize(config.PlayerConfigs[i]));
@@ -28,9 +28,7 @@ public class GameView : IInitializable<MatchConfig>, IStateView<MatchState> {
   }
 
   async Task InitializeOtherViews(MatchConfig config) {
-    var factories = Object.FindObjectsOfType<AbstractViewFactory<MatchState, MatchConfig>>();
-    var viewsTask = await Task.WhenAll(factories.Select(f => f.CreateViews(config)));
-    MatchViews = viewsTask.SelectMany(v => v).ToArray();
+    MatchViews = await CoreUtility.CreateAllViews<MatchState, MatchConfig>(config);
   }
 
   public void ApplyState(MatchState state) {

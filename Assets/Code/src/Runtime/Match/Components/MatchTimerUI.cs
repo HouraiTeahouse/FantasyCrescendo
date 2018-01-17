@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class MatchTimerUI : AbstractViewFactory<MatchState, MatchConfig>, IStateView<MatchState> {
+public class MatchTimerUI : ViewFactory<MatchState, MatchConfig>, IStateView<MatchState> {
 
   public Text DisplayText;
 

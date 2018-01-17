@@ -3,7 +3,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// <summary>
 /// An (almost) uniquely identifiable object.
 /// </summary>
-public interface IIdentifiable {
+public interface IEntity {
 
   /// <summary>
   /// Gets the (almost) unique identifier for the object.

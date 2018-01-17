@@ -5,7 +5,7 @@ using Random = System.Random;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public abstract class GameDataBase : ScriptableObject, IIdentifiable {
+public abstract class GameDataBase : ScriptableObject, IEntity {
 
   [SerializeField, ReadOnly] uint _id;
 
