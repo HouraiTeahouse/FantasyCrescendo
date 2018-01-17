@@ -37,6 +37,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
 
   public void ApplyState(PlayerState state) {
     StateMachine.Presimulate(state);
+    PlayState(ref state);
   }
 
   public PlayerState ResetState(PlayerState state) => state;
@@ -44,6 +45,8 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
   void PlayState(ref PlayerState state) {
     var timeline = StateMachine.StateData.Timeline;
     var time = state.NormalizedStateTime * timeline.duration;
+    // Debug.Log($"{timeline} {Director.playableAsset} {time}");
+    // Director.playableAsset = timeline;
     if (timeline != Director.playableAsset) {
       Director.Play(timeline);
     }
