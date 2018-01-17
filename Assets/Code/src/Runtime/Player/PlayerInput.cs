@@ -130,7 +130,21 @@ public struct DirectionalInput {
   public const float DeadZone = 0.3f;
 
   public Vector2 Value;
-  public Direction Direction => Direction.Neutral;
+  public Direction Direction {
+    get {
+      var absX = Mathf.Abs(Value.x);
+      var absY = Mathf.Abs(Value.y);
+      if (absX > absY) {
+        if (Value.x < -DeadZone) return Direction.Left;
+        if (Value.x > DeadZone) return Direction.Right;
+      }
+      if (absX <= absY) {
+        if (Value.y < -DeadZone) return Direction.Down;
+        if (Value.y > DeadZone) return Direction.Up;
+      }
+      return Direction.Neutral;
+    }
+  }
 
   public static implicit operator DirectionalInput(Vector2 dir) {
     return new DirectionalInput {
