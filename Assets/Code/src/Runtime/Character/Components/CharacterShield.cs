@@ -19,7 +19,7 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
   [Tooltip("How fast shield health replenishes when not in use.")]
   public float RegenRate = 2;
 
-  public int RecoveryCooldown = 120;
+  public uint RecoveryCooldown = 120;
 
   [Tooltip("How much health the shield resets to after being broken.")]
   public float ResetHealth = 30f;
@@ -85,7 +85,7 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
       if (wasActive) {
         state.ShieldRecoveryCooldown = RecoveryCooldown;
       } else {
-        state.ShieldRecoveryCooldown = Mathf.Max(0, state.ShieldRecoveryCooldown - 1);
+        state.ShieldRecoveryCooldown = (uint)Mathf.Max(0, state.ShieldRecoveryCooldown - 1);
       }
       if (state.ShieldRecoveryCooldown <= 0) {
         state.ShieldHealth = Mathf.Max(MaxShieldHealth, state.ShieldHealth + RegenRate);

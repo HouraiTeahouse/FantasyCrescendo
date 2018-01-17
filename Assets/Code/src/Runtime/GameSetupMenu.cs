@@ -54,7 +54,7 @@ public class GameSetupMenu : MonoBehaviour {
     ).ToList();
 
     Config.PlayerConfigs = new PlayerConfig[PlayerMenus.Length];
-    for (uint i = 0; i < PlayerMenus.Length; i++) {
+    for (byte i = 0; i < PlayerMenus.Length; i++) {
       var player = PlayerMenus[i];
       player.CharacterDropdwon.options = characterOptionData;
       player.ColorDropdown.options = colorOptionData;
@@ -66,7 +66,7 @@ public class GameSetupMenu : MonoBehaviour {
         Config.PlayerConfigs[playerIndex].Selection.CharacterID = characters[i].Id;
       });
       player.ColorDropdown.onValueChanged.AddListener(index => {
-        Config.PlayerConfigs[playerIndex].Selection.Pallete = (uint)index;
+        Config.PlayerConfigs[playerIndex].Selection.Pallete = (byte)index;
       });
 
       Config.PlayerConfigs[i].PlayerID = i;
@@ -76,7 +76,6 @@ public class GameSetupMenu : MonoBehaviour {
     }
 
     StageDropdwon.onValueChanged.AddListener(index => {
-      Debug.Log($"{index} {stages.Length}");
       Config.StageID = stages[index].Id;
     });
     GameModeDropdown.onValueChanged.AddListener(index => {

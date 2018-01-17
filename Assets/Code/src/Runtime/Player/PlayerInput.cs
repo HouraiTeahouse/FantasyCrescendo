@@ -8,38 +8,54 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// </summary>
 public struct PlayerInput : IValidatable {
 
-  // One Player Total: 17 bytes
-  // Four Player Total: 68 bytes
+  // One Player Total: 5 bytes
+  // Four Player Total: 20 bytes
   //
-  // 60 times one: 1020 bytes
-  // 60 times four: 4080 bytes
+  // 60 times one: 300 bytes
+  // 60 times four: 1200 bytes
 
-  public bool IsValid;                          // 1 bit
+  public Vector2b Movement;                     // 2 bytes
+  public Vector2b Smash;                        // 2 bytes
+  public byte Buttons;                          // 1 byte
 
-  public Vector2 Movement;                      // 8 bytes
-  public Vector2 Smash;                         // 8 bytes
+  // TODO(james7132): Benchmark using AggressiveInlining on these
+  public bool IsValid {
+    get { return (Buttons & 1) != 0; }
+    set{ Buttons = (byte)(value ? (Buttons | 1) : (Buttons & ~1)); }
+  }
 
-  public bool Attack;                           // 1 bit
-  public bool Special;                          // 1 bit
-  public bool Jump;                             // 1 bit
-  public bool Shield;                           // 1 bit
-  public bool Grab;                             // 1 bit
+  public bool Attack {
+    get { return (Buttons & 2) != 0; }
+    set{ Buttons = (byte)(value ? (Buttons | 2) : (Buttons & ~2)); }
+  }
+
+  public bool Special {
+    get { return (Buttons & 4) != 0; }
+    set{ Buttons = (byte)(value ? (Buttons | 4) : (Buttons & ~4)); }
+  }
+
+  public bool Jump {
+    get { return (Buttons & 8) != 0; }
+    set{ Buttons = (byte)(value ? (Buttons | 8) : (Buttons & ~8)); }
+  }
+
+  public bool Shield {
+    get { return (Buttons & 16) != 0; }
+    set{ Buttons = (byte)(value ? (Buttons | 16) : (Buttons & ~16)); }
+  }
+
+  public bool Grab {
+    get { return (Buttons & 32) != 0; }
+    set{ Buttons = (byte)(value ? (Buttons | 32) : (Buttons & ~32)); }
+  }
 
   bool IValidatable.IsValid => IsValid;
 
   public void Merge(PlayerInput other) {
     IsValid = IsValid || other.IsValid;
-    Movement = MergeDirection(Movement, other.Movement);
-    Smash = MergeDirection(Smash, other.Smash);
-    Attack = Attack || other.Attack;
-    Special = Special || other.Special;
-    Jump = Jump || other.Jump;
-    Shield = Shield || other.Shield;
-    Grab = Grab|| other.Grab;
-  }
-
-  Vector2 MergeDirection(Vector2 a, Vector2 b) {
-    return new Vector2(Mathf.Clamp(a.x + b.x, -1, 1), Mathf.Clamp(a.y + b.y, -1, 1));
+    Movement = (Vector2)Movement + (Vector2)other.Movement;
+    Smash = (Vector2)Smash + (Vector2)other.Smash;
+    Buttons |= other.Buttons;
   }
 
 }
@@ -60,8 +76,8 @@ public class PlayerInputContext : IValidatable {
 
   public bool IsValid => Previous.IsValid && Current.IsValid;
 
-  public DirectionalInput Movement => Current.Movement;
-  public DirectionalInput Smash => Current.Smash;
+  public DirectionalInput Movement => (Vector2)Current.Movement;
+  public DirectionalInput Smash => (Vector2)Current.Smash;
 
   public ButtonContext Attack {
     get {
@@ -108,6 +124,26 @@ public class PlayerInputContext : IValidatable {
     }
   }
 
+}
+
+public struct Vector2b {
+  public sbyte X;
+  public sbyte Y;
+
+  public float x  {
+    get { return ToFloat(X); }
+    set { X = FromFloat(value); }
+  }
+  public float y  {
+    get { return ToFloat(Y); }
+    set { Y = FromFloat(value); }
+  }
+
+  public static implicit operator Vector2b(Vector2 vector) => new Vector2b { x = vector.x, y = vector.y };
+  public static implicit operator Vector2(Vector2b vector) => new Vector2 { x = vector.x, y = vector.y };
+
+  float ToFloat(sbyte val) => (float)val / sbyte.MaxValue;
+  sbyte FromFloat(float val) => (sbyte)(Mathf.Clamp(val, -1, 1) * sbyte.MaxValue);
 }
 
 /// <summary>

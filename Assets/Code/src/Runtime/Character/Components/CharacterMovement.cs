@@ -103,7 +103,7 @@ internal class GroundMovement : CharacterMover {
     var inputMovement = input.Current.Movement;
     state.Velocity.x = inputMovement.x;
     state.IsFastFalling = false;
-    state.RemainingJumps = Character.MaxJumpCount;
+    state.RemainingJumps = (uint)Character.MaxJumpCount;
     var horizontalMovement = input.Movement.Value.x;
     if (horizontalMovement > DirectionalInput.DeadZone) {
       state.Direction = true;

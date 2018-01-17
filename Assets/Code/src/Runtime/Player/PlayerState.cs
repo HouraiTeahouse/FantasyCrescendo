@@ -9,11 +9,17 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [Serializable]
 public struct PlayerState {
 
-  // One Player Total: 44 bytes
-  // 4 Player: 176 bytes
+  // One Player Total: 18-53 bytes
+  // 4 Player: 72-176 bytes
   //
-  // 60 times one: 2640 bytes
-  // 60 times four: 10560 bytes
+  // Send Rate | Minimum | Maximum
+  // -------------------------------
+  // 15/s (x1) | 270     | 795
+  // 15/s (x4) | 4320    | 10560
+  // 30/s (x1) | 540     | 1590
+  // 30/s (x4) | 8640    | 21120
+  // 60/s (x1) | 1080    | 3180
+  // 60/s (x4) | 17280   | 42240
 
   // TODO(james7132): Generalize this
   public bool IsActive => Stocks > 0;
@@ -28,22 +34,22 @@ public struct PlayerState {
   public bool Direction;                              // One bit
   public bool IsFastFalling;                          // One bit
 
-  public int RemainingJumps;                          // 1-4 bytes
+  public uint RemainingJumps;                         // 1-4 bytes
 
-  public uint RespawnTimeRemaining;                    // 1-4 bytes
+  public uint RespawnTimeRemaining;                   // 1-4 bytes
 
   public int StateHash;                               // 1-4 bytes
   public float NormalizedStateTime;                   // 4 bytes
 
   public float ShieldHealth;                          // 4 bytes
-  public int ShieldRecoveryCooldown;                  // 1-4 bytes
+  public uint ShieldRecoveryCooldown;                 // 1-4 bytes
 
-  public int GrabbedLedgeID;                          // 1 byte
+  public byte GrabbedLedgeID;                         // 1 byte
 
   public float Damage;                                // 4 bytes
-  public int Hitstun;                                 // 1-4 bytes
+  public uint Hitstun;                                // 1-4 bytes
 
-  public int Stocks;                                 // 1-4 bytes
+  public int Stocks;                                  // 4 bytes
 
 }
 

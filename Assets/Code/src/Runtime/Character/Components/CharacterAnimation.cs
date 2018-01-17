@@ -43,6 +43,9 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
   public PlayerState ResetState(PlayerState state) => state;
 
   void PlayState(ref PlayerState state) {
+    unsafe {
+      Debug.Log(sizeof(PlayerInput));
+    }
     var timeline = StateMachine.StateData.Timeline;
     var time = state.NormalizedStateTime * timeline.duration;
     // Debug.Log($"{timeline} {Director.playableAsset} {time}");

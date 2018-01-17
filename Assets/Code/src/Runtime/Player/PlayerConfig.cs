@@ -13,13 +13,13 @@ public struct PlayerConfig : IValidatable {
   /// The Player ID of the player. Determines what is visually displayed
   /// to denote the player.
   /// </summary>
-  public uint PlayerID;
+  public byte PlayerID;
 
   /// <summary>
   /// The local player number. Mainly used to determine what local input 
   /// device to read the input from.
   /// </summary>
-  public uint LocalPlayerID;
+  public byte LocalPlayerID;
   public PlayerSelection Selection;
 
   public bool IsValid => Selection.IsValid;
@@ -33,8 +33,8 @@ public struct PlayerConfig : IValidatable {
 [Serializable]
 public struct PlayerSelection : IValidatable {
 
-  public uint CharacterID;
-  public uint Pallete;
+  public uint CharacterID;            // 1-4 bytes
+  public byte Pallete;                // 1 byte
   
   // TODO(james7132): Properly implement
   public bool IsValid => true;
