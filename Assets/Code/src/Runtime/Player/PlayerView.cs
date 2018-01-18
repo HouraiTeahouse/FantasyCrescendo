@@ -28,7 +28,7 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
     View = Object.Instantiate(prefab);
     View.name = $"Player {config.PlayerID + 1} View ({character.name}, {selection.Pallete})";
 
-    PlayerUtil.DestroyAll(View, typeof(Collider));
+    PlayerUtil.DestroyAll(View, typeof(Collider), typeof(Hurtbox), typeof(Hitbox));
 
     var task = View.Broadcast<IPlayerComponent>( component => component.Initialize(config, true));
 

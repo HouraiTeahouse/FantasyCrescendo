@@ -24,7 +24,15 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     Director.timeUpdateMode = DirectorUpdateMode.Manual;
   }
 
-  public Task Initialize(PlayerConfig config, bool isView = false) => Task.CompletedTask;
+  public Task Initialize(PlayerConfig config, bool isView = false) {
+    if (!isView) {
+      var animator = GetComponentInChildren<Animator>();
+      if (animator != null){
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+      }
+    }
+    return Task.CompletedTask;
+  }
 
   public void Presimulate(PlayerState state) => ApplyState(state);
 
@@ -32,17 +40,18 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     Director.time += Time.fixedDeltaTime;
     Director.Evaluate();
     state.NormalizedStateTime = (float)(Director.time / Director.duration);
+    ApplyState(state);
     return state;
   }
 
   public void ApplyState(PlayerState state) {
     StateMachine.Presimulate(state);
-    PlayState(ref state);
+    PlayState(state);
   }
 
   public PlayerState ResetState(PlayerState state) => state;
 
-  void PlayState(ref PlayerState state) {
+  void PlayState(PlayerState state) {
     var timeline = StateMachine.StateData.Timeline;
     var time = state.NormalizedStateTime * timeline.duration;
     if (timeline != Director.playableAsset) {
