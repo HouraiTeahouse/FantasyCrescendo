@@ -29,7 +29,6 @@ public class GameView : IInitializable<MatchConfig>, IStateView<MatchState> {
 
   async Task InitializeOtherViews(MatchConfig config) {
     MatchViews = await CoreUtility.CreateAllViews<MatchState, MatchConfig>(config);
-    Debug.LogWarning("INITALIZED");
   }
 
   public void ApplyState(MatchState state) {

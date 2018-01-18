@@ -32,7 +32,6 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
 
     var task = View.Broadcast<IPlayerComponent>( component => component.Initialize(config, true));
 
-    var viewComponents = new List<IStateView<PlayerState>>();
     var viewTasks = from factory in viewFactories
                     where factory != null
                     select factory.CreateViews(config);

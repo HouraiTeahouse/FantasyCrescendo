@@ -26,41 +26,8 @@ public sealed class Ledge : RegisteredBehaviour<Ledge, byte> {
   void OnDrawGizmos() {
     var capsuleCollider = GetComponent<CapsuleCollider>();
     if (capsuleCollider == null) return;
-    Gizmos.color = Color.red;
-    var center = capsuleCollider.center;
-    var diff = GetDiffVector(capsuleCollider);
-    if (capsuleCollider.radius > capsuleCollider.height) {
-      Gizmos.DrawWireSphere(transform.TransformPoint(center), capsuleCollider.radius);
-      return;
-    }
-    Gizmos.DrawWireSphere(transform.TransformPoint(center + diff), capsuleCollider.radius);
-    Gizmos.DrawWireSphere(transform.TransformPoint(center - diff), capsuleCollider.radius);
-    for (float i = 0; i < Mathf.PI * 2; i += Mathf.PI / 2) {
-      var lineDiff = GetLineDiff(i, capsuleCollider);
-      var start = center + diff + lineDiff;
-      var end = center - diff + lineDiff;
-      Gizmos.DrawLine(transform.TransformPoint(start), transform.TransformPoint(end));
-    }
-  }
-
-  Vector3 GetDiffVector(CapsuleCollider collider) {
-    var magnitude = collider.height / 2 - collider.radius;
-    switch (collider.direction) {
-      case 0: return Vector3.right * magnitude;
-      case 1: return Vector3.up * magnitude;
-      default:
-      case 2: return Vector3.forward * magnitude;
-    }
-  }
-
-  Vector3 GetLineDiff(float i, CapsuleCollider collider) {
-    var cos = Mathf.Cos(i);
-    var sin = Mathf.Sin(i);
-    switch (collider.direction) {
-      case 0: return new Vector3(0, cos, sin) * collider.radius;
-      case 1: return new Vector3(cos, 0, sin) * collider.radius;
-      default:
-      case 2: return new Vector3(cos, sin, 0) * collider.radius;
+    using (GizmoUtil.With(Color.red)) {
+      GizmoUtil.DrawCapsuleCollider(capsuleCollider);
     }
   }
 

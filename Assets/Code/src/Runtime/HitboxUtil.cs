@@ -5,20 +5,32 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public static class HitboxUtil {
 
-  static Dictionary<HitboxType, Color> TypeColors;
+  static Dictionary<HitboxType, Color> HitboxTypeColors;
+  static Dictionary<HurtboxType, Color> HurtboxTypeColors;
 
   static HitboxUtil() {
-    TypeColors = new Dictionary<HitboxType, Color> {
+    HitboxTypeColors = new Dictionary<HitboxType, Color> {
       { HitboxType.Offensive, Color.red },
-      { HitboxType.Damageable, Color.yellow },
-      { HitboxType.Invincible, Color.green },
-      { HitboxType.Intangible, Color.blue }
+    };
+    HurtboxTypeColors = new Dictionary<HurtboxType, Color> {
+      { HurtboxType.Damageable, Color.yellow },
+      { HurtboxType.Invincible, Color.green },
+      { HurtboxType.Intangible, Color.blue },
+      { HurtboxType.Shield, Color.cyan }
     };
   }
 
   public static Color GetHitboxColor(HitboxType type) {
     Color typeColor;
-    if (TypeColors.TryGetValue(type, out typeColor)) {
+    if (HitboxTypeColors.TryGetValue(type, out typeColor)) {
+      return typeColor;
+    }
+    return Color.grey;
+  }
+
+  public static Color GetHurtboxColor(HurtboxType type) {
+    Color typeColor;
+    if (HurtboxTypeColors.TryGetValue(type, out typeColor)) {
       return typeColor;
     }
     return Color.grey;
