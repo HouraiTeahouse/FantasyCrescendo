@@ -42,6 +42,14 @@ public struct MatchState {
     return Time == state.Time && Enumerable.SequenceEqual(PlayerStates, state.PlayerStates);
   }
 
+  public override int GetHashCode() {
+    int hash = Time.GetHashCode();
+    for (var i = 0; i < PlayerStates.Length; i++) {
+      hash ^= PlayerStates[i].GetHashCode();
+    }
+    return hash;
+  }
+
 }
 
 }

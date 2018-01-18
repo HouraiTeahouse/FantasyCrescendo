@@ -58,9 +58,11 @@ public class DefaultMatch : Match {
   }
 
   IMatchSimulation CreateSimulation(MatchConfig config) {
-    var ruleSimulation = new MatchRuleSimulation(MatchRuleFactory.CreateRules(config));
-    var playerSimulation = new MatchPlayerSimulation();
-    return new MatchSimulation(new IMatchSimulation[] { playerSimulation, ruleSimulation });
+    return new MatchSimulation(new IMatchSimulation[] { 
+      new MatchPlayerSimulation(),
+      new MatchHitboxSimulation(),
+      new MatchRuleSimulation(MatchRuleFactory.CreateRules(config))
+    });
   }
 
   MatchState CreateInitialState(MatchConfig config) {

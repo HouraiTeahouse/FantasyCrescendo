@@ -92,8 +92,6 @@ public class GameSetupMenu : MonoBehaviour {
       playerConfigs.Add(Config.PlayerConfigs[i]);
     }
     Config.PlayerConfigs = playerConfigs.ToArray();
-
-    Debug.Log("GAME START");
     await GameMode.RunGame(Config);
   }
 

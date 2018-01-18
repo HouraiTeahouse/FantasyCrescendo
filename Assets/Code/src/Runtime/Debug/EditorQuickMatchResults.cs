@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -15,15 +16,12 @@ public class EditorQuickMatchResults : MonoBehaviour {
   /// </summary>
   async void Awake() {
     await DataLoader.LoadTask.Task;
-    foreach (var playerStats in Results.PlayerStats) {
-      Debug.Log(playerStats);
-      DisplayFactory.CreateViews(playerStats.Config).ContinueWith(task => {
-        foreach (var view in task.Result) {
-          view.ApplyState(playerStats);
-        }
-      });
-    }
-
+    await Task.WhenAll(Results.PlayerStats.Select(async playerStats => {
+      var views = await DisplayFactory.CreateViews(playerStats.Config);
+      foreach (var view in views) {
+        view.ApplyState(playerStats);
+      }
+    }));
   }
 
 }

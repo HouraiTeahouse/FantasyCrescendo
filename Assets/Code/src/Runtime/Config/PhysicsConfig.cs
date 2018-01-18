@@ -1,3 +1,4 @@
+using HouraiTeahouse.EditorAttributes;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -6,6 +7,9 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public class PhysicsConfig : ScriptableObject {
 
   public LayerMask StageLayers;
+  [Layer] public int HurtboxLayer;
+
+  public int HurtboxLayerMask => 1 << HurtboxLayer;
 
 }
 

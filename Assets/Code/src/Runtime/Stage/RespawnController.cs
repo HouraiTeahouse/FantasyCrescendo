@@ -17,7 +17,6 @@ public class RespawnController : MonoBehaviour {
   }
 
   void OnPlayerDied(PlayerRespawnEvent evt) {
-    Debug.Log("HELLO");
     var playerState = evt.PlayerState;
     playerState.RespawnTimeRemaining = (uint)Mathf.FloorToInt(RespawnTime / Time.fixedDeltaTime);
     foreach (var respawnPosition in RespawnPositions) {
