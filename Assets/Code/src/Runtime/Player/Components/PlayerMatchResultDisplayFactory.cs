@@ -8,7 +8,7 @@ public class PlayerMatchResultDisplayFactory : PlayerViewFactory<PlayerMatchStat
 
   public RectTransform Container;
 
-  public override void OnCreateView(PlayerConfig config, GameObject view) {
+  protected override void Preinitialize(PlayerConfig config, GameObject view) {
     var viewTransform = view.transform as RectTransform;
     if  (viewTransform == null) {
       return;
