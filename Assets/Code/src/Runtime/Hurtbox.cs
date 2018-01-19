@@ -6,7 +6,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public abstract class AbstractHitDetector : MonoBehaviour, IComparable<AbstractHitDetector> {
   [NonSerialized]
   public uint PlayerID;
-  public int Priority;
+  public uint Priority;
 
   public int CompareTo(AbstractHitDetector hitDetector) {
     return Priority.CompareTo(hitDetector.Priority);
