@@ -55,8 +55,13 @@ public class MatchHitboxSimulation : IMatchSimulation {
   public static void AddHurtboxes(IEnumerable<Hurtbox> hitboxes) => ActiveHurtboxes.UnionWith(hitboxes);
 
   public MatchState Simulate(MatchState state, MatchInputContext input) {
-    ActiveHitboxes.Clear();
+    Clear();
     return state;
+  }
+
+  void Clear() {
+    ActiveHitboxes.Clear();
+    ActiveHurtboxes.Clear();
   }
 
   IEnumerable<HitboxCollision> CreateCollisions() {

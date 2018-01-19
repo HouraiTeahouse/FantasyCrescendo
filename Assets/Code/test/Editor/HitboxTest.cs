@@ -1,0 +1,139 @@
+﻿using HouraiTeahouse.FantasyCrescendo;
+using UnityEngine;
+using UnityEditor;
+using UnityEngine.TestTools;
+using NUnit.Framework;
+using System.Collections.Generic;
+
+public class HitboxTest {
+
+  List<GameObject> gameObjects = new List<GameObject>();
+
+  [TearDown]
+  public void DestroyAll() {
+    foreach (var go in gameObjects) {
+      Object.DestroyImmediate(go);
+    }
+  }
+
+  T CreateObject<T>() where T : Component {
+    var gameObject = new GameObject(typeof(T).GetType().Name);
+    gameObjects.Add(gameObject);
+    return gameObject.AddComponent<T>();
+  }
+
+  Hitbox CreateHitbox(Vector3 position, float radius, HitboxType type = HitboxType.Offensive) {
+    var hitbox = CreateObject<Hitbox>();
+    hitbox.transform.position = Vector3.zero;
+    hitbox.Offset = position;
+    hitbox.Type = type;
+    hitbox.Radius = radius;
+    return hitbox;
+  }
+
+  Hurtbox CreateHurtbox(Vector3 position, float radius, HurtboxType type = HurtboxType.Damageable) {
+    var hurtbox = CreateObject<Hurtbox>();
+    hurtbox.transform.position = position;
+    hurtbox.gameObject.AddComponent<SphereCollider>().radius = radius;
+    hurtbox.Initalize();
+    hurtbox.Type = type;
+    return hurtbox;
+  }
+
+	[Test]
+	public void IsActive_returns_false_when_not_enabled() {
+    var hitbox = CreateHitbox(Vector3.zero, 0f);
+    hitbox.enabled = false;
+    Assert.IsFalse(hitbox.IsActive);
+	}
+
+	[Test]
+	public void IsActive_returns_false_when_gameobject_inactive() {
+    var hitbox = CreateHitbox(Vector3.zero, 0f);
+    hitbox.gameObject.SetActive(false);
+    Assert.IsFalse(hitbox.IsActive);
+	}
+
+	[Test]
+	public void IsActive_returns_false_when_type_is_inactive() {
+    var hitbox = CreateHitbox(Vector3.zero, 0f);
+    hitbox.Type = HitboxType.Inactive;
+    Assert.IsFalse(hitbox.IsActive);
+	}
+
+	[Test]
+	public void IsActive_returns_true_when_enabled_and_has_good_type() {
+    var hitbox = CreateHitbox(Vector3.zero, 0f);
+    Assert.IsTrue(hitbox.IsActive);
+	}
+
+	[Test]
+	public void Center_is_transformed_by_transform_scale() {
+    const float scale = 5f;
+    var hitbox = CreateHitbox(Vector3.one, 0f);
+    hitbox.transform.localScale = Vector3.one * scale;
+    Assert.AreEqual(Vector3.one * scale, hitbox.Center);
+	}
+
+	[Test]
+	public void Center_is_transformed_by_transform_rotation() {
+    var hitbox = CreateHitbox(Vector3.one, 0f);
+    hitbox.transform.Rotate(90, 0, 0);
+    Assert.AreEqual(1.0, hitbox.Center.x, 0.0001);
+    Assert.AreEqual(-1.0, hitbox.Center.y, 0.0001);
+    Assert.AreEqual(1.0, hitbox.Center.z, 0.0001);
+	}
+
+	[Test]
+	public void Center_is_transformed_by_transform_position() {
+    var hitbox = CreateHitbox(Vector3.one, 0f);
+    hitbox.transform.Translate(5, 0, 0);
+    Assert.AreEqual(new Vector3(6, 1, 1), hitbox.Center);
+	}
+
+	[Test]
+	public void CollisionCheck_returns_zero_if_no_nearby_colliders() {
+    var hitbox = CreateHitbox(Vector3.one, 1.5f);
+    Assert.AreEqual(0, hitbox.CollisionCheck(new Hurtbox[10]));
+	}
+
+	[Test]
+	public void CollisionCheck_returns_zero_if_colliders_has_no_hurtboxes() {
+    var hitbox = CreateHitbox(Vector3.zero, 1.5f);
+    CreateObject<SphereCollider>().transform.position = -0.5f * Vector3.up;
+    CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.up;
+    CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
+    Assert.AreEqual(0, hitbox.CollisionCheck(new Hurtbox[10]));
+	}
+
+	[Test]
+	public void CollisionCheck_ignores_disabled_hurtboxes() {
+    var hitbox = CreateHitbox(Vector3.zero, 1.5f);
+    CreateHurtbox(-0.5f * Vector3.up, 0.5f).enabled = false;
+    CreateHurtbox(0.5f * Vector3.up, 0.5f);
+    CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
+    Assert.AreEqual(1, hitbox.CollisionCheck(new Hurtbox[10]));
+	}
+
+	[Test]
+	public void CollisionCheck_ignores_hurtboxes_on_inactive_gameobjects() {
+    var hitbox = CreateHitbox(Vector3.zero, 1.5f);
+    CreateHurtbox(-0.5f * Vector3.up, 0.5f);
+    CreateHurtbox(0.5f * Vector3.up, 0.5f).gameObject.SetActive(false);
+    CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
+    Assert.AreEqual(1, hitbox.CollisionCheck(new Hurtbox[10]));
+	}
+
+	[Test]
+	public void CollisionCheck_returns_number_of_collided_hurtboxes() {
+    var hitbox = CreateHitbox(Vector3.zero, 1.5f);
+    var h1 = CreateHurtbox(-0.5f * Vector3.up, 0.5f);
+    var h2 = CreateHurtbox(0.5f * Vector3.up, 0.5f);
+    CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
+    var hurtboxes = new Hurtbox[10];
+    Assert.AreEqual(2, hitbox.CollisionCheck(hurtboxes));
+    Assert.AreEqual(h1, hurtboxes[1]);
+    Assert.AreEqual(h2, hurtboxes[0]);
+	}
+
+}

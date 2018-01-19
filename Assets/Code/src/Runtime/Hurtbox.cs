@@ -21,7 +21,9 @@ public class Hurtbox : AbstractHitDetector {
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
-  void Awake() {
+  void Awake() => Initalize();
+
+  public void Initalize() {
     gameObject.layer = Config.Get<PhysicsConfig>().HurtboxLayer;
     foreach (var collider in GetComponents<Collider>()) {
       collider.isTrigger = true;
