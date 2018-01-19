@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -24,20 +25,25 @@ public class Hitbox : AbstractHitDetector {
   public float Radius = 0.5f;
 
   public bool IsActive => isActiveAndEnabled && Type != HitboxType.Inactive;
+  public Vector3 Center => transform.TransformPoint(Offset);
+
+  bool IsValid(Hurtbox hurtbox) => hurtbox != null && DedupCheck.Add(hurtbox) && hurtbox.isActiveAndEnabled;
+  int CheckColliders() {
+    var layerMask = Config.Get<PhysicsConfig>().HurtboxLayerMask;
+    return Physics.OverlapSphereNonAlloc(Center, Radius, CollisionSet, layerMask, QueryTriggerInteraction.Collide);
+  }
 
   public int CollisionCheck(Hurtbox[] hurtboxSet) {
-    var layerMask = Config.Get<PhysicsConfig>().HurtboxLayerMask;
-    var collisionCount = Physics.OverlapSphereNonAlloc(transform.TransformPoint(Offset), Radius, 
-                                                       CollisionSet, layerMask, QueryTriggerInteraction.Collide);
+    var collisionCount = CheckColliders();
     int hurtboxCount = 0;
     DedupCheck.Clear();
     for (int i = 0; i < collisionCount && hurtboxCount < hurtboxSet.Length; i++) {
-      var hurtbox = CollisionSet[i].GetComponentInParent<Hurtbox>();
-      if (DedupCheck.Add(hurtbox) && hurtbox.isActiveAndEnabled) {
+      Assert.IsNotNull(CollisionSet[i]);
+      var hurtbox = CollisionSet[i].GetComponent<Hurtbox>();
+      if (IsValid(hurtbox)) {
         hurtboxSet[hurtboxCount++] = hurtbox;
       }
     }
-    Array.Sort<AbstractHitDetector>(hurtboxSet, 0, hurtboxCount);
     return hurtboxCount;
   }
 
@@ -48,7 +54,7 @@ public class Hitbox : AbstractHitDetector {
   void OnDrawGizmos() {
     if (EditorApplication.isPlayingOrWillChangePlaymode && !IsActive) { return; }
     Gizmos.color = HitboxUtil.GetHitboxColor(Type);
-    Gizmos.DrawWireSphere(transform.TransformPoint(Offset), Radius);
+    Gizmos.DrawWireSphere(Center, Radius);
   }
 #endif 
 
