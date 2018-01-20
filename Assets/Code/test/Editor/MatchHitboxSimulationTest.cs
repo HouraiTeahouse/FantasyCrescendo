@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;
+using System;
 using System.Linq;
 using NUnit.Framework;
 using System.Collections;
@@ -93,6 +94,44 @@ public class MatchHitboxSimulationTest : HitboxTestBase {
     };
     CollectionAssert.AreEquivalent(Enumerable.Empty<PlayerHitboxCollisions>(), 
                                    MatchHitboxSimulation.GetPlayerCollisions(hitboxes));
+	}
+
+	[Test]
+	public void GetPlayerCollisions_orders_by_destination_player_id() {
+    var hitboxes = new HitboxCollision [] {
+      new HitboxCollision {
+        Source = CreateHitbox().AsPlayer(0).Build(),
+        Destination = CreateHurtbox().AsPlayer(3).Build()
+      },
+      new HitboxCollision {
+        Source = CreateHitbox().AsPlayer(0).Build(),
+        Destination = CreateHurtbox().AsPlayer(1).Build()
+      },
+      new HitboxCollision {
+        Source = CreateHitbox().AsPlayer(0).Build(),
+        Destination = CreateHurtbox().AsPlayer(2).Build()
+      },
+    };
+    Assert.That(MatchHitboxSimulation.GetPlayerCollisions(hitboxes), Is.Ordered);
+	}
+
+	[Test]
+	public void GetPlayerCollisions_is_internally_ordered() {
+    var hitboxes = new HitboxCollision [] {
+      new HitboxCollision {
+        Source = CreateHitbox().AsPlayer(0).Build(),
+        Destination = CreateHurtbox().AsPlayer(3).Build()
+      },
+      new HitboxCollision {
+        Source = CreateHitbox().AsPlayer(0).Build(),
+        Destination = CreateHurtbox().AsPlayer(1).Build()
+      },
+      new HitboxCollision {
+        Source = CreateHitbox().AsPlayer(0).Build(),
+        Destination = CreateHurtbox().AsPlayer(2).Build()
+      },
+    };
+    Assert.That(MatchHitboxSimulation.GetPlayerCollisions(hitboxes).Select(h => h.Collisions), Is.All.Ordered);
 	}
 
 	[Test]

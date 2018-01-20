@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks; 
@@ -6,9 +7,21 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public struct PlayerHitboxCollisions {
+public struct PlayerHitboxCollisions : IComparable<PlayerHitboxCollisions> {
   public uint PlayerID;
   public IEnumerable<HitboxCollision> Collisions;
+
+  public override bool Equals(object obj) {
+    if (obj == null || GetType() != obj.GetType()) {
+      return false;
+    }
+    var hitboxCollision = (PlayerHitboxCollisions)obj;
+    return base.Equals (obj) && Collisions.SequenceEqual(hitboxCollision.Collisions);
+  }
+  
+  public override int GetHashCode() => base.GetHashCode() ^ PlayerID.GetHashCode() ^ Collisions.GetHashCode();
+
+  public int CompareTo(PlayerHitboxCollisions obj) => PlayerID.CompareTo(obj.PlayerID);
 }
     
 public class MatchHitboxSimulation : IMatchSimulation {
@@ -29,16 +42,34 @@ public class MatchHitboxSimulation : IMatchSimulation {
   public MatchState Simulate(MatchState state, MatchInputContext input) {
     var collisions = CreateCollisions();
     foreach (var playerCollisions in GetPlayerCollisions(collisions)) {
-      var prioritizedCollisions = PrioritizeCollisions(playerCollisions.Collisions);
-
+      ApplyCollisions(playerCollisions, ref state);
     }
-    Clear();
+    ActiveHitboxes.Clear();
+    ActiveHurtboxes.Clear();
     return state;
   }
 
-  void Clear() {
-    ActiveHitboxes.Clear();
-    ActiveHurtboxes.Clear();
+  // TODO(james7132): Split and generalize this... somehow.
+  public void ApplyCollisions(PlayerHitboxCollisions collisions, ref MatchState state) {
+    var playerState = state.PlayerStates[collisions.PlayerID];
+    bool isShielded = false;
+    foreach (var collision in collisions.Collisions) {
+      var source = collision.Source;
+      switch (collision.Destination.Type) {
+        case HurtboxType.Damageable:
+          if (isShielded) continue;
+          playerState.Damage += source.BaseDamage;
+          // TODO(james7132): Play Effect
+          break;
+        case HurtboxType.Shield:
+          isShielded = true;
+          break;
+        case HurtboxType.Invincible:
+          // TODO(james7132): Play Effect
+          break;
+      }
+    }
+    state.PlayerStates[collisions.PlayerID] = playerState;
   }
 
   public static IEnumerable<PlayerHitboxCollisions> GetPlayerCollisions(IEnumerable<HitboxCollision> collisions) {
@@ -46,18 +77,15 @@ public class MatchHitboxSimulation : IMatchSimulation {
            where !collision.IsSelfCollision
            group collision by collision.Destination.PlayerID into playerGroup
            orderby playerGroup.Key
-           select new PlayerHitboxCollisions { PlayerID = playerGroup.Key, Collisions = playerGroup };
-  }
-
-  public static IEnumerable<HitboxCollision> PrioritizeCollisions(IEnumerable<HitboxCollision> collisions) {
-    return from collision in collisions
-           orderby collision.Destination.Type, collision.Priority descending
-           select collision;
+           select new PlayerHitboxCollisions { 
+             PlayerID = playerGroup.Key, 
+             Collisions = playerGroup.OrderBy(c => c)
+           };
   }
 
   public IEnumerable<HitboxCollision> CreateCollisions() {
     foreach (var hitbox in ActiveHitboxes) {
-      var hurtboxCount = hitbox.CollisionCheck(HurtboxSet);
+      var hurtboxCount = HitboxUtil.CollisionCheck(hitbox, HurtboxSet);
       for (var i = 0; i < hurtboxCount; i++) {
         if (!ActiveHurtboxes.Contains(HurtboxSet[i])) continue;
         yield return new HitboxCollision { Source = hitbox, Destination = HurtboxSet[i] };
