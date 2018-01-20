@@ -40,6 +40,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     ApplyGravity(ref state);
     LimitFallSpeed(ref state);
 
+    Physics.SyncTransforms();
     CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
     state.Position = transform.position;
     return state;

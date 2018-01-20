@@ -66,8 +66,6 @@ public class MatchRuleSimulation : IMatchSimulation {
     };
   }
 
-
-
 }
 
 }

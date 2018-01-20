@@ -40,12 +40,15 @@ public class MatchHitboxSimulation : IMatchSimulation {
   }
 
   public MatchState Simulate(MatchState state, MatchInputContext input) {
-    var collisions = CreateCollisions();
-    foreach (var playerCollisions in GetPlayerCollisions(collisions)) {
-      ApplyCollisions(playerCollisions, ref state);
+    if (ActiveHitboxes.Count + ActiveHurtboxes.Count > 0) {
+      Physics.SyncTransforms();
+      var collisions = CreateCollisions();
+      foreach (var playerCollisions in GetPlayerCollisions(collisions)) {
+        ApplyCollisions(playerCollisions, ref state);
+      }
+      ActiveHitboxes.Clear();
+      ActiveHurtboxes.Clear();
     }
-    ActiveHitboxes.Clear();
-    ActiveHurtboxes.Clear();
     return state;
   }
 
