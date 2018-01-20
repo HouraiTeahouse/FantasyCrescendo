@@ -59,6 +59,8 @@ public class MatchHitboxSimulation : IMatchSimulation {
         case HurtboxType.Damageable:
           if (isShielded) continue;
           playerState.Damage += source.BaseDamage;
+          playerState.Velocity = source.GetKnocback(playerState.Damage);
+          playerState.Hitstun = source.GetHitstun(playerState.Damage);
           // TODO(james7132): Play Effect
           break;
         case HurtboxType.Shield:

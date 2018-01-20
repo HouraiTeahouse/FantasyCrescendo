@@ -14,20 +14,22 @@ public class Hitbox : AbstractHitDetector {
   public Vector3 Offset;
   public float Radius = 0.5f;
 
-  public bool IsActive => isActiveAndEnabled && Type != HitboxType.Inactive;
-  public Vector3 Center => transform.TransformPoint(Offset);
-
   public float BaseDamage = 10f;
   public float BaseKnockback = 5f;
   [Range(-180f, 180f)] public float KnockbackAngle = 45f;
   public float KnockbackScaling = 1f;
-  public float BaseHitstun = 1f;
-  public float HitstunScaling = 1f;
+  public uint BaseHitstun = 1;
+  public float HitstunScaling = 0.1f;
+
+  public bool IsActive => isActiveAndEnabled && Type != HitboxType.Inactive;
+  public Vector3 Center => transform.TransformPoint(Offset);
 
   float KnockbackAngleRad => Mathf.Deg2Rad * KnockbackAngle;
   public Vector2 KnockbackDirection => new Vector2(Mathf.Cos(KnockbackAngleRad), Mathf.Sin(KnockbackAngleRad));
-  public float GetKnockbackScale(float damage) => BaseKnockback + KnockbackScaling * damage;
+  public float GetKnockbackScale(float damage) => Mathf.Max(0, BaseKnockback + KnockbackScaling * damage);
   public Vector2 GetKnocback(float damage) => GetKnockbackScale(damage) * KnockbackDirection;
+
+  public uint GetHitstun(float damage) => (uint)Mathf.Max(0, BaseHitstun + Mathf.FloorToInt(HitstunScaling * damage));
 
 #if UNITY_EDITOR
   /// <summary>
