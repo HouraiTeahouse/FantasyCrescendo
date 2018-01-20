@@ -92,7 +92,7 @@ public class GameSetupMenu : MonoBehaviour {
       playerConfigs.Add(Config.PlayerConfigs[i]);
     }
     Config.PlayerConfigs = playerConfigs.ToArray();
-    await GameMode.RunGame(Config);
+    await GameMode.Execute(Config);
   }
 
 }
