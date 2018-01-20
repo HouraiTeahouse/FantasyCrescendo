@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -18,6 +19,7 @@ public class GameSetupMenu : MonoBehaviour {
 
   public Dropdown StageDropdwon;
   public Dropdown GameModeDropdown;
+  public Button[] ValidationUIElements;
   public int ColorCount;
   public PlayerSelectionMenu[] PlayerMenus;
   public MatchConfig Config;
@@ -62,11 +64,14 @@ public class GameSetupMenu : MonoBehaviour {
       // Do this to avoid bad capture semantics
       uint playerIndex = i;
 
+      player.ActiveToggle.onValueChanged.AddListener(index => UpdateValidattion());
       player.CharacterDropdwon.onValueChanged.AddListener(index => {
         Config.PlayerConfigs[playerIndex].Selection.CharacterID = characters[i].Id;
+        UpdateValidattion();
       });
       player.ColorDropdown.onValueChanged.AddListener(index => {
         Config.PlayerConfigs[playerIndex].Selection.Pallete = (byte)index;
+        UpdateValidattion();
       });
 
       Config.PlayerConfigs[i].PlayerID = i;
@@ -77,22 +82,40 @@ public class GameSetupMenu : MonoBehaviour {
 
     StageDropdwon.onValueChanged.AddListener(index => {
       Config.StageID = stages[index].Id;
+      UpdateValidattion();
     });
     GameModeDropdown.onValueChanged.AddListener(index => {
       GameMode = gameModes[index];
+      UpdateValidattion();
     });
     Config.StageID = stages.FirstOrDefault()?.Id ?? 0;
     GameMode = gameModes.FirstOrDefault();
+
+    UpdateValidattion();
   }
 
-  public async void LaunchGame() {
+  MatchConfig UpdateConfig() {
+    var config = Config;
     var playerConfigs = new List<PlayerConfig>();
     for (int i = 0; i < PlayerMenus.Length; i++) {
       if (!PlayerMenus[i].ActiveToggle.isOn) continue;
       playerConfigs.Add(Config.PlayerConfigs[i]);
     }
-    Config.PlayerConfigs = playerConfigs.ToArray();
-    await GameMode.Execute(Config);
+    config.PlayerConfigs = playerConfigs.ToArray();
+    return config;
+  }
+
+  void UpdateValidattion() {
+    if (GameMode == null || ValidationUIElements.Length <= 0) return; 
+    var isValid = GameMode.IsValidConfig(UpdateConfig());
+    foreach (var button in ValidationUIElements) {
+      if (button == null) continue;
+      button.interactable = isValid;
+    }
+  }
+
+  public async void LaunchGame() {
+    await GameMode.Execute(UpdateConfig());
   }
 
 }
