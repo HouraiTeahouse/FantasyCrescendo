@@ -8,12 +8,13 @@ public abstract class GameMode : GameDataBase {
 
   public const uint GlobalMaxPlayers = 4;
 
+  [Range(1, GlobalMaxPlayers)] public uint MinPlayers = 1;
   [Range(1, GlobalMaxPlayers)] public uint MaxPlayers = GlobalMaxPlayers;
 
   protected abstract Task RunGame(MatchConfig config, bool loadStage = true);
   public virtual bool IsValidConfig(MatchConfig config) {
     var players = config.PlayerConfigs?.Length; 
-    return players >= 1 && players <= MaxPlayers;
+    return players >= MinPlayers && players <= MaxPlayers;
   }
 
   public async Task Execute(MatchConfig config, bool loadStage = true) {
