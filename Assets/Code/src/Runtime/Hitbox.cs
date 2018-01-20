@@ -9,16 +9,6 @@ using UnityEditor;
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public class Hitbox : AbstractHitDetector {
-
-  static Hitbox() {
-    const int kCacheSize = 256;
-    CollisionSet = new Collider[kCacheSize];
-    DedupCheck = new HashSet<Hurtbox>();
-  }
-
-  static Collider[] CollisionSet;
-  static HashSet<Hurtbox> DedupCheck;
-
   public HitboxType Type;
 
   public Vector3 Offset;
@@ -27,25 +17,17 @@ public class Hitbox : AbstractHitDetector {
   public bool IsActive => isActiveAndEnabled && Type != HitboxType.Inactive;
   public Vector3 Center => transform.TransformPoint(Offset);
 
-  bool IsValid(Hurtbox hurtbox) => hurtbox != null && DedupCheck.Add(hurtbox) && hurtbox.isActiveAndEnabled;
-  int CheckColliders() {
-    var layerMask = Config.Get<PhysicsConfig>().HurtboxLayerMask;
-    return Physics.OverlapSphereNonAlloc(Center, Radius, CollisionSet, layerMask, QueryTriggerInteraction.Collide);
-  }
+  public float BaseDamage = 10f;
+  public float BaseKnockback = 5f;
+  [Range(-180f, 180f)] public float KnockbackAngle = 45f;
+  public float KnockbackScaling = 1f;
+  public float BaseHitstun = 1f;
+  public float HitstunScaling = 1f;
 
-  public int CollisionCheck(Hurtbox[] hurtboxSet) {
-    var collisionCount = CheckColliders();
-    int hurtboxCount = 0;
-    DedupCheck.Clear();
-    for (int i = 0; i < collisionCount && hurtboxCount < hurtboxSet.Length; i++) {
-      Assert.IsNotNull(CollisionSet[i]);
-      var hurtbox = CollisionSet[i].GetComponent<Hurtbox>();
-      if (IsValid(hurtbox)) {
-        hurtboxSet[hurtboxCount++] = hurtbox;
-      }
-    }
-    return hurtboxCount;
-  }
+  float KnockbackAngleRad => Mathf.Deg2Rad * KnockbackAngle;
+  public Vector2 KnockbackDirection => new Vector2(Mathf.Cos(KnockbackAngleRad), Mathf.Sin(KnockbackAngleRad));
+  public float GetKnockbackScale(float damage) => BaseKnockback + KnockbackScaling * damage;
+  public Vector2 GetKnocback(float damage) => GetKnockbackScale(damage) * KnockbackDirection;
 
 #if UNITY_EDITOR
   /// <summary>
