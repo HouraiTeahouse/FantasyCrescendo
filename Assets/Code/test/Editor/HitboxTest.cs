@@ -8,6 +8,85 @@ using System.Linq;
 
 public class HitboxTest : HitboxTestBase {
 
+  [TestCase(0, 0, 0)] [TestCase(0, 0, 10)] [TestCase(0, 0, 100)]
+  [TestCase(0, 1, 0)] [TestCase(0, 1, 10)] [TestCase(0, 1, 100)]
+  [TestCase(0, 5, 0)] [TestCase(0, 5, 10)] [TestCase(0, 5, 100)]
+  [TestCase(0, -1, 0)] [TestCase(0, -1, 10)] [TestCase(0, -1, 100)]
+  [TestCase(0, -5, 0)] [TestCase(0, -5, 10)] [TestCase(0, -5, 100)]
+  public void GetKnockbackScale_cannot_be_negative(float baseKnockback, float scaling, float damage) {
+    var scale = CreateHitbox().WithBaseKnockback(baseKnockback) .WithKnockbackScaling(scaling).Build().GetKnockbackScale(damage);
+    Assert.That(scale, Is.GreaterThanOrEqualTo(0f));
+  }
+
+  [TestCase(0, 0, 0, 0)] [TestCase(0, 0, 10, 0)] [TestCase(0, 0, 100, 0)]
+  [TestCase(0, 1, 0, 0)] [TestCase(0, 1, 10, 10)] [TestCase(0, 1, 100, 100)]
+  [TestCase(0, 5, 0, 0)] [TestCase(0, 5, 10, 50)] [TestCase(0, 5, 100, 500)]
+  public void GetKnockbackScale_scales_with_damage(float baseKnockback, float scaling, float damage, float knockback) {
+    var scale = CreateHitbox().WithBaseKnockback(baseKnockback) .WithKnockbackScaling(scaling).Build().GetKnockbackScale(damage);
+    Assert.AreEqual(scale, knockback, float.Epsilon);
+  }
+
+  [TestCase(5, 0, 0, 5)] [TestCase(5, 0, 10, 5)] [TestCase(5, 0, 100, 5)]
+  [TestCase(5, 1, 0, 5)] [TestCase(5, 1, 10, 15)] [TestCase(5, 1, 100, 105)]
+  [TestCase(5, 5, 0, 5)] [TestCase(5, 5, 10, 55)] [TestCase(5, 5, 100, 505)]
+  public void GetKnockbackScale_has_unscaling_base_knockback(float baseKnockback, float scaling, float damage, float knockback) {
+    var scale = CreateHitbox().WithBaseKnockback(baseKnockback) .WithKnockbackScaling(scaling).Build().GetKnockbackScale(damage);
+    Assert.AreEqual(scale, knockback, float.Epsilon);
+  }
+
+  [TestCase(0, 0, 0)] [TestCase(0, 0, 10)] [TestCase(0, 0, 100)]
+  [TestCase(0, 1, 0)] [TestCase(0, 1, 10)] [TestCase(0, 1, 100)]
+  [TestCase(0, 5, 0)] [TestCase(0, 5, 10)] [TestCase(0, 5, 100)]
+  [TestCase(0, -1, 0)] [TestCase(0, -1, 10)] [TestCase(0, -1, 100)]
+  [TestCase(0, -5, 0)] [TestCase(0, -5, 10)] [TestCase(0, -5, 100)]
+  public void GetHitstun_cannot_be_negative(int baseHitstun, float scaling, float damage) {
+    var hitstun = CreateHitbox().WithBaseHitstun((uint)baseHitstun).WithHitstunScaling(scaling).Build().GetHitstun(damage);
+    Assert.That(hitstun, Is.GreaterThanOrEqualTo(0f));
+  }
+
+  [TestCase(0, 0, 0, 0)] [TestCase(0, 0, 10, 0)] [TestCase(0, 0, 100, 0)]
+  [TestCase(0, 1, 0, 0)] [TestCase(0, 1, 10, 10)] [TestCase(0, 1, 100, 100)]
+  [TestCase(0, 5, 0, 0)] [TestCase(0, 5, 10, 50)] [TestCase(0, 5, 100, 500)]
+  public void GetHitstun_scales_with_damage(int baseHitstun, float scaling, float damage, float knockback) {
+    var hitstun = CreateHitbox().WithBaseHitstun((uint)baseHitstun).WithHitstunScaling(scaling).Build().GetHitstun(damage);
+    Assert.AreEqual(hitstun, knockback, float.Epsilon);
+  }
+
+  [TestCase(5, 0, 0, 5)] [TestCase(5, 0, 10, 5)] [TestCase(5, 0, 100, 5)]
+  [TestCase(5, 1, 0, 5)] [TestCase(5, 1, 10, 15)] [TestCase(5, 1, 100, 105)]
+  [TestCase(5, 5, 0, 5)] [TestCase(5, 5, 10, 55)] [TestCase(5, 5, 100, 505)]
+  public void GetHitstun_has_unscaling_base_hitsun(int baseHitstun, float scaling, float damage, float knockback) {
+    var hitstun = CreateHitbox().WithBaseHitstun((uint)baseHitstun).WithHitstunScaling(scaling).Build().GetHitstun(damage);
+    Assert.AreEqual(hitstun, knockback, float.Epsilon);
+  }
+
+  [TestCase(0, 1, 0)] [TestCase(90, 0, 1)] [TestCase(180, -1, 0)] [TestCase(270, 0, -1)] [TestCase(360, 1, 0)]
+  [TestCase(45, 0.70710678118f, 0.70710678118f)] [TestCase(135, -0.70710678118f, 0.70710678118f)] 
+  [TestCase(225, -0.70710678118f, -0.70710678118f)] [TestCase(315, 0.70710678118f, -0.70710678118f)] 
+  public void KnockbackDirection_corresponds_to_knockback_angle(float angle, float x, float y) {
+    var knockbackDirection = CreateHitbox().WithKnockbackAngle(angle).Build().KnockbackDirection;
+    Assert.AreEqual(x, knockbackDirection.x, 0.000001);
+    Assert.AreEqual(y, knockbackDirection.y, 0.000001);
+  }
+ 
+  [TestCase(0, 0, 0, 0)] [TestCase(0, 90, 0, 0)] [TestCase(0, 180, 0, 0)] [TestCase(0, 270, 0, 0)] [TestCase(0, 360, 0, 0)]
+  [TestCase(0, 45, 0, 0)] [TestCase(0, 135, 0, 0)] [TestCase(0, 225, 0, 0)] [TestCase(0, 315, 0, 0)] 
+  [TestCase(1, 0, 1, 0)] [TestCase(1, 90, 0, 1)] [TestCase(1, 180, -1, 0)] [TestCase(1, 270, 0, -1)] [TestCase(1, 360, 1, 0)]
+  [TestCase(1, 45, 0.70710678118f, 0.70710678118f)] [TestCase(1, 135, -0.70710678118f, 0.70710678118f)] 
+  [TestCase(1, 225, -0.70710678118f, -0.70710678118f)] [TestCase(1, 315, 0.70710678118f, -0.70710678118f)] 
+  [TestCase(10, 0, 10, 0)] [TestCase(10, 90, 0, 10)] [TestCase(10, 180, -10, 0)] [TestCase(10, 270, 0, -10)] [TestCase(10, 360, 10, 0)]
+  [TestCase(10, 45, 7.0710678118f, 7.0710678118f)] [TestCase(10, 135, -7.0710678118f, 7.0710678118f)] 
+  [TestCase(10, 225, -7.0710678118f, -7.0710678118f)] [TestCase(10, 315, 7.0710678118f, -7.0710678118f)] 
+  [TestCase(100, 0, 100, 0)] [TestCase(100, 90, 0, 100)] [TestCase(100, 180, -100, 0)] [TestCase(100, 270, 0, -100)] [TestCase(100, 360, 100, 0)]
+  [TestCase(100, 45, 70.710678118f, 70.710678118f)] [TestCase(100, 135, -70.710678118f, 70.710678118f)] 
+  [TestCase(100, 225, -70.710678118f, -70.710678118f)] [TestCase(100, 315, 70.710678118f, -70.710678118f)] 
+  public void GetKnockback_scales_with_damage(float damage, float angle, float x, float y) {
+  var knockback = CreateHitbox().WithBaseKnockback(0).WithKnockbackScaling(1)
+                                .WithKnockbackAngle(angle).Build().GetKnocback(damage);
+    Assert.AreEqual(x, knockback.x, 0.001);
+    Assert.AreEqual(y, knockback.y, 0.001);
+  }
+ 
 	[Test]
 	public void IsActive_returns_false_when_not_enabled() {
     var hitbox = CreateHitbox().WithEnabled(false).Build();

@@ -14,6 +14,31 @@ public class HitboxBuilder {
     return this;
   }
 
+  public HitboxBuilder WithKnockbackScaling(float knockbackScaling) {
+    Hitbox.KnockbackScaling = knockbackScaling;
+    return this;
+  }
+
+  public HitboxBuilder WithBaseKnockback(float baseKnockback) {
+    Hitbox.BaseKnockback = baseKnockback;
+    return this;
+  }
+
+  public HitboxBuilder WithKnockbackAngle(float knockbackAngle) {
+    Hitbox.KnockbackAngle = knockbackAngle;
+    return this;
+  }
+
+  public HitboxBuilder WithHitstunScaling(float hitstunScaling) {
+    Hitbox.HitstunScaling = hitstunScaling;
+    return this;
+  }
+
+  public HitboxBuilder WithBaseHitstun(uint baseHitstun) {
+    Hitbox.BaseHitstun = baseHitstun;
+    return this;
+  }
+
   public HitboxBuilder WithOffset(Vector3 offset) {
     Hitbox.Offset = offset;
     return this;
