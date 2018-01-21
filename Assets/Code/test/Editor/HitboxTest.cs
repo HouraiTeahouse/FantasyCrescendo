@@ -176,8 +176,7 @@ public class HitboxTest : HitboxTestBase {
     CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
     var hurtboxes = new Hurtbox[10];
     Assert.AreEqual(2, HitboxUtil.CollisionCheck(hitbox, hurtboxes));
-    Assert.AreEqual(h1, hurtboxes[1]);
-    Assert.AreEqual(h2, hurtboxes[0]);
+    CollectionAssert.AreEquivalent(new[] {h1, h2}, hurtboxes.Take(2));
 	}
 
 	[Test]

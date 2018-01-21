@@ -14,6 +14,7 @@ public abstract class GameObjectTest {
     foreach (var go in gameObjects) {
       Object.DestroyImmediate(go);
     }
+    gameObjects.Clear();
   }
 
   protected T CreateObject<T>() where T : Component {
