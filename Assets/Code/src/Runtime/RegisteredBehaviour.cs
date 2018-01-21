@@ -9,13 +9,8 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public abstract class RegisteredBehaviour<T, TID> : MonoBehaviour, IEntity where T : RegisteredBehaviour<T, TID> {
 
-  [SerializeField, ReadOnly] TID _id;
-
-  public TID Id {
-    get { return _id; }
-    protected set { _id = value; }
-  }
-  uint IEntity.Id => Convert.ToUInt32(_id);
+  [ ReadOnly] public TID Id;
+  uint IEntity.Id => Convert.ToUInt32(Id);
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
