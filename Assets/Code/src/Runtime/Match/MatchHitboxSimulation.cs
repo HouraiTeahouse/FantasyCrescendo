@@ -28,13 +28,11 @@ public class MatchHitboxSimulation : IMatchSimulation {
 
   public static MatchHitboxSimulation Instance { get; set; }
 
-  Hurtbox[] HurtboxSet;
   public readonly HashSet<Hitbox> ActiveHitboxes;
   public readonly HashSet<Hurtbox> ActiveHurtboxes;
 
   public MatchHitboxSimulation() {
     Instance = this;
-    HurtboxSet = new Hurtbox[256];
     ActiveHitboxes = new HashSet<Hitbox>();
     ActiveHurtboxes = new HashSet<Hurtbox>();
   }
@@ -89,13 +87,15 @@ public class MatchHitboxSimulation : IMatchSimulation {
   }
 
   public IEnumerable<HitboxCollision> CreateCollisions() {
+    var hurtboxes = ArrayPool<Hurtbox>.Shared.Rent(256);
     foreach (var hitbox in ActiveHitboxes) {
-      var hurtboxCount = HitboxUtil.CollisionCheck(hitbox, HurtboxSet);
+      var hurtboxCount = HitboxUtil.CollisionCheck(hitbox, hurtboxes);
       for (var i = 0; i < hurtboxCount; i++) {
-        if (!ActiveHurtboxes.Contains(HurtboxSet[i])) continue;
-        yield return new HitboxCollision { Source = hitbox, Destination = HurtboxSet[i] };
+        if (!ActiveHurtboxes.Contains(hurtboxes[i])) continue;
+        yield return new HitboxCollision { Source = hitbox, Destination = hurtboxes[i] };
       }
     }
+    ArrayPool<Hurtbox>.Shared.Return(hurtboxes);
   }
 
   public Task Initialize(MatchConfig config) => Task.CompletedTask;
