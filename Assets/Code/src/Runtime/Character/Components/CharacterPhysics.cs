@@ -41,6 +41,8 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     LimitFallSpeed(ref state);
 
     Physics.SyncTransforms();
+    // TODO(james7132): Move this somewhere more sane.
+    Platform.CollisionStatusCheckAll(CharacterController);
     CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
     state.Position = transform.position;
     return state;
