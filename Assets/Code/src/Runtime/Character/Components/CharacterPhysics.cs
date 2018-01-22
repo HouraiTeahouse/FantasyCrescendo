@@ -56,7 +56,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
   public PlayerState ResetState(PlayerState state) => state;
 
   void ApplyGravity(ref PlayerState state) {
-    if (state.IsRespawning) return;
+    if (state.IsRespawning || state.IsGrabbingLedge) return;
     if (!IsGrounded) {
       state.Velocity.y -= Gravity * Time.fixedDeltaTime;
     } else {

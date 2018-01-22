@@ -36,9 +36,17 @@ public sealed class Ledge : RegisteredBehaviour<Ledge, byte> {
   /// context menu or when adding the component the first time.
   /// </summary>
   void Reset() {
-    Id = (byte)new Random().Next();
+    ResetID();
     // TODO(james7132): Add this to some config
     gameObject.tag = "Ledge";
+  }
+
+  [ContextMenu("Reset ID")]
+  void ResetID() {
+    var random = new Random();
+    do {
+      Id = (byte)random.Next();
+    } while (Id == 0);
   }
 
 }

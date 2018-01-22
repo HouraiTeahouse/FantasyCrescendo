@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 109288345}
   - component: {fileID: 109288349}
   m_Layer: 0
-  m_Name: Platform
+  m_Name: Platform 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -458,7 +458,7 @@ GameObject:
   - component: {fileID: 328632172}
   - component: {fileID: 328632176}
   m_Layer: 0
-  m_Name: Platform
+  m_Name: Platform 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -802,7 +802,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 924716991}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 6
@@ -819,7 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b431be6539d374795be200798f263c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 0
+  Id: 182
   Direction: 0
 --- !u!1 &1026243086
 GameObject:
@@ -918,7 +918,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 1, z: 1}
+  m_Size: {x: 2.43, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1202620391
 Transform:
@@ -1170,7 +1170,7 @@ GameObject:
   - component: {fileID: 1525136326}
   - component: {fileID: 1525136328}
   - component: {fileID: 1525136327}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Ledge
   m_TagString: Ledge
   m_Icon: {fileID: 0}
@@ -1197,7 +1197,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1525136325}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 6
@@ -1214,7 +1214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b431be6539d374795be200798f263c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 0
+  Id: 4
   Direction: 0
 --- !u!1 &1562859373
 GameObject:
