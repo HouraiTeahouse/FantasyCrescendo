@@ -10,11 +10,13 @@ internal class SceneDataTest : AbstractDataTest<SceneData> {
 
   [Test, TestCaseSource("TestData")]
   public void has_valid_preview_image(SceneData scene) {
+    if (scene.Type != SceneType.Stage) return;
     Assert.NotNull(scene.PreviewImage.Load());
   }
 
   [Test, TestCaseSource("TestData")]
   public void has_valid_icon(SceneData scene) {
+    if (scene.Type != SceneType.Stage) return;
     Assert.NotNull(scene.PreviewImage.Load());
   }
 
