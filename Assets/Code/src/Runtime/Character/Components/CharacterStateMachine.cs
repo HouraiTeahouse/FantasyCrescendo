@@ -19,6 +19,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
   CharacterContext context = new CharacterContext();
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
+    States = Instantiate(States); // Create a per-player copy of the builder.
     StateController = States.BuildCharacterControllerImpl(new StateControllerBuilder<CharacterState, CharacterContext>());
     stateMap = StateController.States.ToDictionary(s => s.AnimatorHash, s => s);
     return Task.CompletedTask;
