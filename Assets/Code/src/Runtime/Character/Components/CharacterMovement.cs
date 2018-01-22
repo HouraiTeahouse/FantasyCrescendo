@@ -44,6 +44,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     foreach (var mover in Movers) {
       if (mover.ShouldMove(state)) {
+        Debug.Log(mover.GetType());
         return mover.Move(state, input);
       }
     }
@@ -130,7 +131,10 @@ internal class LedgeMovement : CharacterMover {
 
   public override bool ShouldMove(PlayerState state) => state.IsGrabbingLedge;
 
-  public override PlayerState Move(PlayerState state, PlayerInputContext input) => state;
+  public override PlayerState Move(PlayerState state, PlayerInputContext input) {
+    state.Velocity = Vector3.zero;
+    return state;
+  }
 
 }
 

@@ -45,7 +45,7 @@ public class Platform : RegisteredBehaviour<Platform, byte> {
   }
 
   public void UpdateCollisionStatus(Collider collider, bool collide) {
-    foreach (var platformCollider in GetComponentsInChildren<Collider>()) {
+    foreach (var platformCollider in SolidColliders) {
       if (platformCollider.isTrigger) continue;
       Physics.IgnoreCollision(platformCollider, collider, collide);
     }
@@ -62,8 +62,7 @@ public class Platform : RegisteredBehaviour<Platform, byte> {
       }
       if (CheckRegions == null) return;
       foreach (var region in CheckRegions) {
-        var worldRegion = GetWorldRegion(region);
-        Gizmos.DrawWireCube(worldRegion.center, worldRegion.size);
+        GizmoUtil.DrawBox(GetWorldRegion(region));
       }
     }
   }
