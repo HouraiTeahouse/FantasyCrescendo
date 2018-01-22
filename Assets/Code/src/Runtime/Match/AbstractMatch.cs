@@ -15,7 +15,7 @@ public abstract class Match {
     Task sceneLoad = Task.CompletedTask;
     if (loadScene) {
       var stage = Registry.Get<SceneData>().Get(config.StageID);
-      Assert.IsTrue(stage != null && stage.IsStage);
+      Assert.IsTrue(stage != null && stage.Type == SceneType.Stage);
       await stage.GameScene.LoadAsync();
     }
     var additionalScenes = Config.Get<SceneConfig>().AdditionalStageScenes;
