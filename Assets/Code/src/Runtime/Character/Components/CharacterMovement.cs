@@ -44,7 +44,6 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     foreach (var mover in Movers) {
       if (mover.ShouldMove(state)) {
-        Debug.Log(mover.GetType());
         return mover.Move(state, input);
       }
     }

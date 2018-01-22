@@ -4,8 +4,8 @@ public abstract class PlayerEvent : MatchEvent {
 
   public uint PlayerID;
   public PlayerState PlayerState {
-    get { return MatchState.PlayerStates[PlayerID]; }
-    set { MatchState.PlayerStates[PlayerID] = value; }
+    get { return MatchState.GetPlayerState(PlayerID); }
+    set { MatchState.SetPlayerState(PlayerID, value); }
   }
 
   public void Copy(PlayerEvent evt) {

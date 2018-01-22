@@ -44,6 +44,7 @@ public class MatchCameraTarget : MonoBehaviour {
       max = Vector3.Max(max, target.position);
     }
 
+
     Vector3 targetPosition = TargetPositionBias + (count <= 0 ? Vector3.zero : sum / count);
     Vector2 size = (Vector2) max - (Vector2) min;
 

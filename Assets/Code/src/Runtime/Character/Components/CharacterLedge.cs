@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -25,7 +26,7 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     if (!state.IsGrabbingLedge) {
       var ledge = CheckForLedges(state);
-      if (ledge != null) {
+      if (ledge != null && state.MatchState.PlayerStates.All(p => p.GrabbedLedgeID != ledge.Id)) {
         state.GrabbedLedgeID = ledge.Id;
       }
       if (state.IsGrabbingLedge) Debug.LogWarning("GRABBING LEDGE");
@@ -49,7 +50,6 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
       var worldRegion = GetWorldRegion(region, state.Direction);
       var colliderCount = Physics.OverlapBoxNonAlloc(worldRegion.center, worldRegion.extents, colliders, Quaternion.identity, layerMask, QueryTriggerInteraction.Collide);
       for (var i = 0; i < colliderCount; i++) {
-        Debug.Log(colliders[i]);
         ledge = colliders[i].GetComponent<Ledge>();
         if (ledge != null) break;
       }

@@ -95,7 +95,6 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
                                  //.Any(col => !_ignoredColliders.Contains(col));
   }
 
-
 }
 
 }

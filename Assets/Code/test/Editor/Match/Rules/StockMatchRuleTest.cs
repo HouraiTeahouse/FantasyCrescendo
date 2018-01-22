@@ -9,7 +9,7 @@ public class StockMatchRuleTest {
 
   MatchState CreateGameState(int[] stocks) {
     var states = stocks.Select(s => new PlayerState { Stocks = s }).ToArray();
-    return new MatchState { PlayerStates = states };
+    return new MatchState(states);
   }
 
 	[Test]

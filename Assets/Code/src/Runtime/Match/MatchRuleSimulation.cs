@@ -57,7 +57,7 @@ public class MatchRuleSimulation : IMatchSimulation {
   }
 
   MatchResult CreateResult(MatchState state) {
-    var players = new PlayerMatchStats[state.PlayerStates.Length];
+    var players = new PlayerMatchStats[state.PlayerCount];
     for (uint i = 0; i < players.Length; i++) {
       players[i].Config = MatchConfig.PlayerConfigs[i];
     }
