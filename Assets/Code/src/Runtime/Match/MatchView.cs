@@ -37,8 +37,8 @@ public class GameView : IInitializable<MatchConfig>, IStateView<MatchState> {
   }
 
   void ApplyPlayerStates(MatchState state) {
-    for (int i = 0; i < PlayerViews.Length; i++) {
-      PlayerViews[i].ApplyState(state.PlayerStates[i]);
+    for (uint i = 0; i < PlayerViews.Length; i++) {
+      PlayerViews[i].ApplyState(state.GetPlayerState(i));
     }
   }
 

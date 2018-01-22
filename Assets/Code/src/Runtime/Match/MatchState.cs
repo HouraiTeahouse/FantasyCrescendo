@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,21 +9,34 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// A complete representation of a given game's state at a given tick.
 /// </summary>
 [Serializable]
-public struct MatchState {
+public class MatchState {
 
   public uint Time;
 
-  public PlayerState[] PlayerStates;
+  PlayerState[] playerStates;
+  public int PlayerCount => playerStates.Length;
+  public IEnumerable<PlayerState> PlayerStates => playerStates.Select(x => x);
+
+  public MatchState() {
+    playerStates = new PlayerState[GameMode.GlobalMaxPlayers];
+    UpdatePlayerStates();
+  }
+
+  public MatchState(IEnumerable<PlayerState> playerStates) {
+    this.playerStates = playerStates.ToArray();
+    UpdatePlayerStates();
+  }
 
   /// <summary>
   /// Constructs a new GameState based on a given GameConfig.
   /// </summary>
   /// <param name="config">the configuration for the game.</param>
   public MatchState(MatchConfig config) {
-    PlayerStates = new PlayerState[config.PlayerCount];
+    playerStates = new PlayerState[config.PlayerCount];
     Time = config.Time;
-    for (var i = 0; i < PlayerStates.Length; i++) {
-      PlayerStates[i].Stocks = (int)config.Stocks;
+    for (var i = 0; i < playerStates.Length; i++) {
+      playerStates[i].Stocks = (int)config.Stocks;
+      playerStates[i].MatchState = this;
     }
   }
 
@@ -32,22 +46,34 @@ public struct MatchState {
   /// <returns>a deep cloned copy of the state.</returns>
   public MatchState Clone() {
     MatchState clone = this;
-    clone.PlayerStates = (PlayerState[]) PlayerStates.Clone();
+    clone.playerStates = (PlayerState[]) playerStates.Clone();
     return clone;
+  }
+
+  public PlayerState GetPlayerState(uint index) => playerStates[index];
+  public void SetPlayerState(uint index, PlayerState state) {
+    state.MatchState = this;
+    playerStates[index] = state;
   }
 
   public override bool Equals(object obj) {
     if (!(obj is MatchState)) return false;
     var state = (MatchState)obj;
-    return Time == state.Time && Enumerable.SequenceEqual(PlayerStates, state.PlayerStates);
+    return Time == state.Time && Enumerable.SequenceEqual(playerStates, state.playerStates);
   }
 
   public override int GetHashCode() {
     int hash = Time.GetHashCode();
-    for (var i = 0; i < PlayerStates.Length; i++) {
-      hash ^= PlayerStates[i].GetHashCode();
+    for (var i = 0; i < playerStates.Length; i++) {
+      hash ^= playerStates[i].GetHashCode();
     }
     return hash;
+  }
+
+  void UpdatePlayerStates() {
+    for (var i = 0; i < playerStates.Length; i++) {
+      playerStates[i].MatchState = this;
+    }
   }
 
 }

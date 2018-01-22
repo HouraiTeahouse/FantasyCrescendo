@@ -9,7 +9,7 @@ public class TimeMatchRuleTest {
 
   MatchState CreateGameState(uint time, int[] stocks) {
     var states = stocks.Select(s => new PlayerState { Stocks = s }).ToArray();
-    return new MatchState { Time = time, PlayerStates = states };
+    return new MatchState(states) { Time = time };
   }
 
 	[Test]

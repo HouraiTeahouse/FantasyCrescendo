@@ -28,8 +28,8 @@ public sealed class TimeMatchRule : IMatchRule {
   public uint? GetWinner(MatchState state) {
     uint? winner = null;
     int maxStocks = int.MinValue;
-    for (uint i = 0; i < state.PlayerStates.Length; i++) {
-      var playerStocks = state.PlayerStates[i].Stocks;
+    for (uint i = 0; i < state.PlayerCount; i++) {
+      var playerStocks = state.GetPlayerState(i).Stocks;
       if (playerStocks > maxStocks) {
         winner = i;
         maxStocks = (int)playerStocks;

@@ -8,8 +8,8 @@ using NUnit.Framework;
 public class TimeStockMatchRuleTest {
 
   MatchState CreateGameState(uint time, int[] stocks) {
-    var states = stocks.Select(s => new PlayerState { Stocks = s }).ToArray();
-    return new MatchState { Time = time, PlayerStates = states };
+    var states = stocks.Select(s => new PlayerState { Stocks = s });
+    return new MatchState(states) { Time = time };
   }
 
 	[Test]

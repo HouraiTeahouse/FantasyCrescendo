@@ -24,22 +24,21 @@ public class MatchPlayerSimulation : IMatchSimulation {
 
   public MatchState Simulate(MatchState state, MatchInputContext input) {
     Assert.IsTrue(input.IsValid);
-    Assert.AreEqual(PlayerSimulations.Length, state.PlayerStates.Length);
+    Assert.AreEqual(PlayerSimulations.Length, state.PlayerCount);
     Assert.AreEqual(PlayerSimulations.Length, input.PlayerInputs.Length);
     var newState = state.Clone();
-    for (int i = 0; i < state.PlayerStates.Length; i++) {
-      PlayerSimulations[i].Presimulate(state.PlayerStates[i]);
+    for (uint i = 0; i < state.PlayerCount; i++) {
+      PlayerSimulations[i].Presimulate(state.GetPlayerState(i));
     }
-    for (int i = 0; i < state.PlayerStates.Length; i++) {
-      newState.PlayerStates[i] =
-        PlayerSimulations[i].Simulate(state.PlayerStates[i], input.PlayerInputs[i]);
+    for (uint i = 0; i < state.PlayerCount; i++) {
+      newState.SetPlayerState(i, PlayerSimulations[i].Simulate(state.GetPlayerState(i), input.PlayerInputs[i]));
     }
     return newState;
   }
 
   public MatchState ResetState(MatchState state) {
-    for (int i = 0; i < state.PlayerStates.Length; i++) {
-      state.PlayerStates[i] = PlayerSimulations[i].ResetState(state.PlayerStates[i]);
+    for (uint i = 0; i < state.PlayerCount; i++) {
+      state.SetPlayerState(i, PlayerSimulations[i].ResetState(state.GetPlayerState(i)));
     }
     return state;
   }

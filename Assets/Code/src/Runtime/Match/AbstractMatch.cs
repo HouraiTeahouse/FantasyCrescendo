@@ -67,8 +67,10 @@ public class DefaultMatch : Match {
 
   MatchState CreateInitialState(MatchConfig config) {
     var initialState = new MatchState(config);
-    for (int i = 0; i < initialState.PlayerStates.Length; i++) {
-      initialState.PlayerStates[i].Position = new Vector3(i * 2 - 3, 1, 0);
+    for (uint i = 0; i < initialState.PlayerCount; i++) {
+      var state = initialState.GetPlayerState(i);
+      state.Position = new Vector3((int)i * 2 - 3, 1, 0);
+      initialState.SetPlayerState(i, state);
     }
     return initialState;
   }

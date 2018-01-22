@@ -22,6 +22,7 @@ public struct PlayerState {
   // 60/s (x4) | 17280   | 42240
 
   // TODO(james7132): Generalize this
+  [NonSerialized] public MatchState MatchState;
   public bool IsActive => Stocks > 0;
   public bool IsGrabbingLedge => GrabbedLedgeID != 0;
   public bool IsRespawning => RespawnTimeRemaining > 0;

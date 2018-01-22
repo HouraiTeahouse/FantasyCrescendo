@@ -52,7 +52,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
 
   // TODO(james7132): Split and generalize this... somehow.
   public void ApplyCollisions(PlayerHitboxCollisions collisions, ref MatchState state) {
-    var playerState = state.PlayerStates[collisions.PlayerID];
+    var playerState = state.GetPlayerState(collisions.PlayerID);
     bool isShielded = false;
     foreach (var collision in collisions.Collisions) {
       var source = collision.Source;
@@ -72,7 +72,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
           break;
       }
     }
-    state.PlayerStates[collisions.PlayerID] = playerState;
+    state.SetPlayerState(collisions.PlayerID,  playerState);
   }
 
   public static IEnumerable<PlayerHitboxCollisions> GetPlayerCollisions(IEnumerable<HitboxCollision> collisions) {
