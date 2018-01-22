@@ -41,7 +41,8 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     context.CanJump = state.RemainingJumps > 0;
 
     StateController.UpdateState(context);
-
+    
+    state = context.State;
     state.StateHash = StateController.CurrentState.AnimatorHash;
     return state;
   }
