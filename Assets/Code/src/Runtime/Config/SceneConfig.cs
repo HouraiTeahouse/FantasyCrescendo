@@ -1,4 +1,5 @@
-﻿using HouraiTeahouse.Loadables;
+﻿using HouraiTeahouse.EditorAttributes;
+using HouraiTeahouse.Loadables;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class SceneConfig : ScriptableObject {
   [SerializeField, Scene] string _mainMenuScene;
   [SerializeField, Scene] string _matchEndScene;
   [SerializeField, Scene] string[] _additionalStageScenes;
+  [Tag] public string SpawnTag;
 
   public IScene MainMenuScene => Scene.Get(_mainMenuScene);
   public IScene MatchEndScene => Scene.Get(_matchEndScene);

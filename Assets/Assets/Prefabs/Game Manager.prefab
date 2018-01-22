@@ -195,7 +195,6 @@ MonoBehaviour:
   Manager: {fileID: 114727785565368142}
   State:
     Time: 0
-    PlayerStates: []
 --- !u!114 &114710496242346924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -235,4 +234,14 @@ MonoBehaviour:
       LocalPlayerID: 1
       Selection:
         CharacterID: 3548088660
+        Pallete: 1
+    - PlayerID: 2
+      LocalPlayerID: 2
+      Selection:
+        CharacterID: 3548088660
         Pallete: 2
+    - PlayerID: 3
+      LocalPlayerID: 3
+      Selection:
+        CharacterID: 3548088660
+        Pallete: 3
