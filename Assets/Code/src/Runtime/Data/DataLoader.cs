@@ -44,6 +44,7 @@ public class DataLoader : MonoBehaviour {
     }
 #else
   async void Awake() {
+    LoadingScreen.Await(LoadTask.Task);
     RegisterAll(GameModes);
     var paths = await GetAllValidPaths(BundleSearch);
     var bundles = paths.Select(async path => {

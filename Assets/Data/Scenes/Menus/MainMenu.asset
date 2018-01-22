@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11ce1ec9da907c4abb2805992df2836, type: 3}
+  m_Name: MainMenu
+  m_EditorClassIdentifier: 
+  _id: 4161339850
+  IsSelectable: 1
+  IsVisible: 1
+  IsDebug: 0
+  Type: 0
+  Name: 
+  _scene: scene/main_menu/scene:Assets/Data/Scenes/Menus/MainMenu.unity
+  _icon: 
+  _previewImage: 
+  LoadPriority: 0
+  Music: []
