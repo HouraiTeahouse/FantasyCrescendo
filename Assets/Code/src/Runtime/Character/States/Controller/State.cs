@@ -36,6 +36,10 @@ public abstract class State<T> {
 
   public virtual StateEntryPolicy GetEntryPolicy(T context) => StateEntryPolicy.Normal;
 
+  public virtual void OnStateEnter(T context) {}
+  public virtual void OnStateUpdate(T context) {}
+  public virtual void OnStateExit(T context) {}
+
 }
 
 }
