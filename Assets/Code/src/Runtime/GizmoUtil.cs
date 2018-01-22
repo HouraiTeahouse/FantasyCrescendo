@@ -8,24 +8,32 @@ public static class GizmoUtil {
   class GizmoDisposable : IDisposable {
     Matrix4x4 matrix;
     Color color;
-    public GizmoDisposable() { color = Gizmos.color; }
-    public void Dispose() => Gizmos.color = color;
+
+    public GizmoDisposable() { 
+      matrix = Gizmos.matrix;
+      color = Gizmos.color; 
+    }
+
+    public void Dispose() {
+      Gizmos.matrix = matrix;
+      Gizmos.color = color;
+    }
+
   }
 
   public static IDisposable With(Color color) {
+    var disposable = new GizmoDisposable();
     Gizmos.color = color;
-    return new GizmoDisposable();
+    return disposable; 
   }
 
   public static IDisposable With(Matrix4x4 matrix) {
+    var disposable = new GizmoDisposable();
     Gizmos.matrix = matrix;
-    return new GizmoDisposable();
+    return disposable;
   }
 
-  public static IDisposable With(Transform transform) {
-    Gizmos.matrix = transform.localToWorldMatrix;
-    return new GizmoDisposable();
-  }
+  public static IDisposable With(Transform transform) => With(transform.localToWorldMatrix);
 
   public static void DrawCollider(Collider collider, bool wire = true) {
     DrawBoxCollider(collider as BoxCollider, wire);

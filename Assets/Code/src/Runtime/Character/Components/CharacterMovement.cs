@@ -71,7 +71,6 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
 
   public void ApplyControlledMovement(ref PlayerState state, Vector2 movementInput) {
     var data = StateMachine.StateData;
-    Debug.Log(StateMachine.StateController.CurrentState.Name);
     switch (data.MovementType) {
       case MovementType.Normal:
         var dir = state.Direction ? 1f : -1f;
