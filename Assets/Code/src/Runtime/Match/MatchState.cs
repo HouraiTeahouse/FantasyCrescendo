@@ -22,6 +22,11 @@ public class MatchState {
     UpdatePlayerStates();
   }
 
+  public MatchState(int playerCount) {
+    playerStates = new PlayerState[playerCount];
+    UpdatePlayerStates();
+  }
+
   public MatchState(IEnumerable<PlayerState> playerStates) {
     this.playerStates = playerStates.ToArray();
     UpdatePlayerStates();
@@ -57,9 +62,9 @@ public class MatchState {
   }
 
   public override bool Equals(object obj) {
-    if (!(obj is MatchState)) return false;
-    var state = (MatchState)obj;
-    return Time == state.Time && Enumerable.SequenceEqual(playerStates, state.playerStates);
+    if (typeof(MatchState) != obj.GetType()) return false;
+    var other = (MatchState)obj;
+    return Time == other.Time && ArrayUtil.AreEqual(playerStates, other.playerStates);
   }
 
   public override int GetHashCode() {

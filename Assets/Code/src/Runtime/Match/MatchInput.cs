@@ -2,12 +2,15 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public struct MatchInput {
 
   public PlayerInput[] PlayerInputs;
+
+  public int PlayerCount => PlayerInputs?.Length ?? 0;
 
   public MatchInput(MatchConfig config) {
     PlayerInputs = new PlayerInput[config.PlayerCount];
@@ -44,6 +47,28 @@ public struct MatchInput {
     MatchInput clone = this;
     clone.PlayerInputs = (PlayerInput[]) PlayerInputs.Clone();
     return clone;
+  }
+
+  public override bool Equals(object obj) {
+    if (typeof(MatchInput) != obj.GetType()) return false;
+    return ArrayUtil.AreEqual(PlayerInputs, ((MatchInput)obj).PlayerInputs);
+  }
+
+  public override string ToString() => $"MatchInput({PlayerInputs?.Length ?? 0})";
+
+  public void Serialize(NetworkWriter writer) {
+    if (PlayerInputs == null) return;
+    for (var i = 0; i < PlayerInputs.Length; i++) {
+      PlayerInputs[i].Serialize(writer);
+    }
+  }
+
+  public static MatchInput Deserialize(NetworkReader reader, int players) {
+    var inputs = new PlayerInput[players];
+    for (var i = 0; i < inputs.Length; i++) {
+      inputs[i] = PlayerInput.Deserialize(reader);
+    }
+    return new MatchInput { PlayerInputs = inputs };
   }
 
 }

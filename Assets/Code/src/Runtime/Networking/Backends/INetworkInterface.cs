@@ -6,14 +6,26 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class NetworkHost {
+public class NetworkHost : IDisposable {
+
   public INetworkServer Server { get; }
   public INetworkClient Client { get; }
 
-  public NetworkHost(INetworkInterface networkInterface, NetworkHostConfig config) {
-    Server = new NetworkGameServer(networkInterface, config.ServerConfig);
-    Client = new NetworkGameClient(networkInterface, config.ClientConfig);
+  public NetworkHost(Type interfaceType, NetworkHostConfig config) {
+    Server = new NetworkGameServer(interfaceType, config.ServerConfig);
+    Client = new NetworkGameClient(interfaceType, config.ClientConfig);
   }
+
+  public void Update() {
+    Server.Update();
+    Client.Update();
+  }
+
+  public void Dispose() {
+    Server.Dispose();
+    Client.Dispose();
+  }
+
 }
 
 public struct NetworkHostConfig {
@@ -21,11 +33,11 @@ public struct NetworkHostConfig {
   public NetworkServerConfig ServerConfig;
 }
 
-public struct NetworkClientConfig {
+public class NetworkClientConfig {
 }
 
-public struct NetworkServerConfig {
-  public uint Port;
+public class NetworkServerConfig {
+  public int Port;
 }
 
 public interface INetworkInterface : IDisposable {
@@ -33,7 +45,7 @@ public interface INetworkInterface : IDisposable {
   MessageHandlers MessageHandlers { get; }
   IReadOnlyCollection<INetworkConnection> Connections { get; }
 
-  Task Initialize();
+  void Initialize(int port);
   void Update();
 
   event Action<INetworkConnection> OnPeerConnected;

@@ -6,12 +6,25 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public interface INetworkClient : IDisposable {
 
-  event Action<uint, IEnumerable<MatchInput>> ReceivedInputs;
-  event Action<uint, MatchState> ReceivedState;
+  event Action<MatchConfig> OnMatchStarted;
+  event Action<MatchResult> OnMatchFinished;
+
+  event Action<uint, IEnumerable<MatchInput>> OnRecievedInputs;
+  event Action<uint, MatchState> OnRecievedState;
 
   Task Connect(string ip, uint port);
+  void Disconnect();
 
+  // Unreliable
   void SendInput(uint startTimestamp, IEnumerable<MatchInput> inputs);
+
+  // Reliable
+  void SetReady(bool isReady);
+
+  // Reliable
+  void SetConfig(PlayerConfig config);
+
+  void Update();
 
 }
 

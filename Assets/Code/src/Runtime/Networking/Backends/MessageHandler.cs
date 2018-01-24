@@ -21,13 +21,16 @@ public class MessageHandlers {
 
   public void RegisterHandler<T>(byte code, Action<T> handler) where T : MessageBase, new() {
     if (handler == null) return;
-    RegisterHandler(code, dataMsg => handler(dataMsg.ReadAs<T>()));
+    RegisterHandler(code, dataMsg => {
+      var message = dataMsg.ReadAs<T>();
+      handler(message);
+      ObjectPool<T>.Shared.Return(message);
+    });
   }
 
   public void UnregisterHandler(byte code) => handlers[code] = null;
 
-  internal void Execute(INetworkConnection connection, byte[] data, int size) {
-    var reader = new NetworkReader(data);
+  internal void Execute(INetworkConnection connection, NetworkReader reader) {
     byte header = reader.ReadByte();
     var handler = handlers[header];
     if (handler == null) return;

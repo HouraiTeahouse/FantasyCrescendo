@@ -11,18 +11,21 @@ public class UNETConnection : INetworkConnection {
   public readonly int ConnectionID;
 
   internal UNETConnection(UNETNetworkInterface networkInterface, int connectionId) {
-    MessageHandlers = new MessageHandlers();
+    MessageHandlers = networkInterface.MessageHandlers;
     NetworkInterface = networkInterface;
     ConnectionID = connectionId;
   }
 
   public void SendBytes(byte[] buffer, int size, NetworkReliablity reliability = NetworkReliablity.Reliable) {
     byte error;
-    var socketId = NetworkInterface.SocketID;
+    var socketId = NetworkInterface.HostID;
     var channelId = NetworkInterface.GetChannelID(reliability);
-    Debug.Log(size);
     NetworkTransport.Send(socketId, ConnectionID, channelId, buffer, size, out error);
     UNETUtility.HandleError(error);
+  }
+
+  public void Disconnect() {
+
   }
 
 }

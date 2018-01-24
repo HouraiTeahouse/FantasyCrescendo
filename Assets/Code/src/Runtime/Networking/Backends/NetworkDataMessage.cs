@@ -14,7 +14,7 @@ public struct NetworkDataMessage {
   }
 
   public T ReadAs<T>() where T : MessageBase, new() {
-    var message = new T();
+    var message = ObjectPool<T>.Shared.Rent();
     message.Deserialize(NetworkReader);
     return message;
   }

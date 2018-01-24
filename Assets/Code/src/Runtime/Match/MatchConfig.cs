@@ -43,6 +43,15 @@ public struct MatchConfig : IValidatable {
 
   public bool IsValid => PlayerConfigs.IsAllValid();
 
+  public override bool Equals(object obj) {
+    if (typeof(MatchConfig) != obj.GetType()) return false;
+    var other = (MatchConfig)obj;
+    var equal = StageID == other.StageID;
+    equal &= Time == other.Time;
+    equal &= ArrayUtil.AreEqual(PlayerConfigs, other.PlayerConfigs);
+    return equal;
+  }
+
 }
 
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
@@ -9,15 +10,43 @@ public class NetworkGameServer : INetworkServer {
 
   readonly INetworkInterface NetworkInterface;
 
-  public NetworkGameServer(INetworkInterface networkInterface, NetworkServerConfig config) {
-    NetworkInterface = networkInterface;
+  public ICollection<NetworkClientPlayer> Clients => clients.Values;
+  public event Action<uint, uint, IEnumerable<MatchInput>> ReceivedInputs;
+  public event Action<NetworkClientPlayer> PlayerAdded;
+  public event Action<NetworkClientPlayer> PlayerUpdated;
+  public event Action<uint> PlayerRemoved;
 
-    NetworkInterface.MessageHandlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
-  }
+  Dictionary<uint, NetworkClientPlayer> clients;
 
   public int ClientCount => NetworkServer.connections.Count; 
 
-  public event Action<uint, uint, IEnumerable<MatchInput>> ReceivedInputs;
+  public NetworkGameServer(Type interfaceType, NetworkServerConfig config) {
+    clients = new Dictionary<uint, NetworkClientPlayer>();
+    NetworkInterface = (INetworkInterface)Activator.CreateInstance(interfaceType);
+    NetworkInterface.Initialize(config.Port);
+
+    NetworkInterface.OnPeerConnected += OnConnect;
+    NetworkInterface.OnPeerDisconnected += OnConnect;
+
+    var handlers = NetworkInterface.MessageHandlers;
+    handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
+    handlers.RegisterHandler(MessageCodes.UpdateConfig, OnClientConfigUpdated);
+    handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
+  }
+
+  public void Update() => NetworkInterface.Update();
+
+  public void StartMatch(MatchConfig config) {
+    NetworkInterface.Connections.SendToAll(MessageCodes.MatchStart, new MatchStartMessage {
+      MatchConfig = config
+    });
+  }
+
+  public void FinishMatch(MatchResult result) {
+    NetworkInterface.Connections.SendToAll(MessageCodes.MatchFinish, new MatchFinishMessage {
+      MatchResult = result
+    });
+  }
 
   public void BroadcastInput(uint startTimestamp, IEnumerable<MatchInput> input) {
     NetworkInterface.Connections.SendToAll(MessageCodes.UpdateInput, new InputSetMessage {
@@ -33,6 +62,48 @@ public class NetworkGameServer : INetworkServer {
     }, NetworkReliablity.Unreliable);
   }
 
+  public void Dispose() {
+    if (NetworkInterface == null) return;
+    NetworkInterface.Dispose();
+    NetworkInterface.OnPeerConnected -= OnConnect;
+    NetworkInterface.OnPeerConnected -= OnConnect;
+
+    var handlers = NetworkInterface.MessageHandlers;
+    if (handlers == null) return;
+    handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
+    handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
+  }
+
+  // Event Handlers
+
+  void OnConnect(INetworkConnection connection) {
+    var connId = connection.Id;
+    var client = new NetworkClientPlayer(connection, LowestAvailablePlayerID(connId));
+    clients[connId] = client;
+    PlayerAdded?.Invoke(client);
+  }
+
+  void OnDisconnect(INetworkConnection connection) {
+    clients.Remove(connection.Id);
+    PlayerRemoved?.Invoke(connection.Id);
+  }
+
+  void OnClientReady(NetworkDataMessage dataMsg) {
+    NetworkClientPlayer client;
+    if (!clients.TryGetValue(dataMsg.Connection.Id, out client)) return;
+    var message = dataMsg.ReadAs<ClientReadyMessage>();
+    client.IsReady = message.IsReady;
+    PlayerUpdated?.Invoke(client);
+  }
+
+  void OnClientConfigUpdated(NetworkDataMessage dataMsg) {
+    NetworkClientPlayer client;
+    if (!clients.TryGetValue(dataMsg.Connection.Id, out client)) return;
+    var message = dataMsg.ReadAs<ClientUpdateConfigMessage>();
+    client.Config = message.PlayerConfig;
+    PlayerUpdated?.Invoke(client);
+  }
+
   void OnReceivedClientInput(NetworkDataMessage message) {
     if (ReceivedInputs == null) return;
     var inputSet = message.ReadAs<InputSetMessage>();
@@ -41,8 +112,21 @@ public class NetworkGameServer : INetworkServer {
                    inputSet.Inputs);
   }
 
-  public void Dispose() {
-    // NetworkServer.UnregisterHandler(MessageCode.UpdateInput);
+  uint LowestAvailablePlayerID(uint connectionId) {
+    bool updated = false;
+    uint id = 0;
+    do {
+      updated = false;
+      foreach (var kvp in clients) {
+        if (kvp.Key == connectionId) continue;
+        var client = kvp.Value;
+        if (client.PlayerID == id) {
+          id++;
+          updated = true;
+        }
+      }
+    } while (updated);
+    return id;
   }
 
 }

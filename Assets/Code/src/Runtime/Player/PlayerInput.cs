@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -56,6 +57,57 @@ public struct PlayerInput : IValidatable {
     Movement = (Vector2)Movement + (Vector2)other.Movement;
     Smash = (Vector2)Smash + (Vector2)other.Smash;
     Buttons |= other.Buttons;
+  }
+
+  public override bool Equals(object obj) {
+    if (!(obj is PlayerInput)) return false;
+    var other = (PlayerInput)obj;
+    var equals = Movement.Equals(other.Movement) && Smash.Equals(other.Smash);
+    return equals && Buttons == other.Buttons;
+  }
+
+  public void Serialize(NetworkWriter writer) {
+    var cutMovement = Movement.X == 0 && Movement.Y == 0;
+    var cutSmash = Smash.X == 0 && Smash.Y == 0;
+    unchecked {
+      if (cutMovement) {
+        Buttons &= (byte)~64;
+      } else  {
+        Buttons |= 64;
+      }
+      if (cutSmash) {
+        Buttons &= (byte)~128;
+      } else  {
+        Buttons |= 128;
+      }
+    }
+    writer.Write(Buttons);
+    if (!cutMovement) {
+      writer.Write(Movement.X);
+      writer.Write(Movement.Y);
+    }
+    if (!cutSmash) {
+      writer.Write(Smash.X);
+      writer.Write(Smash.Y);
+    }
+  }
+
+  public static PlayerInput Deserialize(NetworkReader reader) {
+    var input = new PlayerInput();
+    input.Buttons = reader.ReadByte();
+    if ((input.Buttons & 64) != 0) {
+      input.Movement.X = reader.ReadSByte();
+      input.Movement.Y = reader.ReadSByte();
+    } else {
+      input.Movement.X = input.Movement.Y = 0;
+    }
+    if ((input.Buttons & 128) != 0) {
+      input.Smash.X = reader.ReadSByte();
+      input.Smash.Y = reader.ReadSByte();
+    } else {
+      input.Smash.X = input.Smash.Y = 0;
+    }
+    return input;
   }
 
 }

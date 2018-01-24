@@ -2,25 +2,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public class NetworkingTest : MonoBehaviour {
 
+  public InputField IP;
+  public InputField Port;
+
   NetworkHost host;
+  NetworkGameClient client;
   INetworkInterface networkInterface;
   bool isInitialized = false;
   int timestamp;
 
-  /// <summary>
-  /// Awake is called when the script instance is being loaded.
-  /// </summary>
-  async void Awake()  {
-    networkInterface = new UNETNetworkInterface();
-    host = new NetworkHost(networkInterface, new NetworkHostConfig());
-    await networkInterface.Initialize();
-    await host.Client.Connect("localhost", 8888);
-    host.Client.ReceivedState += (t, state) => Debug.Log($"Time: {t} State: {state.PlayerCount}");
+  uint PortValue => uint.Parse(Port.text);
+
+  public async void StartHost() {
+    host = new NetworkHost(typeof(UNETNetworkInterface), new NetworkHostConfig());
+    await host.Client.Connect("localhost", PortValue);
+    host.Client.OnRecievedState += (t, state) => Debug.Log($"Time: {t} State: {state.PlayerCount}");
+    isInitialized = true;
+  }
+
+  public async void StartClient() {
+    client = new NetworkGameClient(typeof(UNETNetworkInterface), new NetworkClientConfig());
+    await host.Client.Connect(IP.text, PortValue);
+    client.OnRecievedState += (t, state) => Debug.Log($"Time: {t} State: {state.PlayerCount}");
     isInitialized = true;
   }
 
@@ -29,14 +38,16 @@ public class NetworkingTest : MonoBehaviour {
   /// </summary>
   void Update() { 
     if (!isInitialized) return;
-    host.Server.BroadcastState((uint)timestamp++, new MatchState());
+    if (host != null) {
+      host.Server.BroadcastState((uint)timestamp++, new MatchState(2));
+    }
     networkInterface?.Update();
   }
 
   /// <summary>
   /// This function is called when the MonoBehaviour will be destroyed.
   /// </summary>
-  void OnDestroy() => networkInterface.Dispose();
+  void OnDestroy() => networkInterface?.Dispose();
 
 }
 
