@@ -77,7 +77,7 @@ public class GameSetupMenu : MonoBehaviour {
       player.ColorDropdown.value = pallete;
 
       Config.PlayerConfigs[i].PlayerID = i;
-      Config.PlayerConfigs[i].LocalPlayerID = i;
+      Config.PlayerConfigs[i].LocalPlayerID = (sbyte)i;
       Config.PlayerConfigs[i].Selection.CharacterID = characters.FirstOrDefault()?.Id ?? 0;
       Config.PlayerConfigs[i].Selection.Pallete = pallete;
     }

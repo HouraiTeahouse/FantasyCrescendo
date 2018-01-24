@@ -19,9 +19,10 @@ public struct PlayerConfig : IValidatable {
   /// The local player number. Mainly used to determine what local input 
   /// device to read the input from.
   /// </summary>
-  public byte LocalPlayerID;
+  public sbyte LocalPlayerID;
   public PlayerSelection Selection;
 
+  public bool IsLocal => LocalPlayerID >= 0;
   public bool IsValid => Selection.IsValid;
 
 }

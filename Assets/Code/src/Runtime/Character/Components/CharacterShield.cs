@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -11,13 +12,13 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
   public float ShieldSize = 1f;
 
   [Tooltip("Maximum shield health for the character.")]
-  public float MaxShieldHealth = 100;
+  public uint MaxShieldHealth = 10000;
 
   [Tooltip("How much shield health is lost over time.")]
-  public float DepletionRate = 0.25f;
+  public uint DepletionRate = 25;
 
   [Tooltip("How fast shield health replenishes when not in use.")]
-  public float RegenRate = 2;
+  public uint RegenRate = 200;
 
   public uint RecoveryCooldown = 120;
 
@@ -77,8 +78,8 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     var wasActive = false;
     var shieldActive = false;
     if (shieldActive) {
-      state.ShieldHealth = Mathf.Max(0f, state.ShieldHealth - DepletionRate);
-      if (state.ShieldHealth <= 0f) {
+      state.ShieldDamage = Math.Min(MaxShieldHealth, state.ShieldDamage + DepletionRate);
+      if (state.ShieldDamage <= 0f) {
         //TODO(james7132): Do ShieldBreak check here.
       }
     } else {
@@ -88,14 +89,16 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
         state.ShieldRecoveryCooldown = (uint)Mathf.Max(0, state.ShieldRecoveryCooldown - 1);
       }
       if (state.ShieldRecoveryCooldown <= 0) {
-        state.ShieldHealth = Mathf.Max(MaxShieldHealth, state.ShieldHealth + RegenRate);
+        state.ShieldDamage = Math.Max(0, state.ShieldDamage - RegenRate);
       }
     }
     return state;
   }
 
   public void ApplyState(PlayerState state) {
-    _shieldTransform.localScale = Vector3.one * ShieldSize * (state.ShieldHealth / MaxShieldHealth);
+    var shieldHealth = MaxShieldHealth - state.ShieldDamage;
+    var shieldSizeRatio = shieldHealth / (float)MaxShieldHealth;
+    _shieldTransform.localScale = Vector3.one * ShieldSize * shieldSizeRatio;
     if (TargetBone != null) {
       _shieldTransform.localPosition = transform.InverseTransformPoint(TargetBone.position);
     }

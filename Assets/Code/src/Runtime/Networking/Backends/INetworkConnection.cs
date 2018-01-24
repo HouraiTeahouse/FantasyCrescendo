@@ -6,8 +6,12 @@ using UnityEngine.Networking;
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public interface INetworkConnection : IEntity {
+
   MessageHandlers MessageHandlers { get; }
+
   void SendBytes(byte[] buffer, int size, NetworkReliablity reachability = NetworkReliablity.Reliable);
+
+  void Disconnect();
 }
 
 public static class INetworkConnectionExtensions {
@@ -22,7 +26,6 @@ public static class INetworkConnectionExtensions {
 
   public static void SendToAll(this IEnumerable<INetworkConnection> connections, byte header,
                                MessageBase message, NetworkReliablity reliablity = NetworkReliablity.Reliable) {
-    // Debug.Log(connections.Count());
     var writer = new NetworkWriter();
     writer.Write(header);
     message.Serialize(writer);

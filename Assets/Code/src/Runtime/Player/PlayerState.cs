@@ -42,7 +42,7 @@ public struct PlayerState {
   public int StateHash;                               // 1-4 bytes
   public float NormalizedStateTime;                   // 4 bytes
 
-  public float ShieldHealth;                          // 4 bytes
+  public uint ShieldDamage;                          // 4 bytes
   public uint ShieldRecoveryCooldown;                 // 1-4 bytes
 
   public byte GrabbedLedgeID;                         // 1 byte
@@ -51,6 +51,27 @@ public struct PlayerState {
   public uint Hitstun;                                // 1-4 bytes
 
   public int Stocks;                                  // 4 bytes
+
+  // TODO(james7132): See if there's a better 
+  public override bool Equals(object obj) {
+    if (!(obj is PlayerState)) return false;
+    var other = (PlayerState)obj;
+    bool equals = Position == other.Position;
+    equals &= Velocity == other.Velocity;
+    equals &= Direction == other.Direction;
+    equals &= IsFastFalling == other.IsFastFalling;
+    equals &= RemainingJumps == other.RemainingJumps;
+    equals &= RespawnTimeRemaining == other.RespawnTimeRemaining;
+    equals &= StateHash == other.StateHash;
+    equals &= NormalizedStateTime == other.NormalizedStateTime;
+    equals &= ShieldDamage == other.ShieldDamage;
+    equals &= ShieldRecoveryCooldown == other.ShieldRecoveryCooldown;
+    equals &= GrabbedLedgeID == other.GrabbedLedgeID;
+    equals &= Damage == other.Damage;
+    equals &= Hitstun == other.Hitstun;
+    equals &= Stocks == other.Stocks;
+    return equals;
+  }
 
 }
 

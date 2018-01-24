@@ -1,17 +1,32 @@
 using System;
 using System.Collections.Generic;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public interface INetworkServer : IDisposable {
 
-  int ClientCount { get; }
+  ICollection<NetworkClientPlayer> Clients { get; }
 
   // Signature: Client ID, Timestamp, Inputs
   event Action<uint, uint, IEnumerable<MatchInput>> ReceivedInputs;
 
-  void BroadcastInput(uint startTimestamp, IEnumerable<MatchInput> input);
+  event Action<NetworkClientPlayer> PlayerAdded;
+  event Action<NetworkClientPlayer> PlayerUpdated;
+  event Action<uint> PlayerRemoved;
+
+  // Reliable
+  void StartMatch(MatchConfig config);
+
+  // Reliable
+  void FinishMatch(MatchResult result);
+
+  // Unreliable
+  void BroadcastInput(uint startTimestamp, IEnumerable<MatchInput> input); 
+
+  // Unreliable Sequenced
   void BroadcastState(uint timestamp, MatchState state);
+
+  void Update();
 
 }
 

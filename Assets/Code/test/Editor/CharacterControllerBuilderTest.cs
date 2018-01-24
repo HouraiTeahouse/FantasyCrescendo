@@ -197,7 +197,7 @@ public class CharacterControllerBuilderTest {
     TestTransition(src, dst, context ?? new CharacterContext {
       State = new PlayerState {
         NormalizedStateTime = 1.0f,
-        ShieldHealth = 100
+        ShieldDamage = 100
       }
     });
   }        

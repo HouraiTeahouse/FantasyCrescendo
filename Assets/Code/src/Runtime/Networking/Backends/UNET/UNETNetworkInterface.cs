@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -18,10 +19,13 @@ public class UNETNetworkInterface : INetworkInterface {
   readonly IList<INetworkConnection> connections;
   readonly IDictionary<int, UNETConnection> connectionMap;
   readonly IDictionary<NetworkReliablity, int> Channels;
-  internal int SocketID { get; set; }
+  internal int HostID { get; set; }
 
   public event Action<INetworkConnection> OnPeerConnected;
   public event Action<INetworkConnection> OnPeerDisconnected;
+
+  byte[] readBuffer;
+  NetworkReader messageReader;
 
   public UNETNetworkInterface() {
     MessageHandlers = new MessageHandlers();
@@ -30,9 +34,12 @@ public class UNETNetworkInterface : INetworkInterface {
     connections = new List<INetworkConnection>();
     Connections = new ReadOnlyCollection<INetworkConnection>(connections);
 
-    Debug.Log("Initalizing UNET Network Interface...");
+    readBuffer = new byte[NetworkMessage.MaxMessageSize];
+    messageReader = new NetworkReader(readBuffer);
+  }
+
+  public void Initialize(int port) {
     NetworkTransport.Init();
-    Debug.Log("Initalized Transport Layer.");
 
     var config = new ConnectionConfig();
     AddChannel(config, QosType.Reliable, NetworkReliablity.Reliable);
@@ -41,24 +48,29 @@ public class UNETNetworkInterface : INetworkInterface {
 
     var hostTopology = new HostTopology(config, (int)GameMode.GlobalMaxPlayers);
 
-    // TODO(james7132): Make port configurable
-    SocketID = NetworkTransport.AddHost(hostTopology, 8888);
-
-    Debug.Log("Network Interface Configured.");
-    Debug.Log("UNET Network Interface Initialized.");
+    HostID = NetworkTransport.AddHost(hostTopology, port);
   }
 
-  public Task Initialize() => Task.CompletedTask;
-
-  public Task<INetworkConnection> Connect(string address, int port) {
+  public async Task<INetworkConnection> Connect(string address, int port) {
     address = ResolveAddress(address);
+
     byte error;
-    var connectionId = NetworkTransport.Connect(SocketID, address, port, 0, out error);
+    var connectionId = NetworkTransport.Connect(HostID, address, port, 0, out error);
     UNETUtility.HandleError(error);
-    // TODO(james7132): Await response
-    var connection = new UNETConnection(this, connectionId);
-    connectionMap.Add(connectionId, connection);
-    return Task.FromResult<INetworkConnection>(connection);
+
+    INetworkConnection connection = null;
+    var connectTask = new TaskCompletionSource<object>();
+    Action<INetworkConnection> handler = (conn) => {
+      if (conn.Id != connectionId) return;
+      connection = conn;
+      connectTask.TrySetResult(new object());
+    };
+
+    OnPeerConnected += handler;
+    await connectTask.Task;
+    OnPeerConnected -= handler;
+
+    return connection;
   }
 
   internal int GetChannelID(NetworkReliablity reliability) {
@@ -70,35 +82,36 @@ public class UNETNetworkInterface : INetworkInterface {
   }
 
   public void Update() {
+    if (HostID < 0) return;
     const int kMaxBufferSize = 1024;
-    int hostId, connectionId, channelId, dataSize, bufferSize = kMaxBufferSize;
-    byte[] recBuffer = ArrayPool<byte>.Shared.Rent(kMaxBufferSize);
+    int connectionId, channelId, dataSize, bufferSize = kMaxBufferSize;
     byte error;
-    NetworkEventType evt = NetworkTransport.Receive(out hostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
-    UNETUtility.HandleError(error);
-    switch (evt) {
-      case NetworkEventType.Nothing: break;
-      case NetworkEventType.ConnectEvent: OnNewConnection(connectionId); break;
-      case NetworkEventType.DataEvent: OnRecieveData(connectionId, recBuffer, dataSize); break;
-      case NetworkEventType.DisconnectEvent: OnDisconnect(connectionId); break;
-      default:
-        Debug.LogError($"Unkown network message type recieved: {evt}");
-        break;
-    }
-    ArrayPool<byte>.Shared.Return(recBuffer);
+    NetworkEventType evt;
+    do {
+      evt = NetworkTransport.ReceiveFromHost(HostID, out connectionId, out channelId, readBuffer, bufferSize, out dataSize, out error);
+      UNETUtility.HandleError(error);
+      switch (evt) {
+        case NetworkEventType.Nothing: break;
+        case NetworkEventType.ConnectEvent: OnNewConnection(connectionId); break;
+        case NetworkEventType.DataEvent: OnRecieveData(connectionId); break;
+        case NetworkEventType.DisconnectEvent: OnDisconnect(connectionId); break;
+        default:
+          Debug.LogError($"Unkown network message type recieved: {evt}");
+          break;
+      }
+    } while (evt != NetworkEventType.Nothing);
   }
 
   void OnNewConnection(int connectionId) {
     var connection = AddConnection(connectionId);
     OnPeerConnected?.Invoke(connection);
-    Debug.Log("Incoming connection event received");
   }
 
-  void OnRecieveData(int connectionId, byte[] buffer, int dataSize) {
+  void OnRecieveData(int connectionId) {
     UNETConnection connection;
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
-    MessageHandlers.Execute(connection, buffer, dataSize);
-    connection.MessageHandlers.Execute(connection, buffer, dataSize);
+    messageReader.SeekZero();
+    MessageHandlers.Execute(connection, messageReader);
   }
 
   void OnDisconnect(int connectionId) {
@@ -106,10 +119,9 @@ public class UNETNetworkInterface : INetworkInterface {
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
     OnPeerDisconnected?.Invoke(connection);
     RemoveConnection(connection);
-    Debug.Log("Remote client event disconnected");
   }
 
-  public void Dispose() => NetworkTransport.Shutdown();
+  public void Dispose() => NetworkTransport.RemoveHost(HostID);
 
   void AddChannel(ConnectionConfig config, QosType qos, NetworkReliablity reliablity) {
     Channels.Add(reliablity, config.AddChannel(qos));
