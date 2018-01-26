@@ -39,7 +39,7 @@ public struct NetworkClientConfig {
 }
 
 public struct NetworkServerConfig {
-  public int Port;
+  public uint Port;
 }
 
 public interface INetworkInterface : IDisposable {
@@ -47,7 +47,7 @@ public interface INetworkInterface : IDisposable {
   MessageHandlers MessageHandlers { get; }
   IReadOnlyCollection<INetworkConnection> Connections { get; }
 
-  void Initialize(int port);
+  void Initialize(uint port);
   void Update();
 
   event Action<INetworkConnection> OnPeerConnected;
