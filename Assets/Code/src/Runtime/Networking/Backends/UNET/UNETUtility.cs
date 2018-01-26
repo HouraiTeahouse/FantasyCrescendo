@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public static class UNETUtility {
 
@@ -13,7 +13,7 @@ public static class UNETUtility {
 
   public static Exception CreateError(byte error) {
     if (error == 0) return null;
-    return new Exception($"Networking Error: {(NetworkError)error}");
+    return new NetworkingException($"Networking Error: {(NetworkError)error}");
   }
 
 }

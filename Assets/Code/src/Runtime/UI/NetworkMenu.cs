@@ -31,10 +31,10 @@ public class NetworkMenu : MonoBehaviour {
     try {
       SetActive(ConnectingScreen);
       await networkManager.StartHost(hostConfig);
-    } catch (Exception e) {
+    } catch (NetworkingException exception) {
       networkManager.StopHost();
       SetActive(ErrorScreen);
-      ErrorText.text = e.Message;
+      ErrorText.text = exception.Message;
       return;
     }
     SetActive(SuccessScreen);
@@ -48,10 +48,10 @@ public class NetworkMenu : MonoBehaviour {
     try {
       SetActive(ConnectingScreen);
       await client.Connect(IP.text, PortValue);
-    } catch (Exception e) {
+    } catch (NetworkingException exception) {
       networkManager.StopClient();
       SetActive(ErrorScreen);
-      ErrorText.text = e.Message;
+      ErrorText.text = exception.Message;
       return;
     }
     SetActive(SuccessScreen);
