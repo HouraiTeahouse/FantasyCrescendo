@@ -54,6 +54,8 @@ public struct MatchInput {
     return ArrayUtil.AreEqual(PlayerInputs, ((MatchInput)obj).PlayerInputs);
   }
 
+  public override int GetHashCode() => ArrayUtil.GetOrderedHash(PlayerInputs);
+
   public override string ToString() => $"MatchInput({PlayerInputs?.Length ?? 0})";
 
   public void Serialize(NetworkWriter writer) {

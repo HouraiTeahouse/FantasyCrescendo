@@ -11,6 +11,7 @@ public interface INetworkClient : IDisposable {
 
   event Action<uint, IEnumerable<MatchInput>> OnRecievedInputs;
   event Action<uint, MatchState> OnRecievedState;
+	event Action<bool> OnServerReady;
 
   Task Connect(string ip, uint port);
   void Disconnect();

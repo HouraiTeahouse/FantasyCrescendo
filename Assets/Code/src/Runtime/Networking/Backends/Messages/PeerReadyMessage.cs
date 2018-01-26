@@ -2,7 +2,7 @@
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class ClientReadyMessage : MessageBase {
+public class PeerReadyMessage : MessageBase {
   public bool IsReady;
 }
 

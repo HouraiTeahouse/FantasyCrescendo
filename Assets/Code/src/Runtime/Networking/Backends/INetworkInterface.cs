@@ -8,22 +8,24 @@ namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public class NetworkHost : IDisposable {
 
-  public INetworkServer Server { get; }
-  public INetworkClient Client { get; }
+  public INetworkServer Server { get; set; }
+  public INetworkClient Client { get; set; }
 
-  public NetworkHost(Type interfaceType, NetworkHostConfig config) {
-    Server = new NetworkGameServer(interfaceType, config.ServerConfig);
-    Client = new NetworkGameClient(interfaceType, config.ClientConfig);
-  }
+	public static NetworkHost Create(Type interfaceType, NetworkHostConfig config) {
+		return new NetworkHost {
+			Server = new NetworkGameServer(interfaceType, config.ServerConfig),
+			Client = new NetworkGameClient(interfaceType, config.ClientConfig),
+		};
+	}
 
   public void Update() {
-    Server.Update();
-    Client.Update();
+    Server?.Update();
+    Client?.Update();
   }
 
   public void Dispose() {
-    Server.Dispose();
-    Client.Dispose();
+    Server?.Dispose();
+    Client?.Dispose();
   }
 
 }
@@ -33,10 +35,10 @@ public struct NetworkHostConfig {
   public NetworkServerConfig ServerConfig;
 }
 
-public class NetworkClientConfig {
+public struct NetworkClientConfig {
 }
 
-public class NetworkServerConfig {
+public struct NetworkServerConfig {
   public int Port;
 }
 

@@ -24,6 +24,18 @@ public struct PlayerMatchStats {
     return equal;
   }
 
+  public override int GetHashCode() {
+    unchecked {
+      var hash = 113 * Config.GetHashCode();
+      hash += 83 * ArrayUtil.GetOrderedHash(Deaths);
+      hash += 43 * ArrayUtil.GetOrderedHash(Kills);
+      hash += 31 * SelfDestructs.GetHashCode();
+      hash += 17 * DamageDealt.GetHashCode();
+      hash += DamageTaken.GetHashCode();
+      return hash;
+    }
+  }
+
 }
 
 }

@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 114206851257800466}
   - component: {fileID: 114851974053767234}
   - component: {fileID: 114636917838261216}
+  - component: {fileID: 114397010500727212}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: GameController
@@ -227,6 +228,19 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114397010500727212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996456345168662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e5f3e5abc00ae48a70c684a6751a16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkInterface: HouraiTeahouse.FantasyCrescendo.Networking.UNET.UNETNetworkInterface
+  networkStrategy: HouraiTeahouse.FantasyCrescendo.Networking.LockstepStrategy
 --- !u!114 &114423664066748220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -369,6 +383,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2e81b0ad88c34e529dc9b5773df482f, type: 2}
   - {fileID: 11400000, guid: b7afe6661d3c847dab3f997b18e6a2c5, type: 2}
   - {fileID: 11400000, guid: 83e17abaeb9983e43a1a7437cf852a24, type: 2}
+  - {fileID: 11400000, guid: b62ed0214c8a3f7479e6b51e15a6ba24, type: 2}
 --- !u!222 &222196419908616946
 CanvasRenderer:
   m_ObjectHideFlags: 1

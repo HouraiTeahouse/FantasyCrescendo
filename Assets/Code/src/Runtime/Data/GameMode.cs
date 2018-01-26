@@ -8,10 +8,15 @@ public abstract class GameMode : GameDataBase {
 
   public const uint GlobalMaxPlayers = 4;
 
+	public string Name;
+
   [Range(1, GlobalMaxPlayers)] public uint MinPlayers = 1;
   [Range(1, GlobalMaxPlayers)] public uint MaxPlayers = GlobalMaxPlayers;
 
+	public virtual bool SupportsNetworkPlay => false;
+
   protected abstract Task RunGame(MatchConfig config, bool loadStage = true);
+
   public virtual bool IsValidConfig(MatchConfig config) {
     var players = config.PlayerConfigs?.Length; 
     return players >= MinPlayers && players <= MaxPlayers;
@@ -23,6 +28,11 @@ public abstract class GameMode : GameDataBase {
     }
     await RunGame(config, loadStage);
   }
+
+	protected virtual void Reset() {
+		Name = GetType().Name;
+	}
+
 }
 
 }

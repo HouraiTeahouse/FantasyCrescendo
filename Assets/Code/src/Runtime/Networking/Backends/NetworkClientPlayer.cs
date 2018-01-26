@@ -1,4 +1,6 @@
-﻿namespace HouraiTeahouse.FantasyCrescendo.Networking {
+﻿using System.Linq;
+
+namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public class NetworkClientPlayer {
 
@@ -19,6 +21,8 @@ public class NetworkClientPlayer {
       MatchConfig = config
     });
   }
+
+  public void Kick() => Connection?.Disconnect();
 
 }
 

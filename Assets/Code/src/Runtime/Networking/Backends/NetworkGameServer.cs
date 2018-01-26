@@ -26,10 +26,10 @@ public class NetworkGameServer : INetworkServer {
     NetworkInterface.Initialize(config.Port);
 
     NetworkInterface.OnPeerConnected += OnConnect;
-    NetworkInterface.OnPeerDisconnected += OnConnect;
+    NetworkInterface.OnPeerDisconnected += OnDisconnect;
 
     var handlers = NetworkInterface.MessageHandlers;
-    handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
+    handlers.RegisterHandler(MessageCodes.PeerReady, OnClientReady);
     handlers.RegisterHandler(MessageCodes.UpdateConfig, OnClientConfigUpdated);
     handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
   }
@@ -48,6 +48,12 @@ public class NetworkGameServer : INetworkServer {
     });
   }
 
+	public void SetReady(bool ready) {
+    NetworkInterface.Connections.SendToAll(MessageCodes.PeerReady, new PeerReadyMessage {
+			IsReady = ready
+    });
+	}
+
   public void BroadcastInput(uint startTimestamp, IEnumerable<MatchInput> input) {
     NetworkInterface.Connections.SendToAll(MessageCodes.UpdateInput, new InputSetMessage {
       StartTimestamp = startTimestamp,
@@ -62,6 +68,16 @@ public class NetworkGameServer : INetworkServer {
     }, NetworkReliablity.Unreliable);
   }
 
+  public MatchConfig BuildMatchConfigForClient(MatchConfig baseConfig, NetworkClientPlayer clientPlayer) {
+    // TODO(james7132): Generalize this to work with multiple players per client
+    baseConfig.PlayerConfigs = (from client in Clients orderby client.PlayerID select client.Config).ToArray();
+    for (var i = 0; i < baseConfig.PlayerConfigs.Length; i++) {
+      baseConfig.PlayerConfigs[i].LocalPlayerID = -1;
+    }
+    baseConfig.PlayerConfigs[clientPlayer.PlayerID].LocalPlayerID = 1;
+    return baseConfig;
+  }
+
   public void Dispose() {
     if (NetworkInterface == null) return;
     NetworkInterface.Dispose();
@@ -70,7 +86,7 @@ public class NetworkGameServer : INetworkServer {
 
     var handlers = NetworkInterface.MessageHandlers;
     if (handlers == null) return;
-    handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
+    handlers.RegisterHandler(MessageCodes.PeerReady, OnClientReady);
     handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
   }
 
@@ -91,7 +107,7 @@ public class NetworkGameServer : INetworkServer {
   void OnClientReady(NetworkDataMessage dataMsg) {
     NetworkClientPlayer client;
     if (!clients.TryGetValue(dataMsg.Connection.Id, out client)) return;
-    var message = dataMsg.ReadAs<ClientReadyMessage>();
+    var message = dataMsg.ReadAs<PeerReadyMessage>();
     client.IsReady = message.IsReady;
     PlayerUpdated?.Invoke(client);
   }
