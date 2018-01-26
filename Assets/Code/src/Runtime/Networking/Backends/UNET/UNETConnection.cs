@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking.UNET {
@@ -9,6 +10,7 @@ public class UNETConnection : INetworkConnection {
   public MessageHandlers MessageHandlers { get; }
   public readonly UNETNetworkInterface NetworkInterface;
   public readonly int ConnectionID;
+  internal readonly TaskCompletionSource<object> ConnectTask;
   readonly int HostID;
 
   internal UNETConnection(UNETNetworkInterface networkInterface, int connectionId) {
@@ -16,6 +18,7 @@ public class UNETConnection : INetworkConnection {
     HostID = NetworkInterface.HostID;
     MessageHandlers = networkInterface.MessageHandlers;
     ConnectionID = connectionId;
+    ConnectTask = new TaskCompletionSource<object>();
   }
 
   public void SendBytes(byte[] buffer, int size, NetworkReliablity reliability = NetworkReliablity.Reliable) {

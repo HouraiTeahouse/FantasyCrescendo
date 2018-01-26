@@ -26,6 +26,7 @@ public class UNETNetworkInterface : INetworkInterface {
 
   byte[] readBuffer;
   NetworkReader messageReader;
+  bool disposed = false;
 
   public UNETNetworkInterface() {
     MessageHandlers = new MessageHandlers();
@@ -38,7 +39,7 @@ public class UNETNetworkInterface : INetworkInterface {
     messageReader = new NetworkReader(readBuffer);
   }
 
-  public void Initialize(int port) {
+  public void Initialize(uint port) {
     NetworkTransport.Init();
 
     var config = new ConnectionConfig();
@@ -48,7 +49,7 @@ public class UNETNetworkInterface : INetworkInterface {
 
     var hostTopology = new HostTopology(config, (int)GameMode.GlobalMaxPlayers);
 
-    HostID = NetworkTransport.AddHost(hostTopology, port);
+    HostID = NetworkTransport.AddHost(hostTopology, (int)port);
   }
 
   public async Task<INetworkConnection> Connect(string address, int port) {
@@ -58,18 +59,8 @@ public class UNETNetworkInterface : INetworkInterface {
     var connectionId = NetworkTransport.Connect(HostID, address, port, 0, out error);
     UNETUtility.HandleError(error);
 
-    INetworkConnection connection = null;
-    var connectTask = new TaskCompletionSource<object>();
-    Action<INetworkConnection> handler = (conn) => {
-      if (conn.Id != connectionId) return;
-      connection = conn;
-      connectTask.TrySetResult(new object());
-    };
-
-    OnPeerConnected += handler;
-    await connectTask.Task;
-    OnPeerConnected -= handler;
-
+    var connection = AddConnection(connectionId);
+    await connection.ConnectTask.Task;
     return connection;
   }
 
@@ -83,27 +74,26 @@ public class UNETNetworkInterface : INetworkInterface {
 
   public void Update() {
     if (HostID < 0) return;
-    const int kMaxBufferSize = 1024;
-    int connectionId, channelId, dataSize, bufferSize = kMaxBufferSize;
+    int connectionId, channelId, dataSize, bufferSize = NetworkMessage.MaxMessageSize;
     byte error;
     NetworkEventType evt;
     do {
       evt = NetworkTransport.ReceiveFromHost(HostID, out connectionId, out channelId, readBuffer, bufferSize, out dataSize, out error);
-      UNETUtility.HandleError(error);
       switch (evt) {
         case NetworkEventType.Nothing: break;
         case NetworkEventType.ConnectEvent: OnNewConnection(connectionId); break;
         case NetworkEventType.DataEvent: OnRecieveData(connectionId); break;
-        case NetworkEventType.DisconnectEvent: OnDisconnect(connectionId); break;
+        case NetworkEventType.DisconnectEvent: OnDisconnect(connectionId, error); break;
         default:
           Debug.LogError($"Unkown network message type recieved: {evt}");
           break;
       }
-    } while (evt != NetworkEventType.Nothing);
+    } while (evt != NetworkEventType.Nothing && !disposed);
   }
 
   void OnNewConnection(int connectionId) {
     var connection = AddConnection(connectionId);
+    connection.ConnectTask.TrySetResult(new object());
     OnPeerConnected?.Invoke(connection);
   }
 
@@ -114,14 +104,23 @@ public class UNETNetworkInterface : INetworkInterface {
     MessageHandlers.Execute(connection, messageReader);
   }
 
-  void OnDisconnect(int connectionId) {
+  void OnDisconnect(int connectionId, byte error) {
     UNETConnection connection;
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
+    var exception = UNETUtility.CreateError(error);
+    if (exception == null) {
+      connection.ConnectTask.TrySetResult(new object());
+    } else {
+      connection.ConnectTask.TrySetException(exception);
+    }
     OnPeerDisconnected?.Invoke(connection);
     RemoveConnection(connection);
   }
 
-  public void Dispose() => NetworkTransport.RemoveHost(HostID);
+  public void Dispose() {
+    NetworkTransport.RemoveHost(HostID);
+    disposed = true;
+  }
 
   void AddChannel(ConnectionConfig config, QosType qos, NetworkReliablity reliablity) {
     Channels.Add(reliablity, config.AddChannel(qos));
