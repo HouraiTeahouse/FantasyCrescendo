@@ -73,6 +73,25 @@ public struct PlayerState {
     return equals;
   }
 
+  public override int GetHashCode() {
+    unchecked {
+      int hash = 1367 * Position.GetHashCode();
+      hash &= 919 * Velocity.GetHashCode();
+      hash &= 373 * Direction.GetHashCode();
+      hash &= 199 * IsFastFalling.GetHashCode();
+      hash &= 131 * RemainingJumps.GetHashCode();
+      hash &= 101 * RespawnTimeRemaining.GetHashCode();
+      hash &= 83 *StateHash;
+      hash &= 71 * NormalizedStateTime.GetHashCode();
+      hash &= 59 * ShieldDamage.GetHashCode();
+      hash &= 47 * ShieldRecoveryCooldown.GetHashCode();
+      hash &= 43 * GrabbedLedgeID;
+      hash &= 31 * Damage.GetHashCode();
+      hash &= 17 * Hitstun.GetHashCode();
+      hash &= Stocks;
+      return hash;
+    }
+  }
 }
 
 }

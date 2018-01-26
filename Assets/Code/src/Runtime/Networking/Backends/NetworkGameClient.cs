@@ -16,6 +16,7 @@ public class NetworkGameClient : INetworkClient {
 
   public event Action<uint, IEnumerable<MatchInput>> OnRecievedInputs;
   public event Action<uint, MatchState> OnRecievedState;
+  public event Action<bool> OnServerReady;
 
   readonly INetworkInterface NetworkInterface;
   INetworkConnection ServerConnection;
@@ -42,6 +43,7 @@ public class NetworkGameClient : INetworkClient {
     handlers.RegisterHandler<MatchStartMessage>(MessageCodes.MatchStart, OnStartMatch);
     handlers.RegisterHandler<MatchFinishMessage>(MessageCodes.MatchFinish, OnFinishMatch);
     handlers.RegisterHandler<ServerUpdateConfigMessage>(MessageCodes.UpdateConfig, OnUpdateConfig);
+    handlers.RegisterHandler<PeerReadyMessage>(MessageCodes.PeerReady, OnSetServerReady);
 
     connectionTask.TrySetResult(new object());
   }
@@ -49,7 +51,7 @@ public class NetworkGameClient : INetworkClient {
   public void Disconnect() => ServerConnection?.Disconnect();
 
   public void SetReady(bool isReady) {
-    ServerConnection?.Send(MessageCodes.ClientReady, new ClientReadyMessage {
+    ServerConnection?.Send(MessageCodes.PeerReady, new PeerReadyMessage {
       IsReady = isReady
     });
   }
@@ -82,6 +84,7 @@ public class NetworkGameClient : INetworkClient {
 
   void OnStartMatch(MatchStartMessage message) => OnMatchStarted?.Invoke(message.MatchConfig);
   void OnFinishMatch(MatchFinishMessage message) => OnMatchFinished?.Invoke(message.MatchResult);
+  void OnSetServerReady(PeerReadyMessage message) => OnServerReady?.Invoke(message.IsReady);
   void OnUpdateConfig(ServerUpdateConfigMessage message) => OnMatchConfigUpdated?.Invoke(message.MatchConfig);
   void OnGetState(ServerStateMessage message) => OnRecievedState?.Invoke(message.Timestamp, message.State);
   void OnGetInput(InputSetMessage message) => OnRecievedInputs?.Invoke(message.StartTimestamp, message.Inputs);

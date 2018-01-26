@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-[CreateAssetMenu(menuName = "Game Mode/Default Game Mode")]
+[CreateAssetMenu(menuName="Game Mode/Default Game Mode")]
 public class DefaultGameMode : GameMode {
 
+	protected virtual Match CreateMatch(MatchConfig config) => new DefaultMatch();
+
   protected override async Task RunGame(MatchConfig config, bool loadStage = true) {
-    var results = await new DefaultMatch().RunMatch(config, loadStage);
+    var results = await CreateMatch(config).RunMatch(config, loadStage);
     await Config.Get<SceneConfig>().MatchEndScene.LoadAsync();
     var viewFactories = Object.FindObjectsOfType<ViewFactory<PlayerMatchStats, PlayerConfig>>();
     await Task.WhenAll(results.PlayerStats.Select(p => BuildResultViews(p, viewFactories)));

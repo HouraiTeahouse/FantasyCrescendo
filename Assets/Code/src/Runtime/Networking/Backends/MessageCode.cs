@@ -8,7 +8,7 @@ public static class MessageCodes {
   public const MessageHeader Disconnect = 1;
   public const MessageHeader Error = 2;
 
-  public const MessageHeader ClientReady = 3;
+  public const MessageHeader PeerReady = 3;
   public const MessageHeader UpdateConfig = 4;
   public const MessageHeader MatchStart = 5;
   public const MessageHeader MatchFinish = 6;

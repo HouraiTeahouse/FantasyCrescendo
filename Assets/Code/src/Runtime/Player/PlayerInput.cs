@@ -66,6 +66,8 @@ public struct PlayerInput : IValidatable {
     return equals && Buttons == other.Buttons;
   }
 
+  public override int GetHashCode() => 31 * Movement.GetHashCode() + 17 * Smash.GetHashCode() + Buttons.GetHashCode();
+
   public void Serialize(NetworkWriter writer) {
     var cutMovement = Movement.X == 0 && Movement.Y == 0;
     var cutSmash = Smash.X == 0 && Smash.Y == 0;
@@ -196,6 +198,15 @@ public struct Vector2b {
 
   float ToFloat(sbyte val) => (float)val / sbyte.MaxValue;
   sbyte FromFloat(float val) => (sbyte)(Mathf.Clamp(val, -1, 1) * sbyte.MaxValue);
+
+  public override bool Equals(object obj) {
+    if (!(obj is Vector2b)) return false;
+    var other = (Vector2b)obj;
+    return X == other.X && Y == other.Y;
+  }
+
+  public override int GetHashCode() => unchecked(31 * X + Y);
+
 }
 
 /// <summary>

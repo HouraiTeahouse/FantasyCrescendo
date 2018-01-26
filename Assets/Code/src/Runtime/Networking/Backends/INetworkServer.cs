@@ -20,6 +20,9 @@ public interface INetworkServer : IDisposable {
   // Reliable
   void FinishMatch(MatchResult result);
 
+	// Reliable
+	void SetReady(bool ready);
+
   // Unreliable
   void BroadcastInput(uint startTimestamp, IEnumerable<MatchInput> input); 
 

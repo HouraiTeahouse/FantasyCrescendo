@@ -9,7 +9,7 @@ public class MatchManager : MonoBehaviour {
 
   public MatchConfig Config;
 
-  public IGameController<MatchState> MatchController;
+  public IMatchController MatchController;
   public IStateView<MatchState> View;
 
   // TODO(james7132): Implement properly.

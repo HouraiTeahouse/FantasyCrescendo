@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HouraiTeahouse.FantasyCrescendo.Networking;
+using System;
 using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
@@ -27,39 +28,7 @@ public abstract class Match {
     return await gameManager.RunMatch();
   }
 
-  protected abstract Task InitializeMatch(MatchManager manager, MatchConfig config);
-
-}
-
-public class DefaultMatch : Match {
-
-  protected override async Task InitializeMatch(MatchManager gameManager, MatchConfig config) {
-    var gameView = new GameView();
-    var gameSim = CreateSimulation(config);
-    var controller = new GameController(config);
-
-    controller.CurrentState = CreateInitialState(config);
-    controller.InputSource = new InControlInputSource(config);
-    controller.Simulation = gameSim;
-
-    gameManager.MatchController = controller;
-    gameManager.View = gameView;
-    gameManager.enabled = false;
-
-    var simTask = gameSim.Initialize(config).ContinueWith(task => {
-      Debug.Log("Simulation initialized.");
-    });
-    var viewTask = gameView.Initialize(config).ContinueWith(task => {
-      Debug.Log("View initialized.");
-    });
-
-    await Task.WhenAll(viewTask, simTask);
-    controller.CurrentState = gameSim.ResetState(controller.CurrentState);
-    gameManager.enabled = true;
-    Debug.Log("Match initialized.");
-  }
-
-  IMatchSimulation CreateSimulation(MatchConfig config) {
+  protected IMatchSimulation CreateSimulation(MatchConfig config) {
     return new MatchSimulation(new IMatchSimulation[] { 
       new MatchPlayerSimulation(),
       new MatchHitboxSimulation(),
@@ -67,10 +36,16 @@ public class DefaultMatch : Match {
     });
   }
 
-  MatchState CreateInitialState(MatchConfig config) {
+	// TODO(james71323): Refactor or move this to somewhere more sane
+	protected virtual IMatchController CreateMatchController(MatchConfig config) {
+		return new GameController(config);
+	}
+
+  protected abstract Task InitializeMatch(MatchManager manager, MatchConfig config);
+
+  protected MatchState CreateInitialState(MatchConfig config) {
     var tag = Config.Get<SceneConfig>().SpawnTag;
     var startPositions = GameObject.FindGameObjectsWithTag(tag);
-    Debug.LogError(startPositions.Length);
     if (startPositions.Length > 0) {
       return CreateInitialStateByTransform(config, startPositions);
     } 

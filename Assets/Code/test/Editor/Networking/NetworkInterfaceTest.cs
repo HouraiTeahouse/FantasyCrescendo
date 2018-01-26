@@ -44,7 +44,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
   }
 
   IEnumerator RunTest(Action prepare, Func<bool> check, Action validate) {
-    Host = new NetworkHost(typeof(T), CreateHostConfig());
+    Host = NetworkHost.Create(typeof(T), CreateHostConfig());
     var connectTask = Host.Client.Connect("localhost", 8888);
 
     int count = 0;

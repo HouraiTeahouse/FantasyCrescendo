@@ -52,6 +52,8 @@ public struct MatchConfig : IValidatable {
     return equal;
   }
 
+  public override int GetHashCode() => unchecked(StageID.GetHashCode() * 31 + Time.GetHashCode() * 17 + ArrayUtil.GetOrderedHash(PlayerConfigs));
+
 }
 
 }
