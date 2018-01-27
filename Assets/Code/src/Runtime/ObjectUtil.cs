@@ -18,6 +18,10 @@ public static class ObjectUtil {
     }
   }
 
+  public static T ForceNull<T>(this T obj) where T : Object {
+    return obj == null ? null : obj;
+  }
+
 }
 
 }

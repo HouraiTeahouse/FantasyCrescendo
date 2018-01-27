@@ -68,16 +68,6 @@ public class NetworkGameServer : INetworkServer {
     }, NetworkReliablity.Unreliable);
   }
 
-  public MatchConfig BuildMatchConfigForClient(MatchConfig baseConfig, NetworkClientPlayer clientPlayer) {
-    // TODO(james7132): Generalize this to work with multiple players per client
-    baseConfig.PlayerConfigs = (from client in Clients orderby client.PlayerID select client.Config).ToArray();
-    for (var i = 0; i < baseConfig.PlayerConfigs.Length; i++) {
-      baseConfig.PlayerConfigs[i].LocalPlayerID = -1;
-    }
-    baseConfig.PlayerConfigs[clientPlayer.PlayerID].LocalPlayerID = 1;
-    return baseConfig;
-  }
-
   public void Dispose() {
     if (NetworkInterface == null) return;
     NetworkInterface.Dispose();

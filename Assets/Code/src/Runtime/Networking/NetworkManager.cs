@@ -78,6 +78,7 @@ public class NetworkManager : MonoBehaviour {
 		if (!IsClient) return;
 		Client.Dispose();
 		Client = null;
+    Debug.Log("Client Stopped");
 	}
 
 	// Server Methods
@@ -90,6 +91,7 @@ public class NetworkManager : MonoBehaviour {
 		if (!IsServer) return;
 		Server.Dispose();
 		Server = null;
+    Debug.Log("Server Stopped.");
 	}
 
 	// Host Methods
