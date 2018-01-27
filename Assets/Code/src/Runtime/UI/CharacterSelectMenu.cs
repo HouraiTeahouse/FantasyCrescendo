@@ -54,6 +54,7 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
   }
 
   public void ApplyState(MatchConfig config) {
+    Config = config;
     var playerConfigs = config.PlayerConfigs;
     if (playerConfigs == null || Players == null) return;
     for (var i = 0; i < Players.Length; i++) {

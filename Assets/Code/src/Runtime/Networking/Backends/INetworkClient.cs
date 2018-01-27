@@ -9,6 +9,8 @@ public interface INetworkClient : IDisposable {
   event Action<MatchConfig> OnMatchStarted;
   event Action<MatchResult> OnMatchFinished;
 
+  event Action<MatchConfig> OnMatchConfigUpdated;
+
   event Action<uint, IEnumerable<MatchInput>> OnRecievedInputs;
   event Action<uint, MatchState> OnRecievedState;
 	event Action<bool> OnServerReady;

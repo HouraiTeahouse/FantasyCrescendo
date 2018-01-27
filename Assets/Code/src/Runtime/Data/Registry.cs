@@ -65,45 +65,31 @@ public class Registry<T> : ICollection<T> where T : IEntity {
     Entries = new Dictionary<uint, T>();
   }
 
-  public int Count {
-    get { return Entries.Count; }
-  }
+  public int Count => Entries.Count; 
 
-  public bool IsReadOnly {
-    get { return false; }
-  }
+  public bool IsReadOnly => false; 
 
   public T Get(uint id) {
-    return Entries[id];
+    T obj;
+    if (Entries.TryGetValue(id, out obj)) {
+      return obj;
+    }
+    return default(T);
   }
 
-  public void Add(T obj) {
-    Entries[obj.Id] = obj;
-  }
+  public void Add(T obj) => Entries[obj.Id] = obj;
 
-  public bool Remove(T obj) {
-    return Entries.Remove(obj.Id);
-  }
+  public bool Remove(T obj) => Entries.Remove(obj.Id);
 
-  public bool Contains(T obj) {
-    return Entries.ContainsKey(obj.Id);
-  }
+  public bool Contains(T obj) => Entries.ContainsKey(obj.Id);
 
-  public void Clear() {
-    Entries.Clear();
-  }
+  public void Clear() => Entries.Clear();
 
-  public void CopyTo(T[] array, int start) {
-    Entries.Values.CopyTo(array, start);
-  }
+  public void CopyTo(T[] array, int start) => Entries.Values.CopyTo(array, start);
 
-  public IEnumerator<T> GetEnumerator() {
-    return Entries.Values.GetEnumerator();
-  }
+  public IEnumerator<T> GetEnumerator() => Entries.Values.GetEnumerator();
 
-  IEnumerator IEnumerable.GetEnumerator() {
-    return GetEnumerator();
-  }
+  IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); 
 
 }
 
