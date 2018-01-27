@@ -3,6 +3,9 @@
     <a href="https://github.com/HouraiTeahouse/FantasyCrescendo/blob/develop/LICENSE">
         <img src="https://img.shields.io/github/license/HouraiTeahouse/FantasyCrescendo.svg" alt="License">
     </a>
+    <a href="https://houraiteahouse.github.io/FantasyCrescendo-Docs/">
+        <img src="https://img.shields.io/badge/docs-passing-brightgreen.svg" alt="Docs">
+    </a>
     <a href="https://discordapp.com/invite/VuZhs9V">
         <img src="https://discordapp.com/api/guilds/151219753434742784/widget.png" alt="Join the Hourai Teahouse Discord Chat">
     </a>
@@ -26,12 +29,11 @@ check out and initialize in a normally cloned repo, use the following command:
 submodules that may have been updated by remote changes.
 
 ## Contributing
-This is an open project, intended to be a community driven project. 
-Contributions are very welcome. Code based contributions can be received and 
-reviewed publicly on this repository. Non-code assets like BGM or 3D models 
-are best sent through and collaborated on in our development Discord server,
-linked above. For more information, please read 
-[CONTRIBUTING.md](./.github/CONTRIBUTING.md).
+This is an open community driven  project. Contributions are very welcome. 
+Code based contributions can be received and reviewed publicly on this repository. 
+Non-code assets like BGM or 3D models are best sent through and collaborated 
+on in our development Discord server, linked above. For more information, 
+please read [CONTRIBUTING.md](./.github/CONTRIBUTING.md).
 
 ## License
 First and foremost, *Fantasy Crescendo ~ Rumble Dream Ensemble* is a derivative
