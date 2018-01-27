@@ -23,12 +23,11 @@ addons:
 
 before_script:
   - mkdir code_docs
-  - cd code_docs
-  - echo "" > .nojekyll
+  - echo "" > code_docs/.nojekyll
 
 # Generate and deploy documentation
 script:
-  - doxygen $DOXYFILE 2>&1 | tee doxygen.log
+  - doxygen $DOXYFILE 2>&1 | tee code_docs/doxygen.log
 
 deploy:
   provider: pages
@@ -36,4 +35,3 @@ deploy:
   repo: HouraiTeahouse/FantasyCrescendo-Docs
   target-branch: master
   github_token: $GITHUB_TOKEN
-  keep_history: true
