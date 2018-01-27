@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Name: yuuka_kazami
   m_EditorClassIdentifier: 
   _id: 2871670446
-  ShortName: Yuuka
-  LongName: Yuuka Kazami
   IsSelectable: 0
   IsVisible: 1
+  IsDebug: 0
+  ShortName: Yuuka
+  LongName: Yuuka Kazami
   _prefab: 
+  _homeStage: 
+  _victoryTheme: 
   _icon: icons:yuuka_icon
   _portraits:
   - characters/yuuka/portraits:yuuka_portrait_1
   - characters/yuuka/portraits:yuuka_portrait_2
   - characters/yuuka/portraits:yuuka_portrait_3
   - characters/yuuka/portraits:yuuka_portrait_4
+  PortraitCropCenter: {x: 0.5, y: 0.8}
+  PortraitCropSize: 0.22

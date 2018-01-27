@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -41,6 +42,9 @@ public class MatchManager : MonoBehaviour {
   void Update() => View?.ApplyState(MatchController.CurrentState);
 
   public async Task<MatchResult> RunMatch() {
+    if (MatchController == null) {
+      throw new InvalidOperationException("Cannot run match without a match controller");
+    }
     Debug.Log("Running match...");
     MatchTask = new TaskCompletionSource<MatchResult>();
     Mediator.Global.Publish(new MatchStartEvent {

@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Name: wriggle_nightbug
   m_EditorClassIdentifier: 
   _id: 3548088660
-  ShortName: Wriggle
-  LongName: Wriggle Nightbug
   IsSelectable: 0
   IsVisible: 1
+  IsDebug: 0
+  ShortName: Wriggle
+  LongName: Wriggle Nightbug
   _prefab: 
+  _homeStage: 
+  _victoryTheme: 
   _icon: icons:wriggle_icon
   _portraits:
   - characters/wriggle/portraits:wriggle_portrait_1
   - characters/wriggle/portraits:wriggle_portrait_2
   - characters/wriggle/portraits:wriggle_portrait_3
   - characters/wriggle/portraits:wriggle_portrait_4
+  PortraitCropCenter: {x: 0.5, y: 0.8}
+  PortraitCropSize: 0.22

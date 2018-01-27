@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Name: minamitsu_murasa
   m_EditorClassIdentifier: 
   _id: 3444848429
-  ShortName: Murasa
-  LongName: Minamitsu Murasa
   IsSelectable: 0
   IsVisible: 1
+  IsDebug: 0
+  ShortName: Murasa
+  LongName: Minamitsu Murasa
   _prefab: 
+  _homeStage: 
+  _victoryTheme: 
   _icon: icons:murasa_icon
   _portraits:
   - characters/murasa/portraits:murasa_portrait_1
   - characters/murasa/portraits:murasa_portrait_2
   - characters/murasa/portraits:murasa_portrait_3
   - characters/murasa/portraits:murasa_portrait_4
+  PortraitCropCenter: {x: 0.5, y: 0.8}
+  PortraitCropSize: 0.22

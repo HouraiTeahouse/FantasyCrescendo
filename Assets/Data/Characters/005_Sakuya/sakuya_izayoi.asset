@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Name: sakuya_izayoi
   m_EditorClassIdentifier: 
   _id: 2838213749
-  ShortName: Sakuya
-  LongName: Sakuya Izayoi
   IsSelectable: 0
   IsVisible: 1
+  IsDebug: 0
+  ShortName: Sakuya
+  LongName: Sakuya Izayoi
   _prefab: 
+  _homeStage: 
+  _victoryTheme: 
   _icon: icons:sakuya_icon
   _portraits:
   - characters/sakuya/portraits:sakuya_portrait_1
   - characters/sakuya/portraits:sakuya_portrait_2
   - characters/sakuya/portraits:sakuya_portrait_3
   - characters/sakuya/portraits:sakuya_portrait_4
+  PortraitCropCenter: {x: 0.5, y: 0.8}
+  PortraitCropSize: 0.22
