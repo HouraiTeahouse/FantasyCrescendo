@@ -21,11 +21,11 @@ public abstract class Match {
     }
     var additionalScenes = Config.Get<SceneConfig>().AdditionalStageScenes;
     await Task.WhenAll(additionalScenes.Select(s => s.LoadAsync(LoadSceneMode.Additive)));
-    var gameManager = Object.FindObjectOfType<MatchManager>();
-    gameManager.Config = config;
-    await LoadingScreen.Await(InitializeMatch(gameManager, config));
+    var matchManager = Object.FindObjectOfType<MatchManager>();
+    matchManager.Config = config;
+    await LoadingScreen.Await(InitializeMatch(matchManager, config));
     await LoadingScreen.AwaitAll();
-    return await gameManager.RunMatch();
+    return await matchManager.RunMatch();
   }
 
   protected IMatchSimulation CreateSimulation(MatchConfig config) {

@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Name: yuugi_hoshiguma
   m_EditorClassIdentifier: 
   _id: 3284981304
-  ShortName: Yuugi
-  LongName: Yuugi Hoshiguma
   IsSelectable: 0
   IsVisible: 1
+  IsDebug: 0
+  ShortName: Yuugi
+  LongName: Yuugi Hoshiguma
   _prefab: 
+  _homeStage: 
+  _victoryTheme: 
   _icon: icons:yuugi_icon
   _portraits:
   - characters/yuugi/portraits:yuugi_portrait_1
   - characters/yuugi/portraits:yuugi_portrait_2
   - characters/yuugi/portraits:yuugi_portrait_3
   - characters/yuugi/portraits:yuugi_portrait_4
+  PortraitCropCenter: {x: 0.5, y: 0.8}
+  PortraitCropSize: 0.22

@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Name: reimu_hakurei
   m_EditorClassIdentifier: 
   _id: 2538997084
-  ShortName: Reimu
-  LongName: Reimu Hakurei
   IsSelectable: 0
   IsVisible: 1
+  IsDebug: 0
+  ShortName: Reimu
+  LongName: Reimu Hakurei
   _prefab: 
+  _homeStage: 
+  _victoryTheme: 
   _icon: icons:reimu_icon
   _portraits:
   - characters/reimu/portraits:reimu_portrait_1
   - characters/reimu/portraits:reimu_portrait_2
   - characters/reimu/portraits:reimu_portrait_3
   - characters/reimu/portraits:reimu_portrait_4
+  PortraitCropCenter: {x: 0.5, y: 0.8}
+  PortraitCropSize: 0.22

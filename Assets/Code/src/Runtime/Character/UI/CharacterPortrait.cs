@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig> {
+public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, IStateView<PlayerConfig> {
 
   public RawImage Image;
   public Vector2 RectBias;
@@ -24,6 +24,7 @@ public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig> {
     RectTransform = transform as RectTransform;
     if (Image != null) {
       DefaultColor = Image.color;
+      Image.enabled = false;
     }
   }
 
@@ -38,8 +39,11 @@ public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig> {
     CropRect.position += Vector2.Scale(RectBias, GetTextureSize(texture));
     Image.texture = portrait.texture;
     Image.color = (character.IsSelectable && character.IsVisible) ? DefaultColor : DisabledTint;
+    Image.enabled = true;
     SetRect();
   }
+
+  public async void ApplyState(PlayerConfig config) => await Initialize(config);
 
   protected override void OnRectTransformDimensionsChange() => SetRect();
 
