@@ -1,0 +1,39 @@
+# This will run on Travis' 'new' container-based infrastructure
+sudo: false
+
+# Blacklist
+branches:
+  except:
+    - gh-pages
+
+# Environment variables
+env:
+  global:
+    - DOXYFILE: $TRAVIS_BUILD_DIR/DOXYFILE
+
+# Install dependencies
+addons:
+  apt:
+    packages:
+      - doxygen
+      - doxygen-doc
+      - doxygen-latex
+      - doxygen-gui
+      - graphviz
+
+before_script:
+  - mkdir code_docs
+  - cd code_docs
+  - echo "" > .nojekyll
+
+# Generate and deploy documentation
+script:
+  - doxygen $DOXYFILE 2>&1 | tee doxygen.log
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  repo: HouraiTeahouse/FantasyCrescendo-Docs
+  target-branch: master
+  github_token: $GITHUB_TOKEN
+  keep_history: true
