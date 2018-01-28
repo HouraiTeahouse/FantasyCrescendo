@@ -4,16 +4,19 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class PlayerName : MonoBehaviour, IInitializable<PlayerConfig> {
+public class PlayerName : MonoBehaviour, IInitializable<PlayerConfig>, IStateView<PlayerConfig> {
 
   public Text Text;
   public string Format;
 
   public Task Initialize(PlayerConfig config) {
-    if (Text != null) {
-      Text.text = string.Format(Format, config.PlayerID + 1);
-    }
+    ApplyState(config);
     return Task.CompletedTask;
+  }
+
+  public void ApplyState(PlayerConfig config) {
+    if (Text == null) return;
+    Text.text = string.Format(Format, config.PlayerID + 1);
   }
 
 }

@@ -30,20 +30,14 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
   }
 
   public void Presimulate(PlayerState state) {
-    if (PlayerSimulationComponents == null) {
-      return;
-    }
+    if (PlayerSimulationComponents == null) return;
     foreach (var component in PlayerSimulationComponents) {
       component.Presimulate(state);
     }
   }
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
-    if (SimulationComponents == null) {
-      return state;
-    }
-    //Assert.IsTrue(input.IsValid);
-    return SimulationComponents.Simulate(state, input);
+    return SimulationComponents?.Simulate(state, input) ?? state;
   }
 
   public PlayerState ResetState(PlayerState state) {
