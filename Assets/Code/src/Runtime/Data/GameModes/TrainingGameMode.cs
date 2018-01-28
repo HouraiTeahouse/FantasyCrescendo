@@ -7,7 +7,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public class TrainingGameMode : GameMode {
 
   protected override async Task RunGame(MatchConfig config, bool loadStage = true) {
-    await new DefaultMatch().RunMatch(config, loadStage);
+    await new TrainingMatch().RunMatch(config, loadStage);
     await Config.Get<SceneConfig>().MainMenuScene.LoadAsync();
   }
 

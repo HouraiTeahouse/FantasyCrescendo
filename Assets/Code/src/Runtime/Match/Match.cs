@@ -1,5 +1,6 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +10,7 @@ using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+// TODO(james7132): Refactor out parts of this class
 public abstract class Match {
 
   public async Task<MatchResult> RunMatch(MatchConfig config, bool loadScene = true) {
@@ -28,11 +30,15 @@ public abstract class Match {
     return await matchManager.RunMatch();
   }
 
+  protected virtual IEnumerable<IMatchRule> CreateRules(MatchConfig config) {
+    return MatchRuleFactory.CreateRules(config);
+  }
+
   protected IMatchSimulation CreateSimulation(MatchConfig config) {
     return new MatchSimulation(new IMatchSimulation[] { 
       new MatchPlayerSimulation(),
       new MatchHitboxSimulation(),
-      new MatchRuleSimulation(MatchRuleFactory.CreateRules(config))
+      new MatchRuleSimulation(CreateRules(config))
     });
   }
 
