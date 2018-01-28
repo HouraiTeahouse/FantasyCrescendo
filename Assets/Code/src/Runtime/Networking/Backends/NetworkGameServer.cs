@@ -85,6 +85,7 @@ public class NetworkGameServer : INetworkServer {
   void OnConnect(INetworkConnection connection) {
     var connId = connection.Id;
     var client = new NetworkClientPlayer(connection, LowestAvailablePlayerID(connId));
+    client.Config.PlayerID = client.PlayerID;
     clients[connId] = client;
     PlayerAdded?.Invoke(client);
   }
@@ -107,6 +108,7 @@ public class NetworkGameServer : INetworkServer {
     if (!clients.TryGetValue(dataMsg.Connection.Id, out client)) return;
     var message = dataMsg.ReadAs<ClientUpdateConfigMessage>();
     client.Config = message.PlayerConfig;
+    client.Config.PlayerID = client.PlayerID;
     PlayerUpdated?.Invoke(client);
   }
 
@@ -118,9 +120,9 @@ public class NetworkGameServer : INetworkServer {
                    inputSet.Inputs);
   }
 
-  uint LowestAvailablePlayerID(uint connectionId) {
+  byte LowestAvailablePlayerID(uint connectionId) {
     bool updated = false;
-    uint id = 0;
+    byte id = 0;
     do {
       updated = false;
       foreach (var kvp in clients) {

@@ -40,6 +40,8 @@ public struct PlayerSelection : IValidatable {
   // TODO(james7132): Properly implement
   public bool IsValid => true;
 
+  public override string ToString() => $"Selection({CharacterID},{Pallete})";
+
 }
 
 }

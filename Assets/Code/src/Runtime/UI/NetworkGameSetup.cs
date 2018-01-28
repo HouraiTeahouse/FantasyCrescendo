@@ -42,6 +42,9 @@ public sealed class NetworkGameSetup : MonoBehaviour {
     server.PlayerAdded += OnServerAddPlayer;
     server.PlayerUpdated += OnServerUpdatePlayer;
     server.PlayerRemoved += OnServerRemovePlayer;
+    foreach (var client in server.Clients)  {
+      InitalizePlayer(client);
+    }
     OnServerUpdatedConfig();
   }
 
@@ -51,11 +54,20 @@ public sealed class NetworkGameSetup : MonoBehaviour {
     server.PlayerRemoved -= OnServerRemovePlayer;
   }
 
-  void OnServerAddPlayer(NetworkClientPlayer player) => OnServerUpdatedConfig();
+  void OnServerAddPlayer(NetworkClientPlayer player) {
+    InitalizePlayer(player);
+    OnServerUpdatedConfig(); 
+  }
   void OnServerUpdatePlayer(NetworkClientPlayer player) => OnServerUpdatedConfig();
   void OnServerRemovePlayer(uint playerId) => OnServerUpdatedConfig();
 
+  void InitalizePlayer(NetworkClientPlayer player) {
+    player.Config.Selection = CharacterSelectMenu.CreateNewSelection(player.PlayerID);
+    Debug.LogError(player.Config.Selection.CharacterID);
+  }
+
   void OnServerUpdatedConfig() {
+    Debug.Log("SERVER UPDATE");
     var baseConfig = GameSetupMenu.Config;
     var server = NetworkManager.Instance.Server;
     baseConfig.PlayerConfigs = (from client in server.Clients orderby client.PlayerID select client.Config).ToArray();
@@ -69,7 +81,7 @@ public sealed class NetworkGameSetup : MonoBehaviour {
     for (var i = 0; i < baseConfig.PlayerConfigs.Length; i++) {
       baseConfig.PlayerConfigs[i].LocalPlayerID = -1;
     }
-    baseConfig.PlayerConfigs[playerId].LocalPlayerID = 1;
+    baseConfig.PlayerConfigs[playerId].LocalPlayerID = 0;
     return baseConfig;
   }
 
@@ -77,13 +89,29 @@ public sealed class NetworkGameSetup : MonoBehaviour {
 
   void EnableClient(INetworkClient client) {
     client.OnMatchConfigUpdated += OnClientUpdatedConfig;
+    foreach (var player in CharacterSelectMenu.Players) {
+      player.PlayerUpdated += OnClientLocalPlayerUpdated;
+    }
   }
 
   void DisableClient(INetworkClient client) {
     client.OnMatchConfigUpdated -= OnClientUpdatedConfig;
+    foreach (var player in CharacterSelectMenu.Players) {
+      player.PlayerUpdated -= OnClientLocalPlayerUpdated;
+    }
   }
 
-  void OnClientUpdatedConfig(MatchConfig config) => CharacterSelectMenu.ApplyState(config);
+  void OnClientLocalPlayerUpdated(byte playerId, PlayerConfig config) {
+    Debug.LogWarning("LOCAL PLAYER CHANGED");
+    var client = NetworkManager.Instance.ForceNull()?.Client;
+    if (client == null) return;
+    client.SetConfig(config);
+  }
+
+  void OnClientUpdatedConfig(MatchConfig config)  {
+    Debug.Log($"CLIENT UPDATE {config.PlayerConfigs.Length}");
+    CharacterSelectMenu.ApplyState(config); 
+  }
 
 }
 
