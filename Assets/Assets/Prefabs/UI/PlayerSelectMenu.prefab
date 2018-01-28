@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114061874370338452}
   - component: {fileID: 114551186381897950}
   m_Layer: 5
-  m_Name: NextChar
+  m_Name: Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 114777769853437518}
   - component: {fileID: 114837992542558962}
   m_Layer: 5
-  m_Name: Color
+  m_Name: NextChar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -639,6 +639,7 @@ MonoBehaviour:
   - {fileID: 114837992542558962}
   - {fileID: 114017610420194580}
   - {fileID: 114467073765802794}
+  LocalOnlyButtons: []
   ActiveComponents:
   - {fileID: 1423333097751750}
   - {fileID: 1123298696095764}
