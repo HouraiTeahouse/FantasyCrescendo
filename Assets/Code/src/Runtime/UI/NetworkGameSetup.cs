@@ -42,6 +42,7 @@ public sealed class NetworkGameSetup : MonoBehaviour {
     server.PlayerAdded += OnServerAddPlayer;
     server.PlayerUpdated += OnServerUpdatePlayer;
     server.PlayerRemoved += OnServerRemovePlayer;
+    OnServerUpdatedConfig();
   }
 
   void DisableServer(INetworkServer server) {
@@ -55,7 +56,7 @@ public sealed class NetworkGameSetup : MonoBehaviour {
   void OnServerRemovePlayer(uint playerId) => OnServerUpdatedConfig();
 
   void OnServerUpdatedConfig() {
-    var baseConfig = CharacterSelectMenu.Config;
+    var baseConfig = GameSetupMenu.Config;
     var server = NetworkManager.Instance.Server;
     baseConfig.PlayerConfigs = (from client in server.Clients orderby client.PlayerID select client.Config).ToArray();
     foreach (var player in server.Clients) {

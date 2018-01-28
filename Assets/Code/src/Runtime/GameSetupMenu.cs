@@ -15,6 +15,8 @@ public class GameSetupMenu : MonoBehaviour {
   public MainMenu MainMenu;
   public CharacterSelectMenu CharacterSelectMenu;
 
+  public MatchConfig Config;
+
   /// <summary>
   /// Start is called on the frame when a script is enabled just before
   /// any of the Update methods is called the first time.
@@ -31,10 +33,10 @@ public class GameSetupMenu : MonoBehaviour {
     ).ToList();
 
     StageDropdwon.onValueChanged.AddListener(index => {
-      CharacterSelectMenu.Config.StageID = stages[index].Id;
+      Config.StageID = stages[index].Id;
       UpdateValidattion();
     });
-    CharacterSelectMenu.Config.StageID = stages.FirstOrDefault()?.Id ?? 0;
+    Config.StageID = stages.FirstOrDefault()?.Id ?? 0;
 
     UpdateValidattion();
   }
@@ -46,7 +48,10 @@ public class GameSetupMenu : MonoBehaviour {
 
   void UpdateValidattion() {
     if (MainMenu.CurrentGameMode == null || ValidationUIElements.Length <= 0) return; 
-    var isValid = MainMenu.CurrentGameMode.IsValidConfig(CharacterSelectMenu.Config);
+    if (CharacterSelectMenu != null) {
+      Config = CharacterSelectMenu.BuildMatchConfig(Config);
+    }
+    var isValid = MainMenu.CurrentGameMode.IsValidConfig(Config);
     foreach (var button in ValidationUIElements) {
       if (button == null) continue;
       button.interactable = isValid;
@@ -54,7 +59,7 @@ public class GameSetupMenu : MonoBehaviour {
   }
 
   public async void LaunchGame() {
-    await MainMenu.CurrentGameMode.Execute(CharacterSelectMenu.Config);
+    await MainMenu.CurrentGameMode.Execute(Config);
   }
 
 }

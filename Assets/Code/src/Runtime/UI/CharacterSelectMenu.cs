@@ -1,21 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
 
-  GenericView<PlayerConfig>[] Players;
+  CharacterData[] Characters;
+  PlayerSelectControls[] Players;
 
   public MainMenu MainMenu;
   public RectTransform CharacterView;
   public RectTransform Container;
-  public MatchConfig Config;
-
-  CharacterData[] Characters;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
@@ -37,33 +37,30 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
   /// </summary>
   void OnEnable() {
     if (MainMenu == null || MainMenu.CurrentGameMode == null) return;
-    var playerConfigs = new PlayerConfig[MainMenu.CurrentGameMode.MaxPlayers];
-    for (byte i = 0; i < playerConfigs.Length; i++) {
-      playerConfigs[i].PlayerID = i;
-      playerConfigs[i].LocalPlayerID = (sbyte)i;
-      playerConfigs[i].Selection.CharacterID = Characters[0].Id;
-      playerConfigs[i].Selection.Pallete = i;
+    var maxPlayers = MainMenu.CurrentGameMode.MaxPlayers;
+    for (byte i = 0; i < Players.Length; i++) {
+      var playerConfig = new PlayerConfig();
+      playerConfig.PlayerID = i;
+      playerConfig.LocalPlayerID = (sbyte)i;
+      playerConfig.Selection.CharacterID = Characters[0].Id;
+      playerConfig.Selection.Pallete = i;
+      Players[i].Config = playerConfig;
+      Players[i].SetActive(false);
+      Players[i].gameObject.SetActive(i < maxPlayers);
     }
-    Config.PlayerConfigs = playerConfigs;
-    ApplyState(Config);
-  }
-
-  public void UpdatePlayer(uint playerId, PlayerConfig config) {
-    Config.PlayerConfigs[playerId % Config.PlayerConfigs.Length] = config;
-    ApplyState(Config);
   }
 
   public void ApplyState(MatchConfig config) {
-    Config = config;
-    var playerConfigs = config.PlayerConfigs;
-    if (playerConfigs == null || Players == null) return;
-    for (var i = 0; i < Players.Length; i++) {
-      var active = playerConfigs.Any(p => p.PlayerID == i);
-      Players[i].SetActive(active);
-      if (!active) continue;
-      var playerConfig = playerConfigs.First(p => p.PlayerID == i);
-      Players[i].ApplyState(playerConfig);
+    foreach (var player in config.PlayerConfigs) {
+      Players[player.PlayerID].Config = player;
     }
+  }
+
+  public MatchConfig BuildMatchConfig(MatchConfig baseConfig) {
+    baseConfig.PlayerConfigs = (from player in Players
+                               where player.IsActive
+                               select player.Config).ToArray();
+    return baseConfig;
   }
 
   public uint NextCharacterID(uint currentId, bool backwards) {
@@ -81,37 +78,16 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
     return newPallete % (uint)character.Portraits.Count;
   }
 
-  GenericView<PlayerConfig> CreateView(int playerIndex) {
+  PlayerSelectControls CreateView(int playerIndex) {
     var newObj = Instantiate(CharacterView);
     newObj.name = $"Player {playerIndex + 1} View";
     newObj.SetParent(Container, true);
     var playerSelectControls = newObj.GetComponentInChildren<PlayerSelectControls>();
-    if (playerSelectControls != null) {
-      playerSelectControls.PlayerID = (uint)playerIndex;
-      playerSelectControls.CharacterSelectMenu = this;
-    }
-    var view = new GenericView<PlayerConfig>(newObj.gameObject);
-    if (Config.PlayerConfigs != null && playerIndex < Config.PlayerConfigs.Length) {
-      view.ApplyState(Config.PlayerConfigs[playerIndex]);
-    }
-    return view;
+    Assert.IsNotNull(playerSelectControls);
+    playerSelectControls.PlayerID = (uint)playerIndex;
+    playerSelectControls.CharacterSelectMenu = this;
+    return playerSelectControls;
   }
-
-}
-
-public class GenericView<T> : IStateView<T> {
-
-  public readonly GameObject GameObject;
-  readonly IStateView<T>[] Views;
-
-  public GenericView(GameObject viewObj) {
-    GameObject = viewObj;
-    Views = viewObj.GetComponentsInChildren<IStateView<T>>();
-  }
-
-  public void SetActive(bool active)  => ObjectUtil.SetActive(GameObject, active); 
-
-  public void ApplyState(T state) => Views.ApplyState(state);
 
 }
 
