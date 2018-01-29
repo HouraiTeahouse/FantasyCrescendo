@@ -7,7 +7,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// A data object representing the complete input of one player for a given
 /// tick.
 /// </summary>
-public struct PlayerInput : IValidatable {
+public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
 
   // One Player Total: 5 bytes
   // Four Player Total: 20 bytes
@@ -52,7 +52,7 @@ public struct PlayerInput : IValidatable {
 
   bool IValidatable.IsValid => IsValid;
 
-  public void Merge(PlayerInput other) {
+  public void MergeWith(PlayerInput other) {
     IsValid = IsValid || other.IsValid;
     Movement = (Vector2)Movement + (Vector2)other.Movement;
     Smash = (Vector2)Smash + (Vector2)other.Smash;

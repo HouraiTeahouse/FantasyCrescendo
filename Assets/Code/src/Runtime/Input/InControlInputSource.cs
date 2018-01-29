@@ -20,7 +20,7 @@ public class InControlInputSource : IInputSource<MatchInput> {
   }
   
   public MatchInput SampleInput() {
-    var allDevices = InputManager.Devices;
+    var devices = InputManager.Devices;
     var newInput = input.Clone();
     for (var i = 0; i < config.PlayerConfigs.Length; i++) {
       var playerConfig = config.PlayerConfigs[i];
@@ -29,16 +29,15 @@ public class InControlInputSource : IInputSource<MatchInput> {
         continue;
       }
       var playerId = playerConfig.LocalPlayerID;
-      if (playerId >= allDevices.Count) {
+      if (playerId >= devices.Count) {
         newInput.PlayerInputs[i] = new PlayerInput { IsValid = true };
         continue;
       }
-      UpdatePlayerInput(ref newInput.PlayerInputs[i], allDevices[(int)playerId]);
+      UpdatePlayerInput(ref newInput.PlayerInputs[i], devices[(int)playerId]);
       if (playerId == 0) {
-        newInput.PlayerInputs[i].Merge(KeyboardInput());
+        newInput.PlayerInputs[i].MergeWith(KeyboardInput());
       }
     }
-    // Debug.LogError($"{newInput.IsValid} All: {string.Join(" ", newInput.PlayerInputs.Select(c => c.IsValid.ToString()))}");
     input = newInput;
     return newInput;
   }

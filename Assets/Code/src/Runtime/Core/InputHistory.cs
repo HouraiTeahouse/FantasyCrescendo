@@ -7,17 +7,17 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public struct TimedInput<I> {
-  public uint Timestamp;
-  public I Input;
-}
-
-public class InputHistory<I> : IEnumerable<TimedInput<I>> {
+public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
 
   private class Element {
-    public TimedInput<I> Value;
+    public uint Timestamp;
+    public I Input;
     public Element Next;
   }
+
+  public int Count { get; private set; }
+  public I Latest => Tail.Input;
+  public uint LastConfirmedTimestep => Head.Timestamp;
 
   Element Head;
   Element Tail;
@@ -30,12 +30,10 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
 
   // Appends a new input to the end of the list
   public void Append(I input) {
-    var newElement = new Element {
-        Value = new TimedInput<I> {
-          Timestamp = ++LastTimestamp,
-          Input = input
-        }
-    };
+    var newElement = ObjectPool<Element>.Shared.Rent();
+    newElement.Timestamp = ++LastTimestamp;
+    newElement.Input = input;
+    newElement.Next = null;
     if (Tail != null) {
       Tail.Next = newElement;
     }
@@ -43,56 +41,64 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
       Head = newElement;
     }
     Tail = newElement;
+    Count++;
   }
 
   // Merges the given input history with an per tick enumeration of the input.
-  public void MergeWith(uint startTimestamp, IEnumerable<I> source,
-                        Func<I, I, I> mergeFunc) {
-    Assert.IsNotNull(mergeFunc);
+  public void MergeWith(uint startTimestamp, IEnumerable<I> source) {
     Assert.IsNotNull(source);
     Element currentNode = FindByTimestamp(startTimestamp);
     IEnumerator<I> enumerator = source.GetEnumerator();
     while (currentNode != null && enumerator.MoveNext()) {
-      currentNode.Value.Input = mergeFunc(currentNode.Value.Input,
-                                          enumerator.Current);
+      currentNode.Input.MergeWith(enumerator.Current);
     }
     while (enumerator.MoveNext()) {
       Append(enumerator.Current);
     }
   }
 
+  public void DropWhile(Func<I, bool> predicate) {
+    Argument.NotNull(predicate);
+    Drop(e => predicate(e.Input));
+  }
+
   // Drops all inputs before a given timestamp from the history.
-  public void DropBefore(uint timestamp) {
-    Head = FindByTimestamp(timestamp);
-    if (Head == null) {
-      LastTimestamp = Tail.Value.Timestamp;
+  public void DropBefore(uint timestamp) => Drop(e => e.Timestamp <  timestamp);
+
+  void Drop(Func<Element, bool> predicate) {
+    Assert.IsNotNull(predicate);
+    var pool = ObjectPool<Element>.Shared;
+    Element currentNode = Head;
+    while (currentNode != null && predicate(currentNode)) {
+      pool.Return(currentNode);
+      currentNode = currentNode.Next;
+      Count--;
+    }
+    Head = currentNode;
+    if (Head == null && Tail != null) {
+      LastTimestamp = Tail.Timestamp;
       Tail = null;
     }
   }
 
-  public IEnumerator<TimedInput<I>> GetEnumerator() {
-    return StartingWith(0).GetEnumerator();
-  }
-
-  IEnumerator IEnumerable.GetEnumerator() {
-    return GetEnumerator();
-  }
-
-  public IEnumerable<TimedInput<I>> StartingWith(uint timestamp) {
+  public IEnumerable<I> StartingWith(uint timestamp) {
     Element currentNode = FindByTimestamp(timestamp);
     while (currentNode != null) {
-      yield return currentNode.Value;
+      yield return currentNode.Input;
       currentNode = currentNode.Next;
     }
   }
 
   Element FindByTimestamp(uint timestamp) {
     Element currentNode = Head;
-    while (currentNode != null && currentNode.Value.Timestamp < timestamp) {
+    while (currentNode != null && currentNode.Timestamp < timestamp) {
       currentNode = currentNode.Next;
     }
     return currentNode;
   }
+
+  public IEnumerator<I> GetEnumerator() => StartingWith(0).GetEnumerator();
+  IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 }
 
