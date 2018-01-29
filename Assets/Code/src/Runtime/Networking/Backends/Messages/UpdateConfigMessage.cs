@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public class ServerUpdateConfigMessage : MessageBase {
   public MatchConfig MatchConfig;
