@@ -22,6 +22,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	public bool IsHost => IsClient && IsServer;
+  public bool IsNetworkActive => IsClient || IsServer;
 	public bool IsClient => Client != null;
 	public bool IsServer => Server != null;
 

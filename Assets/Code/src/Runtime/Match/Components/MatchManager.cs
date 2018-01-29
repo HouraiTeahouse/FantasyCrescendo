@@ -76,6 +76,7 @@ public class MatchManager : MonoBehaviour {
   public void EndMatch(MatchResult result) {
     if (MatchTask == null || !MatchTask.TrySetResult(result)) return;
     Debug.Log($"Match over. Winner: {result.WinningPlayerID}, Resolution {result.Resolution}");
+    (MatchController as IDisposable)?.Dispose();
   }
 
 }

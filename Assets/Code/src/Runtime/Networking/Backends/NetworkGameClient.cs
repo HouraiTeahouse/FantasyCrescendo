@@ -18,6 +18,8 @@ public class NetworkGameClient : INetworkClient {
   public event Action<uint, MatchState> OnRecievedState;
   public event Action<bool> OnServerReady;
 
+  public bool IsServerReady { get; private set; }
+
   readonly INetworkInterface NetworkInterface;
   INetworkConnection ServerConnection;
   TaskCompletionSource<object> connectionTask;
@@ -43,7 +45,7 @@ public class NetworkGameClient : INetworkClient {
     handlers.RegisterHandler<MatchStartMessage>(MessageCodes.MatchStart, OnStartMatch);
     handlers.RegisterHandler<MatchFinishMessage>(MessageCodes.MatchFinish, OnFinishMatch);
     handlers.RegisterHandler<ServerUpdateConfigMessage>(MessageCodes.UpdateConfig, OnUpdateConfig);
-    handlers.RegisterHandler<PeerReadyMessage>(MessageCodes.PeerReady, OnSetServerReady);
+    handlers.RegisterHandler<PeerReadyMessage>(MessageCodes.ServerReady, OnSetServerReady);
 
     connectionTask.TrySetResult(new object());
   }
@@ -51,7 +53,7 @@ public class NetworkGameClient : INetworkClient {
   public void Disconnect() => ServerConnection?.Disconnect();
 
   public void SetReady(bool isReady) {
-    ServerConnection?.Send(MessageCodes.PeerReady, new PeerReadyMessage {
+    ServerConnection?.Send(MessageCodes.ClientReady, new PeerReadyMessage {
       IsReady = isReady
     });
   }
@@ -84,10 +86,13 @@ public class NetworkGameClient : INetworkClient {
 
   void OnStartMatch(MatchStartMessage message) => OnMatchStarted?.Invoke(message.MatchConfig);
   void OnFinishMatch(MatchFinishMessage message) => OnMatchFinished?.Invoke(message.MatchResult);
-  void OnSetServerReady(PeerReadyMessage message) => OnServerReady?.Invoke(message.IsReady);
   void OnUpdateConfig(ServerUpdateConfigMessage message) => OnMatchConfigUpdated?.Invoke(message.MatchConfig);
   void OnGetState(ServerStateMessage message) => OnRecievedState?.Invoke(message.Timestamp, message.State);
   void OnGetInput(InputSetMessage message) => OnRecievedInputs?.Invoke(message.StartTimestamp, message.Inputs);
+  void OnSetServerReady(PeerReadyMessage message) {
+    IsServerReady = message.IsReady;
+    OnServerReady?.Invoke(IsServerReady);
+  }
 
 }
 

@@ -10,9 +10,13 @@ namespace HouraiTeahouse.FantasyCrescendo.Networking {
 public class NetworkMatch : DefaultMatch {
 
 	readonly NetworkManager NetworkManager;
+  readonly TaskCompletionSource<object> ClientReady;
+  readonly TaskCompletionSource<object> ServerReady;
 
 	public NetworkMatch(NetworkManager networkManager) {
 		NetworkManager = Argument.NotNull(networkManager);
+    ClientReady = new TaskCompletionSource<object>();
+    ServerReady = new TaskCompletionSource<object>();
 	}
 
 	protected override IMatchController CreateMatchController(MatchConfig config ) {
@@ -20,50 +24,54 @@ public class NetworkMatch : DefaultMatch {
 	}
 
 	protected override async Task InitializeMatch(MatchManager manager, MatchConfig config) {
-		await base.InitializeMatch(manager, config);
+		if (NetworkManager.IsServer) {
+      NetworkManager.Server.PlayerUpdated += ServerHandleClientReady;
+      foreach(var client in NetworkManager.Server.Clients) {
+        Debug.Log($"Setting {client.PlayerID} not ready");
+        client.IsReady = false;
+      }
+		}
+    if (NetworkManager.IsClient) {
+      NetworkManager.Client.OnServerReady += ClientHandleServerReady;
+    }
+    await base.InitializeMatch(manager, config);
 		// Wait for remote players to be ready
 		var tasks = new List<Task>();
-		if (NetworkManager.IsClient) {
-			tasks.Add(WaitForServerToBeReady());
+		if (NetworkManager.IsClient && !NetworkManager.Client.IsServerReady) {
+      Debug.Log("Client: Set to Ready.");
+      NetworkManager.Client.SetReady(true);
+			tasks.Add(ClientReady.Task);
 		}
-		if (NetworkManager.IsServer) {
-			tasks.Add(WaitForClientsToBeReady());
+		if (NetworkManager.IsServer && !AllClientsAreReady) {
+      Debug.Log("Waiting on clients...");
+			tasks.Add(ServerReady.Task);
 		}
 		await Task.WhenAll(tasks);
+		if (NetworkManager.IsClient) {
+      NetworkManager.Client.OnServerReady -= ClientHandleServerReady;
+		}
+		if (NetworkManager.IsServer) {
+      NetworkManager.Server.PlayerUpdated -= ServerHandleClientReady;
+		}
 	}
 
 	bool AllClientsAreReady => NetworkManager.Server.Clients.All(client => client.IsReady);
 
-	async Task WaitForServerToBeReady() {
-		Assert.IsNotNull(NetworkManager.Client);
-		NetworkManager.Client.SetReady(true);
-		var taskCompletion = new TaskCompletionSource<object>();
-		Action<bool> handler = isReady => {
-			if (isReady) {
-				taskCompletion.TrySetResult(new object());
-			}
-		};
-		NetworkManager.Client.OnServerReady += handler;
-		await taskCompletion.Task;
-		NetworkManager.Client.OnServerReady -= handler;
-	}
+  void ClientHandleServerReady(bool isServerReady) {
+    Debug.Log("Client: Server is Ready");
+    if (isServerReady) {
+      ClientReady.TrySetResult(true);
+    }
+  }
 
-	async Task WaitForClientsToBeReady() {
-		Assert.IsNotNull(NetworkManager.Server);
-		if (!AllClientsAreReady) {
-			var taskCompletion = new TaskCompletionSource<object>();
-			Action<NetworkClientPlayer> handler = player => {
-				if (AllClientsAreReady) {
-					taskCompletion.TrySetResult(new object());
-				}
-			};
-			NetworkManager.Server.PlayerUpdated += handler;
-			await taskCompletion.Task;
-			Assert.IsTrue(AllClientsAreReady);
-			NetworkManager.Server.PlayerUpdated -= handler;
-		}
-		NetworkManager.Server.SetReady(true);
-	}
+  void ServerHandleClientReady(NetworkClientPlayer player) {
+    if (!player.IsReady) return;
+    Debug.Log($"Server: Client {player.PlayerID} is Ready");
+    if (!AllClientsAreReady) return;
+    Debug.Log("Server: All Clients are Ready");
+    NetworkManager.Server.SetReady(true);
+    ServerReady.TrySetResult(true);
+  }
 
 }
 		

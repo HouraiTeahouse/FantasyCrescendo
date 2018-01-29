@@ -52,6 +52,7 @@ public class NetworkMenu : MonoBehaviour {
       networkManager.StopClient();
       SetActive(ErrorScreen);
       ErrorText.text = exception.Message;
+      Debug.LogError(exception);
       return;
     }
     SetActive(SuccessScreen);

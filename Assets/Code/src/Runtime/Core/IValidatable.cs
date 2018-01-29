@@ -17,6 +17,12 @@ public interface IValidatable {
 
 }
 
+public interface IValidator<T> {
+
+  bool IsValid(T obj);
+
+}
+
 public static class IValidatableExtensions {
 
   /// <summary>

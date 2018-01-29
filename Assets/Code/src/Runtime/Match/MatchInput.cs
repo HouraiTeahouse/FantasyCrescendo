@@ -25,7 +25,7 @@ public struct MatchInput {
   }
 
   public void MergeWith(MatchInput otherInput) {
-    Assert.AreEqual(PlayerInputs.Length, otherInput.PlayerInputs.Length);
+    Assert.IsTrue(PlayerInputs.Length >= otherInput.PlayerInputs.Length);
     for (int i = 0; i < PlayerInputs.Length; i++) {
       if (!PlayerInputs[i].IsValid && otherInput.PlayerInputs[i].IsValid) {
         PlayerInputs[i] = otherInput.PlayerInputs[i];

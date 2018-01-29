@@ -15,9 +15,6 @@ public interface INetworkServer : IDisposable {
   event Action<uint> PlayerRemoved;
 
   // Reliable
-  void StartMatch(MatchConfig config);
-
-  // Reliable
   void FinishMatch(MatchResult result);
 
 	// Reliable
