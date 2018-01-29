@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public struct MatchInput : IMergable<MatchInput> {
 

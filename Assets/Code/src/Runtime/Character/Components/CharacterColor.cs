@@ -1,3 +1,4 @@
+using HouraiTeahouse.FantasyCrescendo.Players;
 using HouraiTeahouse.Loadables; 
 using System;
 using System.Linq;
@@ -7,7 +8,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class CharacterColor : MonoBehaviour, IPlayerComponent {
 

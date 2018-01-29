@@ -1,8 +1,9 @@
+using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 

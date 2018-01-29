@@ -1,3 +1,5 @@
+using HouraiTeahouse.FantasyCrescendo.Matches;
+using HouraiTeahouse.FantasyCrescendo.Players;
 using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {

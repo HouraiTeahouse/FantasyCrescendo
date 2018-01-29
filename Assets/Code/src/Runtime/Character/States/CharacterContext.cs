@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class CharacterContext {
   public PlayerState State;

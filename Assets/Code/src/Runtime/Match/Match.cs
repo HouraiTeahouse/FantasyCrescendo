@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Networking;
+﻿using HouraiTeahouse.FantasyCrescendo.Matches.Rules;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 // TODO(james7132): Refactor out parts of this class
 public abstract class Match {
@@ -44,7 +44,7 @@ public abstract class Match {
 
 	// TODO(james71323): Refactor or move this to somewhere more sane
 	protected virtual IMatchController CreateMatchController(MatchConfig config) {
-		return new GameController(config);
+		return new MatchController(config);
 	}
 
   protected abstract Task InitializeMatch(MatchManager manager, MatchConfig config);

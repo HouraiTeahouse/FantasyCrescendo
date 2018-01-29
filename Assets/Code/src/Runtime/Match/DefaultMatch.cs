@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public class DefaultMatch : Match {
 
   protected override async Task InitializeMatch(MatchManager gameManager, MatchConfig config) {
-    var gameView = new GameView();
+    var gameView = new MatchView();
     var gameSim = CreateSimulation(config);
     var controller = CreateMatchController(config);
 

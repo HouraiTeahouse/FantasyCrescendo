@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Players {
     
 public class PlayerActive : MonoBehaviour, IStateView<PlayerState>, IPlayerSimulation {
 

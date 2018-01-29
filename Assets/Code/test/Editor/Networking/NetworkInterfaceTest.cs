@@ -1,6 +1,8 @@
 ﻿using HouraiTeahouse.FantasyCrescendo;
+using HouraiTeahouse.FantasyCrescendo.Matches;
 using HouraiTeahouse.FantasyCrescendo.Networking;
 using HouraiTeahouse.FantasyCrescendo.Networking.UNET;
+using HouraiTeahouse.FantasyCrescendo.Players;
 using NUnit.Framework;
 using System;
 using System.Collections;

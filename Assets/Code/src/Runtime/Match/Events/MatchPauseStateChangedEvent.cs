@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace HouraiTeahouse.FantasyCrescendo {
+﻿namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public class MatchPauseStateChangedEvent : MatchEvent {
   public bool Paused;

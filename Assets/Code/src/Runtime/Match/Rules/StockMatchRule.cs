@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using UnityEngine;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches.Rules {
 
 /// <summary>
 /// Match Rule for normal stock matches. Players have a limited number of lives.

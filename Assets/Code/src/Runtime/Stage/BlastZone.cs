@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+using HouraiTeahouse.FantasyCrescendo.Players;
+using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Stages {
 
 public class BlastZone : MonoBehaviour {
 

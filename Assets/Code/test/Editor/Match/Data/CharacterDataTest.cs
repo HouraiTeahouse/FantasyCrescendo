@@ -1,4 +1,5 @@
 ﻿using HouraiTeahouse.FantasyCrescendo;
+using HouraiTeahouse.FantasyCrescendo.Characters;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;

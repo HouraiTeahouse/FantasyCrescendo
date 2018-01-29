@@ -1,9 +1,10 @@
+using HouraiTeahouse.FantasyCrescendo.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 /// <summary>
 /// A complete representation of a given game's state at a given tick.

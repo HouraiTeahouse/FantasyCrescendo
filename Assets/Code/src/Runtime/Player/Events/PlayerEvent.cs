@@ -1,4 +1,6 @@
-﻿namespace HouraiTeahouse.FantasyCrescendo {
+﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+
+namespace HouraiTeahouse.FantasyCrescendo.Players {
     
 public abstract class PlayerEvent : MatchEvent {
 

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public abstract class ServerGameController : GameController, IDisposable {
+public abstract class ServerGameController : MatchController, IDisposable {
 
   public INetworkServer NetworkServer { get; }
 

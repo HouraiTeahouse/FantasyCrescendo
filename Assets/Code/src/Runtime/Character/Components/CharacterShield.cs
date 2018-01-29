@@ -1,9 +1,10 @@
+using HouraiTeahouse.FantasyCrescendo.Players;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerView {
 

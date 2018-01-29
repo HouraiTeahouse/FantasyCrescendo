@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches.Rules {
 
 public sealed class TimeMatchRule : IMatchRule {
 

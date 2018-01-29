@@ -1,10 +1,11 @@
+using HouraiTeahouse.FantasyCrescendo.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 [CreateAssetMenu]
 public partial class CharacterControllerBuilder : ScriptableObject, ISerializationCallbackReceiver {

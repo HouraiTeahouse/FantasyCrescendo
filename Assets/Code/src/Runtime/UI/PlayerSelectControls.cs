@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.UI {
 
 public class PlayerSelectControls : MonoBehaviour {
 

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Players {
 
 public interface IPlayerComponent {
 

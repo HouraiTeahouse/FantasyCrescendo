@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public interface IMatchRule : IInitializable<MatchConfig>, IDisposable,
                               ISimulation<MatchState, MatchInputContext> {

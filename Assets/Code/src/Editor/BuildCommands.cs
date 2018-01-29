@@ -5,10 +5,17 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor; 
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
+/// <summary>
+/// A set of static editor commands to automate or simplify the development process.
+/// </summary>
 public static class BuildCommands {
 
+  /// <summary>
+  /// Clears all the Character prefabs to make sure that they aren't directly referencing
+  /// Materials before Asset Bundle Builds.
+  /// </summary>
   [MenuItem("Hourai Teahouse/Clear Character Materials")]
   static void ClearCharacterMaterials() {
     Debug.Log("Clearing character materials.");
@@ -27,6 +34,10 @@ public static class BuildCommands {
     Debug.Log("Finished clearing ");
   }
 
+  /// <summary>
+  /// Unity Cloud Build Pre-Build Command.
+  /// </summary>
+  /// <param name="manifest"></param>
 #if UNITY_CLOUD_BUILD
   public static void Prebuild(UnityEngine.CloudBuild.BuildManifestObject manifest) {
       Debug.Log("Starting pre-export changes and cleanup...");

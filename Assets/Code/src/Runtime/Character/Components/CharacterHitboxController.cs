@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using HouraiTeahouse.FantasyCrescendo.Matches;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
 

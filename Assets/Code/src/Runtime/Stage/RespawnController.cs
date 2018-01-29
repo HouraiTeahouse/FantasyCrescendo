@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System.Linq;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Stages {
 
 public class RespawnController : MonoBehaviour {
 

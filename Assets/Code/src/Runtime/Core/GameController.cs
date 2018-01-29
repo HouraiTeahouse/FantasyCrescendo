@@ -1,11 +1,11 @@
 using UnityEngine.Assertions;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 /// <summary>
-/// An IGameController implementation that runs a normal local game.
+/// An default IMatchController implementation that runs a normal local game.
 /// </summary>
-public class GameController : IMatchController {
+public class MatchController : IMatchController {
 
   public uint Timestep { get; set; }
   public virtual MatchState CurrentState { get; set; }
@@ -14,7 +14,7 @@ public class GameController : IMatchController {
 
   readonly MatchInputContext inputContext;
 
-  public GameController(MatchConfig config) {
+  public MatchController(MatchConfig config) {
     inputContext = new MatchInputContext(new MatchInput(config));
   }
 

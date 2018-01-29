@@ -1,8 +1,9 @@
+using HouraiTeahouse.FantasyCrescendo.Matches;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public interface INetworkClient : IDisposable {
 

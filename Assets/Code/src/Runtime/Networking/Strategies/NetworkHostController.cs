@@ -1,4 +1,5 @@
-﻿
+﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public sealed class NetworkHostController : IMatchController {
