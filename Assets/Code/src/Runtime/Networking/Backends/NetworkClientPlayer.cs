@@ -22,6 +22,12 @@ public class NetworkClientPlayer {
     });
   }
 
+  public void StartMatch(MatchConfig config) {
+    Connection.Send(MessageCodes.MatchStart, new MatchStartMessage {
+      MatchConfig = config
+    });
+  }
+
   public void Kick() => Connection?.Disconnect();
 
 }

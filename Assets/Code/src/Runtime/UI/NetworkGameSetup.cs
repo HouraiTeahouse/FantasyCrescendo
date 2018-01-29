@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public sealed class NetworkGameSetup : MonoBehaviour {
+public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
 
   public GameSetupMenu GameSetupMenu;
   public CharacterSelectMenu CharacterSelectMenu;
@@ -26,14 +27,19 @@ public sealed class NetworkGameSetup : MonoBehaviour {
   void OnDisable() {
     var networkManager = NetworkManager.Instance;
     if (networkManager == null) return;
-    if (networkManager.IsClient) { 
-      DisableClient(networkManager.Client); 
-      networkManager.StopClient();
+    if (networkManager.IsClient) { DisableClient(networkManager.Client); }
+    if (networkManager.IsServer) { DisableServer(networkManager.Server); }
+  }
+
+  bool IValidator<MatchConfig>.IsValid(MatchConfig obj) {
+    var networkManager = NetworkManager.Instance;
+    if (networkManager == null || !networkManager.IsNetworkActive) return true;
+    if (networkManager.IsServer) {
+      var baseConfig = ServerBuildBaseConfig();
+      return GameSetupMenu.MainMenu.CurrentGameMode.IsValidConfig(baseConfig);
     }
-    if (networkManager.IsServer) { 
-      DisableServer(networkManager.Server); 
-      networkManager.StopServer();
-    }
+    // Non-host clients should not be able to start a match
+    return false;
   }
 
   // Server Methods
@@ -42,6 +48,9 @@ public sealed class NetworkGameSetup : MonoBehaviour {
     server.PlayerAdded += OnServerAddPlayer;
     server.PlayerUpdated += OnServerUpdatePlayer;
     server.PlayerRemoved += OnServerRemovePlayer;
+
+    GameSetupMenu.OnStartMatch += OnServerStartMatch;
+
     foreach (var client in server.Clients)  {
       InitalizePlayer(client);
     }
@@ -52,6 +61,15 @@ public sealed class NetworkGameSetup : MonoBehaviour {
     server.PlayerAdded -= OnServerAddPlayer;
     server.PlayerUpdated -= OnServerUpdatePlayer;
     server.PlayerRemoved -= OnServerRemovePlayer;
+    GameSetupMenu.OnStartMatch -= OnServerStartMatch;
+  }
+
+  Task OnServerStartMatch(MatchConfig config) {
+    var baseConfig = ServerBuildBaseConfig();
+    foreach (var player in NetworkManager.Instance.Server.Clients) {
+      player.StartMatch(BuildConfigForPlayer(baseConfig, player.PlayerID));
+    }
+    return Task.CompletedTask;
   }
 
   void OnServerAddPlayer(NetworkClientPlayer player) {
@@ -63,20 +81,23 @@ public sealed class NetworkGameSetup : MonoBehaviour {
 
   void InitalizePlayer(NetworkClientPlayer player) {
     player.Config.Selection = CharacterSelectMenu.CreateNewSelection(player.PlayerID);
-    Debug.LogError(player.Config.Selection.CharacterID);
   }
 
   void OnServerUpdatedConfig() {
-    Debug.Log("SERVER UPDATE");
-    var baseConfig = GameSetupMenu.Config;
-    var server = NetworkManager.Instance.Server;
-    baseConfig.PlayerConfigs = (from client in server.Clients orderby client.PlayerID select client.Config).ToArray();
-    foreach (var player in server.Clients) {
-      player.SendConfig(BuildPlayerMatchConfig(baseConfig, player.PlayerID));
+    var baseConfig = ServerBuildBaseConfig();
+    foreach (var player in NetworkManager.Instance.Server.Clients) {
+      player.SendConfig(BuildConfigForPlayer(baseConfig, player.PlayerID));
     }
   }
 
-  MatchConfig BuildPlayerMatchConfig(MatchConfig baseConfig, uint playerId) {
+  MatchConfig ServerBuildBaseConfig() {
+    var baseConfig = GameSetupMenu.Config;
+    var server = NetworkManager.Instance.Server;
+    baseConfig.PlayerConfigs = (from client in server.Clients orderby client.PlayerID select client.Config).ToArray();
+    return baseConfig;
+  }
+
+  MatchConfig BuildConfigForPlayer(MatchConfig baseConfig, uint playerId) {
     // TODO(james7132): Generalize this to work with multiple players per client
     for (var i = 0; i < baseConfig.PlayerConfigs.Length; i++) {
       baseConfig.PlayerConfigs[i].LocalPlayerID = -1;
@@ -89,6 +110,7 @@ public sealed class NetworkGameSetup : MonoBehaviour {
 
   void EnableClient(INetworkClient client) {
     client.OnMatchConfigUpdated += OnClientUpdatedConfig;
+    client.OnMatchStarted += OnClientMatchStarted;
     foreach (var player in CharacterSelectMenu.Players) {
       player.PlayerUpdated += OnClientLocalPlayerUpdated;
     }
@@ -96,21 +118,24 @@ public sealed class NetworkGameSetup : MonoBehaviour {
 
   void DisableClient(INetworkClient client) {
     client.OnMatchConfigUpdated -= OnClientUpdatedConfig;
+    client.OnMatchStarted -= OnClientMatchStarted;
     foreach (var player in CharacterSelectMenu.Players) {
       player.PlayerUpdated -= OnClientLocalPlayerUpdated;
     }
   }
 
   void OnClientLocalPlayerUpdated(byte playerId, PlayerConfig config) {
-    Debug.LogWarning("LOCAL PLAYER CHANGED");
     var client = NetworkManager.Instance.ForceNull()?.Client;
     if (client == null) return;
     client.SetConfig(config);
   }
 
   void OnClientUpdatedConfig(MatchConfig config)  {
-    Debug.Log($"CLIENT UPDATE {config.PlayerConfigs.Length}");
     CharacterSelectMenu.ApplyState(config); 
+  }
+
+  async void OnClientMatchStarted(MatchConfig config) {
+    await GameSetupMenu.MainMenu.CurrentGameMode.Execute(config);
   }
 
 }

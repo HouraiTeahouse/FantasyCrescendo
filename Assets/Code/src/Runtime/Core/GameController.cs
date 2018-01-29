@@ -23,6 +23,7 @@ public class GameController : IMatchController {
     Assert.IsTrue(input.IsValid);
     inputContext.Update(input);
     CurrentState = Simulation.Simulate(CurrentState, inputContext);
+    Timestep++;
   }
 
 }

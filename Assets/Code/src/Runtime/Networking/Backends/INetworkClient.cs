@@ -15,6 +15,8 @@ public interface INetworkClient : IDisposable {
   event Action<uint, MatchState> OnRecievedState;
 	event Action<bool> OnServerReady;
 
+  bool IsServerReady { get; }
+
   Task Connect(string ip, uint port);
   void Disconnect();
 

@@ -29,18 +29,12 @@ public class NetworkGameServer : INetworkServer {
     NetworkInterface.OnPeerDisconnected += OnDisconnect;
 
     var handlers = NetworkInterface.MessageHandlers;
-    handlers.RegisterHandler(MessageCodes.PeerReady, OnClientReady);
+    handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
     handlers.RegisterHandler(MessageCodes.UpdateConfig, OnClientConfigUpdated);
     handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
   }
 
   public void Update() => NetworkInterface.Update();
-
-  public void StartMatch(MatchConfig config) {
-    NetworkInterface.Connections.SendToAll(MessageCodes.MatchStart, new MatchStartMessage {
-      MatchConfig = config
-    });
-  }
 
   public void FinishMatch(MatchResult result) {
     NetworkInterface.Connections.SendToAll(MessageCodes.MatchFinish, new MatchFinishMessage {
@@ -49,7 +43,7 @@ public class NetworkGameServer : INetworkServer {
   }
 
 	public void SetReady(bool ready) {
-    NetworkInterface.Connections.SendToAll(MessageCodes.PeerReady, new PeerReadyMessage {
+    NetworkInterface.Connections.SendToAll(MessageCodes.ServerReady, new PeerReadyMessage {
 			IsReady = ready
     });
 	}
@@ -76,7 +70,7 @@ public class NetworkGameServer : INetworkServer {
 
     var handlers = NetworkInterface.MessageHandlers;
     if (handlers == null) return;
-    handlers.RegisterHandler(MessageCodes.PeerReady, OnClientReady);
+    handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
     handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
   }
 

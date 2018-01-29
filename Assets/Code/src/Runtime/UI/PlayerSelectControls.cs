@@ -75,7 +75,6 @@ public class PlayerSelectControls : MonoBehaviour {
     var newSelection = CharacterSelectMenu.NextPallete(Config.Selection, PlayerID, backward);
     bool changed = !Config.Selection.Equals(newSelection);
     config.Selection = newSelection;
-    Debug.LogError(newSelection);
     if (changed) {
       PlayerUpdated?.Invoke(PlayerID, config);
     }

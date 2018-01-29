@@ -25,13 +25,18 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
   /// </summary>
   async void Awake() {
     await DataLoader.LoadTask.Task;
-    var characters = from character in Registry.Get<CharacterData>()
-                     where character.IsSelectable && character.IsVisible
-                     select character;
-    if (!Debug.isDebugBuild) {
-      characters = characters.Where(ch => !ch.IsDebug);
+    Debug.Log($"Total Registered Characters: {Registry.Get<CharacterData>().Count}");
+    var characters = new List<CharacterData>();
+    foreach (var character in Registry.Get<CharacterData>()) {
+      var selectable = character.IsSelectable && character.IsVisible;
+      if (!Debug.isDebugBuild) selectable &= !character.IsDebug;
+      Debug.Log($"Charcter: {character}. Selectable: {selectable}");
+      if (selectable) {
+        characters.Add(character);
+      }
     }
     Characters = characters.ToArray();
+    Debug.Log($"Total Selectable Characters: {Characters.Length}");
     players = Enumerable.Range(0, (int)GameMode.GlobalMaxPlayers).Select(CreateView).ToArray();
     Players = new ReadOnlyCollection<PlayerSelectControls>(players);
   }

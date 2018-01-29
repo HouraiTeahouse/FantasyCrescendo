@@ -1,6 +1,7 @@
 ﻿using InControl;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -16,9 +17,6 @@ public class InControlInputSource : IInputSource<MatchInput> {
     this.config = config;
     controllerMapping = new PlayerControllerMapping();
     input = new MatchInput(config);
-    for (int i = 0; i < input.PlayerInputs.Length; i++) {
-      input.PlayerInputs[i].IsValid = true;
-    }
   }
   
   public MatchInput SampleInput() {
@@ -26,6 +24,10 @@ public class InControlInputSource : IInputSource<MatchInput> {
     var newInput = input.Clone();
     for (var i = 0; i < config.PlayerConfigs.Length; i++) {
       var playerConfig = config.PlayerConfigs[i];
+      if (!playerConfig.IsLocal) {
+        newInput.PlayerInputs[i] = new PlayerInput { IsValid = false };
+        continue;
+      }
       var playerId = playerConfig.LocalPlayerID;
       if (playerId >= allDevices.Count) {
         newInput.PlayerInputs[i] = new PlayerInput { IsValid = true };
@@ -36,11 +38,13 @@ public class InControlInputSource : IInputSource<MatchInput> {
         newInput.PlayerInputs[i].Merge(KeyboardInput());
       }
     }
+    // Debug.LogError($"{newInput.IsValid} All: {string.Join(" ", newInput.PlayerInputs.Select(c => c.IsValid.ToString()))}");
     input = newInput;
     return newInput;
   }
 
   void UpdatePlayerInput(ref PlayerInput input, InputDevice device) {
+    input.IsValid = true;
     input.Movement = controllerMapping.Movement(device);
     input.Smash = controllerMapping.Smash(device);
     input.Attack = controllerMapping.Attack(device);

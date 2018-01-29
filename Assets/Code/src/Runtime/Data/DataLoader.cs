@@ -54,7 +54,7 @@ public class DataLoader : MonoBehaviour {
     });
     await Task.WhenAll(bundles);
 #endif
-    LoadTask.SetResult(new object());
+    LoadTask.TrySetResult(new object());
     Debug.Log("Finished loading data");
   }
 

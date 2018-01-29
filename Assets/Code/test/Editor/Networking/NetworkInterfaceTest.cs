@@ -81,7 +81,9 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
 
     return RunTest(() => {
       Host.Client.OnMatchStarted += config => client = config;
-      Host.Server.StartMatch(server);
+      foreach (var serverClient in Host.Server.Clients) {
+        serverClient.StartMatch(server);
+      }
     }, () => client != null, () => {
       Assert.AreEqual(server, client);
     });
