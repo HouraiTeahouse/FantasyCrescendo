@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public struct MatchInput {
+public struct MatchInput : IMergable<MatchInput> {
 
   public PlayerInput[] PlayerInputs;
 
@@ -78,6 +78,9 @@ public struct MatchInput {
 public class MatchInputContext {
 
   public PlayerInputContext[] PlayerInputs;
+
+  public MatchInputContext(MatchConfig config) : this(new MatchInput(config)) {
+  }
 
   public MatchInputContext(MatchInput input) {
     Reset(input);

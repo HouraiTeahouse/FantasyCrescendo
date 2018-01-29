@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkInterface: HouraiTeahouse.FantasyCrescendo.Networking.UNET.UNETNetworkInterface
-  networkStrategy: HouraiTeahouse.FantasyCrescendo.Networking.LockstepStrategy
+  networkStrategy: HouraiTeahouse.FantasyCrescendo.Networking.RollbackStrategy
 --- !u!114 &114423664066748220
 MonoBehaviour:
   m_ObjectHideFlags: 1
