@@ -5,25 +5,59 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
+/// <summary>
+/// Singleton MonoBehaviour manager of network related operations.
+/// </summary>
 public class NetworkManager : MonoBehaviour {
 
+  /// <summary>
+  /// Gets the singleton instance of NetworkManager.
+  /// </summary>
 	public static NetworkManager Instance { get; private set; }
 
+  /// <summary>
+  /// Gets the currently active NetworkHost. Null if not active.
+  /// </summary>
 	public NetworkHost Host { get; private set; }
 
+  /// <summary>
+  /// Gets the currently active NetworkClient. Null if not active.
+  /// </summary>
 	public INetworkClient Client {
 		get { return Host.Client; }
 		private set { Host.Client = value; } 
 	}
 
+  /// <summary>
+  /// Gets the currently active NetworkServer. Null if not active.
+  /// </summary>
 	public INetworkServer Server {
 		get { return Host.Server; }
 		private set { Host.Server = value; } 
 	}
 
+  /// <summary>
+  /// Gets whether both server and client are active on the current game. True if 
+  /// both client and server are active.
+  /// </summary>
 	public bool IsHost => IsClient && IsServer;
+
+  /// <summary>
+  /// Gets whether any network activity is currently being. True if either client 
+  /// or server are active.
+  /// </summary>
   public bool IsNetworkActive => IsClient || IsServer;
+
+  /// <summary>
+  /// Gets whether the current instance is a client to a server. True if the 
+  /// NetworkClient is currently active.
+  /// </summary>
 	public bool IsClient => Client != null;
+
+  /// <summary>
+  /// Gets whether the current instance is server to clients. True if the 
+  /// NetworkClient is currently active.
+  /// </summary>
 	public bool IsServer => Server != null;
 
 	[SerializeField] [Type(typeof(INetworkInterface), CommonName = "NetworkInterface")]
@@ -71,10 +105,28 @@ public class NetworkManager : MonoBehaviour {
 
 	// Client Methods
 
+  /// <summary>
+  /// Starts the local NetworkClient.
+  /// </summary>
+  /// <remarks>
+  /// This does not connect the client to any server. This only opens the
+  /// socket for a client.
+  /// 
+  /// If a client is already active, another client will not be started.
+  /// and the active client will be returned.
+  /// </remarks>
+  /// <param name="config">the NetworkClientConfig used to start the server.</param>
+  /// <returns>the NetworkClient created or fetched.</returns>
 	public INetworkClient StartClient(NetworkClientConfig config) {
 		return Client ?? (Client = new NetworkGameClient(NetworkInterfaceType, config));
 	}
 
+  /// <summary>
+  /// Stops the local NetworkClient.
+  /// </summary>
+  /// <remarks>
+  /// This will forcibly disconnect the client from any connected servers.
+  /// </remarks>
 	public void StopClient() {
 		if (!IsClient) return;
 		Client.Dispose();
@@ -84,10 +136,28 @@ public class NetworkManager : MonoBehaviour {
 
 	// Server Methods
 
+  /// <summary>
+  /// Starts the local NetworkServer.
+  /// </summary>
+  /// <remarks>
+  /// This does not connect the server to any client. This only opens the
+  /// socket for a server.
+  /// 
+  /// If a server is already active, another server will not be started.
+  /// and the active server will be returned.
+  /// </remarks>
+  /// <param name="config">the NetworkServerConfig used to start the server.</param>
+  /// <returns>the NetworkServer created or fetched.</returns>
 	public INetworkServer StartServer(NetworkServerConfig config) {
 		return Server ?? (Server = new NetworkGameServer(NetworkInterfaceType, config));
 	}
 
+  /// <summary>
+  /// Stops the local NetworkServer.
+  /// </summary>
+  /// <remarks>
+  /// This will forcibly disconnect all connected clients.
+  /// </remarks>
 	public void StopServer() {
 		if (!IsServer) return;
 		Server.Dispose();
@@ -97,6 +167,19 @@ public class NetworkManager : MonoBehaviour {
 
 	// Host Methods
 
+  /// <summary>
+  /// Starts the local NetworkServer and NetworkClient, and connects the client to the
+  /// local server.
+  /// </summary>
+  /// <remarks>
+  /// This will open a connection and does not immediately resolve. To assure the
+  /// connection is complete. Await the returned task.
+  /// 
+  /// If a client is already active, another client will not be started.
+  /// and the active client will be returned.
+  /// </remarks>
+  /// <param name="config">the NetworkHostConfig used to start the host.</param>
+  /// <returns>an awaitable task for the resultant NetworkHost</returns>
 	public async Task<NetworkHost> StartHost(NetworkHostConfig config) {
 		StartServer(config.ServerConfig);
 		StartClient(config.ClientConfig);
@@ -104,6 +187,12 @@ public class NetworkManager : MonoBehaviour {
 		return Host;
 	}
 
+  /// <summary>
+  /// Stops both the local client and server..
+  /// </summary>
+  /// <remarks>
+  /// This will forcibly disconnect all connected peers.
+  /// </remarks>
 	public void StopHost() {
 		StopClient();
 		StopServer();

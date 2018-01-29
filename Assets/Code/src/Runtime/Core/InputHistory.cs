@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-//TODO(james7132): Unit test this
-
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// A managed history of a set of inputs.
+/// </summary>
+/// <remarks>
+/// This is internally implemented as a LinkedList, most of the operations on these objects
+/// run in O(n) time.
+/// </remarks>
 public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
 
   private class Element {
@@ -15,20 +20,37 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     public Element Next;
   }
 
+  /// <summary>
+  /// Gets the number of stored inputs
+  /// </summary>
   public int Count { get; private set; }
+
+  /// <summary>
+  /// Gets the most recently stored input in the history.
+  /// </summary>
   public I Latest => Tail.Input;
+
+  /// <summary>
+  /// Gets the oldest stored input's timestamp.
+  /// </summary>
   public uint LastConfirmedTimestep => Head.Timestamp;
 
   Element Head;
   Element Tail;
   uint LastTimestamp;
 
-  // Creates a inputhistory starting at a given timestamp
+  /// <summary>
+  /// Creates a InputHistory starting at a given timestamp
+  /// </summary>
+  /// <param name="startTimestamp">the timestamp to start at</param>
   public InputHistory(uint startTimestamp = 0) {
     LastTimestamp = startTimestamp;
   }
 
-  // Appends a new input to the end of the list
+  /// <summary>
+  /// Appends a new input as the most recent input in the history.
+  /// </summary>
+  /// <param name="input">the new input to add to the history</param>
   public void Append(I input) {
     var newElement = ObjectPool<Element>.Shared.Rent();
     newElement.Timestamp = ++LastTimestamp;
@@ -44,7 +66,17 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     Count++;
   }
 
-  // Merges the given input history with an per tick enumeration of the input.
+  /// <summary>
+  /// Performs an element-wise merge between the history and the
+  /// </summary>
+  /// <remarks>
+  /// Only mutates the history. Any excess inputs will be appended to the end 
+  /// of the history.
+  /// 
+  /// Merges are done with the `IMergable.MergeWith` method of the provided type.
+  /// </remarks>
+  /// <param name="startTimestamp">the timestamp to start the merge.</param>
+  /// <param name="source">an enumeration of inputs to merge into the history.</param>
   public void MergeWith(uint startTimestamp, IEnumerable<I> source) {
     Assert.IsNotNull(source);
     Element currentNode = FindByTimestamp(startTimestamp);
@@ -57,19 +89,15 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     }
   }
 
-  public void DropWhile(Func<I, bool> predicate) {
-    Argument.NotNull(predicate);
-    Drop(e => predicate(e.Input));
-  }
 
-  // Drops all inputs before a given timestamp from the history.
-  public void DropBefore(uint timestamp) => Drop(e => e.Timestamp <  timestamp);
-
-  void Drop(Func<Element, bool> predicate) {
-    Assert.IsNotNull(predicate);
+  /// <summary>
+  /// Drops all inputs before a given timestamp from the history.
+  /// </summary>
+  /// <param name="timestamp">the starting timestamp.</param>
+  public void DropBefore(uint timestamp) {
     var pool = ObjectPool<Element>.Shared;
     Element currentNode = Head;
-    while (currentNode != null && predicate(currentNode)) {
+    while (currentNode != null && currentNode.Timestamp < timestamp) {
       pool.Return(currentNode);
       currentNode = currentNode.Next;
       Count--;
@@ -81,6 +109,11 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     }
   }
 
+  /// <summary>
+  /// Enumerates all the inputs 
+  /// </summary>
+  /// <param name="timestamp"></param>
+  /// <returns></returns>
   public IEnumerable<I> StartingWith(uint timestamp) {
     Element currentNode = FindByTimestamp(timestamp);
     while (currentNode != null) {
@@ -97,7 +130,14 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     return currentNode;
   }
 
-  public IEnumerator<I> GetEnumerator() => StartingWith(0).GetEnumerator();
+  public IEnumerator<I> GetEnumerator() {
+    Element currentNode = Head;
+    while (currentNode != null) {
+      yield return currentNode.Input;
+      currentNode = currentNode.Next;
+    }
+  }
+
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 }

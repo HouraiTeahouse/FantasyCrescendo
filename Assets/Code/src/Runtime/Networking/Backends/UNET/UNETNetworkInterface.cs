@@ -44,7 +44,6 @@ public class UNETNetworkInterface : INetworkInterface {
 
     var config = new ConnectionConfig();
     AddChannel(config, QosType.Reliable, NetworkReliablity.Reliable);
-    AddChannel(config, QosType.StateUpdate, NetworkReliablity.StateUpdate);
     AddChannel(config, QosType.Unreliable, NetworkReliablity.Unreliable);
 
     var hostTopology = new HostTopology(config, (int)GameMode.GlobalMaxPlayers);
