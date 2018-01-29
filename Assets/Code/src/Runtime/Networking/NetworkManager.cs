@@ -1,4 +1,5 @@
 ﻿using HouraiTeahouse.EditorAttributes;
+using HouraiTeahouse.FantasyCrescendo.Matches;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -99,7 +100,7 @@ public class NetworkManager : MonoBehaviour {
 		} else if (IsServer) {
 			return strategy.CreateServer(Server, config);
 		} else {
-			return new GameController(config);
+			return new MatchController(config);
 		}
 	}
 

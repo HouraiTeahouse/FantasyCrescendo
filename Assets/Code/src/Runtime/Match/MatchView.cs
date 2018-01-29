@@ -1,11 +1,12 @@
+using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
-public class GameView : IInitializable<MatchConfig>, IStateView<MatchState> {
+public class MatchView : IInitializable<MatchConfig>, IStateView<MatchState> {
 
   public IStateView<MatchState>[] MatchViews;
   public PlayerView[] PlayerViews;

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
 

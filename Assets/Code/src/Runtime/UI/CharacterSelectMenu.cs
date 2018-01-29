@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.UI {
 
 public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
 

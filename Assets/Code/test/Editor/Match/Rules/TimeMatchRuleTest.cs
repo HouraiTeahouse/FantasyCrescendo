@@ -1,4 +1,7 @@
 ﻿using HouraiTeahouse.FantasyCrescendo;
+using HouraiTeahouse.FantasyCrescendo.Matches;
+using HouraiTeahouse.FantasyCrescendo.Matches.Rules;
+using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;

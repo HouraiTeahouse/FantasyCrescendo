@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+using System.Linq;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 

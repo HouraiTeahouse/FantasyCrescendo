@@ -1,4 +1,4 @@
-﻿namespace HouraiTeahouse.FantasyCrescendo {
+﻿namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public enum MatchResolution {
   HasWinner,

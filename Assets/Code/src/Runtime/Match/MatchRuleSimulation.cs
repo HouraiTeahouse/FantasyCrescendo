@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using HouraiTeahouse.FantasyCrescendo.Stages;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public class MatchRuleSimulation : IMatchSimulation {
 

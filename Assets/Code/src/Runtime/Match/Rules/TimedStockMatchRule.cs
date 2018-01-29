@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches.Rules {
 
 public class TimeStockMatchRule : StockMatchRule {
 

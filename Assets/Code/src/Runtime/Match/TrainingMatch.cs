@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using HouraiTeahouse.FantasyCrescendo.Matches.Rules;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public class TrainingMatch : DefaultMatch {
 

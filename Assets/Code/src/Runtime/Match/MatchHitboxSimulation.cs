@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks; 
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public struct PlayerHitboxCollisions : IComparable<PlayerHitboxCollisions> {
   public uint PlayerID;

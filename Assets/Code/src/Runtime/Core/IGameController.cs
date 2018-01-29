@@ -1,4 +1,4 @@
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 /// <summary>
 /// A top-level controller and manager of a multiplayer game's state.

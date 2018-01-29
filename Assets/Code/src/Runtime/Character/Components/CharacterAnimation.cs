@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 [RequireComponent(typeof(CharacterStateMachine))]
 public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView {

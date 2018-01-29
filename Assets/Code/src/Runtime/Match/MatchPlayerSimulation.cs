@@ -1,3 +1,4 @@
+using HouraiTeahouse.FantasyCrescendo.Players;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Object = UnityEngine.Object;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public class MatchPlayerSimulation : IMatchSimulation {
 

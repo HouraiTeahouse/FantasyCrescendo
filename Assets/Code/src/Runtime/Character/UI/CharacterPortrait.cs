@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters.UI {
 
 public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, IStateView<PlayerConfig> {
 

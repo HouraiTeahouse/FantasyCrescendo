@@ -1,4 +1,4 @@
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Players {
 
 public interface IPlayerSimulation : IPlayerComponent,
                                      ISimulation<PlayerState, PlayerInputContext> {

@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
 

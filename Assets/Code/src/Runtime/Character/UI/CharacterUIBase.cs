@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters.UI {
 
-public abstract class CharacterUIBase : MonoBehaviour, IInitializable<PlayerConfig>, IInitializable<CharacterData> {
+public abstract class CharacterUIBase : MonoBehaviour, IInitializable<PlayerConfig>, 
+                                        IInitializable<CharacterData> {
 
   public CharacterData Character;
 

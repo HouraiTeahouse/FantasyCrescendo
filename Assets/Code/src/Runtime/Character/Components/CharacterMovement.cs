@@ -1,8 +1,9 @@
+using HouraiTeahouse.FantasyCrescendo.Players;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 [RequireComponent(typeof(CharacterPhysics))]
 public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
@@ -38,8 +39,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   
   public PlayerState ResetState(PlayerState state) => state;
 
-  public void Presimulate(PlayerState state) {
-  }
+  public void Presimulate(PlayerState state) { }
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     foreach (var mover in Movers) {
