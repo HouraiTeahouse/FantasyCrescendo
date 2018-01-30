@@ -10,24 +10,12 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
 [Serializable]
 public struct PlayerState {
 
-  // One Player Total: 18-53 bytes
-  // 4 Player: 72-176 bytes
-  //
-  // Send Rate | Minimum | Maximum
-  // -------------------------------
-  // 15/s (x1) | 270     | 795
-  // 15/s (x4) | 4320    | 10560
-  // 30/s (x1) | 540     | 1590
-  // 30/s (x4) | 8640    | 21120
-  // 60/s (x1) | 1080    | 3180
-  // 60/s (x4) | 17280   | 42240
-
-  // TODO(james7132): Generalize this
   [NonSerialized] public MatchState MatchState;
   public bool IsActive => Stocks > 0;
   public bool IsGrabbingLedge => GrabbedLedgeID != 0;
   public bool IsRespawning => RespawnTimeRemaining > 0;
   public bool IsHit => Hitstun > 0;
+  public float StateTime => StateTick * Time.fixedDeltaTime;
 
   public Vector2 Position;                            // 8 bytes
   public Vector2 Velocity;                            // 8 bytes
@@ -41,9 +29,9 @@ public struct PlayerState {
   public uint RespawnTimeRemaining;                   // 1-4 bytes
 
   public int StateHash;                               // 1-4 bytes
-  public float NormalizedStateTime;                   // 4 bytes
+  public uint StateTick;                              // 1-4 bytes
 
-  public uint ShieldDamage;                          // 4 bytes
+  public uint ShieldDamage;                           // 4 bytes
   public uint ShieldRecoveryCooldown;                 // 1-4 bytes
 
   public byte GrabbedLedgeID;                         // 1 byte
@@ -51,7 +39,7 @@ public struct PlayerState {
   public float Damage;                                // 4 bytes
   public uint Hitstun;                                // 1-4 bytes
 
-  public int Stocks;                                  // 4 bytes
+  public sbyte Stocks;                                  // 4 bytes
 
   // TODO(james7132): See if there's a better 
   public override bool Equals(object obj) {
@@ -64,7 +52,7 @@ public struct PlayerState {
     equals &= RemainingJumps == other.RemainingJumps;
     equals &= RespawnTimeRemaining == other.RespawnTimeRemaining;
     equals &= StateHash == other.StateHash;
-    equals &= NormalizedStateTime == other.NormalizedStateTime;
+    equals &= StateTick == other.StateTick;
     equals &= ShieldDamage == other.ShieldDamage;
     equals &= ShieldRecoveryCooldown == other.ShieldRecoveryCooldown;
     equals &= GrabbedLedgeID == other.GrabbedLedgeID;
@@ -83,7 +71,7 @@ public struct PlayerState {
       hash &= 131 * RemainingJumps.GetHashCode();
       hash &= 101 * RespawnTimeRemaining.GetHashCode();
       hash &= 83 *StateHash;
-      hash &= 71 * NormalizedStateTime.GetHashCode();
+      hash &= 71 * StateTick.GetHashCode();
       hash &= 59 * ShieldDamage.GetHashCode();
       hash &= 47 * ShieldRecoveryCooldown.GetHashCode();
       hash &= 43 * GrabbedLedgeID;

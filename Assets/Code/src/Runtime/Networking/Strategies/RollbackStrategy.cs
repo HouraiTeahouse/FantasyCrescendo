@@ -25,17 +25,29 @@ public class RollbackStrategy : INetworkStrategy {
   public sealed class Server : ServerGameController {
 
     readonly InputHistory<MatchInput> InputHistory;
-    readonly MatchInputContext inputContext;
+    readonly MatchInputContext InputContext;
+    readonly NetworkConfig NetworkConfig;
+
+    uint StateSendTimer;
+    MatchInput[] LatestInput;
 
     internal Server(INetworkServer server, MatchConfig config) : base(server, config) {
       // TODO(james7132): Run server simulation for momentary state syncs
       NetworkServer.ReceivedInputs += OnRecievedInputs;
       InputHistory = new InputHistory<MatchInput>();
-      inputContext = new MatchInputContext(config);
+      InputContext = new MatchInputContext(config);
+      LatestInput = new MatchInput[1];
+      LatestInput[0] = new MatchInput(config);
+      NetworkConfig = Config.Get<NetworkConfig>();
+      StateSendTimer = 0;
     }
 
     public override void Update() {
+      StateSendTimer++;
+      if (StateSendTimer < NetworkConfig.StateSendRate) return;
       NetworkServer.BroadcastState(Timestep, CurrentState);
+      NetworkServer.BroadcastInput(Timestep, LatestInput);
+      StateSendTimer = 0;
     }
 
     public override void Dispose() {
@@ -50,12 +62,13 @@ public class RollbackStrategy : INetworkStrategy {
       foreach (var input in InputHistory.TakeWhile(input => input.IsValid)) {
         // TODO(james7132): This should really take into account the prior inputs
         if (!initialized) {
-          inputContext.Reset(input);
+          InputContext.Reset(input);
           initialized = true;
         } else {
-          inputContext.Update(input);
+          InputContext.Update(input);
         }
-        CurrentState = Simulation.Simulate(CurrentState, inputContext);
+        CurrentState = Simulation.Simulate(CurrentState, InputContext);
+        LatestInput[0] = input;
         Timestep++;
       }
     }
@@ -64,29 +77,45 @@ public class RollbackStrategy : INetworkStrategy {
 
   public sealed class Client : ClientGameController {
 
-    InputHistory<MatchInput> InputHistory;
-    MatchInputContext InputContext;
+    readonly InputHistory<MatchInput> InputHistory;
+    readonly MatchInputContext InputContext;
+    readonly NetworkConfig NetworkConfig;
+
+    uint InputSendTimer;
+    MatchInput[] LatestServerInput;
 
     internal Client(INetworkClient client, MatchConfig config) : base(client, config) {
       NetworkClient.OnRecievedState += OnRecievedState;
       InputHistory = new InputHistory<MatchInput>();
       InputContext = new MatchInputContext(config);
+      LatestServerInput = new MatchInput[1];
+      LatestServerInput[0] = new MatchInput(config);
+      NetworkConfig = Config.Get<NetworkConfig>();
+      InputSendTimer = 0;
     }
 
     public override void Update() {
       base.Update();
       var input = InputSource.SampleInput();
       if (InputHistory.Count > 0) {
-        input = input.Predict(InputHistory.Latest);
+        input = input.Predict(LatestServerInput[0]);
       }
       InputHistory.Append(input);
       InputContext.Update(input);
       CurrentState = Simulation.Simulate(CurrentState, InputContext);
+      InputSendTimer++;
+      if (InputSendTimer < NetworkConfig.InputSendRate) return;
       NetworkClient.SendInput(InputHistory.LastConfirmedTimestep, InputHistory.Take(kMaxInputsSent));
+      InputSendTimer = 0;
     }
 
     public override void Dispose() {
       NetworkClient.OnRecievedState -= OnRecievedState;
+    }
+
+    void OnRecievedInputs(uint timestep, IEnumerable<MatchInput> inputs) {
+      if (timestep < Timestep) return;
+      LatestServerInput[0] = inputs.First();
     }
 
     void OnRecievedState(uint timestep, MatchState state) {

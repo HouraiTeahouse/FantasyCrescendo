@@ -165,8 +165,8 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     new[] {JumpStart, JumpAerial}.AddTransitionTo(Jump);
     new[] {Jump, Fall}.AddTransitions(JumpAerial, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump)
                       .AddTransitions(EscapeAir, Input(i => i.Shield.WasPressed));
-    Jump.AddTransition(Idle, ctx => ctx.State.NormalizedStateTime >= 1.0f && ctx.IsGrounded)
-        .AddTransition(Fall, ctx => ctx.State.NormalizedStateTime >= 1.0f && !ctx.IsGrounded);
+    Jump.AddTransition(Idle, ctx => ctx.NormalizedStateTime >= 1.0f && ctx.IsGrounded)
+        .AddTransition(Fall, ctx => ctx.NormalizedStateTime >= 1.0f && !ctx.IsGrounded);
     EscapeAir.AddTransitionTo(FallHelpless);
     new[] {Fall, FallHelpless, EscapeAir}.AddTransitions(Land, ctx => ctx.IsGrounded);
     Land.AddTransitionTo(Idle);
@@ -209,8 +209,8 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
         .AddTransition(LedgeAttack, Attack());
     LedgeJump.AddTransitionTo(Jump);
     new[] {LedgeRelease, LedgeClimb, LedgeEscape, LedgeAttack}
-        .AddTransitions(Idle, ctx => ctx.State.NormalizedStateTime >= 1.0f && ctx.IsGrounded)
-        .AddTransitions(Fall, ctx => ctx.State.NormalizedStateTime >= 1.0f && !ctx.IsGrounded);
+        .AddTransitions(Idle, ctx => ctx.NormalizedStateTime >= 1.0f && ctx.IsGrounded)
+        .AddTransitions(Fall, ctx => ctx.NormalizedStateTime >= 1.0f && !ctx.IsGrounded);
 
     // Shielding
     Idle.AddTransition(Shield.On, Input(i => i.Shield.Current));

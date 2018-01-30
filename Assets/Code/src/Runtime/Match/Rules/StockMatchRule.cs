@@ -51,7 +51,7 @@ public class StockMatchRule : IMatchRule {
 
   void OnPlayerDied(PlayerDiedEvent evt) {
     var state = evt.PlayerState;
-    state.Stocks = Mathf.Max(0, state.Stocks - 1);
+    state.Stocks = (sbyte)Mathf.Max(0, state.Stocks - 1);
     evt.PlayerState = state;
     if (state.Stocks > 0) {
       PlayerUtil.RespawnPlayer(evt);

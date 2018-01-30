@@ -41,7 +41,7 @@ public class MatchState {
     playerStates = new PlayerState[config.PlayerCount];
     Time = config.Time;
     for (var i = 0; i < playerStates.Length; i++) {
-      playerStates[i].Stocks = (int)config.Stocks;
+      playerStates[i].Stocks = (sbyte)config.Stocks;
       playerStates[i].MatchState = this;
     }
   }

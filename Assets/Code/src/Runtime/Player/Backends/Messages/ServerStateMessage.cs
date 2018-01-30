@@ -30,7 +30,7 @@ public class ServerStateMessage : MessageBase {
       writer.Write(state.Velocity);
       writer.Write(state.Damage);
       writer.Write(state.StateHash);
-      writer.Write(state.NormalizedStateTime);
+      writer.WritePackedUInt32(state.StateTick);
       if (state.ShieldDamage != 0) {
         writer.WritePackedUInt32(state.ShieldDamage);
       }
@@ -66,13 +66,13 @@ public class ServerStateMessage : MessageBase {
       state.Velocity = reader.ReadVector2();
       state.Damage = reader.ReadSingle();
       state.StateHash = reader.ReadInt32();
-      state.NormalizedStateTime = reader.ReadSingle();
+      state.StateTick = reader.ReadPackedUInt32();
       state.Direction = (mask & 1 << 0) != 0;
       state.IsFastFalling = (mask & 1 << 1) != 0;
       if ((mask & 1 << 2) != 0) state.ShieldDamage = reader.ReadPackedUInt32();
       if ((mask & 1 << 3) != 0) state.ShieldRecoveryCooldown = reader.ReadPackedUInt32();
       if ((mask & 1 << 4) != 0) state.GrabbedLedgeID = reader.ReadByte();
-      if ((mask & 1 << 5) != 0) state.Stocks = reader.ReadInt32();
+      if ((mask & 1 << 5) != 0) state.Stocks = reader.ReadSByte();
       if ((mask & 1 << 6) != 0) state.Hitstun = reader.ReadPackedUInt32();
       if ((mask & 1 << 7) != 0) state.RemainingJumps = reader.ReadPackedUInt32();
       if ((mask & 1 << 8) != 0) state.RespawnTimeRemaining = reader.ReadPackedUInt32();

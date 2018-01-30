@@ -11,7 +11,7 @@ using NUnit.Framework;
 public class StockMatchRuleTest {
 
   MatchState CreateGameState(int[] stocks) {
-    var states = stocks.Select(s => new PlayerState { Stocks = s }).ToArray();
+    var states = stocks.Select(s => new PlayerState { Stocks = (sbyte)s }).ToArray();
     return new MatchState(states);
   }
 
