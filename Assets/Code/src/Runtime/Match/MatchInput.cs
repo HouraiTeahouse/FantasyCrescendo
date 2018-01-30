@@ -4,11 +4,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
+using Mask = System.Byte;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public struct MatchInput : IMergable<MatchInput> {
 
+  public const int kMaxSupportedPlayers = sizeof(Mask) * 8;
   public PlayerInput[] PlayerInputs;
 
   public int PlayerCount => PlayerInputs?.Length ?? 0;
@@ -63,16 +65,30 @@ public struct MatchInput : IMergable<MatchInput> {
 
   public override string ToString() => $"MatchInput({PlayerInputs?.Length ?? 0})";
 
-  public void Serialize(NetworkWriter writer) {
-    if (PlayerInputs == null) return;
+  public Mask CreateValidMask() {
+    Assert.IsTrue(PlayerInputs.Length <= kMaxSupportedPlayers);
+    Mask mask = 0;
     for (var i = 0; i < PlayerInputs.Length; i++) {
+      mask |= (Mask)(PlayerInputs[i].IsValid ? 1 << i : 0);
+    }
+    return mask;
+  }
+
+  public void Serialize(NetworkWriter writer, Mask mask) {
+    if (PlayerInputs == null) return;
+    Assert.IsTrue(PlayerInputs.Length <= kMaxSupportedPlayers);
+    for (var i = 0; i < PlayerInputs.Length; i++) {
+      if ((mask & (1 << i)) == 0) continue;
+      Assert.IsTrue(PlayerInputs[i].IsValid);
       PlayerInputs[i].Serialize(writer);
     }
   }
 
-  public static MatchInput Deserialize(NetworkReader reader, int players) {
+  public static MatchInput Deserialize(NetworkReader reader, int players, Mask mask) {
+    Assert.IsTrue(players <= kMaxSupportedPlayers);
     var inputs = new PlayerInput[players];
     for (var i = 0; i < inputs.Length; i++) {
+      if ((mask & (1 << i)) == 0) continue;
       inputs[i] = PlayerInput.Deserialize(reader);
     }
     return new MatchInput { PlayerInputs = inputs };

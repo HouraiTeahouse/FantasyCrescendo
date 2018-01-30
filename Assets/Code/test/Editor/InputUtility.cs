@@ -15,6 +15,18 @@ public static class InputUtility {
     };
   }
 
+  public static void ForceValid(ref MatchInput input, int mask) {
+    for (var i = 0; i < input.PlayerInputs.Length; i++) {
+      input.PlayerInputs[i].IsValid = (mask & (1 << i)) != 0;
+    }
+  }
+
+  public static void ForceValid(MatchInput[] inputs, int mask) {
+    for (var i = 0; i < inputs.Length; i++) {
+      ForceValid(ref inputs[i], mask);
+    }
+  }
+
   public static MatchInput RandomInput(int players) {
     return new MatchInput {
       PlayerInputs = Enumerable.Range(0, players).Select(_ => RandomPlayerInput()).ToArray()

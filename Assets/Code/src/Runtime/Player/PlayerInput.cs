@@ -62,6 +62,7 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
   public override bool Equals(object obj) {
     if (!(obj is PlayerInput)) return false;
     var other = (PlayerInput)obj;
+    if (!IsValid && !other.IsValid) return true;
     var equals = Movement.Equals(other.Movement) && Smash.Equals(other.Smash);
     return equals && Buttons == other.Buttons;
   }
