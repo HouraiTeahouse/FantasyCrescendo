@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -82,13 +83,13 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     Element currentNode = FindByTimestamp(startTimestamp);
     IEnumerator<I> enumerator = source.GetEnumerator();
     while (currentNode != null && enumerator.MoveNext()) {
+      Debug.Log($"{currentNode.Timestamp} {startTimestamp} {Count}");
       currentNode.Input.MergeWith(enumerator.Current);
     }
     while (enumerator.MoveNext()) {
       Append(enumerator.Current);
     }
   }
-
 
   /// <summary>
   /// Drops all inputs before a given timestamp from the history.

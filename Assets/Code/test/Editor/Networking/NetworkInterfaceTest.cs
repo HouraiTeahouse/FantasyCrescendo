@@ -29,21 +29,6 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
   [TearDown]
   public void TearDown() => Host.Dispose();
 
-  PlayerInput RandomPlayerInput() {
-    return new PlayerInput {
-      Movement = Random.insideUnitCircle,
-      Smash = Vector2.zero,
-      Buttons = (byte)Random.Range(0, 255),
-    };
-  }
-
-  IEnumerable<MatchInput> RandomInput(int count, int players) {
-    for (int i = 0; i < count; i++ ) {
-      yield return new MatchInput {
-        PlayerInputs = Enumerable.Range(0, players).Select(_ => RandomPlayerInput()).ToArray()
-      };
-    }
-  }
 
   IEnumerator RunTest(Action prepare, Func<bool> check, Action validate) {
     Host = NetworkHost.Create(typeof(T), CreateHostConfig());
@@ -106,7 +91,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
 	[UnityTest]
 	public IEnumerator Server_BroadcastInput() {
     uint serverTimestamp = 42;
-    var serverInputs = RandomInput(20, 4).ToArray();
+    var serverInputs = InputUtility.RandomInput(20, 4).ToArray();
     uint? clientTimestamp = null;
     IEnumerable<MatchInput> clientInputs = null;
     return RunTest(() => {
@@ -168,7 +153,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
 	[UnityTest]
 	public IEnumerator Client_SendInput() {
     uint clientTimestamp = 42;
-    var clientInputs = RandomInput(20, 4).ToArray();
+    var clientInputs = InputUtility.RandomInput(20, 4).ToArray();
     uint? serverTimestamp = null;
     IEnumerable<MatchInput> serverInputs = null;
     return RunTest(() => {
