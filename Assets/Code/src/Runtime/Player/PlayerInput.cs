@@ -125,7 +125,7 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
 /// A data object for managing the state and change of a single
 /// player's input over two ticks of gameplay.
 /// </summary>
-public class PlayerInputContext : IValidatable {
+public struct PlayerInputContext : IValidatable {
 
   public PlayerInput Previous;
   public PlayerInput Current;

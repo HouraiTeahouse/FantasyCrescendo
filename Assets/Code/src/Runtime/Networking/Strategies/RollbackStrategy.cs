@@ -61,7 +61,7 @@ public class RollbackStrategy : INetworkStrategy {
       foreach (var input in InputHistory.TakeWhile(input => input.IsValid)) {
         // TODO(james7132): This should really take into account the prior inputs
         if (!initialized) {
-          InputContext.Reset(input);
+          InputContext.Reset(input, input);
           initialized = true;
         } else {
           InputContext.Update(input);
@@ -122,11 +122,13 @@ public class RollbackStrategy : INetworkStrategy {
       if (timestep < Timestep) return;
       Timestep = timestep;
       InputHistory.DropBefore(Timestep);
-      Assert.AreEqual(InputHistory.LastConfirmedTimestep, timestep);
+      // Assert.AreEqual(InputHistory.LastConfirmedTimestep, timestep);
       bool reset = false;
       foreach (var input in InputHistory) {
+        Assert.IsTrue(input.IsValid, "Stored input is not valid!");
         if (!reset) {
-          InputContext.Reset(input);
+          // TODO(james7132): Properly start this off with the continuation of input.
+          InputContext.Reset(input, input);
           reset = true;
         } else {
           InputContext.Update(input);

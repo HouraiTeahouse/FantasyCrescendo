@@ -37,12 +37,20 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
     PlayerInputs = null;
   }
 
-  public bool IsValid => PlayerInputs.IsAllValid();
+  public bool IsValid {
+    get { 
+      bool isValid = true;
+      for (var i = 0; i < PlayerCount; i++) {
+        isValid &= PlayerInputs[i].IsValid;
+      }
+      return isValid;
+    }
+  }
 
   public void Predict(MatchInput baseInput) => ForceValid(PlayerInputs, true);
 
   public void MergeWith(MatchInput otherInput) {
-    Assert.IsTrue(PlayerCount >= otherInput.PlayerInputs.Length);
+    Assert.IsTrue(PlayerCount >= otherInput.PlayerCount);
     for (int i = 0; i < PlayerCount; i++) {
       if (!PlayerInputs[i].IsValid && otherInput.PlayerInputs[i].IsValid) {
         PlayerInputs[i] = otherInput.PlayerInputs[i];
@@ -132,7 +140,9 @@ public class MatchInputContext {
   }
 
   public void Reset(MatchInput current) {
-    PlayerInputs = new PlayerInputContext[current.PlayerInputs.Length];
+    if (PlayerInputs?.Length != current.PlayerCount) {
+      PlayerInputs = new PlayerInputContext[current.PlayerCount];
+    }
     for (int i = 0; i < PlayerInputs.Length; i++) {
       PlayerInputs[i] = new PlayerInputContext {
         Current = current.PlayerInputs[i]
@@ -146,8 +156,8 @@ public class MatchInputContext {
   }
 
   public void Update(MatchInput input) {
-    Assert.AreEqual(input.PlayerCount, input.PlayerInputs.Length);
-    for (int i = 0; i < input.PlayerInputs.Length; i++) {
+    Assert.AreEqual(PlayerInputs.Length, input.PlayerCount);
+    for (int i = 0; i < input.PlayerCount; i++) {
       PlayerInputs[i].Update(input.PlayerInputs[i]);
     }
   }
