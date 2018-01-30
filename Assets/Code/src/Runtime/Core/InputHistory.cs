@@ -34,18 +34,19 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
   /// <summary>
   /// Gets the oldest stored input's timestamp.
   /// </summary>
-  public uint LastConfirmedTimestep => Head.Timestamp;
+  public uint LastConfirmedTimestep { get; private set; }
 
   Element Head;
   Element Tail;
-  uint LastTimestamp;
+  uint LastTimestep;
 
   /// <summary>
   /// Creates a InputHistory starting at a given timestamp
   /// </summary>
   /// <param name="startTimestamp">the timestamp to start at</param>
   public InputHistory(uint startTimestamp = 0) {
-    LastTimestamp = startTimestamp;
+    LastTimestep = startTimestamp;
+    LastConfirmedTimestep = startTimestamp;
   }
 
   /// <summary>
@@ -54,7 +55,7 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
   /// <param name="input">the new input to add to the history</param>
   public void Append(I input) {
     var newElement = ObjectPool<Element>.Shared.Rent();
-    newElement.Timestamp = ++LastTimestamp;
+    newElement.Timestamp = ++LastTimestep;
     newElement.Input = input;
     newElement.Next = null;
     if (Tail != null) {
@@ -62,6 +63,7 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     }
     if (Head == null) {
       Head = newElement;
+      LastConfirmedTimestep = newElement.Timestamp;
     }
     Tail = newElement;
     Count++;
@@ -111,12 +113,13 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     while (currentNode != null && currentNode.Timestamp < timestamp) {
       pool.Return(currentNode);
       (currentNode.Input as IDisposable)?.Dispose();
+      LastConfirmedTimestep = currentNode.Timestamp;
       currentNode = currentNode.Next;
       Count--;
     }
     Head = currentNode;
     if (Head == null && Tail != null) {
-      LastTimestamp = Tail.Timestamp;
+      LastTimestep = Tail.Timestamp;
       Tail = null;
     }
   }

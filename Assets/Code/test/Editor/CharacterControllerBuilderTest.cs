@@ -192,7 +192,6 @@ public class CharacterControllerBuilderTest {
   }
 
   void TestTransition(string src, string dst, CharacterContext context) {
-    if (context.Input == null) context.Input = new PlayerInputContext();
     _stateController.SetState(_stateMap[src]);
     _stateController.UpdateState(context);
     Assert.AreEqual(dst, _stateController.CurrentState.Name);
