@@ -10,7 +10,7 @@ public class TestInputSource : IInputSource<MatchInput> {
 
   public TestInputSource(MatchConfig config) {
     input = new MatchInput(config);
-    for (int i = 0; i < input.PlayerInputs.Length; i++) {
+    for (int i = 0; i < input.PlayerCount; i++) {
       input.PlayerInputs[i].IsValid = true;
     }
   }
@@ -23,7 +23,7 @@ public class TestInputSource : IInputSource<MatchInput> {
       IsValid = true
     };
     var inputValue = input.Clone();
-    for (int i = 0; i < inputValue.PlayerInputs.Length; i++) {
+    for (int i = 0; i < inputValue.PlayerCount; i++) {
       if (i == 0)
         inputValue.PlayerInputs[i] = playerInput;
     }

@@ -8,41 +8,49 @@ using Mask = System.Byte;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
-public struct MatchInput : IMergable<MatchInput> {
+public struct MatchInput : IMergable<MatchInput>, IDisposable {
 
   public const int kMaxSupportedPlayers = sizeof(Mask) * 8;
+  public int PlayerCount { get; }
+
+  /// <summary> The collection of all player inputs. </summary>
+  /// <remarks> This array may be larger than PlayerCount. </remarks>
   public PlayerInput[] PlayerInputs;
 
-  public int PlayerCount => PlayerInputs?.Length ?? 0;
-
   public MatchInput(int playerCount) {
-    PlayerInputs = new PlayerInput[playerCount];
+    PlayerCount = playerCount;
+    PlayerInputs = ArrayPool<PlayerInput>.Shared.Rent(PlayerCount);
+    Array.Clear(PlayerInputs, 0, PlayerCount);
   }
 
-  public MatchInput(MatchConfig config) {
-    PlayerInputs = new PlayerInput[config.PlayerCount];
+  public MatchInput(MatchConfig config) : this(config.PlayerConfigs.Length) {}
+
+  MatchInput(MatchInput input) {
+    PlayerCount = input.PlayerCount;
+    PlayerInputs = ArrayPool<PlayerInput>.Shared.Rent(PlayerCount);
+    Array.Copy(input.PlayerInputs, 0, PlayerInputs, 0, PlayerCount);
+  }
+
+  public void Dispose() {
+    if (PlayerInputs == null) return;
+    ArrayPool<PlayerInput>.Shared.Return(PlayerInputs);
+    PlayerInputs = null;
   }
 
   public bool IsValid => PlayerInputs.IsAllValid();
 
-  public MatchInput Predict(MatchInput baseInput) {
-    var clone = Clone();
-    ForceValid(clone.PlayerInputs, true);
-    return clone;
-  }
+  public void Predict(MatchInput baseInput) => ForceValid(PlayerInputs, true);
 
   public void MergeWith(MatchInput otherInput) {
-    Assert.IsTrue(PlayerInputs.Length >= otherInput.PlayerInputs.Length);
-    for (int i = 0; i < PlayerInputs.Length; i++) {
+    Assert.IsTrue(PlayerCount >= otherInput.PlayerInputs.Length);
+    for (int i = 0; i < PlayerCount; i++) {
       if (!PlayerInputs[i].IsValid && otherInput.PlayerInputs[i].IsValid) {
         PlayerInputs[i] = otherInput.PlayerInputs[i];
       }
     }
   }
 
-  internal void Reset() {
-    ForceValid(PlayerInputs, false);
-  }
+  internal void Reset() => ForceValid(PlayerInputs, false);
 
   static void ForceValid(PlayerInput[] inputs, bool valid) {
     for (int i = 0; i < inputs.Length; i++) {
@@ -50,25 +58,28 @@ public struct MatchInput : IMergable<MatchInput> {
     }
   }
 
-  public MatchInput Clone() {
-    return new MatchInput {
-      PlayerInputs = (PlayerInput[]) PlayerInputs.Clone()
-    };
-  }
+  public MatchInput Clone() => new MatchInput(this);
 
   public override bool Equals(object obj) {
-    if (typeof(MatchInput) != obj.GetType()) return false;
-    return ArrayUtil.AreEqual(PlayerInputs, ((MatchInput)obj).PlayerInputs);
+    if (!(obj is MatchInput)) return false;
+    var other = (MatchInput)obj;
+    if (PlayerInputs == null || other.PlayerInputs == null) return false;
+    if (PlayerCount != other.PlayerCount) return false;
+    bool equal = true;
+    for (var i = 0; i < PlayerCount; i++) {
+      equal &= PlayerInputs[i].Equals(other.PlayerInputs[i]);
+    }
+    return equal;
   }
 
   public override int GetHashCode() => ArrayUtil.GetOrderedHash(PlayerInputs);
 
-  public override string ToString() => $"MatchInput({PlayerInputs?.Length ?? 0})";
+  public override string ToString() => $"MatchInput({PlayerCount})";
 
   public Mask CreateValidMask() {
-    Assert.IsTrue(PlayerInputs.Length <= kMaxSupportedPlayers);
+    Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
     Mask mask = 0;
-    for (var i = 0; i < PlayerInputs.Length; i++) {
+    for (var i = 0; i < PlayerCount; i++) {
       mask |= (Mask)(PlayerInputs[i].IsValid ? 1 << i : 0);
     }
     return mask;
@@ -76,8 +87,8 @@ public struct MatchInput : IMergable<MatchInput> {
 
   public void Serialize(NetworkWriter writer, Mask mask) {
     if (PlayerInputs == null) return;
-    Assert.IsTrue(PlayerInputs.Length <= kMaxSupportedPlayers);
-    for (var i = 0; i < PlayerInputs.Length; i++) {
+    Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
+    for (var i = 0; i < PlayerCount; i++) {
       if ((mask & (1 << i)) == 0) continue;
       Assert.IsTrue(PlayerInputs[i].IsValid);
       PlayerInputs[i].Serialize(writer);
@@ -86,12 +97,12 @@ public struct MatchInput : IMergable<MatchInput> {
 
   public static MatchInput Deserialize(NetworkReader reader, int players, Mask mask) {
     Assert.IsTrue(players <= kMaxSupportedPlayers);
-    var inputs = new PlayerInput[players];
-    for (var i = 0; i < inputs.Length; i++) {
+    var input = new MatchInput(players);
+    for (var i = 0; i < input.PlayerCount; i++) {
       if ((mask & (1 << i)) == 0) continue;
-      inputs[i] = PlayerInput.Deserialize(reader);
+      input.PlayerInputs[i] = PlayerInput.Deserialize(reader);
     }
-    return new MatchInput { PlayerInputs = inputs };
+    return input;
   }
 
 }
@@ -132,6 +143,7 @@ public class MatchInputContext {
   }
 
   public void Update(MatchInput input) {
+    Assert.AreEqual(input.PlayerCount, input.PlayerInputs.Length);
     for (int i = 0; i < input.PlayerInputs.Length; i++) {
       PlayerInputs[i].Update(input.PlayerInputs[i]);
     }

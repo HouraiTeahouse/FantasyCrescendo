@@ -99,9 +99,7 @@ public class RollbackStrategy : INetworkStrategy {
     public override void Update() {
       base.Update();
       var input = InputSource.SampleInput();
-      if (InputHistory.Count > 0) {
-        input = input.Predict(LatestServerInput[0]);
-      }
+      input.Predict(LatestServerInput[0]);
       InputHistory.Append(input);
       InputContext.Update(input);
       CurrentState = Simulation.Simulate(CurrentState, InputContext);
