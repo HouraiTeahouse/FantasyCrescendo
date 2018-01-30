@@ -46,9 +46,9 @@ public sealed class LockstepStrategy : INetworkStrategy {
     }
 
     void OnRecievedInputs(uint player, uint timestep,
-                          IEnumerable<MatchInput> inputs) {
+                          ArraySlice<MatchInput> inputs) {
       if (timestep != Timestep) return;
-      NextInput.MergeWith(inputs.First());
+      NextInput.MergeWith(inputs[0]);
       if (!NextInput.IsValid) return;
       CurrentInput = NextInput;
       NextInput = CurrentInput.Clone();
@@ -91,10 +91,10 @@ public sealed class LockstepStrategy : INetworkStrategy {
       NetworkClient.OnRecievedState -= OnRecievedState;
     }
 
-    void OnRecievedInputs(uint timestep, IEnumerable<MatchInput> inputs) {
+    void OnRecievedInputs(uint timestep, ArraySlice<MatchInput> inputs) {
       //TODO(james7132): Cache/buffer inputs to smooth out gameplay
       if (timestep != Timestep + 1) return;
-      var newInput = inputs.First();
+      var newInput = inputs[0];
       Assert.IsTrue(newInput.IsValid);
       CurrentInput = newInput;
     }

@@ -12,7 +12,7 @@ public class NetworkGameServer : INetworkServer {
   readonly INetworkInterface NetworkInterface;
 
   public ICollection<NetworkClientPlayer> Clients => clients.Values;
-  public event Action<uint, uint, IEnumerable<MatchInput>> ReceivedInputs;
+  public event Action<uint, uint, ArraySlice<MatchInput>> ReceivedInputs;
   public event Action<NetworkClientPlayer> PlayerAdded;
   public event Action<NetworkClientPlayer> PlayerUpdated;
   public event Action<uint> PlayerRemoved;
@@ -50,9 +50,12 @@ public class NetworkGameServer : INetworkServer {
 	}
 
   public void BroadcastInput(uint startTimestamp, IEnumerable<MatchInput> input) {
+    int inputCount;
+    var inputs = ArrayUtil.ConvertToArray(input, out inputCount);
     NetworkInterface.Connections.SendToAll(MessageCodes.UpdateInput, new InputSetMessage {
       StartTimestamp = startTimestamp,
-      Inputs = input.ToArray()
+      InputCount = (uint)inputCount,
+      Inputs = inputs
     }, NetworkReliablity.Unreliable);
   }
 
@@ -112,7 +115,7 @@ public class NetworkGameServer : INetworkServer {
     var inputSet = message.ReadAs<InputSetMessage>();
     ReceivedInputs(message.Connection.Id,
                    inputSet.StartTimestamp,
-                   inputSet.Inputs);
+                   inputSet.Inputs.GetSlice(inputSet.InputCount));
   }
 
   byte LowestAvailablePlayerID(uint connectionId) {

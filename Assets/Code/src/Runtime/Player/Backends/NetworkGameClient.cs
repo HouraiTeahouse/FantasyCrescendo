@@ -15,7 +15,7 @@ public class NetworkGameClient : INetworkClient {
 
   public event Action<MatchConfig> OnMatchConfigUpdated;
 
-  public event Action<uint, IEnumerable<MatchInput>> OnRecievedInputs;
+  public event Action<uint, ArraySlice<MatchInput>> OnRecievedInputs;
   public event Action<uint, MatchState> OnRecievedState;
   public event Action<bool> OnServerReady;
 
@@ -66,9 +66,12 @@ public class NetworkGameClient : INetworkClient {
   }
 
   public void SendInput(uint startTimestamp, IEnumerable<MatchInput> input) {
+    int inputCount;
+    var inputs = ArrayUtil.ConvertToArray(input, out inputCount);
     ServerConnection?.Send(MessageCodes.UpdateInput, new InputSetMessage {
       StartTimestamp = startTimestamp,
-      Inputs = input.ToArray()
+      InputCount = (uint)inputCount,
+      Inputs = inputs
     }, NetworkReliablity.Unreliable);
   }
 
@@ -89,7 +92,9 @@ public class NetworkGameClient : INetworkClient {
   void OnFinishMatch(MatchFinishMessage message) => OnMatchFinished?.Invoke(message.MatchResult);
   void OnUpdateConfig(ServerUpdateConfigMessage message) => OnMatchConfigUpdated?.Invoke(message.MatchConfig);
   void OnGetState(ServerStateMessage message) => OnRecievedState?.Invoke(message.Timestamp, message.State);
-  void OnGetInput(InputSetMessage message) => OnRecievedInputs?.Invoke(message.StartTimestamp, message.Inputs);
+  void OnGetInput(InputSetMessage message) {
+    OnRecievedInputs?.Invoke(message.StartTimestamp, message.Inputs.GetSlice(message.InputCount)); 
+  }
   void OnSetServerReady(PeerReadyMessage message) {
     IsServerReady = message.IsReady;
     OnServerReady?.Invoke(IsServerReady);

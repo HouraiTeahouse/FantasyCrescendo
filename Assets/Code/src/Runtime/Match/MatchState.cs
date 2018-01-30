@@ -15,32 +15,36 @@ public class MatchState {
   public uint Time;
 
   PlayerState[] playerStates;
-  public int PlayerCount => playerStates.Length;
+  public int PlayerCount { get; }
   public IEnumerable<PlayerState> PlayerStates => playerStates.Select(x => x);
 
-  public MatchState() {
-    playerStates = new PlayerState[GameMode.GlobalMaxPlayers];
-    UpdatePlayerStates();
-  }
+  public MatchState() : this((int)GameMode.GlobalMaxPlayers) { }
 
   public MatchState(int playerCount) {
-    playerStates = new PlayerState[playerCount];
+    PlayerCount = playerCount;
+    playerStates = ArrayPool<PlayerState>.Shared.Rent((int)PlayerCount);
     UpdatePlayerStates();
   }
 
   public MatchState(IEnumerable<PlayerState> playerStates) {
     this.playerStates = playerStates.ToArray();
+    PlayerCount = this.playerStates.Length;
     UpdatePlayerStates();
+  }
+
+  ~MatchState() {
+    if (playerStates == null) return;
+    ArrayPool<PlayerState>.Shared.Return(playerStates);
+    playerStates = null;
   }
 
   /// <summary>
   /// Constructs a new GameState based on a given GameConfig.
   /// </summary>
   /// <param name="config">the configuration for the game.</param>
-  public MatchState(MatchConfig config) {
-    playerStates = new PlayerState[config.PlayerCount];
+  public MatchState(MatchConfig config) : this(config.PlayerCount) {
     Time = config.Time;
-    for (var i = 0; i < playerStates.Length; i++) {
+    for (var i = 0; i < PlayerCount; i++) {
       playerStates[i].Stocks = (sbyte)config.Stocks;
       playerStates[i].MatchState = this;
     }
@@ -51,8 +55,8 @@ public class MatchState {
   /// </summary>
   /// <returns>a deep cloned copy of the state.</returns>
   public MatchState Clone() {
-    MatchState clone = this;
-    clone.playerStates = (PlayerState[]) playerStates.Clone();
+    var clone = (MatchState)MemberwiseClone();
+    Array.Copy(playerStates, clone.playerStates, PlayerCount);
     return clone;
   }
 
@@ -63,21 +67,26 @@ public class MatchState {
   }
 
   public override bool Equals(object obj) {
-    if (typeof(MatchState) != obj.GetType()) return false;
-    var other = (MatchState)obj;
-    return Time == other.Time && ArrayUtil.AreEqual(playerStates, other.playerStates);
+    var other = obj as MatchState;
+    if (other == null) return false;
+    if (Time != other.Time || PlayerCount != other.PlayerCount) return false;
+    bool equal = true;
+    for (var i = 0; i < PlayerCount; i++) {
+      equal &= playerStates[i].Equals(other.playerStates[i]);
+    }
+    return equal;
   }
 
   public override int GetHashCode() {
     int hash = Time.GetHashCode();
-    for (var i = 0; i < playerStates.Length; i++) {
+    for (var i = 0; i < PlayerCount; i++) {
       hash ^= playerStates[i].GetHashCode();
     }
     return hash;
   }
 
   void UpdatePlayerStates() {
-    for (var i = 0; i < playerStates.Length; i++) {
+    for (var i = 0; i < PlayerCount; i++) {
       playerStates[i].MatchState = this;
     }
   }

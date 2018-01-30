@@ -35,7 +35,7 @@ public class UNETNetworkInterface : INetworkInterface {
     connections = new List<INetworkConnection>();
     Connections = new ReadOnlyCollection<INetworkConnection>(connections);
 
-    readBuffer = new byte[NetworkMessage.MaxMessageSize];
+    readBuffer = ArrayPool<byte>.Shared.Rent(NetworkMessage.MaxMessageSize);
     messageReader = new NetworkReader(readBuffer);
   }
 
@@ -117,8 +117,11 @@ public class UNETNetworkInterface : INetworkInterface {
   }
 
   public void Dispose() {
+    if (disposed) return;
     NetworkTransport.RemoveHost(HostID);
+    ArrayPool<byte>.Shared.Return(readBuffer);
     disposed = true;
+    readBuffer=  null;
   }
 
   void AddChannel(ConnectionConfig config, QosType qos, NetworkReliablity reliablity) {
