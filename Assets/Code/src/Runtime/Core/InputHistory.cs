@@ -100,6 +100,7 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     Element currentNode = Head;
     while (currentNode != null && currentNode.Timestamp < timestamp) {
       pool.Return(currentNode);
+      (currentNode.Input as IDisposable)?.Dispose();
       currentNode = currentNode.Next;
       Count--;
     }

@@ -2,7 +2,6 @@
 using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public static class InputUtility {
@@ -16,7 +15,7 @@ public static class InputUtility {
   }
 
   public static void ForceValid(ref MatchInput input, int mask) {
-    for (var i = 0; i < input.PlayerInputs.Length; i++) {
+    for (var i = 0; i < input.PlayerCount; i++) {
       input.PlayerInputs[i].IsValid = (mask & (1 << i)) != 0;
     }
   }
@@ -28,9 +27,11 @@ public static class InputUtility {
   }
 
   public static MatchInput RandomInput(int players) {
-    return new MatchInput {
-      PlayerInputs = Enumerable.Range(0, players).Select(_ => RandomPlayerInput()).ToArray()
-    };
+    var input = new MatchInput(players);
+    for (var i = 0; i < input.PlayerCount; i++) {
+      input.PlayerInputs[i] = RandomPlayerInput();
+    }
+    return input;
   }
 
   public static IEnumerable<MatchInput> RandomInput(int count, int players) {

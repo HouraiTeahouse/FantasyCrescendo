@@ -5,15 +5,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public class InControlInputSource : IInputSource<MatchInput> {
 
-  MatchConfig config;
   MatchInput input;
   // TODO(james7132): Support multiple with player level configurations.
-  PlayerControllerMapping controllerMapping;
+  readonly PlayerControllerMapping controllerMapping;
+  readonly MatchConfig config;
 
   public InControlInputSource(MatchConfig config) {
     this.config = config;
@@ -24,7 +25,7 @@ public class InControlInputSource : IInputSource<MatchInput> {
   public MatchInput SampleInput() {
     var devices = InputManager.Devices;
     var newInput = input.Clone();
-    for (var i = 0; i < config.PlayerConfigs.Length; i++) {
+    for (var i = 0; i < newInput.PlayerCount; i++) {
       var playerConfig = config.PlayerConfigs[i];
       if (!playerConfig.IsLocal) {
         newInput.PlayerInputs[i] = new PlayerInput { IsValid = false };
