@@ -39,7 +39,8 @@ public class CharacterControllerBuilderTest {
       }};
     }
     yield return new object[] {"LedgeGrab", "LedgeIdle", new CharacterContext { 
-      State = new PlayerState { NormalizedStateTime = 1.0f }
+      State = new PlayerState { StateTick = 101 },
+      StateLength = 100 * Time.fixedDeltaTime
     }};
     yield return new object[] {"LedgeIdle", "LedgeRelease", new CharacterContext {
       Input = CreateInput(new PlayerInput { Movement = new Vector2(0, -1) })
@@ -172,17 +173,20 @@ public class CharacterControllerBuilderTest {
     };
     foreach(var kvp in cases) {
       yield return new object[] {kvp.Key, kvp.Value, new CharacterContext {
-        State = new PlayerState { NormalizedStateTime = 1.0f },
+        State = new PlayerState { StateTick = 101 },
+        StateLength = 100 * Time.fixedDeltaTime,
         CanJump = true,
         Input = CreateInput(new PlayerInput())
       }};
     }
     yield return new object[] {"TiltDown", "Crouch", new CharacterContext {
-      State = new PlayerState { NormalizedStateTime = 1.0f },
+      State = new PlayerState { StateTick = 100 },
+      StateLength = 100 * Time.fixedDeltaTime,
       Input = CreateInput(new PlayerInput { Movement = -Vector2.up })
     }};
     yield return new object[] {"Dash", "Run", new CharacterContext {
-      State = new PlayerState { NormalizedStateTime = 1.0f },
+      State = new PlayerState { StateTick = 100 },
+      StateLength = 100 * Time.fixedDeltaTime,
       Input = CreateInput(new PlayerInput { Movement = Vector2.right})
     }};
   }
@@ -198,9 +202,10 @@ public class CharacterControllerBuilderTest {
   public void automatic_exits(string src, string dst, CharacterContext context = null) {
     TestTransition(src, dst, context ?? new CharacterContext {
       State = new PlayerState {
-        NormalizedStateTime = 1.0f,
+        StateTick = 101,
         ShieldDamage = 100
-      }
+      },
+      StateLength = 100 * Time.fixedDeltaTime
     });
   }        
 

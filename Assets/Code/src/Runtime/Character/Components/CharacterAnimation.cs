@@ -40,7 +40,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     Director.time += Time.fixedDeltaTime;
     Director.Evaluate();
-    state.NormalizedStateTime = (float)(Director.time / Director.duration);
+    state.StateTick++;
     ApplyState(state);
     return state;
   }
@@ -54,11 +54,10 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
 
   void PlayState(PlayerState state) {
     var timeline = StateMachine.StateData.Timeline;
-    var time = state.NormalizedStateTime * timeline.duration;
     if (timeline != Director.playableAsset) {
       Director.Play(timeline);
     }
-    Director.time = time % Director.duration;
+    Director.time = state.StateTime % Director.duration;
     Director.Evaluate();
   }
 

@@ -40,6 +40,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     context.Input = input;
     context.IsGrounded = Physics.IsGrounded;
     context.CanJump = state.RemainingJumps > 0;
+    context.StateLength = StateController.CurrentState.Data.Length;
 
     StateController.UpdateState(context);
     

@@ -21,15 +21,15 @@ public class CharacterState : State<CharacterContext> {
   public CharacterState AddTransitionTo(CharacterState state, 
                                         Func<CharacterContext, bool> extraCheck = null) {
     if (extraCheck != null)
-      AddTransition(ctx => ctx.State.NormalizedStateTime >= 1.0f && extraCheck(ctx) ? state : null);
+      AddTransition(ctx => ctx.NormalizedStateTime >= 1.0f && extraCheck(ctx) ? state : null);
     else
-      AddTransition(ctx => ctx.State.NormalizedStateTime >= 1.0f ? state : null);
+      AddTransition(ctx => ctx.NormalizedStateTime >= 1.0f ? state : null);
     return this;
   }
 
   public override State<CharacterContext> Passthrough(CharacterContext context) {
     var altContext = context.Clone();
-    altContext.State.NormalizedStateTime = float.PositiveInfinity;
+    altContext.State.StateTick = uint.MaxValue;
     return EvaluateTransitions(altContext);
   }
 
@@ -63,7 +63,7 @@ public static class CharacterStateExtensions {
 public static IEnumerable<CharacterState> AddTransitionTo(this IEnumerable<CharacterState> states,
                                                           State<CharacterContext> state) {
   foreach (CharacterState characterState in states)
-    characterState.AddTransition(ctx => ctx.State.NormalizedStateTime >= 1.0f ? state : null);
+    characterState.AddTransition(ctx => ctx.NormalizedStateTime >= 1.0f ? state : null);
   return states;
 }
 
