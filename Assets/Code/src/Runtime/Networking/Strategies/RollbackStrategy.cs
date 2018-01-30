@@ -123,7 +123,9 @@ public class RollbackStrategy : INetworkStrategy {
 
     void OnRecievedState(uint timestep, MatchState state) {
       if (timestep < Timestep) return;
+      Timestep = timestep;
       InputHistory.DropBefore(Timestep);
+      Assert.AreEqual(InputHistory.LastConfirmedTimestep, timestep);
       bool reset = false;
       foreach (var input in InputHistory) {
         if (!reset) {
@@ -135,7 +137,6 @@ public class RollbackStrategy : INetworkStrategy {
         state = Simulation.Simulate(state, InputContext);
       }
       CurrentState = state;
-      Timestep = timestep;
     }
 
   }

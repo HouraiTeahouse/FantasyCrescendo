@@ -11,7 +11,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;
-using Random = UnityEngine.Random;
+using Random = System.Random;
 
 public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, new() {
 
@@ -28,7 +28,6 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
 
   [TearDown]
   public void TearDown() => Host.Dispose();
-
 
   IEnumerator RunTest(Action prepare, Func<bool> check, Action validate) {
     Host = NetworkHost.Create(typeof(T), CreateHostConfig());
@@ -92,6 +91,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
 	public IEnumerator Server_BroadcastInput() {
     uint serverTimestamp = 42;
     var serverInputs = InputUtility.RandomInput(20, 4).ToArray();
+    InputUtility.ForceValid(serverInputs, new Random().Next());
     uint? clientTimestamp = null;
     IEnumerable<MatchInput> clientInputs = null;
     return RunTest(() => {
@@ -154,6 +154,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
 	public IEnumerator Client_SendInput() {
     uint clientTimestamp = 42;
     var clientInputs = InputUtility.RandomInput(20, 4).ToArray();
+    InputUtility.ForceValid(clientInputs, new Random().Next());
     uint? serverTimestamp = null;
     IEnumerable<MatchInput> serverInputs = null;
     return RunTest(() => {
