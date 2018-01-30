@@ -56,10 +56,10 @@ public class RollbackStrategy : INetworkStrategy {
 
     void OnRecievedInputs(uint player, uint timestep,
                           IEnumerable<MatchInput> inputs) {
-      InputHistory.DropBefore(Timestep);
       InputHistory.MergeWith(timestep, inputs);
       bool initialized = false;
       foreach (var input in InputHistory.TakeWhile(input => input.IsValid)) {
+        Debug.LogWarning(input.IsValid);
         // TODO(james7132): This should really take into account the prior inputs
         if (!initialized) {
           InputContext.Reset(input);
@@ -71,6 +71,7 @@ public class RollbackStrategy : INetworkStrategy {
         LatestInput[0] = input;
         Timestep++;
       }
+      InputHistory.DropBefore(Timestep);
     }
 
   }
@@ -86,6 +87,7 @@ public class RollbackStrategy : INetworkStrategy {
 
     internal Client(INetworkClient client, MatchConfig config) : base(client, config) {
       NetworkClient.OnRecievedState += OnRecievedState;
+      NetworkClient.OnRecievedInputs  += OnRecievedInputs;
       InputHistory = new InputHistory<MatchInput>();
       InputContext = new MatchInputContext(config);
       LatestServerInput = new MatchInput[1];
@@ -111,6 +113,7 @@ public class RollbackStrategy : INetworkStrategy {
 
     public override void Dispose() {
       NetworkClient.OnRecievedState -= OnRecievedState;
+      NetworkClient.OnRecievedInputs -= OnRecievedInputs;
     }
 
     void OnRecievedInputs(uint timestep, IEnumerable<MatchInput> inputs) {

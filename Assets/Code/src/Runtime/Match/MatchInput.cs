@@ -13,6 +13,10 @@ public struct MatchInput : IMergable<MatchInput> {
 
   public int PlayerCount => PlayerInputs?.Length ?? 0;
 
+  public MatchInput(int playerCount) {
+    PlayerInputs = new PlayerInput[playerCount];
+  }
+
   public MatchInput(MatchConfig config) {
     PlayerInputs = new PlayerInput[config.PlayerCount];
   }
@@ -45,9 +49,9 @@ public struct MatchInput : IMergable<MatchInput> {
   }
 
   public MatchInput Clone() {
-    MatchInput clone = this;
-    clone.PlayerInputs = (PlayerInput[]) PlayerInputs.Clone();
-    return clone;
+    return new MatchInput {
+      PlayerInputs = (PlayerInput[]) PlayerInputs.Clone()
+    };
   }
 
   public override bool Equals(object obj) {
