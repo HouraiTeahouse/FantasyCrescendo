@@ -97,7 +97,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
     return RunTest(() => {
       Host.Client.OnRecievedInputs += (t, inputs) => {
         clientTimestamp = t;
-        clientInputs = inputs;
+        clientInputs = inputs.ToArray();
       };
       Host.Server.BroadcastInput(serverTimestamp, serverInputs);
     }, () => clientTimestamp != null && clientInputs != null, () => {
@@ -160,7 +160,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
     return RunTest(() => {
       Host.Server.ReceivedInputs += (id, t, inputs) => {
         serverTimestamp = t;
-        serverInputs = inputs;
+        serverInputs = inputs.ToArray();
       };
       Host.Client.SendInput(clientTimestamp, clientInputs);
     }, () => serverTimestamp != null && serverInputs == null, () => {

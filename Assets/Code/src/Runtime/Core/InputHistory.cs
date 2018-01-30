@@ -83,7 +83,17 @@ public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
     Element currentNode = FindByTimestamp(startTimestamp);
     IEnumerator<I> enumerator = source.GetEnumerator();
     while (currentNode != null && enumerator.MoveNext()) {
-      Debug.Log($"{currentNode.Timestamp} {startTimestamp} {Count}");
+      currentNode.Input.MergeWith(enumerator.Current);
+    }
+    while (enumerator.MoveNext()) {
+      Append(enumerator.Current);
+    }
+  }
+
+  public void MergeWith(uint startTimestamp, ArraySlice<I> source) {
+    Element currentNode = FindByTimestamp(startTimestamp);
+    ArraySlice<I>.Enumerator enumerator = source.GetEnumerator();
+    while (currentNode != null && enumerator.MoveNext()) {
       currentNode.Input.MergeWith(enumerator.Current);
     }
     while (enumerator.MoveNext()) {

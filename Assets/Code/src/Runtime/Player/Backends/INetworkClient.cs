@@ -12,7 +12,7 @@ public interface INetworkClient : IDisposable {
 
   event Action<MatchConfig> OnMatchConfigUpdated;
 
-  event Action<uint, IEnumerable<MatchInput>> OnRecievedInputs;
+  event Action<uint, ArraySlice<MatchInput>> OnRecievedInputs;
   event Action<uint, MatchState> OnRecievedState;
 	event Action<bool> OnServerReady;
 

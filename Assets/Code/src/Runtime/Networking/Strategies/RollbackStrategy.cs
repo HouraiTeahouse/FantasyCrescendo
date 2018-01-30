@@ -55,11 +55,10 @@ public class RollbackStrategy : INetworkStrategy {
     }
 
     void OnRecievedInputs(uint player, uint timestep,
-                          IEnumerable<MatchInput> inputs) {
+                          ArraySlice<MatchInput> inputs) {
       InputHistory.MergeWith(timestep, inputs);
       bool initialized = false;
       foreach (var input in InputHistory.TakeWhile(input => input.IsValid)) {
-        Debug.LogWarning(input.IsValid);
         // TODO(james7132): This should really take into account the prior inputs
         if (!initialized) {
           InputContext.Reset(input);
@@ -114,9 +113,9 @@ public class RollbackStrategy : INetworkStrategy {
       NetworkClient.OnRecievedInputs -= OnRecievedInputs;
     }
 
-    void OnRecievedInputs(uint timestep, IEnumerable<MatchInput> inputs) {
+    void OnRecievedInputs(uint timestep, ArraySlice<MatchInput> inputs) {
       if (timestep < Timestep) return;
-      LatestServerInput[0] = inputs.First();
+      LatestServerInput[0] = inputs[0];
     }
 
     void OnRecievedState(uint timestep, MatchState state) {

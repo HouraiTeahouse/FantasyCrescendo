@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -22,6 +23,7 @@ public static class INetworkConnectionExtensions {
     writer.Write(header);
     message.Serialize(writer);
     connection.SendBytes(writer.AsArray(), writer.Position, reliablity);
+    (message as IDisposable)?.Dispose();
   }
 
   public static void SendToAll(this IEnumerable<INetworkConnection> connections, byte header,
@@ -34,6 +36,7 @@ public static class INetworkConnectionExtensions {
     foreach (var connection in connections) {
       connection.SendBytes(buffer, bufferSize, reliablity);
     }
+    (message as IDisposable)?.Dispose();
   }
 
 }

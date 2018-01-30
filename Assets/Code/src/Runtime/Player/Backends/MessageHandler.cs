@@ -24,6 +24,7 @@ public class MessageHandlers {
     RegisterHandler(code, dataMsg => {
       var message = dataMsg.ReadAs<T>();
       handler(message);
+      (message as IDisposable)?.Dispose();
       ObjectPool<T>.Shared.Return(message);
     });
   }

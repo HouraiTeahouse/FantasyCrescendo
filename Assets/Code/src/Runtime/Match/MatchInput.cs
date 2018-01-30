@@ -80,7 +80,7 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
     Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
     Mask mask = 0;
     for (var i = 0; i < PlayerCount; i++) {
-      mask |= (Mask)(PlayerInputs[i].IsValid ? 1 << i : 0);
+      mask |= (Mask)(PlayerInputs[i].IsValid ? (1 << i) : 0);
     }
     return mask;
   }
@@ -99,8 +99,11 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
     Assert.IsTrue(players <= kMaxSupportedPlayers);
     var input = new MatchInput(players);
     for (var i = 0; i < input.PlayerCount; i++) {
-      if ((mask & (1 << i)) == 0) continue;
-      input.PlayerInputs[i] = PlayerInput.Deserialize(reader);
+      if ((mask & (1 << i)) != 0) {
+        input.PlayerInputs[i] = PlayerInput.Deserialize(reader);
+      } else {
+        input.PlayerInputs[i] = new PlayerInput { IsValid = false };
+      }
     }
     return input;
   }

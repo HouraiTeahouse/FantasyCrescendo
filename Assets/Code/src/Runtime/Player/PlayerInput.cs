@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -65,6 +66,11 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
     if (!IsValid && !other.IsValid) return true;
     var equals = Movement.Equals(other.Movement) && Smash.Equals(other.Smash);
     return equals && Buttons == other.Buttons;
+  }
+
+  public override string ToString() {
+    var buttons = Convert.ToString(Buttons, 2).PadLeft(8, '0');
+    return $"PlayerInput(({Movement.x}, {Movement.y}), ({Smash.x}, {Smash.y}), {buttons})";
   }
 
   public override int GetHashCode() => 31 * Movement.GetHashCode() + 17 * Smash.GetHashCode() + Buttons.GetHashCode();
