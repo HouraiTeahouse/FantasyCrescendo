@@ -1,4 +1,5 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+﻿using HouraiTeahouse.FantasyCrescendo;
+using HouraiTeahouse.FantasyCrescendo.Matches;
 using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Collections;
 using System.Collections.Generic;
