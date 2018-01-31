@@ -6,6 +6,55 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+public interface IMerger<I> {
+
+  I Merge(I a, I b);
+
+}
+
+public static class Merger<T> {
+
+  public static IMerger<T> Default {
+    get {
+      if (typeof(IMergable<T>).IsAssignableFrom(typeof(T))) {
+        return new DefaultMerger();
+      }
+      throw new NotImplementedException();
+    }
+  }
+
+  public static IMerger<T> FromDelegate(Func<T, T, T> mergeFunc) {
+    return new DelegateMerger(mergeFunc);
+  }
+
+  class DefaultMerger : IMerger<T> {
+
+    public T Merge(T a, T b) {
+      ((IMergable<T>)a).MergeWith(b);
+      return a;
+    }
+
+  }
+
+  class DelegateMerger : IMerger<T> {
+
+    readonly Func<T, T, T> mergeFunc;
+
+    public DelegateMerger(Func<T, T, T> mergeFunc) {
+      this.mergeFunc = Argument.NotNull(mergeFunc);
+    }
+
+    public T Merge(T a, T b) => mergeFunc(a, b);
+
+  }
+
+}
+
+public struct TimedInput<I> {
+  public I Input;
+  public uint Timestep;
+}
+
 /// <summary>
 /// A managed history of a set of inputs.
 /// </summary>
@@ -13,147 +62,172 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// This is internally implemented as a LinkedList, most of the operations on these objects
 /// run in O(n) time.
 /// </remarks>
-public class InputHistory<I> : IReadOnlyCollection<I> where I : IMergable<I> {
+public class InputHistory<I> : IEnumerable<TimedInput<I>> {
 
-  private class Element {
-    public uint Timestamp;
+  readonly IMerger<I> merger;
+  Element oldest;
+  Element current;
+  Element newest;
+
+  public TimedInput<I> Oldest => new TimedInput<I> {
+    Input = oldest.Input,
+    Timestep = oldest.Timestep
+  };
+
+  public TimedInput<I> Current => new TimedInput<I> {
+    Input = current.Input,
+    Timestep = current.Timestep
+  };
+
+  public TimedInput<I> Newest => new TimedInput<I> {
+    Input = newest.Input,
+    Timestep = newest.Timestep
+  };
+
+  public InputHistory(I input) : this(input, 0, Merger<I>.Default) { }
+
+  public InputHistory(I input, uint startTimestamp) : this(input, startTimestamp, Merger<I>.Default) {
+  }
+
+  public InputHistory(I input, IMerger<I> merger) : this(input, 0, merger) {
+  }
+
+  public InputHistory(I input, uint startTimestamp, IMerger<I> merger) {
+    this.merger = Argument.NotNull(merger);
+    oldest = ObjectPool<Element>.Shared.Rent();
+    oldest.Timestep = startTimestamp;
+    oldest.Input = input;
+    oldest.Next = null;
+    current = oldest;
+    newest = oldest;
+  }
+
+  public IEnumerable<TimedInput<I>> GetFullSequence() {
+    var enumerator = GetEnumerator(true);
+    while (enumerator.MoveNext()) {
+      yield return enumerator.Current;
+    }
+  }
+
+  public Enumerator GetEnumerator(bool full = false) => new Enumerator(this, full);
+  IEnumerator<TimedInput<I>> IEnumerable<TimedInput<I>>.GetEnumerator() => GetEnumerator();
+  IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+  public void MergeWith(uint timestep, ArraySlice<I> inputs) {
+    Element currentElement = FindByTimestamp(timestep);
+    foreach (var input in inputs) {
+      currentElement = AppendOrMerge(currentElement, input, timestep);
+      timestep++;
+    }
+  }
+
+  public void DropBefore(uint timestep) {
+    var pool = ObjectPool<Element>.Shared;
+    while (oldest != newest && oldest.Timestep < timestep)  {
+      (oldest.Input as IDisposable)?.Dispose();
+      pool.Return(oldest);
+      oldest = oldest.Next;
+    }
+    if (oldest.Timestep > current.Timestep) {
+      current = oldest;
+    }
+    Assert.AreEqual(oldest?.Timestep, timestep);
+  }
+
+  public void Append(I input) {
+    current = AppendOrMerge(current, input);
+  }
+
+  Element AppendOrMerge(Element previous, I input) {
+    return AppendOrMerge(previous, input, previous.Timestep + 1);
+  }
+
+  Element AppendOrMerge(Element currentElement, I input, uint timestep) {
+    var nextElement = currentElement.Next;
+    if (nextElement == null || nextElement.Timestep > timestep + 1) {
+      Assert.IsTrue(timestep > currentElement.Timestep);
+      currentElement = Append(currentElement, input, timestep);
+    } else if (nextElement.Timestep == timestep) {
+      nextElement.Input = merger.Merge(nextElement.Input, input);
+      currentElement = nextElement;
+    } else if (currentElement.Timestep == timestep) {
+      currentElement.Input = merger.Merge(currentElement.Input, input);
+    } else {
+      Debug.LogAssertion("Invalid AppendOrMerge call.");
+    }
+    return currentElement;
+  }
+
+  Element Append(Element previous, I input, uint timestep) {
+    var nextElement = previous.Next;
+    var newElement = ObjectPool<Element>.Shared.Rent();
+    newElement.Timestep = timestep;
+    newElement.Input = input;
+    newElement.Next = nextElement;
+    previous.Next = newElement;
+    if (newest == previous) {
+      newest = newElement;
+    }
+    return newElement;
+  }
+
+  Element FindByTimestamp(uint timestep) {
+    if (timestep > newest.Timestep) return newest;
+    Element currentElement, end;
+    if (timestep > current.Timestep) {
+      currentElement = current;
+      end = newest;
+    } else {
+      currentElement = oldest;
+      end = current;
+    }
+    while (currentElement != end && currentElement.Timestep < timestep) {
+      currentElement = currentElement.Next;
+    }
+    Assert.IsNotNull(currentElement);
+    return currentElement;
+  }
+
+  class Element {
+    public uint Timestep;
     public I Input;
     public Element Next;
   }
 
-  /// <summary>
-  /// Gets the number of stored inputs
-  /// </summary>
-  public int Count { get; private set; }
+  public struct Enumerator : IEnumerator<TimedInput<I>> {
 
-  /// <summary>
-  /// Gets the most recently stored input in the history.
-  /// </summary>
-  public I Latest => Tail.Input;
+    readonly Element StartElement;
+    readonly Element EndElement;
+    Element current;
 
-  /// <summary>
-  /// Gets the oldest stored input's timestamp.
-  /// </summary>
-  public uint LastConfirmedTimestep { get; private set; }
+    public TimedInput<I> Current => new TimedInput<I> {
+      Input = current.Input,
+      Timestep = current.Timestep
+    };
+    object IEnumerator.Current => Current;
 
-  Element Head;
-  Element Tail;
-  uint LastTimestep;
+    public Enumerator(InputHistory<I> inputHistory, bool full) {
+      StartElement = inputHistory.oldest;
+      EndElement = full ? inputHistory.newest : inputHistory.current;
+      current = null;
+    }
 
-  /// <summary>
-  /// Creates a InputHistory starting at a given timestamp
-  /// </summary>
-  /// <param name="startTimestamp">the timestamp to start at</param>
-  public InputHistory(uint startTimestamp = 0) {
-    LastTimestep = startTimestamp;
-    LastConfirmedTimestep = startTimestamp;
+    public bool MoveNext() {
+      var hasNext = current != EndElement;
+      if (current == null) {
+        current = StartElement;
+        return true;
+      } else if (hasNext) {
+        current = current.Next;
+      }
+      return hasNext;
+    }
+
+    public void Reset() => current = StartElement;
+
+    void IDisposable.Dispose() { }
+
   }
-
-  /// <summary>
-  /// Appends a new input as the most recent input in the history.
-  /// </summary>
-  /// <param name="input">the new input to add to the history</param>
-  public void Append(I input) {
-    var newElement = ObjectPool<Element>.Shared.Rent();
-    newElement.Timestamp = ++LastTimestep;
-    newElement.Input = input;
-    newElement.Next = null;
-    if (Tail != null) {
-      Tail.Next = newElement;
-    }
-    if (Head == null) {
-      Head = newElement;
-      LastConfirmedTimestep = newElement.Timestamp;
-    }
-    Tail = newElement;
-    Count++;
-  }
-
-  /// <summary>
-  /// Performs an element-wise merge between the history and the
-  /// </summary>
-  /// <remarks>
-  /// Only mutates the history. Any excess inputs will be appended to the end 
-  /// of the history.
-  /// 
-  /// Merges are done with the `IMergable.MergeWith` method of the provided type.
-  /// </remarks>
-  /// <param name="startTimestamp">the timestamp to start the merge.</param>
-  /// <param name="source">an enumeration of inputs to merge into the history.</param>
-  public void MergeWith(uint startTimestamp, IEnumerable<I> source) {
-    Assert.IsNotNull(source);
-    Element currentNode = FindByTimestamp(startTimestamp);
-    IEnumerator<I> enumerator = source.GetEnumerator();
-    while (currentNode != null && enumerator.MoveNext()) {
-      currentNode.Input.MergeWith(enumerator.Current);
-    }
-    while (enumerator.MoveNext()) {
-      Append(enumerator.Current);
-    }
-  }
-
-  public void MergeWith(uint startTimestamp, ArraySlice<I> source) {
-    Element currentNode = FindByTimestamp(startTimestamp);
-    ArraySlice<I>.Enumerator enumerator = source.GetEnumerator();
-    while (currentNode != null && enumerator.MoveNext()) {
-      currentNode.Input.MergeWith(enumerator.Current);
-    }
-    while (enumerator.MoveNext()) {
-      Append(enumerator.Current);
-    }
-  }
-
-  /// <summary>
-  /// Drops all inputs before a given timestamp from the history.
-  /// </summary>
-  /// <param name="timestamp">the starting timestamp.</param>
-  public void DropBefore(uint timestamp) {
-    var pool = ObjectPool<Element>.Shared;
-    Element currentNode = Head;
-    while (currentNode != null && currentNode.Timestamp < timestamp) {
-      pool.Return(currentNode);
-      (currentNode.Input as IDisposable)?.Dispose();
-      LastConfirmedTimestep = currentNode.Timestamp;
-      currentNode = currentNode.Next;
-      Count--;
-    }
-    Head = currentNode;
-    if (Head == null && Tail != null) {
-      LastTimestep = Tail.Timestamp;
-      Tail = null;
-    }
-  }
-
-  /// <summary>
-  /// Enumerates all the inputs 
-  /// </summary>
-  /// <param name="timestamp"></param>
-  /// <returns></returns>
-  public IEnumerable<I> StartingWith(uint timestamp) {
-    Element currentNode = FindByTimestamp(timestamp);
-    while (currentNode != null) {
-      yield return currentNode.Input;
-      currentNode = currentNode.Next;
-    }
-  }
-
-  Element FindByTimestamp(uint timestamp) {
-    Element currentNode = Head;
-    while (currentNode != null && currentNode.Timestamp < timestamp) {
-      currentNode = currentNode.Next;
-    }
-    return currentNode;
-  }
-
-  public IEnumerator<I> GetEnumerator() {
-    Element currentNode = Head;
-    while (currentNode != null) {
-      yield return currentNode.Input;
-      currentNode = currentNode.Next;
-    }
-  }
-
-  IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 }
 

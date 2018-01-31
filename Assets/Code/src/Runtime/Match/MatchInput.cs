@@ -82,7 +82,7 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
 
   public override int GetHashCode() => ArrayUtil.GetOrderedHash(PlayerInputs);
 
-  public override string ToString() => $"MatchInput({PlayerCount})";
+  public override string ToString() => $"MatchInput({PlayerCount}, {GetHashCode():X})";
 
   public Mask CreateValidMask() {
     Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
