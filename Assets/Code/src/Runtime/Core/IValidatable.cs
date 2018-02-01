@@ -17,12 +17,26 @@ public interface IValidatable {
 
 }
 
+/// <summary>
+/// A validation policy to check the validity of the state of 
+/// provided objects.
+/// </summary>
+/// <typeparam name="T">the type of object that can be validated.</typeparam>
 public interface IValidator<T> {
 
+  /// <summary>
+  /// Gets whether <paramref cref="obj"/> is valid or not.
+  /// </summary>
+  /// <param name="obj">the object to validate.</param>
+  /// <returns>true, if <paramref cref="obj"/> is valid, false otherwise.</returns>
   bool IsValid(T obj);
 
 }
 
+/// <summary>
+/// A set of extension methods for <see cref="IValidatable"/> objects
+/// and their enumerations.
+/// </summary>
 public static class IValidatableExtensions {
 
   /// <summary>

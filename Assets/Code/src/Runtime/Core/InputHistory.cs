@@ -6,55 +6,6 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public interface IMerger<I> {
-
-  I Merge(I a, I b);
-
-}
-
-public static class Merger<T> {
-
-  public static IMerger<T> Default {
-    get {
-      if (typeof(IMergable<T>).IsAssignableFrom(typeof(T))) {
-        return new DefaultMerger();
-      }
-      throw new NotImplementedException();
-    }
-  }
-
-  public static IMerger<T> FromDelegate(Func<T, T, T> mergeFunc) {
-    return new DelegateMerger(mergeFunc);
-  }
-
-  class DefaultMerger : IMerger<T> {
-
-    public T Merge(T a, T b) {
-      ((IMergable<T>)a).MergeWith(b);
-      return a;
-    }
-
-  }
-
-  class DelegateMerger : IMerger<T> {
-
-    readonly Func<T, T, T> mergeFunc;
-
-    public DelegateMerger(Func<T, T, T> mergeFunc) {
-      this.mergeFunc = Argument.NotNull(mergeFunc);
-    }
-
-    public T Merge(T a, T b) => mergeFunc(a, b);
-
-  }
-
-}
-
-public struct TimedInput<I> {
-  public I Input;
-  public uint Timestep;
-}
-
 /// <summary>
 /// A managed history of a set of inputs.
 /// </summary>
