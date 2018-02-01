@@ -41,6 +41,23 @@ public class InputHistoryTest {
     Assert.That(inputHistory.Select(i => i.Input), Is.EqualTo(results));
 	}
 
+  [Test]
+  public void Append_merges_with_existing_future_inputs() {
+    var inputHistory = new InputHistory<int>(0, (uint)0, Merger<int>.FromDelegate((a, b) => a + b));
+    inputHistory.MergeWith(0, Enumerable.Range(0, 20));
+
+    var result = inputHistory.Append(5);
+    Assert.AreEqual(6, result);
+    result = inputHistory.Append(6);
+    Assert.AreEqual(8, result);
+    result = inputHistory.Append(7);
+    Assert.AreEqual(10, result);
+    result = inputHistory.Append(8);
+    Assert.AreEqual(12, result);
+    result = inputHistory.Append(9);
+    Assert.AreEqual(14, result);
+  }
+
 	[TestCaseSource("TestCases")]
 	public void Append_increments_Count(int playerCount) {
     var inputHistory = new InputHistory<MatchInput>(InputUtility.RandomInput(playerCount));
@@ -129,6 +146,25 @@ public class InputHistoryTest {
                 Is.EqualTo(new[] { 0, 1, 2, 3, 4, 10, 11 }));
 	}
 
+	[Test]
+	public void MergeWith_ignores_inputs_before_oldest_local_input() {
+    var inputHistory = new InputHistory<int>(0, 5, Merger<int>.FromDelegate((a, b) => a + b));
+    inputHistory.Append(1);
+    inputHistory.Append(2);
+    inputHistory.Append(3);
+    inputHistory.Append(4);
+    inputHistory.Append(5);
+    inputHistory.Append(6);
+
+    inputHistory.MergeWith(2, new ArraySlice<int>(new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }));
+
+    Assert.That(inputHistory.GetFullSequence().Select(i => i.Input).ToArray(), 
+                Is.EqualTo(new[] { 4, 6, 8, 10, 12, 14, 16, 11}));
+
+    Assert.That(inputHistory.Select(i => i.Input).ToArray(), 
+                Is.EqualTo(new[] { 4, 6, 8, 10, 12, 14, 16 }));
+	}
+
   [TestCase(10, 5)] [TestCase(100, 5)] [TestCase(100, 50)] [TestCase(30, 23)] 
   public void DropBefore_disposes_inputs_if_possible(int size, int dropPoint) {
     var disposables = new List<DisposableTest>();
@@ -149,6 +185,39 @@ public class InputHistoryTest {
                 Is.All.EqualTo(false));
     Assert.That(inputHistory.GetFullSequence().Select(i => i.Input.IsDisposed).ToArray(),
                 Is.All.EqualTo(false));
+  }
+
+  [TestCase(0, 20, 5)] [TestCase(10, 20, 2)] [TestCase(0, 5, 0)] [TestCase(20, 0, 0)]
+  public void DropBefore_drops_inputs(int start, int count, int dropPoint) {
+    var inputHistory = new InputHistory<int>(0, (uint)start, Merger<int>.FromDelegate((a, b) => a));
+    inputHistory.MergeWith(0, Enumerable.Range(start, count));
+
+    var expectedCount = dropPoint < start ? inputHistory.GetFullSequence().Count() : start + count - dropPoint;
+
+    inputHistory.DropBefore((uint)dropPoint);
+
+    Assert.That(inputHistory.Oldest.Timestep, Is.GreaterThanOrEqualTo(dropPoint));
+    Assert.That(inputHistory.GetFullSequence().Count(), Is.EqualTo(expectedCount));
+  }
+
+  [TestCase(0, 20, 5)] [TestCase(10, 20, 2)] [TestCase(0, 5, 0)] [TestCase(20, 0, 0)]
+  public void DropBefore_updates_Current(int start, int count, int dropPoint) {
+    var inputHistory = new InputHistory<int>(0, (uint)start, Merger<int>.FromDelegate((a, b) => a));
+    inputHistory.MergeWith(0, Enumerable.Range(start, count));
+
+    inputHistory.DropBefore((uint)dropPoint);
+
+    Assert.That(inputHistory.Oldest.Timestep, Is.LessThanOrEqualTo(inputHistory.Current.Timestep));
+  }
+
+  [TestCase(0, 20, 500)] [TestCase(10, 20, 250)] [TestCase(0, 5, 15)] [TestCase(20, 0, 20)]
+  public void DropBefore_always_leaves_one_input(int start, int count, int dropPoint) {
+    var inputHistory = new InputHistory<int>(0, (uint)start, Merger<int>.FromDelegate((a, b) => a));
+    inputHistory.MergeWith(0, Enumerable.Range(start, count));
+
+    inputHistory.DropBefore((uint)dropPoint);
+
+    Assert.That(inputHistory.GetFullSequence().Count(), Is.GreaterThanOrEqualTo(1));
   }
 
 }
