@@ -39,6 +39,7 @@ public class InputHistoryTest {
     var results = new[] { input1, input2, input3, input4 };
 
     Assert.That(inputHistory.Select(i => i.Input), Is.EqualTo(results));
+    AssertHistoryMaintainsOrder(inputHistory);
 	}
 
   [Test]
@@ -56,6 +57,7 @@ public class InputHistoryTest {
     Assert.AreEqual(12, result);
     result = inputHistory.Append(9);
     Assert.AreEqual(14, result);
+    AssertHistoryMaintainsOrder(inputHistory);
   }
 
 	[TestCaseSource("TestCases")]
@@ -70,6 +72,7 @@ public class InputHistoryTest {
     Assert.That(inputHistory.Count, Is.EqualTo(4));
     inputHistory.Append(InputUtility.RandomInput(playerCount));
     Assert.That(inputHistory.Count, Is.EqualTo(5));
+    AssertHistoryMaintainsOrder(inputHistory);
 	}
   
 	[TestCaseSource("TestCases")]
@@ -84,6 +87,7 @@ public class InputHistoryTest {
     Assert.That(inputHistory.Current.Timestep, Is.EqualTo(23));
     inputHistory.Append(InputUtility.RandomInput(playerCount));
     Assert.That(inputHistory.Current.Timestep, Is.EqualTo(24));
+    AssertHistoryMaintainsOrder(inputHistory);
 	}
 
 	[TestCaseSource("TestCases")]
@@ -96,6 +100,7 @@ public class InputHistoryTest {
       inputHistory.Append(latestInput);
       Assert.That(inputHistory.Current.Input, Is.EqualTo(latestInput));
     }
+    AssertHistoryMaintainsOrder(inputHistory);
 	}
 
 	[TestCaseSource("TestCases")]
@@ -109,6 +114,7 @@ public class InputHistoryTest {
       Assert.That(inputHistory.Oldest.Input, Is.EqualTo(firstInput));
       Assert.That(inputHistory.Oldest.Timestep, Is.EqualTo(42));
     }
+    AssertHistoryMaintainsOrder(inputHistory);
 	}
 
 	[Test]
@@ -125,6 +131,7 @@ public class InputHistoryTest {
 
     Assert.That(inputHistory.Select(i => i.Input).ToArray(), 
                 Is.EqualTo(new[] { 0, 1, 7, 8, 9, 10, 6}));
+    AssertHistoryMaintainsOrder(inputHistory);
 	}
 
 	[Test]
@@ -144,6 +151,7 @@ public class InputHistoryTest {
 
     Assert.That(inputHistory.Select(i => i.Input).ToArray(), 
                 Is.EqualTo(new[] { 0, 1, 2, 3, 4, 10, 11 }));
+    AssertHistoryMaintainsOrder(inputHistory);
 	}
 
 	[Test]
@@ -163,6 +171,7 @@ public class InputHistoryTest {
 
     Assert.That(inputHistory.Select(i => i.Input).ToArray(), 
                 Is.EqualTo(new[] { 4, 6, 8, 10, 12, 14, 16 }));
+    AssertHistoryMaintainsOrder(inputHistory);
 	}
 
   [TestCase(10, 5)] [TestCase(100, 5)] [TestCase(100, 50)] [TestCase(30, 23)] 
@@ -185,6 +194,7 @@ public class InputHistoryTest {
                 Is.All.EqualTo(false));
     Assert.That(inputHistory.GetFullSequence().Select(i => i.Input.IsDisposed).ToArray(),
                 Is.All.EqualTo(false));
+    AssertHistoryMaintainsOrder(inputHistory);
   }
 
   [TestCase(0, 20, 5)] [TestCase(10, 20, 2)] [TestCase(0, 5, 0)] [TestCase(20, 0, 0)]
@@ -198,6 +208,7 @@ public class InputHistoryTest {
 
     Assert.That(inputHistory.Oldest.Timestep, Is.GreaterThanOrEqualTo(dropPoint));
     Assert.That(inputHistory.GetFullSequence().Count(), Is.EqualTo(expectedCount));
+    AssertHistoryMaintainsOrder(inputHistory);
   }
 
   [TestCase(0, 20, 5)] [TestCase(10, 20, 2)] [TestCase(0, 5, 0)] [TestCase(20, 0, 0)]
@@ -208,6 +219,7 @@ public class InputHistoryTest {
     inputHistory.DropBefore((uint)dropPoint);
 
     Assert.That(inputHistory.Oldest.Timestep, Is.LessThanOrEqualTo(inputHistory.Current.Timestep));
+    AssertHistoryMaintainsOrder(inputHistory);
   }
 
   [TestCase(0, 20, 500)] [TestCase(10, 20, 250)] [TestCase(0, 5, 15)] [TestCase(20, 0, 20)]
@@ -218,6 +230,15 @@ public class InputHistoryTest {
     inputHistory.DropBefore((uint)dropPoint);
 
     Assert.That(inputHistory.GetFullSequence().Count(), Is.GreaterThanOrEqualTo(1));
+    AssertHistoryMaintainsOrder(inputHistory);
+  }
+
+  void AssertHistoryMaintainsOrder<T>(InputHistory<T> history) {
+    var lastTimestep = uint.MinValue;
+    foreach (var timedInput in history.GetFullSequence()) {
+      Assert.That(timedInput.Timestep, Is.GreaterThanOrEqualTo(lastTimestep));
+      lastTimestep = timedInput.Timestep;
+    }
   }
 
 }
