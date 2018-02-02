@@ -16,7 +16,6 @@ public class MatchState {
 
   PlayerState[] playerStates;
   public int PlayerCount { get; }
-  public IEnumerable<PlayerState> PlayerStates => playerStates.Select(x => x);
 
   public MatchState() : this((int)GameMode.GlobalMaxPlayers) { }
 

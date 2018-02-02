@@ -20,12 +20,15 @@ public class RespawnController : MonoBehaviour {
   void OnPlayerDied(PlayerRespawnEvent evt) {
     var playerState = evt.PlayerState;
     playerState.RespawnTimeRemaining = (uint)Mathf.FloorToInt(RespawnTime / Time.fixedDeltaTime);
+    var state = evt.MatchState;
     foreach (var respawnPosition in RespawnPositions) {
       if (respawnPosition == null) continue;
       var bounds = new Bounds(respawnPosition.position, RespawnBounds);
-      if (evt.MatchState.PlayerStates.Any(state => bounds.Contains(state.Position))) {
-        continue;
+      bool occupied = false;
+      for (uint i = 0; i < state.PlayerCount; i++) {
+        occupied |= bounds.Contains(state.GetPlayerState(i).Position);
       }
+      if (occupied) continue;
       playerState.Position = respawnPosition.position;
       break;
     }

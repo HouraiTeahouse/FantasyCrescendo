@@ -17,7 +17,7 @@ public class PlayerStockDisplay : MonoBehaviour, IStateView<PlayerState> {
   public void ApplyState(PlayerState state) {
     if (!state.IsActive) {
       SetActive(ExcessDisplay.gameObject, false);
-      SetActive(i => false);
+      SetActive(false);
       return;
     }
 
@@ -25,9 +25,9 @@ public class PlayerStockDisplay : MonoBehaviour, IStateView<PlayerState> {
     SetActive(ExcessDisplay.gameObject, excess);
     if (excess) {
       SetExcess(state.Stocks);
-      SetActive(i => i == 0);
+      SetActive(1);
     } else {
-      SetActive(i => i < state.Stocks);
+      SetActive(state.Stocks);
     }
   }
 
@@ -37,9 +37,15 @@ public class PlayerStockDisplay : MonoBehaviour, IStateView<PlayerState> {
     lastShownExcess = stocks;
   }
 
-  void SetActive(Func<int, bool> activeFunc) {
+  void SetActive(bool active) {
     for (var i = 0; i < standardIndicators.Length; i++) {
-      SetActive(standardIndicators[i], activeFunc(i));
+      SetActive(standardIndicators[i], active);
+    }
+  }
+
+  void SetActive(int max) {
+    for (var i = 0; i < standardIndicators.Length; i++) {
+      SetActive(standardIndicators[i], i < max);
     }
   }
 

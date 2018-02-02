@@ -87,8 +87,9 @@ public class Registry<T> : ICollection<T> where T : IEntity {
 
   public void CopyTo(T[] array, int start) => Entries.Values.CopyTo(array, start);
 
-  public IEnumerator<T> GetEnumerator() => Entries.Values.GetEnumerator();
+  public Dictionary<uint, T>.ValueCollection.Enumerator GetEnumerator() => Entries.Values.GetEnumerator();
 
+  IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); 
 
 }

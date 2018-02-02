@@ -8,7 +8,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 /// </summary>
 public class MatchController : IMatchController {
 
-  public uint Timestep { get; set; }
+  public virtual uint Timestep { get; set; }
   public virtual MatchState CurrentState { get; set; }
   public virtual ISimulation<MatchState, MatchInputContext> Simulation { get; set; }
   public virtual IInputSource<MatchInput> InputSource { get; set; }
@@ -25,6 +25,7 @@ public class MatchController : IMatchController {
     inputContext.Update(input);
     CurrentState = Simulation.Simulate(CurrentState, inputContext);
     Timestep++;
+    input.Dispose();
   }
 
 }

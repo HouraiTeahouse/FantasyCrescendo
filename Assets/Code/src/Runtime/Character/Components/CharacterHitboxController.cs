@@ -26,11 +26,20 @@ public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
   public void Presimulate(PlayerState state) { }
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
-    var activeHitboxes = from hitbox in Hitboxes 
-                         where hitbox.isActiveAndEnabled && hitbox.Type != HitboxType.Inactive
-                         select hitbox;
-    MatchHitboxSimulation.Instance?.ActiveHitboxes.UnionWith(activeHitboxes);
-    MatchHitboxSimulation.Instance?.ActiveHurtboxes.UnionWith(Hurtboxes.Where(hurtbox => hurtbox.isActiveAndEnabled));
+    var matchHitboxes = MatchHitboxSimulation.Instance?.ActiveHitboxes;
+    var matchHurtboxes = MatchHitboxSimulation.Instance?.ActiveHurtboxes;
+    if (matchHitboxes != null) {
+      foreach (var hitbox in Hitboxes) {
+        if (!hitbox.IsActive) continue;
+        matchHitboxes.Add(hitbox);
+      }
+    }
+    if (matchHurtboxes != null) {
+      foreach (var hurtbox in Hurtboxes) {
+        if (!hurtbox.isActiveAndEnabled) continue;
+        matchHurtboxes.Add(hurtbox);
+      }
+    }
     return state;
   }
 

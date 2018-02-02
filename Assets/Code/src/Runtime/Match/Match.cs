@@ -37,7 +37,7 @@ public abstract class Match {
   protected IMatchSimulation CreateSimulation(MatchConfig config) {
     return new MatchSimulation(new IMatchSimulation[] { 
       new MatchPlayerSimulation(),
-      new MatchHitboxSimulation(),
+      new MatchHitboxSimulation(config),
       new MatchRuleSimulation(CreateRules(config))
     });
   }

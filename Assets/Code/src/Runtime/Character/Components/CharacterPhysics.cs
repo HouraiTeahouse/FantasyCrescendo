@@ -7,6 +7,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
+  static Collider[] colliderDummy = new Collider[1];
+
   public CharacterController CharacterController;
 
   public float Gravity = 9.86f;
@@ -83,17 +85,16 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     var center = Vector3.zero;
     var radius = 1f;
     if (CharacterController != null) {
-        center = CharacterController.center - Vector3.up * (CharacterController.height * 0.50f - CharacterController.radius * 0.5f);
-        radius = CharacterController.radius * 0.75f;
+      // TODO(james7132): Remove these magic numbers
+      center = CharacterController.center - Vector3.up * (CharacterController.height * 0.50f - CharacterController.radius * 0.5f);
+      radius = CharacterController.radius * 0.75f;
     }
 
     var stageLayers = Config.Get<PhysicsConfig>().StageLayers;
+    center =transform.TransformPoint(center);
 
-    //TODO(james7132): Figure a good way to handle pass through platforms
-    return Physics.OverlapSphere(transform.TransformPoint(center),
-                                 radius, stageLayers,
-                                 QueryTriggerInteraction.Ignore).Any();
-                                 //.Any(col => !_ignoredColliders.Contains(col));
+    var count = Physics.OverlapSphereNonAlloc(center, radius, colliderDummy, stageLayers, QueryTriggerInteraction.Ignore);
+    return count != 0;
   }
 
 }

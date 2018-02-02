@@ -23,26 +23,17 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
   /// <summary>
   /// Gets the oldest recorded input and timestamp.
   /// </summary>
-  public TimedInput<I> Oldest => new TimedInput<I> {
-    Input = oldest.Input,
-    Timestep = oldest.Timestep
-  };
+  public TimedInput<I> Oldest => oldest.Value;
 
   /// <summary>
   /// Gets the current input and timestamp.
   /// </summary>
-  public TimedInput<I> Current => new TimedInput<I> {
-    Input = current.Input,
-    Timestep = current.Timestep
-  };
+  public TimedInput<I> Current => current.Value;
 
   /// <summary>
   /// Gets the newest recorded input and timestamp.
   /// </summary>
-  public TimedInput<I> Newest => new TimedInput<I> {
-    Input = newest.Input,
-    Timestep = newest.Timestep
-  };
+  public TimedInput<I> Newest => newest.Value;
 
   /// <summary>
   /// Initalizes a new instance of the <see cref="InputHistory{T}"/> class.
@@ -228,6 +219,16 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
       yield return enumerator.Current;
     }
   }
+  
+  public IEnumerable<TimedInput<I>> StartingWith(uint timestep, bool full = false) {
+    Element currentElement = FindByTimestamp(timestep);
+    var end = full ? newest : current;
+    while (currentElement != null) {
+      if (currentElement.Timestep >= end.Timestep) break;
+      yield return currentElement.Value;
+      currentElement = currentElement.Next;
+    }
+  }
 
   public Enumerator GetEnumerator(bool full = false) => new Enumerator(this, full);
   IEnumerator<TimedInput<I>> IEnumerable<TimedInput<I>>.GetEnumerator() => GetEnumerator();
@@ -242,8 +243,10 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
     if (nextElement?.Timestep == timestep) {
       nextElement.Input = merger.Merge(nextElement.Input, input);
       currentElement = nextElement;
+      Debug.Log($"NEXT MERGE: {timestep}");
     } else if (currentElement?.Timestep == timestep) {
       currentElement.Input = merger.Merge(currentElement.Input, input);
+      Debug.Log($"CURRENT MERGE: {timestep}");
     } else if (nextElement == null || nextElement.Timestep > timestep + 1) {
       Assert.IsTrue(timestep > currentElement.Timestep);
       currentElement = Append(currentElement, input, timestep);
@@ -287,6 +290,11 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
     public uint Timestep;
     public I Input;
     public Element Next;
+
+    public TimedInput<I> Value => new TimedInput<I> {
+      Input = Input,
+      Timestep = Timestep
+    };
   }
 
   public struct Enumerator : IEnumerator<TimedInput<I>> {
@@ -295,10 +303,7 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
     readonly Element EndElement;
     Element current;
 
-    public TimedInput<I> Current => new TimedInput<I> {
-      Input = current.Input,
-      Timestep = current.Timestep
-    };
+    public TimedInput<I> Current => current.Value;
     object IEnumerator.Current => Current;
 
     public Enumerator(InputHistory<I> inputHistory, bool full) {
