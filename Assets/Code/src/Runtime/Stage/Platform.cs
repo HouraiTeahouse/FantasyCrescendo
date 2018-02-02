@@ -17,13 +17,16 @@ public class Platform : RegisteredBehaviour<Platform, byte> {
   public PlatformHardness Type;
   public Bounds[] CheckRegions;
 
+  Collider[] solidColliders;
+
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   protected override void Awake() {
     base.Awake();
     var colliders = GetComponentsInChildren<Collider>();
-    SolidColliders = new ReadOnlyCollection<Collider>(colliders.Where(c => !c.isTrigger).ToArray());
+    solidColliders = colliders.Where(c => !c.isTrigger).ToArray();
+    SolidColliders = new ReadOnlyCollection<Collider>(solidColliders);
   }
 
   public static void CollisionStatusCheckAll(Collider collider) {
@@ -41,11 +44,15 @@ public class Platform : RegisteredBehaviour<Platform, byte> {
 
   public bool IsIgnoringPlatform(Collider collier) {
     var bounds = collier.bounds;
-    return CheckRegions.Any(region => GetWorldRegion(region).Intersects(bounds));
+    var isTouching = false;
+    foreach (var region in CheckRegions) {
+      isTouching |= GetWorldRegion(region).Intersects(bounds);
+    }
+    return isTouching;
   }
 
   public void UpdateCollisionStatus(Collider collider, bool collide) {
-    foreach (var platformCollider in SolidColliders) {
+    foreach (var platformCollider in solidColliders) {
       if (platformCollider.isTrigger) continue;
       Physics.IgnoreCollision(platformCollider, collider, collide);
     }

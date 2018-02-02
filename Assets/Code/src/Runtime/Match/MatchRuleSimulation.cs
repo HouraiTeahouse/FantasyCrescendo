@@ -45,16 +45,25 @@ public class MatchRuleSimulation : IMatchSimulation {
   public void Dispose() => Events?.Dispose();
 
   void CheckForFinish(MatchState state) {
-    MatchResolution? resolution = Rules.Select(r => r.GetResolution(state)).FirstOrDefault(res => res != null);
-    if (resolution != null) {
-      var winner = Rules.Select(r => r.GetWinner(state)).FirstOrDefault(w => w != null);
-      if (MatchManager.Instance != null) {
-        var result = CreateResult(state);
-        result.Resolution = resolution.Value;
-        result.WinningPlayerID = winner != null ? (int)winner : -1;
-        MatchManager.Instance.EndMatch(result);
-      }
+    MatchResolution? resolution = GetResolution(state);
+    if (resolution == null || MatchManager.Instance == null) return;
+    uint? winner = null;
+    foreach (var rule in Rules) {
+      winner = winner ?? rule.GetWinner(state);
     }
+    var result = CreateResult(state);
+    result.Resolution = resolution.Value;
+    result.WinningPlayerID = winner != null ? (int)winner : -1;
+    MatchManager.Instance.EndMatch(result);
+  }
+
+  MatchResolution? GetResolution(MatchState state) {
+    foreach (var rule in Rules) {
+      var resolution = rule.GetResolution(state);
+      if (resolution == null) continue;
+      return resolution;
+    }
+    return null;
   }
 
   MatchResult CreateResult(MatchState state) {

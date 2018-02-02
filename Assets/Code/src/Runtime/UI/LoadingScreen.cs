@@ -25,7 +25,7 @@ public class LoadingScreen : MonoBehaviour {
   void Update() => UpdateActive();
 
   void UpdateActive() {
-    var isLoading = Tasks.Any(task => !task.IsCompleted);
+    var isLoading = GetIsLoading();
     foreach (var view in ViewObjects) {
       ObjectUtil.SetActive(view, isLoading);
     }
@@ -44,6 +44,14 @@ public class LoadingScreen : MonoBehaviour {
   }
 
   public static Task AwaitAll() => Task.WhenAll(Tasks);
+
+  bool GetIsLoading() {
+    if (Tasks.Count <= 0) return false;
+    foreach (var task in Tasks) {
+      if (!task.IsCompleted) return false;
+    }
+    return true;
+  }
 
 }
 

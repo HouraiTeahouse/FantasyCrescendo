@@ -25,7 +25,11 @@ public class StockMatchRule : IMatchRule {
   }
 
   public virtual MatchResolution? GetResolution(MatchState state) {
-    var livingCount = state.PlayerStates.Count(player => player.Stocks > 0);
+    var livingCount = 0;
+    for (uint i = 0; i < state.PlayerCount; i++) {
+      if (state.GetPlayerState(i).Stocks <= 0) continue;
+      livingCount++;
+    }
     switch(livingCount) {
       case 0: return MatchResolution.Tie;
       case 1: return MatchResolution.HasWinner;

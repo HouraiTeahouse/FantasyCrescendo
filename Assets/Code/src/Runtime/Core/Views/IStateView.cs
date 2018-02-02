@@ -21,14 +21,14 @@ public interface IStateView<S> {
 
 public static class CoreUtility {
 
-  public static T Simulate<T, TInput>(this IEnumerable<ISimulation<T, TInput>> simulations, T state, TInput input) {
+  public static T Simulate<T, TInput>(this ISimulation<T, TInput>[] simulations, T state, TInput input) {
     foreach (var simulation in simulations) {
       state = simulation.Simulate(state, input);
     }
     return state;
   }
 
-  public static void ApplyState<T>(this IEnumerable<IStateView<T>> views, T state) {
+  public static void ApplyState<T>(this IStateView<T>[] views, T state) {
     foreach (var view in views) {
       view?.ApplyState(state);
     }

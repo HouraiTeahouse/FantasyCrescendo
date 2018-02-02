@@ -54,25 +54,33 @@ public class NetworkGameClient : INetworkClient {
   public void Disconnect() => ServerConnection?.Disconnect();
 
   public void SetReady(bool isReady) {
-    ServerConnection?.Send(MessageCodes.ClientReady, new PeerReadyMessage {
-      IsReady = isReady
-    });
+    if (ServerConnection == null) return;
+    using (var rental = ObjectPool<PeerReadyMessage>.Shared.Borrow()) {
+      rental.RentedObject.IsReady = isReady;
+      ServerConnection.Send(MessageCodes.ClientReady, rental.RentedObject);
+    }
   }
 
   public void SetConfig(PlayerConfig config) {
-    ServerConnection?.Send(MessageCodes.UpdateConfig, new ClientUpdateConfigMessage {
-      PlayerConfig = config
-    });
+    if (ServerConnection == null) return;
+    using (var rental = ObjectPool<ClientUpdateConfigMessage>.Shared.Borrow()) {
+      rental.RentedObject.PlayerConfig = config;
+      ServerConnection.Send(MessageCodes.UpdateConfig, rental.RentedObject);
+    }
   }
 
   public void SendInput(uint startTimestamp, IEnumerable<MatchInput> input) {
+    if (ServerConnection == null) return;
     int inputCount;
     var inputs = ArrayUtil.ConvertToArray(input, out inputCount);
-    ServerConnection?.Send(MessageCodes.UpdateInput, new InputSetMessage {
-      StartTimestamp = startTimestamp,
-      InputCount = (uint)inputCount,
-      Inputs = inputs
-    }, NetworkReliablity.Unreliable);
+    if (inputCount <= 0) return;
+    using (var rental = ObjectPool<InputSetMessage>.Shared.Borrow()) {
+      var message = rental.RentedObject;
+      message.StartTimestamp = startTimestamp;
+      message.InputCount = (uint)inputCount;
+      message.Inputs = inputs;
+      ServerConnection.Send(MessageCodes.UpdateInput, message, NetworkReliablity.Unreliable);
+    }
   }
 
   public void Dispose() {

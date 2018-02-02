@@ -13,6 +13,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
   public PlayableDirector Director;
 
   CharacterStateMachine StateMachine;
+  double stateDuration;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
@@ -35,11 +36,9 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     return Task.CompletedTask;
   }
 
-  public void Presimulate(PlayerState state) => ApplyState(state);
+  public void Presimulate(PlayerState state) {}
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
-    Director.time += Time.fixedDeltaTime;
-    Director.Evaluate();
     state.StateTick++;
     ApplyState(state);
     return state;
@@ -47,19 +46,16 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
 
   public void ApplyState(PlayerState state) {
     StateMachine.Presimulate(state);
-    PlayState(state);
-  }
-
-  public PlayerState ResetState(PlayerState state) => state;
-
-  void PlayState(PlayerState state) {
     var timeline = StateMachine.StateData.Timeline;
     if (timeline != Director.playableAsset) {
       Director.Play(timeline);
+      stateDuration = Director.duration;
     }
-    Director.time = state.StateTime % Director.duration;
+    Director.time = state.StateTime % stateDuration;
     Director.Evaluate();
   }
+
+  public PlayerState ResetState(PlayerState state) => state;
 
 }
 

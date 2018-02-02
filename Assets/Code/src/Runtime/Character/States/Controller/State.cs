@@ -30,8 +30,13 @@ public abstract class State<T> {
   public virtual State<T> Passthrough(T context) => EvaluateTransitions(context);
 
   public State<T> EvaluateTransitions(T context) {
-    return _transitions.Select(func => func(context))
-        .FirstOrDefault(state => state != null && state.GetEntryPolicy(context) != StateEntryPolicy.Blocked);
+    foreach (var transition in _transitions) {
+      var newState = transition(context);
+      if (newState?.GetEntryPolicy(context) != StateEntryPolicy.Blocked) {
+        return newState;
+      }
+    }
+    return null;
   }
 
   public virtual StateEntryPolicy GetEntryPolicy(T context) => StateEntryPolicy.Normal;

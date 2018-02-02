@@ -14,6 +14,8 @@ public class PlayerDamage : MonoBehaviour, IStateView<PlayerState> {
   public float MinDamage;
   public float MaxDamage;
 
+  float? lastDamage;
+
   public void ApplyState(PlayerState state) {
     if (DisplayText == null) {
       Debug.LogWarning($"{name} has a PlayerDamage without a Text display.");
@@ -23,6 +25,7 @@ public class PlayerDamage : MonoBehaviour, IStateView<PlayerState> {
   }
 
   void SetTetDamage(float damage) {
+    if (damage == lastDamage) return;
     var displayDamage = Mathf.Round(damage);
     if (string.IsNullOrEmpty(Format)) {
       DisplayText.text = displayDamage.ToString();
@@ -30,6 +33,7 @@ public class PlayerDamage : MonoBehaviour, IStateView<PlayerState> {
       DisplayText.text = string.Format(Format, displayDamage);
     }
     DisplayText.color = GetColor(damage);
+    lastDamage = damage;
   }
 
   Color GetColor(float damage) {

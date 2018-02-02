@@ -1,4 +1,5 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
@@ -18,15 +19,30 @@ public class NetworkClientPlayer {
   }
 
   public void SendConfig(MatchConfig config) {
-    Connection.Send(MessageCodes.UpdateConfig, new ServerUpdateConfigMessage {
-      MatchConfig = config
-    });
+    using (var rental = ObjectPool<ServerUpdateConfigMessage>.Shared.Borrow()) {
+      rental.RentedObject.MatchConfig = config;
+      Connection.Send(MessageCodes.UpdateConfig, rental.RentedObject);
+    }
   }
 
   public void StartMatch(MatchConfig config) {
-    Connection.Send(MessageCodes.MatchStart, new MatchStartMessage {
-      MatchConfig = config
-    });
+    using (var rental = ObjectPool<MatchStartMessage>.Shared.Borrow()) {
+      rental.RentedObject.MatchConfig = config;
+      Connection.Send(MessageCodes.MatchStart, rental.RentedObject);
+    }
+  }
+
+  public void SendInputs(uint timestamp, IEnumerable<MatchInput> inputs) {
+    int size;
+    var inputArray = ArrayUtil.ConvertToArray(inputs, out size);
+    if (size <= 0) return;
+    using (var rental = ObjectPool<InputSetMessage>.Shared.Borrow()) {
+      var message = rental.RentedObject;
+      message.StartTimestamp = timestamp;
+      message.InputCount = (uint)size;
+      message.Inputs = inputArray;
+      Connection.Send(MessageCodes.UpdateInput, message, NetworkReliablity.Unreliable);
+    }
   }
 
   public void Kick() => Connection?.Disconnect();
