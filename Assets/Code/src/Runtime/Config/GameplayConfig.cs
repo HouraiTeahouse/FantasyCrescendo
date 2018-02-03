@@ -8,12 +8,12 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [CreateAssetMenu(menuName = "Config/Gameplay Config")]
 public class GameplayConfig : ScriptableObject {
 
-	[SerializeField] [Type(typeof(IInputSource<MatchInput>), CommonName="InputSource")] 
+	[SerializeField] [Type(typeof(IInputSource), CommonName="InputSource")] 
 	string inputSource;
 
-	public IInputSource<MatchInput> CreateInputSource(MatchConfig config) {
+	public IInputSource CreateInputSource(MatchConfig config) {
 		var sourceType = Type.GetType(inputSource);
-		return (IInputSource<MatchInput>)Activator.CreateInstance(sourceType, config);
+		return (IInputSource)Activator.CreateInstance(sourceType, config);
 	}
 
 }

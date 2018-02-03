@@ -51,7 +51,7 @@ public class NetworkGameServer : INetworkServer {
     }
 	}
 
-  public void BroadcastInput(uint startTimestamp, IEnumerable<MatchInput> input) {
+  public void BroadcastInput(uint startTimestamp, byte validMask, IEnumerable<MatchInput> input) {
     int inputCount;
     var inputs = ArrayUtil.ConvertToArray(input, out inputCount);
     if (inputCount <= 0) return;
@@ -59,6 +59,7 @@ public class NetworkGameServer : INetworkServer {
       var message = rental.RentedObject;
       message.StartTimestamp = startTimestamp;
       message.InputCount = (uint)inputCount;
+      message.ValidMask = validMask;
       message.Inputs = inputs;
       NetworkInterface.Connections.SendToAll(MessageCodes.UpdateInput, message, NetworkReliablity.Unreliable);
     }

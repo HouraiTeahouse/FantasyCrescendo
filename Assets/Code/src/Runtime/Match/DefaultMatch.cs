@@ -21,7 +21,6 @@ public class DefaultMatch : Match {
 
     gameManager.MatchController = controller;
     gameManager.View = gameView;
-    gameManager.enabled = false;
 
     var simTask = gameSim.Initialize(config).ContinueWith(task => {
       Debug.Log("Simulation initialized.");
@@ -32,7 +31,6 @@ public class DefaultMatch : Match {
 
     await Task.WhenAll(viewTask, simTask);
     controller.CurrentState = gameSim.ResetState(controller.CurrentState);
-    gameManager.enabled = true;
     Debug.Log("Match initialized.");
   }
 

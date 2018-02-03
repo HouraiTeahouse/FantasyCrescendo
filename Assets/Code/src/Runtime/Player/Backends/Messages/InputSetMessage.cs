@@ -13,33 +13,34 @@ public class InputSetMessage : MessageBase, IDisposable {
 
   public uint StartTimestamp;
   public uint InputCount;
+  // TODO(james7132): Derive Player Count from Valid Mask
+  public byte ValidMask;
   public MatchInput[] Inputs;
 
   public override void Serialize(NetworkWriter writer) {
     Assert.IsTrue(InputCount <= Inputs.Length);
-    writer.WritePackedUInt32(StartTimestamp);         // 1-4 bytes
     writer.WritePackedUInt32(InputCount);             // 1-4 bytes
     if (InputCount <= 0) return;
     var firstInput = Inputs[0];
     var playerCount = (byte)firstInput.PlayerCount;
-    var mask = firstInput.CreateValidMask();
     Assert.IsTrue(playerCount <= sizeof(Mask) * 8);
+    writer.Write(ValidMask);                          // 1 byte
+    writer.WritePackedUInt32(StartTimestamp);         // 1-4 bytes
     writer.Write(playerCount);                        // 1 byte
-    writer.Write(mask);                               // 1 byte
     for (int i = 0; i < InputCount; i++) {            // 1-5 * playerCount * Inputs.Length bytes
-      Inputs[i].Serialize(writer, mask);              // (Only valid inputs)
+      Inputs[i].Serialize(writer, ValidMask);         // (Only valid inputs)
     }
   }
 
   public override void Deserialize(NetworkReader reader) {
-    StartTimestamp = reader.ReadPackedUInt32();
     InputCount = reader.ReadPackedUInt32();
     if (InputCount <= 0) return;
+    ValidMask = reader.ReadByte();
+    StartTimestamp = reader.ReadPackedUInt32();
     byte playerCount = reader.ReadByte();
-    byte mask = reader.ReadByte();
     Inputs = ArrayPool<MatchInput>.Shared.Rent((int)InputCount);
     for (int i = 0; i < InputCount; i++) {
-      Inputs[i] = MatchInput.Deserialize(reader, (int)playerCount, mask);
+      Inputs[i] = MatchInput.Deserialize(reader, (int)playerCount, ValidMask);
     }
   }
 

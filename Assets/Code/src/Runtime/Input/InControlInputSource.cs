@@ -9,7 +9,9 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class InControlInputSource : IInputSource<MatchInput> {
+public class InControlInputSource : IInputSource {
+
+  public byte ValidMask { get; }
 
   MatchInput input;
   // TODO(james7132): Support multiple with player level configurations.
@@ -20,6 +22,12 @@ public class InControlInputSource : IInputSource<MatchInput> {
     this.config = config;
     controllerMapping = new PlayerControllerMapping();
     input = new MatchInput(config);
+    ValidMask = 0;
+    for (var i = 0; i < config.PlayerCount; i++) {
+      if (!config.PlayerConfigs[i].IsLocal) continue;
+      ValidMask |= (byte)(1 << i);
+    }
+    Debug.Log($"Valid Mask: {ValidMask}");
   }
   
   public MatchInput SampleInput() {
@@ -27,13 +35,9 @@ public class InControlInputSource : IInputSource<MatchInput> {
     var newInput = input.Clone();
     for (var i = 0; i < newInput.PlayerCount; i++) {
       var playerConfig = config.PlayerConfigs[i];
-      if (!playerConfig.IsLocal) {
-        newInput.PlayerInputs[i] = new PlayerInput { IsValid = false };
-        continue;
-      }
       var playerId = playerConfig.LocalPlayerID;
-      if (playerId >= devices.Count) {
-        newInput.PlayerInputs[i] = new PlayerInput { IsValid = true };
+      if (!playerConfig.IsLocal || playerId >= devices.Count) {
+        newInput.PlayerInputs[i] = new PlayerInput { IsValid = playerConfig.IsLocal };
         continue;
       }
       UpdatePlayerInput(ref newInput.PlayerInputs[i], devices[(int)playerId]);
