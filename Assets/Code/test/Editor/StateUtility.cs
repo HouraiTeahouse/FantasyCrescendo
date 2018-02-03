@@ -18,7 +18,7 @@ public static class StateUtility {
       IsFastFalling= random.NextDouble() > 0.5,
       RemainingJumps = (uint)random.Next(10000),
       RespawnTimeRemaining = (uint)random.Next(10000),
-      StateHash = (int)random.Next(10000),
+      StateID = (uint)random.Next(10000),
       ShieldDamage = (uint)random.Next(10000),
       ShieldRecoveryCooldown = (uint)random.Next(10000),
       GrabbedLedgeID = (byte)random.Next(0, 255),

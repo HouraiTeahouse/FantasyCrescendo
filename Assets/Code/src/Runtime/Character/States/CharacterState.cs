@@ -4,15 +4,17 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterState : State<CharacterContext> {
+public class CharacterState : State<CharacterContext>, IEntity {
 
   public string Name { get; private set; }
+  public uint Id { get; private set; }
   public CharacterStateData Data { get; private set; }
   public string AnimatorName { get; private set; }
   public int AnimatorHash { get; private set; }
 
-  internal void Initalize(string name, CharacterStateData data) {
+  internal void Initalize(string name, uint id, CharacterStateData data) {
     Name = name;
+    Id = id;
     Data = Argument.NotNull(data);
     AnimatorName = Name.Replace(".", "-");
     AnimatorHash = Animator.StringToHash(AnimatorName);
