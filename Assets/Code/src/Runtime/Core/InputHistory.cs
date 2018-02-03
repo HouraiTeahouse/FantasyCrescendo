@@ -35,6 +35,8 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
   /// </summary>
   public TimedInput<I> Newest => newest.Value;
 
+  public int Count { get; private set; }
+
   /// <summary>
   /// Initalizes a new instance of the <see cref="InputHistory{T}"/> class.
   /// </summary>
@@ -184,6 +186,7 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
       (oldest.Input as IDisposable)?.Dispose();
       pool.Return(oldest);
       oldest = oldest.Next;
+      Count--;
     }
     if (oldest.Timestep >= current.Timestep) {
       current = oldest;
@@ -264,6 +267,7 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
     if (newest == previous) {
       newest = newElement;
     }
+    Count++;
     return newElement;
   }
 
