@@ -11,15 +11,13 @@ internal class AbstractDataTest<T> where T : GameDataBase {
 
     protected delegate IEnumerable AssetManyFunc(T data);
 
-    protected static IEnumerable<T> data;
-
-    public static IEnumerable<object[]> TestData() {
-        if (data == null) {
-          data = EditorAssetUtil.LoadAll<T>().Where(d => d != null && d.IsSelectable && d.IsVisible);
-        }
+    protected static IEnumerable<object[]> AllData {
+      get {
+        var data = EditorAssetUtil.LoadAll<T>().Where(d => d != null && d.IsSelectable && d.IsVisible);
         foreach (var datum in data) {
           yield return new object[] {datum};
         }
+      }
     }
 
 }
