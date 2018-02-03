@@ -33,6 +33,11 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
   }
 
   void InjectState(object obj, string path = "", int depth = 0) {
+    uint id = 0;
+    InjectState(obj, ref id, path, depth);
+  }
+
+  void InjectState(object obj, ref uint currentId, string path = "", int depth = 0) {
     const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
     foreach (PropertyInfo propertyInfo in obj.GetType().GetProperties(flags)) {
       string propertyName = propertyInfo.Name;
@@ -44,11 +49,11 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
       var state = instance as CharacterState;
       propertyInfo.SetValue(obj, instance, null);
       if (state != null) {
-        state.Initalize(propertyName, GetStateData(propertyName));
+        state.Initalize(propertyName, currentId++, GetStateData(propertyName));
         Builder.AddState(state);
       } else {
         if (depth < 7) {
-          InjectState(instance, propertyName, depth + 1);
+          InjectState(instance, ref currentId, propertyName, depth + 1);
         }
       }
     }

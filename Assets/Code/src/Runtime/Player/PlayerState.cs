@@ -60,7 +60,7 @@ public struct PlayerState {
 
   public uint RespawnTimeRemaining;                   // 1-4 bytes
 
-  public int StateHash;                               // 1-4 bytes
+  public uint StateID;                                // 1-4 bytes
   public uint StateTick;                              // 1-4 bytes
 
   public uint ShieldDamage;                           // 4 bytes
@@ -90,7 +90,7 @@ public struct PlayerState {
     writer.WritePackedInt32(velX);
     writer.WritePackedInt32(velY);
     writer.Write(damage);
-    writer.WritePackedInt32(StateHash);
+    writer.WritePackedUInt32(StateID);
     writer.WritePackedUInt32(StateTick);
     if (ShieldDamage != 0) {
       writer.WritePackedUInt32(ShieldDamage);
@@ -122,7 +122,7 @@ public struct PlayerState {
     velX = reader.ReadPackedInt32();
     velY = reader.ReadPackedInt32();
     damage = reader.ReadUInt16();
-    StateHash = reader.ReadPackedInt32();
+    StateID = reader.ReadPackedUInt32();
     StateTick = reader.ReadPackedUInt32();
     Direction = (mask & 1 << 0) != 0;
     IsFastFalling = (mask & 1 << 1) != 0;
@@ -145,7 +145,7 @@ public struct PlayerState {
     equals &= IsFastFalling == other.IsFastFalling;
     equals &= RemainingJumps == other.RemainingJumps;
     equals &= RespawnTimeRemaining == other.RespawnTimeRemaining;
-    equals &= StateHash == other.StateHash;
+    equals &= StateID == other.StateID;
     equals &= StateTick == other.StateTick;
     equals &= ShieldDamage == other.ShieldDamage;
     equals &= ShieldRecoveryCooldown == other.ShieldRecoveryCooldown;
@@ -164,7 +164,7 @@ public struct PlayerState {
       hash &= 199 * IsFastFalling.GetHashCode();
       hash &= 131 * RemainingJumps.GetHashCode();
       hash &= 101 * RespawnTimeRemaining.GetHashCode();
-      hash &= 83 *StateHash;
+      hash &= 83 * StateID.GetHashCode();
       hash &= 71 * StateTick.GetHashCode();
       hash &= 59 * ShieldDamage.GetHashCode();
       hash &= 47 * ShieldRecoveryCooldown.GetHashCode();

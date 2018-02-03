@@ -16,13 +16,13 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
 
   public CharacterStateData StateData => StateController?.CurrentState?.Data;
 
-  Dictionary<int, CharacterState> stateMap;
+  Dictionary<uint, CharacterState> stateMap;
   CharacterContext context = new CharacterContext();
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
     States = Instantiate(States); // Create a per-player copy of the builder.
     StateController = States.BuildCharacterControllerImpl(new StateControllerBuilder<CharacterState, CharacterContext>());
-    stateMap = StateController.States.ToDictionary(s => s.AnimatorHash, s => s);
+    stateMap = StateController.States.ToDictionary(s => s.Id, s => s);
     return Task.CompletedTask;
   }
 
@@ -30,7 +30,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
 
   public void ApplyState(PlayerState state) {
     CharacterState controllerState;
-    if (stateMap.TryGetValue(state.StateHash, out controllerState)) {
+    if (stateMap.TryGetValue(state.StateID, out controllerState)) {
       StateController.SetState(controllerState);
     }
   }
@@ -45,12 +45,12 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     StateController.UpdateState(context);
     
     state = context.State;
-    state.StateHash = StateController.CurrentState.AnimatorHash;
+    state.StateID = StateController.CurrentState.Id;
     return state;
   }
 
   public PlayerState ResetState(PlayerState state) {
-    state.StateHash = StateController.DefaultState.AnimatorHash;
+    state.StateID = StateController.DefaultState.Id;
     return state;
   }
 

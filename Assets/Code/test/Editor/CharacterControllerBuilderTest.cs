@@ -15,13 +15,12 @@ public class CharacterControllerBuilderTest {
 
   [SetUp]
   public void Setup() {
-      if (_stateMap != null && _stateController != null)
-          return;
-      var instance = ScriptableObject.CreateInstance<CharacterControllerBuilder>();
-      var builder = new StateControllerBuilder<CharacterState, CharacterContext>();
-      _stateController = instance.BuildCharacterControllerImpl(builder);
-      _stateMap = _stateController.States.ToDictionary(s => s.Name, s => s);
-      UnityEngine.Object.DestroyImmediate(instance);
+    if (_stateMap != null && _stateController != null) return;
+    var instance = ScriptableObject.CreateInstance<CharacterControllerBuilder>();
+    var builder = new StateControllerBuilder<CharacterState, CharacterContext>();
+    _stateController = instance.BuildCharacterControllerImpl(builder);
+    _stateMap = _stateController.States.ToDictionary(s => s.Name, s => s);
+    UnityEngine.Object.DestroyImmediate(instance);
   }
 
   static PlayerInputContext CreateInput(PlayerInput input) => new PlayerInputContext { Current = input };
