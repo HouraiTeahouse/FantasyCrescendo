@@ -4,14 +4,17 @@ using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public static class InputUtility {
+  
+  static Random random = new Random();
 
   public static PlayerInput RandomPlayerInput() {
     return new PlayerInput {
-      Movement = Random.insideUnitCircle,
-      Smash = Random.insideUnitCircle,
-      Buttons = (byte)Random.Range(0, 255),
+      Movement = UnityEngine.Random.insideUnitCircle,
+      Smash = random.NextDouble() > 0.5 ? UnityEngine.Random.insideUnitCircle : Vector2.zero,
+      Buttons = (byte)random.Next(0, 255),
     };
   }
 

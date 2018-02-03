@@ -1,6 +1,7 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Players;
 using NUnit.Framework;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;
@@ -10,14 +11,18 @@ public class PlayerInputTests {
 
 	[Test]
 	public void PlayerInput_serializes_and_deserializes_properly() {
+    var sizes = new List<int>();
     for (var i = 0; i < 1000; i++) {
-      var input = InputUtility.RandomPlayerInput();
+      var state = InputUtility.RandomPlayerInput();
       var networkWriter = new NetworkWriter();
-      input.Serialize(networkWriter);
-      var networkReader = new NetworkReader(networkWriter.AsArray());
-      var deserializedInput = PlayerInput.Deserialize(networkReader);
-      Assert.AreEqual(input, deserializedInput);
+      state.Serialize(networkWriter);
+      var bytes = networkWriter.AsArray();
+      sizes.Add(networkWriter.Position);
+      var networkReader = new NetworkReader(bytes);
+      var deserialized = PlayerInput.Deserialize(networkReader);
+      Assert.AreEqual(state, deserialized);
     }
+    Debug.Log($"Average Message Size: {sizes.Average()}");
 	}
 
 }

@@ -16,15 +16,15 @@ public static class StateUtility {
       Velocity =random.Next() * new Vector2((float)random.NextDouble(), (float)random.NextDouble()),
       Direction = random.NextDouble() > 0.5,
       IsFastFalling= random.NextDouble() > 0.5,
-      RemainingJumps = (uint)random.Next(10000),
-      RespawnTimeRemaining = (uint)random.Next(10000),
-      StateID = (uint)random.Next(10000),
-      ShieldDamage = (uint)random.Next(10000),
-      ShieldRecoveryCooldown = (uint)random.Next(10000),
+      RemainingJumps = random.NextDouble() > 0.5 ? (uint)random.Next(10) : 0,
+      RespawnTimeRemaining = random.NextDouble() > 0.5 ? (uint)random.Next(300) : 0,
+      StateID = (uint)random.Next(200),
+      ShieldDamage = random.NextDouble() > 0.5 ? (uint)random.Next(300) : 0,
+      ShieldRecoveryCooldown = random.NextDouble() > 0.5 ? (uint)random.Next(300) : 0,
       GrabbedLedgeID = (byte)random.Next(0, 255),
       Damage = random.Next(1000),
-      Hitstun = (uint)random.Next(1000),
-      Stocks = (sbyte)random.Next(-127, 127)
+      Hitstun = random.NextDouble() > 0.5 ? (uint)random.Next(300) : 0,
+      Stocks = (sbyte)(random.NextDouble() > 0.5 ? random.Next(-127, 127) : 0)
     };
   }
 

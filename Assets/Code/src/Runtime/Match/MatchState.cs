@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
@@ -15,7 +16,7 @@ public class MatchState {
   public uint Time;
 
   PlayerState[] playerStates;
-  public int PlayerCount { get; }
+  public int PlayerCount { get; private set; }
 
   public MatchState() : this((int)GameMode.GlobalMaxPlayers) { }
 
@@ -59,10 +60,42 @@ public class MatchState {
     return clone;
   }
 
+  public void Serialize(NetworkWriter writer) {
+    byte activeMask = (byte)(PlayerCount & 15);
+    for (var i = 0; i < PlayerCount; i++) {
+      if (!playerStates[i].IsActive) continue;
+      activeMask |= (byte)(1 << (i + 4));
+    }
+    writer.Write(activeMask);
+    for (uint i = 0; i < PlayerCount; i++) {
+      if (playerStates[i].IsActive) {
+        playerStates[i].Serialize(writer);
+      }
+    }
+  }
+
+  public void Deserialize(NetworkReader reader) {
+    var mask = reader.ReadByte();
+    PlayerCount = mask & 15;
+    playerStates = ArrayPool<PlayerState>.Shared.Rent(PlayerCount);
+    for (var i = 0; i < PlayerCount; i++) {
+      var state = new PlayerState();
+      if ((mask & (1 << (i + 4))) != 0) {
+        state.Deserialize(reader);
+      }
+      SetPlayerState((uint)i, state);
+    }
+  }
+
   public PlayerState GetPlayerState(uint index) => playerStates[index];
   public void SetPlayerState(uint index, PlayerState state) {
     state.MatchState = this;
     playerStates[index] = state;
+  }
+
+  public override string ToString() {
+    var players = string.Join(" ", playerStates.Take(PlayerCount).Select(p => p.GetHashCode().ToString()));
+    return $"{{MatchState ({PlayerCount}): {players}}}";
   }
 
   public override bool Equals(object obj) {
