@@ -243,10 +243,8 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
     if (nextElement?.Timestep == timestep) {
       nextElement.Input = merger.Merge(nextElement.Input, input);
       currentElement = nextElement;
-      Debug.Log($"NEXT MERGE: {timestep}");
     } else if (currentElement?.Timestep == timestep) {
       currentElement.Input = merger.Merge(currentElement.Input, input);
-      Debug.Log($"CURRENT MERGE: {timestep}");
     } else if (nextElement == null || nextElement.Timestep > timestep + 1) {
       Assert.IsTrue(timestep > currentElement.Timestep);
       currentElement = Append(currentElement, input, timestep);
