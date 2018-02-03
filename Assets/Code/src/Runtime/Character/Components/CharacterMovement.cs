@@ -31,8 +31,9 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
       new AerialMovement(),
     };
 
-    foreach (var mover in Movers)
+    foreach (var mover in Movers) {
       mover.Character = this;
+    }
 
     return Task.CompletedTask;
   }
