@@ -54,6 +54,7 @@ public class RollbackStrategy : INetworkStrategy {
       StateSendTimer++;
       if (StateSendTimer < NetworkConfig.StateSendRate) return;
       LatestInput[0] = InputHistory.Newest.Input;
+      Debug.Log($"Server: Broadcast State (Timestep: {Timestep})");
       NetworkServer.BroadcastState(Timestep, CurrentState);
       BroadcastInputs();
       StateSendTimer = 0;
@@ -65,6 +66,7 @@ public class RollbackStrategy : INetworkStrategy {
 
     void OnRecievedInputs(uint player, uint timestep,
                           ArraySlice<MatchInput> inputs) {
+      Debug.Log($"Server: Recieve Inputs {player} {timestep}");
       ForwardSimulate(timestep, inputs);
       UpdateClientTimestep(player, timestep);
     }
@@ -86,13 +88,14 @@ public class RollbackStrategy : INetworkStrategy {
       MatchInput input = InputHistory.Current.Input;
       InputContext.Reset(input);
       int count = 0; 
-      while (input.IsValid) {
+      var newestTimestep = InputHistory.Newest.Timestep;
+      while (input.IsValid && InputHistory.Current.Timestep < newestTimestep) {
         count++;
         InputContext.Update(input);
         CurrentState = Simulation.Simulate(CurrentState, InputContext);
         input = InputHistory.Step();
       }
-      Debug.Log($"Server: Forward Simulate {count} {Timestep}");
+      Debug.Log($"Server: Forward Simulate (Timestep: {Timestep}) (Delta: {count})");
     }
 
     uint GetClientTimestamp(uint clientId) {
@@ -136,17 +139,22 @@ public class RollbackStrategy : INetworkStrategy {
       base.Update();
 
       var input = InputSource.SampleInput();
-      InputContext.Reset(InputHistory.Current.Input);
+      if (InputHistory.Current.Timestep == 0) {
+        InputHistory.Current.Input.MergeWith(input);
+      }
       input = InputHistory.Append(input);
-      input.Predict(InputHistory.Current.Input);
-      InputContext.Update(input);
+
+      InputContext.Reset(InputHistory.Current.Input, input);
+      InputContext.Predict();
 
       CurrentState = Simulation.Simulate(CurrentState, InputContext);
       
       InputSendTimer++;
       if (InputSendTimer < NetworkConfig.InputSendRate) return;
-      NetworkClient.SendInput(InputHistory.Oldest.Timestep, InputHistory.Take(kMaxInputsSent).Select(i => i.Input));
-      Debug.Log("Client: Send Inputs");
+      var timestamp = InputHistory.Oldest.Timestep;
+      var mask = InputSource.ValidMask;
+      var inputs = InputHistory.Take(kMaxInputsSent).Select(i => i.Input);
+      NetworkClient.SendInput(timestamp, mask, inputs);
       InputSendTimer = 0;
     }
 
@@ -156,27 +164,26 @@ public class RollbackStrategy : INetworkStrategy {
     }
 
     void OnRecievedInputs(uint timestep, ArraySlice<MatchInput> inputs) {
-      Debug.Log($"Client: Update Inputs {timestep} {inputs.Count}");
       InputHistory.MergeWith(timestep, inputs);
+      Debug.Log($"Client: Update Inputs (Server: {timestep}) (Client Oldest: {InputHistory.Oldest.Timestep}) (Client Current: {Timestep})");
     }
 
     void OnRecievedState(uint timestep, MatchState state) {
-      if (timestep < Timestep) return;
-      Debug.Log($"Client: Update State {timestep}");
+      if (timestep < InputHistory.Oldest.Timestep) return;
       CurrentState = state;
       var start = timestep != 0 ? timestep - 1 : 0;
       foreach (var timedInput in InputHistory.StartingWith(start)) {
         Assert.IsTrue(timedInput.Timestep <= InputHistory.Current.Timestep);
-        Assert.IsTrue(timedInput.Input.IsValid);
         if (timedInput.Timestep < timestep || timedInput.Timestep == 0) {
-          Debug.Log("RESET");
           InputContext.Reset(timedInput.Input);
         } else {
           InputContext.Update(timedInput.Input);
+          InputContext.Predict();
           CurrentState = Simulation.Simulate(CurrentState, InputContext);
         }
       }
       InputHistory.DropBefore(timestep);
+      Debug.Log($"Client: Update State (Server: {timestep}) (Client Oldest: {InputHistory.Oldest.Timestep}) (Client Current: {Timestep})");
     }
 
   }

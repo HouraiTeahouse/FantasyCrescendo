@@ -100,7 +100,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
         clientTimestamp = t;
         clientInputs = inputs.ToArray();
       };
-      Host.Server.BroadcastInput(serverTimestamp, serverInputs);
+      Host.Server.BroadcastInput(serverTimestamp, MatchInput.AllValid, serverInputs);
     }, () => clientTimestamp != null && clientInputs != null, () => {
       Assert.AreEqual(serverTimestamp, clientTimestamp);
       CollectionAssert.AreEqual(serverInputs, clientInputs);
@@ -163,7 +163,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
         serverTimestamp = t;
         serverInputs = inputs.ToArray();
       };
-      Host.Client.SendInput(clientTimestamp, clientInputs);
+      Host.Client.SendInput(clientTimestamp, MatchInput.AllValid, clientInputs);
     }, () => serverTimestamp != null && serverInputs == null, () => {
       Assert.AreEqual(clientTimestamp, serverTimestamp);
       CollectionAssert.AreEqual(clientInputs, serverInputs);

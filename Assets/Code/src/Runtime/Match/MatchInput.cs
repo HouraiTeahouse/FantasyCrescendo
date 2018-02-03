@@ -10,6 +10,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public struct MatchInput : IMergable<MatchInput>, IDisposable {
 
+  public const Mask AllValid = (byte)255;
+
   public const int kMaxSupportedPlayers = sizeof(Mask) * 8;
   public int PlayerCount { get; }
 
@@ -19,15 +21,14 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
 
   public MatchInput(int playerCount) {
     PlayerCount = playerCount;
+    Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers, $"PlayerCount not in range: {PlayerCount}");
     PlayerInputs = ArrayPool<PlayerInput>.Shared.Rent(PlayerCount);
     Array.Clear(PlayerInputs, 0, PlayerCount);
   }
 
   public MatchInput(MatchConfig config) : this(config.PlayerConfigs.Length) {}
 
-  MatchInput(MatchInput input) {
-    PlayerCount = input.PlayerCount;
-    PlayerInputs = ArrayPool<PlayerInput>.Shared.Rent(PlayerCount);
+  MatchInput(MatchInput input) : this(input.PlayerCount) {
     Array.Copy(input.PlayerInputs, 0, PlayerInputs, 0, PlayerCount);
   }
 
@@ -47,7 +48,7 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
     }
   }
 
-  public void Predict(MatchInput baseInput) => ForceValid(PlayerInputs, true);
+  public void Predict() => ForceValid(PlayerInputs, true);
 
   public void MergeWith(MatchInput otherInput) {
     Assert.IsTrue(PlayerCount >= otherInput.PlayerCount);
@@ -95,10 +96,8 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
 
   public void Serialize(NetworkWriter writer, Mask mask) {
     if (PlayerInputs == null) return;
-    Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
     for (var i = 0; i < PlayerCount; i++) {
       if ((mask & (1 << i)) == 0) continue;
-      Assert.IsTrue(PlayerInputs[i].IsValid);
       PlayerInputs[i].Serialize(writer);
     }
   }
@@ -136,6 +135,13 @@ public class MatchInputContext {
         isValid &= PlayerInputs[i].IsValid;
       }
       return isValid;
+    }
+  }
+
+  public void Predict() {
+    for (int i = 0; i < PlayerInputs.Length; i++) {
+      PlayerInputs[i].Current.IsValid = true;
+      PlayerInputs[i].Previous.IsValid = true;
     }
   }
 

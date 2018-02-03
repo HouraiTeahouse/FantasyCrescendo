@@ -69,7 +69,7 @@ public class NetworkGameClient : INetworkClient {
     }
   }
 
-  public void SendInput(uint startTimestamp, IEnumerable<MatchInput> input) {
+  public void SendInput(uint startTimestamp, byte validMask, IEnumerable<MatchInput> input) {
     if (ServerConnection == null) return;
     int inputCount;
     var inputs = ArrayUtil.ConvertToArray(input, out inputCount);
@@ -78,6 +78,7 @@ public class NetworkGameClient : INetworkClient {
       var message = rental.RentedObject;
       message.StartTimestamp = startTimestamp;
       message.InputCount = (uint)inputCount;
+      message.ValidMask = validMask;
       message.Inputs = inputs;
       ServerConnection.Send(MessageCodes.UpdateInput, message, NetworkReliablity.Unreliable);
     }

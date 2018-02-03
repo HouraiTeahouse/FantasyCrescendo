@@ -3588,8 +3588,8 @@ MonoBehaviour:
     RemainingJumps: 0
     RespawnTimeRemaining: 0
     StateHash: 0
-    NormalizedStateTime: 0
-    ShieldHealth: 0
+    StateTick: 0
+    ShieldDamage: 0
     ShieldRecoveryCooldown: 0
     GrabbedLedgeID: 0
     Damage: 0
@@ -3664,7 +3664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShieldSize: 1
   MaxShieldHealth: 100
-  DepletionRate: 0.25
+  DepletionRate: 0
   RegenRate: 2
   RecoveryCooldown: 120
   ResetHealth: 30

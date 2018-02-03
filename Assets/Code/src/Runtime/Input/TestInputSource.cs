@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class TestInputSource : IInputSource<MatchInput> {
+public class TestInputSource : IInputSource {
+
+  public byte ValidMask => MatchInput.AllValid;
 
   MatchInput input;
 

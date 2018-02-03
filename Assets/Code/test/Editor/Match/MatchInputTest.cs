@@ -1,11 +1,12 @@
 ﻿using HouraiTeahouse.FantasyCrescendo;
 using HouraiTeahouse.FantasyCrescendo.Matches;
-using UnityEngine;
-using UnityEditor;
-using UnityEngine.TestTools;
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.Networking;
+using UnityEditor;
+using UnityEngine.TestTools;
 
 public class MatchInputTest {
 
@@ -32,8 +33,32 @@ public class MatchInputTest {
 	[TestCaseSource("TestCases")]
 	public void Predict_forces_invalid_inputs_to_be_valid(int playerCount) {
     var src = InputUtility.RandomInput(playerCount);
-    src.Predict(InputUtility.RandomInput(playerCount));
+    src.Predict();
     Assert.IsTrue(src.IsValid);
 	}
+
+  [TestCaseSource("TestCases")]
+  public void MatchInput_prodcues_proper_valid_masks(int playerCount) {
+    for (var i = 0; i < 1000; i++) {
+      byte mask = (byte)(Mathf.FloorToInt(Random.value) & ~(1 << playerCount));
+      var input = InputUtility.RandomInput(playerCount);
+      InputUtility.ForceValid(ref input, mask);
+      Assert.AreEqual(mask, input.CreateValidMask());
+    }
+  }
+
+	[TestCaseSource("TestCases")]
+	public void MatchInput_serializes_and_deserializes_properly(int playerCount) {
+    for (var i = 0; i < 1000; i++) {
+      var input = InputUtility.RandomInput(playerCount);
+      var networkWriter = new NetworkWriter();
+      var validMask = input.CreateValidMask();
+      input.Serialize(networkWriter, validMask);
+      var networkReader = new NetworkReader(networkWriter.AsArray());
+      var deserializedInput = MatchInput.Deserialize(networkReader, playerCount, validMask);
+      Assert.AreEqual(input, deserializedInput);
+    }
+	}
+
 
 }

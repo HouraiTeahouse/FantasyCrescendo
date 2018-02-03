@@ -38,7 +38,7 @@ public sealed class LockstepStrategy : INetworkStrategy {
       base.Update();
       if (!CurrentInput.IsValid) return;
       InputBuffer[0] = CurrentInput;
-      NetworkServer.BroadcastInput(Timestep, InputBuffer);
+      NetworkServer.BroadcastInput(Timestep, MatchInput.AllValid, InputBuffer);
     }
 
     public override void Dispose() {
@@ -77,7 +77,7 @@ public sealed class LockstepStrategy : INetworkStrategy {
         LocalInput = new MatchInput[1];
         LocalInput[0] = InputSource.SampleInput();
       }
-      NetworkClient.SendInput(Timestep, LocalInput);
+      NetworkClient.SendInput(Timestep, InputSource.ValidMask, LocalInput);
       if (!CurrentInput.IsValid) return;
       InputContext.Update(CurrentInput);
       CurrentState = Simulation.Simulate(CurrentState, InputContext);

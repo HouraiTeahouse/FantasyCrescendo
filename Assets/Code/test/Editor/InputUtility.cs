@@ -10,7 +10,7 @@ public static class InputUtility {
   public static PlayerInput RandomPlayerInput() {
     return new PlayerInput {
       Movement = Random.insideUnitCircle,
-      Smash = Vector2.zero,
+      Smash = Random.insideUnitCircle,
       Buttons = (byte)Random.Range(0, 255),
     };
   }

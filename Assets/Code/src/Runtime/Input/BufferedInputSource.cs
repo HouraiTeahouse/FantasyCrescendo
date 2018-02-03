@@ -1,21 +1,25 @@
+using HouraiTeahouse.FantasyCrescendo.Matches;
+
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class BufferedInputSource<I> : IInputSource<I> {
+public class BufferedInputSource : IInputSource {
 
-  readonly IInputSource<I> baseInputSource;
-  readonly I[] buffer;
+  public byte ValidMask => baseInputSource.ValidMask;
+
+  readonly IInputSource baseInputSource;
+  readonly MatchInput[] buffer;
   int index;
 
-  public BufferedInputSource(int bufferSize, IInputSource<I> baseInputSource) {
+  public BufferedInputSource(int bufferSize, IInputSource baseInputSource) {
     this.baseInputSource = baseInputSource;
-    buffer = new I[bufferSize];
-    I sampledBaseInput = baseInputSource.SampleInput();
+    buffer = new MatchInput[bufferSize];
+    MatchInput sampledBaseInput = baseInputSource.SampleInput();
     for (int i = 0; i < buffer.Length; i++) {
       buffer[i] = sampledBaseInput;
     }
   }
 
-  public I SampleInput() {
+  public MatchInput SampleInput() {
     buffer[index] = baseInputSource.SampleInput();
     index = (index + 1) % buffer.Length;
     return buffer[index];
