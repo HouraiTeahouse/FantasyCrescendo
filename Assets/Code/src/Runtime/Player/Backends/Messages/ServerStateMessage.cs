@@ -11,21 +11,15 @@ public class ServerStateMessage : MessageBase {
 
   public override void Serialize(NetworkWriter writer) {
     writer.WritePackedUInt32(Timestamp);
-    writer.WritePackedUInt32((uint)State.PlayerCount);
-    for (uint i = 0; i < State.PlayerCount; i++) {
-      State.GetPlayerState(i).Serialize(writer);
-    }
+    State.Serialize(writer);
   }
 
   public override void Deserialize(NetworkReader reader) {
     Timestamp = reader.ReadPackedUInt32();
-    var count = reader.ReadPackedUInt32();
-    State = new MatchState((int)count);
-    for (uint i = 0; i < count; i++) {
-      var state = new PlayerState();
-      state.Deserialize(reader);
-      State.SetPlayerState(i, state);
+    if (State == null) {
+      State = new MatchState(0);
     }
+    State.Deserialize(reader);
   }
 
 }

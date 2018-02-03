@@ -2,6 +2,7 @@
 using HouraiTeahouse.FantasyCrescendo.Matches;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -49,15 +50,19 @@ public class MatchInputTest {
 
 	[TestCaseSource("TestCases")]
 	public void MatchInput_serializes_and_deserializes_properly(int playerCount) {
+    var sizes = new List<int>();
     for (var i = 0; i < 1000; i++) {
       var input = InputUtility.RandomInput(playerCount);
       var networkWriter = new NetworkWriter();
       var validMask = input.CreateValidMask();
       input.Serialize(networkWriter, validMask);
-      var networkReader = new NetworkReader(networkWriter.AsArray());
+      var bytes = networkWriter.AsArray();
+      sizes.Add(networkWriter.Position);
+      var networkReader = new NetworkReader(bytes);
       var deserializedInput = MatchInput.Deserialize(networkReader, playerCount, validMask);
       Assert.AreEqual(input, deserializedInput);
     }
+    Debug.Log($"Average Message Size ({playerCount}): {sizes.Average()}");
 	}
 
 

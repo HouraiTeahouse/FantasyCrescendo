@@ -38,6 +38,7 @@ public struct PlayerState {
     get { return new Vector2(PositionX, PositionY); }
     set { PositionX = value.x; PositionY = value.y; }
   }
+
   int velX, velY;                                     // 2-6 bytes
   public float VelocityX {
     get { return velX / (float)(1 << 8); }
@@ -72,17 +73,28 @@ public struct PlayerState {
 
   public sbyte Stocks;                                // 4 bytes
 
+  void WriteBit(ref uint mask, bool val) {
+    mask <<= 1;
+    if (val) mask |= 1;
+  }
+
+  bool ReadBit(ref uint mask) {
+    var result = (mask & 1) != 0;
+    mask >>= 1;
+    return result;
+  }
+
   public void Serialize(NetworkWriter writer) {
     uint mask = 0;
-    if (Direction) mask |= 1 << 0;
-    if (IsFastFalling) mask |= 1 << 1;
-    if (ShieldDamage != 0) mask |= 1 << 2;
-    if (ShieldRecoveryCooldown != 0) mask |= 1 << 3;
-    if (GrabbedLedgeID != 0) mask |= 1 << 4;
-    if (Stocks != 0) mask |= 1 << 5;
-    if (Hitstun != 0) mask |= 1 << 6;
-    if (RemainingJumps != 0) mask |= 1 << 7;
-    if (RespawnTimeRemaining != 0) mask |= 1 << 8;
+    WriteBit(ref mask, RespawnTimeRemaining != 0);
+    WriteBit(ref mask, ShieldRecoveryCooldown != 0);
+    WriteBit(ref mask, Hitstun != 0);
+    WriteBit(ref mask, ShieldDamage != 0);
+    WriteBit(ref mask, GrabbedLedgeID != 0);
+    WriteBit(ref mask, RemainingJumps != 0);
+    WriteBit(ref mask, Stocks != 0);
+    WriteBit(ref mask, IsFastFalling);
+    WriteBit(ref mask, Direction);
 
     writer.WritePackedUInt32(mask);
     writer.Write(posX);
@@ -92,27 +104,14 @@ public struct PlayerState {
     writer.Write(damage);
     writer.WritePackedUInt32(StateID);
     writer.WritePackedUInt32(StateTick);
-    if (ShieldDamage != 0) {
-      writer.WritePackedUInt32(ShieldDamage);
-    }
-    if (ShieldRecoveryCooldown != 0)  {
-      writer.WritePackedUInt32(ShieldRecoveryCooldown);
-    }
-    if (GrabbedLedgeID != 0)  {
-      writer.Write(GrabbedLedgeID);
-    }
-    if (Stocks != 0) {
-      writer.Write(Stocks);
-    }
-    if (Hitstun != 0) {
-      writer.WritePackedUInt32(Hitstun);
-    }
-    if (RemainingJumps != 0) {
-      writer.WritePackedUInt32(RemainingJumps);
-    }
-    if (RespawnTimeRemaining != 0) {
-      writer.WritePackedUInt32(RespawnTimeRemaining);
-    }
+
+    if (Stocks != 0)                 writer.Write(Stocks);
+    if (RemainingJumps != 0)         writer.WritePackedUInt32(RemainingJumps);
+    if (GrabbedLedgeID != 0)         writer.Write(GrabbedLedgeID);
+    if (ShieldDamage != 0)           writer.WritePackedUInt32(ShieldDamage);
+    if (Hitstun != 0)                writer.WritePackedUInt32(Hitstun);
+    if (ShieldRecoveryCooldown != 0) writer.WritePackedUInt32(ShieldRecoveryCooldown);
+    if (RespawnTimeRemaining != 0)   writer.WritePackedUInt32(RespawnTimeRemaining);
   }
 
   public void Deserialize(NetworkReader reader) {
@@ -124,21 +123,23 @@ public struct PlayerState {
     damage = reader.ReadUInt16();
     StateID = reader.ReadPackedUInt32();
     StateTick = reader.ReadPackedUInt32();
-    Direction = (mask & 1 << 0) != 0;
-    IsFastFalling = (mask & 1 << 1) != 0;
-    if ((mask & 1 << 2) != 0) ShieldDamage = reader.ReadPackedUInt32();
-    if ((mask & 1 << 3) != 0) ShieldRecoveryCooldown = reader.ReadPackedUInt32();
-    if ((mask & 1 << 4) != 0) GrabbedLedgeID = reader.ReadByte();
-    if ((mask & 1 << 5) != 0) Stocks = reader.ReadSByte();
-    if ((mask & 1 << 6) != 0) Hitstun = reader.ReadPackedUInt32();
-    if ((mask & 1 << 7) != 0) RemainingJumps = reader.ReadPackedUInt32();
-    if ((mask & 1 << 8) != 0) RespawnTimeRemaining = reader.ReadPackedUInt32();
+
+    Direction = ReadBit(ref mask);
+    IsFastFalling = ReadBit(ref mask);
+    if (ReadBit(ref mask)) Stocks = reader.ReadSByte();
+    if (ReadBit(ref mask)) RemainingJumps = reader.ReadPackedUInt32();
+    if (ReadBit(ref mask)) GrabbedLedgeID = reader.ReadByte();
+    if (ReadBit(ref mask)) ShieldDamage = reader.ReadPackedUInt32();
+    if (ReadBit(ref mask)) Hitstun = reader.ReadPackedUInt32();
+    if (ReadBit(ref mask)) ShieldRecoveryCooldown = reader.ReadPackedUInt32();
+    if (ReadBit(ref mask)) RespawnTimeRemaining = reader.ReadPackedUInt32();
   }
 
-  // TODO(james7132): See if there's a better 
+  // TODO(james7132): See if there's a better way to do this
   public override bool Equals(object obj) {
     if (!(obj is PlayerState)) return false;
     var other = (PlayerState)obj;
+    if (!IsActive && !other.IsActive) return true;
     bool equals = Position == other.Position;
     equals &= Velocity == other.Velocity;
     equals &= Direction == other.Direction;
@@ -159,19 +160,19 @@ public struct PlayerState {
   public override int GetHashCode() {
     unchecked {
       int hash = 1367 * Position.GetHashCode();
-      hash &= 919 * Velocity.GetHashCode();
-      hash &= 373 * Direction.GetHashCode();
-      hash &= 199 * IsFastFalling.GetHashCode();
-      hash &= 131 * RemainingJumps.GetHashCode();
-      hash &= 101 * RespawnTimeRemaining.GetHashCode();
-      hash &= 83 * StateID.GetHashCode();
-      hash &= 71 * StateTick.GetHashCode();
-      hash &= 59 * ShieldDamage.GetHashCode();
-      hash &= 47 * ShieldRecoveryCooldown.GetHashCode();
-      hash &= 43 * GrabbedLedgeID;
-      hash &= 31 * Damage.GetHashCode();
-      hash &= 17 * Hitstun.GetHashCode();
-      hash &= Stocks;
+      hash += 919 * Velocity.GetHashCode();
+      hash += 373 * Direction.GetHashCode();
+      hash += 199 * IsFastFalling.GetHashCode();
+      hash += 131 * RemainingJumps.GetHashCode();
+      hash += 101 * RespawnTimeRemaining.GetHashCode();
+      hash += 83 * StateID.GetHashCode();
+      hash += 71 * StateTick.GetHashCode();
+      hash += 59 * ShieldDamage.GetHashCode();
+      hash += 47 * ShieldRecoveryCooldown.GetHashCode();
+      hash += 43 * GrabbedLedgeID;
+      hash += 31 * Damage.GetHashCode();
+      hash += 17 * Hitstun.GetHashCode();
+      hash += Stocks;
       return hash;
     }
   }
