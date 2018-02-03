@@ -13,6 +13,7 @@ using UnityEditor;
 using UnityEngine.TestTools;
 using Random = System.Random;
 
+[Category("Network")] [Category("Integration")]
 public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, new() {
 
   NetworkHost Host;
