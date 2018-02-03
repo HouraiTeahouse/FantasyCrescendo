@@ -59,7 +59,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
 
   public void Jump(ref PlayerState state) {
     if (CanJump(state)) {
-      state.Velocity.y = GetJumpPower(state);
+      state.VelocityY = GetJumpPower(state);
       state.RemainingJumps--;
     }
   }
@@ -75,10 +75,10 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     switch (data.MovementType) {
       case MovementType.Normal:
         var dir = state.Direction ? 1f : -1f;
-        state.Velocity.x =  dir * Mathf.Abs(movementInput.x) * data.MaxMoveSpeed;
+        state.VelocityX =  dir * Mathf.Abs(movementInput.x) * data.MaxMoveSpeed;
         break;
       case MovementType.DirectionalInfluenceOnly:
-        state.Velocity.x = movementInput.x * data.MaxMoveSpeed;
+        state.VelocityX = movementInput.x * data.MaxMoveSpeed;
         break;
     }
   }
@@ -101,7 +101,7 @@ internal class GroundMovement : CharacterMover {
 
   public override PlayerState Move(PlayerState state, PlayerInputContext input) {
     var inputMovement = input.Current.Movement;
-    state.Velocity.x = inputMovement.x;
+    state.VelocityX = inputMovement.x;
     state.IsFastFalling = false;
     state.RemainingJumps = (uint)Character.MaxJumpCount;
     var horizontalMovement = input.Movement.Value.x;

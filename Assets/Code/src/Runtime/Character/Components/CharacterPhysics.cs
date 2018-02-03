@@ -61,9 +61,9 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
   void ApplyGravity(ref PlayerState state) {
     if (state.IsRespawning || state.IsGrabbingLedge) return;
     if (!IsGrounded) {
-      state.Velocity.y -= Gravity * Time.fixedDeltaTime;
+      state.VelocityY -= Gravity * Time.fixedDeltaTime;
     } else {
-      state.Velocity.y = Mathf.Max(0f, state.Velocity.y);
+      state.VelocityY = Mathf.Max(0f, state.Velocity.y);
     }
   }
 
@@ -72,9 +72,9 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
       return;
     }
     if (state.IsFastFalling) {
-      state.Velocity.y = -FastFallSpeed;
+      state.VelocityY = -FastFallSpeed;
     } else if (state.Velocity.y < -MaxFallSpeed) {
-      state.Velocity.y = -MaxFallSpeed;
+      state.VelocityY = -MaxFallSpeed;
     }
   }
 
