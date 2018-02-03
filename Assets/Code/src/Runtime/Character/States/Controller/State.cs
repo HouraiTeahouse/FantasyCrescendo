@@ -32,7 +32,7 @@ public abstract class State<T> {
   public State<T> EvaluateTransitions(T context) {
     foreach (var transition in _transitions) {
       var newState = transition(context);
-      if (newState?.GetEntryPolicy(context) != StateEntryPolicy.Blocked) {
+      if (newState != null && newState?.GetEntryPolicy(context) != StateEntryPolicy.Blocked) {
         return newState;
       }
     }
