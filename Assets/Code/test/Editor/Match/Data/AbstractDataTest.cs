@@ -1,10 +1,11 @@
 ﻿using HouraiTeahouse;
 using HouraiTeahouse.FantasyCrescendo;
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
+[Category("Data")]
 internal class AbstractDataTest<T> where T : GameDataBase {
 
     protected delegate object AssetFunc(T data);
