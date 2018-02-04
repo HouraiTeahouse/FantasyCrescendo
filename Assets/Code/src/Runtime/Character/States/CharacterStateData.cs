@@ -4,14 +4,6 @@ using UnityEngine.Timeline;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public enum SmashAttack {
-  None, Charge, Attack
-}
-
-public enum ImmunityType {
-  Normal, Invincible, Intangible, SuperArmor
-}
-
 public enum MovementType {
   Normal, DirectionalInfluenceOnly, Locked
 }
@@ -28,8 +20,8 @@ public class CharacterStateData {
   public float MinMoveSpeed;
   [Tooltip("Maxiumum movement speeds. Interpolated based on input magnitude.")]
   public float MaxMoveSpeed;
+  public float RotationOffset;
   public StateEntryPolicy EntryPolicy = StateEntryPolicy.Normal;
-  public ImmunityType DamageType = ImmunityType.Normal;
   public MovementType MovementType = MovementType.Normal;
   public bool CanTurn = true;
   public float KnockbackResistance;

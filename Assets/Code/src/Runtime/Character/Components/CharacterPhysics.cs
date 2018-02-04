@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
+[RequireComponent(typeof(CharacterStateMachine))]
 public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   static Collider[] colliderDummy = new Collider[1];
@@ -18,7 +19,11 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public bool IsGrounded { get; private set; }
 
+  CharacterStateMachine StateMachine;
+
   public Task Initialize(PlayerConfig config, bool isView) {
+    StateMachine = GetComponent<CharacterStateMachine>();
+
     if (CharacterController == null) {
       CharacterController = GetComponent<CharacterController>();
     }
@@ -53,7 +58,11 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public void ApplyState(PlayerState state) {
     transform.position = state.Position;
-    transform.localEulerAngles = (state.Direction ? 0 : 180) * Vector3.up;
+    var offset = StateMachine.StateData.RotationOffset;
+    if (!state.Direction) {
+      offset += 180f;
+    }
+    transform.localEulerAngles = offset * Vector3.up;
   }
 
   public PlayerState ResetState(PlayerState state) => state;

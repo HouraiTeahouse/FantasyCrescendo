@@ -3581,18 +3581,15 @@ MonoBehaviour:
       CharacterID: 0
       Pallete: 0
   State:
-    Position: {x: 0, y: 0}
-    Velocity: {x: 0, y: 0}
     Direction: 0
     IsFastFalling: 0
     RemainingJumps: 0
     RespawnTimeRemaining: 0
-    StateHash: 0
+    StateID: 0
     StateTick: 0
     ShieldDamage: 0
     ShieldRecoveryCooldown: 0
     GrabbedLedgeID: 0
-    Damage: 0
     Hitstun: 0
     Stocks: 0
 --- !u!114 &114502081682064662
@@ -4242,7 +4239,7 @@ PlayableDirector:
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 2eb91958e5a6cb94fae2044509f2004c, type: 2}
   m_InitialState: 1
-  m_WrapMode: 2
+  m_WrapMode: 1
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:

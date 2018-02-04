@@ -20,8 +20,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 180
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -29,11 +29,11 @@ MonoBehaviour:
     Data:
       Timeline: {fileID: 11400000, guid: 2eb91958e5a6cb94fae2044509f2004c, type: 2}
       AnimationClip: {fileID: 7400000, guid: fb01eb96bd4199341a5083c7648d097c, type: 3}
-      Length: 1
+      Length: 0.25
       MinMoveSpeed: 3
       MaxMoveSpeed: 3
+      RotationOffset: 90
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -44,8 +44,8 @@ MonoBehaviour:
       Length: 1.9833333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -56,8 +56,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -68,8 +68,8 @@ MonoBehaviour:
       Length: 1.9833333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -80,8 +80,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -92,8 +92,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -104,8 +104,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -116,8 +116,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -128,8 +128,8 @@ MonoBehaviour:
       Length: 1.7083333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -140,8 +140,8 @@ MonoBehaviour:
       Length: 0.45833334
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -152,8 +152,8 @@ MonoBehaviour:
       Length: 0.45833334
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -164,8 +164,8 @@ MonoBehaviour:
       Length: 0.99999976
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -176,8 +176,8 @@ MonoBehaviour:
       Length: 0.25
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -188,8 +188,8 @@ MonoBehaviour:
       Length: 0.020833343
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -200,8 +200,8 @@ MonoBehaviour:
       Length: 0.020833343
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -212,8 +212,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -224,8 +224,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -236,8 +236,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -248,8 +248,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -260,8 +260,8 @@ MonoBehaviour:
       Length: 1.1250001
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -272,8 +272,8 @@ MonoBehaviour:
       Length: 0.9583333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -284,8 +284,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -296,8 +296,8 @@ MonoBehaviour:
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -308,8 +308,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -320,8 +320,8 @@ MonoBehaviour:
       Length: 0.7083333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -332,8 +332,8 @@ MonoBehaviour:
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -344,8 +344,8 @@ MonoBehaviour:
       Length: 2
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -356,8 +356,8 @@ MonoBehaviour:
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -368,8 +368,8 @@ MonoBehaviour:
       Length: 3.75
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -380,8 +380,8 @@ MonoBehaviour:
       Length: 3.75
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -392,8 +392,8 @@ MonoBehaviour:
       Length: 3.75
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -404,8 +404,8 @@ MonoBehaviour:
       Length: 3.75
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -416,8 +416,8 @@ MonoBehaviour:
       Length: 0.08333333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -428,8 +428,8 @@ MonoBehaviour:
       Length: 0.8
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -440,8 +440,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -452,8 +452,8 @@ MonoBehaviour:
       Length: 0.7083333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -464,8 +464,8 @@ MonoBehaviour:
       Length: 0.7916667
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -476,8 +476,8 @@ MonoBehaviour:
       Length: 0.55833334
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -488,8 +488,8 @@ MonoBehaviour:
       Length: 0.7166667
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -500,8 +500,8 @@ MonoBehaviour:
       Length: 0.99999976
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -512,8 +512,8 @@ MonoBehaviour:
       Length: 0.7083333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -524,8 +524,8 @@ MonoBehaviour:
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -536,8 +536,8 @@ MonoBehaviour:
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -548,8 +548,8 @@ MonoBehaviour:
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -560,8 +560,8 @@ MonoBehaviour:
       Length: 1.2333333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -572,8 +572,8 @@ MonoBehaviour:
       Length: 1.2333333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -584,8 +584,8 @@ MonoBehaviour:
       Length: 1.5416667
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -596,8 +596,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -608,8 +608,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -620,8 +620,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -632,8 +632,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -644,8 +644,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -656,8 +656,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -668,8 +668,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -680,8 +680,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -692,8 +692,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -704,8 +704,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -716,8 +716,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -728,8 +728,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -740,8 +740,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -752,8 +752,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -764,8 +764,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -776,8 +776,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -788,8 +788,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -800,8 +800,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -812,8 +812,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -824,8 +824,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -836,8 +836,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -848,8 +848,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -860,8 +860,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -872,8 +872,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -884,8 +884,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -896,8 +896,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -908,8 +908,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -920,8 +920,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -932,8 +932,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -944,8 +944,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -956,8 +956,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -968,8 +968,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -980,8 +980,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -992,8 +992,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -1004,8 +1004,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -1016,8 +1016,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -1028,8 +1028,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -1040,8 +1040,8 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
@@ -1052,8 +1052,19 @@ MonoBehaviour:
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
+      RotationOffset: 0
       EntryPolicy: 0
-      DamageType: 0
       MovementType: 0
       CanTurn: 1
       KnockbackResistance: 0
+  _default:
+    Timeline: {fileID: 0}
+    AnimationClip: {fileID: 0}
+    Length: 0
+    MinMoveSpeed: 0
+    MaxMoveSpeed: 0
+    RotationOffset: 0
+    EntryPolicy: 0
+    MovementType: 0
+    CanTurn: 1
+    KnockbackResistance: 0

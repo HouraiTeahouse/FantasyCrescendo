@@ -18,6 +18,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
 
   public GameObject _prefab;
   public StateData[] _data;
+  public CharacterStateData _default;
   Dictionary<string, CharacterStateData> _dataMap;
 
   public StateControllerBuilder<CharacterState, CharacterContext> Builder { get; set; }

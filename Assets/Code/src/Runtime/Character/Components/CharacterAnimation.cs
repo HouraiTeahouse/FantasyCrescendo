@@ -50,6 +50,9 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     if (timeline != Director.playableAsset) {
       Director.Play(timeline);
       stateDuration = Director.duration;
+      if (stateDuration == 0) {
+        stateDuration = 1;
+      }
     }
     Director.time = state.StateTime % stateDuration;
     Director.Evaluate();

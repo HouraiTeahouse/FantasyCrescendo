@@ -19,7 +19,7 @@ MonoBehaviour:
   m_EditorSettings:
     m_Framerate: 60
   m_DurationMode: 0
---- !u!114 &114337212070707814
+--- !u!114 &114291093446156368
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -85,9 +85,9 @@ MonoBehaviour:
   m_Clips:
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114337212070707814}
+    m_Asset: {fileID: 114291093446156368}
     m_UnderlyingAsset: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
-    m_Duration: 1.9833333333333334
+    m_Duration: 1.95
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114453949568394274}
     m_EaseInDuration: 0

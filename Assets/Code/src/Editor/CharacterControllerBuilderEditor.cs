@@ -18,6 +18,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 public class CharacterControllerBuilderEditor : UnityEditor.Editor {
 
   string filter = string.Empty;
+  bool defaultExpanded;
 
   void OnEnable() {
     var builder = target as CharacterControllerBuilder;
@@ -43,44 +44,10 @@ public class CharacterControllerBuilderEditor : UnityEditor.Editor {
     filter = EditorGUILayout.TextField("Filter", filter);
     var text = prefabProperty.objectReferenceValue != null ? "Update Animator Controller" : "Create Animation Controller";
     if (GUILayout.Button(text)) {
-      var directory = Path.GetDirectoryName(AssetDatabase.GetAssetPath(target));
-      var builder = target as CharacterControllerBuilder;
-      var prefab = prefabProperty.objectReferenceValue as GameObject;
-      var director = prefab == null ? null : prefab.GetComponentInChildren<PlayableDirector>();
-      var animator = prefab == null ? null : prefab.GetComponentInChildren<Animator>();
-      var animatorGo = animator == null ? null : animator.gameObject;
-      foreach (var state in builder.Builder.States) {
-        TimelineAsset timeline = state.Data.Timeline;
-        if (state.Data.Timeline == null) {
-          timeline = ScriptableObject.CreateInstance<TimelineAsset>();
-          AssetDatabase.CreateAsset(timeline, Path.Combine(directory, builder.name + "_" + state.Name + ".playable"));
-          state.Data.Timeline = timeline;
-        }
-        var baseAnimationTrack = GetOrCreateAnimationTrack($"base_animation_{state.Name}", timeline, track => {
-          foreach (var timelineClip in track.GetClips())
-              timeline.DeleteClip(timelineClip);
-        });
-        var hitboxAnimationTrack = GetOrCreateAnimationTrack($"hitbox_animation_{state.Name}", timeline);
-
-        if (director != null && animator != null) {
-          director.SetGenericBinding(baseAnimationTrack, animatorGo);
-          director.SetGenericBinding(hitboxAnimationTrack, animatorGo);
-        }
-
-        if (state.Data.AnimationClip == null) continue;
-
-        // Create base animation clip
-        var baseClip = baseAnimationTrack.CreateClip(state.Data.AnimationClip);
-        baseClip.displayName = state.Data.AnimationClip.name + "_Animation";
-
-        EditorUtility.SetDirty(timeline);
-        EditorUtility.SetDirty(baseAnimationTrack);
-        EditorUtility.SetDirty(hitboxAnimationTrack);
-      }
-      EditorUtility.SetDirty(prefab);
-      EditorUtility.SetDirty(target);
-      AssetDatabase.SaveAssets();
+      UpdateAnimatorController(prefabProperty);
     }
+    EditorGUILayout.Space();
+    HandleDefaults();
     EditorGUILayout.Space();
     var data = serializedObject.FindProperty("_data");
     for (var i = 0; i < data.arraySize; i++) {
@@ -102,6 +69,74 @@ public class CharacterControllerBuilderEditor : UnityEditor.Editor {
     if (GUI.changed) {
       serializedObject.ApplyModifiedProperties();
     }
+  }
+
+  void HandleDefaults() {
+    var defaultValues = serializedObject.FindProperty("_default");
+    if (defaultExpanded = EditorGUILayout.Foldout(defaultExpanded, "Default Values")) {
+      EditorGUI.indentLevel++;
+      EditDefault<float>(defaultValues, "RotationOffset", p => p.floatValue, (p, f) => p.floatValue = f);
+      EditorGUI.indentLevel--;
+    }
+  }
+
+  void EditDefault<T>(SerializedProperty defaultValue, string field, 
+                       Func<SerializedProperty, T> getFunc,
+                       Action<SerializedProperty, T> setFunc) {
+    var relativeField = defaultValue.FindPropertyRelative(field);
+    var oldValue = getFunc(relativeField);
+    EditorGUILayout.PropertyField(relativeField);
+    var newValue = getFunc(relativeField);
+    if (!oldValue.Equals(newValue)) {
+      var data = serializedObject.FindProperty("_data");
+      for (var i = 0; i < data.arraySize; i++) {
+        var element = data.GetArrayElementAtIndex(i);
+        var elementData = element.FindPropertyRelative("Data");
+        relativeField = elementData.FindPropertyRelative(field);
+        if (!getFunc(relativeField).Equals(oldValue)) continue;
+        setFunc(relativeField, newValue);
+      }
+    }
+  }
+
+  void UpdateAnimatorController(SerializedProperty prefabProperty) {
+    var directory = Path.GetDirectoryName(AssetDatabase.GetAssetPath(target));
+    var builder = target as CharacterControllerBuilder;
+    var prefab = prefabProperty.objectReferenceValue as GameObject;
+    var director = prefab == null ? null : prefab.GetComponentInChildren<PlayableDirector>();
+    var animator = prefab == null ? null : prefab.GetComponentInChildren<Animator>();
+    var animatorGo = animator == null ? null : animator.gameObject;
+    foreach (var state in builder.Builder.States) {
+      TimelineAsset timeline = state.Data.Timeline;
+      if (state.Data.Timeline == null) {
+        timeline = ScriptableObject.CreateInstance<TimelineAsset>();
+        AssetDatabase.CreateAsset(timeline, Path.Combine(directory, builder.name + "_" + state.Name + ".playable"));
+        state.Data.Timeline = timeline;
+      }
+      var baseAnimationTrack = GetOrCreateAnimationTrack($"base_animation_{state.Name}", timeline, track => {
+        foreach (var timelineClip in track.GetClips())
+            timeline.DeleteClip(timelineClip);
+      });
+      var hitboxAnimationTrack = GetOrCreateAnimationTrack($"hitbox_animation_{state.Name}", timeline);
+
+      if (director != null && animator != null) {
+        director.SetGenericBinding(baseAnimationTrack, animatorGo);
+        director.SetGenericBinding(hitboxAnimationTrack, animatorGo);
+      }
+
+      if (state.Data.AnimationClip == null) continue;
+
+      // Create base animation clip
+      var baseClip = baseAnimationTrack.CreateClip(state.Data.AnimationClip);
+      baseClip.displayName = state.Data.AnimationClip.name + "_Animation";
+
+      EditorUtility.SetDirty(timeline);
+      EditorUtility.SetDirty(baseAnimationTrack);
+      EditorUtility.SetDirty(hitboxAnimationTrack);
+    }
+    EditorUtility.SetDirty(prefab);
+    EditorUtility.SetDirty(target);
+    AssetDatabase.SaveAssets();
   }
 
 }
