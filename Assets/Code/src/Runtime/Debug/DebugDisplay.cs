@@ -1,6 +1,7 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -33,6 +34,11 @@ public class DebugDisplay : MonoBehaviour {
 
   FPSCounter TPSCounter;
   uint lastTimestep;
+  StringBuilder builder;
+
+  bool showDisplay => MatchManager != null && 
+                      MatchManager.isActiveAndEnabled && 
+                      MatchManager.MatchController != null;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
@@ -42,17 +48,18 @@ public class DebugDisplay : MonoBehaviour {
       DestroyImmediate(this); 
     }
     TPSCounter = new FPSCounter();
+    builder = new StringBuilder();
   }
 
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
   void FixedUpdate() {
-    if (MatchManager == null) return;
-    var currentTimestep = MatchManager.MatchController?.Timestep;
-    if (currentTimestep != null && lastTimestep != currentTimestep) {
+    if (!showDisplay) return;
+    var currentTimestep = MatchManager.MatchController.Timestep;
+    if (lastTimestep != currentTimestep) {
       TPSCounter.Update();
-      lastTimestep = currentTimestep.Value;
+      lastTimestep = currentTimestep;
     }
   }
 
@@ -61,9 +68,15 @@ public class DebugDisplay : MonoBehaviour {
   /// This function can be called multiple times per frame (one call per event).
   /// </summary>
   void OnGUI() {
-    var resolution = Screen.currentResolution;
-    var screenRect = new Rect(0f, 0f, resolution.width, resolution.height);
-    GUI.Label(screenRect, $"{TPSCounter.FPS:0.0}TPS");
+    if (!showDisplay) return;
+    var state = MatchManager.MatchController.CurrentState;
+    builder.Clear();
+    builder.AppendLine($"{TPSCounter.FPS:0.0}TPS");
+    for (uint i = 0; i < state.PlayerCount; i++) {
+      var player = state.GetPlayerState(i);
+      builder.AppendLine($"P{i+1}: S:{player.StateID} T:{player.StateTick}");
+    }
+    GUILayout.Label(builder.ToString());
   }
 
 }

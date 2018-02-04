@@ -20,6 +20,10 @@ public class CharacterState : State<CharacterContext>, IEntity {
     AnimatorHash = Animator.StringToHash(AnimatorName);
   }
 
+  public override void OnStateEnter(CharacterContext context) {
+    context.State.StateTick = 0;
+  }
+
   public CharacterState AddTransitionTo(CharacterState state, 
                                         Func<CharacterContext, bool> extraCheck = null) {
     if (extraCheck != null)
