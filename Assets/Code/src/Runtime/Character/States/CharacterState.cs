@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
@@ -19,6 +20,8 @@ public class CharacterState : State<CharacterContext>, IEntity {
     AnimatorName = Name.Replace(".", "-");
     AnimatorHash = Animator.StringToHash(AnimatorName);
   }
+
+  public virtual Task Initalize(GameObject gameObject, bool isView) => null;
 
   public override void OnStateEnter(CharacterContext context) {
     context.State.StateTick = 0;

@@ -111,9 +111,6 @@ internal class GroundMovement : CharacterMover {
       state.Direction = false;
     }
     Character.ApplyControlledMovement(ref state, input.Movement.Value);
-    if (input.Jump.WasPressed) {
-      Character.Jump(ref state);
-    }
     return state;
   }
 

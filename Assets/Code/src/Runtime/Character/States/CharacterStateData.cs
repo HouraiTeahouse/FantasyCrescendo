@@ -33,8 +33,6 @@ public class CharacterStateData {
   public MovementType MovementType = MovementType.Normal;
   public bool CanTurn = true;
   public float KnockbackResistance;
-  [NonSerialized]
-  public SmashAttack SmashAttack;
 }
 
 }

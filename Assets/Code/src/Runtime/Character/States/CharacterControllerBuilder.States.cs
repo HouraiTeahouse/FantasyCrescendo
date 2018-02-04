@@ -26,9 +26,9 @@ public partial class CharacterControllerBuilder {
   // -----------------------------------------------
   // Jump States
   // -----------------------------------------------
-  public CharacterState Jump { get; private set; }
+  public JumpState Jump { get; private set; }
   public CharacterState JumpStart { get; private set; }
-  public CharacterState JumpAerial { get; private set; }
+  public JumpState JumpAerial { get; private set; }
   public CharacterState Land { get; private set; }
 
   // -----------------------------------------------
@@ -36,8 +36,8 @@ public partial class CharacterControllerBuilder {
   // -----------------------------------------------
   public class ShieldStates {
     public CharacterState On { get; set; }
-    public CharacterState Perfect { get; set; }
-    public CharacterState Main { get; set; }
+    public ShieldState Perfect { get; set; }
+    public ShieldState Main { get; set; }
     public CharacterState Off { get; set; }
     public CharacterState Broken { get; set; }
     public CharacterState Stunned { get; set; }
@@ -61,8 +61,8 @@ public partial class CharacterControllerBuilder {
   // Attacks
   // -----------------------------------------------
   public class SmashAttackStates {
-    public CharacterState Charge { get; private set; }
-    public CharacterState Attack { get; private set; }
+    public SmashChargeState Charge { get; private set; }
+    public SmashAttackState Attack { get; private set; }
   }
 
   // Neutral Combo

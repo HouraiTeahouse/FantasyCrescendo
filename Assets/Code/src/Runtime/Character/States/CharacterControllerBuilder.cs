@@ -90,15 +90,6 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     Builder = builder;
     InjectState(this);
 
-    // Declare Smash Attacks
-    SmashUp.Charge.Data.SmashAttack = SmashAttack.Charge;
-    SmashSide.Charge.Data.SmashAttack = SmashAttack.Charge;
-    SmashDown.Charge.Data.SmashAttack = SmashAttack.Charge;
-
-    SmashUp.Attack.Data.SmashAttack = SmashAttack.Attack;
-    SmashSide.Attack.Data.SmashAttack = SmashAttack.Attack;
-    SmashDown.Attack.Data.SmashAttack = SmashAttack.Attack;
-
     // Ground Attacks
     new [] {Idle, Walk, CrouchStart, Crouch, CrouchEnd}
         // Smash Attacks
