@@ -16,7 +16,9 @@ public class JumpState : CharacterState {
 
   public override void OnStateEnter(CharacterContext context) {
     base.OnStateEnter(context);
-    component.Jump(ref context.State);
+    if (component != null) {
+      component.Jump(ref context.State);
+    }
   }
 
 }

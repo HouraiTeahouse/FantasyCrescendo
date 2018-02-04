@@ -73,6 +73,7 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
     oldest.Next = null;
     current = oldest;
     newest = oldest;
+    Count = 1;
   }
 
   /// <summary>
