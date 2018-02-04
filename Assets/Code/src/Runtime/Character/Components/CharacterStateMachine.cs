@@ -23,7 +23,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     States = Instantiate(States); // Create a per-player copy of the builder.
     StateController = States.BuildCharacterControllerImpl(new StateControllerBuilder<CharacterState, CharacterContext>());
     stateMap = StateController.States.ToDictionary(s => s.Id, s => s);
-    return Task.WhenAll(stateMap.Values.Select(s => s.Initalize(gameObject, isView)).Where(t => t != null));
+    return Task.WhenAll(stateMap.Values.Select(s => s.Initalize(config, gameObject, isView)).Where(t => t != null));
   }
 
   public void Presimulate(PlayerState state) => ApplyState(state);
@@ -32,6 +32,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     CharacterState controllerState;
     if (stateMap.TryGetValue(state.StateID, out controllerState)) {
       StateController.SetState(controllerState);
+      controllerState.ApplyState(state);
     }
   }
 
@@ -43,8 +44,8 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     context.StateLength = StateController.CurrentState.Data.Length;
 
     StateController.UpdateState(context);
-    
-    state = context.State;
+    state = StateController.CurrentState.Simulate(context.State, input);
+
     state.StateID = StateController.CurrentState.Id;
     return state;
   }

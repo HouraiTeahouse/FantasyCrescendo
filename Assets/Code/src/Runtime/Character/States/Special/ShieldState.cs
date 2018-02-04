@@ -9,9 +9,9 @@ public class ShieldState : CharacterState {
 
   CharacterShield component;
 
-  public override Task Initalize(GameObject gameObject, bool isView) {
+  public override Task Initalize(PlayerConfig config, GameObject gameObject, bool isView) {
     component = gameObject.GetComponentInChildren<CharacterShield>();
-    return base.Initalize(gameObject, isView);
+    return base.Initalize(config, gameObject, isView);
   }
 
   public override void OnStateEnter(CharacterContext context) => SetShieldActive(true);

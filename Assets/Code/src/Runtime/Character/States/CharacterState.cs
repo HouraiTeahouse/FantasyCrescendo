@@ -1,11 +1,13 @@
-﻿using System;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterState : State<CharacterContext>, IEntity {
+public class CharacterState : State<CharacterContext>, IEntity, IStateView<PlayerState>,
+                              ISimulation<PlayerState, PlayerInputContext> {
 
   public string Name { get; private set; }
   public uint Id { get; private set; }
@@ -21,11 +23,16 @@ public class CharacterState : State<CharacterContext>, IEntity {
     AnimatorHash = Animator.StringToHash(AnimatorName);
   }
 
-  public virtual Task Initalize(GameObject gameObject, bool isView) => null;
+  public virtual Task Initalize(PlayerConfig config, GameObject gameObject, 
+                                bool isView) => null;
 
   public override void OnStateEnter(CharacterContext context) {
     context.State.StateTick = 0;
   }
+
+  public PlayerState Simulate(PlayerState state, PlayerInputContext simulate) => state;
+
+  public void ApplyState(PlayerState state) {}
 
   public CharacterState AddTransitionTo(CharacterState state, 
                                         Func<CharacterContext, bool> extraCheck = null) {
@@ -71,8 +78,9 @@ public static class CharacterStateExtensions {
 
 public static IEnumerable<CharacterState> AddTransitionTo(this IEnumerable<CharacterState> states,
                                                           State<CharacterContext> state) {
-  foreach (CharacterState characterState in states)
+  foreach (CharacterState characterState in states) {
     characterState.AddTransition(ctx => ctx.NormalizedStateTime >= 1.0f ? state : null);
+  }
   return states;
 }
 
@@ -83,6 +91,7 @@ public static void Chain(this IEnumerable<CharacterState> states) {
     if (last != null) last.AddTransitionTo(state);
     last = state;
   }
+
 }
 
 }
