@@ -1,11 +1,12 @@
-﻿using HouraiTeahouse.Loadables.AssetBundles;
+﻿using HouraiTeahouse.FantasyCrescendo.Characters;
+using HouraiTeahouse.Loadables.AssetBundles;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEditor; 
 
-namespace HouraiTeahouse.FantasyCrescendo.Characters {
+namespace HouraiTeahouse.FantasyCrescendo {
 
 /// <summary>
 /// A set of static editor commands to automate or simplify the development process.
