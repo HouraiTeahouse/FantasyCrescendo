@@ -68,9 +68,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
   }
 
   void LimitFallSpeed(ref PlayerState state) {
-    if (IsGrounded) {
-      return;
-    }
+    if (IsGrounded) return;
     if (state.IsFastFalling) {
       state.VelocityY = -FastFallSpeed;
     } else if (state.Velocity.y < -MaxFallSpeed) {
@@ -79,9 +77,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
   }
 
   bool IsCharacterGrounded(PlayerState state) {
-    if (state.Velocity.y > 0) {
-      return false;
-    }
+    if (state.VelocityY > 0) return false;
     var center = Vector3.zero;
     var radius = 1f;
     if (CharacterController != null) {
@@ -91,7 +87,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     }
 
     var stageLayers = Config.Get<PhysicsConfig>().StageLayers;
-    center =transform.TransformPoint(center);
+    center = transform.TransformPoint(center);
 
     var count = Physics.OverlapSphereNonAlloc(center, radius, colliderDummy, stageLayers, QueryTriggerInteraction.Ignore);
     return count != 0;

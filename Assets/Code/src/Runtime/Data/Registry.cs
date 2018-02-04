@@ -77,7 +77,14 @@ public class Registry<T> : ICollection<T> where T : IEntity {
     return default(T);
   }
 
-  public void Add(T obj) => Entries[obj.Id] = obj;
+  public void Add(T obj) {
+    var id = obj.Id;
+    T storedObj;
+    if (Entries.TryGetValue(id, out storedObj)) {
+      Debug.LogWarning($"Duplicate Registry Entry for {typeof(T).Name} (ID: {id}): {storedObj} => {obj}.");
+    }
+    Entries[obj.Id] = obj;
+  }
 
   public bool Remove(T obj) => Entries.Remove(obj.Id);
 

@@ -9,7 +9,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public abstract class RegisteredBehaviour<T, TID> : MonoBehaviour, IEntity where T : RegisteredBehaviour<T, TID> {
 
-  [ ReadOnly] public TID Id;
+  [ReadOnly] public TID Id;
   uint IEntity.Id => Convert.ToUInt32(Id);
 
   /// <summary>

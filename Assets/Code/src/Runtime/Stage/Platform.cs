@@ -74,6 +74,19 @@ public class Platform : RegisteredBehaviour<Platform, byte> {
     }
   }
 
+  /// <summary>
+  /// Reset is called when the user hits the Reset button in the Inspector's
+  /// context menu or when adding the component the first time.
+  /// </summary>
+  void Reset() => ResetID();
+
+  [ContextMenu("Reset ID")]
+  void ResetID() {
+    unchecked {
+      Id = (byte)new System.Random().Next();
+    }
+  }
+
   Bounds GetWorldRegion(Bounds localRegion) {
     Bounds worldRegion = localRegion;
     worldRegion.center = transform.TransformPoint(worldRegion.center);
