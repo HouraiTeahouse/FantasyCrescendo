@@ -25,7 +25,6 @@ public class MatchController : IMatchController {
     inputContext.Update(input);
     CurrentState = Simulation.Simulate(CurrentState, inputContext);
     Timestep++;
-    input.Dispose();
   }
 
 }

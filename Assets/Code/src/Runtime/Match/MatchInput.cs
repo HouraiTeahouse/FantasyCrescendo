@@ -8,97 +8,127 @@ using Mask = System.Byte;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
-public struct MatchInput : IMergable<MatchInput>, IDisposable {
+public unsafe struct MatchInput : IMergable<MatchInput> {
 
   public const Mask AllValid = (byte)255;
 
-  public const int kMaxSupportedPlayers = sizeof(Mask) * 8;
+  const int kPlayerInputSize = 5;
+  public const int kMaxSupportedPlayers = 4;
   public int PlayerCount { get; }
 
-  /// <summary> The collection of all player inputs. </summary>
-  /// <remarks> This array may be larger than PlayerCount. </remarks>
-  public PlayerInput[] PlayerInputs;
+  fixed byte Data[kMaxSupportedPlayers * kPlayerInputSize];
+
+  /// <summary>
+  /// Gets the input for the player at a given frame.
+  /// </summary>
+  /// <remarks>
+  /// This indexer does **not** do any bounds checking. Be sure to do a
+  /// check against 0 and PlayerCount before using it.
+  /// </remarks>
+  /// <param name="index">the index of the player's inputs.</param>
+  public unsafe PlayerInput this[int index] {
+    get {
+      fixed (byte* inputPtr = Data) {
+        var inputs = (PlayerInput*)inputPtr;
+        return inputs[index];
+      }
+    }
+    set {
+      fixed (byte* inputPtr = Data) {
+        var inputs = (PlayerInput*)inputPtr;
+        inputs[index] = value;
+      }
+    }
+  }
 
   public MatchInput(int playerCount) {
     PlayerCount = playerCount;
     Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
-    PlayerInputs = ArrayPool<PlayerInput>.Shared.Rent(PlayerCount);
-    Array.Clear(PlayerInputs, 0, PlayerCount);
   }
 
   public MatchInput(MatchConfig config) : this(config.PlayerConfigs.Length) {}
 
-  MatchInput(MatchInput input) : this(input.PlayerCount) {
-    Array.Copy(input.PlayerInputs, 0, PlayerInputs, 0, PlayerCount);
-  }
-
-  public void Dispose() {
-    if (PlayerInputs == null) return;
-    ArrayPool<PlayerInput>.Shared.Return(PlayerInputs);
-    PlayerInputs = null;
-  }
-
   public bool IsValid {
     get { 
-      bool isValid = true;
-      for (var i = 0; i < PlayerCount; i++) {
-        isValid &= PlayerInputs[i].IsValid;
-      }
-      return isValid;
-    }
-  }
-
-  public void Predict() => ForceValid(PlayerInputs, true);
-
-  public void MergeWith(MatchInput otherInput) {
-    Assert.IsTrue(PlayerCount >= otherInput.PlayerCount);
-    for (int i = 0; i < PlayerCount; i++) {
-      if (!PlayerInputs[i].IsValid && otherInput.PlayerInputs[i].IsValid) {
-        PlayerInputs[i] = otherInput.PlayerInputs[i];
+      fixed (byte* data = Data) {
+        bool isValid = true;
+        var inputs = (PlayerInput*)data;
+        for (int i = 0; i < PlayerCount; i++) {
+          isValid &= inputs[i].IsValid;
+        }
+        return isValid;
       }
     }
   }
 
-  internal void Reset() => ForceValid(PlayerInputs, false);
+  public void Predict() => ForceValid(true);
 
-  static void ForceValid(PlayerInput[] inputs, bool valid) {
-    for (int i = 0; i < inputs.Length; i++) {
-      inputs[i].IsValid = valid;
+  public unsafe void MergeWith(MatchInput other) {
+    Assert.IsTrue(PlayerCount >= other.PlayerCount);
+    fixed (byte* selfData = Data) {
+      fixed (byte* otherData = other.Data) {
+        var selfInputs = (PlayerInput*)selfData;
+        var otherInputs = (PlayerInput*)otherData;
+        for (int i = 0; i < PlayerCount; i++) {
+          if (!selfInputs[i].IsValid && otherInputs[i].IsValid) {
+            selfInputs[i] = otherInputs[i];
+          }
+        }
+      }
     }
   }
 
-  public MatchInput Clone() => new MatchInput(this);
+  internal void Reset() => ForceValid(false);
+
+  unsafe void ForceValid(bool valid) {
+    fixed (byte* data = Data) {
+      var inputs = (PlayerInput*)data;
+      for (int i = 0; i < PlayerCount; i++) {
+        inputs[i].IsValid = valid;
+      }
+    }
+  }
 
   public override bool Equals(object obj) {
     if (!(obj is MatchInput)) return false;
     var other = (MatchInput)obj;
-    if (PlayerInputs == null || other.PlayerInputs == null) return false;
     var maxPlayerCount = Mathf.Max(PlayerCount, other.PlayerCount);
     bool equal = true;
     for (var i = 0; i < maxPlayerCount; i++) {
       if (i < PlayerCount && i < other.PlayerCount) {
-        equal &= PlayerInputs[i].Equals(other.PlayerInputs[i]);
+        equal &= this[i].Equals(other[i]);
       } else if (i < PlayerCount) {
-        if (PlayerInputs[i].IsValid) return false;
+        if (this[i].IsValid) return false;
       } else if (i < other.PlayerCount) {
-        if (other.PlayerInputs[i].IsValid) return false;
+        if (other[i].IsValid) return false;
       } else {
         break;
       }
-      // Debug.Log($"{i} {PlayerCount} {other.PlayerCount} {PlayerInputs[i]} {other.PlayerInputs[i]} {equal}");
+      Debug.Log($"{i} {PlayerCount} {other.PlayerCount} {this[i]} {other[i]} {equal}");
     }
     return equal;
   }
 
-  public override int GetHashCode() => ArrayUtil.GetOrderedHash(PlayerInputs);
+  public override int GetHashCode() {
+    unchecked {
+      var hash = PlayerCount;
+      for (var i = 0; i < PlayerCount; i++) {
+        hash += this[i].GetHashCode();
+      }
+      return hash;
+    }
+  }
 
   public override string ToString() => $"MatchInput({PlayerCount}, {GetHashCode():X})";
 
   public Mask CreateValidMask() {
     Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
     Mask mask = 0;
-    for (var i = 0; i < PlayerCount; i++) {
-      mask |= (Mask)(PlayerInputs[i].IsValid ? (1 << i) : 0);
+    fixed (byte* data = Data) {
+      var inputs = (PlayerInput*)data;
+      for (int i = 0; i < PlayerCount; i++) {
+        mask |= (Mask)(inputs[i].IsValid ? (1 << i) : 0);
+      }
     }
     return mask;
   }
@@ -139,7 +169,7 @@ public class MatchInputContext {
     }
     for (int i = 0; i < PlayerInputs.Length; i++) {
       PlayerInputs[i] = new PlayerInputContext {
-        Current = current.PlayerInputs[i]
+        Current = current[i]
       };
     }
   }
@@ -152,7 +182,7 @@ public class MatchInputContext {
   public void Update(MatchInput input) {
     Assert.AreEqual(PlayerInputs.Length, input.PlayerCount);
     for (int i = 0; i < input.PlayerCount; i++) {
-      PlayerInputs[i].Update(input.PlayerInputs[i]);
+      PlayerInputs[i].Update(input[i]);
     }
   }
 

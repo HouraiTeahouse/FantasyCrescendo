@@ -20,7 +20,9 @@ public static class InputUtility {
 
   public static void ForceValid(ref MatchInput input, int mask) {
     for (var i = 0; i < input.PlayerCount; i++) {
-      input.PlayerInputs[i].IsValid = (mask & (1 << i)) != 0;
+      var playerInput = input[i];
+      playerInput.IsValid = (mask & (1 << i)) != 0;
+      input[i] = playerInput;
     }
   }
 
@@ -33,7 +35,7 @@ public static class InputUtility {
   public static MatchInput RandomInput(int players) {
     var input = new MatchInput(players);
     for (var i = 0; i < input.PlayerCount; i++) {
-      input.PlayerInputs[i] = RandomPlayerInput();
+      input[i] = RandomPlayerInput();
     }
     return input;
   }

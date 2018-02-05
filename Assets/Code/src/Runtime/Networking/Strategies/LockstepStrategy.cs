@@ -51,7 +51,7 @@ public sealed class LockstepStrategy : INetworkStrategy {
       NextInput.MergeWith(inputs.Array[inputs.Offset]);
       if (!NextInput.IsValid) return;
       CurrentInput = NextInput;
-      NextInput = CurrentInput.Clone();
+      NextInput = CurrentInput;
       NextInput.Reset();
       Timestep++;
     }

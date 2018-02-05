@@ -32,24 +32,26 @@ public class InControlInputSource : IInputSource {
   
   public MatchInput SampleInput() {
     var devices = InputManager.Devices;
-    var newInput = input.Clone();
-    for (var i = 0; i < newInput.PlayerCount; i++) {
+    input = new MatchInput(input.PlayerCount);
+    for (var i = 0; i < input.PlayerCount; i++) {
       var playerConfig = config.PlayerConfigs[i];
       var playerId = playerConfig.LocalPlayerID;
       if (!playerConfig.IsLocal || playerId >= devices.Count) {
-        newInput.PlayerInputs[i] = new PlayerInput { IsValid = playerConfig.IsLocal };
+        input[i] = new PlayerInput { IsValid = playerConfig.IsLocal };
         continue;
       }
-      UpdatePlayerInput(ref newInput.PlayerInputs[i], devices[(int)playerId]);
+      input[i] = UpdatePlayerInput(input[i], devices[(int)playerId]);
       if (playerId == 0) {
-        newInput.PlayerInputs[i].MergeWith(KeyboardInput());
+        var playerInput = input[i];
+        playerInput.MergeWith(KeyboardInput());
+        input[i] = playerInput;
       }
     }
-    input = newInput;
-    return newInput;
+    // Debug.Log(string.Join(" ", Enumerable.Range(0, input.PlayerCount).Select(i => input[i].ToString())));
+    return input;
   }
 
-  void UpdatePlayerInput(ref PlayerInput input, InputDevice device) {
+  PlayerInput UpdatePlayerInput(PlayerInput input, InputDevice device) {
     input.IsValid = true;
     input.Movement = controllerMapping.Movement(device);
     input.Smash = controllerMapping.Smash(device);
@@ -57,6 +59,7 @@ public class InControlInputSource : IInputSource {
     input.Special = controllerMapping.Special(device);
     input.Shield = controllerMapping.Shield(device);
     input.Jump = controllerMapping.Jump(device);
+    return input;
   }
 
   PlayerInput KeyboardInput() {

@@ -13,7 +13,9 @@ public class TestInputSource : IInputSource {
   public TestInputSource(MatchConfig config) {
     input = new MatchInput(config);
     for (int i = 0; i < input.PlayerCount; i++) {
-      input.PlayerInputs[i].IsValid = true;
+      var playerInput = input[i];
+      playerInput.IsValid = true;
+      input[i] = playerInput;
     }
   }
 
@@ -24,10 +26,11 @@ public class TestInputSource : IInputSource {
       Jump = Input.GetKey(KeyCode.W),
       IsValid = true
     };
-    var inputValue = input.Clone();
+    var inputValue = input;
     for (int i = 0; i < inputValue.PlayerCount; i++) {
-      if (i == 0)
-        inputValue.PlayerInputs[i] = playerInput;
+      if (i == 0) {
+        inputValue[i] = playerInput;
+      }
     }
     return inputValue;
   }

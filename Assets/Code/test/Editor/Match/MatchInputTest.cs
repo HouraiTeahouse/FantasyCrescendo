@@ -18,20 +18,6 @@ public class MatchInputTest {
   }
 
 	[TestCaseSource("TestCases")]
-	public void Clone_produces_equal_inputs(int playerCount) {
-    var matchInput = InputUtility.RandomInput(playerCount);
-    var clone = matchInput.Clone();
-    Assert.AreEqual(matchInput, clone);
-	}
-
-	[TestCaseSource("TestCases")]
-	public void Clone_produces_different_backing_arrays(int playerCount) {
-    var matchInput = InputUtility.RandomInput(playerCount);
-    var clone = matchInput.Clone();
-    Assert.AreNotSame(matchInput.PlayerInputs, clone.PlayerInputs);
-	}
-
-	[TestCaseSource("TestCases")]
 	public void Predict_forces_invalid_inputs_to_be_valid(int playerCount) {
     var src = InputUtility.RandomInput(playerCount);
     src.Predict();

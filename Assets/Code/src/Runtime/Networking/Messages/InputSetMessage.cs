@@ -40,7 +40,7 @@ public class InputSetMessage : INetworkSerializable, IDisposable {
       if ((ValidMask & (1 << i)) == 0) continue;
       PlayerInput? lastInput= null;
       for (int j = 0; j < InputCount; j++) {                // 1-5 * playerCount * Inputs.Length bytes
-        var currentInput = Inputs[j].PlayerInputs[i];       // (Only valid inputs)
+        var currentInput = Inputs[j][i];       // (Only valid inputs)
         currentInput.Serialize(serializer, lastInput);
         lastInput = currentInput;
       }
@@ -62,7 +62,7 @@ public class InputSetMessage : INetworkSerializable, IDisposable {
       PlayerInput? lastInput= null;
       for (int j = 0; j < InputCount; j++) {
         var currentInput = PlayerInput.Deserialize(deserializer, lastInput);
-        Inputs[j].PlayerInputs[i] = currentInput;
+        Inputs[j][i] = currentInput;
         lastInput = currentInput;
       }
     }
