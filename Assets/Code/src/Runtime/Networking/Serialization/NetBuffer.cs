@@ -162,7 +162,7 @@ class NetBuffer {
   }
 
   public override string ToString() {
-    return String.Format("NetBuf sz:{0} pos:{1}", Buffer.Length, position);
+    return string.Format("NetBuf sz:{0} pos:{1}", Buffer.Length, position);
   }
 } // end NetBuffer
 

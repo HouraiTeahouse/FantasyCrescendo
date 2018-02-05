@@ -32,16 +32,16 @@ public class Deserializer {
 
   static void Initialize() {
     if (s_Encoding == null) {
-        s_StringReaderBuffer = new byte[k_InitialStringBufferSize];
-        s_Encoding = new UTF8Encoding();
+      s_StringReaderBuffer = new byte[k_InitialStringBufferSize];
+      s_Encoding = new UTF8Encoding();
     }
   }
 
-  public uint Position { get { return m_buf.Position; } }
+  public uint Position => m_buf.Position;
 
   public void SeekZero() => m_buf.SeekZero();
 
-  internal void Replace(byte[] buffer) => m_buf.Replace(buffer);
+  public void Replace(byte[] buffer) => m_buf.Replace(buffer);
 
   // http://sqlite.org/src4/doc/trunk/www/varint.wiki
   // NOTE: big endian.

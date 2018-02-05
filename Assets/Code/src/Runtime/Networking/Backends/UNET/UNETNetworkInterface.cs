@@ -74,10 +74,14 @@ public class UNETNetworkInterface : INetworkInterface {
   public void Send(int connectionId, byte[] buffer, int count, 
                    NetworkReliablity reliability) {
     if (!connectionMap.ContainsKey(connectionId)) return;
+    var pool = ArrayPool<byte>.Shared;
+    var compressed = pool.Rent(count);
+    var newSize = CLZF2.Compress(buffer, ref compressed, count);
     byte error;
     var channelId = GetChannelID(reliability);
-    NetworkTransport.Send(HostID, connectionId, channelId, buffer, count, out error);
+    NetworkTransport.Send(HostID, connectionId, channelId, compressed, newSize, out error);
     UNETUtility.HandleError(error);
+    pool.Return(compressed);
   }
 
   public void Update() {
@@ -109,8 +113,9 @@ public class UNETNetworkInterface : INetworkInterface {
   void OnRecieveData(int connectionId, int dataSize) {
     UNETConnection connection;
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
-    // CLZF2.Decompress();
-    // messageReader.as
+    var decompressed = ArrayPool<byte>.Shared.Rent(dataSize);
+    var newSize = CLZF2.Decompress(readBuffer, ref decompressed, dataSize);
+    messageDeserializer.Replace(decompressed);
     messageDeserializer.SeekZero();
     MessageHandlers.Execute(connection, messageDeserializer);
   }

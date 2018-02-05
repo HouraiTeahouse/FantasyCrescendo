@@ -21,7 +21,7 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
 
   public MatchInput(int playerCount) {
     PlayerCount = playerCount;
-    Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers, $"PlayerCount not in range: {PlayerCount}");
+    Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
     PlayerInputs = ArrayPool<PlayerInput>.Shared.Rent(PlayerCount);
     Array.Clear(PlayerInputs, 0, PlayerCount);
   }

@@ -77,14 +77,12 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     return ctx => ctx.Input.Special.WasPressed && inputFunc(ctx.Input);
   }
 
-  protected Func<CharacterContext, bool> DirectionInput(params Direction[] directions) {
-    var set = new HashSet<Direction>(directions);
-    return Input(i => set.Contains(i.Movement.Direction));
+  protected Func<CharacterContext, bool> DirectionInput(Direction direction) {
+    return Input(i => direction == i.Movement.Direction);
   }
 
-  protected Func<CharacterContext, bool> DirectionalSmash(params Direction[] directions) {
-    var set = new HashSet<Direction>(directions);
-    return Input(i => set.Contains(i.Smash.Direction));
+  protected Func<CharacterContext, bool> DirectionalSmash(Direction direction) {
+    return Input(i => direction == i.Smash.Direction);
   }
 
   public StateController<CharacterState, CharacterContext> BuildCharacterControllerImpl(StateControllerBuilder<CharacterState, CharacterContext> builder) {
@@ -170,8 +168,9 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
 
     Func<Func<PlayerInputContext, DirectionalInput>, Func<CharacterContext, bool>>
         movementContext = func => {
-            return ctx => !DirectionInput(Direction.Down)(ctx) && 
-                            Input(i => Mathf.Abs(func(i).Value.x) > DirectionalInput.DeadZone)(ctx);
+          var downMove = DirectionInput(Direction.Down);
+          var lateralMovement = Input(i => Mathf.Abs(func(i).Value.x) > DirectionalInput.DeadZone);
+          return ctx => !downMove(ctx) && lateralMovement(ctx);
         };
 
     // Running States
@@ -219,18 +218,20 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
     
     // Rolls/Sidesteps
+    var leftSmash = DirectionalSmash(Direction.Left);
+    var rightSmash = DirectionalSmash(Direction.Right);
     Shield.Main
     .AddTransition(EscapeForward, ctx => {
         if (ctx.Direction > 0f)
-            return DirectionalSmash(Direction.Right)(ctx);
+            return rightSmash(ctx);
         else
-            return DirectionalSmash(Direction.Left)(ctx);
+            return leftSmash(ctx);
     })
     .AddTransition(EscapeBackward, ctx => {
         if (ctx.Direction > 0f)
-            return DirectionalSmash(Direction.Left)(ctx);
+            return leftSmash(ctx);
         else
-            return DirectionalSmash(Direction.Right)(ctx);
+            return rightSmash(ctx);
         })
     .AddTransition(Escape, DirectionInput(Direction.Down));
     new[] {Escape, EscapeForward, EscapeBackward}.AddTransitionTo(Shield.Main);
