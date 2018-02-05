@@ -42,8 +42,7 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
   }
 
   public MatchInput(int playerCount) {
-    PlayerCount = playerCount;
-    Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
+    PlayerCount = Mathf.Min(playerCount, kMaxSupportedPlayers);
   }
 
   public MatchInput(MatchConfig config) : this(config.PlayerConfigs.Length) {}
