@@ -10,6 +10,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public class NetworkGameClient : INetworkClient {
 
+  public NetworkConnection Connection { get; private set; }
+
   public event Action<MatchConfig> OnMatchStarted;
   public event Action<MatchResult> OnMatchFinished;
 
@@ -22,7 +24,6 @@ public class NetworkGameClient : INetworkClient {
   public bool IsServerReady { get; private set; }
 
   readonly INetworkInterface NetworkInterface;
-  INetworkConnection ServerConnection;
   TaskCompletionSource<object> connectionTask;
 
   public NetworkGameClient(Type interfaceType, NetworkClientConfig config) {
@@ -38,9 +39,9 @@ public class NetworkGameClient : INetworkClient {
       return;
     }
     connectionTask = new TaskCompletionSource<object>();
-    ServerConnection = await NetworkInterface.Connect(ip, (int)port);
+    Connection = await NetworkInterface.Connect(ip, (int)port);
 
-    var handlers = ServerConnection.MessageHandlers;
+    var handlers = Connection.MessageHandlers;
     handlers.RegisterHandler<InputSetMessage>(MessageCodes.UpdateInput, OnGetInput);
     handlers.RegisterHandler<ServerStateMessage>(MessageCodes.UpdateState, OnGetState);
     handlers.RegisterHandler<MatchStartMessage>(MessageCodes.MatchStart, OnStartMatch);
@@ -51,26 +52,26 @@ public class NetworkGameClient : INetworkClient {
     connectionTask.TrySetResult(new object());
   }
 
-  public void Disconnect() => ServerConnection?.Disconnect();
+  public void Disconnect() => Connection?.Disconnect();
 
   public void SetReady(bool isReady) {
-    if (ServerConnection == null) return;
+    if (Connection == null) return;
     using (var rental = ObjectPool<PeerReadyMessage>.Shared.Borrow()) {
       rental.RentedObject.IsReady = isReady;
-      ServerConnection.Send(MessageCodes.ClientReady, rental.RentedObject);
+      Connection.Send(MessageCodes.ClientReady, rental.RentedObject);
     }
   }
 
   public void SetConfig(PlayerConfig config) {
-    if (ServerConnection == null) return;
+    if (Connection == null) return;
     using (var rental = ObjectPool<ClientUpdateConfigMessage>.Shared.Borrow()) {
       rental.RentedObject.PlayerConfig = config;
-      ServerConnection.Send(MessageCodes.UpdateConfig, rental.RentedObject);
+      Connection.Send(MessageCodes.UpdateConfig, rental.RentedObject);
     }
   }
 
   public void SendInput(uint startTimestamp, byte validMask, IEnumerable<MatchInput> input) {
-    if (ServerConnection == null) return;
+    if (Connection == null) return;
     int inputCount;
     var inputs = ArrayUtil.ConvertToArray(input, out inputCount);
     if (inputCount <= 0) return;
@@ -80,13 +81,13 @@ public class NetworkGameClient : INetworkClient {
       message.InputCount = (uint)inputCount;
       message.ValidMask = validMask;
       message.Inputs = inputs;
-      ServerConnection.Send(MessageCodes.UpdateInput, message, NetworkReliablity.Unreliable);
+      Connection.Send(MessageCodes.UpdateInput, message, NetworkReliablity.Unreliable);
     }
   }
 
   public void Dispose() {
     NetworkInterface.Dispose();
-    var handlers = ServerConnection?.MessageHandlers;
+    var handlers = Connection?.MessageHandlers;
     if (handlers == null) return;
     handlers.UnregisterHandler(MessageCodes.UpdateInput);
     handlers.UnregisterHandler(MessageCodes.UpdateState);

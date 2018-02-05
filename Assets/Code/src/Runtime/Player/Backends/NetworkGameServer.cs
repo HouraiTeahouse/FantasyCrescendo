@@ -88,7 +88,7 @@ public class NetworkGameServer : INetworkServer {
 
   // Event Handlers
 
-  void OnConnect(INetworkConnection connection) {
+  void OnConnect(NetworkConnection connection) {
     var connId = connection.Id;
     var client = new NetworkClientPlayer(connection, LowestAvailablePlayerID(connId));
     client.Config.PlayerID = client.PlayerID;
@@ -96,7 +96,7 @@ public class NetworkGameServer : INetworkServer {
     PlayerAdded?.Invoke(client);
   }
 
-  void OnDisconnect(INetworkConnection connection) {
+  void OnDisconnect(NetworkConnection connection) {
     clients.Remove(connection.Id);
     PlayerRemoved?.Invoke(connection.Id);
   }

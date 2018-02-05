@@ -31,7 +31,7 @@ public class MessageHandlers {
 
   public void UnregisterHandler(byte code) => handlers[code] = null;
 
-  internal void Execute(INetworkConnection connection, NetworkReader reader) {
+  internal void Execute(NetworkConnection connection, NetworkReader reader) {
     byte header = reader.ReadByte();
     var handler = handlers[header];
     if (handler == null) return;

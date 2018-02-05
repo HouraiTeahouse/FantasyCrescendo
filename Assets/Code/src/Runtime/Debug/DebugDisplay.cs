@@ -1,4 +1,5 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+using HouraiTeahouse.FantasyCrescendo.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -69,14 +70,57 @@ public class DebugDisplay : MonoBehaviour {
   /// </summary>
   void OnGUI() {
     if (!showDisplay) return;
+    var tick = MatchManager.MatchController.Timestep;
     var state = MatchManager.MatchController.CurrentState;
     builder.Clear();
-    builder.AppendLine($"{TPSCounter.FPS:0.0}TPS");
+    builder.AppendLine($"{TPSCounter.FPS:0.0}TPS {GetEllapsedTime(tick)}");
+    GetNetworkStats(tick);
     for (uint i = 0; i < state.PlayerCount; i++) {
       var player = state.GetPlayerState(i);
       builder.AppendLine($"P{i+1}: S:{player.StateID} T:{player.StateTick}");
     }
     GUILayout.Label(builder.ToString());
+  }
+
+  string GetEllapsedTime(uint timestep) {
+    var seconds = GetSeconds(timestep);
+    var minutes = seconds / 60f;
+    seconds %= 60f;
+    return $"{minutes:00}:{seconds:00}";
+  }
+
+  float GetSeconds(float timestep) => timestep * Time.fixedDeltaTime;
+
+  void GetNetworkStats(uint timestep) {
+    var networkManager = NetworkManager.Instance;
+    if (networkManager == null) return;
+    var seconds = GetSeconds(timestep);
+    if (networkManager.IsClient) {
+      builder.AppendLine($"Client: {NetworkStats(networkManager.Client.Connection.Stats, seconds)}");
+    }
+    if (networkManager.IsServer) {
+      var stats = new ConnectionStats();
+      foreach (var client in networkManager.Server.Clients) {
+        stats.MergeWith(client.Connection.Stats);
+      }
+      builder.AppendLine($"Server: {NetworkStats(stats, seconds)}");
+    }
+  }
+
+  string NetworkStats(ConnectionStats stats, float seconds) {
+    var bandwidth = GetHumanBandwdithDisplay(stats.TotalBytesOut);
+    var bytesPerSecond = GetHumanBandwdithDisplay(stats.TotalBytesOut / seconds);
+    return $"RTT: {stats.CurrentRTT}ms PL:{stats.PacketLossPercent:0}% B: {bandwidth} {bytesPerSecond}";
+  }
+
+  string GetHumanBandwdithDisplay(float count) {
+    if (count < 1024) return count.ToString();
+    count /= 1024;
+    if (count < 1024) return $"{count:0.00}K";
+    count /= 1024;
+    if (count < 1024) return $"{count:0.00}M";
+    count /= 1024;
+    return $"{count:0.00}G";
   }
 
 }

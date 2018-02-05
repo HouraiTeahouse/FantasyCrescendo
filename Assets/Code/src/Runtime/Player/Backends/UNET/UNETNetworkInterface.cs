@@ -14,15 +14,15 @@ namespace HouraiTeahouse.FantasyCrescendo.Networking.UNET {
 public class UNETNetworkInterface : INetworkInterface {
 
   public MessageHandlers MessageHandlers { get; }
-  public IReadOnlyCollection<INetworkConnection> Connections { get; }
+  public IReadOnlyCollection<NetworkConnection> Connections { get; }
 
-  readonly IList<INetworkConnection> connections;
+  readonly IList<NetworkConnection> connections;
   readonly IDictionary<int, UNETConnection> connectionMap;
   readonly IDictionary<NetworkReliablity, int> Channels;
   internal int HostID { get; set; }
 
-  public event Action<INetworkConnection> OnPeerConnected;
-  public event Action<INetworkConnection> OnPeerDisconnected;
+  public event Action<NetworkConnection> OnPeerConnected;
+  public event Action<NetworkConnection> OnPeerDisconnected;
 
   byte[] readBuffer;
   NetworkReader messageReader;
@@ -32,8 +32,8 @@ public class UNETNetworkInterface : INetworkInterface {
     MessageHandlers = new MessageHandlers();
     Channels = new Dictionary<NetworkReliablity, int>();
     connectionMap = new Dictionary<int, UNETConnection>();
-    connections = new List<INetworkConnection>();
-    Connections = new ReadOnlyCollection<INetworkConnection>(connections);
+    connections = new List<NetworkConnection>();
+    Connections = new ReadOnlyCollection<NetworkConnection>(connections);
 
     readBuffer = ArrayPool<byte>.Shared.Rent(NetworkMessage.MaxMessageSize);
     messageReader = new NetworkReader(readBuffer);
@@ -51,7 +51,7 @@ public class UNETNetworkInterface : INetworkInterface {
     HostID = NetworkTransport.AddHost(hostTopology, (int)port);
   }
 
-  public async Task<INetworkConnection> Connect(string address, int port) {
+  public async Task<NetworkConnection> Connect(string address, int port) {
     address = ResolveAddress(address);
 
     byte error;
@@ -92,6 +92,7 @@ public class UNETNetworkInterface : INetworkInterface {
 
   void OnNewConnection(int connectionId) {
     var connection = AddConnection(connectionId);
+    connection.Status = ConnectionStatus.Connected;
     connection.ConnectTask.TrySetResult(new object());
     OnPeerConnected?.Invoke(connection);
   }
@@ -106,6 +107,7 @@ public class UNETNetworkInterface : INetworkInterface {
   void OnDisconnect(int connectionId, byte error) {
     UNETConnection connection;
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
+    connection.Status = ConnectionStatus.Disconnected;
     var exception = UNETUtility.CreateError(error);
     if (exception == null) {
       connection.ConnectTask.TrySetResult(new object());

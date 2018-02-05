@@ -7,6 +7,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public interface INetworkClient : IDisposable {
 
+  NetworkConnection Connection { get; }
+
   event Action<MatchConfig> OnMatchStarted;
   event Action<MatchResult> OnMatchFinished;
 

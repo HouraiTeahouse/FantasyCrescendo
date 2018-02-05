@@ -6,18 +6,48 @@ using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public interface INetworkConnection : IEntity {
+public enum ConnectionStatus {
+  Initialized,
+  Connecting,
+  Connected,
+  Disconnected
+}
 
-  MessageHandlers MessageHandlers { get; }
+public struct ConnectionStats : IMergable<ConnectionStats> {
+  public int TotalBytesOut;
+  public int IncomingPacketsCount;
+  public int IncomingPacketsLost;
+  public int CurrentRTT;
 
-  void SendBytes(byte[] buffer, int size, NetworkReliablity reachability = NetworkReliablity.Reliable);
+  public float PacketLossPercent {
+    get {
+      var total = IncomingPacketsCount += IncomingPacketsLost;
+      if (total == 0) return 0;
+      return IncomingPacketsLost / total;
+    }
+  }
 
-  void Disconnect();
+  public void MergeWith(ConnectionStats other) {
+    TotalBytesOut += other.TotalBytesOut;
+    IncomingPacketsCount += other.IncomingPacketsCount;
+    IncomingPacketsLost += other.IncomingPacketsLost;
+    CurrentRTT = Mathf.Max(CurrentRTT, other.CurrentRTT);
+  }
+}
+
+public abstract class NetworkConnection : IEntity {
+  public abstract uint Id { get; }
+  public bool IsConnected => Status == ConnectionStatus.Connected;
+  public abstract ConnectionStatus Status { get; protected internal set; }
+  public abstract ConnectionStats Stats { get; }
+  public abstract MessageHandlers MessageHandlers { get; }
+  public abstract void SendBytes(byte[] buffer, int size, NetworkReliablity reachability = NetworkReliablity.Reliable);
+  public abstract void Disconnect();
 }
 
 public static class INetworkConnectionExtensions {
 
-  public static void Send(this INetworkConnection connection, byte header, 
+  public static void Send(this NetworkConnection connection, byte header, 
                           MessageBase message, NetworkReliablity reliablity = NetworkReliablity.Reliable) {
     var writer = new NetworkWriter();
     writer.Write(header);
@@ -26,7 +56,7 @@ public static class INetworkConnectionExtensions {
     (message as IDisposable)?.Dispose();
   }
 
-  public static void SendToAll(this IEnumerable<INetworkConnection> connections, byte header,
+  public static void SendToAll(this IEnumerable<NetworkConnection> connections, byte header,
                                MessageBase message, NetworkReliablity reliablity = NetworkReliablity.Reliable) {
     var writer = new NetworkWriter();
     writer.Write(header);

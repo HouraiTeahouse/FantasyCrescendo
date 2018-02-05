@@ -45,15 +45,15 @@ public struct NetworkServerConfig {
 public interface INetworkInterface : IDisposable {
 
   MessageHandlers MessageHandlers { get; }
-  IReadOnlyCollection<INetworkConnection> Connections { get; }
+  IReadOnlyCollection<NetworkConnection> Connections { get; }
 
   void Initialize(uint port);
   void Update();
 
-  event Action<INetworkConnection> OnPeerConnected;
-  event Action<INetworkConnection> OnPeerDisconnected;
+  event Action<NetworkConnection> OnPeerConnected;
+  event Action<NetworkConnection> OnPeerDisconnected;
 
-  Task<INetworkConnection> Connect(string ip, int port);
+  Task<NetworkConnection> Connect(string ip, int port);
 }
 
 }

@@ -73,10 +73,19 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
     if (!(obj is MatchInput)) return false;
     var other = (MatchInput)obj;
     if (PlayerInputs == null || other.PlayerInputs == null) return false;
-    if (PlayerCount != other.PlayerCount) return false;
+    var maxPlayerCount = Mathf.Max(PlayerCount, other.PlayerCount);
     bool equal = true;
-    for (var i = 0; i < PlayerCount; i++) {
-      equal &= PlayerInputs[i].Equals(other.PlayerInputs[i]);
+    for (var i = 0; i < maxPlayerCount; i++) {
+      Debug.Log($"{i} {PlayerCount} {other.PlayerCount} {PlayerInputs[i]} {other.PlayerInputs[i]}");
+      if (i < PlayerCount && i < other.PlayerCount) {
+        equal &= PlayerInputs[i].Equals(other.PlayerInputs[i]);
+      } else if (i < PlayerCount) {
+        if (PlayerInputs[i].IsValid) return false;
+      } else if (i < other.PlayerCount) {
+        if (other.PlayerInputs[i].IsValid) return false;
+      } else {
+        break;
+      }
     }
     return equal;
   }

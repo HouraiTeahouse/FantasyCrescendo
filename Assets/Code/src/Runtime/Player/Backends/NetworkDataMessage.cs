@@ -5,10 +5,10 @@ namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public struct NetworkDataMessage {
 
-  public readonly INetworkConnection Connection;
+  public readonly NetworkConnection Connection;
   public readonly NetworkReader NetworkReader;
 
-  public NetworkDataMessage(INetworkConnection connection, NetworkReader reader) {
+  public NetworkDataMessage(NetworkConnection connection, NetworkReader reader) {
     Connection = connection;
     NetworkReader = reader;
   }
