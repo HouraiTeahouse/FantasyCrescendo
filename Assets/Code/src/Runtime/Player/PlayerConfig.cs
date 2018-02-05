@@ -54,12 +54,12 @@ public struct PlayerSelection : IValidatable, INetworkSerializable {
   public bool IsValid => true;
 
   public void Serialize(Serializer serializer) {
-    serializer.WritePackedUInt32(CharacterID);
+    serializer.Write(CharacterID);
     serializer.Write(Pallete);
   }
 
   public void Deserialize(Deserializer deserializer) {
-    CharacterID = deserializer.ReadPackedUInt32();
+    CharacterID = deserializer.ReadUInt32();
     Pallete = deserializer.ReadByte();
   }
 

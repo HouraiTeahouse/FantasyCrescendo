@@ -10,12 +10,12 @@ public class ServerStateMessage : INetworkSerializable {
   public MatchState State;
 
   public void Serialize(Serializer serializer) {
-    serializer.WritePackedUInt32(Timestamp);
+    serializer.Write(Timestamp);
     serializer.Write(State);
   }
 
   public void Deserialize(Deserializer deserializer) {
-    Timestamp = deserializer.ReadPackedUInt32();
+    Timestamp = deserializer.ReadUInt32();
     State = deserializer.Read<MatchState>();
   }
 

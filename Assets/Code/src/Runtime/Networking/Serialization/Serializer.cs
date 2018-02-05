@@ -43,7 +43,7 @@ public class Serializer {
 
   // http://sqlite.org/src4/doc/trunk/www/varint.wiki
 
-  public void WritePackedUInt32(UInt32 value) {
+  public void Write(UInt32 value) {
     if (value <= 240) {
       Write((byte)value);
       return;
@@ -75,7 +75,7 @@ public class Serializer {
     Write((byte)((value >> 24) & 0xFF));
   }
 
-  public void WritePackedUInt64(UInt64 value) {
+  public void Write(UInt64 value) {
     if (value <= 240) {
       Write((byte)value);
     } else if (value <= 2287) {
@@ -144,46 +144,9 @@ public class Serializer {
     writeBuffer.WriteByte2((byte)(value & 0xff), (byte)((value >> 8) & 0xff));
   }
 
-  public void Write(int value) {
-    // little endian...
-    writeBuffer.WriteByte4(
-        (byte)(value & 0xff),
-        (byte)((value >> 8) & 0xff),
-        (byte)((value >> 16) & 0xff),
-        (byte)((value >> 24) & 0xff));
-  }
+  public void Write(int value) => Write((uint)EncodeZigZag(value, 32));
 
-  public void Write(uint value) {
-    writeBuffer.WriteByte4(
-        (byte)(value & 0xff),
-        (byte)((value >> 8) & 0xff),
-        (byte)((value >> 16) & 0xff),
-        (byte)((value >> 24) & 0xff));
-  }
-
-  public void Write(long value) {
-    writeBuffer.WriteByte8(
-        (byte)(value & 0xff),
-        (byte)((value >> 8) & 0xff),
-        (byte)((value >> 16) & 0xff),
-        (byte)((value >> 24) & 0xff),
-        (byte)((value >> 32) & 0xff),
-        (byte)((value >> 40) & 0xff),
-        (byte)((value >> 48) & 0xff),
-        (byte)((value >> 56) & 0xff));
-  }
-
-  public void Write(ulong value) {
-    writeBuffer.WriteByte8(
-        (byte)(value & 0xff),
-        (byte)((value >> 8) & 0xff),
-        (byte)((value >> 16) & 0xff),
-        (byte)((value >> 24) & 0xff),
-        (byte)((value >> 32) & 0xff),
-        (byte)((value >> 40) & 0xff),
-        (byte)((value >> 48) & 0xff),
-        (byte)((value >> 56) & 0xff));
-  }
+  public void Write(long value) => Write(EncodeZigZag(value, 64));
 
 #if !INCLUDE_IL2CPP
   static UIntFloat s_FloatConverter;
@@ -365,6 +328,13 @@ public class Serializer {
       // writes correct size into space at start of buffer
       writeBuffer.FinishMessage();
   }
+
+  static ulong EncodeZigZag(long value, int bitLength) {
+    unchecked {
+      return (ulong)((value << 1) ^ (value >> (bitLength - 1)));
+    }
+  }
+
 };
 
 }

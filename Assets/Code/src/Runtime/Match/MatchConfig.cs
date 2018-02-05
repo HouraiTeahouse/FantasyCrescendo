@@ -56,20 +56,20 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
   public override int GetHashCode() => unchecked(StageID.GetHashCode() * 31 + Time.GetHashCode() * 17 + ArrayUtil.GetOrderedHash(PlayerConfigs));
 
   public void Serialize(Serializer serializer) {
-    serializer.WritePackedUInt32(StageID);
-    serializer.WritePackedUInt32(Stocks);
-    serializer.WritePackedUInt32(Time);
-    serializer.WritePackedUInt32((uint)PlayerConfigs.Length);
+    serializer.Write(StageID);
+    serializer.Write(Stocks);
+    serializer.Write(Time);
+    serializer.Write((uint)PlayerConfigs.Length);
     for (var i = 0; i < PlayerConfigs.Length; i++) {
       serializer.Write(PlayerConfigs[i]);
     }
   }
 
   public void Deserialize(Deserializer deserializer) {
-    StageID = deserializer.ReadPackedUInt32();
-    Stocks = deserializer.ReadPackedUInt32();
-    Time = deserializer.ReadPackedUInt32();
-    var length = deserializer.ReadPackedUInt32();
+    StageID = deserializer.ReadUInt32();
+    Stocks = deserializer.ReadUInt32();
+    Time = deserializer.ReadUInt32();
+    var length = deserializer.ReadUInt32();
     PlayerConfigs = new PlayerConfig[length];
     for (var i = 0; i < PlayerConfigs.Length; i++) {
       PlayerConfigs[i] = deserializer.Read<PlayerConfig>();

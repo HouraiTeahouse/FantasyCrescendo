@@ -46,7 +46,7 @@ public class Deserializer {
   // http://sqlite.org/src4/doc/trunk/www/varint.wiki
   // NOTE: big endian.
 
-  public UInt32 ReadPackedUInt32() {
+  public UInt32 ReadUInt32() {
     byte a0 = ReadByte();
     if (a0 < 241) return a0;
     byte a1 = ReadByte();
@@ -60,7 +60,7 @@ public class Deserializer {
     throw new IndexOutOfRangeException("ReadPackedUInt32() failure: " + a0);
   }
 
-  public UInt64 ReadPackedUInt64() {
+  public UInt64 ReadUInt64() {
       byte a0 = ReadByte();
       if (a0 < 241) return a0;
       byte a1 = ReadByte();
@@ -109,47 +109,9 @@ public class Deserializer {
     return value;
   }
 
-  public int ReadInt32() {
-    uint value = 0;
-    value |= m_buf.ReadByte();
-    value |= (uint)(m_buf.ReadByte() << 8);
-    value |= (uint)(m_buf.ReadByte() << 16);
-    value |= (uint)(m_buf.ReadByte() << 24);
-    return (int)value;
-  }
+  public int ReadInt32() => (int)DecodeZigZag(ReadUInt32());
 
-  public uint ReadUInt32() {
-    uint value = 0;
-    value |= m_buf.ReadByte();
-    value |= (uint)(m_buf.ReadByte() << 8);
-    value |= (uint)(m_buf.ReadByte() << 16);
-    value |= (uint)(m_buf.ReadByte() << 24);
-    return value;
-  }
-
-  public long ReadInt64() {
-    ulong value = m_buf.ReadByte();
-    value |= ((ulong)m_buf.ReadByte()) << 8;
-    value |= ((ulong)m_buf.ReadByte()) << 16;
-    value |= ((ulong)m_buf.ReadByte()) << 24;
-    value |= ((ulong)m_buf.ReadByte()) << 32;
-    value |= ((ulong)m_buf.ReadByte()) << 40;
-    value |= ((ulong)m_buf.ReadByte()) << 48;
-    value |= ((ulong)m_buf.ReadByte()) << 56;
-    return (long)value;
-  }
-
-  public ulong ReadUInt64() {
-    ulong value = m_buf.ReadByte();
-    value |= ((ulong)m_buf.ReadByte()) << 8;
-    value |= ((ulong)m_buf.ReadByte()) << 16;
-    value |= ((ulong)m_buf.ReadByte()) << 24;
-    value |= ((ulong)m_buf.ReadByte()) << 32;
-    value |= ((ulong)m_buf.ReadByte()) << 40;
-    value |= ((ulong)m_buf.ReadByte()) << 48;
-    value |= ((ulong)m_buf.ReadByte()) << 56;
-    return value;
-  }
+  public long ReadInt64() => (long)DecodeZigZag(ReadUInt64());
 
   public float ReadSingle() {
 #if INCLUDE_IL2CPP
@@ -268,6 +230,17 @@ public class Deserializer {
     msg.Deserialize(this);
     return msg;
   }
+
+  static long DecodeZigZag(ulong value) {
+    unchecked {
+      if ((value & 0x1) == 0x1) {
+        return -1 * ((long)(value >> 1) + 1);
+      }
+      return (long)(value >> 1);
+    }
+  }
+
+
 
 }
 

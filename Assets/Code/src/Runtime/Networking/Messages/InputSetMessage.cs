@@ -19,7 +19,7 @@ public class InputSetMessage : INetworkSerializable, IDisposable {
 
   public void Serialize(Serializer serializer) {
     Assert.IsTrue(InputCount <= Inputs.Length);
-    serializer.WritePackedUInt32(InputCount);                   // 1-4 bytes
+    serializer.Write(InputCount);                   // 1-4 bytes
     if (InputCount <= 0) return;
     var firstInput = Inputs[0];
     var playerCount = (byte)firstInput.PlayerCount;
@@ -33,7 +33,7 @@ public class InputSetMessage : INetworkSerializable, IDisposable {
     ValidMask |= (byte)(1 << playerCount);                  // Set the count bit to 1.
 
     serializer.Write(ValidMask);                                // 1 byte
-    serializer.WritePackedUInt32(StartTimestamp);               // 1-4 bytes
+    serializer.Write(StartTimestamp);               // 1-4 bytes
     for (var i = 0; i < playerCount; i++) {
       if ((ValidMask & (1 << i)) == 0) continue;
       PlayerInput? lastInput= null;
@@ -46,10 +46,10 @@ public class InputSetMessage : INetworkSerializable, IDisposable {
   }
 
   public void Deserialize(Deserializer deserializer) {
-    InputCount = deserializer.ReadPackedUInt32();
+    InputCount = deserializer.ReadUInt32();
     if (InputCount <= 0) return;
     ValidMask = deserializer.ReadByte();
-    StartTimestamp = deserializer.ReadPackedUInt32();
+    StartTimestamp = deserializer.ReadUInt32();
     byte playerCount = GetPlayerCount(ValidMask);
     Inputs = ArrayPool<MatchInput>.Shared.Rent((int)InputCount);
     for (int i = 0; i < InputCount; i++) {

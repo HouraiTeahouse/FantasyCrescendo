@@ -95,43 +95,43 @@ public struct PlayerState : INetworkSerializable {
     WriteBit(ref mask, IsFastFalling);
     WriteBit(ref mask, Direction);
 
-    writer.WritePackedUInt32(mask);
+    writer.Write(mask);
     writer.Write(posX);
     writer.Write(posY);
-    writer.WritePackedInt32(velX);
-    writer.WritePackedInt32(velY);
+    writer.Write(velX);
+    writer.Write(velY);
     writer.Write(damage);
-    writer.WritePackedUInt32(StateID);
-    writer.WritePackedUInt32(StateTick);
+    writer.Write(StateID);
+    writer.Write(StateTick);
 
     if (Stocks != 0)                 writer.Write(Stocks);
-    if (RemainingJumps != 0)         writer.WritePackedUInt32(RemainingJumps);
+    if (RemainingJumps != 0)         writer.Write(RemainingJumps);
     if (GrabbedLedgeID != 0)         writer.Write(GrabbedLedgeID);
-    if (ShieldDamage != 0)           writer.WritePackedUInt32(ShieldDamage);
-    if (Hitstun != 0)                writer.WritePackedUInt32(Hitstun);
-    if (ShieldRecoveryCooldown != 0) writer.WritePackedUInt32(ShieldRecoveryCooldown);
-    if (RespawnTimeRemaining != 0)   writer.WritePackedUInt32(RespawnTimeRemaining);
+    if (ShieldDamage != 0)           writer.Write(ShieldDamage);
+    if (Hitstun != 0)                writer.Write(Hitstun);
+    if (ShieldRecoveryCooldown != 0) writer.Write(ShieldRecoveryCooldown);
+    if (RespawnTimeRemaining != 0)   writer.Write(RespawnTimeRemaining);
   }
 
   public void Deserialize(Deserializer deserializer) {
-    uint mask = deserializer.ReadPackedUInt32();
+    uint mask = deserializer.ReadUInt32();
     posX = deserializer.ReadInt16();
     posY = deserializer.ReadInt16();
-    velX = deserializer.ReadPackedInt32();
-    velY = deserializer.ReadPackedInt32();
+    velX = deserializer.ReadInt32();
+    velY = deserializer.ReadInt32();
     damage = deserializer.ReadUInt16();
-    StateID = deserializer.ReadPackedUInt32();
-    StateTick = deserializer.ReadPackedUInt32();
+    StateID = deserializer.ReadUInt32();
+    StateTick = deserializer.ReadUInt32();
 
     Direction = ReadBit(ref mask);
     IsFastFalling = ReadBit(ref mask);
     if (ReadBit(ref mask)) Stocks = deserializer.ReadSByte();
-    if (ReadBit(ref mask)) RemainingJumps = deserializer.ReadPackedUInt32();
+    if (ReadBit(ref mask)) RemainingJumps = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) GrabbedLedgeID = deserializer.ReadByte();
-    if (ReadBit(ref mask)) ShieldDamage = deserializer.ReadPackedUInt32();
-    if (ReadBit(ref mask)) Hitstun = deserializer.ReadPackedUInt32();
-    if (ReadBit(ref mask)) ShieldRecoveryCooldown = deserializer.ReadPackedUInt32();
-    if (ReadBit(ref mask)) RespawnTimeRemaining = deserializer.ReadPackedUInt32();
+    if (ReadBit(ref mask)) ShieldDamage = deserializer.ReadUInt32();
+    if (ReadBit(ref mask)) Hitstun = deserializer.ReadUInt32();
+    if (ReadBit(ref mask)) ShieldRecoveryCooldown = deserializer.ReadUInt32();
+    if (ReadBit(ref mask)) RespawnTimeRemaining = deserializer.ReadUInt32();
   }
 
   // TODO(james7132): See if there's a better way to do this
