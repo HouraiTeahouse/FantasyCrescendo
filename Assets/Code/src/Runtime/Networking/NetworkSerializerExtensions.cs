@@ -1,33 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking{
 
 public static class NetworkSerializerExtensions {
 
-  public static short ReadPackedInt16(this NetworkReader reader) {
+  public static short ReadPackedInt16(this Deserializer reader) {
     return (short)DecodeZigZag(reader.ReadPackedUInt32());
   }
 
-  public static void WritePackedInt16(this NetworkWriter writer, short value) {
+  public static void WritePackedInt16(this Serializer writer, short value) {
     writer.WritePackedUInt32((uint)EncodeZigZag(value, 16));
   }
 
-  public static int ReadPackedInt32(this NetworkReader reader) {
+  public static int ReadPackedInt32(this Deserializer reader) {
     return (int)DecodeZigZag(reader.ReadPackedUInt32());
   }
 
-  public static void WritePackedInt32(this NetworkWriter writer, int value) {
+  public static void WritePackedInt32(this Serializer writer, int value) {
     writer.WritePackedUInt32((uint)EncodeZigZag(value, 32));
   }
 
-  public static long ReadPackedInt64(this NetworkReader reader) {
+  public static long ReadPackedInt64(this Deserializer reader) {
     return DecodeZigZag(reader.ReadPackedUInt64());
   }
 
-  public static void WritePackedInt64(this NetworkWriter writer, long value) {
+  public static void WritePackedInt64(this Serializer writer, long value) {
     writer.WritePackedUInt64(EncodeZigZag(value, 64));
   }
 

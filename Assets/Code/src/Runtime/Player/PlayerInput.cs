@@ -1,3 +1,4 @@
+using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -78,10 +79,10 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
 
   public override int GetHashCode() => 31 * Movement.GetHashCode() + 17 * Smash.GetHashCode() + Buttons.GetHashCode();
 
-  public void Serialize(NetworkWriter writer, PlayerInput? previous = null) {
+  public void Serialize(Serializer serializer, PlayerInput? previous = null) {
     bool cutMovement, cutSmash;
     if (!IsValid) {
-      writer.Write((byte)0);
+      serializer.Write((byte)0);
       return;
     }
     if (previous != null && previous.Value.IsValid) {
@@ -103,24 +104,24 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
         Buttons |= 128;
       }
     }
-    writer.Write(Buttons);
+    serializer.Write(Buttons);
     if (!cutMovement) {
-      writer.Write(Movement.X);
-      writer.Write(Movement.Y);
+      serializer.Write(Movement.X);
+      serializer.Write(Movement.Y);
     }
     if (!cutSmash) {
-      writer.Write(Smash.X);
-      writer.Write(Smash.Y);
+      serializer.Write(Smash.X);
+      serializer.Write(Smash.Y);
     }
   }
 
-  public static PlayerInput Deserialize(NetworkReader reader, PlayerInput? previous = null) {
+  public static PlayerInput Deserialize(Deserializer deserializer, PlayerInput? previous = null) {
     var input = new PlayerInput();
-    input.Buttons = reader.ReadByte();
+    input.Buttons = deserializer.ReadByte();
     if (!input.IsValid) return input;
     if ((input.Buttons & 64) != 0) {
-      input.Movement.X = reader.ReadSByte();
-      input.Movement.Y = reader.ReadSByte();
+      input.Movement.X = deserializer.ReadSByte();
+      input.Movement.Y = deserializer.ReadSByte();
     } else {
       if (previous != null && previous.Value.IsValid) {
         input.Movement = previous.Value.Movement;
@@ -129,8 +130,8 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
       }
     }
     if ((input.Buttons & 128) != 0) {
-      input.Smash.X = reader.ReadSByte();
-      input.Smash.Y = reader.ReadSByte();
+      input.Smash.X = deserializer.ReadSByte();
+      input.Smash.Y = deserializer.ReadSByte();
     } else {
       if (previous != null && previous.Value.IsValid) {
         input.Smash = previous.Value.Smash;

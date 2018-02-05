@@ -25,7 +25,7 @@ public class UNETNetworkInterface : INetworkInterface {
   public event Action<NetworkConnection> OnPeerDisconnected;
 
   byte[] readBuffer;
-  NetworkReader messageReader;
+  Deserializer messageDeserializer;
   bool disposed = false;
 
   public UNETNetworkInterface() {
@@ -36,7 +36,7 @@ public class UNETNetworkInterface : INetworkInterface {
     Connections = new ReadOnlyCollection<NetworkConnection>(connections);
 
     readBuffer = ArrayPool<byte>.Shared.Rent(NetworkMessage.MaxMessageSize);
-    messageReader = new NetworkReader(readBuffer);
+    messageDeserializer = new Deserializer(readBuffer);
   }
 
   public void Initialize(uint port) {
@@ -71,6 +71,15 @@ public class UNETNetworkInterface : INetworkInterface {
     return Channels[NetworkReliablity.Reliable];
   }
 
+  public void Send(int connectionId, byte[] buffer, int count, 
+                   NetworkReliablity reliability) {
+    if (!connectionMap.ContainsKey(connectionId)) return;
+    byte error;
+    var channelId = GetChannelID(reliability);
+    NetworkTransport.Send(HostID, connectionId, channelId, buffer, count, out error);
+    UNETUtility.HandleError(error);
+  }
+
   public void Update() {
     if (HostID < 0) return;
     int connectionId, channelId, dataSize, bufferSize = NetworkMessage.MaxMessageSize;
@@ -81,7 +90,7 @@ public class UNETNetworkInterface : INetworkInterface {
       switch (evt) {
         case NetworkEventType.Nothing: break;
         case NetworkEventType.ConnectEvent: OnNewConnection(connectionId); break;
-        case NetworkEventType.DataEvent: OnRecieveData(connectionId); break;
+        case NetworkEventType.DataEvent: OnRecieveData(connectionId, dataSize); break;
         case NetworkEventType.DisconnectEvent: OnDisconnect(connectionId, error); break;
         default:
           Debug.LogError($"Unkown network message type recieved: {evt}");
@@ -97,11 +106,13 @@ public class UNETNetworkInterface : INetworkInterface {
     OnPeerConnected?.Invoke(connection);
   }
 
-  void OnRecieveData(int connectionId) {
+  void OnRecieveData(int connectionId, int dataSize) {
     UNETConnection connection;
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
-    messageReader.SeekZero();
-    MessageHandlers.Execute(connection, messageReader);
+    // CLZF2.Decompress();
+    // messageReader.as
+    messageDeserializer.SeekZero();
+    MessageHandlers.Execute(connection, messageDeserializer);
   }
 
   void OnDisconnect(int connectionId, byte error) {

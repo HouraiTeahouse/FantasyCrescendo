@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HouraiTeahouse.FantasyCrescendo.Networking;
+using System;
 using System.Linq;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 [Serializable]
-public struct MatchResult {
+public struct MatchResult : INetworkSerializable {
 
   public MatchResolution Resolution;
   public int WinningPlayerID;
@@ -24,7 +25,13 @@ public struct MatchResult {
     return hash + ArrayUtil.GetOrderedHash(PlayerStats);
   }
 
-}
+  public void Serialize(Serializer serializer) {
+    // serializer.Write(MatchResult);
+  }
+  public void Deserialize(Deserializer deserializer) {
+    // MatchResult = deserializer.Read<MatchResult>();
+  }
 
+}
 
 }

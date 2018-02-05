@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -19,7 +18,7 @@ public class MessageHandlers {
     handlers[code] += handler;
   }
 
-  public void RegisterHandler<T>(byte code, Action<T> handler) where T : MessageBase, new() {
+  public void RegisterHandler<T>(byte code, Action<T> handler) where T : INetworkSerializable, new() {
     if (handler == null) return;
     RegisterHandler(code, dataMsg => {
       var message = dataMsg.ReadAs<T>();
@@ -31,11 +30,11 @@ public class MessageHandlers {
 
   public void UnregisterHandler(byte code) => handlers[code] = null;
 
-  internal void Execute(NetworkConnection connection, NetworkReader reader) {
-    byte header = reader.ReadByte();
+  internal void Execute(NetworkConnection connection, Deserializer deserializer) {
+    byte header = deserializer.ReadByte();
     var handler = handlers[header];
     if (handler == null) return;
-    var message = new NetworkDataMessage(connection, reader);
+    var message = new NetworkDataMessage(connection, deserializer);
     handler(message);
   }
 

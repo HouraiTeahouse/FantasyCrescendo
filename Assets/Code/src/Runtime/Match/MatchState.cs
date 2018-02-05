@@ -1,9 +1,9 @@
 using HouraiTeahouse.FantasyCrescendo.Players;
+using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
@@ -11,7 +11,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 /// A complete representation of a given game's state at a given tick.
 /// </summary>
 [Serializable]
-public class MatchState {
+public class MatchState : INetworkSerializable {
 
   public uint Time;
 
@@ -60,7 +60,7 @@ public class MatchState {
     return clone;
   }
 
-  public void Serialize(NetworkWriter writer) {
+  public void Serialize(Serializer writer) {
     byte activeMask = (byte)(PlayerCount & 15);
     for (var i = 0; i < PlayerCount; i++) {
       if (!playerStates[i].IsActive) continue;
@@ -74,14 +74,14 @@ public class MatchState {
     }
   }
 
-  public void Deserialize(NetworkReader reader) {
-    var mask = reader.ReadByte();
+  public void Deserialize(Deserializer deserializer) {
+    var mask = deserializer.ReadByte();
     PlayerCount = mask & 15;
     playerStates = ArrayPool<PlayerState>.Shared.Rent(PlayerCount);
     for (var i = 0; i < PlayerCount; i++) {
       var state = new PlayerState();
       if ((mask & (1 << (i + 4))) != 0) {
-        state.Deserialize(reader);
+        state.Deserialize(deserializer);
       }
       SetPlayerState((uint)i, state);
     }

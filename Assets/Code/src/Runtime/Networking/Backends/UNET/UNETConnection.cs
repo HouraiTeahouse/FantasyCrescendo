@@ -44,10 +44,7 @@ public class UNETConnection : NetworkConnection {
 
   public override void SendBytes(byte[] buffer, int size, NetworkReliablity reliability = NetworkReliablity.Reliable) {
     if (!IsConnected) return;
-    byte error;
-    var channelId = NetworkInterface.GetChannelID(reliability);
-    NetworkTransport.Send(HostID, ConnectionID, channelId, buffer, size, out error);
-    UNETUtility.HandleError(error);
+    NetworkInterface.Send(ConnectionID, buffer, size, reliability);
   }
 
   public override void Disconnect() {

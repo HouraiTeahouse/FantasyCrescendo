@@ -10,16 +10,16 @@ using Mask = System.Byte;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class InputSetMessage : MessageBase, IDisposable {
+public class InputSetMessage : INetworkSerializable, IDisposable {
 
   public uint StartTimestamp;
   public uint InputCount;
   public byte ValidMask;
   public MatchInput[] Inputs;
 
-  public override void Serialize(NetworkWriter writer) {
+  public void Serialize(Serializer serializer) {
     Assert.IsTrue(InputCount <= Inputs.Length);
-    writer.WritePackedUInt32(InputCount);                   // 1-4 bytes
+    serializer.WritePackedUInt32(InputCount);                   // 1-4 bytes
     if (InputCount <= 0) return;
     var firstInput = Inputs[0];
     var playerCount = (byte)firstInput.PlayerCount;
@@ -32,24 +32,24 @@ public class InputSetMessage : MessageBase, IDisposable {
     ValidMask &= (byte)((1 << playerCount + 1) - 1);        // Disable all bits higher than N + 1
     ValidMask |= (byte)(1 << playerCount);                  // Set the count bit to 1.
 
-    writer.Write(ValidMask);                                // 1 byte
-    writer.WritePackedUInt32(StartTimestamp);               // 1-4 bytes
+    serializer.Write(ValidMask);                                // 1 byte
+    serializer.WritePackedUInt32(StartTimestamp);               // 1-4 bytes
     for (var i = 0; i < playerCount; i++) {
       if ((ValidMask & (1 << i)) == 0) continue;
       PlayerInput? lastInput= null;
       for (int j = 0; j < InputCount; j++) {                // 1-5 * playerCount * Inputs.Length bytes
         var currentInput = Inputs[j].PlayerInputs[i];       // (Only valid inputs)
-        currentInput.Serialize(writer, lastInput);
+        currentInput.Serialize(serializer, lastInput);
         lastInput = currentInput;
       }
     }
   }
 
-  public override void Deserialize(NetworkReader reader) {
-    InputCount = reader.ReadPackedUInt32();
+  public void Deserialize(Deserializer deserializer) {
+    InputCount = deserializer.ReadPackedUInt32();
     if (InputCount <= 0) return;
-    ValidMask = reader.ReadByte();
-    StartTimestamp = reader.ReadPackedUInt32();
+    ValidMask = deserializer.ReadByte();
+    StartTimestamp = deserializer.ReadPackedUInt32();
     byte playerCount = GetPlayerCount(ValidMask);
     Inputs = ArrayPool<MatchInput>.Shared.Rent((int)InputCount);
     for (int i = 0; i < InputCount; i++) {
@@ -59,7 +59,7 @@ public class InputSetMessage : MessageBase, IDisposable {
       if ((ValidMask & (1 << i)) == 0) continue;
       PlayerInput? lastInput= null;
       for (int j = 0; j < InputCount; j++) {
-        var currentInput = PlayerInput.Deserialize(reader, lastInput);
+        var currentInput = PlayerInput.Deserialize(deserializer, lastInput);
         Inputs[j].PlayerInputs[i] = currentInput;
         lastInput = currentInput;
       }

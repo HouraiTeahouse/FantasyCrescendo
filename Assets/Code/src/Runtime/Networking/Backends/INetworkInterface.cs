@@ -53,6 +53,8 @@ public interface INetworkInterface : IDisposable {
   event Action<NetworkConnection> OnPeerConnected;
   event Action<NetworkConnection> OnPeerDisconnected;
 
+  void Send(int connectionId, byte[] bytes, int count, NetworkReliablity reliablity);
+
   Task<NetworkConnection> Connect(string ip, int port);
 }
 

@@ -85,6 +85,7 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
       } else {
         break;
       }
+      // Debug.Log($"{i} {PlayerCount} {other.PlayerCount} {PlayerInputs[i]} {other.PlayerInputs[i]} {equal}");
     }
     return equal;
   }

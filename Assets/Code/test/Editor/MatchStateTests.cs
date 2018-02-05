@@ -1,9 +1,9 @@
 ﻿using HouraiTeahouse.FantasyCrescendo;
 using HouraiTeahouse.FantasyCrescendo.Matches;
+using HouraiTeahouse.FantasyCrescendo.Networking;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;
-using UnityEngine.Networking;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +21,11 @@ public class MatchStateTests {
     var sizes = new List<int>();
     for (var i = 0; i < 1000; i++) {
       var input = StateUtility.RandomState(playerCount);
-      var networkWriter = new NetworkWriter();
+      var networkWriter = new Serializer();
       input.Serialize(networkWriter);
       var bytes = networkWriter.AsArray();
       sizes.Add(networkWriter.Position);
-      var networkReader = new NetworkReader(bytes);
+      var networkReader = new Deserializer(bytes);
       var deserialized = new MatchState(playerCount);
       deserialized.Deserialize(networkReader);
       Assert.AreEqual(input, deserialized);

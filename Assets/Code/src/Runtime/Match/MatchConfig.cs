@@ -1,3 +1,4 @@
+using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 /// A data object for configuring a game between multiple players.
 /// </summary>
 [Serializable]
-public struct MatchConfig : IValidatable {
+public struct MatchConfig : IValidatable, INetworkSerializable {
 
   public uint StageID;
 
@@ -53,6 +54,27 @@ public struct MatchConfig : IValidatable {
   }
 
   public override int GetHashCode() => unchecked(StageID.GetHashCode() * 31 + Time.GetHashCode() * 17 + ArrayUtil.GetOrderedHash(PlayerConfigs));
+
+  public void Serialize(Serializer serializer) {
+    serializer.WritePackedUInt32(StageID);
+    serializer.WritePackedUInt32(Stocks);
+    serializer.WritePackedUInt32(Time);
+    serializer.WritePackedUInt32((uint)PlayerConfigs.Length);
+    for (var i = 0; i < PlayerConfigs.Length; i++) {
+      serializer.Write(PlayerConfigs[i]);
+    }
+  }
+
+  public void Deserialize(Deserializer deserializer) {
+    StageID = deserializer.ReadPackedUInt32();
+    Stocks = deserializer.ReadPackedUInt32();
+    Time = deserializer.ReadPackedUInt32();
+    var length = deserializer.ReadPackedUInt32();
+    PlayerConfigs = new PlayerConfig[length];
+    for (var i = 0; i < PlayerConfigs.Length; i++) {
+      PlayerConfigs[i] = deserializer.Read<PlayerConfig>();
+    }
+  }
 
 }
 

@@ -1,3 +1,4 @@
+using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using System.Linq;
 
@@ -7,7 +8,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// A data object for configuring a single player within a multiplayer match.
 /// </summary>
 [Serializable]
-public struct PlayerConfig : IValidatable {
+public struct PlayerConfig : IValidatable, INetworkSerializable {
 
   /// <summary>
   /// The Player ID of the player. Determines what is visually displayed
@@ -25,6 +26,18 @@ public struct PlayerConfig : IValidatable {
   public bool IsLocal => LocalPlayerID >= 0;
   public bool IsValid => Selection.IsValid;
 
+  public void Serialize(Serializer serializer) {
+    serializer.Write(PlayerID);
+    serializer.Write(LocalPlayerID);
+    serializer.Write(Selection);
+  }
+
+  public void Deserialize(Deserializer deserializer) {
+    PlayerID = deserializer.ReadByte();
+    LocalPlayerID = deserializer.ReadSByte();
+    Selection = deserializer.Read<PlayerSelection>();
+  }
+
 }
 
 /// <summary>
@@ -32,13 +45,23 @@ public struct PlayerConfig : IValidatable {
 /// configuration.
 /// </summary>
 [Serializable]
-public struct PlayerSelection : IValidatable {
+public struct PlayerSelection : IValidatable, INetworkSerializable {
 
   public uint CharacterID;            // 1-4 bytes
   public byte Pallete;                // 1 byte
   
   // TODO(james7132): Properly implement
   public bool IsValid => true;
+
+  public void Serialize(Serializer serializer) {
+    serializer.WritePackedUInt32(CharacterID);
+    serializer.Write(Pallete);
+  }
+
+  public void Deserialize(Deserializer deserializer) {
+    CharacterID = deserializer.ReadPackedUInt32();
+    Pallete = deserializer.ReadByte();
+  }
 
   public override string ToString() => $"Selection({CharacterID},{Pallete})";
 

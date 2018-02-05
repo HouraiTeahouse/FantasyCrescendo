@@ -1,4 +1,5 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using HouraiTeahouse.FantasyCrescendo.Networking;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,11 +15,11 @@ public class PlayerStateTests {
     var sizes = new List<int>();
     for (var i = 0; i < 1000; i++) {
       var state = StateUtility.RandomPlayerState();
-      var networkWriter = new NetworkWriter();
+      var networkWriter = new Serializer();
       state.Serialize(networkWriter);
       var bytes = networkWriter.AsArray();
       sizes.Add(networkWriter.Position);
-      var networkReader = new NetworkReader(bytes);
+      var networkReader = new Deserializer(bytes);
       var deserializedState = new PlayerState();
       deserializedState.Deserialize(networkReader);
       Assert.AreEqual(state, deserializedState);

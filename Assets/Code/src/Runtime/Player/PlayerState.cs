@@ -2,7 +2,6 @@ using HouraiTeahouse.FantasyCrescendo.Matches;
 using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Players {
 
@@ -10,7 +9,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
 /// A complete representation of a player's state at a given tick.
 /// </summary>
 [Serializable]
-public struct PlayerState {
+public struct PlayerState : INetworkSerializable {
 
   [NonSerialized] public MatchState MatchState;
   public bool IsActive => Stocks > 0;
@@ -84,7 +83,7 @@ public struct PlayerState {
     return result;
   }
 
-  public void Serialize(NetworkWriter writer) {
+  public void Serialize(Serializer writer) {
     uint mask = 0;
     WriteBit(ref mask, RespawnTimeRemaining != 0);
     WriteBit(ref mask, ShieldRecoveryCooldown != 0);
@@ -114,25 +113,25 @@ public struct PlayerState {
     if (RespawnTimeRemaining != 0)   writer.WritePackedUInt32(RespawnTimeRemaining);
   }
 
-  public void Deserialize(NetworkReader reader) {
-    uint mask = reader.ReadPackedUInt32();
-    posX = reader.ReadInt16();
-    posY = reader.ReadInt16();
-    velX = reader.ReadPackedInt32();
-    velY = reader.ReadPackedInt32();
-    damage = reader.ReadUInt16();
-    StateID = reader.ReadPackedUInt32();
-    StateTick = reader.ReadPackedUInt32();
+  public void Deserialize(Deserializer deserializer) {
+    uint mask = deserializer.ReadPackedUInt32();
+    posX = deserializer.ReadInt16();
+    posY = deserializer.ReadInt16();
+    velX = deserializer.ReadPackedInt32();
+    velY = deserializer.ReadPackedInt32();
+    damage = deserializer.ReadUInt16();
+    StateID = deserializer.ReadPackedUInt32();
+    StateTick = deserializer.ReadPackedUInt32();
 
     Direction = ReadBit(ref mask);
     IsFastFalling = ReadBit(ref mask);
-    if (ReadBit(ref mask)) Stocks = reader.ReadSByte();
-    if (ReadBit(ref mask)) RemainingJumps = reader.ReadPackedUInt32();
-    if (ReadBit(ref mask)) GrabbedLedgeID = reader.ReadByte();
-    if (ReadBit(ref mask)) ShieldDamage = reader.ReadPackedUInt32();
-    if (ReadBit(ref mask)) Hitstun = reader.ReadPackedUInt32();
-    if (ReadBit(ref mask)) ShieldRecoveryCooldown = reader.ReadPackedUInt32();
-    if (ReadBit(ref mask)) RespawnTimeRemaining = reader.ReadPackedUInt32();
+    if (ReadBit(ref mask)) Stocks = deserializer.ReadSByte();
+    if (ReadBit(ref mask)) RemainingJumps = deserializer.ReadPackedUInt32();
+    if (ReadBit(ref mask)) GrabbedLedgeID = deserializer.ReadByte();
+    if (ReadBit(ref mask)) ShieldDamage = deserializer.ReadPackedUInt32();
+    if (ReadBit(ref mask)) Hitstun = deserializer.ReadPackedUInt32();
+    if (ReadBit(ref mask)) ShieldRecoveryCooldown = deserializer.ReadPackedUInt32();
+    if (ReadBit(ref mask)) RespawnTimeRemaining = deserializer.ReadPackedUInt32();
   }
 
   // TODO(james7132): See if there's a better way to do this
