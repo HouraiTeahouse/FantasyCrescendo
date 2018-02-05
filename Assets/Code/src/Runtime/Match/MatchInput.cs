@@ -102,27 +102,6 @@ public struct MatchInput : IMergable<MatchInput>, IDisposable {
     return mask;
   }
 
-  public void Serialize(NetworkWriter writer, Mask mask) {
-    if (PlayerInputs == null) return;
-    for (var i = 0; i < PlayerCount; i++) {
-      if ((mask & (1 << i)) == 0) continue;
-      PlayerInputs[i].Serialize(writer);
-    }
-  }
-
-  public static MatchInput Deserialize(NetworkReader reader, int players, Mask mask) {
-    Assert.IsTrue(players <= kMaxSupportedPlayers);
-    var input = new MatchInput(players);
-    for (var i = 0; i < input.PlayerCount; i++) {
-      if ((mask & (1 << i)) != 0) {
-        input.PlayerInputs[i] = PlayerInput.Deserialize(reader);
-      } else {
-        input.PlayerInputs[i] = new PlayerInput { IsValid = false };
-      }
-    }
-    return input;
-  }
-
 }
 
 public class MatchInputContext {

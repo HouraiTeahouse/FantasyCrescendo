@@ -64,8 +64,11 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
     if (!(obj is PlayerInput)) return false;
     var other = (PlayerInput)obj;
     if (!IsValid && !other.IsValid) return true;
-    var equals = Movement.Equals(other.Movement) && Smash.Equals(other.Smash);
-    return equals && Buttons == other.Buttons;
+    var equals = IsValid == other.IsValid;
+    equals &= Movement.Equals(other.Movement);
+    equals &= Smash.Equals(other.Smash);
+    equals &= (Buttons & 63) == (other.Buttons & 63);
+    return equals;
   }
 
   public override string ToString() {
@@ -75,9 +78,19 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
 
   public override int GetHashCode() => 31 * Movement.GetHashCode() + 17 * Smash.GetHashCode() + Buttons.GetHashCode();
 
-  public void Serialize(NetworkWriter writer) {
-    var cutMovement = Movement.X == 0 && Movement.Y == 0;
-    var cutSmash = Smash.X == 0 && Smash.Y == 0;
+  public void Serialize(NetworkWriter writer, PlayerInput? previous = null) {
+    bool cutMovement, cutSmash;
+    if (!IsValid) {
+      writer.Write((byte)0);
+      return;
+    }
+    if (previous != null && previous.Value.IsValid) {
+      cutMovement = Movement.Equals(previous.Value.Movement);
+      cutSmash = Smash.Equals(previous.Value.Smash);
+    } else {
+      cutMovement = Movement.X == 0 && Movement.Y == 0;
+      cutSmash = Smash.X == 0 && Smash.Y == 0;
+    }
     unchecked {
       if (cutMovement) {
         Buttons &= (byte)~64;
@@ -101,20 +114,29 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
     }
   }
 
-  public static PlayerInput Deserialize(NetworkReader reader) {
+  public static PlayerInput Deserialize(NetworkReader reader, PlayerInput? previous = null) {
     var input = new PlayerInput();
     input.Buttons = reader.ReadByte();
+    if (!input.IsValid) return input;
     if ((input.Buttons & 64) != 0) {
       input.Movement.X = reader.ReadSByte();
       input.Movement.Y = reader.ReadSByte();
     } else {
-      input.Movement.X = input.Movement.Y = 0;
+      if (previous != null && previous.Value.IsValid) {
+        input.Movement = previous.Value.Movement;
+      } else {
+        input.Movement.X = input.Movement.Y = 0;
+      }
     }
     if ((input.Buttons & 128) != 0) {
       input.Smash.X = reader.ReadSByte();
       input.Smash.Y = reader.ReadSByte();
     } else {
-      input.Smash.X = input.Smash.Y = 0;
+      if (previous != null && previous.Value.IsValid) {
+        input.Smash = previous.Value.Smash;
+      } else {
+        input.Smash.X = input.Smash.Y = 0;
+      }
     }
     return input;
   }
