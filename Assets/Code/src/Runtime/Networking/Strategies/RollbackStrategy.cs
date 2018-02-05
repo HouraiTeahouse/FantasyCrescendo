@@ -63,7 +63,7 @@ public class RollbackStrategy : INetworkStrategy {
     }
 
     void OnRecievedInputs(uint player, uint timestep,
-                          ArraySlice<MatchInput> inputs) {
+                          ArraySegment<MatchInput> inputs) {
       ForwardSimulate(timestep, inputs);
       UpdateClientTimestep(player, timestep);
     }
@@ -78,7 +78,7 @@ public class RollbackStrategy : INetworkStrategy {
       }
     }
 
-    void ForwardSimulate(uint timestep, ArraySlice<MatchInput> inputs) {
+    void ForwardSimulate(uint timestep, ArraySegment<MatchInput> inputs) {
       InputHistory.MergeWith(timestep, inputs);
       MatchInput input = InputHistory.Current.Input;
       InputContext.Reset(input);
@@ -157,7 +157,7 @@ public class RollbackStrategy : INetworkStrategy {
       NetworkClient.OnRecievedInputs -= OnRecievedInputs;
     }
 
-    void OnRecievedInputs(uint timestep, ArraySlice<MatchInput> inputs) {
+    void OnRecievedInputs(uint timestep, ArraySegment<MatchInput> inputs) {
       InputHistory.MergeWith(timestep, inputs);
     }
 

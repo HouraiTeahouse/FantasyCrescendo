@@ -114,7 +114,7 @@ public class UNETNetworkInterface : INetworkInterface {
     UNETConnection connection;
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
     var decompressed = ArrayPool<byte>.Shared.Rent(dataSize);
-    var newSize = CLZF2.Decompress(readBuffer, ref decompressed, dataSize);
+    CLZF2.Decompress(readBuffer, ref decompressed, dataSize);
     messageDeserializer.Replace(decompressed);
     messageDeserializer.SeekZero();
     MessageHandlers.Execute(connection, messageDeserializer);

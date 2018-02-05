@@ -127,7 +127,7 @@ public class InputHistoryTest {
     inputHistory.Append(5);
     inputHistory.Append(6);
 
-    inputHistory.MergeWith(2, new ArraySlice<int>(new[] {5, 5, 5, 5}));
+    inputHistory.MergeWith(2, new ArraySegment<int>(new[] {5, 5, 5, 5}));
 
     Assert.That(inputHistory.Select(i => i.Input).ToArray(), 
                 Is.EqualTo(new[] { 0, 1, 7, 8, 9, 10, 6}));
@@ -144,7 +144,7 @@ public class InputHistoryTest {
     inputHistory.Append(5);
     inputHistory.Append(6);
 
-    inputHistory.MergeWith(5, new ArraySlice<int>(new[] {5, 5, 5, 5}));
+    inputHistory.MergeWith(5, new ArraySegment<int>(new[] {5, 5, 5, 5}));
 
     Assert.That(inputHistory.GetFullSequence().Select(i => i.Input).ToArray(), 
                 Is.EqualTo(new[] { 0, 1, 2, 3, 4, 10, 11, 5, 5 }));
@@ -164,7 +164,7 @@ public class InputHistoryTest {
     inputHistory.Append(5);
     inputHistory.Append(6);
 
-    inputHistory.MergeWith(2, new ArraySlice<int>(new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }));
+    inputHistory.MergeWith(2, new ArraySegment<int>(new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }));
 
     Assert.That(inputHistory.GetFullSequence().Select(i => i.Input).ToArray(), 
                 Is.EqualTo(new[] { 4, 6, 8, 10, 12, 14, 16, 11}));

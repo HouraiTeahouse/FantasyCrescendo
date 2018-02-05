@@ -17,6 +17,8 @@ public class InputSetMessage : INetworkSerializable, IDisposable {
   public byte ValidMask;
   public MatchInput[] Inputs;
 
+  public ArraySegment<MatchInput> AsArraySegment() => new ArraySegment<MatchInput>(Inputs, 0, (int)InputCount);
+
   public void Serialize(Serializer serializer) {
     Assert.IsTrue(InputCount <= Inputs.Length);
     serializer.Write(InputCount);                   // 1-4 bytes

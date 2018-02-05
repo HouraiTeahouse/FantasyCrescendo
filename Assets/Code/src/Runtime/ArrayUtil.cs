@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq; 
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -27,8 +28,6 @@ public static class ArrayUtil {
     }
     return hash;
   }
-
-  public static ArraySlice<T> GetSlice<T>(this T[] array, uint end) => new ArraySlice<T>(array, end);
 
   public static T[] ConvertToArray<T>(IEnumerable<T> values, out int size) {
     size = values.Count();

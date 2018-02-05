@@ -157,7 +157,7 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
   /// The start timestamp corresponding to the first element in the list.
   /// </param>
   /// <param name="inputs">the list of inputs to merge into the history.</param>
-  public void MergeWith(uint timestep, ArraySlice<I> inputs) {
+  public void MergeWith(uint timestep, ArraySegment<I> inputs) {
     Element currentElement = FindByTimestamp(timestep);
     foreach (var input in inputs) {
       if (timestep >= currentElement.Timestep) {

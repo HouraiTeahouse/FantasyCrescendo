@@ -9,7 +9,7 @@ public interface INetworkServer : IDisposable {
   ICollection<NetworkClientPlayer> Clients { get; }
 
   // Signature: Client ID, Timestamp, Inputs
-  event Action<uint, uint, ArraySlice<MatchInput>> ReceivedInputs;
+  event Action<uint, uint, ArraySegment<MatchInput>> ReceivedInputs;
 
   event Action<NetworkClientPlayer> PlayerAdded;
   event Action<NetworkClientPlayer> PlayerUpdated;
