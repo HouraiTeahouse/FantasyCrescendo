@@ -3701,21 +3701,29 @@ MonoBehaviour:
       - characters/youmu/1:youmu_body_1
       - characters/youmu/1:youmu_body_1
       - characters/youmu/1:youmu_eye_1
+      - characters/youmu/2:youmu_sword
+      - characters/youmu/2:youmu_sword
     - Materials:
       - characters/youmu/2:youmu_clothes_2
       - characters/youmu/2:youmu_body_2
       - characters/youmu/2:youmu_body_2
       - characters/youmu/2:youmu_eye_2
+      - characters/youmu/2:youmu_sword
+      - characters/youmu/2:youmu_sword
     - Materials:
       - characters/youmu/3:youmu_clothes_3
       - characters/youmu/3:youmu_body_3
       - characters/youmu/3:youmu_body_3
       - characters/youmu/3:youmu_eye_3
+      - characters/youmu/2:youmu_sword
+      - characters/youmu/2:youmu_sword
     - Materials:
       - characters/youmu/4:youmu_clothes_4
       - characters/youmu/4:youmu_body_4
       - characters/youmu/4:youmu_body_4
       - characters/youmu/4:youmu_eye_4
+      - characters/youmu/2:youmu_sword
+      - characters/youmu/2:youmu_sword
     TargetRenderers:
     - {fileID: 137747126268554948}
   - MaterialSets:
@@ -4079,6 +4087,8 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}

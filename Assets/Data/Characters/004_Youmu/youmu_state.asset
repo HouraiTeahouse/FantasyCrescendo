@@ -23,19 +23,19 @@ MonoBehaviour:
       RotationOffset: 180
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Walk
     Data:
       Timeline: {fileID: 11400000, guid: 2eb91958e5a6cb94fae2044509f2004c, type: 2}
       AnimationClip: {fileID: 7400000, guid: fb01eb96bd4199341a5083c7648d097c, type: 3}
       Length: 0.25
-      MinMoveSpeed: 3
+      MinMoveSpeed: 2.5
       MaxMoveSpeed: 3
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Crouch
     Data:
@@ -47,7 +47,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: CrouchStart
     Data:
@@ -59,7 +59,7 @@ MonoBehaviour:
       RotationOffset: 180
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: CrouchEnd
     Data:
@@ -71,31 +71,31 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Dash
     Data:
       Timeline: {fileID: 11400000, guid: a5aaa097964f7884aac4e4c35ef76f4a, type: 2}
       AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
       Length: 1
-      MinMoveSpeed: 0
-      MaxMoveSpeed: 0
+      MinMoveSpeed: 4
+      MaxMoveSpeed: 4
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Run
     Data:
       Timeline: {fileID: 11400000, guid: 6edee2da42f8e7948a561b93c6588ab7, type: 2}
       AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
       Length: 1
-      MinMoveSpeed: 0
-      MaxMoveSpeed: 0
+      MinMoveSpeed: 5
+      MaxMoveSpeed: 5
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: RunBrake
     Data:
@@ -107,7 +107,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: RunTurn
     Data:
@@ -119,7 +119,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Jump
     Data:
@@ -131,7 +131,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: JumpStart
     Data:
@@ -143,7 +143,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: JumpAerial
     Data:
@@ -155,7 +155,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Land
     Data:
@@ -167,7 +167,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Shield.On
     Data:
@@ -179,7 +179,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Shield.Perfect
     Data:
@@ -191,7 +191,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Shield.Main
     Data:
@@ -203,7 +203,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Shield.Off
     Data:
@@ -215,7 +215,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Shield.Broken
     Data:
@@ -227,7 +227,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Shield.Stunned
     Data:
@@ -239,7 +239,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Escape
     Data:
@@ -251,7 +251,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: EscapeForward
     Data:
@@ -263,7 +263,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: EscapeBackward
     Data:
@@ -275,7 +275,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Fall
     Data:
@@ -287,7 +287,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: FallHelpless
     Data:
@@ -299,7 +299,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: EscapeAir
     Data:
@@ -311,7 +311,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Neutral
     Data:
@@ -323,7 +323,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: TiltUp
     Data:
@@ -335,7 +335,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: TiltSide
     Data:
@@ -347,7 +347,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: TiltDown
     Data:
@@ -359,7 +359,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SmashUp.Charge
     Data:
@@ -371,7 +371,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SmashUp.Attack
     Data:
@@ -383,7 +383,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SmashSide.Charge
     Data:
@@ -395,7 +395,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SmashSide.Attack
     Data:
@@ -407,7 +407,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SmashDown.Charge
     Data:
@@ -419,7 +419,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SmashDown.Attack
     Data:
@@ -431,7 +431,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: AerialNeutral
     Data:
@@ -443,7 +443,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: AerialForward
     Data:
@@ -455,7 +455,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: AerialBackward
     Data:
@@ -467,7 +467,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: AerialUp
     Data:
@@ -479,7 +479,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: AerialDown
     Data:
@@ -491,7 +491,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: AerialAttackLand
     Data:
@@ -503,7 +503,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SpecialNeutral
     Data:
@@ -515,7 +515,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SpecialUp
     Data:
@@ -527,7 +527,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SpecialSide
     Data:
@@ -539,7 +539,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: SpecialDown
     Data:
@@ -551,7 +551,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: LedgeGrab
     Data:
@@ -563,7 +563,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: LedgeIdle
     Data:
@@ -575,7 +575,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: LedgeClimb
     Data:
@@ -587,7 +587,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: LedgeEscape
     Data:
@@ -599,7 +599,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: LedgeAttack
     Data:
@@ -611,7 +611,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: LedgeJump
     Data:
@@ -623,7 +623,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: LedgeRelease
     Data:
@@ -635,7 +635,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: DamageStun
     Data:
@@ -647,7 +647,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: DamageStunAir
     Data:
@@ -659,7 +659,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: DamageLaunched
     Data:
@@ -671,7 +671,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: DamageFall
     Data:
@@ -683,7 +683,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabPull
     Data:
@@ -695,7 +695,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabRunPull
     Data:
@@ -707,7 +707,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabWait
     Data:
@@ -719,7 +719,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabInterrupted
     Data:
@@ -731,7 +731,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabPummel
     Data:
@@ -743,7 +743,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ThrowForward
     Data:
@@ -755,7 +755,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ThrowBackward
     Data:
@@ -767,7 +767,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ThrowUp
     Data:
@@ -779,7 +779,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ThrowDown
     Data:
@@ -791,7 +791,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabbedPulled
     Data:
@@ -803,7 +803,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabbedWait
     Data:
@@ -815,7 +815,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabbedInterrupt
     Data:
@@ -827,7 +827,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabbedInterruptJump
     Data:
@@ -839,7 +839,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: GrabbedDamaged
     Data:
@@ -851,7 +851,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ThrownUp
     Data:
@@ -863,7 +863,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ThrownDown
     Data:
@@ -875,7 +875,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ThrownForward
     Data:
@@ -887,7 +887,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ThrownBackward
     Data:
@@ -899,7 +899,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: StopCeiling
     Data:
@@ -911,7 +911,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: StopWall
     Data:
@@ -923,7 +923,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Crash
     Data:
@@ -935,7 +935,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Prone
     Data:
@@ -947,7 +947,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ProneStand
     Data:
@@ -959,7 +959,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ProneAttack
     Data:
@@ -971,7 +971,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ProneRollLeft
     Data:
@@ -983,7 +983,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: ProneRollRight
     Data:
@@ -995,7 +995,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: Tech
     Data:
@@ -1007,7 +1007,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: TechRollLeft
     Data:
@@ -1019,7 +1019,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: TechRollRight
     Data:
@@ -1031,7 +1031,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: TechWall
     Data:
@@ -1043,7 +1043,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   - Name: TechWallJump
     Data:
@@ -1055,7 +1055,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      CanTurn: 1
+      DirectionMode: 0
       KnockbackResistance: 0
   _default:
     Timeline: {fileID: 0}
@@ -1066,5 +1066,5 @@ MonoBehaviour:
     RotationOffset: 90
     EntryPolicy: 0
     MovementType: 0
-    CanTurn: 1
+    DirectionMode: 0
     KnockbackResistance: 0
