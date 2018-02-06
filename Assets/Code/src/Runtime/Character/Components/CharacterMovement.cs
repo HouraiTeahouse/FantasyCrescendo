@@ -27,8 +27,8 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
       new HitstunMovement(),
       new RespawnMovement(),
       new LedgeMovement(),
-      new GroundMovement(),
       new AerialMovement(),
+      new GroundMovement(),
     };
 
     foreach (var mover in Movers) {
@@ -51,36 +51,53 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     return state;
   }
 
-  public bool CanJump(PlayerState state) => state.RemainingJumps > 0;
-
-  public float GetJumpPower(PlayerState state) {
-    return JumpPower[JumpPower.Length - state.RemainingJumps];
-  }
+  public bool CanJump(PlayerState state) => state.JumpCount < MaxJumpCount;
+  public float GetJumpPower(PlayerState state) => JumpPower[state.JumpCount];
 
   public void Jump(ref PlayerState state) {
     if (CanJump(state)) {
       state.VelocityY = GetJumpPower(state);
-      state.RemainingJumps--;
-    }
-  }
-
-  public void SetDirection(ref PlayerState state, bool direction) {
-    if (StateMachine.StateData.CanTurn) {
-      state.Direction = direction;
+      state.IsFastFalling = false;
+      state.JumpCount++;
     }
   }
 
   public void ApplyControlledMovement(ref PlayerState state, Vector2 movementInput) {
     var data = StateMachine.StateData;
-    switch (data.MovementType) {
-      case MovementType.Normal:
-        var dir = state.Direction ? 1f : -1f;
-        state.VelocityX =  dir * Mathf.Abs(movementInput.x) * data.MaxMoveSpeed;
+    switch (data.DirectionMode) {
+      case DirectionMode.PlayerControlled:
+        if (movementInput.x > DirectionalInput.DeadZone) {
+          state.Direction = true;
+        } else if (movementInput.x < -DirectionalInput.DeadZone) {
+          state.Direction = false;
+        }
         break;
-      case MovementType.DirectionalInfluenceOnly:
-        state.VelocityX = movementInput.x * data.MaxMoveSpeed;
+      case DirectionMode.AlwaysLeft: 
+        state.Direction = false; 
+        break;
+      case DirectionMode.AlwaysRight: 
+        state.Direction = true; 
+        break;
+      default: 
         break;
     }
+    float dir = state.Direction ? 1f : -1f;
+    float speed = 1f;
+    switch (data.MovementType) {
+      case MovementType.Normal:
+        speed = Mathf.Lerp(data.MinMoveSpeed, data.MaxMoveSpeed, Mathf.Abs(movementInput.x));
+        break;
+      case MovementType.DirectionalInfluenceOnly:
+        speed = Mathf.Lerp(data.MinMoveSpeed, data.MaxMoveSpeed, Mathf.Abs(movementInput.x));
+        break;
+      case MovementType.Locked:
+        speed = 0;
+        break;
+      case MovementType.Forced:
+        speed = data.MaxMoveSpeed;
+        break;
+    }
+    state.VelocityX = dir * speed;
   }
 
 }
@@ -100,16 +117,8 @@ internal class GroundMovement : CharacterMover {
   public override bool ShouldMove(PlayerState state) => Character.Physics.IsGrounded;
 
   public override PlayerState Move(PlayerState state, PlayerInputContext input) {
-    var inputMovement = input.Current.Movement;
-    state.VelocityX = inputMovement.x;
     state.IsFastFalling = false;
-    state.RemainingJumps = (uint)Character.MaxJumpCount;
-    var horizontalMovement = input.Movement.Value.x;
-    if (horizontalMovement > DirectionalInput.DeadZone) {
-      state.Direction = true;
-    } else if (horizontalMovement < -DirectionalInput.DeadZone) {
-      state.Direction = false;
-    }
+    state.JumpCount = 0;
     Character.ApplyControlledMovement(ref state, input.Movement.Value);
     return state;
   }
@@ -117,9 +126,14 @@ internal class GroundMovement : CharacterMover {
 }
 
 [Serializable]
-internal class AerialMovement : GroundMovement {
+internal class AerialMovement : CharacterMover {
 
   public override bool ShouldMove(PlayerState state) => !Character.Physics.IsGrounded;
+
+  public override PlayerState Move(PlayerState state, PlayerInputContext input) {
+    Character.ApplyControlledMovement(ref state, input.Movement.Value);
+    return state;
+  }
 
 }
 

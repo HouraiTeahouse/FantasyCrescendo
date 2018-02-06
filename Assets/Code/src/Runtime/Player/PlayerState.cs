@@ -56,7 +56,7 @@ public struct PlayerState : INetworkSerializable {
   public bool Direction;                              // One bit
   public bool IsFastFalling;                          // One bit
 
-  public uint RemainingJumps;                         // 1-4 bytes
+  public uint JumpCount;                         // 1-4 bytes
 
   public uint RespawnTimeRemaining;                   // 1-4 bytes
 
@@ -90,7 +90,7 @@ public struct PlayerState : INetworkSerializable {
     WriteBit(ref mask, Hitstun != 0);
     WriteBit(ref mask, ShieldDamage != 0);
     WriteBit(ref mask, GrabbedLedgeID != 0);
-    WriteBit(ref mask, RemainingJumps != 0);
+    WriteBit(ref mask, JumpCount != 0);
     WriteBit(ref mask, Stocks != 0);
     WriteBit(ref mask, IsFastFalling);
     WriteBit(ref mask, Direction);
@@ -105,7 +105,7 @@ public struct PlayerState : INetworkSerializable {
     writer.Write(StateTick);
 
     if (Stocks != 0)                 writer.Write(Stocks);
-    if (RemainingJumps != 0)         writer.Write(RemainingJumps);
+    if (JumpCount != 0)         writer.Write(JumpCount);
     if (GrabbedLedgeID != 0)         writer.Write(GrabbedLedgeID);
     if (ShieldDamage != 0)           writer.Write(ShieldDamage);
     if (Hitstun != 0)                writer.Write(Hitstun);
@@ -126,7 +126,7 @@ public struct PlayerState : INetworkSerializable {
     Direction = ReadBit(ref mask);
     IsFastFalling = ReadBit(ref mask);
     if (ReadBit(ref mask)) Stocks = deserializer.ReadSByte();
-    if (ReadBit(ref mask)) RemainingJumps = deserializer.ReadUInt32();
+    if (ReadBit(ref mask)) JumpCount = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) GrabbedLedgeID = deserializer.ReadByte();
     if (ReadBit(ref mask)) ShieldDamage = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) Hitstun = deserializer.ReadUInt32();
@@ -143,7 +143,7 @@ public struct PlayerState : INetworkSerializable {
     equals &= Velocity == other.Velocity;
     equals &= Direction == other.Direction;
     equals &= IsFastFalling == other.IsFastFalling;
-    equals &= RemainingJumps == other.RemainingJumps;
+    equals &= JumpCount == other.JumpCount;
     equals &= RespawnTimeRemaining == other.RespawnTimeRemaining;
     equals &= StateID == other.StateID;
     equals &= StateTick == other.StateTick;
@@ -162,7 +162,7 @@ public struct PlayerState : INetworkSerializable {
       hash += 919 * Velocity.GetHashCode();
       hash += 373 * Direction.GetHashCode();
       hash += 199 * IsFastFalling.GetHashCode();
-      hash += 131 * RemainingJumps.GetHashCode();
+      hash += 131 * JumpCount.GetHashCode();
       hash += 101 * RespawnTimeRemaining.GetHashCode();
       hash += 83 * StateID.GetHashCode();
       hash += 71 * StateTick.GetHashCode();

@@ -18,6 +18,7 @@ public class JumpState : CharacterState {
     base.OnStateEnter(context);
     if (component != null) {
       component.Jump(ref context.State);
+      Debug.Log(context.State.JumpCount);
     }
   }
 

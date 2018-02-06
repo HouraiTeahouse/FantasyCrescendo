@@ -16,7 +16,7 @@ public static class StateUtility {
       Velocity =random.Next() * new Vector2((float)random.NextDouble(), (float)random.NextDouble()),
       Direction = random.NextDouble() > 0.5,
       IsFastFalling= random.NextDouble() > 0.5,
-      RemainingJumps = random.NextDouble() > 0.5 ? (uint)random.Next(10) : 0,
+      JumpCount = random.NextDouble() > 0.5 ? (uint)random.Next(10) : 0,
       RespawnTimeRemaining = random.NextDouble() > 0.5 ? (uint)random.Next(300) : 0,
       StateID = (uint)random.Next(200),
       ShieldDamage = random.NextDouble() > 0.5 ? (uint)random.Next(300) : 0,

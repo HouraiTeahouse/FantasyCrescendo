@@ -11,6 +11,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
 
   public CharacterControllerBuilder States;
   public CharacterPhysics Physics;
+  public CharacterMovement Movement;
 
   public StateController<CharacterState, CharacterContext> StateController { get; private set; }
 
@@ -40,7 +41,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     context.State = state;
     context.Input = input;
     context.IsGrounded = Physics.IsGrounded;
-    context.CanJump = state.RemainingJumps > 0;
+    context.CanJump = Movement.CanJump(state);
     context.StateLength = StateController.CurrentState.Data.Length;
 
     StateController.UpdateState(context);

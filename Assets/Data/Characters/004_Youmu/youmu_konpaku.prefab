@@ -3563,6 +3563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   States: {fileID: 11400000, guid: 02d1957d12506104cbaa782e5cba7bf8, type: 2}
   Physics: {fileID: 114424149413010172}
+  Movement: {fileID: 114250758504073034}
 --- !u!114 &114492919615002904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3583,7 +3584,7 @@ MonoBehaviour:
   State:
     Direction: 0
     IsFastFalling: 0
-    RemainingJumps: 0
+    JumpCount: 0
     RespawnTimeRemaining: 0
     StateID: 0
     StateTick: 0
