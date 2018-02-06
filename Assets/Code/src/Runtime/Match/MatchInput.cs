@@ -10,10 +10,10 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public unsafe struct MatchInput : IMergable<MatchInput> {
 
-  public const Mask AllValid = (byte)255;
-
   const int kPlayerInputSize = 5;
-  public const int kMaxSupportedPlayers = 4;
+  public const int kMaxSupportedPlayers = (int)GameMode.GlobalMaxPlayers;
+  public const Mask AllValid = (byte)(1 << (kMaxSupportedPlayers + 1));
+
   public int PlayerCount { get; }
 
   fixed byte Data[kMaxSupportedPlayers * kPlayerInputSize];
@@ -64,14 +64,12 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
 
   public unsafe void MergeWith(MatchInput other) {
     Assert.IsTrue(PlayerCount >= other.PlayerCount);
-    fixed (byte* selfData = Data) {
-      fixed (byte* otherData = other.Data) {
-        var selfInputs = (PlayerInput*)selfData;
-        var otherInputs = (PlayerInput*)otherData;
-        for (int i = 0; i < PlayerCount; i++) {
-          if (!selfInputs[i].IsValid && otherInputs[i].IsValid) {
-            selfInputs[i] = otherInputs[i];
-          }
+    fixed (byte* selfData = Data, otherData = other.Data) {
+      var selfInputs = (PlayerInput*)selfData;
+      var otherInputs = (PlayerInput*)otherData;
+      for (int i = 0; i < PlayerCount; i++) {
+        if (!selfInputs[i].IsValid && otherInputs[i].IsValid) {
+          selfInputs[i] = otherInputs[i];
         }
       }
     }
@@ -103,7 +101,7 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
       } else {
         break;
       }
-      Debug.Log($"{i} {PlayerCount} {other.PlayerCount} {this[i]} {other[i]} {equal}");
+      // Debug.Log($"{i} {PlayerCount} {other.PlayerCount} {this[i]} {other[i]} {equal}");
     }
     return equal;
   }
