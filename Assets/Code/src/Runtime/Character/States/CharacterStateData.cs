@@ -37,6 +37,8 @@ public class CharacterStateData {
   public MovementType MovementType = MovementType.Normal;
   public DirectionMode DirectionMode = DirectionMode.PlayerControlled;
   public float KnockbackResistance;
+
+  public float GetScaledMoveSpeed(Vector2 movement) => Mathf.Lerp(MinMoveSpeed, MaxMoveSpeed, Mathf.Abs(movement.x));
 }
 
 }

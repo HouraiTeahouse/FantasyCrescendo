@@ -64,11 +64,16 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
 
   public void ApplyControlledMovement(ref PlayerState state, Vector2 movementInput) {
     var data = StateMachine.StateData;
+    ApplyDirection(ref state, movementInput, data);
+    ApplyMovement(ref state, movementInput, data);
+  }
+
+  void ApplyDirection(ref PlayerState state, Vector2 movement, CharacterStateData data) {
     switch (data.DirectionMode) {
       case DirectionMode.PlayerControlled:
-        if (movementInput.x > DirectionalInput.DeadZone) {
+        if (movement.x > DirectionalInput.DeadZone) {
           state.Direction = true;
-        } else if (movementInput.x < -DirectionalInput.DeadZone) {
+        } else if (movement.x < -DirectionalInput.DeadZone) {
           state.Direction = false;
         }
         break;
@@ -81,14 +86,17 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
       default: 
         break;
     }
+  }
+
+  void ApplyMovement(ref PlayerState state, Vector2 movement, CharacterStateData data) {
     float dir = state.Direction ? 1f : -1f;
-    float speed = 1f;
+    float speed = 0f;
     switch (data.MovementType) {
       case MovementType.Normal:
-        speed = Mathf.Lerp(data.MinMoveSpeed, data.MaxMoveSpeed, Mathf.Abs(movementInput.x));
+        speed = data.GetScaledMoveSpeed(movement);
         break;
       case MovementType.DirectionalInfluenceOnly:
-        speed = Mathf.Lerp(data.MinMoveSpeed, data.MaxMoveSpeed, Mathf.Abs(movementInput.x));
+        speed = Mathf.Lerp(data.MinMoveSpeed, data.MaxMoveSpeed, Mathf.Abs(movement.x));
         break;
       case MovementType.Locked:
         speed = 0;
@@ -99,6 +107,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     }
     state.VelocityX = dir * speed;
   }
+
 
 }
 
@@ -131,6 +140,9 @@ internal class AerialMovement : CharacterMover {
   public override bool ShouldMove(PlayerState state) => !Character.Physics.IsGrounded;
 
   public override PlayerState Move(PlayerState state, PlayerInputContext input) {
+    if (input.Smash.Value.y < -DirectionalInput.DeadZone) {
+      state.IsFastFalling = true;
+    }
     Character.ApplyControlledMovement(ref state, input.Movement.Value);
     return state;
   }
