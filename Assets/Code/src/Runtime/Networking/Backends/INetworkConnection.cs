@@ -57,8 +57,9 @@ public static class INetworkConnectionExtensions {
     (message as IDisposable)?.Dispose();
   }
 
-  public static void SendToAll(this IEnumerable<NetworkConnection> connections, byte header,
-                               INetworkSerializable message, NetworkReliablity reliablity = NetworkReliablity.Reliable) {
+  public static void SendToAll<T>(this IEnumerable<NetworkConnection> connections, byte header,
+                                  T message, NetworkReliablity reliablity = NetworkReliablity.Reliable) 
+                                  where T : INetworkSerializable {
     var writer = new Serializer();
     writer.Write(header);
     message.Serialize(writer);

@@ -19,30 +19,27 @@ public class NetworkClientPlayer {
   }
 
   public void SendConfig(MatchConfig config) {
-    using (var rental = ObjectPool<ServerUpdateConfigMessage>.Shared.Borrow()) {
-      rental.RentedObject.MatchConfig = config;
-      Connection.Send(MessageCodes.UpdateConfig, rental.RentedObject);
-    }
+    Connection.Send(MessageCodes.UpdateConfig, new ServerUpdateConfigMessage {
+      MatchConfig = config 
+    });
   }
 
   public void StartMatch(MatchConfig config) {
-    using (var rental = ObjectPool<MatchStartMessage>.Shared.Borrow()) {
-      rental.RentedObject.MatchConfig = config;
-      Connection.Send(MessageCodes.MatchStart, rental.RentedObject);
-    }
+    Connection.Send(MessageCodes.MatchStart, new MatchStartMessage {
+      MatchConfig = config 
+    });
   }
 
   public void SendInputs(uint timestamp, IEnumerable<MatchInput> inputs) {
     int size;
     var inputArray = ArrayUtil.ConvertToArray(inputs, out size);
     if (size <= 0) return;
-    using (var rental = ObjectPool<InputSetMessage>.Shared.Borrow()) {
-      var message = rental.RentedObject;
-      message.StartTimestamp = timestamp;
-      message.InputCount = (uint)size;
-      message.Inputs = inputArray;
-      Connection.Send(MessageCodes.UpdateInput, message, NetworkReliablity.Unreliable);
-    }
+    Connection.Send(MessageCodes.UpdateInput, new InputSetMessage {
+      StartTimestamp = timestamp,
+      InputCount = (uint)size,
+      ValidMask = MatchInput.AllValid,
+      Inputs = inputArray,
+    }, NetworkReliablity.Unreliable);
   }
 
   public void Kick() => Connection?.Disconnect();

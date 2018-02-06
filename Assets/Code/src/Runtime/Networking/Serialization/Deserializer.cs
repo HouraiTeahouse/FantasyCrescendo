@@ -225,11 +225,18 @@ public class Deserializer {
 
   public override string ToString() => m_buf.ToString();
 
-  public TMsg Read<TMsg>() where TMsg : INetworkSerializable, new() {
+  public TMsg Read<TMsg>() where TMsg : struct, INetworkSerializable {
     var msg = new TMsg();
     msg.Deserialize(this);
     return msg;
   }
+
+  public TMsg ReadMessage<TMsg>() where TMsg : class, INetworkSerializable, new() {
+    var msg = new TMsg();
+    msg.Deserialize(this);
+    return msg;
+  }
+
 
   static long DecodeZigZag(ulong value) {
     unchecked {

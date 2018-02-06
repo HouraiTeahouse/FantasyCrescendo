@@ -12,7 +12,7 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
 
   const int kPlayerInputSize = 5;
   public const int kMaxSupportedPlayers = (int)GameMode.GlobalMaxPlayers;
-  public const Mask AllValid = (byte)(1 << (kMaxSupportedPlayers + 1));
+  public const Mask AllValid = (byte)((1 << kMaxSupportedPlayers) - 1);
 
   public int PlayerCount { get; }
 

@@ -4,7 +4,8 @@ using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class MatchFinishMessage : INetworkSerializable {
+public struct MatchFinishMessage : INetworkSerializable {
+
   public MatchResult MatchResult;
 
   public void Serialize(Serializer serializer) => serializer.Write(MatchResult);

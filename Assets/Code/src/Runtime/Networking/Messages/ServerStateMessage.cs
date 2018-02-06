@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class ServerStateMessage : INetworkSerializable {
+public struct ServerStateMessage : INetworkSerializable {
 
   public uint Timestamp;
   public MatchState State;
@@ -16,7 +16,7 @@ public class ServerStateMessage : INetworkSerializable {
 
   public void Deserialize(Deserializer deserializer) {
     Timestamp = deserializer.ReadUInt32();
-    State = deserializer.Read<MatchState>();
+    State = deserializer.ReadMessage<MatchState>();
   }
 
 }

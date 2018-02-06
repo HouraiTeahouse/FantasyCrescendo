@@ -2,7 +2,8 @@
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class PeerReadyMessage : INetworkSerializable {
+public struct PeerReadyMessage : INetworkSerializable {
+
   public bool IsReady;
 
   public void Serialize(Serializer serializer) => serializer.Write(IsReady);

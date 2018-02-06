@@ -38,40 +38,34 @@ public class NetworkGameServer : INetworkServer {
   public void Update() => NetworkInterface.Update();
 
   public void FinishMatch(MatchResult result) {
-    using (var rental = ObjectPool<MatchFinishMessage>.Shared.Borrow()) { 
-      rental.RentedObject.MatchResult = result;
-      NetworkInterface.Connections.SendToAll(MessageCodes.MatchFinish, rental.RentedObject);
-    }
+    NetworkInterface.Connections.SendToAll(MessageCodes.MatchFinish, new MatchFinishMessage {
+      MatchResult = result
+    });
   }
 
 	public void SetReady(bool ready) {
-    using (var rental = ObjectPool<PeerReadyMessage>.Shared.Borrow()) { 
-      rental.RentedObject.IsReady = ready;
-      NetworkInterface.Connections.SendToAll(MessageCodes.ServerReady, rental.RentedObject);
-    }
+    NetworkInterface.Connections.SendToAll(MessageCodes.ServerReady, new PeerReadyMessage {
+      IsReady = ready
+    });
 	}
 
   public void BroadcastInput(uint startTimestamp, byte validMask, IEnumerable<MatchInput> input) {
     int inputCount;
     var inputs = ArrayUtil.ConvertToArray(input, out inputCount);
     if (inputCount <= 0) return;
-    using (var rental = ObjectPool<InputSetMessage>.Shared.Borrow()) {
-      var message = rental.RentedObject;
-      message.StartTimestamp = startTimestamp;
-      message.InputCount = (uint)inputCount;
-      message.ValidMask = validMask;
-      message.Inputs = inputs;
-      NetworkInterface.Connections.SendToAll(MessageCodes.UpdateInput, message, NetworkReliablity.Unreliable);
-    }
+    NetworkInterface.Connections.SendToAll(MessageCodes.UpdateInput, new InputSetMessage {
+      StartTimestamp = startTimestamp,
+      InputCount = (uint)inputCount,
+      ValidMask = validMask,
+      Inputs = inputs
+    }, NetworkReliablity.Unreliable);
   }
 
   public void BroadcastState(uint timestamp, MatchState state) {
-    using (var rental = ObjectPool<ServerStateMessage>.Shared.Borrow()) { 
-      var message = rental.RentedObject;
-      message.Timestamp = timestamp;
-      message.State = state;
-      NetworkInterface.Connections.SendToAll(MessageCodes.UpdateState, message, NetworkReliablity.Unreliable);
-    }
+    NetworkInterface.Connections.SendToAll(MessageCodes.UpdateState, new ServerStateMessage {
+      Timestamp = timestamp,
+      State = state
+    }, NetworkReliablity.Unreliable);
   }
 
   public void Dispose() {

@@ -10,7 +10,7 @@ using Mask = System.Byte;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class InputSetMessage : INetworkSerializable, IDisposable {
+public struct InputSetMessage : INetworkSerializable, IDisposable {
 
   public uint StartTimestamp;
   public uint InputCount;
