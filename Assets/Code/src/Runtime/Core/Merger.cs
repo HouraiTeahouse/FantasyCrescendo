@@ -47,12 +47,7 @@ public static class Merger<T> {
   }
 
   class DefaultMerger : IMerger<T> {
-
-    public T Merge(T a, T b) {
-      ((IMergable<T>)a).MergeWith(b);
-      return a;
-    }
-
+    public T Merge(T a, T b) => ((IMergable<T>)a).MergeWith(b);
   }
 
   class DelegateMerger : IMerger<T> {

@@ -38,7 +38,6 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
   readonly IMerger<I> merger;
   readonly bool isDisposable;
 
-  
   /// <summary>
   /// Gets the oldest recorded input and timestamp.
   /// </summary>
@@ -47,7 +46,10 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
   /// <summary>
   /// Gets the current input and timestamp.
   /// </summary>
-  public TimedInput<I> Current => inputs[currentIndex].Value;
+  public TimedInput<I> Current {
+    get { return inputs[currentIndex].Value; }
+    set { inputs[currentIndex].Value = value; }
+  } 
 
   /// <summary>
   /// Gets the newest recorded input and timestamp.

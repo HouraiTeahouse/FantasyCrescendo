@@ -42,12 +42,9 @@ public class InControlInputSource : IInputSource {
       }
       input[i] = UpdatePlayerInput(input[i], devices[(int)playerId]);
       if (playerId == 0) {
-        var playerInput = input[i];
-        playerInput.MergeWith(KeyboardInput());
-        input[i] = playerInput;
+        input[i] = input[i].MergeWith(KeyboardInput());
       }
     }
-    // Debug.Log(string.Join(" ", Enumerable.Range(0, input.PlayerCount).Select(i => input[i].ToString())));
     return input;
   }
 

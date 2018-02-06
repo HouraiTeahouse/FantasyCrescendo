@@ -54,11 +54,13 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
 
   bool IValidatable.IsValid => IsValid;
 
-  public void MergeWith(PlayerInput other) {
-    IsValid = IsValid || other.IsValid;
-    Movement = (Vector2)Movement + (Vector2)other.Movement;
-    Smash = (Vector2)Smash + (Vector2)other.Smash;
-    Buttons |= other.Buttons;
+  public PlayerInput MergeWith(PlayerInput other) {
+    return new PlayerInput {
+      IsValid = IsValid || other.IsValid,
+      Movement = (Vector2)Movement + (Vector2)other.Movement,
+      Smash = (Vector2)Smash + (Vector2)other.Smash,
+      Buttons = (byte)(Buttons | other.Buttons)
+    };
   }
 
   public override bool Equals(object obj) {

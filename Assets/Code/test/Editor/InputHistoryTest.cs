@@ -21,7 +21,7 @@ public class InputHistoryTest {
   class DisposableTest : IDisposable, IMergable<DisposableTest> {
     public bool IsDisposed { get; private set; }
     public void Dispose() => IsDisposed = true;
-    public void MergeWith(DisposableTest merge) {}
+    public DisposableTest MergeWith(DisposableTest merge) => this;
   }
 
 	[TestCaseSource("TestCases")]

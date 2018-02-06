@@ -27,11 +27,12 @@ public struct ConnectionStats : IMergable<ConnectionStats> {
     }
   }
 
-  public void MergeWith(ConnectionStats other) {
+  public ConnectionStats MergeWith(ConnectionStats other) {
     TotalBytesOut += other.TotalBytesOut;
     IncomingPacketsCount += other.IncomingPacketsCount;
     IncomingPacketsLost += other.IncomingPacketsLost;
     CurrentRTT = Mathf.Max(CurrentRTT, other.CurrentRTT);
+    return this;
   }
 }
 

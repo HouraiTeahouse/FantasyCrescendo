@@ -62,17 +62,24 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
 
   public void Predict() => ForceValid(true);
 
-  public unsafe void MergeWith(MatchInput other) {
+  public unsafe MatchInput MergeWith(MatchInput other) {
     Assert.IsTrue(PlayerCount >= other.PlayerCount);
-    fixed (byte* selfData = Data, otherData = other.Data) {
+    var newInput = this;
+    fixed (byte* newData = newInput.Data, 
+                 selfData = Data, 
+                 otherData = other.Data) {
+      var newInputs = (PlayerInput*)newData;
       var selfInputs = (PlayerInput*)selfData;
       var otherInputs = (PlayerInput*)otherData;
       for (int i = 0; i < PlayerCount; i++) {
         if (!selfInputs[i].IsValid && otherInputs[i].IsValid) {
-          selfInputs[i] = otherInputs[i];
+          newInputs[i] = otherInputs[i];
+        } else {
+          newInputs[i] = selfInputs[i];
         }
       }
     }
+    return newInput;
   }
 
   internal void Reset() => ForceValid(false);

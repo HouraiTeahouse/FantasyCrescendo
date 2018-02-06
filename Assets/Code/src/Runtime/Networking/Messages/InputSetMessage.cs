@@ -21,7 +21,7 @@ public class InputSetMessage : INetworkSerializable, IDisposable {
 
   public void Serialize(Serializer serializer) {
     Assert.IsTrue(InputCount <= Inputs.Length);
-    serializer.Write(InputCount);                   // 1-4 bytes
+    serializer.Write(InputCount);                           // 1-4 bytes
     if (InputCount <= 0) return;
     var firstInput = Inputs[0];
     var playerCount = (byte)firstInput.PlayerCount;
@@ -34,13 +34,13 @@ public class InputSetMessage : INetworkSerializable, IDisposable {
     ValidMask &= (byte)((1 << playerCount + 1) - 1);        // Disable all bits higher than N + 1
     ValidMask |= (byte)(1 << playerCount);                  // Set the count bit to 1.
 
-    serializer.Write(ValidMask);                                // 1 byte
-    serializer.Write(StartTimestamp);               // 1-4 bytes
+    serializer.Write(ValidMask);                            // 1 byte
+    serializer.Write(StartTimestamp);                       // 1-4 bytes
     for (var i = 0; i < playerCount; i++) {
       if ((ValidMask & (1 << i)) == 0) continue;
       PlayerInput? lastInput= null;
       for (int j = 0; j < InputCount; j++) {                // 1-5 * playerCount * Inputs.Length bytes
-        var currentInput = Inputs[j][i];       // (Only valid inputs)
+        var currentInput = Inputs[j][i];                    // (Only valid inputs)
         currentInput.Serialize(serializer, lastInput);
         lastInput = currentInput;
       }

@@ -132,13 +132,14 @@ public class RollbackStrategy : INetworkStrategy {
       base.Update();
 
       var input = InputSource.SampleInput();
-      if (InputHistory.Current.Timestep == 0) {
-        InputHistory.Current.Input.MergeWith(input);
+      var current = InputHistory.Current;
+      if (current.Timestep == 0) {
+        current.Input = current.Input.MergeWith(input);
+        InputHistory.Current = current;
       }
       input = InputHistory.Append(input);
-      GameStats.Network.Client.UnconfirmedInputs.Update(InputHistory.Count);
 
-      InputContext.Reset(InputHistory.Current.Input, input);
+      InputContext.Reset(current.Input, input);
       InputContext.Predict();
 
       CurrentState = Simulation.Simulate(CurrentState, InputContext);

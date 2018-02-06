@@ -15,7 +15,8 @@ public interface IMergable<T> {
   /// Merges the current instance with the provided object.
   /// </summary>
   /// <param name="obj">the object to merge with.</param>
-  void MergeWith(T obj);
+  /// <returns>the merged object</returns>
+  T MergeWith(T obj);
 
 }
 
