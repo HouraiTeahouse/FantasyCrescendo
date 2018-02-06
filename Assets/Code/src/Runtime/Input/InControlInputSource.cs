@@ -60,10 +60,17 @@ public class InControlInputSource : IInputSource {
   }
 
   PlayerInput KeyboardInput() {
+    var wasd = new Vector2(ButtonAxis(KeyCode.A, KeyCode.D), ButtonAxis(KeyCode.S, KeyCode.W));
+    var arrowKeys = new Vector2(ButtonAxis(KeyCode.LeftArrow, KeyCode.RightArrow), 
+                                ButtonAxis(KeyCode.DownArrow, KeyCode.UpArrow));
     return new PlayerInput {
-      Movement = new Vector2(ButtonAxis(KeyCode.A, KeyCode.D), ButtonAxis(KeyCode.S, KeyCode.W)),
+      Movement = wasd + arrowKeys,
+      Smash = wasd,
+      Attack = Input.GetKey(KeyCode.E),
+      Special = Input.GetKey(KeyCode.R),
+      Shield = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift),
       //TODO(james7132): Make Tap Jump Configurable
-      Jump = Input.GetKey(KeyCode.W),
+      Jump = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow),
       IsValid = true
     };
   }
