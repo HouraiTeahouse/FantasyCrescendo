@@ -2,6 +2,7 @@ using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
@@ -16,6 +17,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public float MaxFallSpeed = 7.5f;
   public float FastFallSpeed = 10f;
+  public Transform LedgeGrabBone;
 
   public bool IsGrounded { get; private set; }
 
@@ -23,6 +25,10 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public Task Initialize(PlayerConfig config, bool isView) {
     StateMachine = GetComponent<CharacterStateMachine>();
+
+    if (LedgeGrabBone == null) {
+      LedgeGrabBone = transform;
+    }
 
     if (CharacterController == null) {
       CharacterController = GetComponent<CharacterController>();
@@ -51,8 +57,13 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     Physics.SyncTransforms();
     // TODO(james7132): Move this somewhere more sane.
     Platform.CollisionStatusCheckAll(CharacterController);
-    CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
-    state.Position = transform.position;
+
+    if (state.IsGrabbingLedge)  {
+      SnapToLedge(ref state); 
+    } else {
+      CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
+      state.Position = transform.position;
+    }
     return state;
   }
 
@@ -63,6 +74,16 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
       offset += 180f;
     }
     transform.localEulerAngles = offset * Vector3.up;
+  }
+
+  void SnapToLedge(ref PlayerState state) {
+    var targetLedge = Registry.Get<Ledge>().Get(state.GrabbedLedgeID);
+    Assert.IsNotNull(targetLedge);
+    var relativeDisplacement = LedgeGrabBone.position - transform.position;
+    state.Position = targetLedge.transform.position - relativeDisplacement;
+    state.Direction = targetLedge.Direction;
+    state.IsFastFalling = false;
+    state.JumpCount = 0;
   }
 
   public PlayerState ResetState(PlayerState state) => state;
