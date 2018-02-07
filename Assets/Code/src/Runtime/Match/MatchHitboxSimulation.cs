@@ -88,6 +88,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
           break;
         case HurtboxType.Shield:
           isShielded = true;
+          state.ShieldDamage += (uint)(source.BaseDamage * 100);
           break;
         case HurtboxType.Invincible:
           // TODO(james7132): Play Effect
