@@ -35,7 +35,6 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
   [Tooltip("How much health the shield resets to after being broken.")]
   public float ResetHealth = 30f;
 
-
   GameObject Shield;
   Transform ShieldTransform;
   Hurtbox ShieldHurtbox;

@@ -13,8 +13,15 @@ public class MatchManager : MonoBehaviour {
   public IMatchController MatchController;
   public IStateView<MatchState> View;
 
-  // TODO(james7132): Implement properly.
-  public bool IsLocal => true;
+  public bool IsLocal {
+    get {
+      bool isLocal = true;
+      for (var i = 0; i < Config.PlayerConfigs.Length; i++) {
+        isLocal &= !Config.PlayerConfigs[i].IsLocal;
+      }
+      return isLocal;
+    }
+  }
   public bool IsPaused { get; private set; }
 
   TaskCompletionSource<MatchResult> MatchTask;
