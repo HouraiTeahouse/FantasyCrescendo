@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33387468893032814}
   - component: {fileID: 135017465943465492}
   - component: {fileID: 23571130467776438}
-  - component: {fileID: 114246747776914438}
+  - component: {fileID: 114135656719032972}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -57,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 70c567f44c231184d87f4483cfe45e47, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,7 +84,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944505594192634}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114246747776914438
+--- !u!114 &114135656719032972
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -92,12 +92,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1944505594192634}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  m_Script: {fileID: 11500000, guid: 221569252219c504cb649859070f81aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 4
-  Radius: 0.5
-  Offset: {x: 0, y: 0, z: 0}
+  Priority: 0
+  Type: 3
 --- !u!135 &135017465943465492
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -105,7 +104,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944505594192634}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

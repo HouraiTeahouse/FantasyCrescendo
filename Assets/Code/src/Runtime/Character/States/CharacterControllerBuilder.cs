@@ -212,7 +212,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     Idle.AddTransition(Shield.On, Input(i => i.Shield.Current));
     Shield.On.AddTransition(Shield.Perfect, ctx => ctx.State.IsHit)
         .AddTransitionTo(Shield.Main);
-    Shield.Main.AddTransition(Shield.Broken, ctx => ctx.State.ShieldDamage <= 0)
+    Shield.Main.AddTransition(Shield.Broken, ctx => ctx.ShieldBroken)
         .AddTransition(Shield.Off, Input(i => !i.Shield.Current));
     Shield.Off.AddTransitionTo(Idle);
     new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();

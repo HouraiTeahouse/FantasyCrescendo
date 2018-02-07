@@ -3563,8 +3563,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   States: {fileID: 11400000, guid: 02d1957d12506104cbaa782e5cba7bf8, type: 2}
-  Physics: {fileID: 114424149413010172}
-  Movement: {fileID: 114250758504073034}
 --- !u!114 &114492919615002904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3661,15 +3659,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da02dea600a341ffa17266838df70af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShieldSize: 1
-  MaxShieldHealth: 100
-  DepletionRate: 0
-  RegenRate: 2
-  RecoveryCooldown: 120
-  ResetHealth: 30
+  StateMachine: {fileID: 114442081878316268}
   ShieldPrefab: {fileID: 1944505594192634, guid: cd5e1226335244ddf86161487a8f55c9,
     type: 2}
-  TargetBone: {fileID: 4721612826610312}
+  TargetBone: {fileID: 4519530053389650}
+  ShieldSize: 1
+  MaxShieldHealth: 10000
+  DepletionRate: 25
+  RegenRate: 20
+  RecoveryCooldown: 120
+  ResetHealth: 1
 --- !u!114 &114774830839887272
 MonoBehaviour:
   m_ObjectHideFlags: 1

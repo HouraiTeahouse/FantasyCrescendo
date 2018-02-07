@@ -14,6 +14,7 @@ public class CharacterContext {
   // Local computed state information
   public float StateLength;
   public float Direction => State.Direction ? 1.0f : -1.0f;
+  public bool ShieldBroken;
   public bool IsGrounded;
   public bool CanJump;
 

@@ -35,7 +35,7 @@ public partial class CharacterControllerBuilder {
   // Shield States
   // -----------------------------------------------
   public class ShieldStates {
-    public CharacterState On { get; set; }
+    public ShieldState On { get; set; }
     public ShieldState Perfect { get; set; }
     public ShieldState Main { get; set; }
     public CharacterState Off { get; set; }

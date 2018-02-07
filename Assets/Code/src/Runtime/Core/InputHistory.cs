@@ -254,7 +254,7 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
   public IEnumerable<TimedInput<I>> StartingWith(uint timestep, bool full = false) {
     int index = FindByTimestamp(timestep);
     int endIndex = full ? newestIndex : currentIndex;
-    while (index != currentIndex) {
+    while (index != endIndex) {
       yield return inputs[index].Value;
       index = inputs[index].Next.Value;
     }

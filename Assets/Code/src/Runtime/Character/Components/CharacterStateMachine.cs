@@ -10,15 +10,27 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public CharacterControllerBuilder States;
-  public CharacterPhysics Physics;
-  public CharacterMovement Movement;
 
   public StateController<CharacterState, CharacterContext> StateController { get; private set; }
 
+  public CharacterState CurrentState => StateController?.CurrentState;
   public CharacterStateData StateData => StateController?.CurrentState?.Data;
 
   Dictionary<uint, CharacterState> stateMap;
   CharacterContext context = new CharacterContext();
+
+  CharacterPhysics Physics;
+  CharacterMovement Movement;
+  CharacterShield Shield;
+
+  /// <summary>
+  /// Awake is called when the script instance is being loaded.
+  /// </summary>
+  void Awake() {
+    Physics = GetComponentInChildren<CharacterPhysics>();
+    Movement = GetComponentInChildren<CharacterMovement>();
+    Shield = GetComponentInChildren<CharacterShield>();
+  }
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
     States = Instantiate(States); // Create a per-player copy of the builder.
@@ -40,6 +52,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     context.State = state;
     context.Input = input;
+    context.ShieldBroken = Shield.IsShieldBroken(state);
     context.IsGrounded = Physics.IsGrounded;
     context.CanJump = Movement.CanJump(state);
     context.StateLength = StateController.CurrentState.Data.Length;
