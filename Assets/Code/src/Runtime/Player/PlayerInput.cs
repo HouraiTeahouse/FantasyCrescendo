@@ -165,50 +165,11 @@ public struct PlayerInputContext : IValidatable {
   public DirectionalInput Movement => (Vector2)Current.Movement;
   public DirectionalInput Smash => (Vector2)Current.Smash;
 
-  public ButtonContext Attack {
-    get {
-      return new ButtonContext {
-        Previous = Previous.Attack,
-        Current  = Current.Attack
-      };
-    }
-  }
-
-  public ButtonContext Special {
-    get {
-      return new ButtonContext {
-        Previous = Previous.Special,
-        Current = Current.Special
-      };
-    }
-  }
-
-  public ButtonContext Jump {
-    get {
-      return new ButtonContext {
-        Previous = Previous.Jump,
-        Current = Current.Jump
-      };
-    }
-  }
-
-  public ButtonContext Shield {
-    get {
-      return new ButtonContext {
-        Previous = Previous.Shield,
-        Current = Current.Shield
-      };
-    }
-  }
-
-  public ButtonContext Grab {
-    get {
-      return new ButtonContext {
-        Previous = Previous.Grab,
-        Current = Current.Grab
-      };
-    }
-  }
+  public ButtonContext Attack => new ButtonContext { Previous = Previous.Attack, Current  = Current.Attack };
+  public ButtonContext Special => new ButtonContext { Previous = Previous.Special, Current = Current.Special };
+  public ButtonContext Jump => new ButtonContext { Previous = Previous.Jump, Current = Current.Jump };
+  public ButtonContext Shield => new ButtonContext { Previous = Previous.Shield, Current = Current.Shield };
+  public ButtonContext Grab => new ButtonContext { Previous = Previous.Grab, Current = Current.Grab };
 
 }
 

@@ -148,6 +148,7 @@ public class MatchInputContext {
 
   public MatchInputContext(MatchInput input) {
     Reset(input);
+    Predict();
   }
 
   public bool IsValid {
