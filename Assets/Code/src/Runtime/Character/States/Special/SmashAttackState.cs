@@ -5,7 +5,11 @@ using UnityEngine;
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class SmashAttackState : CharacterState {
-  // TODO(james7132): Implement
+
+  public override void OnStateExit(CharacterContext context) {
+    context.State.Charge = 0;
+  }
+
 }
 
 }

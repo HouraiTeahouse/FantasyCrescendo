@@ -56,12 +56,14 @@ public struct PlayerState : INetworkSerializable {
   public bool Direction;                              // One bit
   public bool IsFastFalling;                          // One bit
 
-  public uint JumpCount;                         // 1-4 bytes
+  public uint JumpCount;                              // 1-4 bytes
 
   public uint RespawnTimeRemaining;                   // 1-4 bytes
 
   public uint StateID;                                // 1-4 bytes
   public uint StateTick;                              // 1-4 bytes
+
+  public byte Charge;                                 // 1 byte
 
   public uint ShieldDamage;                           // 4 bytes
   public uint ShieldRecoveryCooldown;                 // 1-4 bytes
@@ -88,6 +90,7 @@ public struct PlayerState : INetworkSerializable {
     WriteBit(ref mask, RespawnTimeRemaining != 0);
     WriteBit(ref mask, ShieldRecoveryCooldown != 0);
     WriteBit(ref mask, Hitstun != 0);
+    WriteBit(ref mask, Charge != 0);
     WriteBit(ref mask, ShieldDamage != 0);
     WriteBit(ref mask, GrabbedLedgeID != 0);
     WriteBit(ref mask, JumpCount != 0);
@@ -105,9 +108,10 @@ public struct PlayerState : INetworkSerializable {
     writer.Write(StateTick);
 
     if (Stocks != 0)                 writer.Write(Stocks);
-    if (JumpCount != 0)         writer.Write(JumpCount);
+    if (JumpCount != 0)              writer.Write(JumpCount);
     if (GrabbedLedgeID != 0)         writer.Write(GrabbedLedgeID);
     if (ShieldDamage != 0)           writer.Write(ShieldDamage);
+    if (Charge != 0)                 writer.Write(Charge);
     if (Hitstun != 0)                writer.Write(Hitstun);
     if (ShieldRecoveryCooldown != 0) writer.Write(ShieldRecoveryCooldown);
     if (RespawnTimeRemaining != 0)   writer.Write(RespawnTimeRemaining);
@@ -129,6 +133,7 @@ public struct PlayerState : INetworkSerializable {
     if (ReadBit(ref mask)) JumpCount = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) GrabbedLedgeID = deserializer.ReadByte();
     if (ReadBit(ref mask)) ShieldDamage = deserializer.ReadUInt32();
+    if (ReadBit(ref mask)) Charge = deserializer.ReadByte();
     if (ReadBit(ref mask)) Hitstun = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) ShieldRecoveryCooldown = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) RespawnTimeRemaining = deserializer.ReadUInt32();
@@ -152,6 +157,7 @@ public struct PlayerState : INetworkSerializable {
     equals &= GrabbedLedgeID == other.GrabbedLedgeID;
     equals &= Damage == other.Damage;
     equals &= Hitstun == other.Hitstun;
+    equals &= Charge == other.Charge;
     equals &= Stocks == other.Stocks;
     return equals;
   }

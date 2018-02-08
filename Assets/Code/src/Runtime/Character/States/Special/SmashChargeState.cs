@@ -5,7 +5,17 @@ using UnityEngine;
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class SmashChargeState : CharacterState {
-  // TODO(james7132): Implement
+
+  public override void OnStateEnter(CharacterContext context) {
+    context.State.Charge = 0;
+  }
+
+  public override void OnStateUpdate(CharacterContext context) {
+    var charge = context.State.Charge;
+    if (charge == byte.MaxValue) return;
+    context.State.Charge++;
+  }
+
 }
 
 }
