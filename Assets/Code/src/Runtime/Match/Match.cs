@@ -26,8 +26,13 @@ public abstract class Match {
     var matchManager = Object.FindObjectOfType<MatchManager>();
     matchManager.enabled = false;
     matchManager.Config = config;
-    await LoadingScreen.Await(InitializeMatch(matchManager, config));
-    await LoadingScreen.AwaitAll();
+    try {
+      await LoadingScreen.Await(InitializeMatch(matchManager, config));
+      await LoadingScreen.AwaitAll();
+    } catch (Exception e) {
+      Debug.LogError("Error Initializing Match");
+      Debug.LogException(e);
+    }
     matchManager.enabled = true;
     return await matchManager.RunMatch();
   }

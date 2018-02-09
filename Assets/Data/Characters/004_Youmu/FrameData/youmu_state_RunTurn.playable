@@ -48,7 +48,7 @@ MonoBehaviour:
   m_ApplyOffsets: 0
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
---- !u!114 &114536568487363256
+--- !u!114 &114638840546008582
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Clips:
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114536568487363256}
+    m_Asset: {fileID: 114638840546008582}
     m_UnderlyingAsset: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
     m_Duration: 1.5833333333333333
     m_TimeScale: 1

@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Name: marisa_kirisame
   m_EditorClassIdentifier: 
   _id: 3660741799
-  IsSelectable: 0
+  IsSelectable: 1
   IsVisible: 1
   IsDebug: 0
   ShortName: Marisa
   LongName: Marisa Kirisame
-  _prefab: 
-  _homeStage: 
-  _victoryTheme: 
+  _prefab: characters/marisa/player:marisa_kirisame
+  _homeStage: scene/forest/info:ForestOfMagic
+  _victoryTheme: bgm/forest:Magus Night
   _icon: icons:marisa_icon
   _portraits:
   - characters/marisa/portraits:marisa_portrait_1
   - characters/marisa/portraits:marisa_portrait_2
   - characters/marisa/portraits:marisa_portrait_3
   - characters/marisa/portraits:marisa_portrait_4
-  PortraitCropCenter: {x: 0.5, y: 0.8}
+  PortraitCropCenter: {x: 0.45, y: 0.8}
   PortraitCropSize: 0.22

@@ -87,9 +87,12 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
   }
 
   public uint NextCharacterID(uint currentId, bool backwards) {
+    var length = Characters.Length;
     for (var i = 0; i < Characters.Length; i++) {
       if (Characters[i].Id != currentId) continue;
-      var newIndex = (backwards ? i - 1 : i + 1) % Characters.Length;
+      var newIndex = backwards ? i - 1 : i + 1;
+      newIndex = (newIndex % length + length) % length; // Modulo that handles negative indicies
+      Debug.Log(newIndex);
       return Characters[newIndex].Id;
     }
     return Characters[0].Id;

@@ -152,6 +152,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1996456345168662, guid: bf625dd01f80d7b41a53783c50b4317d, type: 2}
+      propertyPath: m_TagString
+      value: GameController
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bf625dd01f80d7b41a53783c50b4317d, type: 2}
   m_IsPrefabParent: 0

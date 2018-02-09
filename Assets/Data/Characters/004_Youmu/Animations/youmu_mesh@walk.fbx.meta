@@ -989,8 +989,14 @@ ModelImporter:
         weight: 1
       - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_thumb1/R_thumb2/R_thumb3
         weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
+      - path: YoumuMesh_Body
+        weight: 1
+      - path: YoumuMesh_PrimarySword
+        weight: 1
+      - path: YoumuMesh_SecondarySword
+        weight: 1
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: 7be0b64f86bf25a439e2179239c46339, type: 2}
       additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
