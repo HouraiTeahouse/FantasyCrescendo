@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 114851974053767234}
   - component: {fileID: 114636917838261216}
   - component: {fileID: 114397010500727212}
+  - component: {fileID: 114209513861547228}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: EditorOnly
@@ -211,6 +212,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _autosave: 1
+--- !u!114 &114209513861547228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996456345168662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045e5ad3827f41c4bb3aae2482d34fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Key: 293
+  DateTimeFormat: MM-dd-yyyy-HHmmss
+  Format: screenshot-{0}
 --- !u!114 &114269918881832616
 MonoBehaviour:
   m_ObjectHideFlags: 1
