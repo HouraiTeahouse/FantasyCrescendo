@@ -17,11 +17,8 @@ public class PlayerViewFactory<T> : ViewFactory<T, PlayerConfig> {
     return view.GetComponentsInChildren<IStateView<T>>();
   }
 
-  protected virtual void Preinitialize(PlayerConfig config, GameObject view) {
-  }
-  protected virtual void Postinitalize(PlayerConfig config, GameObject view) {
-  }
-
+  protected virtual void Preinitialize(PlayerConfig config, GameObject view) { }
+  protected virtual void Postinitalize(PlayerConfig config, GameObject view) { }
 
 }
 
