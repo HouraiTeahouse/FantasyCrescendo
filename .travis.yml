@@ -34,5 +34,5 @@ deploy:
   skip-cleanup: true
   repo: HouraiTeahouse/FantasyCrescendo-Docs
   local-dir: code_docs/html
-  target-branch: master
+  target-branch: develop
   github_token: $GITHUB_TOKEN
