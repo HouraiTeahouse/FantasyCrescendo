@@ -22,4 +22,15 @@ deploy:
   local-dir: docs/_site
   target-branch: master
   github_token: $GITHUB_TOKEN
-  all_branches: true
+  on:
+    all_branches: true
+ 
+notifications:
+  webhooks:
+    urls:
+      - https://skyhook.glitch.me/api/webhooks/323190260718764032/3Bl47Pbb0yM1ZTlZwHV0zNPl1yfBaYhLiwYqVzQZWlQDLPMakH3eXdR5NkxSMhqmN2Qu/travis
+  on_success: change
+  on_failure: always
+  on_start: change
+  on_cancel: always
+  on_error: always
