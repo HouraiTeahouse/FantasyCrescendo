@@ -3,9 +3,8 @@
     {
       "src": [
         {
-          "files": [
-            "Assets/Code/**.cs"
-          ]
+          "files": ["Assets/Code/**.cs"],
+          "exclude": ["**/Editor/**"]
         }
       ],
       "dest": "docs/api",
@@ -43,7 +42,7 @@
         ],
         "exclude": [
           "obj/**",
-          "_site/**"
+          "code_docs/**"
         ]
       }
     ],
