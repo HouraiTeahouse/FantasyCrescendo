@@ -3,11 +3,12 @@
     {
       "src": [
         {
-          "files": ["Assets/Code/**.cs"],
-          "exclude": ["**/Editor/**"]
+          "files": ["**.cs"],
+          "exclude": ["**/Editor/**"],
+          "src": "../Assets/Code/"
         }
       ],
-      "dest": "docs/api",
+      "dest": "api",
       "disableGitFeatures": false
     }
   ],
@@ -15,38 +16,38 @@
     "content": [
       {
         "files": [
-          "docs/api/**.yml",
-          "docs/api/index.md"
+          "api/**.yml",
+          "api/index.md"
         ]
       },
       {
         "files": [
-          "docs/articles/**.md",
-          "docs/articles/**/toc.yml",
-          "docs/toc.yml",
-          "docs/*.md"
+          "articles/**.md",
+          "articles/**/toc.yml",
+          "toc.yml",
+          "*.md"
         ]
       }
     ],
     "resource": [
       {
         "files": [
-          "docs/images/**"
+          "images/**"
         ]
       }
     ],
     "overwrite": [
       {
         "files": [
-          "docs/apidoc/**.md"
+          "apidoc/**.md"
         ],
         "exclude": [
           "obj/**",
-          "code_docs/**"
+          "_site/**"
         ]
       }
     ],
-    "dest": "code_docs",
+    "dest": "_site",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
