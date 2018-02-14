@@ -1,38 +1,24 @@
 # This will run on Travis' 'new' container-based infrastructure
 sudo: false
+language: csharp
 
 # Blacklist
 branches:
   except:
     - gh-pages
 
-# Environment variables
-env:
-  global:
-    - DOXYFILE: $TRAVIS_BUILD_DIR/DOXYFILE
+install:
+  - nuget install docfx.console -OutputDirectory docfx
 
-# Install dependencies
-addons:
-  apt:
-    packages:
-      - doxygen
-      - doxygen-doc
-      - doxygen-latex
-      - doxygen-gui
-      - graphviz
-
-before_script:
-  - mkdir code_docs
-  - echo "" > code_docs/.nojekyll
-
-# Generate and deploy documentation
 script:
-  - doxygen $DOXYFILE 2>&1 | tee code_docs/doxygen.log
+  - ls docfx/tools
+  - mono docfx/tools/docfx.exe docs/docfx.json
+  - echo "" > docs/_site/.nojekyll
 
 deploy:
   provider: pages
   skip-cleanup: true
   repo: HouraiTeahouse/FantasyCrescendo-Docs
-  local-dir: code_docs/html
-  target-branch: develop
+  local-dir: docs/_site
+  target-branch: master
   github_token: $GITHUB_TOKEN
