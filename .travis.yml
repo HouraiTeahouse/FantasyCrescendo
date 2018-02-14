@@ -8,11 +8,11 @@ branches:
     - gh-pages
 
 install:
-  - nuget install docfx.console -OutputDirectory docfx
+  - nuget install docfx.console -Version 2.31.0 -OutputDirectory .
 
 script:
-  - ls docfx/tools
-  - mono docfx/tools/docfx.exe docs/docfx.json
+  - ls docfx.console.2.31.0/tools
+  - mono docfx.console.2.31.0/tools/docfx.exe docs/docfx.json
   - echo "" > docs/_site/.nojekyll
 
 deploy:
