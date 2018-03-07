@@ -38,9 +38,9 @@ public class InControlInputSource : IInputSource {
       var playerId = playerConfig.LocalPlayerID;
       if (!playerConfig.IsLocal || playerId >= devices.Count) {
         input[i] = new PlayerInput { IsValid = playerConfig.IsLocal };
-        continue;
+      } else {
+        input[i] = UpdatePlayerInput(input[i], devices[(int)playerId]);
       }
-      input[i] = UpdatePlayerInput(input[i], devices[(int)playerId]);
       if (playerId == 0) {
         input[i] = input[i].MergeWith(KeyboardInput());
       }
