@@ -46,7 +46,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
 
   public void ApplyState(PlayerState state) {
     StateMachine.Presimulate(state);
-    var timeline = StateMachine.StateData.Timeline;
+    var timeline = StateMachine.GetControllerState(state).Data.Timeline;
     if (timeline != Director.playableAsset) {
       Director.Play(timeline);
       stateDuration = Director.duration;

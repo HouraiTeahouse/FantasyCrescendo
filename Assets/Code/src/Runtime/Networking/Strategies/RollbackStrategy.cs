@@ -117,6 +117,9 @@ public class RollbackStrategy : INetworkStrategy {
     readonly MatchInputContext InputContext;
     readonly NetworkConfig NetworkConfig;
 
+    uint latestServerStateTimestamp;
+    MatchState latestServerState;
+
     uint InputSendTimer;
 
     internal Client(INetworkClient client, MatchConfig config) : base(client, config) {
@@ -126,11 +129,40 @@ public class RollbackStrategy : INetworkStrategy {
       InputHistory = new InputHistory<MatchInput>(new MatchInput(config));
       NetworkConfig = Config.Get<NetworkConfig>();
       InputSendTimer = 0;
+      latestServerState = null;
     }
 
     public override void Update() {
       base.Update();
+      FastForwardServerState();
+      LocalSimulate();
+      SendLocalInput();
+    }
 
+    public override void Dispose() {
+      NetworkClient.OnRecievedState -= OnRecievedState;
+      NetworkClient.OnRecievedInputs -= OnRecievedInputs;
+    }
+
+    void FastForwardServerState() {
+      if (latestServerState == null || latestServerStateTimestamp < InputHistory.Oldest.Timestep) return;
+      CurrentState = latestServerState;
+      var start = latestServerStateTimestamp != 0 ? latestServerStateTimestamp - 1 : 0;
+      foreach (var timedInput in InputHistory.StartingWith(start)) {
+        if (timedInput.Timestep >= InputHistory.Current.Timestep) break;
+        if (timedInput.Timestep < latestServerStateTimestamp || timedInput.Timestep == 0) {
+          InputContext.Reset(timedInput.Input);
+        } else {
+          InputContext.Update(timedInput.Input);
+          InputContext.Predict();
+          CurrentState = Simulation.Simulate(CurrentState, InputContext);
+        }
+      }
+      InputHistory.DropBefore(latestServerStateTimestamp);
+      latestServerState = null;
+    }
+
+    void LocalSimulate() {
       var input = InputSource.SampleInput();
       var current = InputHistory.Current;
       if (current.Timestep == 0) {
@@ -143,7 +175,9 @@ public class RollbackStrategy : INetworkStrategy {
       InputContext.Predict();
 
       CurrentState = Simulation.Simulate(CurrentState, InputContext);
-      
+    }
+
+    void SendLocalInput() {
       InputSendTimer++;
       if (InputSendTimer < NetworkConfig.InputSendRate) return;
       var timestamp = InputHistory.Oldest.Timestep;
@@ -153,30 +187,14 @@ public class RollbackStrategy : INetworkStrategy {
       InputSendTimer = 0;
     }
 
-    public override void Dispose() {
-      NetworkClient.OnRecievedState -= OnRecievedState;
-      NetworkClient.OnRecievedInputs -= OnRecievedInputs;
-    }
-
     void OnRecievedInputs(uint timestep, ArraySegment<MatchInput> inputs) {
       InputHistory.MergeWith(timestep, inputs);
     }
 
     void OnRecievedState(uint timestep, MatchState state) {
-      if (timestep < InputHistory.Oldest.Timestep) return;
-      CurrentState = state;
-      var start = timestep != 0 ? timestep - 1 : 0;
-      foreach (var timedInput in InputHistory.StartingWith(start)) {
-        if (timedInput.Timestep >= InputHistory.Current.Timestep) break;
-        if (timedInput.Timestep < timestep || timedInput.Timestep == 0) {
-          InputContext.Reset(timedInput.Input);
-        } else {
-          InputContext.Update(timedInput.Input);
-          InputContext.Predict();
-          CurrentState = Simulation.Simulate(CurrentState, InputContext);
-        }
-      }
-      InputHistory.DropBefore(timestep);
+      if (timestep < latestServerStateTimestamp || state == null) return;
+      latestServerStateTimestamp = timestep;
+      latestServerState = state;
     }
 
   }

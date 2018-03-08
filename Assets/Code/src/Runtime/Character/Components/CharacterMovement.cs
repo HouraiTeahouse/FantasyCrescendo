@@ -63,7 +63,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   }
 
   public void ApplyControlledMovement(ref PlayerState state, Vector2 movementInput) {
-    var data = StateMachine.StateData;
+    var data = StateMachine.GetControllerState(state).Data;
     ApplyDirection(ref state, movementInput, data);
     ApplyMovement(ref state, movementInput, data);
   }

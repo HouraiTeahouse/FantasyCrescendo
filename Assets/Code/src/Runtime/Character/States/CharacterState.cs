@@ -70,6 +70,8 @@ public class CharacterState : State<CharacterContext>, IEntity, IStateView<Playe
     return object.ReferenceEquals(state, null) ? false : state == this;
   }
 
+  public override string ToString() => $"CharacterState({Name})";
+
   public override int GetHashCode() => AnimatorHash;
 
 }

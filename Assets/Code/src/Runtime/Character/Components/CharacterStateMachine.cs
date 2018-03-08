@@ -13,9 +13,6 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
 
   public StateController<CharacterState, CharacterContext> StateController { get; private set; }
 
-  public CharacterState CurrentState => StateController?.CurrentState;
-  public CharacterStateData StateData => StateController?.CurrentState?.Data;
-
   Dictionary<uint, CharacterState> stateMap;
   CharacterContext context = new CharacterContext();
 
@@ -41,27 +38,33 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
 
   public void Presimulate(PlayerState state) => ApplyState(state);
 
-  public void ApplyState(PlayerState state) {
-    CharacterState controllerState;
-    if (stateMap.TryGetValue(state.StateID, out controllerState)) {
-      StateController.SetState(controllerState);
-      controllerState.ApplyState(state);
-    }
-  }
+  public void ApplyState(PlayerState state) => GetControllerState(state)?.ApplyState(state);
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+    var controllerState = GetControllerState(state);
     context.State = state;
     context.Input = input;
     context.ShieldBroken = Shield.IsShieldBroken(state);
     context.IsGrounded = Physics.IsGrounded;
     context.CanJump = Movement.CanJump(state);
-    context.StateLength = StateController.CurrentState.Data.Length;
+    context.StateLength = controllerState.Data.Length;
 
-    StateController.UpdateState(context);
-    state = StateController.CurrentState.Simulate(context.State, input);
+    controllerState = StateController.UpdateState(controllerState, context);
+    state = controllerState.Simulate(context.State, input);
 
-    state.StateID = StateController.CurrentState.Id;
+    state.StateID = controllerState.Id;
     return state;
+  }
+
+  public CharacterState GetControllerState(PlayerState state) =>  GetControllerState(state.StateID);
+
+  public CharacterState GetControllerState(uint id) {
+    CharacterState controllerState;
+    if (stateMap.TryGetValue(id, out controllerState)) {
+      return controllerState;
+    } else {
+      return null;
+    }
   }
 
   public PlayerState ResetState(PlayerState state) {

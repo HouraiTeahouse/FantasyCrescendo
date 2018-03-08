@@ -27,16 +27,14 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
   /// </remarks>
   /// <param name="index">the index of the player's inputs.</param>
   public unsafe PlayerInput this[int index] {
-    get {
+    get { 
       fixed (byte* inputPtr = Data) {
-        var inputs = (PlayerInput*)inputPtr;
-        return inputs[index];
+        return ((PlayerInput*)inputPtr)[index];
       }
     }
     set {
       fixed (byte* inputPtr = Data) {
-        var inputs = (PlayerInput*)inputPtr;
-        inputs[index] = value;
+        ((PlayerInput*)inputPtr)[index] = value;
       }
     }
   }

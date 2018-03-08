@@ -191,9 +191,8 @@ public class CharacterControllerBuilderTest {
   }
 
   void TestTransition(string src, string dst, CharacterContext context) {
-    _stateController.SetState(_stateMap[src]);
-    _stateController.UpdateState(context);
-    Assert.AreEqual(dst, _stateController.CurrentState.Name);
+    var newState = _stateController.UpdateState(_stateMap[src], context);
+    Assert.AreEqual(dst, newState.Name);
   }
 
   [Test, TestCaseSource("AutomaticTestCases")]

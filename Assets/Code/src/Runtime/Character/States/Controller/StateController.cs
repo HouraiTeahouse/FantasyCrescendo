@@ -8,7 +8,6 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 public class StateController<T, TContext> where T : State<TContext> {
 
   public T DefaultState { get; private set; }
-  public T CurrentState { get; private set; }
   readonly HashSet<T> _states;
   public ReadOnlyCollection<T> States { get; private set; }
 
@@ -16,25 +15,9 @@ public class StateController<T, TContext> where T : State<TContext> {
 
   internal StateController(StateControllerBuilder<T, TContext> builder) {
     DefaultState = builder.DefaultState;
-    CurrentState = DefaultState;
     _states = builder._states;
     States = new ReadOnlyCollection<T>(builder.States.ToArray());
 }
-
-  /// <summary>
-  /// Sets the current state of the StateController to the provided state.
-  /// This will not invoke the <see cref="OnStateChange"/> event.
-  /// For a version that doesn't invoke the event, use <see cref="ChangeState"/>
-  /// </summary>
-  /// <param name="state">the state to change to</param>
-  /// <exception cref="System.ArgumentException"><paramref cref="state"> is not a state of the StateController</exception>
-  /// <exception cref="System.ArgumentNullException"><paramref cref="state"> is null</exception>
-  public void SetState(T state) {
-    Argument.NotNull(state);
-    if (!_states.Contains(state))
-      throw new ArgumentException("Cannot set a state to a state not within the controller.");
-    CurrentState = state; 
-  }
 
   /// <summary>
   /// Changes the current state of the state controller to the provided state.
@@ -42,21 +25,18 @@ public class StateController<T, TContext> where T : State<TContext> {
   /// This will invoke the <see cref="OnStateChange"/> event.
   /// For a version that doesn't invoke the event, use <see cref="SetState"/>
   /// </summary>
-  /// <param name="state">the state to change to</param>
+  /// <param name="dst">the state to change to</param>
   /// <exception cref="System.ArgumentException"><paramref cref="state">/ is not a state of the StateController</exception>
   /// <exception cref="System.ArgumentNullException"><paramref cref="state"/> is null</exception>
-  public void ChangeState(T state) => ChangeState(state, default(TContext));
+  public void ChangeState(T src, T dst) => ChangeState(src, dst, default(TContext));
 
-  void ChangeState(T state, TContext context) {
-    var oldState = CurrentState;
-    SetState(state);
+  void ChangeState(T src, T dst, TContext context) {
+    if (src == dst) return;
     if (context != null) {
-      oldState?.OnStateExit(context);
-      CurrentState?.OnStateEnter(context);
+      src?.OnStateExit(context);
+      dst?.OnStateEnter(context);
     }
-    if (oldState != CurrentState) {
-      OnStateChange?.Invoke(oldState, CurrentState);
-    }
+    OnStateChange?.Invoke(src, dst);
   }
 
   /// <summary>
@@ -64,36 +44,33 @@ public class StateController<T, TContext> where T : State<TContext> {
   /// </summary>
   /// <param name="context">the context object for evaluating the chnage against</param>
   /// <returns>the new current state</returns>
-  public T UpdateState(TContext context) => UpdateState(context, false);
+  public T UpdateState(T src, TContext context) => UpdateState(src, context, false);
 
-  T UpdateState(TContext context, bool passthrough) {
-    T nextState;
+  T UpdateState(T src, TContext context, bool passthrough) {
+    T dst;
     if (passthrough) {
-      nextState = CurrentState.Passthrough(context) as T;
+      dst = src.Passthrough(context) as T;
     } else {
-      CurrentState?.OnStateUpdate(context);
-      nextState = CurrentState.EvaluateTransitions(context) as T;
+      src?.OnStateUpdate(context);
+      dst = src.EvaluateTransitions(context) as T;
     }
-    if (nextState != null) {
-      switch (nextState.GetEntryPolicy(context)) {
+    if (dst == null) { 
+      return src;
+    } else {
+      switch (dst.GetEntryPolicy(context)) {
         case StateEntryPolicy.Normal:
-          ChangeState(nextState, context);
+          ChangeState(src, dst, context);
           break;
         case StateEntryPolicy.Passthrough:
-          ChangeState(nextState, context);
-          UpdateState(context, true);
+          ChangeState(src, dst, context);
+          dst = UpdateState(dst, context, true);
           break;
         case StateEntryPolicy.Blocked:
           break;
       }
-    }
-    return CurrentState;
+      return dst;
+    } 
   }
-
-  /// <summary>
-  /// Resets <see cref="CurrentState"/> to 
-  /// </summary>
-  public void ResetState() => ChangeState(DefaultState);
 
 }
 
