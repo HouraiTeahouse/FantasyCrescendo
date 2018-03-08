@@ -36,14 +36,12 @@ public class RollbackStrategy : INetworkStrategy {
     readonly Dictionary<uint, uint> ClientTimesteps;
 
     uint StateSendTimer;
-    MatchInput[] LatestInput;
 
     internal Server(INetworkServer server, MatchConfig config) : base(server, config) {
       NetworkServer.ReceivedInputs += OnRecievedInputs;
+      NetworkServer.PlayerRemoved += OnRemovePlayer;
       InputContext = new MatchInputContext(config);
-      LatestInput = new MatchInput[1];
-      LatestInput[0] = new MatchInput(config);
-      InputHistory = new InputHistory<MatchInput>(LatestInput[0]);
+      InputHistory = new InputHistory<MatchInput>(new MatchInput(config));
       NetworkConfig = Config.Get<NetworkConfig>();
       ClientTimesteps = new Dictionary<uint, uint>();
       StateSendTimer = 0;
@@ -51,8 +49,8 @@ public class RollbackStrategy : INetworkStrategy {
 
     public override void Update() {
       StateSendTimer++;
+      ForwardSimulate();
       if (StateSendTimer < NetworkConfig.StateSendRate) return;
-      LatestInput[0] = InputHistory.Newest.Input;
       NetworkServer.BroadcastState(Timestep, CurrentState);
       BroadcastInputs();
       StateSendTimer = 0;
@@ -64,8 +62,15 @@ public class RollbackStrategy : INetworkStrategy {
 
     void OnRecievedInputs(uint player, uint timestep,
                           ArraySegment<MatchInput> inputs) {
-      ForwardSimulate(timestep, inputs);
+      InputHistory.MergeWith(timestep, inputs);
       UpdateClientTimestep(player, timestep);
+    }
+
+    void OnRemovePlayer(uint playerId) {
+      var playerState = CurrentState.GetPlayerState(playerId);
+      playerState.Stocks = sbyte.MinValue;
+      Assert.IsTrue(!playerState.IsActive);
+      CurrentState.SetPlayerState(playerId, playerState);
     }
 
     void BroadcastInputs() {
@@ -78,14 +83,10 @@ public class RollbackStrategy : INetworkStrategy {
       }
     }
 
-    void ForwardSimulate(uint timestep, ArraySegment<MatchInput> inputs) {
-      InputHistory.MergeWith(timestep, inputs);
+    void ForwardSimulate() {
       MatchInput input = InputHistory.Current.Input;
-      InputContext.Reset(input);
-      int count = 0; 
       var newestTimestep = InputHistory.Newest.Timestep;
       while (input.IsValid && InputHistory.Current.Timestep < newestTimestep) {
-        count++;
         InputContext.Update(input);
         CurrentState = Simulation.Simulate(CurrentState, InputContext);
         input = InputHistory.Step();
@@ -100,7 +101,12 @@ public class RollbackStrategy : INetworkStrategy {
 
     void UpdateClientTimestep(uint player, uint timestep) {
       ClientTimesteps[player] = Math.Max(GetClientTimestamp(player), timestep);
-      var minTimestep = ClientTimesteps.Values.Min();
+      uint minTimestep = uint.MaxValue;
+      foreach (var clientTimestep in ClientTimesteps.Values) {
+        if (clientTimestep < minTimestep) {
+          minTimestep = clientTimestep;
+        }
+      }
       InputHistory.DropBefore(minTimestep);
     }
 
