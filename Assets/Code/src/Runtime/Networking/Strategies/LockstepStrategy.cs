@@ -99,7 +99,7 @@ public sealed class LockstepStrategy : INetworkStrategy {
       CurrentInput = newInput;
     }
 
-    void OnRecievedState(uint timestep, MatchState state) {
+    void OnRecievedState(uint timestep, MatchState state, MatchInput? latestInput) {
       if (timestep < Timestep) return;
       CurrentState = state;
       Timestep = timestep;

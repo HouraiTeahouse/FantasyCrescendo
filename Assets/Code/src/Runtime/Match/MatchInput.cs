@@ -8,6 +8,11 @@ using Mask = System.Byte;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
+public enum MatchInputMergeStrategy {
+  FullMerge,        // Completely copies over the new inputs
+  KeepValidity      // Copies over everything except for the validity of the new inputs
+}
+
 public unsafe struct MatchInput : IMergable<MatchInput> {
 
   const int kPlayerInputSize = 5;
@@ -60,7 +65,9 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
 
   public void Predict() => ForceValid(true);
 
-  public unsafe MatchInput MergeWith(MatchInput other) {
+  public unsafe MatchInput MergeWith(MatchInput other) => MergeWith(other, MatchInputMergeStrategy.FullMerge);
+
+  public unsafe MatchInput MergeWith(MatchInput other, MatchInputMergeStrategy strategy) {
     Assert.IsTrue(PlayerCount >= other.PlayerCount);
     var newInput = this;
     fixed (byte* newData = newInput.Data, 
@@ -69,12 +76,26 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
       var newInputs = (PlayerInput*)newData;
       var selfInputs = (PlayerInput*)selfData;
       var otherInputs = (PlayerInput*)otherData;
-      for (int i = 0; i < PlayerCount; i++) {
-        if (!selfInputs[i].IsValid && otherInputs[i].IsValid) {
-          newInputs[i] = otherInputs[i];
-        } else {
-          newInputs[i] = selfInputs[i];
-        }
+      switch (strategy) {
+        case MatchInputMergeStrategy.FullMerge:
+          for (int i = 0; i < PlayerCount; i++) {
+            if (!selfInputs[i].IsValid && otherInputs[i].IsValid) {
+              newInputs[i] = otherInputs[i];
+            } else {
+              newInputs[i] = selfInputs[i];
+            }
+          }
+          break;
+        case MatchInputMergeStrategy.KeepValidity:
+          for (int i = 0; i < PlayerCount; i++) {
+            if (!selfInputs[i].IsValid) {
+              newInputs[i] = otherInputs[i];
+              newInputs[i].IsValid = false;
+            } else {
+              newInputs[i] = selfInputs[i];
+            }
+          }
+          break;
       }
     }
     return newInput;

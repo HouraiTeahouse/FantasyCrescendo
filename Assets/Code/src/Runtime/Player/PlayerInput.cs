@@ -239,9 +239,7 @@ public struct DirectionalInput {
   }
 
   public static implicit operator DirectionalInput(Vector2 dir) {
-    return new DirectionalInput {
-      Value = dir
-    };
+    return new DirectionalInput { Value = dir };
   }
 
 }

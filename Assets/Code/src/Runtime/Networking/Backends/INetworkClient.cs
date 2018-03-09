@@ -15,7 +15,7 @@ public interface INetworkClient : IDisposable {
   event Action<MatchConfig> OnMatchConfigUpdated;
 
   event Action<uint, ArraySegment<MatchInput>> OnRecievedInputs;
-  event Action<uint, MatchState> OnRecievedState;
+  event Action<uint, MatchState, MatchInput?> OnRecievedState;
 	event Action<bool> OnServerReady;
 
   bool IsServerReady { get; }

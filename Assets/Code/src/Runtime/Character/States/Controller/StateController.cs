@@ -8,16 +8,14 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 public class StateController<T, TContext> where T : State<TContext> {
 
   public T DefaultState { get; private set; }
-  readonly HashSet<T> _states;
   public ReadOnlyCollection<T> States { get; private set; }
 
   public event Action<T, T> OnStateChange;
 
   internal StateController(StateControllerBuilder<T, TContext> builder) {
     DefaultState = builder.DefaultState;
-    _states = builder._states;
     States = new ReadOnlyCollection<T>(builder.States.ToArray());
-}
+  }
 
   /// <summary>
   /// Changes the current state of the state controller to the provided state.

@@ -18,7 +18,7 @@ public class NetworkGameClient : INetworkClient {
   public event Action<MatchConfig> OnMatchConfigUpdated;
 
   public event Action<uint, ArraySegment<MatchInput>> OnRecievedInputs;
-  public event Action<uint, MatchState> OnRecievedState;
+  public event Action<uint, MatchState, MatchInput?> OnRecievedState;
   public event Action<bool> OnServerReady;
 
   public bool IsServerReady { get; private set; }
@@ -97,7 +97,7 @@ public class NetworkGameClient : INetworkClient {
   void OnStartMatch(MatchStartMessage message) => OnMatchStarted?.Invoke(message.MatchConfig);
   void OnFinishMatch(MatchFinishMessage message) => OnMatchFinished?.Invoke(message.MatchResult);
   void OnUpdateConfig(ServerUpdateConfigMessage message) => OnMatchConfigUpdated?.Invoke(message.MatchConfig);
-  void OnGetState(ServerStateMessage message) => OnRecievedState?.Invoke(message.Timestamp, message.State);
+  void OnGetState(ServerStateMessage message) => OnRecievedState?.Invoke(message.Timestamp, message.State, message.LatestInput);
   void OnGetInput(InputSetMessage message) {
     OnRecievedInputs?.Invoke(message.StartTimestamp, message.AsArraySegment()); 
   }

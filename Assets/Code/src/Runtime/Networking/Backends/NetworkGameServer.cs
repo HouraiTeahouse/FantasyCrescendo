@@ -61,10 +61,11 @@ public class NetworkGameServer : INetworkServer {
     }, NetworkReliablity.Unreliable);
   }
 
-  public void BroadcastState(uint timestamp, MatchState state) {
+  public void BroadcastState(uint timestamp, MatchState state, MatchInput? latestInput = null) {
     NetworkInterface.Connections.SendToAll(MessageCodes.UpdateState, new ServerStateMessage {
       Timestamp = timestamp,
-      State = state
+      State = state,
+      LatestInput = latestInput
     }, NetworkReliablity.Unreliable);
   }
 

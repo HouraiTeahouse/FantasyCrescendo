@@ -114,7 +114,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
     uint? clientTimestamp = null;
     MatchState clientState = null;
     return RunTest(() => {
-      Host.Client.OnRecievedState += (t, state) => {
+      Host.Client.OnRecievedState += (t, state, i) => {
         clientTimestamp = t;
         clientState = state;
       };
