@@ -3587,6 +3587,7 @@ MonoBehaviour:
     RespawnTimeRemaining: 0
     StateID: 0
     StateTick: 0
+    Charge: 0
     ShieldDamage: 0
     ShieldRecoveryCooldown: 0
     GrabbedLedgeID: 0
@@ -3663,7 +3664,25 @@ MonoBehaviour:
   ShieldPrefab: {fileID: 1944505594192634, guid: cd5e1226335244ddf86161487a8f55c9,
     type: 2}
   TargetBone: {fileID: 4519530053389650}
-  ShieldSize: 1
+  ShieldScale: 1
+  ShieldSize:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   MaxShieldHealth: 10000
   DepletionRate: 25
   RegenRate: 20

@@ -60,6 +60,15 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     Shield.SetActive(false);
   }
 
+  /// <summary>
+  /// This function is called when the MonoBehaviour will be destroyed.
+  /// </summary>
+  void OnDestroy() {
+    if (Shield == null) {
+      Destroy(Shield);
+    }
+  }
+
   public Task Initialize(PlayerConfig config, bool isView) {
     SetShieldColor(Config.Get<VisualConfig>().GetPlayerColor(config.PlayerID));
     return Task.CompletedTask;

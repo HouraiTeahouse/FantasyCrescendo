@@ -51,7 +51,6 @@ public class RollbackStrategy : INetworkStrategy {
       StateSendTimer++;
       ForwardSimulate();
       if (StateSendTimer < NetworkConfig.StateSendRate) return;
-      BroadcastInputs();
       NetworkServer.BroadcastState(Timestep, CurrentState, InputHistory.Current.Input);
       StateSendTimer = 0;
     }
