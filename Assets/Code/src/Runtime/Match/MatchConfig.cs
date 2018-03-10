@@ -42,6 +42,16 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
   /// </summary>
   public int PlayerCount => PlayerConfigs.Length;
 
+  public bool IsLocal {
+    get {
+      bool isLocal = true;
+      for (var i = 0; i < PlayerConfigs.Length; i++) {
+        isLocal &= !PlayerConfigs[i].IsLocal;
+      }
+      return isLocal;
+    }
+  }
+
   public bool IsValid => PlayerConfigs.IsAllValid();
 
   public override bool Equals(object obj) {
