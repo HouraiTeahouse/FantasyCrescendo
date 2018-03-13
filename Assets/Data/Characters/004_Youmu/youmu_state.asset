@@ -130,8 +130,8 @@ MonoBehaviour:
       MaxMoveSpeed: 3
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 1
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: JumpStart
     Data:
@@ -142,8 +142,8 @@ MonoBehaviour:
       MaxMoveSpeed: 0
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 2
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: JumpAerial
     Data:
@@ -154,8 +154,8 @@ MonoBehaviour:
       MaxMoveSpeed: 0
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 1
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Land
     Data:
@@ -286,8 +286,8 @@ MonoBehaviour:
       MaxMoveSpeed: 3
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 1
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: FallHelpless
     Data:
@@ -298,8 +298,8 @@ MonoBehaviour:
       MaxMoveSpeed: 3
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 1
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: EscapeAir
     Data:
@@ -443,7 +443,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: AerialForward
     Data:
@@ -455,7 +455,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: AerialBackward
     Data:
@@ -467,7 +467,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: AerialUp
     Data:
@@ -479,7 +479,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: AerialDown
     Data:
@@ -491,7 +491,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: AerialAttackLand
     Data:
@@ -503,7 +503,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: SpecialNeutral
     Data:
@@ -622,8 +622,8 @@ MonoBehaviour:
       MaxMoveSpeed: 0
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 1
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: LedgeRelease
     Data:
@@ -682,8 +682,8 @@ MonoBehaviour:
       MaxMoveSpeed: 0
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 1
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: GrabPull
     Data:
@@ -838,8 +838,8 @@ MonoBehaviour:
       MaxMoveSpeed: 0
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 1
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: GrabbedDamaged
     Data:
@@ -1054,8 +1054,8 @@ MonoBehaviour:
       MaxMoveSpeed: 0
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 1
+      DirectionMode: 1
       KnockbackResistance: 0
   _default:
     Timeline: {fileID: 0}

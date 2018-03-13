@@ -16,7 +16,6 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   public int MaxJumpCount =>  JumpPower?.Length ?? 0;
 
   CharacterMover[] Movers;
-  CharacterMover Ground, Aerial, Ledge, Respawn;
 
   public Task Initialize(PlayerConfig config, bool isView) {
     if (Physics == null) {
@@ -96,7 +95,8 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
         speed = data.GetScaledMoveSpeed(movement);
         break;
       case MovementType.DirectionalInfluenceOnly:
-        speed = Mathf.Lerp(data.MinMoveSpeed, data.MaxMoveSpeed, Mathf.Abs(movement.x));
+        dir = movement.x > 0 ? 1f : -1f;
+        speed = data.GetScaledMoveSpeed(movement);
         break;
       case MovementType.Locked:
         speed = 0;
