@@ -37,7 +37,10 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     return Task.CompletedTask;
   }
   
-  public PlayerState ResetState(PlayerState state) => state;
+  public PlayerState ResetState(PlayerState state) {
+    state.IsFastFalling = false;
+    return state;
+  }
 
   public void Presimulate(PlayerState state) { }
 
@@ -156,6 +159,9 @@ internal class LedgeMovement : CharacterMover {
 
   public override PlayerState Move(PlayerState state, PlayerInputContext input) {
     state.Velocity = Vector3.zero;
+    if (input.Movement.Direction == Direction.Down) {
+      state.ReleaseLedge();
+    }
     return state;
   }
 

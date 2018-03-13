@@ -27,7 +27,7 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     if (!state.IsGrabbingLedge && state.GrabbedLedgeTimer >= 0) {
       var ledge = CheckForLedges(state);
-      if (ledge?.IsOccupied(state.MatchState) == true) {
+      if (ledge?.IsOccupied(state.MatchState) == false) {
         state.GrabLedge(ledge);
       }
     }
