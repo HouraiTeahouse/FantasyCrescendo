@@ -70,9 +70,31 @@ public struct PlayerState : INetworkSerializable {
 
   public byte GrabbedLedgeID;                         // 1 byte
 
+  // A timer for measuring the cooldown
+  //
+  // If greater than zero, the player is grabbing a ledge 
+  // and it is a count of how many ticks remain before they automatically
+  // let go.
+  // 
+  // If zero, the player is not grabbing a ledge.
+  // 
+  // If negative, the absolute value is the number of frames before
+  // the player can grab a ledge again.
+  public short GrabbedLedgeTimer;                     // 1-2 bytes
+
   public uint Hitstun;                                // 1-4 bytes
 
   public sbyte Stocks;                                // 4 bytes
+
+  public void GrabLedge(Ledge ledge) {
+    GrabbedLedgeID = ledge.Id;
+    GrabbedLedgeTimer = Config.Get<GameplayConfig>().MaxLedgeHangTime;
+  }
+
+  public void ReleaseLedge() {
+    GrabbedLedgeID = 0;
+    GrabbedLedgeTimer = (short)(-Config.Get<GameplayConfig>().LedgeGrabCooldown);
+  }
 
   void WriteBit(ref uint mask, bool val) {
     mask <<= 1;
@@ -92,6 +114,7 @@ public struct PlayerState : INetworkSerializable {
     WriteBit(ref mask, Hitstun != 0);
     WriteBit(ref mask, Charge != 0);
     WriteBit(ref mask, ShieldDamage != 0);
+    WriteBit(ref mask, GrabbedLedgeTimer != 0);
     WriteBit(ref mask, GrabbedLedgeID != 0);
     WriteBit(ref mask, JumpCount != 0);
     WriteBit(ref mask, Stocks != 0);
@@ -110,6 +133,7 @@ public struct PlayerState : INetworkSerializable {
     if (Stocks != 0)                 writer.Write(Stocks);
     if (JumpCount != 0)              writer.Write(JumpCount);
     if (GrabbedLedgeID != 0)         writer.Write(GrabbedLedgeID);
+    if (GrabbedLedgeTimer != 0)      writer.Write(GrabbedLedgeTimer);
     if (ShieldDamage != 0)           writer.Write(ShieldDamage);
     if (Charge != 0)                 writer.Write(Charge);
     if (Hitstun != 0)                writer.Write(Hitstun);
@@ -132,6 +156,7 @@ public struct PlayerState : INetworkSerializable {
     if (ReadBit(ref mask)) Stocks = deserializer.ReadSByte();
     if (ReadBit(ref mask)) JumpCount = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) GrabbedLedgeID = deserializer.ReadByte();
+    if (ReadBit(ref mask)) GrabbedLedgeTimer = deserializer.ReadInt16();
     if (ReadBit(ref mask)) ShieldDamage = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) Charge = deserializer.ReadByte();
     if (ReadBit(ref mask)) Hitstun = deserializer.ReadUInt32();
@@ -155,6 +180,7 @@ public struct PlayerState : INetworkSerializable {
     equals &= ShieldDamage == other.ShieldDamage;
     equals &= ShieldRecoveryCooldown == other.ShieldRecoveryCooldown;
     equals &= GrabbedLedgeID == other.GrabbedLedgeID;
+    equals &= GrabbedLedgeTimer == other.GrabbedLedgeTimer;
     equals &= Damage == other.Damage;
     equals &= Hitstun == other.Hitstun;
     equals &= Charge == other.Charge;
@@ -175,6 +201,7 @@ public struct PlayerState : INetworkSerializable {
       hash += 59 * ShieldDamage.GetHashCode();
       hash += 47 * ShieldRecoveryCooldown.GetHashCode();
       hash += 43 * GrabbedLedgeID;
+      hash += 37 * GrabbedLedgeTimer;
       hash += 31 * Damage.GetHashCode();
       hash += 17 * Hitstun.GetHashCode();
       hash += Stocks;

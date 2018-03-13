@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Name: GameplayConfig
   m_EditorClassIdentifier: 
   inputSource: HouraiTeahouse.FantasyCrescendo.InControlInputSource
+  _maxLedgeHangTime: 3
+  _ledgeGrabCooldown: 3

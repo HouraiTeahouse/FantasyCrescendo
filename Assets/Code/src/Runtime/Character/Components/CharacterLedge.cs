@@ -22,22 +22,14 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(PlayerState state) =>  ApplyState(state);
+  public void Presimulate(PlayerState state) => ApplyState(state);
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
-    if (!state.IsGrabbingLedge) {
+    if (!state.IsGrabbingLedge && state.GrabbedLedgeTimer >= 0) {
       var ledge = CheckForLedges(state);
-      if (ledge != null) {
-        bool occupied = false;
-        for (uint i = 0; i < state.MatchState.PlayerCount; i++) {
-          var player = state.MatchState.GetPlayerState(i);
-          occupied |= player.GrabbedLedgeID == ledge?.Id;
-        }
-        if (!occupied && ledge != null) {
-          state.GrabbedLedgeID = ledge.Id;
-        }
+      if (ledge?.IsOccupied(state.MatchState) == true) {
+        state.GrabLedge(ledge);
       }
-      if (state.IsGrabbingLedge) Debug.LogWarning("GRABBING LEDGE");
     }
     return state;
   }
@@ -46,14 +38,16 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public PlayerState ResetState(PlayerState state) {
     state.GrabbedLedgeID = 0;
+    state.GrabbedLedgeTimer = 0;
     return state;
   }
 
   Ledge CheckForLedges(PlayerState state) {
     dir = state.Direction;
     Ledge ledge = null;
+    var arrayPool = ArrayPool<Collider>.Shared;
     var layerMask = Config.Get<PhysicsConfig>().StageLayers;
-    var colliders = ArrayPool<Collider>.Shared.Rent(256);
+    var colliders = arrayPool.Rent(256);
     foreach (var region in CheckRegions) {
       var worldRegion = GetWorldRegion(region, state.Direction);
       var colliderCount = Physics.OverlapBoxNonAlloc(worldRegion.center, worldRegion.extents, colliders, Quaternion.identity, layerMask, QueryTriggerInteraction.Collide);
@@ -63,10 +57,7 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
       }
       if (ledge != null) break;
     }
-    ArrayPool<Collider>.Shared.Return(colliders);
-    if (ledge) {
-      Debug.LogWarning(ledge);
-    }
+    arrayPool.Return(colliders);
     return ledge;
   }
 

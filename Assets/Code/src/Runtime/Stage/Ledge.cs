@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using HouraiTeahouse.FantasyCrescendo.Matches;
 using UnityEngine;
 using Random = System.Random;
 
@@ -29,6 +30,14 @@ public sealed class Ledge : RegisteredBehaviour<Ledge, byte> {
     using (GizmoUtil.With(Color.red)) {
       GizmoUtil.DrawCapsuleCollider(capsuleCollider);
     }
+  }
+
+  public bool IsOccupied(MatchState state) {
+    bool occupied = false;
+    for (uint i = 0; i < state.PlayerCount; i++) {
+      occupied |= state.GetPlayerState(i).GrabbedLedgeID == Id;
+    }
+    return occupied;
   }
 
   /// <summary>

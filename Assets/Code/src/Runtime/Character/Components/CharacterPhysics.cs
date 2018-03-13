@@ -60,9 +60,17 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
     if (state.IsGrabbingLedge)  {
       SnapToLedge(ref state); 
+      state.GrabbedLedgeTimer--;
+      if (state.GrabbedLedgeTimer <= 0) {
+        state.ReleaseLedge();
+        Debug.LogWarning($"Released ledge! {state.GrabbedLedgeTimer}");
+      }
     } else {
       CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
       state.Position = transform.position;
+      if (state.GrabbedLedgeTimer < 0) {
+        state.GrabbedLedgeTimer++;
+      }
     }
     return state;
   }
