@@ -258,24 +258,24 @@ MonoBehaviour:
       Timeline: {fileID: 11400000, guid: 1fd7b626d03ad1548b49eeaf5f5f62f8, type: 2}
       AnimationClip: {fileID: 7400000, guid: 35d059f904e24e5449691aac8343c2e6, type: 3}
       Length: 1.1250001
-      MinMoveSpeed: 0
-      MaxMoveSpeed: 0
+      MinMoveSpeed: 2
+      MaxMoveSpeed: 2
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 3
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: EscapeBackward
     Data:
       Timeline: {fileID: 11400000, guid: ad079928d837c9949b230d99ed87713d, type: 2}
       AnimationClip: {fileID: 7400000, guid: 293c8c11f95e57e44995c0fd91670f0f, type: 3}
       Length: 0.9583333
-      MinMoveSpeed: 0
-      MaxMoveSpeed: 0
+      MinMoveSpeed: -2
+      MaxMoveSpeed: -2
       RotationOffset: 90
       EntryPolicy: 0
-      MovementType: 0
-      DirectionMode: 0
+      MovementType: 3
+      DirectionMode: 5
       KnockbackResistance: 0
   - Name: Fall
     Data:
