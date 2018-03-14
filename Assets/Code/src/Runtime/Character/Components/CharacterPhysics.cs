@@ -63,7 +63,6 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
       state.GrabbedLedgeTimer--;
       if (state.GrabbedLedgeTimer <= 0) {
         state.ReleaseLedge();
-        Debug.LogWarning($"Released ledge! {state.GrabbedLedgeTimer}");
       }
     } else {
       CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
@@ -116,6 +115,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   bool IsCharacterGrounded(PlayerState state) {
     if (state.VelocityY > 0) return false;
+    if (state.RespawnTimeRemaining > 0) return true;
     var center = Vector3.zero;
     var radius = 1f;
     if (CharacterController != null) {

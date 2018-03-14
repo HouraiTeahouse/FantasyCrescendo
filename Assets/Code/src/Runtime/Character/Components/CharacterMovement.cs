@@ -183,6 +183,9 @@ internal class RespawnMovement : CharacterMover {
 
   public override PlayerState Move(PlayerState state, PlayerInputContext input) {
     state.Velocity = Vector3.zero;
+    if (input.Movement.Direction != Direction.Neutral) {
+      state.RespawnTimeRemaining = 0;
+    }
     return state;
   }
 
