@@ -8,12 +8,14 @@ public class InControlPlayerInputSource : IInputSource<PlayerInput> {
 
   readonly PlayerControllerMapping controllerMapping;
   readonly PlayerConfig config;
+  readonly SmashInputDetector smashInputDetector;
   PlayerInput input;
 
   public InControlPlayerInputSource(PlayerConfig config) {
     this.config = config;
-    // TODO(james7132): Make this configurable
+    // TODO(james7132): Make these configurable
     controllerMapping = new PlayerControllerMapping();
+    smashInputDetector = new SmashInputDetector(5);
   }
 
   public PlayerInput SampleInput() {
@@ -27,6 +29,7 @@ public class InControlPlayerInputSource : IInputSource<PlayerInput> {
     if (playerId == 0) {
       input = input.MergeWith(KeyboardInput());
     }
+    UpdateSmashFromMovement();
     return input;
   }
 
@@ -38,6 +41,16 @@ public class InControlPlayerInputSource : IInputSource<PlayerInput> {
     input.Special = controllerMapping.Special(device);
     input.Shield = controllerMapping.Shield(device);
     input.Jump = controllerMapping.Jump(device);
+  }
+
+  void UpdateSmashFromMovement() {
+    smashInputDetector.Update(input.Movement);
+    var test  = config.LocalPlayerID == 0;
+    var smash = smashInputDetector.GetSmash(input.Movement);
+    if (test && smash != Vector2.zero) {
+      Debug.Log($"{smash} {DirectionalInput.GetDirection(smash)}");
+    }
+    input.Smash = MergeVectors(input.Smash, smash);
   }
 
   static PlayerInput KeyboardInput() {
@@ -53,6 +66,13 @@ public class InControlPlayerInputSource : IInputSource<PlayerInput> {
       //TODO(james7132): Make Tap Jump Configurable
       Jump = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow),
       IsValid = true
+    };
+  }
+
+  static Vector2 MergeVectors(Vector2 a, Vector2 b) {
+    return new Vector2 {
+      x = Mathf.Abs(a.x) > Mathf.Abs(b.x) ? a.x : b.x,
+      y = Mathf.Abs(a.y) > Mathf.Abs(b.y) ? a.y : b.y
     };
   }
 
