@@ -46,7 +46,7 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
     get {
       bool isLocal = true;
       for (var i = 0; i < PlayerConfigs.Length; i++) {
-        isLocal &= !PlayerConfigs[i].IsLocal;
+        isLocal &= PlayerConfigs[i].IsLocal;
       }
       return isLocal;
     }

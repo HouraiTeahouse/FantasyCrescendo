@@ -13,9 +13,9 @@ public class MatchPauseController : MonoBehaviour {
   uint PausedPlayer;
 
   /// <summary>
-  /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
+  /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
-  void FixedUpdate() {
+  void Update() {
     if (MatchManager == null || !MatchManager.IsLocal) return;
     if (MatchManager.IsPaused) {
       PausedCheck();
