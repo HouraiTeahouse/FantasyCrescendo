@@ -12,7 +12,7 @@ public interface IMatchController {
 
 	ISimulation<MatchState, MatchInputContext> Simulation { get; set; }
 
-	IInputSource InputSource { get; set; }
+	IMatchInputSource InputSource { get; set; }
 
   /// <summary>
   /// The current game state of the game.

@@ -28,7 +28,7 @@ public sealed class NetworkHostController : IMatchController {
     }
   }
 
-  public IInputSource InputSource {
+  public IMatchInputSource InputSource {
     get { return ClientController.InputSource; }
     set {
       ClientController.InputSource = value;

@@ -8,7 +8,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [CreateAssetMenu(menuName = "Config/Gameplay Config")]
 public class GameplayConfig : ScriptableObject {
 
-	[SerializeField] [Type(typeof(IInputSource), CommonName="InputSource")] 
+	[SerializeField] [Type(typeof(IMatchInputSource), CommonName="InputSource")] 
 	string inputSource;
 
   [SerializeField] float _maxLedgeHangTime = 10;
@@ -17,9 +17,9 @@ public class GameplayConfig : ScriptableObject {
   public short MaxLedgeHangTime => (short)(_maxLedgeHangTime / Time.fixedDeltaTime);
   public short LedgeGrabCooldown => (short)(_ledgeGrabCooldown / Time.fixedDeltaTime);
 
-	public IInputSource CreateInputSource(MatchConfig config) {
+	public IMatchInputSource CreateInputSource(MatchConfig config) {
 		var sourceType = Type.GetType(inputSource);
-		return (IInputSource)Activator.CreateInstance(sourceType, config);
+		return (IMatchInputSource)Activator.CreateInstance(sourceType, config);
 	}
 
 }
