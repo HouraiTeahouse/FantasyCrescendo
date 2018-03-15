@@ -20,7 +20,7 @@ public sealed class TrainingMatchRule : IMatchRule {
 
   public MatchState Simulate(MatchState state, MatchInputContext input) => state;
 
-  public uint? GetWinner(MatchState state) => null;
+  public int GetWinner(MatchState state) => -1;
 
   public MatchResolution? GetResolution(MatchState state) => null;
 

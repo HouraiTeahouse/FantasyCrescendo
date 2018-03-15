@@ -21,22 +21,22 @@ public sealed class TimeMatchRule : IMatchRule {
 
   public MatchResolution? GetResolution(MatchState state) {
     if (state.Time <= 0) {
-      return GetWinner(state) != null ? MatchResolution.HasWinner : MatchResolution.Tie;
+      return GetWinner(state) >= 0 ? MatchResolution.HasWinner : MatchResolution.Tie;
     }
     return null;
   }
 
-  public uint? GetWinner(MatchState state) {
-    uint? winner = null;
+  public int GetWinner(MatchState state) {
+    int winner = -1;
     int maxStocks = int.MinValue;
-    for (uint i = 0; i < state.PlayerCount; i++) {
+    for (var i = 0; i < state.PlayerCount; i++) {
       var playerStocks = state.GetPlayerState(i).Stocks;
       if (playerStocks > maxStocks) {
         winner = i;
         maxStocks = (int)playerStocks;
       } else if (playerStocks == maxStocks) {
         // More than one player alive. No current winner.
-        winner = null;
+        winner = -1;
       }
     }
     return winner;

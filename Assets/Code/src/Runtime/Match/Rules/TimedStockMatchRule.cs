@@ -12,7 +12,7 @@ public class TimeStockMatchRule : StockMatchRule {
   public override MatchResolution? GetResolution(MatchState state) {
     MatchResolution? resolution = null;
     if (state.Time <= 0) {
-      return GetWinner(state) != null ? MatchResolution.HasWinner : MatchResolution.Tie;
+      return GetWinner(state) >= 0 ? MatchResolution.HasWinner : MatchResolution.Tie;
     }
     return base.GetResolution(state) ?? resolution;
   }

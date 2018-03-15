@@ -83,12 +83,12 @@ public class MatchState : INetworkSerializable {
       if ((mask & (1 << (i + 4))) != 0) {
         state.Deserialize(deserializer);
       }
-      SetPlayerState((uint)i, state);
+      SetPlayerState(i, state);
     }
   }
 
-  public PlayerState GetPlayerState(uint index) => playerStates[index];
-  public void SetPlayerState(uint index, PlayerState state) {
+  public PlayerState GetPlayerState(int index) => playerStates[index];
+  public void SetPlayerState(int index, PlayerState state) {
     state.MatchState = this;
     playerStates[index] = state;
   }

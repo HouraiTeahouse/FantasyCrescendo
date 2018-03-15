@@ -79,7 +79,7 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
     OnServerUpdatedConfig(); 
   }
   void OnServerUpdatePlayer(NetworkClientPlayer player) => OnServerUpdatedConfig();
-  void OnServerRemovePlayer(uint playerId) => OnServerUpdatedConfig();
+  void OnServerRemovePlayer(int playerId) => OnServerUpdatedConfig();
 
   void InitalizePlayer(NetworkClientPlayer player) {
     player.Config.Selection = CharacterSelectMenu.CreateNewSelection(player.PlayerID);

@@ -4,7 +4,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
     
 public abstract class PlayerEvent : MatchEvent {
 
-  public uint PlayerID;
+  public int PlayerID;
   public PlayerState PlayerState {
     get { return MatchState.GetPlayerState(PlayerID); }
     set { MatchState.SetPlayerState(PlayerID, value); }

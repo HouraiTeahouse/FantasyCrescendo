@@ -9,11 +9,11 @@ public interface INetworkServer : IDisposable {
   ICollection<NetworkClientPlayer> Clients { get; }
 
   // Signature: Client ID, Timestamp, Inputs
-  event Action<uint, uint, ArraySegment<MatchInput>> ReceivedInputs;
+  event Action<int, uint, ArraySegment<MatchInput>> ReceivedInputs;
 
   event Action<NetworkClientPlayer> PlayerAdded;
   event Action<NetworkClientPlayer> PlayerUpdated;
-  event Action<uint> PlayerRemoved;
+  event Action<int> PlayerRemoved;
 
   // Reliable
   void FinishMatch(MatchResult result);

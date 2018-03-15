@@ -47,13 +47,16 @@ public interface INetworkInterface : IDisposable {
   MessageHandlers MessageHandlers { get; }
   IReadOnlyCollection<NetworkConnection> Connections { get; }
 
-  void Initialize(uint port);
-  void Update();
-
   event Action<NetworkConnection> OnPeerConnected;
   event Action<NetworkConnection> OnPeerDisconnected;
 
+  void Initialize(uint port);
+  void Update();
+
   void Send(int connectionId, byte[] bytes, int count, NetworkReliablity reliablity);
+  void Disconnect(int connectionId);
+
+  ConnectionStats GetConnectionStats(int connectionId);
 
   Task<NetworkConnection> Connect(string ip, int port);
 }

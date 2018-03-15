@@ -30,7 +30,7 @@ public static class StateUtility {
 
   public static MatchState RandomState(int players) {
     var state = new MatchState(players);
-    for (uint i = 0; i < state.PlayerCount; i++) {
+    for (var i = 0; i < state.PlayerCount; i++) {
       state.SetPlayerState(i, RandomPlayerState());
     }
     return state;

@@ -12,17 +12,17 @@ public class NetworkGameServer : INetworkServer {
   readonly INetworkInterface NetworkInterface;
 
   public ICollection<NetworkClientPlayer> Clients => clients.Values;
-  public event Action<uint, uint, ArraySegment<MatchInput>> ReceivedInputs;
+  public event Action<int, uint, ArraySegment<MatchInput>> ReceivedInputs;
   public event Action<NetworkClientPlayer> PlayerAdded;
   public event Action<NetworkClientPlayer> PlayerUpdated;
-  public event Action<uint> PlayerRemoved;
+  public event Action<int> PlayerRemoved;
 
-  Dictionary<uint, NetworkClientPlayer> clients;
+  Dictionary<int, NetworkClientPlayer> clients;
 
   public int ClientCount => NetworkServer.connections.Count; 
 
   public NetworkGameServer(Type interfaceType, NetworkServerConfig config) {
-    clients = new Dictionary<uint, NetworkClientPlayer>();
+    clients = new Dictionary<int, NetworkClientPlayer>();
     NetworkInterface = (INetworkInterface)Activator.CreateInstance(interfaceType);
     NetworkInterface.Initialize(config.Port);
 
@@ -120,7 +120,7 @@ public class NetworkGameServer : INetworkServer {
                    inputSet.AsArraySegment());
   }
 
-  byte LowestAvailablePlayerID(uint connectionId) {
+  byte LowestAvailablePlayerID(int connectionId) {
     bool updated = false;
     byte id = 0;
     do {

@@ -28,10 +28,10 @@ public class MatchPlayerSimulation : IMatchSimulation {
     Assert.IsTrue(input.IsValid);
     Assert.AreEqual(PlayerSimulations.Length, state.PlayerCount);
     Assert.AreEqual(PlayerSimulations.Length, input.PlayerInputs.Length);
-    for (uint i = 0; i < state.PlayerCount; i++) {
+    for (var i = 0; i < state.PlayerCount; i++) {
       PlayerSimulations[i].Presimulate(state.GetPlayerState(i));
     }
-    for (uint i = 0; i < state.PlayerCount; i++) {
+    for (var i = 0; i < state.PlayerCount; i++) {
       var playerState = state.GetPlayerState(i);
       var simulation = PlayerSimulations[i];
       var playerInput = input.PlayerInputs[i];
@@ -42,7 +42,7 @@ public class MatchPlayerSimulation : IMatchSimulation {
   }
 
   public MatchState ResetState(MatchState state) {
-    for (uint i = 0; i < state.PlayerCount; i++) {
+    for (var i = 0; i < state.PlayerCount; i++) {
       state.SetPlayerState(i, PlayerSimulations[i].ResetState(state.GetPlayerState(i)));
     }
     return state;

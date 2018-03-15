@@ -68,7 +68,7 @@ public abstract class Match {
   MatchState CreateInitialStateByTransform(MatchConfig config, GameObject[] startPositions) {
     var initialState = new MatchState(config);
     startPositions = startPositions.OrderBy(s => s.transform.GetSiblingIndex()).ToArray();
-    for (uint i = 0; i < initialState.PlayerCount; i++) {
+    for (int i = 0; i < initialState.PlayerCount; i++) {
       var startPos = startPositions[i % startPositions.Length].transform;
       var state = initialState.GetPlayerState(i);
       state.Position = startPos.position;
@@ -80,7 +80,7 @@ public abstract class Match {
 
   MatchState CreateInitialStateSimple(MatchConfig config) {
     var initialState = new MatchState(config);
-    for (uint i = 0; i < initialState.PlayerCount; i++) {
+    for (var i = 0; i < initialState.PlayerCount; i++) {
       var state = initialState.GetPlayerState(i);
       state.Position = new Vector3((int)i * 2 - 3, 1, 0);
       initialState.SetPlayerState(i, state);

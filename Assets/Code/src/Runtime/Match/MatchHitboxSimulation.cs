@@ -59,7 +59,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
     if (ActiveHitboxes.Count + ActiveHurtboxes.Count > 0) {
       Physics.SyncTransforms();
       CreateCollisions();
-      for (uint i = 0; i < Config.PlayerCount; i++) {
+      for (var i = 0; i < Config.PlayerCount; i++) {
         var playerState = state.GetPlayerState(i);
         var collisions = CollisionManager.PlayerCollisions[i];
         ApplyCollisions(collisions, ref playerState);

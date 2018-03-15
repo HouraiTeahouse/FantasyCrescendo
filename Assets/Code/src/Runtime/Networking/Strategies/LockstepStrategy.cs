@@ -45,7 +45,7 @@ public sealed class LockstepStrategy : INetworkStrategy {
       NetworkServer.ReceivedInputs -= OnRecievedInputs;
     }
 
-    void OnRecievedInputs(uint player, uint timestep,
+    void OnRecievedInputs(int player, uint timestep,
                           ArraySegment<MatchInput> inputs) {
       if (timestep != Timestep) return;
       NextInput.MergeWith(inputs.Array[inputs.Offset]);

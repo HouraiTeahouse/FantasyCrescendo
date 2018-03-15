@@ -75,7 +75,7 @@ public class DebugDisplay : MonoBehaviour {
     builder.Clear();
     builder.AppendLine($"{TPSCounter.FPS:0.0}TPS {GetEllapsedTime(tick)}");
     GetNetworkStats(tick);
-    for (uint i = 0; i < state.PlayerCount; i++) {
+    for (var i = 0; i < state.PlayerCount; i++) {
       var player = state.GetPlayerState(i);
       builder.AppendLine($"P{i+1}: S:{player.StateID} T:{player.StateTick}");
     }

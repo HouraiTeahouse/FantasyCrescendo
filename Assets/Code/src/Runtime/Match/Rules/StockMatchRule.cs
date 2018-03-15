@@ -26,7 +26,7 @@ public class StockMatchRule : IMatchRule {
 
   public virtual MatchResolution? GetResolution(MatchState state) {
     var livingCount = 0;
-    for (uint i = 0; i < state.PlayerCount; i++) {
+    for (var i = 0; i < state.PlayerCount; i++) {
       if (state.GetPlayerState(i).Stocks <= 0) continue;
       livingCount++;
     }
@@ -37,17 +37,17 @@ public class StockMatchRule : IMatchRule {
     }
   }
 
-  public virtual uint? GetWinner(MatchState state) {
-    uint? winner = null;
+  public virtual int GetWinner(MatchState state) {
+    int winner = -1;
     int maxStocks = int.MinValue;
-    for (uint i = 0; i < state.PlayerCount; i++) {
+    for (var i = 0; i < state.PlayerCount; i++) {
       var playerStocks = state.GetPlayerState(i).Stocks;
       if (playerStocks > maxStocks) {
         winner = i;
         maxStocks = (int)playerStocks;
       } else if (playerStocks == maxStocks) {
         // More than one player alive. No current winner.
-        winner = null;
+        winner = -1;
       }
     }
     return winner;

@@ -9,7 +9,7 @@ public class BlastZone : MonoBehaviour {
   public Bounds Bounds;
 
   public MatchState Simulate(MatchState state) {
-    for (uint i = 0; i < state.PlayerCount; i++) {
+    for (var i = 0; i < state.PlayerCount; i++) {
       var playerState = state.GetPlayerState(i);
       if (Bounds.Contains(playerState.Position)) continue;
       Mediator.Global.Publish(new PlayerDiedEvent {

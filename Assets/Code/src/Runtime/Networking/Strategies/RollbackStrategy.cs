@@ -33,7 +33,7 @@ public class RollbackStrategy : INetworkStrategy {
     readonly InputHistory<MatchInput> InputHistory;
     readonly MatchInputContext InputContext;
     readonly NetworkConfig NetworkConfig;
-    readonly Dictionary<uint, uint> ClientTimesteps;
+    readonly Dictionary<int, uint> ClientTimesteps;
 
     uint StateSendTimer;
 
@@ -43,7 +43,7 @@ public class RollbackStrategy : INetworkStrategy {
       InputContext = new MatchInputContext(config);
       InputHistory = new InputHistory<MatchInput>(new MatchInput(config));
       NetworkConfig = Config.Get<NetworkConfig>();
-      ClientTimesteps = new Dictionary<uint, uint>();
+      ClientTimesteps = new Dictionary<int, uint>();
       StateSendTimer = 0;
     }
 
@@ -60,13 +60,13 @@ public class RollbackStrategy : INetworkStrategy {
       NetworkServer.PlayerRemoved -= OnRemovePlayer;
     }
 
-    void OnRecievedInputs(uint player, uint timestep,
+    void OnRecievedInputs(int player, uint timestep,
                           ArraySegment<MatchInput> inputs) {
       InputHistory.MergeWith(timestep, inputs);
       UpdateClientTimestep(player, timestep);
     }
 
-    void OnRemovePlayer(uint playerId) {
+    void OnRemovePlayer(int playerId) {
       var playerState = CurrentState.GetPlayerState(playerId);
       playerState.Stocks = sbyte.MinValue;
       Assert.IsTrue(!playerState.IsActive);
@@ -93,13 +93,13 @@ public class RollbackStrategy : INetworkStrategy {
       }
     }
 
-    uint GetClientTimestamp(uint clientId) {
+    uint GetClientTimestamp(int clientId) {
       uint timestamp = 0;
       ClientTimesteps.TryGetValue(clientId, out timestamp);
       return timestamp;
     }
 
-    void UpdateClientTimestep(uint player, uint timestep) {
+    void UpdateClientTimestep(int player, uint timestep) {
       ClientTimesteps[player] = Math.Max(GetClientTimestamp(player), timestep);
       uint minTimestep = uint.MaxValue;
       foreach (var clientTimestep in ClientTimesteps.Values) {

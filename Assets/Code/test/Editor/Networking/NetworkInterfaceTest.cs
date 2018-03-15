@@ -14,7 +14,7 @@ using UnityEngine.TestTools;
 using Random = System.Random;
 
 [Category("Network")] [Category("Integration")]
-public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, new() {
+public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.FantasyCrescendo.Networking.INetworkInterface, new() {
 
   NetworkHost Host;
 
@@ -172,4 +172,4 @@ public abstract class NetworkInterfaceTestBase<T> where T : INetworkInterface, n
 
 }
 
-public class UNETNetworkInterfaceTest : NetworkInterfaceTestBase<UNETNetworkInterface> {}
+public class UNETNetworkInterfaceTest : NetworkInterfaceTestBase<HouraiTeahouse.FantasyCrescendo.Networking.UNET.UNETNetworkInterface> {}

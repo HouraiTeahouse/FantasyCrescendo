@@ -47,13 +47,16 @@ public class MatchRuleSimulation : IMatchSimulation {
   void CheckForFinish(MatchState state) {
     MatchResolution? resolution = GetResolution(state);
     if (resolution == null || MatchManager.Instance == null) return;
-    uint? winner = null;
+    int winner = -1;
     foreach (var rule in Rules) {
-      winner = winner ?? rule.GetWinner(state);
+      var ruleWinner = rule.GetWinner(state);
+      if (ruleWinner < 0) continue;
+      winner = ruleWinner;
+      break;
     }
     var result = CreateResult(state);
     result.Resolution = resolution.Value;
-    result.WinningPlayerID = winner != null ? (int)winner : -1;
+    result.WinningPlayerID = winner;
     MatchManager.Instance.EndMatch(result);
   }
 

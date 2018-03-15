@@ -3,50 +3,12 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Networking = HouraiTeahouse.FantasyCrescendo.Networking.NetworkConnection;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public enum ConnectionStatus {
-  Initialized,
-  Connecting,
-  Connected,
-  Disconnected
-}
 
-public struct ConnectionStats : IMergable<ConnectionStats> {
-  public int TotalBytesOut;
-  public int IncomingPacketsCount;
-  public int IncomingPacketsLost;
-  public int CurrentRTT;
-
-  public float PacketLossPercent {
-    get {
-      var total = IncomingPacketsCount += IncomingPacketsLost;
-      if (total == 0) return 0;
-      return IncomingPacketsLost / total;
-    }
-  }
-
-  public ConnectionStats MergeWith(ConnectionStats other) {
-    TotalBytesOut += other.TotalBytesOut;
-    IncomingPacketsCount += other.IncomingPacketsCount;
-    IncomingPacketsLost += other.IncomingPacketsLost;
-    CurrentRTT = Mathf.Max(CurrentRTT, other.CurrentRTT);
-    return this;
-  }
-}
-
-public abstract class NetworkConnection : IEntity {
-  public abstract uint Id { get; }
-  public bool IsConnected => Status == ConnectionStatus.Connected;
-  public abstract ConnectionStatus Status { get; protected internal set; }
-  public abstract ConnectionStats Stats { get; }
-  public abstract MessageHandlers MessageHandlers { get; }
-  public abstract void SendBytes(byte[] buffer, int size, NetworkReliablity reachability = NetworkReliablity.Reliable);
-  public abstract void Disconnect();
-}
-
-public static class INetworkConnectionExtensions {
+public static class NetworkConnectionExtensions {
 
   public static void Send(this NetworkConnection connection, byte header, 
                           INetworkSerializable message, NetworkReliablity reliablity = NetworkReliablity.Reliable) {
