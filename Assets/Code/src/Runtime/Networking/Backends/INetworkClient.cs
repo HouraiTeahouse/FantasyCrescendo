@@ -20,7 +20,7 @@ public interface INetworkClient : IDisposable {
 
   bool IsServerReady { get; }
 
-  Task Connect(string ip, uint port);
+  Task Connect(NetworkConnectionConfig config);
   void Disconnect();
 
   // Unreliable

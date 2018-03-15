@@ -15,6 +15,8 @@ public class Deserializer {
   static byte[] s_StringReaderBuffer;
   static Encoding s_Encoding;
 
+  public int Size => m_buf.Size;
+
   public Deserializer() {
     m_buf = new NetBuffer();
     Initialize();

@@ -184,7 +184,10 @@ public class NetworkManager : MonoBehaviour {
 	public async Task<NetworkHost> StartHost(NetworkHostConfig config) {
 		StartServer(config.ServerConfig);
 		StartClient(config.ClientConfig);
-		await Client.Connect("localhost", (uint)config.ServerConfig.Port);
+		await Client.Connect( new NetworkConnectionConfig {
+      IP = "localhost",
+      Port = config.ServerConfig.Port
+    });
 		return Host;
 	}
 

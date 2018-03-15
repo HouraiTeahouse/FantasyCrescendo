@@ -31,11 +31,11 @@ public class MessageHandlers {
   public void UnregisterHandler(byte code) => handlers[code] = null;
 
   internal void Execute(NetworkConnection connection, Deserializer deserializer) {
+    if (deserializer.Size <= 0) return;
     byte header = deserializer.ReadByte();
     var handler = handlers[header];
     if (handler == null) return;
-    var message = new NetworkDataMessage(connection, deserializer);
-    handler(message);
+    handler(new NetworkDataMessage(connection, deserializer));
   }
 
 }

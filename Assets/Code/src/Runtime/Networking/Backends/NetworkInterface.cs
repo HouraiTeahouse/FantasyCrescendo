@@ -9,6 +9,7 @@ public abstract class NetworkInterface : INetworkInterface {
 
   public MessageHandlers MessageHandlers { get; }
   public IReadOnlyCollection<NetworkConnection> Connections { get; }
+  public NetworkInterfaceConfiguration Config { get; private set; }
 
   readonly IList<NetworkConnection> connections;
   readonly IDictionary<int, NetworkConnection> connectionMap;
@@ -30,9 +31,12 @@ public abstract class NetworkInterface : INetworkInterface {
     messageDeserializer = new Deserializer(ReadBuffer);
   }
 
-  public virtual void Initialize(uint port) {}
+  public virtual Task Initialize(NetworkInterfaceConfiguration config) {
+    Config = config;
+    return Task.CompletedTask;
+  }
 
-  public abstract Task<NetworkConnection> Connect(string ipAddress, int port);
+  public abstract Task<NetworkConnection> Connect(NetworkConnectionConfig config);
 
   public abstract void Update();
 
@@ -67,13 +71,12 @@ public abstract class NetworkInterface : INetworkInterface {
     MessageHandlers.Execute(connection, messageDeserializer);
   }
 
-  protected virtual void OnDisconnect(int connectionId, byte error) {
+  protected virtual void OnDisconnect(int connectionId, Exception exception) {
     NetworkConnection connection;
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
     connection.Status = ConnectionStatus.Disconnected;
-    var exception = UNETUtility.CreateError(error);
     if (exception == null) {
-      connection.ConnectTask.TrySetResult(new object());
+      connection.ConnectTask.TrySetCanceled();
     } else {
       connection.ConnectTask.TrySetException(exception);
     }

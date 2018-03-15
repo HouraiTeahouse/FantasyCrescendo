@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using Steamworks;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -39,7 +40,27 @@ public struct NetworkClientConfig {
 }
 
 public struct NetworkServerConfig {
-  public uint Port;
+  public int Port;
+}
+
+public enum NetworkInterfaceType {
+  Client,
+  Server
+}
+
+public class NetworkInterfaceConfiguration {
+  public NetworkInterfaceType Type;
+  public int Port;
+
+  public ELobbyType ServerSteamLobbyType;
+  public int ServerSteamLobbyMaxSize;
+}
+
+public class NetworkConnectionConfig {
+  public string IP;
+  public int Port;
+
+  public CSteamID? LobbyID;
 }
 
 public interface INetworkInterface : IDisposable {
@@ -50,15 +71,16 @@ public interface INetworkInterface : IDisposable {
   event Action<NetworkConnection> OnPeerConnected;
   event Action<NetworkConnection> OnPeerDisconnected;
 
-  void Initialize(uint port);
+  Task Initialize(NetworkInterfaceConfiguration config);
   void Update();
 
   void Send(int connectionId, byte[] bytes, int count, NetworkReliablity reliablity);
+
+  Task<NetworkConnection> Connect(NetworkConnectionConfig config);
   void Disconnect(int connectionId);
 
   ConnectionStats GetConnectionStats(int connectionId);
 
-  Task<NetworkConnection> Connect(string ip, int port);
 }
 
 }

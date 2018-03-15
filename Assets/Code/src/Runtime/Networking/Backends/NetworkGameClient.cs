@@ -28,18 +28,20 @@ public class NetworkGameClient : INetworkClient {
 
   public NetworkGameClient(Type interfaceType, NetworkClientConfig config) {
     NetworkInterface = (INetworkInterface)Activator.CreateInstance(interfaceType);
-    NetworkInterface.Initialize(0);
+    NetworkInterface.Initialize(new NetworkInterfaceConfiguration {
+      Type = NetworkInterfaceType.Client
+    });
   }
 
   public void Update() => NetworkInterface.Update();
 
-  public async Task Connect(string ip, uint port) {
+  public async Task Connect(NetworkConnectionConfig config) {
     if (connectionTask != null) {
       await connectionTask.Task;
       return;
     }
     connectionTask = new TaskCompletionSource<object>();
-    Connection = await NetworkInterface.Connect(ip, (int)port);
+    Connection = await NetworkInterface.Connect(config);
 
     var handlers = Connection.MessageHandlers;
     handlers.RegisterHandler<InputSetMessage>(MessageCodes.UpdateInput, OnGetInput);

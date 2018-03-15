@@ -16,23 +16,25 @@ public class UNETNetworkInterface : NetworkInterface {
     Channels = new Dictionary<NetworkReliablity, int>();
   }
 
-  public override void Initialize(uint port) {
+  public override async Task Initialize(NetworkInterfaceConfiguration config) {
+    await base.Initialize(config);
     NetworkTransport.Init();
 
-    var config = new ConnectionConfig();
-    AddChannel(config, QosType.Reliable, NetworkReliablity.Reliable);
-    AddChannel(config, QosType.Unreliable, NetworkReliablity.Unreliable);
+    var connectionConfig = new ConnectionConfig();
+    AddChannel(connectionConfig, QosType.Reliable, NetworkReliablity.Reliable);
+    AddChannel(connectionConfig, QosType.Unreliable, NetworkReliablity.Unreliable);
 
-    var hostTopology = new HostTopology(config, (int)GameMode.GlobalMaxPlayers);
+    var hostTopology = new HostTopology(connectionConfig, (int)GameMode.GlobalMaxPlayers);
+    var port = config.Type == NetworkInterfaceType.Client ? 0 : config.Port;
 
-    HostID = NetworkTransport.AddHost(hostTopology, (int)port);
+    HostID = NetworkTransport.AddHost(hostTopology, port);
   }
 
-  public override async Task<NetworkConnection> Connect(string address, int port) {
-    address = ResolveAddress(address);
+  public override async Task<NetworkConnection> Connect(NetworkConnectionConfig config) {
+    var address = ResolveAddress(config.IP);
 
     byte error;
-    var connectionId = NetworkTransport.Connect(HostID, address, port, 0, out error);
+    var connectionId = NetworkTransport.Connect(HostID, address, config.Port, 0, out error);
     UNETUtility.HandleError(error);
 
     var connection = AddConnection(connectionId);
@@ -59,7 +61,7 @@ public class UNETNetworkInterface : NetworkInterface {
         case NetworkEventType.Nothing: break;
         case NetworkEventType.ConnectEvent: OnNewConnection(connectionId); break;
         case NetworkEventType.DataEvent: OnRecieveData(connectionId, dataSize); break;
-        case NetworkEventType.DisconnectEvent: OnDisconnect(connectionId, error); break;
+        case NetworkEventType.DisconnectEvent: OnDisconnect(connectionId, UNETUtility.CreateError(error)); break;
         default:
           Debug.LogError($"Unkown network message type recieved: {evt}");
           break;

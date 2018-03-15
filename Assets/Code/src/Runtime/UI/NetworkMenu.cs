@@ -18,7 +18,7 @@ public class NetworkMenu : MonoBehaviour {
   public GameObject ErrorScreen;
   public Text ErrorText;
 
-  uint PortValue => uint.Parse(Port.text);
+  int PortValue => int.Parse(Port.text);
 
   public async void StartHost() {
     var networkManager = NetworkManager.Instance;
@@ -47,7 +47,11 @@ public class NetworkMenu : MonoBehaviour {
     Debug.Log($"Connecting to {IP.text}:{PortValue}");
     try {
       SetActive(ConnectingScreen);
-      await client.Connect(IP.text, PortValue);
+      await client.Connect(
+        new NetworkConnectionConfig {
+          IP = IP.text,
+          Port = PortValue
+        });
     } catch (NetworkingException exception) {
       networkManager.StopClient();
       SetActive(ErrorScreen);

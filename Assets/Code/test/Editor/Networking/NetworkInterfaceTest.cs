@@ -32,7 +32,11 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
 
   IEnumerator RunTest(Action prepare, Func<bool> check, Action validate) {
     Host = NetworkHost.Create(typeof(T), CreateHostConfig());
-    var connectTask = Host.Client.Connect("localhost", 8888);
+    var connectTask = Host.Client.Connect(
+      new NetworkConnectionConfig {
+        IP = "localhost",
+        Port = 8888
+      });
 
     int count = 0;
 

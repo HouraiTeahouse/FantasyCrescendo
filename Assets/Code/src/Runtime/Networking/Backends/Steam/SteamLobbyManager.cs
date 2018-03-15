@@ -35,9 +35,6 @@ public static class SteamLobbyManager {
     SteamMatchmaking.CreateLobby(type, maxLobbySize);
   }
 
-  public static bool IsPlayerInLobby(CSteamID id) {
-  }
-
   public static void LeaveLobby() {
     if (!InLobby) return;
     SteamMatchmaking.LeaveLobby(new CSteamID(currentLobbyId.Value));

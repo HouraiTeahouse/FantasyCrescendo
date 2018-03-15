@@ -24,7 +24,10 @@ public class NetworkGameServer : INetworkServer {
   public NetworkGameServer(Type interfaceType, NetworkServerConfig config) {
     clients = new Dictionary<int, NetworkClientPlayer>();
     NetworkInterface = (INetworkInterface)Activator.CreateInstance(interfaceType);
-    NetworkInterface.Initialize(config.Port);
+    NetworkInterface.Initialize(new NetworkInterfaceConfiguration {
+      Type = NetworkInterfaceType.Server,
+      Port = config.Port
+    });
 
     NetworkInterface.OnPeerConnected += OnConnect;
     NetworkInterface.OnPeerDisconnected += OnDisconnect;

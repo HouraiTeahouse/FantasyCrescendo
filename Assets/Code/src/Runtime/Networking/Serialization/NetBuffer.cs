@@ -14,7 +14,8 @@ class NetBuffer {
   const float kGrowthFactor = 1.5f;
   const int kBufferSizeWarning = 1024 * 1024 * 128;
 
-  public uint Position { get { return position; } }
+  public uint Position => position; 
+  public int Size => Buffer.Length;
 
   public NetBuffer() {
     Buffer = ArrayPool<byte>.Shared.Rent(kInitialSize);
@@ -155,8 +156,7 @@ class NetBuffer {
   public void SeekZero() => position = 0;
 
   public void Replace(byte[] buffer) {
-    var pool = ArrayPool<byte>.Shared;
-    pool.Return(Buffer);
+    ArrayPool<byte>.Shared.Return(Buffer);
     Buffer = buffer;
     position = 0;
   }
