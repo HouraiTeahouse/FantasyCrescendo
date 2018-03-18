@@ -1,5 +1,6 @@
 ﻿using HouraiTeahouse.EditorAttributes;
 using HouraiTeahouse.FantasyCrescendo.Matches;
+using HouraiTeahouse.FantasyCrescendo.Matchmaking;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -61,11 +62,19 @@ public class NetworkManager : MonoBehaviour {
   /// </summary>
 	public bool IsServer => Server != null;
 
+  IMatchmaker matchmakerInstance;
+  public IMatchmaker Matchmaker {
+    get { return matchmakerInstance ?? (matchmakerInstance = (IMatchmaker)Activator.CreateInstance(Type.GetType(matchmaker))); }
+  }
+
 	[SerializeField] [Type(typeof(INetworkInterface), CommonName = "NetworkInterface")]
 	string networkInterface;
 
 	[SerializeField] [Type(typeof(INetworkStrategy), CommonName = "Strategy")]
 	string networkStrategy;
+
+	[SerializeField] [Type(typeof(IMatchmaker), CommonName = "MatchMaker")]
+	string matchmaker;
 
 	/// <summary>
 	/// Awake is called when the script instance is being loaded.
