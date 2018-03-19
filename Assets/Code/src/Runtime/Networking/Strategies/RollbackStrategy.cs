@@ -79,7 +79,7 @@ public class RollbackStrategy : INetworkStrategy {
         var inputs = InputHistory.StartingWith(clientTimestep);
         var timestep = inputs.FirstOrDefault().Timestep;
         if (timestep < clientTimestep) continue;
-        client.SendInputs(timestep, inputs.Select(i => i.Input).TakeWhile(i => i.IsValid));
+        client.SendInputs(timestep, MatchInput.AllValid, inputs.Select(i => i.Input).TakeWhile(i => i.IsValid));
       }
     }
 

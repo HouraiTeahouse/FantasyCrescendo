@@ -109,7 +109,7 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     uint dataSize;
     CSteamID userId;
     while (SteamNetworking.ReadP2PPacket(ReadBuffer, (uint)ReadBuffer.Length, out dataSize, out userId)) {
-      OnRecieveData(connectionIds[userId], (int)dataSize);
+      OnRecieveData(connectionIds[userId], ReadBuffer, (int)dataSize);
     }
   }
 

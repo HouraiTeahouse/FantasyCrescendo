@@ -60,7 +60,7 @@ public class UNETNetworkInterface : NetworkInterface {
       switch (evt) {
         case NetworkEventType.Nothing: break;
         case NetworkEventType.ConnectEvent: OnNewConnection(connectionId); break;
-        case NetworkEventType.DataEvent: OnRecieveData(connectionId, dataSize); break;
+        case NetworkEventType.DataEvent: OnRecieveData(connectionId, ReadBuffer, dataSize); break;
         case NetworkEventType.DisconnectEvent: OnDisconnect(connectionId, UNETUtility.CreateError(error)); break;
         default:
           Debug.LogError($"Unkown network message type recieved: {evt}");

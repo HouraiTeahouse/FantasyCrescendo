@@ -9,7 +9,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public class NetworkGameServer : INetworkServer {
 
-  readonly INetworkInterface NetworkInterface;
+  readonly List<INetworkInterface> interfaces;
 
   public ICollection<NetworkClientPlayer> Clients => clients.Values;
   public event Action<int, uint, ArraySegment<MatchInput>> ReceivedInputs;
@@ -17,119 +17,152 @@ public class NetworkGameServer : INetworkServer {
   public event Action<NetworkClientPlayer> PlayerUpdated;
   public event Action<int> PlayerRemoved;
 
-  Dictionary<int, NetworkClientPlayer> clients;
+  Dictionary<NetworkConnection, NetworkClientPlayer> clients;
 
   public int ClientCount => NetworkServer.connections.Count; 
 
   public NetworkGameServer(Type interfaceType, NetworkServerConfig config) {
-    clients = new Dictionary<int, NetworkClientPlayer>();
-    NetworkInterface = (INetworkInterface)Activator.CreateInstance(interfaceType);
-    NetworkInterface.Initialize(new NetworkInterfaceConfiguration {
+    clients = new Dictionary<NetworkConnection, NetworkClientPlayer>();
+    interfaces = new List<INetworkInterface>();
+    var networkInterface = (INetworkInterface)Activator.CreateInstance(interfaceType);
+    networkInterface.Initialize(new NetworkInterfaceConfiguration {
       Type = NetworkInterfaceType.Server,
       Port = config.Port
     });
+    AddNetworkInterface(networkInterface);
+  }
 
-    NetworkInterface.OnPeerConnected += OnConnect;
-    NetworkInterface.OnPeerDisconnected += OnDisconnect;
+  void AddNetworkInterface(INetworkInterface networkInterface) {
+    interfaces.Add(networkInterface);
 
-    var handlers = NetworkInterface.MessageHandlers;
+    networkInterface.OnPeerConnected += OnConnect;
+    networkInterface.OnPeerDisconnected += OnDisconnect;
+
+    var handlers = networkInterface.MessageHandlers;
     handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
     handlers.RegisterHandler(MessageCodes.UpdateConfig, OnClientConfigUpdated);
     handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
   }
 
-  public void Update() => NetworkInterface.Update();
+  public void Update() {
+    foreach (var networkInterface in interfaces) {
+      networkInterface.Update();
+    }
+  }
 
   public void FinishMatch(MatchResult result) {
-    NetworkInterface.Connections.SendToAll(MessageCodes.MatchFinish, new MatchFinishMessage {
-      MatchResult = result
-    });
+    foreach (var client in clients.Values) {
+      client.FinishMatch(result);
+    }
   }
 
 	public void SetReady(bool ready) {
-    NetworkInterface.Connections.SendToAll(MessageCodes.ServerReady, new PeerReadyMessage {
-      IsReady = ready
-    });
+    foreach (var client in clients.Values) {
+      client.SetServerReady(ready);
+    }
 	}
 
-  public void BroadcastInput(uint startTimestamp, byte validMask, IEnumerable<MatchInput> input) {
-    int inputCount;
-    var inputs = ArrayUtil.ConvertToArray(input, out inputCount);
-    if (inputCount <= 0) return;
-    NetworkInterface.Connections.SendToAll(MessageCodes.UpdateInput, new InputSetMessage {
-      StartTimestamp = startTimestamp,
-      InputCount = (uint)inputCount,
-      ValidMask = validMask,
-      Inputs = inputs
-    }, NetworkReliablity.Unreliable);
+  public void BroadcastInput(uint timestamp, byte validMask, IEnumerable<MatchInput> inputs) {
+    foreach (var client in clients.Values) {
+      client.SendInputs(timestamp, validMask, inputs);
+    }
   }
 
   public void BroadcastState(uint timestamp, MatchState state, MatchInput? latestInput = null) {
-    NetworkInterface.Connections.SendToAll(MessageCodes.UpdateState, new ServerStateMessage {
-      Timestamp = timestamp,
-      State = state,
-      LatestInput = latestInput
-    }, NetworkReliablity.Unreliable);
+    foreach (var client in clients.Values) {
+      client.SendState(timestamp, state, latestInput);
+    }
   }
 
   public void Dispose() {
-    if (NetworkInterface == null) return;
-    NetworkInterface.Dispose();
-    NetworkInterface.OnPeerConnected -= OnConnect;
-    NetworkInterface.OnPeerConnected -= OnConnect;
+    if (interfaces.Count <= 0) return;
+    foreach (var networkInterface in interfaces) {
+      networkInterface.Dispose();
+      networkInterface.OnPeerConnected -= OnConnect;
+      networkInterface.OnPeerConnected -= OnConnect;
 
-    var handlers = NetworkInterface.MessageHandlers;
-    if (handlers == null) return;
-    handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
-    handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
+      var handlers = networkInterface.MessageHandlers;
+      if (handlers == null) return;
+      handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
+      handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
+    }
+    interfaces.Clear();
+  }
+
+  public INetworkClient CreateLocalClient() {
+    // TODO(james7132): Make this dynamic
+    var clientToServer = new LocalInterface();
+    var serverInterface = clientToServer.Mirror;
+    var serverToClient = serverInterface.Connection;
+    var localClient = new NetworkClientPlayer(serverToClient, LowestAvailablePlayerID(serverToClient));
+    localClient.Config.PlayerID = localClient.PlayerID;
+    clients[serverToClient] = localClient;
+    PlayerAdded?.Invoke(localClient);
+    AddNetworkInterface(serverInterface);
+    return new NetworkGameClient(clientToServer.Connection);
   }
 
   // Event Handlers
 
   void OnConnect(NetworkConnection connection) {
     var connId = connection.Id;
-    var client = new NetworkClientPlayer(connection, LowestAvailablePlayerID(connId));
+    var client = new NetworkClientPlayer(connection, LowestAvailablePlayerID(connection));
     client.Config.PlayerID = client.PlayerID;
-    clients[connId] = client;
+    clients[connection] = client;
     PlayerAdded?.Invoke(client);
   }
 
   void OnDisconnect(NetworkConnection connection) {
-    clients.Remove(connection.Id);
-    PlayerRemoved?.Invoke(connection.Id);
+    NetworkClientPlayer client;
+    if (!clients.TryGetValue(connection, out client)) return;
+    clients.Remove(connection);
+    InvokePlayerRemoved(client.PlayerID);
   }
 
   void OnClientReady(NetworkDataMessage dataMsg) {
     NetworkClientPlayer client;
-    if (!clients.TryGetValue(dataMsg.Connection.Id, out client)) return;
+    if (!clients.TryGetValue(dataMsg.Connection, out client)) return;
     var message = dataMsg.ReadAs<PeerReadyMessage>();
     client.IsReady = message.IsReady;
-    PlayerUpdated?.Invoke(client);
+    InvokePlayerUpdated(client);
   }
 
   void OnClientConfigUpdated(NetworkDataMessage dataMsg) {
     NetworkClientPlayer client;
-    if (!clients.TryGetValue(dataMsg.Connection.Id, out client)) return;
+    if (!clients.TryGetValue(dataMsg.Connection, out client)) return;
     var message = dataMsg.ReadAs<ClientUpdateConfigMessage>();
     client.Config = message.PlayerConfig;
     client.Config.PlayerID = client.PlayerID;
-    PlayerUpdated?.Invoke(client);
+    InvokePlayerUpdated(client);
   }
 
   void OnReceivedClientInput(NetworkDataMessage message) {
-    if (ReceivedInputs == null) return;
+    NetworkClientPlayer client;
+    if (!clients.TryGetValue(message.Connection, out client)) return;
     var inputSet = message.ReadAs<InputSetMessage>();
-    ReceivedInputs(message.Connection.Id, inputSet.StartTimestamp,
-                   inputSet.AsArraySegment());
+    InvokeRecievedInputs(client.PlayerID, inputSet.StartTimestamp,
+                         inputSet.AsArraySegment());
   }
 
-  byte LowestAvailablePlayerID(int connectionId) {
+  internal void InvokePlayerRemoved(int id) {
+    PlayerRemoved?.Invoke(id);
+  }
+
+  internal void InvokePlayerUpdated(NetworkClientPlayer client) {
+    PlayerUpdated?.Invoke(client);
+  }
+
+  internal void InvokeRecievedInputs(int connectionId, uint timestamp, ArraySegment<MatchInput> input) {
+    ReceivedInputs?.Invoke(connectionId, timestamp, input);
+  }
+
+  byte LowestAvailablePlayerID(NetworkConnection connection) {
     bool updated = false;
     byte id = 0;
     do {
       updated = false;
       foreach (var kvp in clients) {
-        if (kvp.Key == connectionId) continue;
+        if (kvp.Key == connection) continue;
         var client = kvp.Value;
         if (client.PlayerID == id) {
           id++;

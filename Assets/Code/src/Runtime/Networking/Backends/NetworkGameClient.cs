@@ -33,6 +33,14 @@ public class NetworkGameClient : INetworkClient {
     });
   }
 
+  internal NetworkGameClient(NetworkConnection connection) {
+    connectionTask = new TaskCompletionSource<object>();
+    connectionTask.SetResult(new object());
+    NetworkInterface = connection.NetworkInterface;
+    Connection = connection;
+    InitConnection(connection);
+  }
+
   public void Update() => NetworkInterface.Update();
 
   public async Task Connect(NetworkConnectionConfig config) {
@@ -42,8 +50,11 @@ public class NetworkGameClient : INetworkClient {
     }
     connectionTask = new TaskCompletionSource<object>();
     Connection = await NetworkInterface.Connect(config);
+    InitConnection(Connection);
+  }
 
-    var handlers = Connection.MessageHandlers;
+  void InitConnection(NetworkConnection connection) {
+    var handlers = connection.MessageHandlers;
     handlers.RegisterHandler<InputSetMessage>(MessageCodes.UpdateInput, OnGetInput);
     handlers.RegisterHandler<ServerStateMessage>(MessageCodes.UpdateState, OnGetState);
     handlers.RegisterHandler<MatchStartMessage>(MessageCodes.MatchStart, OnStartMatch);

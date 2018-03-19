@@ -20,7 +20,7 @@ public class NetworkMenu : MonoBehaviour {
 
   int PortValue => int.Parse(Port.text);
 
-  public async void StartHost() {
+  public void StartHost() {
     var networkManager = NetworkManager.Instance;
     var hostConfig = new NetworkHostConfig {
       ServerConfig = new NetworkServerConfig  {
@@ -30,7 +30,7 @@ public class NetworkMenu : MonoBehaviour {
     Debug.Log($"Started host on {PortValue}");
     try {
       SetActive(ConnectingScreen);
-      await networkManager.StartHost(hostConfig);
+      networkManager.StartHost(hostConfig);
     } catch (NetworkingException exception) {
       networkManager.StopHost();
       SetActive(ErrorScreen);

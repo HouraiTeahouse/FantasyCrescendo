@@ -1,4 +1,5 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -57,6 +58,12 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
       players[i].Config = playerConfig;
       players[i].SetActive(false);
       players[i].gameObject.SetActive(i < maxPlayers);
+    }
+    var networkManager = NetworkManager.Instance;
+    if (networkManager == null || !networkManager.IsServer) return;
+    foreach (var client in networkManager.Server.Clients) {
+      players[client.PlayerID].Config = client.Config;
+      players[client.PlayerID].SetActive(true);
     }
   }
 

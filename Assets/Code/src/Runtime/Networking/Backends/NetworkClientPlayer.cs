@@ -1,6 +1,8 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
 using System.Collections.Generic;
-using System.Linq;
+using System;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -30,7 +32,19 @@ public class NetworkClientPlayer {
     });
   }
 
-  public void SendInputs(uint timestamp, IEnumerable<MatchInput> inputs) {
+  public void FinishMatch(MatchResult result) {
+    Connection.Send(MessageCodes.MatchFinish, new MatchFinishMessage {
+      MatchResult = result
+    });
+  }
+
+  public void SetServerReady(bool isReady) {
+    Connection.Send(MessageCodes.ServerReady, new PeerReadyMessage {
+      IsReady = isReady 
+    });
+  }
+
+  public void SendInputs(uint timestamp, byte validMask, IEnumerable<MatchInput> inputs) {
     int size;
     var inputArray = ArrayUtil.ConvertToArray(inputs, out size);
     if (size <= 0) return;
@@ -39,6 +53,14 @@ public class NetworkClientPlayer {
       InputCount = (uint)size,
       ValidMask = MatchInput.AllValid,
       Inputs = inputArray,
+    }, NetworkReliablity.Unreliable);
+  }
+
+  public void SendState(uint timestamp, MatchState state, MatchInput? latestInput) {
+    Connection.Send(MessageCodes.UpdateState, new ServerStateMessage {
+      Timestamp = timestamp,
+      State = state,
+      LatestInput = latestInput
     }, NetworkReliablity.Unreliable);
   }
 

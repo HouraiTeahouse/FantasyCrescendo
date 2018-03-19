@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -61,11 +62,11 @@ public abstract class NetworkInterface : INetworkInterface {
     IsDisposed = true;
   }
 
-  protected virtual void OnRecieveData(int connectionId, int dataSize) {
+  protected virtual void OnRecieveData(int connectionId, byte[] data, int dataSize) {
     NetworkConnection connection;
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
     var decompressed = ArrayPool<byte>.Shared.Rent(dataSize);
-    CLZF2.Decompress(ReadBuffer, ref decompressed, dataSize);
+    CLZF2.Decompress(data, ref decompressed, dataSize);
     messageDeserializer.Replace(decompressed);
     messageDeserializer.SeekZero();
     MessageHandlers.Execute(connection, messageDeserializer);

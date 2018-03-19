@@ -190,13 +190,10 @@ public class NetworkManager : MonoBehaviour {
   /// </remarks>
   /// <param name="config">the NetworkHostConfig used to start the host.</param>
   /// <returns>an awaitable task for the resultant NetworkHost</returns>
-	public async Task<NetworkHost> StartHost(NetworkHostConfig config) {
-		StartServer(config.ServerConfig);
-		StartClient(config.ClientConfig);
-		await Client.Connect( new NetworkConnectionConfig {
-      IP = "localhost",
-      Port = config.ServerConfig.Port
-    });
+	public NetworkHost StartHost(NetworkHostConfig config) {
+		var server = StartServer(config.ServerConfig) as NetworkGameServer;
+    if (Client != null) StopClient();
+    Client = server.CreateLocalClient();
 		return Host;
 	}
 
