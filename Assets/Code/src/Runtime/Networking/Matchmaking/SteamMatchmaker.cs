@@ -7,14 +7,14 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matchmaking {
 
-public class SteamMatchMaker : IMatchmaker {
+public class SteamMatchmaker : IMatchmaker {
 
   readonly List<LobbyInfo> lobbies;
 
   const string kNameKey = "name";
   const string kOwnerName = "owner_name";
 
-  public SteamMatchMaker() {
+  public SteamMatchmaker() {
     lobbies = new List<LobbyInfo>();
   }
 
@@ -72,7 +72,6 @@ public class SteamMatchMaker : IMatchmaker {
     if (!SteamManager.Initialized) {
       throw new InvalidOperationException("Cannot join Steam lobby if SteamManager is not initalized.");
     }
-    var steamId = new CSteamID(lobby.Id);
     var lobbyEnter = await SteamMatchmaking.JoinLobby(new CSteamID(lobby.Id)).ToTask<LobbyEnter_t>();
     var response = (EChatRoomEnterResponse)lobbyEnter.m_EChatRoomEnterResponse;
     if (response != EChatRoomEnterResponse.k_EChatRoomEnterResponseSuccess) {
