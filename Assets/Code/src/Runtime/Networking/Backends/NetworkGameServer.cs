@@ -105,7 +105,6 @@ public class NetworkGameServer : INetworkServer {
   // Event Handlers
 
   void OnConnect(NetworkConnection connection) {
-    var connId = connection.Id;
     var client = new NetworkClientPlayer(connection, LowestAvailablePlayerID(connection));
     client.Config.PlayerID = client.PlayerID;
     clients[connection] = client;
