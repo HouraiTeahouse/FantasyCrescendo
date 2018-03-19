@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 114636917838261216}
   - component: {fileID: 114397010500727212}
   - component: {fileID: 114209513861547228}
+  - component: {fileID: 114147230044848370}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: EditorOnly
@@ -200,6 +201,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!114 &114147230044848370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996456345168662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52346005b1e41864b9885e9d55896597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ApplicationId: 425238271283429377
+  AutoRegister: 0
+  OptionalSteamID: 774701
 --- !u!114 &114206851257800466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -284,7 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkInterface: HouraiTeahouse.FantasyCrescendo.Networking.UNET.UNETNetworkInterface
   networkStrategy: HouraiTeahouse.FantasyCrescendo.Networking.RollbackStrategy
-  matchmaker: HouraiTeahouse.FantasyCrescendo.Matchmaking.SteamMatchMaker
+  matchmaker: HouraiTeahouse.FantasyCrescendo.Matchmaking.SteamMatchmaker
 --- !u!114 &114423664066748220
 MonoBehaviour:
   m_ObjectHideFlags: 1
