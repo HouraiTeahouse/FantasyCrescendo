@@ -68,6 +68,8 @@ public struct PlayerSelection : IValidatable, INetworkSerializable {
     Pallete = deserializer.ReadByte();
   }
 
+  public CharacterData GetCharacter() => Registry.Get<CharacterData>().Get(CharacterID);
+
   public override string ToString() => $"Selection({CharacterID},{Pallete})";
 
 }

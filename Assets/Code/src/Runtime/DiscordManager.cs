@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +26,7 @@ public class DiscordManager : MonoBehaviour {
   /// any of the Update methods is called the first time.
   /// </summary>
   void Start() {
-    // startTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    startTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     updateTimer = float.MaxValue;
     eventHandlers.readyCallback += Ready;
     eventHandlers.disconnectedCallback += Disconnected;
@@ -46,17 +47,61 @@ public class DiscordManager : MonoBehaviour {
     if (updateTimer < kUpdateInterval) return;
     updateTimer = 0f;
     if (!isReady) return;
-    DiscordRpc.UpdatePresence(new DiscordRpc.RichPresence {
-      state = "In Menus",
-      // details = "Test test test",
+    var presence = new DiscordRpc.RichPresence {
+      state = GetStatus(),
       startTimestamp = startTimestamp,
       largeImageKey = "default",
-      largeImageText = "Large image text test",
-      smallImageKey = "default",
-      smallImageText = "Small image text test",
-      partySize = (int)GameMode.GlobalMaxPlayers,
+      // largeImageText = "Large image text test",
+      partySize = GetPlayerCount(),
       partyMax = (int)GameMode.GlobalMaxPlayers
-    });
+    };
+    var stage = GetSceneData();
+    var character = GetCurrentCharacter();
+    if (character != null) {
+      presence.smallImageKey = character.name;
+      presence.smallImageText = character.LongName;
+    }
+    if (stage != null) {
+      presence.details = stage.Name;
+    }
+    DiscordRpc.UpdatePresence(presence);
+  }
+
+  CharacterData GetCurrentCharacter() {
+    var matchManager = MatchManager.Instance;
+    if (matchManager == null) return null;
+    var config = matchManager.Config;
+    int minLocalPlayer = int.MaxValue;
+    CharacterData data = null;
+    for (var i = 0; i < config.PlayerCount; i++) {
+      var player = config.PlayerConfigs[i];
+      if (!player.IsLocal || player.LocalPlayerID >= minLocalPlayer) continue;
+      var character = player.Selection.GetCharacter();
+      if (character == null) continue;
+      data = character;
+      minLocalPlayer = player.LocalPlayerID;
+    }
+    return data;
+  }
+
+  SceneData GetSceneData() {
+    var matchManager = MatchManager.Instance;
+    if (matchManager == null) return null;
+    return Registry.Get<SceneData>().Get(matchManager.Config.StageID);
+  }
+
+  int GetPlayerCount() {
+    var matchManager = MatchManager.Instance;
+    if (matchManager == null) return 0;
+    return matchManager.Config.PlayerCount;
+  }
+
+  string GetStatus() {
+#if UNITY_EDITOR
+    return "Developing game";
+#else
+    return MatchManager.Instance == null ? "In Menus" : "In Game";
+#endif
   }
 
   /// <summary>
