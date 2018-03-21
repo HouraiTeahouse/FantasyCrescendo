@@ -719,22 +719,23 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Inbetween bone
       rotation in copied configuration does not match rotation in animation file:\n\t'L_ball'
-      : rotation error = 1.417114 deg\n\t'R_ball' : rotation error = 1.408250 deg\n"
+      : rotation error = 1.417101 deg\n\t'R_ball' : rotation error = 40.945919 deg\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar to
       improve retargeting quality.\n\t'Spine_1' is inbetween humanoid transforms and
-      has rotation animation that will be discarded.\n\t'R_Shoulder' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'R_forearm_roll'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'R_thumb1'
-      has translation animation that will be discarded.\n\t'R_index1' has translation
-      animation that will be discarded.\n\t'R_middle1' has translation animation that
-      will be discarded.\n\t'R_ring1' has translation animation that will be discarded.\n\t'R_pinkie1'
-      has translation animation that will be discarded.\n\t'L_Shoulder' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'L_forearm_roll'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'L_ball'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'R_ball'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+      has rotation animation that will be discarded.\n\t'Head' has translation animation
+      that will be discarded.\n\t'R_Shoulder' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\t'R_forearm_roll' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'L_Shoulder'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'L_forearm_roll'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'L_thumb1'
+      has translation animation that will be discarded.\n\t'L_index1' has translation
+      animation that will be discarded.\n\t'L_middle1' has translation animation that
+      will be discarded.\n\t'L_ring1' has translation animation that will be discarded.\n\t'L_pinkie1'
+      has translation animation that will be discarded.\n\t'L_ball' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'R_ball' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
