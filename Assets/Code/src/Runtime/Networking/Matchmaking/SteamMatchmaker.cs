@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -11,8 +12,8 @@ public class SteamMatchmaker : IMatchmaker {
 
   readonly List<LobbyInfo> lobbies;
 
-  const string kNameKey = "name";
-  const string kOwnerName = "owner_name";
+  public const string kNameKey = "name";
+  public const string kOwnerName = "owner_name";
 
   public SteamMatchmaker() {
     lobbies = new List<LobbyInfo>();
@@ -20,7 +21,7 @@ public class SteamMatchmaker : IMatchmaker {
 
   public async Task<IEnumerable<LobbyInfo>> GetLobbies() {
     if (!SteamManager.Initialized) {
-      throw new InvalidOperationException("Cannot fetch lobbies if SteamManager is not initalized.");
+      return Enumerable.Empty<LobbyInfo>();
     }
     var lobbyList = await SteamMatchmaking.RequestLobbyList().ToTask<LobbyMatchList_t>();
     lobbies.Clear();
