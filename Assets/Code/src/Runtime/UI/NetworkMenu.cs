@@ -20,7 +20,7 @@ public class NetworkMenu : MonoBehaviour {
 
   int PortValue => int.Parse(Port.text);
 
-  public void StartHost() {
+  public async void StartHost() {
     var networkManager = NetworkManager.Instance;
     var hostConfig = new NetworkHostConfig {
       ServerConfig = new NetworkServerConfig  {
@@ -30,14 +30,14 @@ public class NetworkMenu : MonoBehaviour {
     Debug.Log($"Started host on {PortValue}");
     try {
       SetActive(ConnectingScreen);
-      networkManager.StartHost(hostConfig);
+      await networkManager.StartHost(hostConfig);
+      SetActive(SuccessScreen);
     } catch (NetworkingException exception) {
       networkManager.StopHost();
       SetActive(ErrorScreen);
       ErrorText.text = exception.Message;
       return;
     }
-    SetActive(SuccessScreen);
   }
 
   public async void StartClient() {
@@ -52,6 +52,7 @@ public class NetworkMenu : MonoBehaviour {
           IP = IP.text,
           Port = PortValue
         });
+      SetActive(SuccessScreen);
     } catch (NetworkingException exception) {
       networkManager.StopClient();
       SetActive(ErrorScreen);
@@ -59,7 +60,6 @@ public class NetworkMenu : MonoBehaviour {
       Debug.LogError(exception);
       return;
     }
-    SetActive(SuccessScreen);
   }
 
   public void ReturnToMainScreen() {

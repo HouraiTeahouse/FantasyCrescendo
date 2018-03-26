@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Steamworks;
+using HouraiTeahouse.FantasyCrescendo.Matchmaking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -52,15 +53,15 @@ public class NetworkInterfaceConfiguration {
   public NetworkInterfaceType Type;
   public int Port;
 
-  public ELobbyType ServerSteamLobbyType;
-  public int ServerSteamLobbyMaxSize;
+  public ELobbyType ServerSteamLobbyType = ELobbyType.k_ELobbyTypePublic;
+  public int ServerSteamLobbyMaxSize = (int)GameMode.GlobalMaxPlayers;
 }
 
 public class NetworkConnectionConfig {
   public string IP;
   public int Port;
 
-  public CSteamID? LobbyID;
+  public LobbyInfo LobbyInfo;
 }
 
 public interface INetworkInterface : IDisposable {

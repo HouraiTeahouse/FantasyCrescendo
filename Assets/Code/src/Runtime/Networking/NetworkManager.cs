@@ -158,8 +158,11 @@ public class NetworkManager : MonoBehaviour {
   /// </remarks>
   /// <param name="config">the NetworkServerConfig used to start the server.</param>
   /// <returns>the NetworkServer created or fetched.</returns>
-	public INetworkServer StartServer(NetworkServerConfig config) {
-		return Server ?? (Server = new NetworkGameServer(NetworkInterfaceType, config));
+	public async Task<INetworkServer> StartServer(NetworkServerConfig config) {
+    if (Server != null) return Server;
+		Server = new NetworkGameServer(NetworkInterfaceType, config);
+    await Server.Initialize();
+    return Server;
 	}
 
   /// <summary>
@@ -190,8 +193,8 @@ public class NetworkManager : MonoBehaviour {
   /// </remarks>
   /// <param name="config">the NetworkHostConfig used to start the host.</param>
   /// <returns>an awaitable task for the resultant NetworkHost</returns>
-	public NetworkHost StartHost(NetworkHostConfig config) {
-		var server = StartServer(config.ServerConfig) as NetworkGameServer;
+	public async Task<NetworkHost> StartHost(NetworkHostConfig config) {
+		var server = await StartServer(config.ServerConfig) as NetworkGameServer;
     if (Client != null) StopClient();
     Client = server.CreateLocalClient();
 		return Host;

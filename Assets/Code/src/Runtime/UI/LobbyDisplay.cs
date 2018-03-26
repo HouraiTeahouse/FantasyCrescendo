@@ -1,17 +1,20 @@
-﻿using System.Collections;
+﻿using HouraiTeahouse.FantasyCrescendo.Networking;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matchmaking {
 
-public class LobbyDisplay : MonoBehaviour, IStateView<LobbyInfo> {
+public class LobbyDisplay : MonoBehaviour, IStateView<LobbyInfo>, IStateView<MatchmakerController> {
 
   public LobbyInfo lobbyInfo;
 
   public Text Name;
   public Text Owner;
   public Text Players;
+
+  MatchmakerController controller;
 
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -32,10 +35,19 @@ public class LobbyDisplay : MonoBehaviour, IStateView<LobbyInfo> {
     }
   }
 
+  public async void JoinLobby() {
+    if (controller == null || lobbyInfo == null) return;
+    await controller.JoinLobby(lobbyInfo);
+  }
+
   public void ApplyState(LobbyInfo lobby) {
     lobbyInfo = lobby;
     name = lobby.Id.ToString();
     UpdateUI(lobbyInfo);
+  }
+
+  public void ApplyState(MatchmakerController controller) {
+    this.controller = controller;
   }
 
 }

@@ -15,12 +15,11 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   Callback<P2PSessionRequest_t> callbackP2PSesssionRequest;
   Callback<P2PSessionConnectFail_t> callbackP2PConnectFail;
   Callback<LobbyChatUpdate_t> callbackLobbyChatUpdate;
-  Callback<LobbyEnter_t> callbackLobbyEnter;
   
   const int kMaxMessageSize = 1200;
   int lastConnectionId;
-  CSteamID? currentLobbyId;
-  CSteamID? lobbyOwner;
+  CSteamID currentLobbyId;
+  CSteamID lobbyOwner;
 
   public SteamNetworkInterface() : base(kMaxMessageSize) {
     ValidateSteamInitalized();
@@ -35,38 +34,42 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     callbackP2PSesssionRequest = Callback<P2PSessionRequest_t>.Create(OnP2PSessionRequest);
     callbackP2PConnectFail = Callback<P2PSessionConnectFail_t>.Create(OnP2PSessionConnectFail);
     callbackLobbyChatUpdate = Callback<LobbyChatUpdate_t>.Create(OnLobbyChatUpdate);
-    callbackLobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEnter);
 
-    if (config.Type == NetworkInterfaceType.Server) {
-      var type = config.ServerSteamLobbyType;
-      var size = config.ServerSteamLobbyMaxSize;
-      var result = await SteamMatchmaking.CreateLobby(type, size).ToTask<LobbyCreated_t>();
-      
-      if (!SteamUtility.IsError(result.m_eResult)) {
-        currentLobbyId = new CSteamID(result.m_ulSteamIDLobby);
-      } else {
-        throw SteamUtility.CreateError(result.m_eResult);
-      }
+    if (config.Type != NetworkInterfaceType.Server) return;
+    var type = config.ServerSteamLobbyType;
+    var size = config.ServerSteamLobbyMaxSize;
+    var result = await SteamMatchmaking.CreateLobby(type, size).ToTask<LobbyCreated_t>();
+    
+    if (SteamUtility.IsError(result.m_eResult)) {
+      throw SteamUtility.CreateError(result.m_eResult);
     }
+    var lobbyEnter = await SteamUtility.WaitFor<LobbyEnter_t>();
+    currentLobbyId = new CSteamID(lobbyEnter.m_ulSteamIDLobby);
+    Debug.Log($"[Steam] Created server lobby ID: {currentLobbyId}");
+    SetLobbyData(currentLobbyId);
   }
 
   public override async Task<NetworkConnection> Connect(NetworkConnectionConfig config) {
     ValidateSteamInitalized();
-    if (config.LobbyID == null) {
-      throw new ArgumentException("Cannot connect to Steam except through a lobby.");
+    if (config.LobbyInfo == null) {
+      throw new ArgumentException("Cannot connect to Steam networking except through a lobby.");
     }
-    var lobbyEnter = await SteamMatchmaking.JoinLobby(config.LobbyID.Value).ToTask<LobbyEnter_t>();
+    var id = new CSteamID(config.LobbyInfo.Id);
+    Debug.Log($"[Steam] Joining lobby: {config.LobbyInfo.Id}");
+    var lobbyEnter = await SteamMatchmaking.JoinLobby(id).ToTask<LobbyEnter_t>();
     var responseCode = (EChatRoomEnterResponse)lobbyEnter.m_EChatRoomEnterResponse;
-    if (responseCode == EChatRoomEnterResponse.k_EChatRoomEnterResponseSuccess) {
-      currentLobbyId = new CSteamID(lobbyEnter.m_ulSteamIDLobby);
-      lobbyOwner = SteamMatchmaking.GetLobbyOwner(currentLobbyId.Value);
-      // Send initial message to process NAT traversal
-      SteamNetworking.SendP2PPacket(lobbyOwner.Value, null, 0, EP2PSend.k_EP2PSendReliable);
-      var connection = AddConnection(lobbyOwner.Value);
-      await connection.ConnectTask.Task;
+    if (responseCode != EChatRoomEnterResponse.k_EChatRoomEnterResponseSuccess) {
+      throw new NetworkingException($"Could not join lobby {lobbyEnter.m_ulSteamIDLobby}. Error: {responseCode}.");
+    }
+    await SteamUtility.WaitFor<LobbyDataUpdate_t>();
+    currentLobbyId = new CSteamID(lobbyEnter.m_ulSteamIDLobby);
+    lobbyOwner = SteamMatchmaking.GetLobbyOwner(currentLobbyId);
+    var connection = AddConnection(lobbyOwner);
+    var connectTask = connection.ConnectTask.Task;
+    if (await Task.WhenAny(connectTask, Task.Delay(20000)) == connectTask) {
       return connection;
     } else {
-      throw new Exception($"Could not join lobby {lobbyEnter.m_ulSteamIDLobby}. Error: {responseCode}.");
+      throw new NetworkingException("Could not connect to lobby host. Timeout: 20 seconds passed.");
     }
   }
 
@@ -82,13 +85,15 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     uint dataSize;
     CSteamID userId;
     while (SteamNetworking.ReadP2PPacket(ReadBuffer, (uint)ReadBuffer.Length, out dataSize, out userId)) {
-      OnRecieveData(connectionIds[userId], ReadBuffer, (int)dataSize);
+      int connectionId;
+      if (!connectionIds.TryGetValue(userId, out connectionId)) continue;
+      OnRecieveData(connectionId, ReadBuffer, (int)dataSize);
     }
   }
 
   public override void Disconnect(int connectionId) {
     ValidateSteamInitalized();
-    if (currentLobbyId != null) {
+    if (currentLobbyId != CSteamID.Nil) {
       CloseAllConnections();
     }
   }
@@ -103,46 +108,52 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   void OnP2PSessionRequest(P2PSessionRequest_t evt) {
     var id = evt.m_steamIDRemote;
     if (ExpectingClient(id)) {
-      AddConnection(id);
+      OnNewConnection(id);
+      Debug.Log($"[Steam] New P2P Connection with player: {id}");
       // Send response packet to ack the connection creation
       SteamNetworking.SendP2PPacket(id, null, 0, EP2PSend.k_EP2PSendReliable);
     } else {
-      Debug.LogWarning("Unexpected session request from " + id);
+      Debug.LogWarning("[Steam] Unexpected session request from " + id);
     }
   }
 
-  void OnP2PSessionConnectFail(P2PSessionConnectFail_t evt) => OnDisconnect(evt.m_steamIDRemote);
-
-  void OnLobbyEnter(LobbyEnter_t evt) {
-    var lobbyId = new CSteamID(evt.m_ulSteamIDLobby);
-    if (SteamMatchmaking.GetLobbyOwner(lobbyId) == SteamUser.GetSteamID()) {
-      var success = SteamMatchmaking.SetLobbyData(lobbyId, "name", $"{SteamFriends.GetPersonaName()}'s Lobby");
-      success |= SteamMatchmaking.SetLobbyData(lobbyId, "owner_name", SteamFriends.GetPersonaName());
-      if (!success) {
-        Debug.LogWarning("Error setting lobby info.");
-      }
-    }
-  }
+  void OnP2PSessionConnectFail(P2PSessionConnectFail_t evt)  {
+    Debug.Log($"P2P Failed! {(EP2PSessionError)evt.m_eP2PSessionError}");
+    OnDisconnect(evt.m_steamIDRemote);
+  } 
 
   void OnLobbyChatUpdate(LobbyChatUpdate_t evt) {
-    if (currentLobbyId?.m_SteamID != evt.m_ulSteamIDLobby) return;
+    currentLobbyId = new CSteamID(evt.m_ulSteamIDLobby);
     var stateChange = (EChatMemberStateChange)evt.m_rgfChatMemberStateChange;
     if (stateChange == 0) {
       return;
     } else if ((stateChange | EChatMemberStateChange.k_EChatMemberStateChangeEntered) != 0) {
+      Debug.Log($"[Steam] Lobby User Join: {evt.m_ulSteamIDUserChanged}");
       OnChatJoin(evt);
     } else {
+      Debug.Log($"[Steam] Lobby User Leave: {evt.m_ulSteamIDUserChanged}");
       OnDisconnect(new CSteamID(evt.m_ulSteamIDUserChanged));
     }
   }
 
   // Private Utility Functions
 
+  void SetLobbyData(CSteamID lobbyId) {
+    var success = SteamMatchmaking.SetLobbyData(lobbyId, "name", $"{SteamFriends.GetPersonaName()}'s Lobby");
+    success |= SteamMatchmaking.SetLobbyData(lobbyId, "owner_name", SteamFriends.GetPersonaName());
+    if (!success) {
+      Debug.LogWarning("Error setting lobby info.");
+    }
+  }
+
   void OnChatJoin(LobbyChatUpdate_t evt) {
+    var lobby = new CSteamID(evt.m_ulSteamIDLobby);
     var user = new CSteamID(evt.m_ulSteamIDUserChanged);
     if (user == SteamUser.GetSteamID()) return; // Ignore join events involving self.
-    Assert.IsTrue(!connectionIds.ContainsKey(user));
-    AddConnection(user);
+    if (SteamMatchmaking.GetLobbyOwner(lobby) != SteamUser.GetSteamID())  return;
+    Debug.Log("Server sending initial connection packet.");
+    OnNewConnection(user);
+    SteamNetworking.SendP2PPacket(user, null, 0, EP2PSend.k_EP2PSendReliable);
   }
 
   void OnDisconnect(CSteamID user) {
@@ -159,24 +170,38 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   }
 
   bool ExpectingClient(CSteamID id) {
-    if (Config == null || currentLobbyId == null) return false;
+    if (Config == null || currentLobbyId == CSteamID.Nil) return false;
     if (Config.Type == NetworkInterfaceType.Client) {
       // Only allow the lobby owner (the host/server) to connect to you if you are a client
       return lobbyOwner == id;
     } else {
       // Allow any user in the lobby to connect to the server
-      var playerCount = SteamMatchmaking.GetNumLobbyMembers(currentLobbyId.Value);
+      var playerCount = SteamMatchmaking.GetNumLobbyMembers(currentLobbyId);
       for (var i = 0; i < playerCount; i++) {
-        if (SteamMatchmaking.GetLobbyMemberByIndex(currentLobbyId.Value, i) == id) return true;
+        if (SteamMatchmaking.GetLobbyMemberByIndex(currentLobbyId, i) == id) return true;
       }
       return false;
     }
   }
 
   NetworkConnection AddConnection(CSteamID user) {
-    connectionUsers[lastConnectionId] = user;
-    connectionIds[user] = lastConnectionId;
-    return OnNewConnection(lastConnectionId++);
+    var connectionId = lastConnectionId;
+    if (!connectionIds.TryGetValue(user, out connectionId)) {
+      connectionId = lastConnectionId++;
+    }
+    connectionUsers[connectionId] = user;
+    connectionIds[user] = connectionId;
+    return AddConnection(connectionId);
+  }
+
+  NetworkConnection OnNewConnection(CSteamID user) {
+    var connectionId = lastConnectionId;
+    if (!connectionIds.TryGetValue(user, out connectionId)) {
+      connectionId = lastConnectionId++;
+    }
+    connectionUsers[connectionId] = user;
+    connectionIds[user] = connectionId;
+    return OnNewConnection(connectionId);
   }
 
   void RemoveConnection(CSteamID user) {
@@ -188,11 +213,10 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   }
 
   void CloseAllConnections() {
-    var lobby = currentLobbyId.Value;
-    SteamMatchmaking.LeaveLobby(lobby);
-    var playerCount = SteamMatchmaking.GetNumLobbyMembers(lobby);
+    SteamMatchmaking.LeaveLobby(currentLobbyId);
+    var playerCount = SteamMatchmaking.GetNumLobbyMembers(currentLobbyId);
     for (var i = 0; i < playerCount; i++) {
-      var id = SteamMatchmaking.GetLobbyMemberByIndex(lobby, i);
+      var id = SteamMatchmaking.GetLobbyMemberByIndex(currentLobbyId, i);
       SteamNetworking.CloseP2PSessionWithUser(id);
     }
   }

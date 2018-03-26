@@ -1,6 +1,7 @@
 using HouraiTeahouse.FantasyCrescendo.Matches;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -14,6 +15,8 @@ public interface INetworkServer : IDisposable {
   event Action<NetworkClientPlayer> PlayerAdded;
   event Action<NetworkClientPlayer> PlayerUpdated;
   event Action<int> PlayerRemoved;
+
+  Task Initialize();
 
   // Reliable
   void FinishMatch(MatchResult result);

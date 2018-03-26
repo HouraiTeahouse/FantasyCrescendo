@@ -32,7 +32,7 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
     foreach (var character in Registry.Get<CharacterData>()) {
       var selectable = character.IsSelectable && character.IsVisible;
       if (!Debug.isDebugBuild) selectable &= !character.IsDebug;
-      Debug.Log($"Charcter: {character}. Selectable: {selectable}");
+      Debug.Log($"Character: {character}. Selectable: {selectable}");
       if (selectable) {
         characters.Add(character);
       }
@@ -99,7 +99,6 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
       if (Characters[i].Id != currentId) continue;
       var newIndex = backwards ? i - 1 : i + 1;
       newIndex = (newIndex % length + length) % length; // Modulo that handles negative indicies
-      Debug.Log(newIndex);
       return Characters[newIndex].Id;
     }
     return Characters[0].Id;
@@ -122,11 +121,9 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
       bool present = false;
       for (byte j = 0; j < players.Length; j++) {
         if (!players[j].IsActive) continue;
-        Debug.LogWarning($"{newSelection} {players[j].Config.Selection}");
         present |= players[j].Config.Selection.Equals(newSelection);
       }
       if (!present) {
-        Debug.Log($"{newSelection.Pallete} {present}");
         return newSelection;
       }
     }

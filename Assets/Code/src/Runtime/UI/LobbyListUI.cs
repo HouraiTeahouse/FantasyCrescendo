@@ -44,7 +44,7 @@ public class LobbyListUI : MonoBehaviour, IStateView<IEnumerable<LobbyInfo>> {
       display.ApplyState(lobby);
       index++;
     }
-    for (; index < displays.Count; index++) {
+    for (; index < displays?.Count; index++) {
       displays[index].gameObject.SetActive(false);
     }
   }

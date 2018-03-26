@@ -1,6 +1,7 @@
 using HouraiTeahouse.FantasyCrescendo.Matches;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -19,17 +20,24 @@ public class NetworkGameServer : INetworkServer {
 
   Dictionary<NetworkConnection, NetworkClientPlayer> clients;
 
+  public readonly NetworkServerConfig Config;
   public int ClientCount => NetworkServer.connections.Count; 
 
   public NetworkGameServer(Type interfaceType, NetworkServerConfig config) {
+    Config = config;
     clients = new Dictionary<NetworkConnection, NetworkClientPlayer>();
     interfaces = new List<INetworkInterface>();
     var networkInterface = (INetworkInterface)Activator.CreateInstance(interfaceType);
-    networkInterface.Initialize(new NetworkInterfaceConfiguration {
-      Type = NetworkInterfaceType.Server,
-      Port = config.Port
-    });
     AddNetworkInterface(networkInterface);
+  }
+
+  public async Task Initialize() {
+    foreach (var networkInterface in interfaces) {
+      await networkInterface.Initialize(new NetworkInterfaceConfiguration {
+        Type = NetworkInterfaceType.Server,
+        Port = Config.Port
+      });
+    }
   }
 
   void AddNetworkInterface(INetworkInterface networkInterface) {

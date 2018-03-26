@@ -49,7 +49,9 @@ public class NetworkGameClient : INetworkClient {
       return;
     }
     connectionTask = new TaskCompletionSource<object>();
+    Debug.Log("Start connection");
     Connection = await NetworkInterface.Connect(config);
+    Debug.Log("Connection complete!");
     InitConnection(Connection);
   }
 

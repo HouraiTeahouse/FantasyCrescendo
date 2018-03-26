@@ -1,8 +1,10 @@
 ﻿using Steamworks;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo.Networking.Steam {
+namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public static class SteamUtility {
 
@@ -28,6 +30,26 @@ public static class SteamUtility {
   public static Exception CreateError(EResult result) {
     if (result == EResult.k_EResultOK) return null;
     return new NetworkingException($"Steam Networking Error: {result}");
+  }
+
+  public static Task<T> ToTask<T>(this SteamAPICall_t apiCall) {
+    var completionSource = new TaskCompletionSource<T>();
+    CallResult<T>.Create((callResult, failure) => {
+      if (failure) {
+        completionSource.TrySetException(new NetworkingException("Steam Networking Exception."));
+      } else {
+        completionSource.TrySetResult(callResult);
+      }
+    }).Set(apiCall);
+    return completionSource.Task;
+  }
+
+  public static async Task<T> WaitFor<T>() {
+    var completionSource = new TaskCompletionSource<T>();
+    Callback<T>.Create(result => {
+      completionSource.TrySetResult(result);
+    });
+    return await completionSource.Task;
   }
 
 }
