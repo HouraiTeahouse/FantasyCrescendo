@@ -89,7 +89,7 @@ MonoBehaviour:
     Data:
       Timeline: {fileID: 11400000, guid: 6edee2da42f8e7948a561b93c6588ab7, type: 2}
       AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
-      Length: 1
+      Length: 0.5
       MinMoveSpeed: 5
       MaxMoveSpeed: 5
       RotationOffset: 90
@@ -100,26 +100,26 @@ MonoBehaviour:
   - Name: RunBrake
     Data:
       Timeline: {fileID: 11400000, guid: cfa9092820a34d14c8b8c186d5311c38, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
-      Length: 0.125
+      AnimationClip: {fileID: 7400000, guid: 601f587de7485bb4ca66764c36ece344, type: 3}
+      Length: 0.25000003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: RunTurn
     Data:
       Timeline: {fileID: 11400000, guid: a933f65d2f9b9fd4480ab5c1e4aa906d, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
-      Length: 0.125
+      AnimationClip: {fileID: 7400000, guid: 10ce163cdc9c3da48aa64ccabec322f3, type: 3}
+      Length: 0.25
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 5
       KnockbackResistance: 0
   - Name: Jump
     Data:
