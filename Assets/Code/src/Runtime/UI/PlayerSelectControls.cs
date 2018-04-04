@@ -20,8 +20,8 @@ public class PlayerSelectControls : MonoBehaviour {
       bool changed = !config.Selection.Equals(value.Selection);
       config = value;
       config.PlayerID = PlayerID;
-      if (changed && IsActive && Config.IsLocal) {
-        PlayerUpdated?.Invoke(PlayerID, Config);
+      if (changed) {
+        InvokePlayerUpdated();
       }
       UpdatePlayerInfo();
     }
@@ -65,7 +65,7 @@ public class PlayerSelectControls : MonoBehaviour {
     bool changed = Config.Selection.CharacterID != newId;
     config.Selection.CharacterID = newId;
     if (changed) {
-      PlayerUpdated?.Invoke(PlayerID, config);
+      InvokePlayerUpdated();
     }
     UpdatePlayerInfo();
   }
@@ -76,7 +76,7 @@ public class PlayerSelectControls : MonoBehaviour {
     bool changed = !Config.Selection.Equals(newSelection);
     config.Selection = newSelection;
     if (changed) {
-      PlayerUpdated?.Invoke(PlayerID, config);
+      InvokePlayerUpdated();
     }
     UpdatePlayerInfo();
   }
@@ -90,6 +90,13 @@ public class PlayerSelectControls : MonoBehaviour {
     IsActive = !IsActive;
     UpdatePlayerInfo();
   }
+
+  void InvokePlayerUpdated() {
+    if (IsActive && Config.IsLocal) {
+      PlayerUpdated?.Invoke(PlayerID, config);
+    }
+  }
+
 
 }
 

@@ -1,6 +1,7 @@
 using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using System.Linq;
+using System.Text;
 using System.Collections.Generic;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
@@ -84,6 +85,15 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
     for (var i = 0; i < PlayerConfigs.Length; i++) {
       PlayerConfigs[i] = deserializer.Read<PlayerConfig>();
     }
+  }
+
+  public override string ToString() {
+    var builder = new StringBuilder($"(MatchConfig {{{PlayerCount}}}: ");
+    for (var i = 0; i < PlayerCount; i++) {
+      builder.Append(PlayerConfigs[i].ToString()).Append(" ");
+    }
+    builder.Append(")");
+    return builder.ToString();
   }
 
 }

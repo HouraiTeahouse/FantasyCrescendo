@@ -14,6 +14,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 public abstract class Match {
 
   public async Task<MatchResult> RunMatch(MatchConfig config, bool loadScene = true) {
+    Debug.Log($"Running Match. Config: {config}");
     await DataLoader.LoadTask.Task;
     Task sceneLoad = Task.CompletedTask;
     if (loadScene) {
@@ -30,7 +31,6 @@ public abstract class Match {
       await LoadingScreen.Await(InitializeMatch(matchManager, config));
       await LoadingScreen.AwaitAll();
     } catch (Exception e) {
-      Debug.LogError("Error Initializing Match");
       Debug.LogException(e);
     }
     matchManager.enabled = true;

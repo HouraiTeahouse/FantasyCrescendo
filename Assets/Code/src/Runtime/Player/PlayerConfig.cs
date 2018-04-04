@@ -38,6 +38,8 @@ public struct PlayerConfig : IValidatable, INetworkSerializable {
     Selection = deserializer.Read<PlayerSelection>();
   }
 
+  public override string ToString() => Selection.ToString();
+
 }
 
 /// <summary>
