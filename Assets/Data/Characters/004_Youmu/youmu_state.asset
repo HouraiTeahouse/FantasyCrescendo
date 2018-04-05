@@ -263,7 +263,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 3
-      DirectionMode: 1
+      DirectionMode: 5
       KnockbackResistance: 0
   - Name: EscapeBackward
     Data:
@@ -275,7 +275,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 3
-      DirectionMode: 5
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Fall
     Data:
