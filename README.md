@@ -11,10 +11,6 @@
     </a>
 </p>
 
-An Experimental Rewrite of Fantasy Crescendo from the ground up to support
-various types of net-enabled gameplay.
-
-## About
 *Fantasy Crescendo* is a collaborative community project to create a *[Touhou Project](https://en.touhouwiki.net/wiki/Touhou_Project)* fangame akin to that of Super Smash Bros.
 
 This project does not only consist of code contributions, and many of the assets included are custom art, music, sound effects, and 3D designs created by community submissions. For a full list of credits, see the [credits](./CREDITS.md) file in the repository.
