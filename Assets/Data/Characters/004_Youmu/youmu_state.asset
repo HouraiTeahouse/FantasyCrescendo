@@ -179,7 +179,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Shield.Perfect
     Data:
@@ -191,7 +191,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Shield.Main
     Data:
@@ -203,7 +203,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Shield.Off
     Data:
@@ -215,7 +215,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Shield.Broken
     Data:
@@ -227,7 +227,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Shield.Stunned
     Data:
@@ -239,7 +239,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Escape
     Data:
