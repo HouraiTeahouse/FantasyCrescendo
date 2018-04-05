@@ -8,12 +8,13 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters.UI {
 
 public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, IStateView<PlayerConfig> {
 
-  public RawImage Image;
+  public Graphic Image;
+  public AspectRatioFitter Fitter;
   public Vector2 RectBias;
   public bool Cropped;
   public Color DisabledTint = Color.grey;
 
-  Rect CropRect;
+  public Rect CropRect;
   Color DefaultColor;
   RectTransform RectTransform;
 
@@ -34,13 +35,29 @@ public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, ISta
     var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
     if (character == null) return;
     var portrait = await character.Portraits[(int)selection.Pallete % character.Portraits.Count].LoadAsync();
+    SetImage(portrait);
+    Image.color = (character.IsSelectable && character.IsVisible) ? DefaultColor : DisabledTint;
+    Image.enabled = true;
+    if (Fitter != null) {
+      Fitter.aspectRatio = GetAspectRatio(GetPixelRect(portrait.texture));
+    }
+    var rawImage = Image as RawImage;
+    if (rawImage == null) return;
     var texture = portrait.texture;
     CropRect = Cropped ? UVToPixelRect(character.PortraitCropRect, texture) : GetPixelRect(texture);
     CropRect.position += Vector2.Scale(RectBias, GetTextureSize(texture));
-    Image.texture = portrait.texture;
-    Image.color = (character.IsSelectable && character.IsVisible) ? DefaultColor : DisabledTint;
-    Image.enabled = true;
+    rawImage.texture = portrait.texture;
     SetRect();
+  }
+
+  void SetImage(Sprite image) {
+    var uiImage = Image as Image;
+    var rawImage = Image as RawImage;
+    if (uiImage != null) {
+      uiImage.sprite = image;
+    } else if (rawImage != null) {
+      rawImage.texture = image.texture;
+    }
   }
 
   public async void ApplyState(PlayerConfig config) => await Initialize(config);
@@ -48,16 +65,17 @@ public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, ISta
   protected override void OnRectTransformDimensionsChange() => SetRect();
 
   void SetRect() {
-    if (RectTransform == null || Image == null || Image.texture == null) return;
+    var rawImage = Image as RawImage;
+    if (RectTransform == null || rawImage == null || rawImage.texture == null) return;
     Vector2 size = RectTransform.rect.size;
     float aspect = size.x / size.y;
-    Texture texture = Image.texture;
+    Texture texture = rawImage.texture;
     Rect imageRect = EnforceAspect(CropRect, aspect);
     if (imageRect.width > texture.width || imageRect.height > texture.height) {
       imageRect = RestrictRect(imageRect, texture.width, texture.height, aspect);
       imageRect.center = GetTextureCenter(texture);
     }
-    Image.uvRect = PixelToUVRect(imageRect, texture);
+    rawImage.uvRect = PixelToUVRect(imageRect, texture);
   }
 
   Rect PixelToUVRect(Rect pixelRect, Texture texture) {
@@ -71,7 +89,6 @@ public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, ISta
     var size = GetTextureSize(texture);
     return new Rect(Vector2.Scale(size, uvRect.position), Vector2.Scale(size, uvRect.size));
   }
-
 
   Rect GetPixelRect(Texture texture) => new Rect(0, 0, texture.width, texture.height);
   Vector2 GetTextureSize(Texture texture) => new Vector2(texture.width, texture.height);
