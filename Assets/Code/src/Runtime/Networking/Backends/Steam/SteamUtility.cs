@@ -32,7 +32,7 @@ public static class SteamUtility {
     return new NetworkingException($"Steam Networking Error: {result}");
   }
 
-  public static Task<T> ToTask<T>(this SteamAPICall_t apiCall) {
+  public static async Task<T> ToTask<T>(this SteamAPICall_t apiCall) {
     var completionSource = new TaskCompletionSource<T>();
     CallResult<T>.Create((callResult, failure) => {
       if (failure) {
@@ -41,14 +41,12 @@ public static class SteamUtility {
         completionSource.TrySetResult(callResult);
       }
     }).Set(apiCall);
-    return completionSource.Task;
+    return await completionSource.Task;
   }
 
   public static async Task<T> WaitFor<T>() {
     var completionSource = new TaskCompletionSource<T>();
-    Callback<T>.Create(result => {
-      completionSource.TrySetResult(result);
-    });
+    Callback<T>.Create(result => completionSource.TrySetResult(result));
     return await completionSource.Task;
   }
 

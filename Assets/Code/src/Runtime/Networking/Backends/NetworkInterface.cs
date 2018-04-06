@@ -88,7 +88,7 @@ public abstract class NetworkInterface : INetworkInterface {
   protected virtual NetworkConnection OnNewConnection(int connectionId) {
     var connection = AddConnection(connectionId);
     connection.Status = ConnectionStatus.Connected;
-    if (connection.ConnectTask.TrySetResult(new object())) {
+    if (connection.ConnectTask.TrySetResult(null)) {
       OnPeerConnected?.Invoke(connection);
     }
     return connection;

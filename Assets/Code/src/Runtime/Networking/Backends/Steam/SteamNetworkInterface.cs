@@ -31,6 +31,7 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   public override async Task Initialize(NetworkInterfaceConfiguration config) {
     ValidateSteamInitalized();
     await base.Initialize(config);
+    Debug.Log($"[Steam] Steam User ID: {SteamUser.GetSteamID()}");
     callbackP2PSesssionRequest = Callback<P2PSessionRequest_t>.Create(OnP2PSessionRequest);
     callbackP2PConnectFail = Callback<P2PSessionConnectFail_t>.Create(OnP2PSessionConnectFail);
     callbackLobbyChatUpdate = Callback<LobbyChatUpdate_t>.Create(OnLobbyChatUpdate);
@@ -64,9 +65,13 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     await SteamUtility.WaitFor<LobbyDataUpdate_t>();
     currentLobbyId = new CSteamID(lobbyEnter.m_ulSteamIDLobby);
     lobbyOwner = SteamMatchmaking.GetLobbyOwner(currentLobbyId);
+    // Send initial connection packet.
+    Debug.Log($"[Steam] Sending initial connection packet to lobby owner {lobbyOwner}...");
+    SendPacket(lobbyOwner, null, 0);
     var connection = AddConnection(lobbyOwner);
     var connectTask = connection.ConnectTask.Task;
     if (await Task.WhenAny(connectTask, Task.Delay(20000)) == connectTask) {
+      Debug.Log("[Steam] Connected to host");
       return connection;
     } else {
       throw new NetworkingException("Could not connect to lobby host. Timeout: 20 seconds passed.");
@@ -77,7 +82,7 @@ public sealed class SteamNetworkInterface : NetworkInterface {
                                    NetworkReliablity reliability) {
     ValidateSteamInitalized();
     EP2PSend ep2p = reliability == NetworkReliablity.Reliable ? EP2PSend.k_EP2PSendReliable : EP2PSend.k_EP2PSendUnreliable;
-    SteamNetworking.SendP2PPacket(connectionUsers[connectionId], buffer, (uint)count, ep2p);
+    SendPacket(connectionUsers[connectionId], buffer, (uint)count, ep2p);
   }
 
   public override void Update() {
@@ -87,6 +92,7 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     while (SteamNetworking.ReadP2PPacket(ReadBuffer, (uint)ReadBuffer.Length, out dataSize, out userId)) {
       int connectionId;
       if (!connectionIds.TryGetValue(userId, out connectionId)) continue;
+      OnNewConnection(connectionId);
       OnRecieveData(connectionId, ReadBuffer, (int)dataSize);
     }
   }
@@ -102,6 +108,12 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     CloseAllConnections();
     base.Dispose();
   }
+
+  void SendPacket(CSteamID id, byte[] msg, uint size, EP2PSend reliability = EP2PSend.k_EP2PSendReliable) {
+    if (!SteamNetworking.SendP2PPacket(id, msg, size, reliability)) {
+      Debug.LogAssertion("Failed to send Steam packet!");
+    }
+  }
   
   // Steam Callbacks
 
@@ -111,7 +123,8 @@ public sealed class SteamNetworkInterface : NetworkInterface {
       OnNewConnection(id);
       Debug.Log($"[Steam] New P2P Connection with player: {id}");
       // Send response packet to ack the connection creation
-      SteamNetworking.SendP2PPacket(id, null, 0, EP2PSend.k_EP2PSendReliable);
+      Debug.Log($"[Steam] Sending connection response.");
+      SendPacket(id, null, 0);
     } else {
       Debug.LogWarning("[Steam] Unexpected session request from " + id);
     }
@@ -129,7 +142,6 @@ public sealed class SteamNetworkInterface : NetworkInterface {
       return;
     } else if ((stateChange | EChatMemberStateChange.k_EChatMemberStateChangeEntered) != 0) {
       Debug.Log($"[Steam] Lobby User Join: {evt.m_ulSteamIDUserChanged}");
-      OnChatJoin(evt);
     } else {
       Debug.Log($"[Steam] Lobby User Leave: {evt.m_ulSteamIDUserChanged}");
       OnDisconnect(new CSteamID(evt.m_ulSteamIDUserChanged));
@@ -144,16 +156,6 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     if (!success) {
       Debug.LogWarning("Error setting lobby info.");
     }
-  }
-
-  void OnChatJoin(LobbyChatUpdate_t evt) {
-    var lobby = new CSteamID(evt.m_ulSteamIDLobby);
-    var user = new CSteamID(evt.m_ulSteamIDUserChanged);
-    if (user == SteamUser.GetSteamID()) return; // Ignore join events involving self.
-    if (SteamMatchmaking.GetLobbyOwner(lobby) != SteamUser.GetSteamID())  return;
-    Debug.Log("Server sending initial connection packet.");
-    OnNewConnection(user);
-    SteamNetworking.SendP2PPacket(user, null, 0, EP2PSend.k_EP2PSendReliable);
   }
 
   void OnDisconnect(CSteamID user) {
