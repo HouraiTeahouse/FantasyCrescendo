@@ -47,7 +47,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: CrouchStart
     Data:
@@ -59,7 +59,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: CrouchEnd
     Data:
@@ -71,7 +71,7 @@ MonoBehaviour:
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Dash
     Data:
