@@ -215,12 +215,14 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   }
 
   void CloseAllConnections() {
+    if (currentLobbyId == CSteamID.Nil) return;
     SteamMatchmaking.LeaveLobby(currentLobbyId);
     var playerCount = SteamMatchmaking.GetNumLobbyMembers(currentLobbyId);
     for (var i = 0; i < playerCount; i++) {
       var id = SteamMatchmaking.GetLobbyMemberByIndex(currentLobbyId, i);
       SteamNetworking.CloseP2PSessionWithUser(id);
     }
+    Debug.Log($"[Steam] Left lobby {currentLobbyId}");
   }
 
   static void ValidateSteamInitalized() {

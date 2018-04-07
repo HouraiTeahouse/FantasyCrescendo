@@ -33,6 +33,13 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
     if (networkManager.IsServer) { DisableServer(networkManager.Server); }
   }
 
+  public void CloseConnections() {
+    var networkManager = NetworkManager.Instance;
+    if (networkManager == null) return;
+    if (networkManager.IsClient) { networkManager.Client.Dispose(); }
+    if (networkManager.IsServer) { networkManager.Server.Dispose(); }
+  }
+
   bool IValidator<MatchConfig>.IsValid(MatchConfig obj) {
     var networkManager = NetworkManager.Instance;
     if (networkManager == null || !networkManager.IsNetworkActive) return true;
