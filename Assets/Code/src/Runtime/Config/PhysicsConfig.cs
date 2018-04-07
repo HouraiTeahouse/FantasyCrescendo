@@ -9,6 +9,9 @@ public class PhysicsConfig : ScriptableObject {
   public LayerMask StageLayers;
   [Layer] public int HurtboxLayer;
 
+  public float GroundedSnapOffset = 0.5f;
+  public float GroundedSnapDistance = 1.5f;
+
   public int HurtboxLayerMask => 1 << HurtboxLayer;
 
 }

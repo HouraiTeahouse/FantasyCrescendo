@@ -67,6 +67,9 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     } else {
       CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
       state.Position = transform.position;
+      if (IsCharacterGrounded(state)) {
+        state = SnapToGround(state);
+      }
       if (state.GrabbedLedgeTimer < 0) {
         state.GrabbedLedgeTimer++;
       }
@@ -111,6 +114,28 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     } else if (state.Velocity.y < -MaxFallSpeed) {
       state.VelocityY = -MaxFallSpeed;
     }
+  }
+
+  PlayerState SnapToGround(PlayerState state) {
+    var config = Config.Get<PhysicsConfig>();
+    var pool = ArrayPool<RaycastHit>.Shared;
+    var hits = pool.Rent(1);
+    var offset = Vector3.up * CharacterController.height * 0.5f;
+    var start = Vector3.up * config.GroundedSnapOffset;
+    var top = transform.TransformPoint(CharacterController.center + offset) + start;
+    var bottom = transform.TransformPoint(CharacterController.center - offset) + start;
+    var distance = config.GroundedSnapOffset + config.GroundedSnapDistance;
+    var count = Physics.CapsuleCastNonAlloc(top, bottom, CharacterController.radius, Vector3.down, hits, 
+                                            distance, config.StageLayers, QueryTriggerInteraction.Ignore);
+    if (count > 0) {
+      // TODO(james7132): Properly transform this back.
+      var pos = hits[0].point;
+      if (Mathf.Approximately(pos.x, state.Position.x)) {
+        state.Position = hits[0].point;
+      }
+    }
+    pool.Return(hits);
+    return state;
   }
 
   bool IsCharacterGrounded(PlayerState state) {
