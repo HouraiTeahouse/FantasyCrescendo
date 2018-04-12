@@ -87,6 +87,7 @@ public sealed class LockstepStrategy : INetworkStrategy {
     }
 
     public override void Dispose() {
+      base.Dispose();
       NetworkClient.OnRecievedInputs -= OnRecievedInputs;
       NetworkClient.OnRecievedState -= OnRecievedState;
     }

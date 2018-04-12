@@ -147,6 +147,7 @@ public class RollbackStrategy : INetworkStrategy {
     }
 
     public override void Dispose() {
+      base.Dispose();
       NetworkClient.OnRecievedState -= OnRecievedState;
       NetworkClient.OnRecievedInputs -= OnRecievedInputs;
     }

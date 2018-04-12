@@ -20,6 +20,7 @@ public class NetworkGameClient : INetworkClient {
   public event Action<uint, ArraySegment<MatchInput>> OnRecievedInputs;
   public event Action<uint, MatchState, MatchInput?> OnRecievedState;
   public event Action<bool> OnServerReady;
+  public event Action OnDisconnect;
 
   public bool IsServerReady { get; private set; }
 
@@ -28,6 +29,7 @@ public class NetworkGameClient : INetworkClient {
 
   public NetworkGameClient(Type interfaceType, NetworkClientConfig config) {
     NetworkInterface = (INetworkInterface)Activator.CreateInstance(interfaceType);
+    NetworkInterface.OnPeerDisconnected += OnPeerDisconnected;
     NetworkInterface.Initialize(new NetworkInterfaceConfiguration {
       Type = NetworkInterfaceType.Client
     });
@@ -64,7 +66,7 @@ public class NetworkGameClient : INetworkClient {
     handlers.RegisterHandler<ServerUpdateConfigMessage>(MessageCodes.UpdateConfig, OnUpdateConfig);
     handlers.RegisterHandler<PeerReadyMessage>(MessageCodes.ServerReady, OnSetServerReady);
 
-    connectionTask.TrySetResult(new object());
+    connectionTask.TrySetResult(null);
   }
 
   public void Disconnect() => Connection?.Disconnect();
@@ -97,6 +99,7 @@ public class NetworkGameClient : INetworkClient {
   }
 
   public void Dispose() {
+    NetworkInterface.OnPeerConnected -= OnPeerDisconnected;
     NetworkInterface.Dispose();
     var handlers = Connection?.MessageHandlers;
     if (handlers == null) return;
@@ -119,6 +122,11 @@ public class NetworkGameClient : INetworkClient {
   void OnSetServerReady(PeerReadyMessage message) {
     IsServerReady = message.IsReady;
     OnServerReady?.Invoke(IsServerReady);
+  }
+
+  void OnPeerDisconnected(NetworkConnection connection) {
+    if (connection != Connection) return;
+    OnDisconnect?.Invoke();
   }
 
 }

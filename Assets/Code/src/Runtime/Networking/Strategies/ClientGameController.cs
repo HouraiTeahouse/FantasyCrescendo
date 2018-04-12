@@ -12,11 +12,20 @@ public abstract class ClientGameController : MatchController, IDisposable {
 
   protected ClientGameController(INetworkClient client, MatchConfig config) : base(config) {
     NetworkClient = Argument.NotNull(client);
+    NetworkClient.OnDisconnect += Dispose;
   }
 
   public override void Update() => NetworkClient.Update();
 
-  public abstract void Dispose();
+  public virtual void Dispose() {
+    NetworkClient.OnDisconnect -= Dispose;
+    var matchManager = MatchManager.Instance;
+    if (matchManager != null) {
+      matchManager.EndMatch(new MatchResult {
+        Resolution = MatchResolution.NoContest
+      });
+    }
+  }
 
 }
 
