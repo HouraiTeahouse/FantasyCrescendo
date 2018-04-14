@@ -68,7 +68,7 @@ public class NetworkManager : MonoBehaviour {
   }
 
 	[SerializeField] [Type(typeof(INetworkInterface), CommonName = "NetworkInterface")]
-	string networkInterface;
+	string defaultNetworkInterface;
 
 	[SerializeField] [Type(typeof(INetworkStrategy), CommonName = "Strategy")]
 	string networkStrategy;
@@ -94,7 +94,7 @@ public class NetworkManager : MonoBehaviour {
 	/// </summary>
 	void OnDestroy() => StopHost();
 
-	Type NetworkInterfaceType => Type.GetType(networkInterface);
+	Type DefaultNetworkInterfaceType => Type.GetType(defaultNetworkInterface);
 
 	INetworkStrategy GetNetworkStrategy() {
 		return Activator.CreateInstance(Type.GetType(networkStrategy)) as INetworkStrategy;
@@ -126,9 +126,13 @@ public class NetworkManager : MonoBehaviour {
   /// and the active client will be returned.
   /// </remarks>
   /// <param name="config">the NetworkClientConfig used to start the server.</param>
+  /// <param name="interfaceType">INetworkInterface type to use, uses default if null.</param>
   /// <returns>the NetworkClient created or fetched.</returns>
-	public INetworkClient StartClient(NetworkClientConfig config) {
-		return Client ?? (Client = new NetworkGameClient(NetworkInterfaceType, config));
+	public INetworkClient StartClient(NetworkClientConfig config, Type interfaceType = null) {
+    if (Client != null) return Client;
+    interfaceType = interfaceType ?? DefaultNetworkInterfaceType;
+    Client = new NetworkGameClient(interfaceType, config);
+		return Client;
 	}
 
   /// <summary>
@@ -157,10 +161,12 @@ public class NetworkManager : MonoBehaviour {
   /// and the active server will be returned.
   /// </remarks>
   /// <param name="config">the NetworkServerConfig used to start the server.</param>
+  /// <param name="interfaceType">INetworkInterface type to use, uses default if null.</param>
   /// <returns>the NetworkServer created or fetched.</returns>
-	public async Task<INetworkServer> StartServer(NetworkServerConfig config) {
+	public async Task<INetworkServer> StartServer(NetworkServerConfig config, Type interfaceType = null) {
     if (Server != null) return Server;
-		Server = new NetworkGameServer(NetworkInterfaceType, config);
+    interfaceType = interfaceType ?? DefaultNetworkInterfaceType;
+		Server = new NetworkGameServer(interfaceType, config);
     await Server.Initialize();
     return Server;
 	}
@@ -192,9 +198,10 @@ public class NetworkManager : MonoBehaviour {
   /// and the active client will be returned.
   /// </remarks>
   /// <param name="config">the NetworkHostConfig used to start the host.</param>
+  /// <param name="interfaceType">INetworkInterface type to use, uses default if null.</param>
   /// <returns>an awaitable task for the resultant NetworkHost</returns>
-	public async Task<NetworkHost> StartHost(NetworkHostConfig config) {
-		var server = await StartServer(config.ServerConfig) as NetworkGameServer;
+	public async Task<NetworkHost> StartHost(NetworkHostConfig config, Type interfaceType = null) {
+		var server = await StartServer(config.ServerConfig, interfaceType) as NetworkGameServer;
     if (Client != null) StopClient();
     Client = server.CreateLocalClient();
 		return Host;

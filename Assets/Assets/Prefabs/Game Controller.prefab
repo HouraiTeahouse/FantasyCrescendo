@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e5f3e5abc00ae48a70c684a6751a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkInterface: HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface
+  defaultNetworkInterface: HouraiTeahouse.FantasyCrescendo.Networking.UNET.UNETNetworkInterface
   networkStrategy: HouraiTeahouse.FantasyCrescendo.Networking.RollbackStrategy
   matchmaker: HouraiTeahouse.FantasyCrescendo.Matchmaking.SteamMatchmaker
 --- !u!114 &114423664066748220

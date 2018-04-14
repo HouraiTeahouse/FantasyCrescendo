@@ -50,7 +50,8 @@ public class MatchmakerController : MonoBehaviour {
     Debug.Log("Started host for matchmaking.");
     SetActive(ConnectingScreen);
     try {
-      await NetworkManager.Instance.StartHost(new NetworkHostConfig());
+      var manager = NetworkManager.Instance;
+      await manager.StartHost(new NetworkHostConfig(), manager.Matchmaker.NetworkInterfaceType);
       SetActive(SuccessScreen);
     } catch (NetworkingException exception) {
       SetActive(ErrorScreen);
@@ -60,7 +61,8 @@ public class MatchmakerController : MonoBehaviour {
 
   public async Task JoinLobby(LobbyInfo lobby) {
     if (lobby == null) return;
-    var client = NetworkManager.Instance.StartClient(new NetworkClientConfig());
+    var manager = NetworkManager.Instance;
+    var client = manager.StartClient(new NetworkClientConfig(), manager.Matchmaker.NetworkInterfaceType);
     try {
       SetActive(ConnectingScreen);
       await client.Connect(new NetworkConnectionConfig {

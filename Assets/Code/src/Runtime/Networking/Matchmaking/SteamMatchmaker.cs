@@ -1,4 +1,5 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Networking;
+using HouraiTeahouse.FantasyCrescendo.Networking.Steam;
 using Steamworks;
 using System;
 using System.Collections;
@@ -15,6 +16,8 @@ public class SteamMatchmaker : IMatchmaker {
 
   public const string kNameKey = "name";
   public const string kOwnerName = "owner_name";
+  
+  public Type NetworkInterfaceType => typeof(SteamNetworkInterface);
 
   public SteamMatchmaker() {
     lobbies = new List<LobbyInfo>();
