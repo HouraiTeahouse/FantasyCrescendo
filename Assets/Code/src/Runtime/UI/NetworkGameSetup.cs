@@ -36,8 +36,8 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
   public void CloseConnections() {
     var networkManager = NetworkManager.Instance;
     if (networkManager == null) return;
-    if (networkManager.IsClient) { networkManager.Client.Dispose(); }
-    if (networkManager.IsServer) { networkManager.Server.Dispose(); }
+    if (networkManager.IsClient) { networkManager.StopClient(); }
+    if (networkManager.IsServer) { networkManager.StopServer(); }
   }
 
   bool IValidator<MatchConfig>.IsValid(MatchConfig obj) {
