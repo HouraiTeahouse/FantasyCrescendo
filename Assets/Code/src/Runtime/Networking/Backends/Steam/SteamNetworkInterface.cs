@@ -36,6 +36,9 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     callbackP2PConnectFail = Callback<P2PSessionConnectFail_t>.Create(OnP2PSessionConnectFail);
     callbackLobbyChatUpdate = Callback<LobbyChatUpdate_t>.Create(OnLobbyChatUpdate);
 
+    // Allow use of Steam relay servers
+    SteamNetworking.AllowP2PPacketRelay(true);
+
     if (config.Type != NetworkInterfaceType.Server) return;
     var type = config.ServerSteamLobbyType;
     var size = config.ServerSteamLobbyMaxSize;
