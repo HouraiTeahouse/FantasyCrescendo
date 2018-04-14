@@ -138,8 +138,10 @@ public class NetworkGameServer : INetworkServer {
     NetworkClientPlayer client;
     if (!clients.TryGetValue(dataMsg.Connection, out client)) return;
     var message = dataMsg.ReadAs<ClientUpdateConfigMessage>();
-    client.Config = message.PlayerConfig;
-    client.Config.PlayerID = client.PlayerID;
+    if (message.PlayerConfig.IsValid) {
+      client.Config = message.PlayerConfig;
+      client.Config.PlayerID = client.PlayerID;
+    }
     InvokePlayerUpdated(client);
   }
 

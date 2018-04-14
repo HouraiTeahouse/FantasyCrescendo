@@ -91,8 +91,12 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     CSteamID userId;
     while (SteamNetworking.ReadP2PPacket(ReadBuffer, (uint)ReadBuffer.Length, out dataSize, out userId)) {
       int connectionId;
-      if (!connectionIds.TryGetValue(userId, out connectionId)) continue;
-      OnNewConnection(connectionId);
+      if (!connectionIds.TryGetValue(userId, out connectionId)) {
+        if (!NewConnectionCheck(userId)) {
+          Debug.LogError($"[Steam] Unexpected P2P packet recieved from Steam user: {userId}");
+          return;
+        }
+      }
       OnRecieveData(connectionId, ReadBuffer, (int)dataSize);
     }
   }
@@ -114,18 +118,25 @@ public sealed class SteamNetworkInterface : NetworkInterface {
       Debug.LogAssertion("Failed to send Steam packet!");
     }
   }
+
+  bool NewConnectionCheck(CSteamID userId) {
+    if (ExpectingClient(userId)) {
+      OnNewConnection(userId);
+      Debug.Log($"[Steam] New P2P Connection with player: {userId}");
+      // Send response packet to ack the connection creation
+      Debug.Log($"[Steam] Sending connection response.");
+      SendPacket(userId, null, 0);
+      return true;
+    }
+    return false;
+  }
   
   // Steam Callbacks
 
   void OnP2PSessionRequest(P2PSessionRequest_t evt) {
     var id = evt.m_steamIDRemote;
-    if (ExpectingClient(id)) {
-      OnNewConnection(id);
-      Debug.Log($"[Steam] New P2P Connection with player: {id}");
-      // Send response packet to ack the connection creation
-      Debug.Log($"[Steam] Sending connection response.");
-      SendPacket(id, null, 0);
-    } else {
+    Debug.Log($"[Steam] P2P Session requested by player: {id}");
+    if (!NewConnectionCheck(id)) {
       Debug.LogWarning("[Steam] Unexpected session request from " + id);
     }
   }

@@ -85,7 +85,10 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
     InitalizePlayer(player);
     OnServerUpdatedConfig(); 
   }
-  void OnServerUpdatePlayer(NetworkClientPlayer player) => OnServerUpdatedConfig();
+  void OnServerUpdatePlayer(NetworkClientPlayer player) {
+    Debug.Log($"Player config updated: {player.PlayerID} {player.Config}");
+    OnServerUpdatedConfig();
+  } 
   void OnServerRemovePlayer(int playerId) => OnServerUpdatedConfig();
 
   void InitalizePlayer(NetworkClientPlayer player) {
@@ -94,6 +97,7 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
 
   void OnServerUpdatedConfig() {
     var baseConfig = ServerBuildBaseConfig();
+    Debug.Log($"Sending Config: {baseConfig}");
     foreach (var player in NetworkManager.Instance.Server.Clients) {
       player.SendConfig(BuildConfigForPlayer(baseConfig, player.PlayerID));
     }
