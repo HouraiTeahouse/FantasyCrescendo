@@ -29,7 +29,6 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   }
 
   public override async Task Initialize(NetworkInterfaceConfiguration config) {
-    try {
     ValidateSteamInitalized();
     await base.Initialize(config);
     Debug.Log($"[Steam] Steam User ID: {SteamUser.GetSteamID()}");
@@ -54,9 +53,6 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     currentLobbyId = new CSteamID(lobbyEnter.m_ulSteamIDLobby);
     Debug.Log($"[Steam] Created server lobby ID: {currentLobbyId}");
     SetLobbyData(currentLobbyId);
-    }  catch {
-      Debug.LogError("ERROR");
-    }
   }
 
   public override async Task<NetworkConnection> Connect(NetworkConnectionConfig config) {
