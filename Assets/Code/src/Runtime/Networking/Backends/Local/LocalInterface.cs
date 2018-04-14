@@ -19,14 +19,12 @@ internal class LocalInterface : NetworkInterface  {
     UnreadMessages = new Queue<Message>();
     Mirror = mirror;
     Connection = OnNewConnection(0);
-    Connection.Status = ConnectionStatus.Connected;
   }
 
   public LocalInterface() : base(1500) {
     Mirror = new LocalInterface(this);
     UnreadMessages = new Queue<Message>();
     Connection = OnNewConnection(0);
-    Connection.Status = ConnectionStatus.Connected;
   }
 
   public override void Update() {

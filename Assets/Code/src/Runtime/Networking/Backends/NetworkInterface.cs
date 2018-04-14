@@ -75,22 +75,14 @@ public abstract class NetworkInterface : INetworkInterface {
   protected virtual void OnDisconnect(int connectionId, Exception exception) {
     NetworkConnection connection;
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
-    connection.Status = ConnectionStatus.Disconnected;
-    if (exception == null) {
-      connection.ConnectTask.TrySetCanceled();
-    } else {
-      connection.ConnectTask.TrySetException(exception);
-    }
+    connection.DisconnectInternal();
     OnPeerDisconnected?.Invoke(connection);
     RemoveConnection(connection);
   }
 
   protected virtual NetworkConnection OnNewConnection(int connectionId) {
     var connection = AddConnection(connectionId);
-    connection.Status = ConnectionStatus.Connected;
-    if (connection.ConnectTask.TrySetResult(null)) {
-      OnPeerConnected?.Invoke(connection);
-    }
+    connection.ConnectInternal();
     return connection;
   }
 
@@ -101,7 +93,13 @@ public abstract class NetworkInterface : INetworkInterface {
 
   public virtual ConnectionStats GetConnectionStats(int connectionId) => new ConnectionStats();
 
-  protected NetworkConnection GetConnection(int connectionId) => connectionMap[connectionId];
+  protected NetworkConnection GetConnection(int connectionId) {
+    NetworkConnection connection;
+    if (connectionMap.TryGetValue(connectionId, out connection)) {
+      return connection;
+    }
+    return null;
+  }
 
   protected NetworkConnection AddConnection(int connectionId) {
     NetworkConnection connection;

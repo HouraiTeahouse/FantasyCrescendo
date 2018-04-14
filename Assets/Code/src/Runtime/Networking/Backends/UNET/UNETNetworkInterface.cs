@@ -38,7 +38,7 @@ public class UNETNetworkInterface : NetworkInterface {
     UNETUtility.HandleError(error);
 
     var connection = AddConnection(connectionId);
-    await connection.ConnectTask.Task;
+    await connection.ConnectTask;
     return connection;
   }
 

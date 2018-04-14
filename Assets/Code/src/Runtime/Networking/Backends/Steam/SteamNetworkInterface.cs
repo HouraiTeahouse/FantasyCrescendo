@@ -29,6 +29,7 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   }
 
   public override async Task Initialize(NetworkInterfaceConfiguration config) {
+    try {
     ValidateSteamInitalized();
     await base.Initialize(config);
     Debug.Log($"[Steam] Steam User ID: {SteamUser.GetSteamID()}");
@@ -42,7 +43,9 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     if (config.Type != NetworkInterfaceType.Server) return;
     var type = config.ServerSteamLobbyType;
     var size = config.ServerSteamLobbyMaxSize;
+    Debug.Log($"[Steam] Creating lobby");
     var result = await SteamMatchmaking.CreateLobby(type, size).ToTask<LobbyCreated_t>();
+    Debug.Log($"[Steam] Creating lobby");
     
     if (SteamUtility.IsError(result.m_eResult)) {
       throw SteamUtility.CreateError(result.m_eResult);
@@ -51,6 +54,9 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     currentLobbyId = new CSteamID(lobbyEnter.m_ulSteamIDLobby);
     Debug.Log($"[Steam] Created server lobby ID: {currentLobbyId}");
     SetLobbyData(currentLobbyId);
+    }  catch {
+      Debug.LogError("ERROR");
+    }
   }
 
   public override async Task<NetworkConnection> Connect(NetworkConnectionConfig config) {
@@ -72,7 +78,7 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     Debug.Log($"[Steam] Sending initial connection packet to lobby owner {lobbyOwner}...");
     SendPacket(lobbyOwner, null, 0);
     var connection = AddConnection(lobbyOwner);
-    var connectTask = connection.ConnectTask.Task;
+    var connectTask = connection.ConnectTask;
     if (await Task.WhenAny(connectTask, Task.Delay(20000)) == connectTask) {
       Debug.Log("[Steam] Connected to host");
       return connection;
@@ -102,6 +108,21 @@ public sealed class SteamNetworkInterface : NetworkInterface {
       }
       OnRecieveData(connectionId, ReadBuffer, (int)dataSize);
     }
+
+    List<CSteamID> deadConnections = null;
+    foreach (var kvp in connectionIds) {
+      // This should never throw an error
+      var connection = GetConnection(kvp.Value);
+      if (!UpdateConnection(kvp.Key, connection)) {
+        deadConnections = deadConnections ?? new List<CSteamID>();
+        deadConnections.Add(kvp.Key);
+      }
+    }
+    if (deadConnections != null) {
+      foreach (var connection in deadConnections) {
+        OnDisconnect(connection);
+      }
+    }
   }
 
   public override void Disconnect(int connectionId) {
@@ -114,6 +135,19 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   public override void Dispose() {
     CloseAllConnections();
     base.Dispose();
+  }
+
+  bool UpdateConnection(CSteamID userId, NetworkConnection connection) {
+    Debug.Log("Update connection");
+    P2PSessionState_t state;
+    if (SteamNetworking.GetP2PSessionState(userId, out state)) {
+      if (state.m_bConnectionActive != 0) {
+        connection.ConnectInternal();
+      }
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void SendPacket(CSteamID id, byte[] msg, uint size, EP2PSend reliability = EP2PSend.k_EP2PSendReliable) {
