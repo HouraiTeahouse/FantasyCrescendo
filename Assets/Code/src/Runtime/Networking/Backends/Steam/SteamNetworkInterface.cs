@@ -266,6 +266,7 @@ public sealed class SteamNetworkInterface : NetworkInterface {
       SteamNetworking.CloseP2PSessionWithUser(id);
     }
     Debug.Log($"[Steam] Left lobby {currentLobbyId}");
+    currentLobbyId = CSteamID.Nil;
   }
 
   static void ValidateSteamInitalized() {
