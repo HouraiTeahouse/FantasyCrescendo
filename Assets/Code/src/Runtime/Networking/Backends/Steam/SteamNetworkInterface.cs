@@ -134,10 +134,9 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   }
 
   bool UpdateConnection(CSteamID userId, NetworkConnection connection) {
-    Debug.Log("Update connection");
     P2PSessionState_t state;
     if (SteamNetworking.GetP2PSessionState(userId, out state)) {
-      if (state.m_bConnectionActive != 0) {
+      if (state.m_bConnectionActive != 0 && state.m_bConnecting == 0) {
         connection.ConnectInternal();
       }
       return true;
