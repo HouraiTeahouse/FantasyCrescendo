@@ -136,13 +136,13 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   bool UpdateConnection(CSteamID userId, NetworkConnection connection) {
     P2PSessionState_t state;
     if (SteamNetworking.GetP2PSessionState(userId, out state)) {
+      Debug.Log($"{userId} {state.m_bConnectionActive} {state.m_bConnecting}");
       if (state.m_bConnectionActive != 0 && state.m_bConnecting == 0) {
         OnNewConnection(userId);
       }
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   void SendPacket(CSteamID id, byte[] msg, uint size, EP2PSend reliability = EP2PSend.k_EP2PSendReliable) {
@@ -233,9 +233,9 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     var connectionId = lastConnectionId;
     if (!connectionIds.TryGetValue(user, out connectionId)) {
       connectionId = lastConnectionId++;
+      connectionUsers[connectionId] = user;
+      connectionIds[user] = connectionId;
     }
-    connectionUsers[connectionId] = user;
-    connectionIds[user] = connectionId;
     return AddConnection(connectionId);
   }
 
@@ -243,9 +243,9 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     var connectionId = lastConnectionId;
     if (!connectionIds.TryGetValue(user, out connectionId)) {
       connectionId = lastConnectionId++;
+      connectionIds[user] = connectionId;
+      connectionUsers[connectionId] = user;
     }
-    connectionUsers[connectionId] = user;
-    connectionIds[user] = connectionId;
     return OnNewConnection(connectionId);
   }
 

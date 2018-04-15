@@ -82,7 +82,9 @@ public abstract class NetworkInterface : INetworkInterface {
 
   protected virtual NetworkConnection OnNewConnection(int connectionId) {
     var connection = AddConnection(connectionId);
-    connection.ConnectInternal();
+    if (connection.ConnectInternal()) {
+      OnPeerConnected?.Invoke(connection);
+    }
     return connection;
   }
 
