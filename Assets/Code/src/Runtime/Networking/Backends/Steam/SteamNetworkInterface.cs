@@ -137,7 +137,7 @@ public sealed class SteamNetworkInterface : NetworkInterface {
     P2PSessionState_t state;
     if (SteamNetworking.GetP2PSessionState(userId, out state)) {
       if (state.m_bConnectionActive != 0 && state.m_bConnecting == 0) {
-        connection.ConnectInternal();
+        OnNewConnection(userId);
       }
       return true;
     } else {
