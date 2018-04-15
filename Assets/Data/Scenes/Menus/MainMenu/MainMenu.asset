@@ -16,9 +16,13 @@ MonoBehaviour:
   IsVisible: 1
   IsDebug: 0
   Type: 0
-  Name: 
+  Name: Main Menu
   _scene: scene/main_menu/scene:Assets/Data/Scenes/Menus/MainMenu.unity
   _icon: 
   _previewImage: 
   LoadPriority: 0
-  Music: []
+  Music:
+  - {fileID: 11400000, guid: 89b14f26127485c46bc7173adacf672b, type: 2}
+  - {fileID: 11400000, guid: fdd759b94cc962041974a12641684c30, type: 2}
+  - {fileID: 11400000, guid: 931a9dfd591fe2945a9df59da296fecf, type: 2}
+  - {fileID: 11400000, guid: 32300aa571cf3434eb439fc66e79c18c, type: 2}
