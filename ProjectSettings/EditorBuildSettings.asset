@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Data/Scenes/ErrorDisplay.unity
     guid: 34f53487d5f67004d85ed3f6e6275256
   - enabled: 1
-    path: Assets/Data/Scenes/Menus/MainMenu.unity
+    path: Assets/Data/Scenes/Menus/MainMenu/MainMenu.unity
     guid: da1c90b397c2bfc4d9fb342dd396198f
   - enabled: 1
     path: Assets/Data/Scenes/Stages/StageBootstrap.unity
@@ -20,9 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Data/Scenes/Stages/000_Debug/DebugStage.unity
     guid: 3c93374069ffbc54783494484b9276d9
-  - enabled: 1
-    path: Assets/Data/Scenes/Stages/001_ForestOfMagic/ForestOfMagic.unity
-    guid: 3455517ea66ea544ba91dcf401791591
   - enabled: 1
     path: Assets/Data/Scenes/Stages/002_HakureiShrine/HakureiShrine.unity
     guid: 7a1d3fdcc6ce4554389aa7ef959f1d5f
@@ -38,3 +35,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Data/Scenes/Stages/006_ScarletDevilMansion/ScarletDevilMansion.unity
     guid: 4580ce3accb761c4283ad97ed51cd2a3
+  m_configObjects: {}
