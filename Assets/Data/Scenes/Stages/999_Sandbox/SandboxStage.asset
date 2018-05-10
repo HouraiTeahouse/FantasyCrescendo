@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11ce1ec9da907c4abb2805992df2836, type: 3}
+  m_Name: SandboxStage
+  m_EditorClassIdentifier: 
+  _id: 3682038897
+  IsSelectable: 0
+  IsVisible: 0
+  IsDebug: 1
+  Type: 1
+  Name: Sandbox Stage
+  _scene: 
+  _icon: icons:marisa_icon
+  _previewImage: icons:marisa_icon
+  LoadPriority: 0
+  Music:
+  - {fileID: 11400000, guid: b8dfe2a858fbe944f8f8442856dcfe15, type: 2}
