@@ -25,6 +25,8 @@ public class EditorTable<T> {
 
   }
 
+  public event Action<Rect, T> OnDrawRowStart;
+  public event Action<Rect, T> OnDrawRowEnd;
   public float RowHeight { get; set; }
   public float LabelPadding { get; set; }
   public Vector2 Padding { get; set; }
@@ -58,6 +60,8 @@ public class EditorTable<T> {
     _scrollPos = GUI.BeginScrollView(area, _scrollPos, new Rect(0, 0, area.width, set.Count() * RowHeight));
     foreach (var element in set) {
       EditorGUI.BeginChangeCheck();
+      rect.width = area.width;
+      OnDrawRowStart?.Invoke(rect, element);
       DrawRow(ref rect, area.width, (col, colRect) => col.Draw(colRect, element));
       if (!EditorGUI.EndChangeCheck()) continue;
       var elementObject = element as UnityEngine.Object;
@@ -71,6 +75,7 @@ public class EditorTable<T> {
         if (serializedObject != null)
           serializedObject.ApplyModifiedProperties();
       }
+      OnDrawRowEnd?.Invoke(rect, element);
     }
     GUI.EndScrollView();
   }

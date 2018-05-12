@@ -28,6 +28,10 @@ class EditorCommands {
       hb.transform.localScale = Vector3.one;
       hb.transform.localRotation = Quaternion.identity;
 
+      if (hb is Hurtbox) {
+        hb.gameObject.AddComponent<SphereCollider>();
+      }
+
       return hb;
     }
 

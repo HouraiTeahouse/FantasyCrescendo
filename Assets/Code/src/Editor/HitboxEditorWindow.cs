@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -20,22 +21,52 @@ public class HitboxEditorWindow : LockableEditorWindow {
 
   EditorTable<SerializedObject>.Column CreatePropertyColumn(string propertyName, bool onlyOffensive = true) {
     return table.AddColumn((rect, serializedObject) => {
-      EditorGUI.PropertyField(rect, serializedObject.FindProperty(propertyName), GUIContent.none);
+      var property = serializedObject.FindProperty(propertyName);
+      if (property == null) return;
+      EditorGUI.PropertyField(rect, property, GUIContent.none);
     });
   }
 
   void BuildTable() {
     table = new EditorTable<SerializedObject>();
+
+    table.OnDrawRowStart += (rect, element) => {
+      var gameObj = (element.targetObject as Component).gameObject;
+      if (!Selection.gameObjects.Contains(gameObj)) return;
+      var color = GUI.backgroundColor;
+      GUI.backgroundColor = Color.blue;
+      GUI.Box(rect, GUIContent.none);
+      GUI.backgroundColor = color;
+    };
+
     var enabledCol = CreatePropertyColumn("m_Enabled", false);
     var nameCol = table.AddColumn((rect, serializedObject) => {
-        EditorGUI.LabelField(rect, serializedObject.targetObject.name);
+      var target = serializedObject.targetObject as Component;
+      EditorGUI.LabelField(rect, target.name);
+      var evt = Event.current;
+      var gameObj = target.gameObject;
+      if (evt.type != EventType.MouseUp || !rect.Contains(evt.mousePosition)) return;
+      if ((evt.modifiers & EventModifiers.Control) != 0) {
+        if (Selection.gameObjects.Contains(gameObj)) return;
+        var temp = new List<Object>(Selection.gameObjects);
+        temp.Add(gameObj);
+        Selection.objects = temp.ToArray();
+      } else {
+        Selection.activeGameObject = gameObj;
+      }
     });
     var typeCol = table.AddColumn((rect, serializedObject) => {
-        var hitbox = serializedObject.targetObject as Hitbox;
-        var color = GUI.color;
+      var color = GUI.color;
+      var hitbox = serializedObject.targetObject as Hitbox;
+      var hurtbox = serializedObject.targetObject as Hurtbox;
+      if (hitbox != null) {
         GUI.color = HitboxUtil.GetHitboxColor(hitbox.Type);
-        EditorGUI.PropertyField(rect, serializedObject.FindProperty("Type"), GUIContent.none);
-        GUI.color = color;
+      }
+      if (hurtbox != null) {
+        GUI.color = HitboxUtil.GetHurtboxColor(hurtbox.Type);
+      }
+      EditorGUI.PropertyField(rect, serializedObject.FindProperty("Type"), GUIContent.none);
+      GUI.color = color;
     });
     var priorityCol = CreatePropertyColumn("Priority");
     var damageCol = CreatePropertyColumn("BaseDamage");
@@ -69,6 +100,13 @@ public class HitboxEditorWindow : LockableEditorWindow {
       Repaint();
   }
 
+  IEnumerable<SerializedObject> GetAllChildren<T>() where T : Component {
+    return _roots.SelectMany(g => g.GetComponentsInChildren<T>(true))
+                .OrderByDescending(h => h.name)
+                .Distinct()
+                .Select(h => new SerializedObject(h));
+  }
+
   /// <summary>
   /// OnGUI is called for rendering and handling GUI events.
   /// This function can be called multiple times per frame (one call per event).
@@ -82,10 +120,8 @@ public class HitboxEditorWindow : LockableEditorWindow {
 
     _roots = _roots ?? new GameObject[0];
 
-    table.Draw(pos, _roots.SelectMany(g => g.GetComponentsInChildren<Hitbox>(true))
-                          .Distinct()
-                          .OrderByDescending(h => h.name)
-                          .Select(h => new SerializedObject(h)));
+    table.Draw(pos, GetAllChildren<Hitbox>().Concat(GetAllChildren<Hurtbox>()));
+
     // Force Repaint the animation view if something changed.
     if (GUI.changed) {
       InternalEditorUtility.RepaintAllViews();
