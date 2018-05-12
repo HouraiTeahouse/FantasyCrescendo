@@ -47,6 +47,7 @@ public static class HitboxUtil {
     ArrayPool<Collider>.Shared.Return(colliders);
     return hurtboxCount;
   }
+
   public static Color GetHitboxColor(HitboxType type) {
     Color typeColor;
     if (HitboxTypeColors.TryGetValue(type, out typeColor)) {
