@@ -16,7 +16,7 @@ public abstract class AbstractHitDetector : MonoBehaviour, IComparable<AbstractH
 
 public class Hurtbox : AbstractHitDetector {
 
-  public HurtboxType Type;
+  public HurtboxType Type = HurtboxType.Damageable;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
