@@ -96,7 +96,10 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     state.JumpCount = 0;
   }
 
-  public PlayerState ResetState(PlayerState state) => state;
+  public PlayerState ResetState(PlayerState state) {
+    state.Velocity = Vector2.zero;
+    return state;
+  }
 
   void ApplyGravity(ref PlayerState state) {
     if (state.IsRespawning || state.IsGrabbingLedge) return;

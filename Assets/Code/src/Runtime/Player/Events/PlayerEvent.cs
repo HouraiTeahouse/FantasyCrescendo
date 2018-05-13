@@ -10,6 +10,12 @@ public abstract class PlayerEvent : MatchEvent {
     set { MatchState.SetPlayerState(PlayerID, value); }
   }
 
+  public PlayerEvent() {}
+
+  public PlayerEvent(PlayerEvent evt) {
+    Copy(evt);
+  }
+
   public void Copy(PlayerEvent evt) {
     base.Copy(evt as MatchEvent);
     PlayerID = evt.PlayerID;
