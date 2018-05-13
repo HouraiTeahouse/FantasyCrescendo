@@ -20,6 +20,7 @@ public class PlayerCollisionManager {
   }
 
   public void Add(HitboxCollision collision) {
+    if (collision.IsSelfCollision) return;
     PlayerCollisions[collision.Destination.PlayerID].Add(collision);
   }
 
@@ -105,8 +106,10 @@ public class MatchHitboxSimulation : IMatchSimulation {
       var hurtboxCount = HitboxUtil.CollisionCheck(hitbox, hurtboxes);
       for (var i = 0; i < hurtboxCount; i++) {
         if (!ActiveHurtboxes.Contains(hurtboxes[i])) continue;
-        var collision = new HitboxCollision { Source = hitbox, Destination = hurtboxes[i] };
-        CollisionManager.Add(collision);
+        CollisionManager.Add(new HitboxCollision {
+          Source = hitbox,
+          Destination = hurtboxes[i]
+        });
       }
     }
     ArrayPool<Hurtbox>.Shared.Return(hurtboxes);
