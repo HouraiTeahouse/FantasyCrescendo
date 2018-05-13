@@ -76,14 +76,16 @@ public class MatchHitboxSimulation : IMatchSimulation {
   public void ApplyCollisions(List<HitboxCollision> collisions, ref PlayerState state) {
     if (collisions.Count <= 0 ) return;
     bool isShielded = false;
+    bool isHit = false;
     foreach (var collision in collisions) {
       var source = collision.Source;
       switch (collision.Destination.Type) {
         case HurtboxType.Damageable:
-          if (isShielded) continue;
+          if (isShielded || isHit) continue;
           state.Damage += source.BaseDamage;
           state.Velocity = source.GetKnocback(state.Damage);
           state.Hitstun = source.GetHitstun(state.Damage);
+          isHit = true;
           // TODO(james7132): Play Effect
           break;
         case HurtboxType.Shield:
