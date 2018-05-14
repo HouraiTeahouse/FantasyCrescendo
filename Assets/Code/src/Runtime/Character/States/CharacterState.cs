@@ -28,6 +28,7 @@ public class CharacterState : State<CharacterContext>, IEntity, IStateView<Playe
 
   public override void OnStateEnter(CharacterContext context) {
     context.State.StateTick = 0;
+    context.State.ResetPlayersHit();
   }
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext simulate) => state;

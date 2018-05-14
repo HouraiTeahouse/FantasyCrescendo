@@ -80,13 +80,24 @@ public class MatchHitboxSimulation : IMatchSimulation {
     bool isHit = false;
     foreach (var collision in collisions) {
       var source = collision.Source;
+      int srcPlayerId = (int)collision.Source.PlayerID;
+      int dstPlayerId = (int)collision.Destination.PlayerID;
       switch (collision.Destination.Type) {
         case HurtboxType.Damageable:
-          if (isShielded || isHit) continue;
           var sourceState = match.GetPlayerState((int)source.PlayerID);
+
+          // Check if hit is valid.
+          if (isShielded || isHit || sourceState.HasHit(dstPlayerId)) continue;
+
+          // Deal damage and knockback
           state.Damage += source.BaseDamage;
           state.Velocity = source.GetKnocback(state.Damage, sourceState.Direction);
           state.Hitstun = source.GetHitstun(state.Damage);
+
+          // Mark the source as having hit the destination.
+          sourceState.HitPlayer(dstPlayerId);
+          match.SetPlayerState(srcPlayerId, sourceState);
+
           isHit = true;
           // TODO(james7132): Play Effect
           break;

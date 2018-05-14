@@ -77,10 +77,10 @@ public class HitboxTest : HitboxTestBase {
   [TestCase(225, -0.70710678118f, -0.70710678118f)] [TestCase(315, 0.70710678118f, -0.70710678118f)] 
   public void GetKnockbackDirection_mirrors_direction(float angle, float x, float y) {
     var knockbackDirection = CreateHitbox().WithMirrorDirection(true).WithKnockbackAngle(angle).Build().GetKnockbackDirection(false);
-    Assert.AreEqual(x, knockbackDirection.x, 0.000001);
+    Assert.AreEqual(-x, knockbackDirection.x, 0.000001);
     Assert.AreEqual(y, knockbackDirection.y, 0.000001);
     knockbackDirection = CreateHitbox().WithMirrorDirection(true).WithKnockbackAngle(angle).Build().GetKnockbackDirection(true);
-    Assert.AreEqual(-x, knockbackDirection.x, 0.000001);
+    Assert.AreEqual(x, knockbackDirection.x, 0.000001);
     Assert.AreEqual(y, knockbackDirection.y, 0.000001);
   }
 
@@ -97,7 +97,7 @@ public class HitboxTest : HitboxTestBase {
   [TestCase(100, 225, -70.710678118f, -70.710678118f)] [TestCase(100, 315, 70.710678118f, -70.710678118f)] 
   public void GetKnockback_scales_with_damage(float damage, float angle, float x, float y) {
   var knockback = CreateHitbox().WithBaseKnockback(0).WithKnockbackScaling(1)
-                                .WithKnockbackAngle(angle).Build().GetKnocback(damage, false);
+                                .WithKnockbackAngle(angle).Build().GetKnocback(damage, true);
     Assert.AreEqual(x, knockback.x, 0.001);
     Assert.AreEqual(y, knockback.y, 0.001);
   }
