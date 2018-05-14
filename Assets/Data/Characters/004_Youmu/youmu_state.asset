@@ -29,9 +29,9 @@ MonoBehaviour:
     Data:
       Timeline: {fileID: 11400000, guid: 2eb91958e5a6cb94fae2044509f2004c, type: 2}
       AnimationClip: {fileID: 7400000, guid: fb01eb96bd4199341a5083c7648d097c, type: 3}
-      Length: 1.41
-      MinMoveSpeed: 2.5
-      MaxMoveSpeed: 2.5
+      Length: 2
+      MinMoveSpeed: 1
+      MaxMoveSpeed: 1
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
@@ -77,9 +77,9 @@ MonoBehaviour:
     Data:
       Timeline: {fileID: 11400000, guid: a5aaa097964f7884aac4e4c35ef76f4a, type: 2}
       AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
-      Length: 0.125
-      MinMoveSpeed: 4
-      MaxMoveSpeed: 4
+      Length: 0.1
+      MinMoveSpeed: 10
+      MaxMoveSpeed: 10
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
     Data:
       Timeline: {fileID: 11400000, guid: 6edee2da42f8e7948a561b93c6588ab7, type: 2}
       AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
-      Length: 0.5
+      Length: 0.2
       MinMoveSpeed: 5
       MaxMoveSpeed: 5
       RotationOffset: 90
@@ -341,7 +341,7 @@ MonoBehaviour:
     Data:
       Timeline: {fileID: 11400000, guid: b64dbb0e0b5854d4cb4f5a6ae46cab82, type: 2}
       AnimationClip: {fileID: 7400000, guid: 54996c9ce217a924b8d0757bca18d606, type: 3}
-      Length: 2
+      Length: 0.5
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90
@@ -377,7 +377,7 @@ MonoBehaviour:
     Data:
       Timeline: {fileID: 11400000, guid: 54aa710641f24d94e88fe076e9bf3dfc, type: 2}
       AnimationClip: {fileID: 7400000, guid: 1e692717d005f7944b8729b30ac94573, type: 3}
-      Length: 3.75
+      Length: 0.5
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90

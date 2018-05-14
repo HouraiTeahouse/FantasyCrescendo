@@ -63,12 +63,27 @@ public class HitboxTest : HitboxTestBase {
   [TestCase(0, 1, 0)] [TestCase(90, 0, 1)] [TestCase(180, -1, 0)] [TestCase(270, 0, -1)] [TestCase(360, 1, 0)]
   [TestCase(45, 0.70710678118f, 0.70710678118f)] [TestCase(135, -0.70710678118f, 0.70710678118f)] 
   [TestCase(225, -0.70710678118f, -0.70710678118f)] [TestCase(315, 0.70710678118f, -0.70710678118f)] 
-  public void KnockbackDirection_corresponds_to_knockback_angle(float angle, float x, float y) {
-    var knockbackDirection = CreateHitbox().WithKnockbackAngle(angle).Build().KnockbackDirection;
+  public void GetKnockbackDirection_corresponds_to_knockback_angle(float angle, float x, float y) {
+    var knockbackDirection = CreateHitbox().WithMirrorDirection(false).WithKnockbackAngle(angle).Build().GetKnockbackDirection(false);
+    Assert.AreEqual(x, knockbackDirection.x, 0.000001);
+    Assert.AreEqual(y, knockbackDirection.y, 0.000001);
+    knockbackDirection = CreateHitbox().WithMirrorDirection(false).WithKnockbackAngle(angle).Build().GetKnockbackDirection(true);
     Assert.AreEqual(x, knockbackDirection.x, 0.000001);
     Assert.AreEqual(y, knockbackDirection.y, 0.000001);
   }
- 
+
+  [TestCase(0, 1, 0)] [TestCase(90, 0, 1)] [TestCase(180, -1, 0)] [TestCase(270, 0, -1)] [TestCase(360, 1, 0)]
+  [TestCase(45, 0.70710678118f, 0.70710678118f)] [TestCase(135, -0.70710678118f, 0.70710678118f)] 
+  [TestCase(225, -0.70710678118f, -0.70710678118f)] [TestCase(315, 0.70710678118f, -0.70710678118f)] 
+  public void GetKnockbackDirection_mirrors_direction(float angle, float x, float y) {
+    var knockbackDirection = CreateHitbox().WithMirrorDirection(true).WithKnockbackAngle(angle).Build().GetKnockbackDirection(false);
+    Assert.AreEqual(-x, knockbackDirection.x, 0.000001);
+    Assert.AreEqual(y, knockbackDirection.y, 0.000001);
+    knockbackDirection = CreateHitbox().WithMirrorDirection(true).WithKnockbackAngle(angle).Build().GetKnockbackDirection(true);
+    Assert.AreEqual(x, knockbackDirection.x, 0.000001);
+    Assert.AreEqual(y, knockbackDirection.y, 0.000001);
+  }
+
   [TestCase(0, 0, 0, 0)] [TestCase(0, 90, 0, 0)] [TestCase(0, 180, 0, 0)] [TestCase(0, 270, 0, 0)] [TestCase(0, 360, 0, 0)]
   [TestCase(0, 45, 0, 0)] [TestCase(0, 135, 0, 0)] [TestCase(0, 225, 0, 0)] [TestCase(0, 315, 0, 0)] 
   [TestCase(1, 0, 1, 0)] [TestCase(1, 90, 0, 1)] [TestCase(1, 180, -1, 0)] [TestCase(1, 270, 0, -1)] [TestCase(1, 360, 1, 0)]
@@ -82,7 +97,7 @@ public class HitboxTest : HitboxTestBase {
   [TestCase(100, 225, -70.710678118f, -70.710678118f)] [TestCase(100, 315, 70.710678118f, -70.710678118f)] 
   public void GetKnockback_scales_with_damage(float damage, float angle, float x, float y) {
   var knockback = CreateHitbox().WithBaseKnockback(0).WithKnockbackScaling(1)
-                                .WithKnockbackAngle(angle).Build().GetKnocback(damage);
+                                .WithKnockbackAngle(angle).Build().GetKnocback(damage, true);
     Assert.AreEqual(x, knockback.x, 0.001);
     Assert.AreEqual(y, knockback.y, 0.001);
   }

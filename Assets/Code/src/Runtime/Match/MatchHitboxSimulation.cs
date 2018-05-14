@@ -20,6 +20,7 @@ public class PlayerCollisionManager {
   }
 
   public void Add(HitboxCollision collision) {
+    if (collision.IsSelfCollision) return;
     PlayerCollisions[collision.Destination.PlayerID].Add(collision);
   }
 
@@ -62,7 +63,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
       for (var i = 0; i < Config.PlayerCount; i++) {
         var playerState = state.GetPlayerState(i);
         var collisions = CollisionManager.PlayerCollisions[i];
-        ApplyCollisions(collisions, ref playerState);
+        ApplyCollisions(collisions, ref playerState, state);
         state.SetPlayerState(i,  playerState);
       }
       CollisionManager.Clear();
@@ -73,17 +74,31 @@ public class MatchHitboxSimulation : IMatchSimulation {
   }
 
   // TODO(james7132): Split and generalize this... somehow.
-  public void ApplyCollisions(List<HitboxCollision> collisions, ref PlayerState state) {
+  public void ApplyCollisions(List<HitboxCollision> collisions, ref PlayerState state, MatchState match) {
     if (collisions.Count <= 0 ) return;
     bool isShielded = false;
+    bool isHit = false;
     foreach (var collision in collisions) {
       var source = collision.Source;
+      int srcPlayerId = (int)collision.Source.PlayerID;
+      int dstPlayerId = (int)collision.Destination.PlayerID;
       switch (collision.Destination.Type) {
         case HurtboxType.Damageable:
-          if (isShielded) continue;
+          var sourceState = match.GetPlayerState((int)source.PlayerID);
+
+          // Check if hit is valid.
+          if (isShielded || isHit || sourceState.HasHit(dstPlayerId)) continue;
+
+          // Deal damage and knockback
           state.Damage += source.BaseDamage;
-          state.Velocity = source.GetKnocback(state.Damage);
+          state.Velocity = source.GetKnocback(state.Damage, sourceState.Direction);
           state.Hitstun = source.GetHitstun(state.Damage);
+
+          // Mark the source as having hit the destination.
+          sourceState.HitPlayer(dstPlayerId);
+          match.SetPlayerState(srcPlayerId, sourceState);
+
+          isHit = true;
           // TODO(james7132): Play Effect
           break;
         case HurtboxType.Shield:
@@ -103,8 +118,10 @@ public class MatchHitboxSimulation : IMatchSimulation {
       var hurtboxCount = HitboxUtil.CollisionCheck(hitbox, hurtboxes);
       for (var i = 0; i < hurtboxCount; i++) {
         if (!ActiveHurtboxes.Contains(hurtboxes[i])) continue;
-        var collision = new HitboxCollision { Source = hitbox, Destination = hurtboxes[i] };
-        CollisionManager.Add(collision);
+        CollisionManager.Add(new HitboxCollision {
+          Source = hitbox,
+          Destination = hurtboxes[i]
+        });
       }
     }
     ArrayPool<Hurtbox>.Shared.Return(hurtboxes);

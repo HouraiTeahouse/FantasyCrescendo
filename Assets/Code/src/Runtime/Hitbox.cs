@@ -20,14 +20,23 @@ public class Hitbox : AbstractHitDetector {
   public float KnockbackScaling = 1f;
   public uint BaseHitstun = 1;
   public float HitstunScaling = 0.1f;
+  public bool MirrorDirection = true;
 
   public bool IsActive => isActiveAndEnabled && Type != HitboxType.Inactive;
   public Vector3 Center => transform.TransformPoint(Offset);
 
   float KnockbackAngleRad => Mathf.Deg2Rad * KnockbackAngle;
-  public Vector2 KnockbackDirection => new Vector2(Mathf.Cos(KnockbackAngleRad), Mathf.Sin(KnockbackAngleRad));
+
+  public Vector2 GetKnockbackDirection(bool direction) {
+    var dirMult = 1f;
+    if (MirrorDirection && !direction) {
+      dirMult = -1;
+    }
+    return new Vector2(dirMult * Mathf.Cos(KnockbackAngleRad), Mathf.Sin(KnockbackAngleRad));
+  }
+
   public float GetKnockbackScale(float damage) => Mathf.Max(0, BaseKnockback + KnockbackScaling * damage);
-  public Vector2 GetKnocback(float damage) => GetKnockbackScale(damage) * KnockbackDirection;
+  public Vector2 GetKnocback(float damage, bool dir) => GetKnockbackScale(damage) * GetKnockbackDirection(dir);
 
   public uint GetHitstun(float damage) => (uint)Mathf.Max(0, BaseHitstun + Mathf.FloorToInt(HitstunScaling * damage));
 

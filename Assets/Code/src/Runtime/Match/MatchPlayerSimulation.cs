@@ -12,6 +12,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 public class MatchPlayerSimulation : IMatchSimulation {
 
   public PlayerSimulation[] PlayerSimulations;
+  MediatorContext context;
 
   public Task Initialize(MatchConfig config) {
     Assert.IsTrue(config.IsValid);
@@ -21,6 +22,10 @@ public class MatchPlayerSimulation : IMatchSimulation {
       PlayerSimulations[i] = new PlayerSimulation();
       tasks.Add(PlayerSimulations[i].Initialize(config.PlayerConfigs[i]));
     }
+
+    context = Mediator.Global.CreateContext();
+    context.Subscribe<PlayerResetEvent>(ResetPlayer);
+
     return Task.WhenAll(tasks);
   }
 
@@ -48,7 +53,11 @@ public class MatchPlayerSimulation : IMatchSimulation {
     return state;
   }
 
-  public void Dispose() { }
+  void ResetPlayer(PlayerResetEvent evt) {
+    evt.PlayerState = PlayerSimulations[evt.PlayerID].ResetState(evt.PlayerState);
+  }
+
+  public void Dispose() => context.Dispose();
 
 }
 

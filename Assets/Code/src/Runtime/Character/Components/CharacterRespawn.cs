@@ -37,7 +37,11 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
     return state;
   }
 
-  public PlayerState ResetState(PlayerState state) => state;
+  public PlayerState ResetState(PlayerState state) {
+    state.Damage = 0f;
+    state.ShieldDamage = 0;
+    return state;
+  }
 
   public void ApplyState(PlayerState state) {
     if (platform == null) return;

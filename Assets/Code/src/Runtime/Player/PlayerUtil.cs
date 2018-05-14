@@ -29,8 +29,7 @@ public static class PlayerUtil {
 
   public static PlayerRespawnEvent RespawnPlayer(PlayerDiedEvent evt) {
     if (evt.Respawned) return null;
-    var respawnEvent = new PlayerRespawnEvent();
-    respawnEvent.Copy(evt);
+    var respawnEvent = new PlayerRespawnEvent(evt);
     Mediator.Global.Publish(respawnEvent);
     evt.Copy(respawnEvent);
     evt.Respawned = true;
