@@ -63,7 +63,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
       for (var i = 0; i < Config.PlayerCount; i++) {
         var playerState = state.GetPlayerState(i);
         var collisions = CollisionManager.PlayerCollisions[i];
-        ApplyCollisions(collisions, ref playerState);
+        ApplyCollisions(collisions, ref playerState, state);
         state.SetPlayerState(i,  playerState);
       }
       CollisionManager.Clear();
@@ -74,7 +74,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
   }
 
   // TODO(james7132): Split and generalize this... somehow.
-  public void ApplyCollisions(List<HitboxCollision> collisions, ref PlayerState state) {
+  public void ApplyCollisions(List<HitboxCollision> collisions, ref PlayerState state, MatchState match) {
     if (collisions.Count <= 0 ) return;
     bool isShielded = false;
     bool isHit = false;
@@ -83,8 +83,9 @@ public class MatchHitboxSimulation : IMatchSimulation {
       switch (collision.Destination.Type) {
         case HurtboxType.Damageable:
           if (isShielded || isHit) continue;
+          var sourceState = match.GetPlayerState((int)source.PlayerID);
           state.Damage += source.BaseDamage;
-          state.Velocity = source.GetKnocback(state.Damage);
+          state.Velocity = source.GetKnocback(state.Damage, sourceState.Direction);
           state.Hitstun = source.GetHitstun(state.Damage);
           isHit = true;
           // TODO(james7132): Play Effect

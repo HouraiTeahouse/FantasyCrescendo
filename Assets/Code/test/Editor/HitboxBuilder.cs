@@ -44,6 +44,11 @@ public class HitboxBuilder {
     return this;
   }
 
+  public HitboxBuilder WithMirrorDirection(bool mirror) {
+    Hitbox.MirrorDirection = mirror;
+    return this;
+  }
+
   public HitboxBuilder WithPosition(Vector3 position) {
     Hitbox.transform.position = position;
     return this;
