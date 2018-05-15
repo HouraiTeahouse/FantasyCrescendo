@@ -10,6 +10,14 @@ public class MatchPauseController : MonoBehaviour {
   public KeyCode PlayerOneKey = KeyCode.Return;
   public InputControlType PauseButton = InputControlType.Start;
 
+  // TODO(james7132): Add support for non-keyboard reset.
+  public KeyCode[] ResetKeys = new KeyCode[] {
+    KeyCode.LeftShift,
+    KeyCode.Return,
+    KeyCode.Q,
+    KeyCode.E,
+  };
+
   uint PausedPlayer;
 
   /// <summary>
@@ -25,6 +33,9 @@ public class MatchPauseController : MonoBehaviour {
   }
 
   void PausedCheck() {
+    if (MatchResetCheck()) {
+      ResetMatch();
+    }
     var wasPressed = WasPressed(PausedPlayer);
     if (wasPressed == true) {
       MatchManager.SetPaused(false);
@@ -46,6 +57,22 @@ public class MatchPauseController : MonoBehaviour {
       MatchManager.SetPaused(true);
       PausedPlayer = player;
     }
+  }
+
+  void ResetMatch() {
+    // TODO(james7132): Generalize match end logic.
+    MatchManager.EndMatch(new MatchResult {
+      Resolution = MatchResolution.NoContest,
+      WinningPlayerID = -1,
+      PlayerStats = MatchResultUtil.CreateMatchStatsFromConfig(MatchManager.Config)
+    });
+  }
+
+  bool MatchResetCheck() {
+    foreach (KeyCode key in ResetKeys) {
+      if (!Input.GetKey(key)) return false;
+    }
+    return true;
   }
 
   bool? WasPressed(uint player) {

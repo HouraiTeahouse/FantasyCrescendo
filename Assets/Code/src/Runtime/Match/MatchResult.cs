@@ -34,4 +34,16 @@ public struct MatchResult : INetworkSerializable {
 
 }
 
+public static class MatchResultUtil {
+
+  public static PlayerMatchStats[] CreateMatchStatsFromConfig(MatchConfig config) {
+    var players = new PlayerMatchStats[config.PlayerCount];
+    for (uint i = 0; i < players.Length; i++) {
+      players[i].Config = config.PlayerConfigs[i];
+    }
+    return players;
+  }
+
+}
+
 }
