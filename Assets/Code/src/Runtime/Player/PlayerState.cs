@@ -83,6 +83,7 @@ public struct PlayerState : INetworkSerializable {
   public short GrabbedLedgeTimer;                     // 1-2 bytes
 
   public uint Hitstun;                                // 1-4 bytes
+  public uint Hitlag;                                 // 1-4 bytes
 
   public sbyte Stocks;                                // 4 bytes
 
@@ -120,6 +121,7 @@ public struct PlayerState : INetworkSerializable {
     WriteBit(ref mask, RespawnTimeRemaining != 0);
     WriteBit(ref mask, ShieldRecoveryCooldown != 0);
     WriteBit(ref mask, Hitstun != 0);
+    WriteBit(ref mask, Hitlag != 0);
     WriteBit(ref mask, Charge != 0);
     WriteBit(ref mask, ShieldDamage != 0);
     WriteBit(ref mask, GrabbedLedgeTimer != 0);
@@ -146,6 +148,7 @@ public struct PlayerState : INetworkSerializable {
     if (GrabbedLedgeTimer != 0)      writer.Write(GrabbedLedgeTimer);
     if (ShieldDamage != 0)           writer.Write(ShieldDamage);
     if (Charge != 0)                 writer.Write(Charge);
+    if (Hitlag != 0)                 writer.Write(Hitlag);
     if (Hitstun != 0)                writer.Write(Hitstun);
     if (ShieldRecoveryCooldown != 0) writer.Write(ShieldRecoveryCooldown);
     if (RespawnTimeRemaining != 0)   writer.Write(RespawnTimeRemaining);
@@ -170,6 +173,7 @@ public struct PlayerState : INetworkSerializable {
     if (ReadBit(ref mask)) GrabbedLedgeTimer = deserializer.ReadInt16();
     if (ReadBit(ref mask)) ShieldDamage = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) Charge = deserializer.ReadByte();
+    if (ReadBit(ref mask)) Hitlag = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) Hitstun = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) ShieldRecoveryCooldown = deserializer.ReadUInt32();
     if (ReadBit(ref mask)) RespawnTimeRemaining = deserializer.ReadUInt32();

@@ -37,6 +37,11 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
   }
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+    // If under hitlag, do not further simulate player.
+    if (state.Hitlag > 0) {
+      state.Hitlag--;
+      return state; 
+    }
     return SimulationComponents?.Simulate(state, input) ?? state;
   }
 

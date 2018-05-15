@@ -89,10 +89,12 @@ public class MatchHitboxSimulation : IMatchSimulation {
           // Check if hit is valid.
           if (isShielded || isHit || sourceState.HasHit(dstPlayerId)) continue;
 
-          // Deal damage and knockback
+          // Deal damage, knockback, hitlag, and hitstun
           state.Damage += source.BaseDamage;
           state.Velocity = source.GetKnocback(state.Damage, sourceState.Direction);
           state.Hitstun = source.GetHitstun(state.Damage);
+          state.Hitlag = source.Hitlag;
+          sourceState.Hitlag = source.Hitlag;
 
           // Mark the source as having hit the destination.
           sourceState.HitPlayer(dstPlayerId);
