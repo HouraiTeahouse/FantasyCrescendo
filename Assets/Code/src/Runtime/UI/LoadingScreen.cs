@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -45,12 +44,12 @@ public class LoadingScreen : MonoBehaviour {
 
   public static Task AwaitAll() => Task.WhenAll(Tasks);
 
-  bool GetIsLoading() {
+  static bool GetIsLoading() {
     if (Tasks.Count <= 0) return false;
     foreach (var task in Tasks) {
-      if (!task.IsCompleted) return false;
+      if (!task.IsCompleted) return true;
     }
-    return true;
+    return false;
   }
 
 }
