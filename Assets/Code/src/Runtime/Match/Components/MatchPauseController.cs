@@ -32,20 +32,32 @@ public class MatchPauseController : MonoBehaviour {
   }
 
   void UnpausedCheck() {
-    for (uint i = 0; i < InputManager.Devices.Count; i++) {
-      if (WasPressed(i) == true) {
-        MatchManager.SetPaused(true);
-        PausedPlayer = i;
-        return;
+    if (InputManager.Devices.Count <= 0) {
+      PlayerUnpausedCheck(0);
+    } else {
+      for (uint i = 0; i < InputManager.Devices.Count; i++) {
+        PlayerUnpausedCheck(i);
       }
     }
   }
 
+  void PlayerUnpausedCheck(uint player) {
+    if (WasPressed(player) == true) {
+      MatchManager.SetPaused(true);
+      PausedPlayer = player;
+    }
+  }
+
   bool? WasPressed(uint player) {
-    if (PausedPlayer >= InputManager.Devices.Count) return null;
-    var device = InputManager.Devices[(int)PausedPlayer];
-    var wasPressed = device.GetControl(PauseButton).WasPressed;
-    return wasPressed || (PausedPlayer == 0 && Input.GetKeyDown(PlayerOneKey));
+    if (player >= InputManager.Devices.Count) {
+      if (player == 0) {
+        return Input.GetKeyDown(PlayerOneKey);
+      } else {
+        return null;
+      }
+    }
+    return InputManager.Devices[(int)player].GetControl(PauseButton).WasPressed ||
+           (player == 0 && Input.GetKeyDown(PlayerOneKey));
   }
 
 }
