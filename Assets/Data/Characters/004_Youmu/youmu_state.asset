@@ -305,7 +305,7 @@ MonoBehaviour:
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
-      RotationOffset: 90
+      RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
       DirectionMode: 0
@@ -319,18 +319,18 @@ MonoBehaviour:
       RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: TiltDown
     Data:
       Timeline: {fileID: 11400000, guid: 76782a81def70ab459400262d18599e7, type: 2}
-      Length: 0.37500003
+      Length: 0.375
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: SmashUp.Charge
     Data:
@@ -390,13 +390,13 @@ MonoBehaviour:
   - Name: SmashDown.Attack
     Data:
       Timeline: {fileID: 11400000, guid: 1c069663a9872d146b06c18c96e424f1, type: 2}
-      Length: 0.8
+      Length: 0.9166667
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
-      RotationOffset: 90
+      RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: AerialNeutral
     Data:
@@ -426,7 +426,7 @@ MonoBehaviour:
       Length: 0.7916667
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
-      RotationOffset: 90
+      RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
       DirectionMode: 1

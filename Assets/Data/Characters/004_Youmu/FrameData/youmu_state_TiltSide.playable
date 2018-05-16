@@ -70,155 +70,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: Type
-    path: YoumuMesh_PrimarySword/GameObject
-    classID: 114
-    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/GameObject
-    classID: 114
-    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: Type
     path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
-    classID: 114
-    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/youmu_konpaku_hb_Offensive_4
-    classID: 114
-    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/youmu_konpaku_hb_Offensive_5
     classID: 114
     script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
   - curve:
@@ -292,7 +144,101 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_2
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 12
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2
+        value: 12
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 11
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseDamage
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_1
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 50
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseKnockback
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_1
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 30
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackAngle
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_1
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 30
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackAngle
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
     classID: 114
     script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
   - curve:
@@ -301,35 +247,186 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_3
+    attribute: KnockbackAngle
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 12
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2
+        value: 12
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 11
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseDamage
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 50
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseKnockback
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackScaling
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackScaling
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_1
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackScaling
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 10
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseKnockback
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 8
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2
+        value: 8
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 6
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseDamage
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
     classID: 114
     script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
   m_PPtrCurves: []
@@ -341,35 +438,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 80334989
-      attribute: 753727511
-      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-      typeID: 114
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 3315011090
-      attribute: 753727511
-      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-      typeID: 114
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
       path: 938289911
-      attribute: 753727511
-      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-      typeID: 114
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 4210785930
-      attribute: 753727511
-      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-      typeID: 114
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 2382122524
       attribute: 753727511
       script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
       typeID: 114
@@ -383,15 +452,92 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3655551963
+      path: 3340088179
       attribute: 753727511
       script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
       typeID: 114
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2934209357
-      attribute: 753727511
+      path: 1089084001
+      attribute: 1848258500
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 938289911
+      attribute: 1848258500
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 3340088179
+      attribute: 1848258500
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1089084001
+      attribute: 4178349855
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1089084001
+      attribute: 537108996
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 938289911
+      attribute: 537108996
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 3340088179
+      attribute: 537108996
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 938289911
+      attribute: 4178349855
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 938289911
+      attribute: 4282389779
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1089084001
+      attribute: 4282389779
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 3340088179
+      attribute: 4282389779
+      script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 3340088179
+      attribute: 4178349855
       script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
       typeID: 114
       customType: 0
@@ -452,155 +598,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: Type
-    path: YoumuMesh_PrimarySword/GameObject
-    classID: 114
-    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/GameObject
-    classID: 114
-    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: Type
     path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
-    classID: 114
-    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/youmu_konpaku_hb_Offensive_4
-    classID: 114
-    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/youmu_konpaku_hb_Offensive_5
     classID: 114
     script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
   - curve:
@@ -674,7 +672,101 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_2
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 12
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2
+        value: 12
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 11
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseDamage
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_1
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 50
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseKnockback
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_1
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 30
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackAngle
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_1
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 30
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackAngle
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
     classID: 114
     script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
   - curve:
@@ -683,35 +775,186 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: Type
-    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_3
+    attribute: KnockbackAngle
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 12
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2
+        value: 12
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 11
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseDamage
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 50
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseKnockback
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackScaling
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_0
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackScaling
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/youmu_konpaku_hb_Offensive_1
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: KnockbackScaling
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 10
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseKnockback
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
+    classID: 114
+    script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 8
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2
+        value: 8
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 6
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: BaseDamage
+    path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end/youmu_konpaku_hb_Offensive_2
     classID: 114
     script: {fileID: 11500000, guid: 7c40d353748634e74aff4100a42ca205, type: 3}
   m_EulerEditorCurves: []
