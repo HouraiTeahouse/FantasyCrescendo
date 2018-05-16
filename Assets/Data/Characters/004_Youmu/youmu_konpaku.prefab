@@ -3624,7 +3624,9 @@ MonoBehaviour:
     GrabbedLedgeID: 0
     GrabbedLedgeTimer: 0
     Hitstun: 0
+    Hitlag: 0
     Stocks: 0
+    PlayersHit: 0
 --- !u!114 &114502081682064662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3693,7 +3695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority: 0
-  Type: 1
+  Type: 0
   Offset: {x: 0, y: 0, z: 0}
   Radius: 0.5
   BaseDamage: 10
@@ -3702,6 +3704,7 @@ MonoBehaviour:
   KnockbackScaling: 1
   BaseHitstun: 1
   HitstunScaling: 0.1
+  MirrorDirection: 1
 --- !u!114 &114752305556272700
 MonoBehaviour:
   m_ObjectHideFlags: 1

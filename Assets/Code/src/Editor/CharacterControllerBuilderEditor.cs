@@ -57,13 +57,13 @@ public class CharacterControllerBuilderEditor : UnityEditor.Editor {
         continue;
       }
       var elementData = element.FindPropertyRelative("Data");
-      var clip = elementData.FindPropertyRelative("AnimationClip");
+      var timeline = elementData.FindPropertyRelative("Timeline");
       var length = elementData.FindPropertyRelative("Length");
-      var animationClip = clip.objectReferenceValue as AnimationClip;
+      var timelineAsset = timeline.objectReferenceValue as TimelineAsset;
       EditorGUILayout.PropertyField(elementData, new GUIContent(name), true);
-      var newClip = clip.objectReferenceValue as AnimationClip;
-      if (animationClip != newClip && newClip != null) {
-        length.floatValue = newClip.length;
+      var newTimeline = timeline.objectReferenceValue as TimelineAsset;
+      if (timelineAsset != newTimeline && newTimeline != null) {
+        length.floatValue = (float)newTimeline.duration;
       }
     }
     if (GUI.changed) {
@@ -113,22 +113,13 @@ public class CharacterControllerBuilderEditor : UnityEditor.Editor {
         AssetDatabase.CreateAsset(timeline, Path.Combine(directory, builder.name + "_" + state.Name + ".playable"));
         state.Data.Timeline = timeline;
       }
-      var baseAnimationTrack = GetOrCreateAnimationTrack($"base_animation_{state.Name}", timeline, track => {
-        foreach (var timelineClip in track.GetClips())
-            timeline.DeleteClip(timelineClip);
-      });
+      var baseAnimationTrack = GetOrCreateAnimationTrack($"base_animation_{state.Name}", timeline);
       var hitboxAnimationTrack = GetOrCreateAnimationTrack($"hitbox_animation_{state.Name}", timeline);
 
       if (director != null && animator != null) {
         director.SetGenericBinding(baseAnimationTrack, animatorGo);
         director.SetGenericBinding(hitboxAnimationTrack, animatorGo);
       }
-
-      if (state.Data.AnimationClip == null) continue;
-
-      // Create base animation clip
-      var baseClip = baseAnimationTrack.CreateClip(state.Data.AnimationClip);
-      baseClip.displayName = state.Data.AnimationClip.name + "_Animation";
 
       EditorUtility.SetDirty(timeline);
       EditorUtility.SetDirty(baseAnimationTrack);

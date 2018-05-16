@@ -16,7 +16,6 @@ MonoBehaviour:
   - Name: Idle
     Data:
       Timeline: {fileID: 11400000, guid: bcb63ac198282374ca733c6e482e8702, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -28,7 +27,6 @@ MonoBehaviour:
   - Name: Walk
     Data:
       Timeline: {fileID: 11400000, guid: 2eb91958e5a6cb94fae2044509f2004c, type: 2}
-      AnimationClip: {fileID: 7400000, guid: fb01eb96bd4199341a5083c7648d097c, type: 3}
       Length: 2
       MinMoveSpeed: 1
       MaxMoveSpeed: 1
@@ -40,7 +38,6 @@ MonoBehaviour:
   - Name: Crouch
     Data:
       Timeline: {fileID: 11400000, guid: 1deaad0706c75ab4a95c62747364d303, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
       Length: 1.9833333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -52,7 +49,6 @@ MonoBehaviour:
   - Name: CrouchStart
     Data:
       Timeline: {fileID: 11400000, guid: 85f5dd0cf68f0294c9e54af65064e9ed, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 37212a7c5e819ac47bfc304de5b5aed3, type: 3}
       Length: 0.125
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -64,7 +60,6 @@ MonoBehaviour:
   - Name: CrouchEnd
     Data:
       Timeline: {fileID: 11400000, guid: 7d32b2412920f3f4ca4ed5ce77a2f174, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 733a78fe4515d93429ca246cba965e5d, type: 3}
       Length: 0.125
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -76,7 +71,6 @@ MonoBehaviour:
   - Name: Dash
     Data:
       Timeline: {fileID: 11400000, guid: a5aaa097964f7884aac4e4c35ef76f4a, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
       Length: 0.1
       MinMoveSpeed: 10
       MaxMoveSpeed: 10
@@ -88,7 +82,6 @@ MonoBehaviour:
   - Name: Run
     Data:
       Timeline: {fileID: 11400000, guid: 6edee2da42f8e7948a561b93c6588ab7, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 903c5e1ade027ad4ea7e452f1421683d, type: 3}
       Length: 0.2
       MinMoveSpeed: 5
       MaxMoveSpeed: 5
@@ -100,7 +93,6 @@ MonoBehaviour:
   - Name: RunBrake
     Data:
       Timeline: {fileID: 11400000, guid: cfa9092820a34d14c8b8c186d5311c38, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 601f587de7485bb4ca66764c36ece344, type: 3}
       Length: 0.25000003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -112,7 +104,6 @@ MonoBehaviour:
   - Name: RunTurn
     Data:
       Timeline: {fileID: 11400000, guid: a933f65d2f9b9fd4480ab5c1e4aa906d, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 10ce163cdc9c3da48aa64ccabec322f3, type: 3}
       Length: 0.25
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -124,7 +115,6 @@ MonoBehaviour:
   - Name: Jump
     Data:
       Timeline: {fileID: 11400000, guid: 81797ce10eabef24886cf092d3e0d69c, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
       Length: 0.5
       MinMoveSpeed: 0
       MaxMoveSpeed: 3
@@ -136,7 +126,6 @@ MonoBehaviour:
   - Name: JumpStart
     Data:
       Timeline: {fileID: 11400000, guid: 9632d9bab4864094bb0430166aca745c, type: 2}
-      AnimationClip: {fileID: 7400002, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
       Length: 0.125
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -148,7 +137,6 @@ MonoBehaviour:
   - Name: JumpAerial
     Data:
       Timeline: {fileID: 11400000, guid: 68d9283c8132a4d47b312d814d3626c6, type: 2}
-      AnimationClip: {fileID: 7400002, guid: 55afce5ced792a44b9eaa84338c4bb6a, type: 3}
       Length: 0.45833334
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -160,7 +148,6 @@ MonoBehaviour:
   - Name: Land
     Data:
       Timeline: {fileID: 11400000, guid: a0935b3e483df794f87ef68b83b996a7, type: 2}
-      AnimationClip: {fileID: 7400000, guid: a04d73ffa41e4dd4099fbbebfe00a948, type: 3}
       Length: 0.125
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -172,7 +159,6 @@ MonoBehaviour:
   - Name: Shield.On
     Data:
       Timeline: {fileID: 11400000, guid: f220471678f2ab6488b151f270ad9ff4, type: 2}
-      AnimationClip: {fileID: 7400002, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
       Length: 0.125
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -184,7 +170,6 @@ MonoBehaviour:
   - Name: Shield.Perfect
     Data:
       Timeline: {fileID: 11400000, guid: 98dadcd2366e5a347b6a286653042a8e, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
       Length: 0.020833343
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -196,7 +181,6 @@ MonoBehaviour:
   - Name: Shield.Main
     Data:
       Timeline: {fileID: 11400000, guid: 00b32d67992bc6c48b3084f367c9e38c, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
       Length: 0.020833343
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -208,7 +192,6 @@ MonoBehaviour:
   - Name: Shield.Off
     Data:
       Timeline: {fileID: 11400000, guid: 2d71f581f8b9f254c88b228b3a0c969d, type: 2}
-      AnimationClip: {fileID: 7400004, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
       Length: 0.125
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -220,7 +203,6 @@ MonoBehaviour:
   - Name: Shield.Broken
     Data:
       Timeline: {fileID: 11400000, guid: 193f232ad529d2446aeef20f3a768e28, type: 2}
-      AnimationClip: {fileID: 7400004, guid: 04d72bb6f19da7844a62ea29c23e7936, type: 3}
       Length: 0.125
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -232,7 +214,6 @@ MonoBehaviour:
   - Name: Shield.Stunned
     Data:
       Timeline: {fileID: 11400000, guid: de1b1084929683d4baa97d2b54ad0f01, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -244,7 +225,6 @@ MonoBehaviour:
   - Name: Escape
     Data:
       Timeline: {fileID: 11400000, guid: 936685f07126c3e4b8e322869a1aedc7, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -256,7 +236,6 @@ MonoBehaviour:
   - Name: EscapeForward
     Data:
       Timeline: {fileID: 11400000, guid: 1fd7b626d03ad1548b49eeaf5f5f62f8, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 35d059f904e24e5449691aac8343c2e6, type: 3}
       Length: 1.1250001
       MinMoveSpeed: 2
       MaxMoveSpeed: 2
@@ -268,7 +247,6 @@ MonoBehaviour:
   - Name: EscapeBackward
     Data:
       Timeline: {fileID: 11400000, guid: ad079928d837c9949b230d99ed87713d, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 293c8c11f95e57e44995c0fd91670f0f, type: 3}
       Length: 0.9583333
       MinMoveSpeed: -2
       MaxMoveSpeed: -2
@@ -280,7 +258,6 @@ MonoBehaviour:
   - Name: Fall
     Data:
       Timeline: {fileID: 11400000, guid: a7812bfd6e8d1524082a7a47657bbbab, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 6084871001fff60419effbdbc5ff9122, type: 3}
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 3
@@ -292,7 +269,6 @@ MonoBehaviour:
   - Name: FallHelpless
     Data:
       Timeline: {fileID: 11400000, guid: d517c4b16ddf8d645b7fb59f4ef4b462, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 6084871001fff60419effbdbc5ff9122, type: 3}
       Length: 1
       MinMoveSpeed: 0
       MaxMoveSpeed: 3
@@ -304,7 +280,6 @@ MonoBehaviour:
   - Name: EscapeAir
     Data:
       Timeline: {fileID: 11400000, guid: 614e794750218214c812cebf8b54400d, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -316,7 +291,6 @@ MonoBehaviour:
   - Name: Neutral
     Data:
       Timeline: {fileID: 11400000, guid: 4ef169b5162b15f43a8a54328899acfe, type: 2}
-      AnimationClip: {fileID: 7400000, guid: e73966a8c42569341bf845661f16f957, type: 3}
       Length: 0.7083333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -328,7 +302,6 @@ MonoBehaviour:
   - Name: TiltUp
     Data:
       Timeline: {fileID: 11400000, guid: c80ea10bf12f1ba41b7884667aa4eded, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 18ef095d63e2166469dadfbd4570c55c, type: 3}
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -340,7 +313,6 @@ MonoBehaviour:
   - Name: TiltSide
     Data:
       Timeline: {fileID: 11400000, guid: b64dbb0e0b5854d4cb4f5a6ae46cab82, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 54996c9ce217a924b8d0757bca18d606, type: 3}
       Length: 0.5
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -352,7 +324,6 @@ MonoBehaviour:
   - Name: TiltDown
     Data:
       Timeline: {fileID: 11400000, guid: 76782a81def70ab459400262d18599e7, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 18ef095d63e2166469dadfbd4570c55c, type: 3}
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -364,7 +335,6 @@ MonoBehaviour:
   - Name: SmashUp.Charge
     Data:
       Timeline: {fileID: 11400000, guid: 7012ce75af296114dba394040a687814, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 1e692717d005f7944b8729b30ac94573, type: 3}
       Length: 3.75
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -376,7 +346,6 @@ MonoBehaviour:
   - Name: SmashUp.Attack
     Data:
       Timeline: {fileID: 11400000, guid: 54aa710641f24d94e88fe076e9bf3dfc, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 1e692717d005f7944b8729b30ac94573, type: 3}
       Length: 0.5
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -388,7 +357,6 @@ MonoBehaviour:
   - Name: SmashSide.Charge
     Data:
       Timeline: {fileID: 11400000, guid: 9c26f8fa2c2d191419548a8f4165fc36, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 1e692717d005f7944b8729b30ac94573, type: 3}
       Length: 3.75
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -400,7 +368,6 @@ MonoBehaviour:
   - Name: SmashSide.Attack
     Data:
       Timeline: {fileID: 11400000, guid: b955c69cd750bcc49949e7365ff5a524, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 1e692717d005f7944b8729b30ac94573, type: 3}
       Length: 3.75
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -412,7 +379,6 @@ MonoBehaviour:
   - Name: SmashDown.Charge
     Data:
       Timeline: {fileID: 11400000, guid: dce4ba34760b406469677905055f59bd, type: 2}
-      AnimationClip: {fileID: 7400002, guid: c559a9c1c353b5b42927632b5a6577ae, type: 3}
       Length: 0.08333333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -424,7 +390,6 @@ MonoBehaviour:
   - Name: SmashDown.Attack
     Data:
       Timeline: {fileID: 11400000, guid: 1c069663a9872d146b06c18c96e424f1, type: 2}
-      AnimationClip: {fileID: 7400000, guid: c559a9c1c353b5b42927632b5a6577ae, type: 3}
       Length: 0.8
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -436,7 +401,6 @@ MonoBehaviour:
   - Name: AerialNeutral
     Data:
       Timeline: {fileID: 11400000, guid: c51459cf178200440920a5a4bfb1ff80, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -448,7 +412,6 @@ MonoBehaviour:
   - Name: AerialForward
     Data:
       Timeline: {fileID: 11400000, guid: 653ac318355c7354f8098642380365e6, type: 2}
-      AnimationClip: {fileID: 7400000, guid: c917a20a027f67e47a8b0d334f704819, type: 3}
       Length: 0.7083333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -460,7 +423,6 @@ MonoBehaviour:
   - Name: AerialBackward
     Data:
       Timeline: {fileID: 11400000, guid: 63375165093a80b43a26c151c0c4c009, type: 2}
-      AnimationClip: {fileID: 7400000, guid: df44469fae4300e4090822720904b539, type: 3}
       Length: 0.7916667
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -472,7 +434,6 @@ MonoBehaviour:
   - Name: AerialUp
     Data:
       Timeline: {fileID: 11400000, guid: fccb4409ffed1894cad585de87aabfa7, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 765e971c19c6a6a4cac69270ff6b340e, type: 3}
       Length: 0.55833334
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -484,7 +445,6 @@ MonoBehaviour:
   - Name: AerialDown
     Data:
       Timeline: {fileID: 11400000, guid: 6700d07c3fd4b3443b7458371f91e5e9, type: 2}
-      AnimationClip: {fileID: 7400000, guid: bdf50aa75dfdcb7419351ccdb880b99b, type: 3}
       Length: 0.7166667
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -496,7 +456,6 @@ MonoBehaviour:
   - Name: AerialAttackLand
     Data:
       Timeline: {fileID: 11400000, guid: 192349e7dba356f44b0033bf4191ec0f, type: 2}
-      AnimationClip: {fileID: 7400000, guid: a04d73ffa41e4dd4099fbbebfe00a948, type: 3}
       Length: 0.99999976
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -508,7 +467,6 @@ MonoBehaviour:
   - Name: SpecialNeutral
     Data:
       Timeline: {fileID: 11400000, guid: 1cb73eb51a736914c8224259a496cb1e, type: 2}
-      AnimationClip: {fileID: 7400000, guid: e73966a8c42569341bf845661f16f957, type: 3}
       Length: 0.7083333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -520,7 +478,6 @@ MonoBehaviour:
   - Name: SpecialUp
     Data:
       Timeline: {fileID: 11400000, guid: 4e1b008785cec2a40a64f63dd0cd7e73, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 18ef095d63e2166469dadfbd4570c55c, type: 3}
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -532,7 +489,6 @@ MonoBehaviour:
   - Name: SpecialSide
     Data:
       Timeline: {fileID: 11400000, guid: 99fa44cb8d41c4b4a98d249f5e46bd2e, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 18ef095d63e2166469dadfbd4570c55c, type: 3}
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -544,7 +500,6 @@ MonoBehaviour:
   - Name: SpecialDown
     Data:
       Timeline: {fileID: 11400000, guid: c655789892e2fc14ebba71dac8c41fb6, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 18ef095d63e2166469dadfbd4570c55c, type: 3}
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -556,7 +511,6 @@ MonoBehaviour:
   - Name: LedgeGrab
     Data:
       Timeline: {fileID: 11400000, guid: 3983c89be80a0d343aa17303e1832f68, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 5e538867655a4ab4b96bb3980d620489, type: 3}
       Length: 1.2333333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -568,7 +522,6 @@ MonoBehaviour:
   - Name: LedgeIdle
     Data:
       Timeline: {fileID: 11400000, guid: 21e9e0ac3e7f2d6438ed6bf9c26fb39f, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 5e538867655a4ab4b96bb3980d620489, type: 3}
       Length: 1.2333333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -580,7 +533,6 @@ MonoBehaviour:
   - Name: LedgeClimb
     Data:
       Timeline: {fileID: 11400000, guid: dc9a2bc00d4aa0048b6cf29d3e68a972, type: 2}
-      AnimationClip: {fileID: 7400000, guid: 1dd4206191c7cec468dfbf521362a338, type: 3}
       Length: 1.5416667
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -592,7 +544,6 @@ MonoBehaviour:
   - Name: LedgeEscape
     Data:
       Timeline: {fileID: 11400000, guid: 96469ed6f40915547b7593605e908ab0, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -604,7 +555,6 @@ MonoBehaviour:
   - Name: LedgeAttack
     Data:
       Timeline: {fileID: 11400000, guid: 63aa38ba2b69ac14f96bd1c0903258c8, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -616,7 +566,6 @@ MonoBehaviour:
   - Name: LedgeJump
     Data:
       Timeline: {fileID: 11400000, guid: 11b30c9b58fdd2848a4862ed715fed80, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -628,7 +577,6 @@ MonoBehaviour:
   - Name: LedgeRelease
     Data:
       Timeline: {fileID: 11400000, guid: b6cbe0e1b6b1630408a32aa8b8d29d38, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -640,7 +588,6 @@ MonoBehaviour:
   - Name: DamageStun
     Data:
       Timeline: {fileID: 11400000, guid: c381dd5aebac31a48a74db9daf12028e, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -652,7 +599,6 @@ MonoBehaviour:
   - Name: DamageStunAir
     Data:
       Timeline: {fileID: 11400000, guid: 8f07ba4d64321224fb724b706005f428, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -664,7 +610,6 @@ MonoBehaviour:
   - Name: DamageLaunched
     Data:
       Timeline: {fileID: 11400000, guid: dddb7ec4564a6494fafb36dfae7d1b62, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -676,7 +621,6 @@ MonoBehaviour:
   - Name: DamageFall
     Data:
       Timeline: {fileID: 11400000, guid: 97cbfb92763540e44ae37634f839c8b9, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -688,7 +632,6 @@ MonoBehaviour:
   - Name: GrabPull
     Data:
       Timeline: {fileID: 11400000, guid: 77ed99b9437319b4a8e6fe93f21dafeb, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -700,7 +643,6 @@ MonoBehaviour:
   - Name: GrabRunPull
     Data:
       Timeline: {fileID: 11400000, guid: 678ba0346320c3140b49e66cf4bf9ff7, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -712,7 +654,6 @@ MonoBehaviour:
   - Name: GrabWait
     Data:
       Timeline: {fileID: 11400000, guid: 6394b96bda1fdad49b77e9eab1fb82d0, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -724,7 +665,6 @@ MonoBehaviour:
   - Name: GrabInterrupted
     Data:
       Timeline: {fileID: 11400000, guid: 7a993adf1b837b740ae957e7873d0170, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -736,7 +676,6 @@ MonoBehaviour:
   - Name: GrabPummel
     Data:
       Timeline: {fileID: 11400000, guid: e8df09ce4fced944f95ac551b7b087d7, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -748,7 +687,6 @@ MonoBehaviour:
   - Name: ThrowForward
     Data:
       Timeline: {fileID: 11400000, guid: 7853726c91de72e4cad3f8c721793815, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -760,7 +698,6 @@ MonoBehaviour:
   - Name: ThrowBackward
     Data:
       Timeline: {fileID: 11400000, guid: bcefe3b038d5fab49bbef66160f3bdf5, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -772,7 +709,6 @@ MonoBehaviour:
   - Name: ThrowUp
     Data:
       Timeline: {fileID: 11400000, guid: e7ebea5f170a0d84788c2e93aae56308, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -784,7 +720,6 @@ MonoBehaviour:
   - Name: ThrowDown
     Data:
       Timeline: {fileID: 11400000, guid: e15b0289559d84c4dae69406b1a212e0, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -796,7 +731,6 @@ MonoBehaviour:
   - Name: GrabbedPulled
     Data:
       Timeline: {fileID: 11400000, guid: 2b42b353beb968444956e97d362818d1, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -808,7 +742,6 @@ MonoBehaviour:
   - Name: GrabbedWait
     Data:
       Timeline: {fileID: 11400000, guid: f4b5be9ceda9be640bd0785f1b43f7fe, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -820,7 +753,6 @@ MonoBehaviour:
   - Name: GrabbedInterrupt
     Data:
       Timeline: {fileID: 11400000, guid: f8110be8e807dba4297abba13d1929ec, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -832,7 +764,6 @@ MonoBehaviour:
   - Name: GrabbedInterruptJump
     Data:
       Timeline: {fileID: 11400000, guid: c9eaf66dc3ffe544ca18cbf652ba0e86, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -844,7 +775,6 @@ MonoBehaviour:
   - Name: GrabbedDamaged
     Data:
       Timeline: {fileID: 11400000, guid: 2da44b685420c5641975761952a8a5f2, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -856,7 +786,6 @@ MonoBehaviour:
   - Name: ThrownUp
     Data:
       Timeline: {fileID: 11400000, guid: 182b984cbf2289242afc049861a37516, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -868,7 +797,6 @@ MonoBehaviour:
   - Name: ThrownDown
     Data:
       Timeline: {fileID: 11400000, guid: a4cfa91b237dafa4d8cc11f1a454d33e, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -880,7 +808,6 @@ MonoBehaviour:
   - Name: ThrownForward
     Data:
       Timeline: {fileID: 11400000, guid: a59e29edd98f7094baac915a54e59b70, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -892,7 +819,6 @@ MonoBehaviour:
   - Name: ThrownBackward
     Data:
       Timeline: {fileID: 11400000, guid: ee007fc4f4246fd41ad761383105136f, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -904,7 +830,6 @@ MonoBehaviour:
   - Name: StopCeiling
     Data:
       Timeline: {fileID: 11400000, guid: a407a59dd22c4f84b8f566b9ca95f1d9, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -916,7 +841,6 @@ MonoBehaviour:
   - Name: StopWall
     Data:
       Timeline: {fileID: 11400000, guid: 7cdb6f82ea2d4c646adf1937c0a55e3d, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -928,7 +852,6 @@ MonoBehaviour:
   - Name: Crash
     Data:
       Timeline: {fileID: 11400000, guid: 4e65315ffde06b748bc4a8a545e228a4, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -940,7 +863,6 @@ MonoBehaviour:
   - Name: Prone
     Data:
       Timeline: {fileID: 11400000, guid: 68dd865766c37b04fbafc0f39ed838da, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -952,7 +874,6 @@ MonoBehaviour:
   - Name: ProneStand
     Data:
       Timeline: {fileID: 11400000, guid: d201abb83aaa4a846a90113ca80f3fb4, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -964,7 +885,6 @@ MonoBehaviour:
   - Name: ProneAttack
     Data:
       Timeline: {fileID: 11400000, guid: a8288926c890c074c8dd781a8697c05a, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -976,7 +896,6 @@ MonoBehaviour:
   - Name: ProneRollLeft
     Data:
       Timeline: {fileID: 11400000, guid: e58f1873baff6394ab4251496d3b0d46, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -988,7 +907,6 @@ MonoBehaviour:
   - Name: ProneRollRight
     Data:
       Timeline: {fileID: 11400000, guid: 0e436389b7650444aa8ccb03b2ba7e9e, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -1000,7 +918,6 @@ MonoBehaviour:
   - Name: Tech
     Data:
       Timeline: {fileID: 11400000, guid: 29b816f26afa462488c73695da1d4727, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -1012,7 +929,6 @@ MonoBehaviour:
   - Name: TechRollLeft
     Data:
       Timeline: {fileID: 11400000, guid: d67014c03db43334a82870cace879053, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -1024,7 +940,6 @@ MonoBehaviour:
   - Name: TechRollRight
     Data:
       Timeline: {fileID: 11400000, guid: a5c73d33e1e9fd1449f1318aa5d736f7, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -1036,7 +951,6 @@ MonoBehaviour:
   - Name: TechWall
     Data:
       Timeline: {fileID: 11400000, guid: 841a335e20ee872408e93bdbeeb51be8, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -1048,7 +962,6 @@ MonoBehaviour:
   - Name: TechWallJump
     Data:
       Timeline: {fileID: 11400000, guid: d67243c9c25971a44b304e8a48315847, type: 2}
-      AnimationClip: {fileID: 0}
       Length: 0
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
@@ -1059,7 +972,6 @@ MonoBehaviour:
       KnockbackResistance: 0
   _default:
     Timeline: {fileID: 0}
-    AnimationClip: {fileID: 0}
     Length: 0
     MinMoveSpeed: 0
     MaxMoveSpeed: 0

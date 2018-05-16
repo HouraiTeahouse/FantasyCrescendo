@@ -24,8 +24,6 @@ public enum MovementType {
 public class CharacterStateData {
   [Tooltip("Corresponding timeline controller")]
   public TimelineAsset Timeline;
-  [Tooltip("Corresponding animation for the state")]
-  public AnimationClip AnimationClip;
   [Tooltip("Length of time the state lasts")]
   public float Length;
   [Tooltip("Minimum movement speeds. Interpolated based on input magnitude.")]

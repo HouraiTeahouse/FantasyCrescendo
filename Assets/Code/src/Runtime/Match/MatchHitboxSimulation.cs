@@ -66,10 +66,10 @@ public class MatchHitboxSimulation : IMatchSimulation {
         ApplyCollisions(collisions, ref playerState, state);
         state.SetPlayerState(i,  playerState);
       }
-      CollisionManager.Clear();
-      ActiveHitboxes.Clear();
-      ActiveHurtboxes.Clear();
     }
+    CollisionManager.Clear();
+    ActiveHitboxes.Clear();
+    ActiveHurtboxes.Clear();
     return state;
   }
 
