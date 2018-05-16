@@ -14,6 +14,8 @@ public class PhysicsConfig : ScriptableObject {
 
   public int HurtboxLayerMask => 1 << HurtboxLayer;
 
+  public float GlobalKnockbackScaling = 0.1f;
+
 }
 
 }

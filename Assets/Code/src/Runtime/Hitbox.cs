@@ -37,7 +37,9 @@ public class Hitbox : AbstractHitDetector {
     return new Vector2(dirMult * Mathf.Cos(KnockbackAngleRad), Mathf.Sin(KnockbackAngleRad));
   }
 
-  public float GetKnockbackScale(float damage) => Mathf.Max(0, BaseKnockback + KnockbackScaling * damage);
+  public float GetKnockbackScale(float damage) {
+    return Config.Get<PhysicsConfig>().GlobalKnockbackScaling * Mathf.Max(0, BaseKnockback + KnockbackScaling * damage);
+  }
   public Vector2 GetKnocback(float damage, bool dir) => GetKnockbackScale(damage) * GetKnockbackDirection(dir);
 
   public uint GetHitstun(float damage) => (uint)Mathf.Max(0, BaseHitstun + Mathf.FloorToInt(HitstunScaling * damage));
