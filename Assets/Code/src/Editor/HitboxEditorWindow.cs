@@ -13,6 +13,7 @@ public class HitboxEditorWindow : LockableEditorWindow {
 
   EditorTable<SerializedObject> table;
   GameObject[] _roots;
+  HurtboxType hurtboxType;
 
   [MenuItem("Window/Hitbox Window")]
   public static void ShowHitboxWindow() {
@@ -107,6 +108,18 @@ public class HitboxEditorWindow : LockableEditorWindow {
                 .Select(h => new SerializedObject(h));
   }
 
+  void SetAllHurtboxTypes(HurtboxType type) {
+    var serializedObjs = GetAllChildren<Hurtbox>();
+    Undo.IncrementCurrentGroup();
+    var hurtboxes = serializedObjs.Select(obj => obj.targetObject as Hurtbox); 
+    var objs = hurtboxes.Cast<Object>().ToArray();
+    Undo.RecordObjects(objs, "Change Hurtbox Type");
+    foreach (var hurtbox in hurtboxes) {
+      hurtbox.Type = type;
+    }
+    Undo.FlushUndoRecordObjects();
+  }
+
   /// <summary>
   /// OnGUI is called for rendering and handling GUI events.
   /// This function can be called multiple times per frame (one call per event).
@@ -117,10 +130,24 @@ public class HitboxEditorWindow : LockableEditorWindow {
     var pos = position;
     pos.x = 0f;
     pos.y = 0f;
+    pos.height -= 16f;
 
     _roots = _roots ?? new GameObject[0];
 
     table.Draw(pos, GetAllChildren<Hitbox>().Concat(GetAllChildren<Hurtbox>()));
+
+    pos.y = pos.y + pos.height;
+    pos.height = 16f;
+    pos.width -= 200;
+
+    hurtboxType = (HurtboxType)EditorGUI.EnumPopup(pos, hurtboxType);
+
+    pos.x += pos.width;
+    pos.width = 200;
+
+    if (GUI.Button(pos, "Set Hurtbox Type")) {
+      SetAllHurtboxTypes(hurtboxType);
+    }
 
     // Force Repaint the animation view if something changed.
     if (GUI.changed) {
