@@ -456,10 +456,10 @@ MonoBehaviour:
   - Name: AerialAttackLand
     Data:
       Timeline: {fileID: 11400000, guid: 192349e7dba356f44b0033bf4191ec0f, type: 2}
-      Length: 0.99999976
+      Length: 0.25
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
-      RotationOffset: 90
+      RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
       DirectionMode: 1
