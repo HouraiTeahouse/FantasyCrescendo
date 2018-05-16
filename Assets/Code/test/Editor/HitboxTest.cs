@@ -1,4 +1,5 @@
-﻿using HouraiTeahouse.FantasyCrescendo;
+﻿using HouraiTeahouse;
+using HouraiTeahouse.FantasyCrescendo;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;
@@ -96,10 +97,11 @@ public class HitboxTest : HitboxTestBase {
   [TestCase(100, 45, 70.710678118f, 70.710678118f)] [TestCase(100, 135, -70.710678118f, 70.710678118f)] 
   [TestCase(100, 225, -70.710678118f, -70.710678118f)] [TestCase(100, 315, 70.710678118f, -70.710678118f)] 
   public void GetKnockback_scales_with_damage(float damage, float angle, float x, float y) {
-  var knockback = CreateHitbox().WithBaseKnockback(0).WithKnockbackScaling(1)
-                                .WithKnockbackAngle(angle).Build().GetKnocback(damage, true);
-    Assert.AreEqual(x, knockback.x, 0.001);
-    Assert.AreEqual(y, knockback.y, 0.001);
+    var knockback = CreateHitbox().WithBaseKnockback(0).WithKnockbackScaling(1)
+                                  .WithKnockbackAngle(angle).Build().GetKnocback(damage, true);
+    var scaling = Config.Get<PhysicsConfig>().GlobalKnockbackScaling;
+    Assert.AreEqual(x * scaling, knockback.x, 0.001);
+    Assert.AreEqual(y * scaling, knockback.y, 0.001);
   }
  
 	[Test]
