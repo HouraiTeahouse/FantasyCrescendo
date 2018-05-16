@@ -24,7 +24,8 @@ public class HitboxTest : HitboxTestBase {
   [TestCase(0, 5, 0, 0)] [TestCase(0, 5, 10, 50)] [TestCase(0, 5, 100, 500)]
   public void GetKnockbackScale_scales_with_damage(float baseKnockback, float scaling, float damage, float knockback) {
     var scale = CreateHitbox().WithBaseKnockback(baseKnockback) .WithKnockbackScaling(scaling).Build().GetKnockbackScale(damage);
-    Assert.AreEqual(scale, knockback, float.Epsilon);
+    var globalScaling = Config.Get<PhysicsConfig>().GlobalKnockbackScaling;
+    Assert.AreEqual(scale, knockback * globalScaling, 0.001);
   }
 
   [TestCase(5, 0, 0, 5)] [TestCase(5, 0, 10, 5)] [TestCase(5, 0, 100, 5)]
@@ -32,7 +33,8 @@ public class HitboxTest : HitboxTestBase {
   [TestCase(5, 5, 0, 5)] [TestCase(5, 5, 10, 55)] [TestCase(5, 5, 100, 505)]
   public void GetKnockbackScale_has_unscaling_base_knockback(float baseKnockback, float scaling, float damage, float knockback) {
     var scale = CreateHitbox().WithBaseKnockback(baseKnockback) .WithKnockbackScaling(scaling).Build().GetKnockbackScale(damage);
-    Assert.AreEqual(scale, knockback, float.Epsilon);
+    var globalScaling = Config.Get<PhysicsConfig>().GlobalKnockbackScaling;
+    Assert.AreEqual(scale, knockback * globalScaling, 0.001);
   }
 
   [TestCase(0, 0, 0)] [TestCase(0, 0, 10)] [TestCase(0, 0, 100)]
