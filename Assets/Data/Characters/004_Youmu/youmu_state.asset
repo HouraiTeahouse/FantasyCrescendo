@@ -313,10 +313,10 @@ MonoBehaviour:
   - Name: TiltSide
     Data:
       Timeline: {fileID: 11400000, guid: b64dbb0e0b5854d4cb4f5a6ae46cab82, type: 2}
-      Length: 0.5
+      Length: 0.5833333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
-      RotationOffset: 90
+      RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
       DirectionMode: 0
@@ -327,7 +327,7 @@ MonoBehaviour:
       Length: 0.37500003
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
-      RotationOffset: 90
+      RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
       DirectionMode: 0

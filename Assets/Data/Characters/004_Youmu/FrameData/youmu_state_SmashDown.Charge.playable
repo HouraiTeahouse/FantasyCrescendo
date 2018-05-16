@@ -20,7 +20,7 @@ MonoBehaviour:
     m_Framerate: 60
   m_DurationMode: 0
   m_Version: 0
---- !u!114 &114237631576666266
+--- !u!114 &114595170292140874
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Clips:
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114237631576666266}
+    m_Asset: {fileID: 114595170292140874}
     m_Duration: 0.08333333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114693669430718012}
