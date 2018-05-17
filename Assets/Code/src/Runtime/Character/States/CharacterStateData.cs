@@ -24,8 +24,6 @@ public enum MovementType {
 public class CharacterStateData {
   [Tooltip("Corresponding timeline controller")]
   public TimelineAsset Timeline;
-  [Tooltip("Length of time the state lasts")]
-  public float Length;
   [Tooltip("Minimum movement speeds. Interpolated based on input magnitude.")]
   public float MinMoveSpeed;
   [Tooltip("Maxiumum movement speeds. Interpolated based on input magnitude.")]
@@ -35,6 +33,8 @@ public class CharacterStateData {
   public MovementType MovementType = MovementType.Normal;
   public DirectionMode DirectionMode = DirectionMode.PlayerControlled;
   public float KnockbackResistance;
+
+  public float Length => (float)Timeline.duration;
 
   public float GetScaledMoveSpeed(Vector2 movement) => Mathf.Lerp(MinMoveSpeed, MaxMoveSpeed, Mathf.Abs(movement.x));
 }
