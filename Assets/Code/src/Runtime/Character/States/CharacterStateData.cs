@@ -28,7 +28,6 @@ public class CharacterStateData {
   public float MinMoveSpeed;
   [Tooltip("Maxiumum movement speeds. Interpolated based on input magnitude.")]
   public float MaxMoveSpeed;
-  public float RotationOffset;
   public StateEntryPolicy EntryPolicy = StateEntryPolicy.Normal;
   public MovementType MovementType = MovementType.Normal;
   public DirectionMode DirectionMode = DirectionMode.PlayerControlled;

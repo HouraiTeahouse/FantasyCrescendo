@@ -79,7 +79,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public void ApplyState(PlayerState state) {
     transform.position = state.Position;
-    var offset = StateMachine.GetControllerState(state).Data.RotationOffset;
+    var offset = 90f;
     if (!state.Direction) {
       offset += 180f;
     }
