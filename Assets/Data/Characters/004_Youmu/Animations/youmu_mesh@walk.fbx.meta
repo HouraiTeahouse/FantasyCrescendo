@@ -718,7 +718,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Inbetween bone
       rotation in copied configuration does not match rotation in animation file:\n\t'L_ball'
-      : rotation error = 1.417101 deg\n\t'R_ball' : rotation error = 40.945919 deg\n"
+      : rotation error = 1.417101 deg\n\t'R_ball' : rotation error = 43.807678 deg\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar to
@@ -738,7 +738,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
+    importConstraints: 1
     animationCompression: 0
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -753,7 +753,7 @@ ModelImporter:
       firstFrame: 1
       lastFrame: 80
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: -90
       level: 0
       cycleOffset: 0
       loop: 0
@@ -763,7 +763,7 @@ ModelImporter:
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
