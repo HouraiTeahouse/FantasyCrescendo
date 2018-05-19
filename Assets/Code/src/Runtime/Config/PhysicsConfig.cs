@@ -16,6 +16,9 @@ public class PhysicsConfig : ScriptableObject {
 
   public float GlobalKnockbackScaling = 0.1f;
 
+  public uint BaseHitlag = 3;
+  public uint HitlagScaling = 3;
+
 }
 
 }

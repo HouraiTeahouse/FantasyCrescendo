@@ -25,7 +25,13 @@ public class Hitbox : AbstractHitDetector {
   public bool IsActive => isActiveAndEnabled && Type != HitboxType.Inactive;
   public Vector3 Center => transform.TransformPoint(Offset);
 
-  public uint Hitlag => (uint)Mathf.FloorToInt(Mathf.Abs(BaseDamage) / 3 + 3);
+  public uint Hitlag {
+    get {
+      var config = Config.Get<PhysicsConfig>();
+      var absDamage = Mathf.Abs(BaseDamage);
+      return (uint)Mathf.FloorToInt(absDamage / config.HitlagScaling + config.BaseHitlag); 
+    }
+  }
 
   float KnockbackAngleRad => Mathf.Deg2Rad * KnockbackAngle;
 
