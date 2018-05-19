@@ -71,10 +71,10 @@ MonoBehaviour:
   - Name: Dash
     Data:
       Timeline: {fileID: 11400000, guid: a5aaa097964f7884aac4e4c35ef76f4a, type: 2}
-      Length: 0.1
-      MinMoveSpeed: 10
-      MaxMoveSpeed: 10
-      RotationOffset: 90
+      Length: 0.05
+      MinMoveSpeed: 15
+      MaxMoveSpeed: 15
+      RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
       DirectionMode: 0
@@ -82,10 +82,10 @@ MonoBehaviour:
   - Name: Run
     Data:
       Timeline: {fileID: 11400000, guid: 6edee2da42f8e7948a561b93c6588ab7, type: 2}
-      Length: 0.2
-      MinMoveSpeed: 5
-      MaxMoveSpeed: 5
-      RotationOffset: 90
+      Length: 0.5
+      MinMoveSpeed: 7.5
+      MaxMoveSpeed: 7.5
+      RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
       DirectionMode: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
   - Name: RunBrake
     Data:
       Timeline: {fileID: 11400000, guid: cfa9092820a34d14c8b8c186d5311c38, type: 2}
-      Length: 0.25000003
+      Length: 0.1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90
@@ -104,7 +104,7 @@ MonoBehaviour:
   - Name: RunTurn
     Data:
       Timeline: {fileID: 11400000, guid: a933f65d2f9b9fd4480ab5c1e4aa906d, type: 2}
-      Length: 0.25
+      Length: 0.1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90
@@ -115,7 +115,7 @@ MonoBehaviour:
   - Name: Jump
     Data:
       Timeline: {fileID: 11400000, guid: 81797ce10eabef24886cf092d3e0d69c, type: 2}
-      Length: 0.5
+      Length: 0.6666667
       MinMoveSpeed: 0
       MaxMoveSpeed: 3
       RotationOffset: 90
@@ -126,7 +126,7 @@ MonoBehaviour:
   - Name: JumpStart
     Data:
       Timeline: {fileID: 11400000, guid: 9632d9bab4864094bb0430166aca745c, type: 2}
-      Length: 0.125
+      Length: 0.1
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90
@@ -137,7 +137,7 @@ MonoBehaviour:
   - Name: JumpAerial
     Data:
       Timeline: {fileID: 11400000, guid: 68d9283c8132a4d47b312d814d3626c6, type: 2}
-      Length: 0.45833334
+      Length: 0.5833333
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90
@@ -148,13 +148,13 @@ MonoBehaviour:
   - Name: Land
     Data:
       Timeline: {fileID: 11400000, guid: a0935b3e483df794f87ef68b83b996a7, type: 2}
-      Length: 0.125
+      Length: 0.16666667
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
-      DirectionMode: 0
+      DirectionMode: 1
       KnockbackResistance: 0
   - Name: Shield.On
     Data:
@@ -258,7 +258,7 @@ MonoBehaviour:
   - Name: Fall
     Data:
       Timeline: {fileID: 11400000, guid: a7812bfd6e8d1524082a7a47657bbbab, type: 2}
-      Length: 1
+      Length: 0.8333333
       MinMoveSpeed: 0
       MaxMoveSpeed: 3
       RotationOffset: 90

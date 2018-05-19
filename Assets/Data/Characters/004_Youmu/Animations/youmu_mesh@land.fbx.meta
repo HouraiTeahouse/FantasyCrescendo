@@ -113,6 +113,8 @@ ModelImporter:
     100214: Spine_4
     100216: //RootNode
     100218: Skeleton_Grp
+    100220: Prop_1
+    100222: Prop_2
     400000: Eye_Left_1
     400002: Eye_Left_2
     400004: Eye_Left_3
@@ -223,6 +225,8 @@ ModelImporter:
     400214: Spine_4
     400216: //RootNode
     400218: Skeleton_Grp
+    400220: Prop_1
+    400222: Prop_2
     7400000: Take 001
     9500000: //RootNode
     2186277476908879412: ImportLogs
@@ -238,11 +242,37 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: "Copied Avatar Rig Configuration mis-match. Transform hierarchy
-      does not match:\n\tTransform 'Skeleton_Grp' not found in HumanDescription.\n"
-    rigImportWarnings: 
+    rigImportErrors: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'L_hip' :
+      position error = 29.391001 mm\n\t'L_knee' : position error = 104.140068 mm\n\t'L_ankle'
+      : position error = 103.862602 mm\n\t'L_ball' : position error = 30.205698 mm\n\t'L_toe'
+      : position error = 22.896397 mm\n\t'R_hip' : position error = 29.385645 mm\n\t'R_knee'
+      : position error = 104.141487 mm\n\t'R_ankle' : position error = 103.862640
+      mm\n\t'R_ball' : position error = 30.205561 mm\n\t'R_toe' : position error =
+      22.896423 mm\nCopied Avatar Rig Configuration mis-match. Inbetween bone rotation
+      in copied configuration does not match rotation in animation file:\n\t'L_ball'
+      : rotation error = 1.110332 deg\n\t'R_ball' : rotation error = 1.117991 deg\n"
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'Spine_1' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\t'Head' has translation animation
+      that will be discarded.\n\t'R_Shoulder' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\t'R_forearm_roll' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'R_thumb1'
+      has translation animation that will be discarded.\n\t'R_index1' has translation
+      animation that will be discarded.\n\t'R_middle1' has translation animation that
+      will be discarded.\n\t'R_ring1' has translation animation that will be discarded.\n\t'R_pinkie1'
+      has translation animation that will be discarded.\n\t'L_Shoulder' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'L_forearm_roll'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'L_thumb1'
+      has translation animation that will be discarded.\n\t'L_index1' has translation
+      animation that will be discarded.\n\t'L_middle1' has translation animation that
+      will be discarded.\n\t'L_ring1' has translation animation that will be discarded.\n\t'L_pinkie1'
+      has translation animation that will be discarded.\n\t'L_ball' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'R_ball' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
