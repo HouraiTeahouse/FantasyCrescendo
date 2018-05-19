@@ -25,7 +25,9 @@ public static class HitboxUtil {
     DedupCheck = new HashSet<Hurtbox>();
   }
 
-  static bool IsValid(Hurtbox hurtbox) => hurtbox != null && DedupCheck.Add(hurtbox) && hurtbox.isActiveAndEnabled;
+  public static void FlushHurtboxDedupCache() => DedupCheck.Clear();
+
+  public static bool IsValidHurtbox(Hurtbox hurtbox) => hurtbox != null && DedupCheck.Add(hurtbox) && hurtbox.isActiveAndEnabled;
 
   static int CheckColliders(Hitbox hitbox, Collider[] colliders) {
     var layerMask = Config.Get<PhysicsConfig>().HurtboxLayerMask;
@@ -40,7 +42,7 @@ public static class HitboxUtil {
     for (int i = 0; i < collisionCount && hurtboxCount < hurtboxSet.Length; i++) {
       Assert.IsNotNull(colliders[i]);
       var hurtbox = colliders[i].GetComponent<Hurtbox>();
-      if (IsValid(hurtbox)) {
+      if (IsValidHurtbox(hurtbox)) {
         hurtboxSet[hurtboxCount++] = hurtbox;
       }
     }

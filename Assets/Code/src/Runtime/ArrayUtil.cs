@@ -29,6 +29,33 @@ public static class ArrayUtil {
     return hash;
   }
 
+  public static int RemoveDuplicates<T>(T[] array) {
+    int writeIndex = 0;
+    for (var i = 0; i < array.Length; i++) {
+      bool duplicate = false;
+      for (var j = 0; j < writeIndex; j++) {
+        if (array[i].Equals(array[j])) {
+          duplicate = true;
+          break;
+        }
+      }
+      if (!duplicate) {
+        array[writeIndex++] = array[i];
+      }
+    }
+    for (var i = 0; i < writeIndex; i++) {
+      array[i] = default(T);
+    }
+    return writeIndex;
+  }
+
+  public static int Join<T>(T[] lhs, T[] rhs, int lhsSize) {
+    if (lhsSize >= lhs.Length) return lhs.Length;
+    int rhsSize = Math.Min(rhs.Length, lhs.Length - lhsSize);
+    Array.Copy(rhs, 0, lhs, lhsSize, rhsSize);
+    return lhsSize + rhsSize;
+  }
+
   public static T[] ConvertToArray<T>(IEnumerable<T> values, out int size) {
     size = values.Count();
     T[] array = ArrayPool<T>.Shared.Rent(size);

@@ -23,7 +23,11 @@ public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(PlayerState state) { }
+  public void Presimulate(PlayerState state) { 
+    foreach (var hitbox in Hitboxes) {
+      hitbox.Presimulate();
+    }
+  }
 
   public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
     var matchHitboxes = MatchHitboxSimulation.Instance?.ActiveHitboxes;
