@@ -28,8 +28,8 @@ MonoBehaviour:
     Data:
       Timeline: {fileID: 11400000, guid: 2eb91958e5a6cb94fae2044509f2004c, type: 2}
       Length: 2
-      MinMoveSpeed: 1
-      MaxMoveSpeed: 1
+      MinMoveSpeed: 3
+      MaxMoveSpeed: 3
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
@@ -139,7 +139,7 @@ MonoBehaviour:
       Timeline: {fileID: 11400000, guid: 68d9283c8132a4d47b312d814d3626c6, type: 2}
       Length: 0.5833333
       MinMoveSpeed: 0
-      MaxMoveSpeed: 0
+      MaxMoveSpeed: 3
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 1
@@ -335,7 +335,7 @@ MonoBehaviour:
   - Name: SmashUp.Charge
     Data:
       Timeline: {fileID: 11400000, guid: 7012ce75af296114dba394040a687814, type: 2}
-      Length: 3.75
+      Length: 0.05
       MinMoveSpeed: 0
       MaxMoveSpeed: 0
       RotationOffset: 90
@@ -403,7 +403,7 @@ MonoBehaviour:
       Timeline: {fileID: 11400000, guid: c51459cf178200440920a5a4bfb1ff80, type: 2}
       Length: 0.71666664
       MinMoveSpeed: 0
-      MaxMoveSpeed: 0
+      MaxMoveSpeed: 3
       RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
       Timeline: {fileID: 11400000, guid: 653ac318355c7354f8098642380365e6, type: 2}
       Length: 0.7083333
       MinMoveSpeed: 0
-      MaxMoveSpeed: 0
+      MaxMoveSpeed: 3
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
@@ -436,7 +436,7 @@ MonoBehaviour:
       Timeline: {fileID: 11400000, guid: fccb4409ffed1894cad585de87aabfa7, type: 2}
       Length: 0.55833334
       MinMoveSpeed: 0
-      MaxMoveSpeed: 0
+      MaxMoveSpeed: 3
       RotationOffset: 0
       EntryPolicy: 0
       MovementType: 0
@@ -447,7 +447,7 @@ MonoBehaviour:
       Timeline: {fileID: 11400000, guid: 6700d07c3fd4b3443b7458371f91e5e9, type: 2}
       Length: 0.7166667
       MinMoveSpeed: 0
-      MaxMoveSpeed: 0
+      MaxMoveSpeed: 3
       RotationOffset: 90
       EntryPolicy: 0
       MovementType: 0
