@@ -157,7 +157,7 @@ public class HitboxTest : HitboxTestBase {
 	[Test]
 	public void CollisionCheck_returns_zero_if_no_nearby_colliders() {
     var hitbox = CreateHitbox().WithOffset(Vector3.one).WithRadius(0.5f).Build();
-    Assert.AreEqual(0, HitboxUtil.CollisionCheck(hitbox, new Hurtbox[10]));
+    Assert.AreEqual(0, hitbox.GetCollidedHurtboxes(new Hurtbox[10]));
 	}
 
 	[Test]
@@ -166,7 +166,7 @@ public class HitboxTest : HitboxTestBase {
     CreateObject<SphereCollider>().transform.position = -0.5f * Vector3.up;
     CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.up;
     CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
-    Assert.AreEqual(0, HitboxUtil.CollisionCheck(hitbox, new Hurtbox[10]));
+    Assert.AreEqual(0, hitbox.GetCollidedHurtboxes(new Hurtbox[10]));
 	}
 
 	[Test]
@@ -175,7 +175,7 @@ public class HitboxTest : HitboxTestBase {
     CreateHurtbox().WithPosition(-0.5f * Vector3.up).WithRadius(0.5f).WithEnabled(false);
     CreateHurtbox().WithPosition(0.5f * Vector3.up).WithRadius(0.5f);
     CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
-    Assert.AreEqual(1, HitboxUtil.CollisionCheck(hitbox, new Hurtbox[10]));
+    Assert.AreEqual(1, hitbox.GetCollidedHurtboxes(new Hurtbox[10]));
 	}
 
 	[Test]
@@ -184,7 +184,7 @@ public class HitboxTest : HitboxTestBase {
     CreateHurtbox().WithPosition(-0.5f * Vector3.up).WithRadius(0.5f);
     CreateHurtbox().WithPosition(0.5f * Vector3.up).WithRadius(0.5f).WithActive(false);
     CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
-    Assert.AreEqual(1, HitboxUtil.CollisionCheck(hitbox, new Hurtbox[10]));
+    Assert.AreEqual(1, hitbox.GetCollidedHurtboxes(new Hurtbox[10]));
 	}
 
 	[Test]
@@ -194,7 +194,7 @@ public class HitboxTest : HitboxTestBase {
     var h2 = CreateHurtbox().WithPosition(0.5f * Vector3.up).WithRadius(0.5f).Build();
     CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
     var hurtboxes = new Hurtbox[10];
-    Assert.AreEqual(2, HitboxUtil.CollisionCheck(hitbox, hurtboxes));
+    Assert.AreEqual(2, hitbox.GetCollidedHurtboxes(hurtboxes));
     CollectionAssert.AreEquivalent(new[] {h1, h2}, hurtboxes.Take(2));
 	}
 
@@ -205,7 +205,7 @@ public class HitboxTest : HitboxTestBase {
     CreateHurtbox().WithPosition(0.5f * Vector3.up).WithRadius(0.5f);
     CreateObject<SphereCollider>().transform.position = 0.5f * Vector3.right;
     var hurtboxes = new Hurtbox[10];
-    var count = HitboxUtil.CollisionCheck(hitbox, hurtboxes);
+    var count = hitbox.GetCollidedHurtboxes(hurtboxes);
     Assert.AreEqual(2, count);
     Assert.That(hurtboxes.Take(count), Is.Not.Null);
 	}

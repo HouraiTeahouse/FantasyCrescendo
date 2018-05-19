@@ -12,8 +12,6 @@ public class Hitbox : AbstractHitDetector {
 
   Vector3? oldCenter_;
 
-  public Vector3 OldCenter;
-
   public HitboxType Type;
 
   public Vector3 Offset;
@@ -67,7 +65,7 @@ public class Hitbox : AbstractHitDetector {
     var colliderCount = FullCollisionCheck(colliders);
     int hurtboxCount = 0;
     for (int i = 0; i < colliderCount && hurtboxCount < hurtboxes.Length; i++) {
-      Assert.IsNotNull(colliders[i]);
+      if (colliders[i] == null) continue;
       var hurtbox = colliders[i].GetComponent<Hurtbox>();
       if (HitboxUtil.IsValidHurtbox(hurtbox)) {
         hurtboxes[hurtboxCount++] = hurtbox;
@@ -98,7 +96,6 @@ public class Hitbox : AbstractHitDetector {
     }
 
     arrayPool.Return(hits);
-
     return count;
   }
 
@@ -127,7 +124,7 @@ public class Hitbox : AbstractHitDetector {
     if (EditorApplication.isPlayingOrWillChangePlaymode && !IsActive) return;
     Gizmos.color = HitboxUtil.GetHitboxColor(Type);
     if (oldCenter_.HasValue) {
-      GizmoUtil.DrawCapsule(Center, OldCenter, Radius);
+      GizmoUtil.DrawCapsule(Center, oldCenter_.Value, Radius);
     } else {
       Gizmos.DrawWireSphere(Center, Radius);
     }

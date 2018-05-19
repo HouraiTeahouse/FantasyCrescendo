@@ -117,7 +117,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
   public void CreateCollisions() {
     var hurtboxes = ArrayPool<Hurtbox>.Shared.Rent(256);
     foreach (var hitbox in ActiveHitboxes) {
-      var hurtboxCount = HitboxUtil.CollisionCheck(hitbox, hurtboxes);
+      var hurtboxCount = hitbox.GetCollidedHurtboxes(hurtboxes);
       for (var i = 0; i < hurtboxCount; i++) {
         if (!ActiveHurtboxes.Contains(hurtboxes[i])) continue;
         CollisionManager.Add(new HitboxCollision {

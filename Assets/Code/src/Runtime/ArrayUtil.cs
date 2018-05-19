@@ -32,6 +32,7 @@ public static class ArrayUtil {
   public static int RemoveDuplicates<T>(T[] array) {
     int writeIndex = 0;
     for (var i = 0; i < array.Length; i++) {
+      if (array[i] == null) continue;
       bool duplicate = false;
       for (var j = 0; j < writeIndex; j++) {
         if (array[i].Equals(array[j])) {
@@ -43,7 +44,7 @@ public static class ArrayUtil {
         array[writeIndex++] = array[i];
       }
     }
-    for (var i = 0; i < writeIndex; i++) {
+    for (var i = writeIndex; i < array.Length; i++) {
       array[i] = default(T);
     }
     return writeIndex;

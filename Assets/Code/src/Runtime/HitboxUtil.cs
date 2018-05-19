@@ -29,27 +29,6 @@ public static class HitboxUtil {
 
   public static bool IsValidHurtbox(Hurtbox hurtbox) => hurtbox != null && DedupCheck.Add(hurtbox) && hurtbox.isActiveAndEnabled;
 
-  static int CheckColliders(Hitbox hitbox, Collider[] colliders) {
-    var layerMask = Config.Get<PhysicsConfig>().HurtboxLayerMask;
-    return Physics.OverlapSphereNonAlloc(hitbox.Center, hitbox.Radius, colliders, layerMask, QueryTriggerInteraction.Collide);
-  }
-
-  public static int CollisionCheck(Hitbox hitbox, Hurtbox[] hurtboxSet) {
-    var colliders = ArrayPool<Collider>.Shared.Rent(256);
-    var collisionCount = CheckColliders(hitbox, colliders);
-    int hurtboxCount = 0;
-    DedupCheck.Clear();
-    for (int i = 0; i < collisionCount && hurtboxCount < hurtboxSet.Length; i++) {
-      Assert.IsNotNull(colliders[i]);
-      var hurtbox = colliders[i].GetComponent<Hurtbox>();
-      if (IsValidHurtbox(hurtbox)) {
-        hurtboxSet[hurtboxCount++] = hurtbox;
-      }
-    }
-    ArrayPool<Collider>.Shared.Return(colliders);
-    return hurtboxCount;
-  }
-
   public static Color GetHitboxColor(HitboxType type) {
     Color typeColor;
     if (HitboxTypeColors.TryGetValue(type, out typeColor)) {
