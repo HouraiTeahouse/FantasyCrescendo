@@ -73,9 +73,13 @@ public class MatchHitboxSimulation : IMatchSimulation {
     return state;
   }
 
+  static bool IsPlayerInvincible(PlayerState state) {
+    return state.RespawnTimeRemaining > 0 || !state.IsActive;
+  }
+
   // TODO(james7132): Split and generalize this... somehow.
   public void ApplyCollisions(List<HitboxCollision> collisions, ref PlayerState state, MatchState match) {
-    if (collisions.Count <= 0 ) return;
+    if (collisions.Count <= 0 || IsPlayerInvincible(state)) return;
     bool isShielded = false;
     bool isHit = false;
     foreach (var collision in collisions) {
@@ -89,10 +93,12 @@ public class MatchHitboxSimulation : IMatchSimulation {
           // Check if hit is valid.
           if (isShielded || isHit || sourceState.HasHit(dstPlayerId)) continue;
 
-          // Deal damage, knockback, hitlag, and hitstun
+          // Deal damage, knockback, and hitstun to the target
           state.Damage += source.BaseDamage;
           state.Velocity = source.GetKnocback(state.Damage, sourceState.Direction);
           state.Hitstun = source.GetHitstun(state.Damage);
+
+          // Apply hitlag
           state.Hitlag = source.Hitlag;
           sourceState.Hitlag = source.Hitlag;
 
