@@ -26,6 +26,8 @@ public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
   public void Presimulate(PlayerState state) { 
     foreach (var hitbox in Hitboxes) {
       hitbox.Presimulate();
+      // Deactivate all hitboxes, let them be driven solely by tick to tick animation
+      hitbox.Type = HitboxType.Inactive;
     }
   }
 
