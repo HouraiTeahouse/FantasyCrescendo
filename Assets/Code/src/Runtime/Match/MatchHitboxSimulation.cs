@@ -106,15 +106,16 @@ public class MatchHitboxSimulation : IMatchSimulation {
           sourceState.HitPlayer(dstPlayerId);
           match.SetPlayerState(srcPlayerId, sourceState);
 
+          collision.PlayEffect();
+
           isHit = true;
-          // TODO(james7132): Play Effect
           break;
         case HurtboxType.Shield:
           isShielded = true;
           state.ShieldDamage += (uint)(source.BaseDamage * 100);
           break;
         case HurtboxType.Invincible:
-          // TODO(james7132): Play Effect
+          collision.PlayEffect();
           break;
       }
     }

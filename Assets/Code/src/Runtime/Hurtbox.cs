@@ -18,6 +18,24 @@ public class Hurtbox : AbstractHitDetector {
 
   public HurtboxType Type = HurtboxType.Damageable;
 
+  Collider[] colliders;
+
+  public Vector3 Center {
+    get {
+      var center = Vector3.zero;
+      if (colliders != null) {
+        colliders = GetComponents<Collider>();
+      }
+      if (colliders.Length <= 0) {
+        return transform.position;
+      }
+      foreach (var collider in colliders) {
+        center += collider.bounds.center;
+      }
+      return center / colliders.Length;
+    }
+  }
+
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
@@ -25,7 +43,8 @@ public class Hurtbox : AbstractHitDetector {
 
   public void Initalize() {
     gameObject.layer = Config.Get<PhysicsConfig>().HurtboxLayer;
-    foreach (var collider in GetComponents<Collider>()) {
+    colliders = GetComponents<Collider>();
+    foreach (var collider in colliders) {
       collider.isTrigger = true;
     }
   }

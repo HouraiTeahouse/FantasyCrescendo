@@ -17,6 +17,9 @@ public struct HitboxCollision : IComparable<HitboxCollision> {
   }
 
   public override string ToString() => $"HitboxCollision ({Source} -> {Destination})";
+
+  public void PlayEffect() => Source.PlayEffect(Destination.Center);
+
 }
 
 }

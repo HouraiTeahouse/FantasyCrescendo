@@ -25,6 +25,8 @@ public class Hitbox : AbstractHitDetector {
   public float HitstunScaling = 0.1f;
   public bool MirrorDirection = true;
 
+  public SoundEffect[] SFX;
+
   public bool IsActive => isActiveAndEnabled && Type != HitboxType.Inactive;
   public Vector3 Center => transform.TransformPoint(Offset);
 
@@ -53,6 +55,15 @@ public class Hitbox : AbstractHitDetector {
   public Vector2 GetKnocback(float damage, bool dir) => GetKnockbackScale(damage) * GetKnockbackDirection(dir);
 
   public uint GetHitstun(float damage) => (uint)Mathf.Max(0, BaseHitstun + Mathf.FloorToInt(HitstunScaling * damage));
+
+  public void PlayEffect(Vector3 position) {
+    // TODO(james7132): Play visual effects too
+    foreach (var effect in SFX) {
+      if (effect != null) {
+        effect.Play(position);
+      }
+    }
+  }
 
   public void Presimulate() {
     oldCenter_ = Center;
