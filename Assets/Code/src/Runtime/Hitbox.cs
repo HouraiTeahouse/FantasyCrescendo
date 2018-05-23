@@ -26,6 +26,7 @@ public class Hitbox : AbstractHitDetector {
   public bool MirrorDirection = true;
 
   public SoundEffect[] SFX;
+  public GameObject[] VisualEffects;
 
   public bool IsActive => isActiveAndEnabled && Type != HitboxType.Inactive;
   public Vector3 Center => transform.TransformPoint(Offset);
@@ -56,11 +57,19 @@ public class Hitbox : AbstractHitDetector {
 
   public uint GetHitstun(float damage) => (uint)Mathf.Max(0, BaseHitstun + Mathf.FloorToInt(HitstunScaling * damage));
 
-  public void PlayEffect(Vector3 position) {
-    // TODO(james7132): Play visual effects too
+  public void PlayEffect(HitInfo hitInfo) {
+    var position = hitInfo.Position;
     foreach (var effect in SFX) {
       if (effect != null) {
         effect.Play(position);
+      }
+    }
+
+    foreach (var effect in VisualEffects) {
+      var instance = PrefabPool.Get(effect).Rent();
+      instance.transform.position = position;
+      foreach (var vfx in instance.GetComponentsInChildren<HitEffect>()) {
+        vfx.Setup(hitInfo);
       }
     }
   }

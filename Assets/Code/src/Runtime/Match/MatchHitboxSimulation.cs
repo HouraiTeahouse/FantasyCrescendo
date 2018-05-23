@@ -94,8 +94,11 @@ public class MatchHitboxSimulation : IMatchSimulation {
           if (isShielded || isHit || sourceState.HasHit(dstPlayerId)) continue;
 
           // Deal damage, knockback, and hitstun to the target
-          state.Damage += source.BaseDamage;
-          state.Velocity = source.GetKnocback(state.Damage, sourceState.Direction);
+          var hitDamage = source.BaseDamage;
+          var hitKnockback = source.GetKnocback(state.Damage, sourceState.Direction);
+
+          state.Damage += hitDamage;
+          state.Velocity = hitKnockback;
           state.Hitstun = source.GetHitstun(state.Damage);
 
           // Apply hitlag
@@ -106,7 +109,11 @@ public class MatchHitboxSimulation : IMatchSimulation {
           sourceState.HitPlayer(dstPlayerId);
           match.SetPlayerState(srcPlayerId, sourceState);
 
-          collision.PlayEffect();
+          collision.PlayEffect(new HitInfo { 
+            Source = collision.Source, 
+            Destination = collision.Destination, 
+            MatchState = match, 
+          });
 
           isHit = true;
           break;
@@ -115,7 +122,11 @@ public class MatchHitboxSimulation : IMatchSimulation {
           state.ShieldDamage += (uint)(source.BaseDamage * 100);
           break;
         case HurtboxType.Invincible:
-          collision.PlayEffect();
+          collision.PlayEffect(new HitInfo { 
+            Source = collision.Source, 
+            Destination = collision.Destination, 
+            MatchState = match, 
+          });
           break;
       }
     }

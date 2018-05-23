@@ -3688,6 +3688,8 @@ MonoBehaviour:
   MirrorDirection: 1
   SFX:
   - {fileID: 11400000, guid: 6591ac923b9efa04f83bc1efe80958f6, type: 2}
+  VisualEffects:
+  - {fileID: 1112211455041308, guid: c1e08d87efe85004daa17b2ecaafd9aa, type: 2}
 --- !u!114 &114071214708862820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3737,6 +3739,8 @@ MonoBehaviour:
   MirrorDirection: 1
   SFX:
   - {fileID: 11400000, guid: 6591ac923b9efa04f83bc1efe80958f6, type: 2}
+  VisualEffects:
+  - {fileID: 1112211455041308, guid: c1e08d87efe85004daa17b2ecaafd9aa, type: 2}
 --- !u!114 &114146074795061766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3856,15 +3860,17 @@ MonoBehaviour:
   Type: 0
   Offset: {x: 0, y: 0, z: -0.2}
   Radius: 0.4
-  BaseDamage: 12
+  BaseDamage: 100
   BaseKnockback: 30
-  KnockbackAngle: 30
+  KnockbackAngle: 90
   KnockbackScaling: 0.5
   BaseHitstun: 1
   HitstunScaling: 0.1
   MirrorDirection: 1
   SFX:
   - {fileID: 11400000, guid: 6591ac923b9efa04f83bc1efe80958f6, type: 2}
+  VisualEffects:
+  - {fileID: 1112211455041308, guid: c1e08d87efe85004daa17b2ecaafd9aa, type: 2}
 --- !u!114 &114420143924494240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4019,6 +4025,8 @@ MonoBehaviour:
   MirrorDirection: 1
   SFX:
   - {fileID: 11400000, guid: 6591ac923b9efa04f83bc1efe80958f6, type: 2}
+  VisualEffects:
+  - {fileID: 1112211455041308, guid: c1e08d87efe85004daa17b2ecaafd9aa, type: 2}
 --- !u!114 &114698366458502902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4034,15 +4042,17 @@ MonoBehaviour:
   Type: 0
   Offset: {x: 0, y: -0.18, z: -0.6}
   Radius: 0.4
-  BaseDamage: 12
+  BaseDamage: 100
   BaseKnockback: 30
-  KnockbackAngle: 30
+  KnockbackAngle: 90
   KnockbackScaling: 0.5
   BaseHitstun: 1
   HitstunScaling: 0.1
   MirrorDirection: 1
   SFX:
   - {fileID: 11400000, guid: 6591ac923b9efa04f83bc1efe80958f6, type: 2}
+  VisualEffects:
+  - {fileID: 1112211455041308, guid: c1e08d87efe85004daa17b2ecaafd9aa, type: 2}
 --- !u!114 &114710037103642200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4067,6 +4077,8 @@ MonoBehaviour:
   MirrorDirection: 1
   SFX:
   - {fileID: 11400000, guid: 6591ac923b9efa04f83bc1efe80958f6, type: 2}
+  VisualEffects:
+  - {fileID: 1112211455041308, guid: c1e08d87efe85004daa17b2ecaafd9aa, type: 2}
 --- !u!114 &114752305556272700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4149,6 +4161,8 @@ MonoBehaviour:
   MirrorDirection: 1
   SFX:
   - {fileID: 11400000, guid: 6591ac923b9efa04f83bc1efe80958f6, type: 2}
+  VisualEffects:
+  - {fileID: 1112211455041308, guid: c1e08d87efe85004daa17b2ecaafd9aa, type: 2}
 --- !u!114 &114821924302504854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4242,6 +4256,8 @@ MonoBehaviour:
   MirrorDirection: 1
   SFX:
   - {fileID: 11400000, guid: 6591ac923b9efa04f83bc1efe80958f6, type: 2}
+  VisualEffects:
+  - {fileID: 1112211455041308, guid: c1e08d87efe85004daa17b2ecaafd9aa, type: 2}
 --- !u!114 &114890452036378600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4266,6 +4282,8 @@ MonoBehaviour:
   MirrorDirection: 1
   SFX:
   - {fileID: 11400000, guid: 6591ac923b9efa04f83bc1efe80958f6, type: 2}
+  VisualEffects:
+  - {fileID: 1112211455041308, guid: c1e08d87efe85004daa17b2ecaafd9aa, type: 2}
 --- !u!114 &114926393862588738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4766,7 +4784,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1872841189430122}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 6700d07c3fd4b3443b7458371f91e5e9, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 54aa710641f24d94e88fe076e9bf3dfc, type: 2}
   m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -5123,6 +5141,8 @@ PlayableDirector:
   - key: {fileID: 114697804319075414, guid: 6700d07c3fd4b3443b7458371f91e5e9, type: 2}
     value: {fileID: 1529847484260842}
   - key: {fileID: 114039827553241384, guid: 6700d07c3fd4b3443b7458371f91e5e9, type: 2}
+    value: {fileID: 1529847484260842}
+  - key: {fileID: 114225201127874036, guid: 68d9283c8132a4d47b312d814d3626c6, type: 2}
     value: {fileID: 1529847484260842}
   m_ExposedReferences:
     m_References: []
