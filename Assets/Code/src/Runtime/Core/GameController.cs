@@ -23,7 +23,11 @@ public class MatchController : IMatchController {
     var input = InputSource.SampleInput();
     Assert.IsTrue(input.IsValid);
     inputContext.Update(input);
-    CurrentState = Simulation.Simulate(CurrentState, inputContext);
+
+    var state = CurrentState;
+    Simulation.Simulate(ref state, inputContext);
+    CurrentState = state;
+
     Timestep++;
   }
 

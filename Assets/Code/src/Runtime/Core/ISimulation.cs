@@ -11,8 +11,7 @@ public interface ISimulation<S, I> {
   /// </summary>
   /// <param name="state">the previous timestep's state.</param>
   /// <param name="input">the input for the timestep.</param>
-  /// <returns>the new state after a simulation timestep.</returns>
-  S Simulate(S state, I input);
+  void Simulate(ref S state, I input);
 
 }
 

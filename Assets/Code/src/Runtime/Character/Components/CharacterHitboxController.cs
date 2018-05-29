@@ -23,7 +23,7 @@ public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(PlayerState state) { 
+  public void Presimulate(ref PlayerState state) { 
     foreach (var hitbox in Hitboxes) {
       hitbox.Presimulate();
       // Deactivate all hitboxes, let them be driven solely by tick to tick animation
@@ -31,7 +31,7 @@ public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
     }
   }
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+  public void Simulate(ref PlayerState state, PlayerInputContext input) {
     var matchHitboxes = MatchHitboxSimulation.Instance?.ActiveHitboxes;
     var matchHurtboxes = MatchHitboxSimulation.Instance?.ActiveHurtboxes;
     if (matchHitboxes != null) {
@@ -46,10 +46,9 @@ public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
         matchHurtboxes.Add(hurtbox);
       }
     }
-    return state;
   }
 
-  public PlayerState ResetState(PlayerState state) => state;
+  public void ResetState(ref PlayerState state) {}
 
 }
 

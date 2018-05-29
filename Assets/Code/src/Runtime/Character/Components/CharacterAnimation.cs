@@ -36,17 +36,16 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     return Task.CompletedTask;
   }
 
-  public void Presimulate(PlayerState state) {}
+  public void Presimulate(ref PlayerState state) {}
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+  public void Simulate(ref PlayerState state, PlayerInputContext input) {
     state.StateTick++;
-    ApplyState(state);
-    return state;
+    ApplyState(ref state);
   }
 
-  public void ApplyState(PlayerState state) {
-    StateMachine.Presimulate(state);
-    var timeline = StateMachine.GetControllerState(state).Data.Timeline;
+  public void ApplyState(ref PlayerState state) {
+    StateMachine.Presimulate(ref state);
+    var timeline = StateMachine.GetControllerState(ref state).Data.Timeline;
     if (timeline != Director.playableAsset) {
       Director.Play(timeline);
       stateDuration = Director.duration;
@@ -58,7 +57,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     Director.Evaluate();
   }
 
-  public PlayerState ResetState(PlayerState state) => state;
+  public void ResetState(ref PlayerState state) {}
 
 }
 

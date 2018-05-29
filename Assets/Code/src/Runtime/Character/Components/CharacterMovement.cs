@@ -37,20 +37,18 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     return Task.CompletedTask;
   }
   
-  public PlayerState ResetState(PlayerState state) {
+  public void ResetState(ref PlayerState state) {
     state.IsFastFalling = false;
-    return state;
   }
 
-  public void Presimulate(PlayerState state) { }
+  public void Presimulate(ref PlayerState state) {}
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+  public void Simulate(ref PlayerState state, PlayerInputContext input) {
     foreach (var mover in Movers) {
-      if (mover.ShouldMove(state)) {
-        return mover.Move(state, input);
+      if (mover.ShouldMove(ref state)) {
+        mover.Move(ref state, input);
       }
     }
-    return state;
   }
 
   public bool CanJump(PlayerState state) => state.JumpCount < MaxJumpCount;
@@ -65,7 +63,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   }
 
   public void ApplyControlledMovement(ref PlayerState state, Vector2 movementInput) {
-    var data = StateMachine.GetControllerState(state).Data;
+    var data = StateMachine.GetControllerState(ref state).Data;
     ApplyDirection(ref state, movementInput, data);
     ApplyMovement(ref state, movementInput, data);
   }
@@ -118,21 +116,20 @@ public abstract class CharacterMover {
 
   public CharacterMovement Character { get; set; }
 
-  public abstract bool ShouldMove(PlayerState state);
-  public abstract PlayerState Move(PlayerState state, PlayerInputContext input);
+  public abstract bool ShouldMove(ref PlayerState state);
+  public abstract void Move(ref PlayerState state, PlayerInputContext input);
 
 }
 
 [Serializable]
 internal class GroundMovement : CharacterMover {
 
-  public override bool ShouldMove(PlayerState state) => Character.Physics.IsGrounded;
+  public override bool ShouldMove(ref PlayerState state) => Character.Physics.IsGrounded;
 
-  public override PlayerState Move(PlayerState state, PlayerInputContext input) {
+  public override void Move(ref PlayerState state, PlayerInputContext input) {
     state.IsFastFalling = false;
     state.JumpCount = 0;
     Character.ApplyControlledMovement(ref state, input.Movement.Value);
-    return state;
   }
 
 }
@@ -140,14 +137,13 @@ internal class GroundMovement : CharacterMover {
 [Serializable]
 internal class AerialMovement : CharacterMover {
 
-  public override bool ShouldMove(PlayerState state) => !Character.Physics.IsGrounded;
+  public override bool ShouldMove(ref PlayerState state) => !Character.Physics.IsGrounded;
 
-  public override PlayerState Move(PlayerState state, PlayerInputContext input) {
+  public override void Move(ref PlayerState state, PlayerInputContext input) {
     if (input.Smash.Value.y < -DirectionalInput.DeadZone) {
       state.IsFastFalling = true;
     }
     Character.ApplyControlledMovement(ref state, input.Movement.Value);
-    return state;
   }
 
 }
@@ -155,14 +151,13 @@ internal class AerialMovement : CharacterMover {
 [Serializable]
 internal class LedgeMovement : CharacterMover {
 
-  public override bool ShouldMove(PlayerState state) => state.IsGrabbingLedge;
+  public override bool ShouldMove(ref PlayerState state) => state.IsGrabbingLedge;
 
-  public override PlayerState Move(PlayerState state, PlayerInputContext input) {
+  public override void Move(ref PlayerState state, PlayerInputContext input) {
     state.Velocity = Vector3.zero;
     if (input.Movement.Direction == Direction.Down) {
       state.ReleaseLedge();
     }
-    return state;
   }
 
 }
@@ -170,23 +165,22 @@ internal class LedgeMovement : CharacterMover {
 [Serializable]
 internal class HitstunMovement : CharacterMover {
 
-  public override bool ShouldMove(PlayerState state) => state.IsHit;
+  public override bool ShouldMove(ref PlayerState state) => state.IsHit;
 
-  public override PlayerState Move(PlayerState state, PlayerInputContext input) => state;
+  public override void Move(ref PlayerState state, PlayerInputContext input) {}
 
 }
 
 [Serializable]
 internal class RespawnMovement : CharacterMover {
 
-  public override bool ShouldMove(PlayerState state) => state.IsRespawning;
+  public override bool ShouldMove(ref PlayerState state) => state.IsRespawning;
 
-  public override PlayerState Move(PlayerState state, PlayerInputContext input) {
+  public override void Move(ref PlayerState state, PlayerInputContext input) {
     state.Velocity = Vector3.zero;
     if (input.Movement.Direction != Direction.Neutral) {
       state.RespawnTimeRemaining = 0;
     }
-    return state;
   }
 
 }

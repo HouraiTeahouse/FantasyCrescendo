@@ -40,13 +40,13 @@ public class LobbyDisplay : MonoBehaviour, IStateView<LobbyInfo>, IStateView<Mat
     await controller.JoinLobby(lobbyInfo);
   }
 
-  public void ApplyState(LobbyInfo lobby) {
+  public void ApplyState(ref LobbyInfo lobby) {
     lobbyInfo = lobby;
     name = lobby.Id.ToString();
     UpdateUI(lobbyInfo);
   }
 
-  public void ApplyState(MatchmakerController controller) {
+  public void ApplyState(ref MatchmakerController controller) {
     this.controller = controller;
   }
 

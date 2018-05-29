@@ -29,15 +29,14 @@ public class MatchRuleSimulation : IMatchSimulation {
     return Task.WhenAll(Rules.Select(rule => rule.Initialize(config)));
   } 
 
-  public MatchState Simulate(MatchState state, MatchInputContext input) {
+  public void Simulate(ref MatchState state, MatchInputContext input) {
     foreach (var rule in Rules) {
-      state = rule.Simulate(state, input);
+      rule.Simulate(ref state, input);
     }
     if (BlastZone != null) {
       state = BlastZone.Simulate(state);
     }
     CheckForFinish(state);
-    return state;
   }
 
   public MatchState ResetState(MatchState state) => state;

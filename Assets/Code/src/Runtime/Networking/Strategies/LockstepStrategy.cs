@@ -80,7 +80,11 @@ public sealed class LockstepStrategy : INetworkStrategy {
       NetworkClient.SendInput(Timestep, InputSource.ValidMask, LocalInput);
       if (!CurrentInput.IsValid) return;
       InputContext.Update(CurrentInput);
-      CurrentState = Simulation.Simulate(CurrentState, InputContext);
+
+      var state = CurrentState;
+      Simulation.Simulate(ref state, InputContext);
+      CurrentState = state;
+
       LocalInput[0] = InputSource.SampleInput();
       CurrentInput.Reset();
       Timestep++;

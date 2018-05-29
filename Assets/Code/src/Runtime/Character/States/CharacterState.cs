@@ -31,9 +31,9 @@ public class CharacterState : State<CharacterContext>, IEntity, IStateView<Playe
     context.State.ResetPlayersHit();
   }
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext simulate) => state;
+  public void Simulate(ref PlayerState state, PlayerInputContext simulate) {}
 
-  public void ApplyState(PlayerState state) {}
+  public void ApplyState(ref PlayerState state) {}
 
   public CharacterState AddTransitionTo(CharacterState state, 
                                         Func<CharacterContext, bool> extraCheck = null) {

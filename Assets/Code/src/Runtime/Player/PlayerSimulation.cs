@@ -32,24 +32,23 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
   public void Presimulate(PlayerState state) {
     if (PlayerSimulationComponents == null) return;
     foreach (var component in PlayerSimulationComponents) {
-      component.Presimulate(state);
+      component.Presimulate(ref state);
     }
   }
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+  public void Simulate(ref PlayerState state, PlayerInputContext input) {
     // If under hitlag, do not further simulate player.
     if (state.Hitlag > 0) {
       state.Hitlag--;
-      return state; 
+      return;
     }
-    return SimulationComponents?.Simulate(state, input) ?? state;
+    SimulationComponents?.Simulate(ref state, input);
   }
 
-  public PlayerState ResetState(PlayerState state) {
+  public void ResetState(ref PlayerState state) {
     foreach (var component in PlayerSimulationComponents) {
-      state = component.ResetState(state);
+      component.ResetState(ref state);
     }
-    return state;
   }
 
 }

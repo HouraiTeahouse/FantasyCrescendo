@@ -18,7 +18,7 @@ public sealed class TrainingMatchRule : IMatchRule {
     return Task.CompletedTask;
   }
 
-  public MatchState Simulate(MatchState state, MatchInputContext input) => state;
+  public void Simulate(ref MatchState state, MatchInputContext input) {}
 
   public int GetWinner(MatchState state) => -1;
 

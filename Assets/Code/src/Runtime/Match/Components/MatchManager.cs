@@ -38,7 +38,11 @@ public class MatchManager : MonoBehaviour {
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
-  void Update() => View?.ApplyState(MatchController.CurrentState);
+  void Update() {
+    if (View == null) return;
+    var state = MatchController.CurrentState;
+    View?.ApplyState(ref state);
+  }
 
   public async Task<MatchResult> RunMatch() {
     if (MatchController == null) {

@@ -25,25 +25,22 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(PlayerState state) {
-  }
+  public void Presimulate(ref PlayerState state) {}
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+  public void Simulate(ref PlayerState state, PlayerInputContext input) {
     if (state.RespawnTimeRemaining > 0) {
       state.RespawnTimeRemaining--;
     } else {
       state.RespawnTimeRemaining = 0;
     }
-    return state;
   }
 
-  public PlayerState ResetState(PlayerState state) {
+  public void ResetState(ref PlayerState state) {
     state.Damage = 0f;
     state.ShieldDamage = 0;
-    return state;
   }
 
-  public void ApplyState(PlayerState state) {
+  public void ApplyState(ref PlayerState state) {
     if (platform == null) return;
     platform.SetActive(state.RespawnTimeRemaining > 0);
   }

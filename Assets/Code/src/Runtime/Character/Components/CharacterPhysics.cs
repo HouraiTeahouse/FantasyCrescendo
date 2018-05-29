@@ -45,12 +45,12 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(PlayerState state) {
-    ApplyState(state);
+  public void Presimulate(ref PlayerState state) {
+    ApplyState(ref state);
     IsGrounded = IsCharacterGrounded(state);
   }
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+  public void Simulate(ref PlayerState state, PlayerInputContext input) {
     ApplyGravity(ref state);
     LimitFallSpeed(ref state);
 
@@ -74,10 +74,9 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
         state.GrabbedLedgeTimer++;
       }
     }
-    return state;
   }
 
-  public void ApplyState(PlayerState state) {
+  public void ApplyState(ref PlayerState state) {
     transform.position = state.Position;
     var offset = 90f;
     if (!state.Direction) {
@@ -96,9 +95,8 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     state.JumpCount = 0;
   }
 
-  public PlayerState ResetState(PlayerState state) {
+  public void ResetState(ref PlayerState state) {
     state.Velocity = Vector2.zero;
-    return state;
   }
 
   void ApplyGravity(ref PlayerState state) {

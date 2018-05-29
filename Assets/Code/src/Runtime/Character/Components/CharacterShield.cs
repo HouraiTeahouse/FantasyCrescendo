@@ -41,8 +41,8 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
   Renderer[] ShieldRenderers;
   bool isShieldView;
 
-  public bool IsShieldActive(PlayerState state) => StateMachine.GetControllerState(state) is ShieldState;
-  public bool IsShieldBroken(PlayerState state) => state.ShieldDamage >= MaxShieldHealth;
+  public bool IsShieldActive(ref PlayerState state) => StateMachine.GetControllerState(ref state) is ShieldState;
+  public bool IsShieldBroken(ref PlayerState state) => state.ShieldDamage >= MaxShieldHealth;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
@@ -74,10 +74,10 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     return Task.CompletedTask;
   }
 
-  public void Presimulate(PlayerState state) => ApplyState(state);
+  public void Presimulate(ref PlayerState state) => ApplyState(ref state);
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
-    if (IsShieldActive(state)) {
+  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+    if (IsShieldActive(ref state)) {
       state.ShieldDamage = Math.Min(MaxShieldHealth, state.ShieldDamage + DepletionRate);
       state.ShieldRecoveryCooldown = RecoveryCooldown;
     } else {
@@ -86,20 +86,19 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
         state.ShieldDamage = (uint)Math.Max(0, (int)state.ShieldDamage - RegenRate);
       }
     }
-    return state;
   }
 
-  public void ApplyState(PlayerState state) {
+  public void ApplyState(ref PlayerState state) {
     var shieldHealth = MaxShieldHealth - state.ShieldDamage;
     var shieldSizeRatio = shieldHealth / (float)MaxShieldHealth;
-    ObjectUtil.SetActive(Shield, IsShieldActive(state));
+    ObjectUtil.SetActive(Shield, IsShieldActive(ref state));
     ShieldTransform.localScale = Vector3.one * ShieldScale * ShieldSize.Evaluate(shieldSizeRatio);
     if (TargetBone != null) {
       ShieldTransform.localPosition = transform.InverseTransformPoint(TargetBone.position);
     }
   }
 
-  public PlayerState ResetState(PlayerState state) => state;
+  public void ResetState(ref PlayerState state) {}
 
   void SetShieldColor(Color color) {
     foreach (var renderer in ShieldRenderers) {

@@ -10,27 +10,28 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// </summary>
 public interface IStateView<S> {
 
+  // TODO(james7132): Change ref -> in when C# 7.2 is available.
+
   /// <summary>
   /// Alters the outward appearance of the view to match the d
   /// data represented by a state.
   /// </summary>
   /// <param name="state">the state to display.</param>
-  void ApplyState(S state);
+  void ApplyState(ref S state);
 
 }
 
 public static class CoreUtility {
 
-  public static T Simulate<T, TInput>(this ISimulation<T, TInput>[] simulations, T state, TInput input) {
+  public static void Simulate<T, TInput>(this ISimulation<T, TInput>[] simulations, ref T state, TInput input) {
     foreach (var simulation in simulations) {
-      state = simulation.Simulate(state, input);
+      simulation.Simulate(ref state, input);
     }
-    return state;
   }
 
   public static void ApplyState<T>(this IStateView<T>[] views, T state) {
     foreach (var view in views) {
-      view?.ApplyState(state);
+      view?.ApplyState(ref state);
     }
   }
   

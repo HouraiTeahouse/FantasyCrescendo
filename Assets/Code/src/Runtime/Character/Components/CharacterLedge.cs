@@ -22,24 +22,22 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(PlayerState state) => ApplyState(state);
+  public void Presimulate(ref PlayerState state) => ApplyState(ref state);
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
+  public void Simulate(ref PlayerState state, PlayerInputContext input) {
     if (!state.IsGrabbingLedge && state.GrabbedLedgeTimer >= 0) {
       var ledge = CheckForLedges(state);
       if (ledge?.IsOccupied(state.MatchState) == false) {
         state.GrabLedge(ledge);
       }
     }
-    return state;
   }
 
-  public void ApplyState(PlayerState state) => dir = state.Direction;
+  public void ApplyState(ref PlayerState state) => dir = state.Direction;
 
-  public PlayerState ResetState(PlayerState state) {
+  public void ResetState(ref PlayerState state) {
     state.GrabbedLedgeID = 0;
     state.GrabbedLedgeTimer = 0;
-    return state;
   }
 
   Ledge CheckForLedges(PlayerState state) {

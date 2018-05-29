@@ -56,7 +56,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
     CollisionManager = new PlayerCollisionManager(config);
   }
 
-  public MatchState Simulate(MatchState state, MatchInputContext input) {
+  public void Simulate(ref MatchState state, MatchInputContext input) {
     if (ActiveHitboxes.Count + ActiveHurtboxes.Count > 0) {
       Physics.SyncTransforms();
       CreateCollisions();
@@ -70,7 +70,6 @@ public class MatchHitboxSimulation : IMatchSimulation {
     CollisionManager.Clear();
     ActiveHitboxes.Clear();
     ActiveHurtboxes.Clear();
-    return state;
   }
 
   static bool IsPlayerInvincible(PlayerState state) {

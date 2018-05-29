@@ -13,11 +13,11 @@ public class PlayerColor : MonoBehaviour, IInitializable<PlayerConfig>, IStateVi
   public Graphic[] Graphics;
 
   public Task Initialize(PlayerConfig config) {
-    ApplyState(config);
+    ApplyState(ref config);
     return Task.CompletedTask;
   }
 
-  public void ApplyState(PlayerConfig config) {
+  public void ApplyState(ref PlayerConfig config) {
     var color = Config.Get<VisualConfig>().GetPlayerColor(config.PlayerID);
     foreach (var graphic in Graphics) {
       if (graphic == null) continue;

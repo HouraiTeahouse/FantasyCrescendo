@@ -67,7 +67,7 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
     }
   }
 
-  public void ApplyState(MatchConfig config) {
+  public void ApplyState(ref MatchConfig config) {
     foreach (var player in players) {
       player.IsActive = false;
     }

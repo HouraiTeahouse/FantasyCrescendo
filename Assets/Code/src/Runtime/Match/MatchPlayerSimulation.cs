@@ -29,7 +29,7 @@ public class MatchPlayerSimulation : IMatchSimulation {
     return Task.WhenAll(tasks);
   }
 
-  public MatchState Simulate(MatchState state, MatchInputContext input) {
+  public void Simulate(ref MatchState state, MatchInputContext input) {
     Assert.IsTrue(input.IsValid);
     Assert.AreEqual(PlayerSimulations.Length, state.PlayerCount);
     Assert.AreEqual(PlayerSimulations.Length, input.PlayerInputs.Length);
@@ -40,21 +40,25 @@ public class MatchPlayerSimulation : IMatchSimulation {
       var playerState = state.GetPlayerState(i);
       var simulation = PlayerSimulations[i];
       var playerInput = input.PlayerInputs[i];
-      playerState = simulation.Simulate(playerState, playerInput);
+      simulation.Simulate(ref playerState, playerInput);
+      state.SetPlayerState(i, playerState);
+    }
+  }
+
+  public MatchState ResetState(MatchState state) {
+    for (var i = 0; i < state.PlayerCount; i++) {
+      // TODO(james7132): Replace this with ref return/locals
+      var playerState = state.GetPlayerState(i);
+      PlayerSimulations[i].ResetState(ref playerState);
       state.SetPlayerState(i, playerState);
     }
     return state;
   }
 
-  public MatchState ResetState(MatchState state) {
-    for (var i = 0; i < state.PlayerCount; i++) {
-      state.SetPlayerState(i, PlayerSimulations[i].ResetState(state.GetPlayerState(i)));
-    }
-    return state;
-  }
-
   void ResetPlayer(PlayerResetEvent evt) {
-    evt.PlayerState = PlayerSimulations[evt.PlayerID].ResetState(evt.PlayerState);
+    var state = evt.PlayerState;
+    PlayerSimulations[evt.PlayerID].ResetState(ref state);
+    evt.PlayerState = state;
   }
 
   public void Dispose() => context.Dispose();

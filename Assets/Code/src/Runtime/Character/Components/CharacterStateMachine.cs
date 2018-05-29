@@ -36,27 +36,27 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     return Task.WhenAll(stateMap.Values.Select(s => s.Initalize(config, gameObject, isView)).Where(t => t != null));
   }
 
-  public void Presimulate(PlayerState state) => ApplyState(state);
+  public void Presimulate(ref PlayerState state) => ApplyState(ref state);
 
-  public void ApplyState(PlayerState state) => GetControllerState(state)?.ApplyState(state);
+  public void ApplyState(ref PlayerState state) => GetControllerState(ref state)?.ApplyState(ref state);
 
-  public PlayerState Simulate(PlayerState state, PlayerInputContext input) {
-    var controllerState = GetControllerState(state);
+  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+    var controllerState = GetControllerState(ref state);
     context.State = state;
     context.Input = input;
-    context.ShieldBroken = Shield.IsShieldBroken(state);
+    context.ShieldBroken = Shield.IsShieldBroken(ref state);
     context.IsGrounded = Physics.IsGrounded;
     context.CanJump = Movement.CanJump(state);
     context.StateLength = controllerState.Data.Length;
 
     controllerState = StateController.UpdateState(controllerState, context);
-    state = controllerState.Simulate(context.State, input);
+    controllerState.Simulate(ref context.State, input);
+    state = context.State;
 
     state.StateID = controllerState.Id;
-    return state;
   }
 
-  public CharacterState GetControllerState(PlayerState state) =>  GetControllerState(state.StateID);
+  public CharacterState GetControllerState(ref PlayerState state) =>  GetControllerState(state.StateID);
 
   public CharacterState GetControllerState(uint id) {
     CharacterState controllerState;
@@ -67,9 +67,8 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     }
   }
 
-  public PlayerState ResetState(PlayerState state) {
+  public void ResetState(ref PlayerState state) {
     state.StateID = StateController.DefaultState.Id;
-    return state;
   }
 
 }

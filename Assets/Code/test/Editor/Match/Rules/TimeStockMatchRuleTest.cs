@@ -23,7 +23,8 @@ public class TimeStockMatchRuleTest {
     var input = new MatchInput(config);
     var inputContext = new MatchInputContext(input);
 
-    Assert.AreEqual(99, timeMatchRule.Simulate(state, inputContext).Time);
+    timeMatchRule.Simulate(ref state, inputContext);
+    Assert.AreEqual(99, state.Time);
 	}
 
 	[Test]

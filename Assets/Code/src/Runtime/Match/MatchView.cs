@@ -32,20 +32,22 @@ public class MatchView : IInitializable<MatchConfig>, IStateView<MatchState> {
     MatchViews = await CoreUtility.CreateAllViews<MatchState, MatchConfig>(config);
   }
 
-  public void ApplyState(MatchState state) {
+  public void ApplyState(ref MatchState state) {
     ApplyPlayerStates(state);
     ApplyOtherStates(state);
   }
 
   void ApplyPlayerStates(MatchState state) {
     for (var i = 0; i < PlayerViews.Length; i++) {
-      PlayerViews[i].ApplyState(state.GetPlayerState(i));
+      // TODO(james7132): Use ref returns when 7.2 is available
+      var playerState = state.GetPlayerState(i);
+      PlayerViews[i].ApplyState(ref playerState);
     }
   }
 
   void ApplyOtherStates(MatchState state) {
     foreach (var view in MatchViews) {
-      view.ApplyState(state);
+      view.ApplyState(ref state);
     }
   }
 

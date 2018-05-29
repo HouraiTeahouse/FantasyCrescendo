@@ -14,9 +14,8 @@ public sealed class TimeMatchRule : IMatchRule {
     return Task.CompletedTask;
   }
 
-  public MatchState Simulate(MatchState state, MatchInputContext input) {
+  public void Simulate(ref MatchState state, MatchInputContext input) {
     state.Time--;
-    return state;
   }
 
   public MatchResolution? GetResolution(MatchState state) {

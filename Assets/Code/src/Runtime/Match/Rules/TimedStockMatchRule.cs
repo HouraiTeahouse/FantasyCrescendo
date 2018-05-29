@@ -4,9 +4,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches.Rules {
 
 public class TimeStockMatchRule : StockMatchRule {
 
-  public override MatchState Simulate(MatchState state, MatchInputContext input) {
+  public override void Simulate(ref MatchState state, MatchInputContext input) {
     state.Time--;
-    return state;
   }
 
   public override MatchResolution? GetResolution(MatchState state) {

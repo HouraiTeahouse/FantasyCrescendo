@@ -22,8 +22,8 @@ public class MatchSimulation : IMatchSimulation {
     return Task.WhenAll(SimulationComponents.Select(comp => comp.Initialize(config)));
   }
 
-  public MatchState Simulate(MatchState state, MatchInputContext input) {
-    return SimulationComponents.Simulate(state, input);
+  public void Simulate(ref MatchState state, MatchInputContext input) {
+    SimulationComponents.Simulate(ref state, input);
   }
 
   public MatchState ResetState(MatchState state) {

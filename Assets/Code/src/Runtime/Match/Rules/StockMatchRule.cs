@@ -20,9 +20,7 @@ public class StockMatchRule : IMatchRule {
     return Task.CompletedTask;
   }
 
-  public virtual MatchState Simulate(MatchState state, MatchInputContext input) {
-    return state;
-  }
+  public virtual void Simulate(ref MatchState state, MatchInputContext input) {}
 
   public virtual MatchResolution? GetResolution(MatchState state) {
     var livingCount = 0;

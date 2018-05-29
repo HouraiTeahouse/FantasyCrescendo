@@ -86,11 +86,13 @@ public class RollbackStrategy : INetworkStrategy {
     void ForwardSimulate() {
       MatchInput input = InputHistory.Current.Input;
       var newestTimestep = InputHistory.Newest.Timestep;
+      var state = CurrentState;
       while (input.IsValid && InputHistory.Current.Timestep < newestTimestep) {
         InputContext.Update(input);
-        CurrentState = Simulation.Simulate(CurrentState, InputContext);
+        Simulation.Simulate(ref state, InputContext);
         input = InputHistory.Step();
       }
+      CurrentState = state;
     }
 
     uint GetClientTimestamp(int clientId) {
@@ -167,7 +169,10 @@ public class RollbackStrategy : INetworkStrategy {
         } else {
           InputContext.Update(input);
           InputContext.Predict();
-          CurrentState = Simulation.Simulate(CurrentState, InputContext);
+          
+          var state = CurrentState;
+          Simulation.Simulate(ref state, InputContext);
+          CurrentState = state;
         }
       }
       InputHistory.DropBefore(latestServerStateTimestamp);
@@ -189,7 +194,9 @@ public class RollbackStrategy : INetworkStrategy {
       InputContext.Reset(current.Input, input);
       InputContext.Predict();
 
-      CurrentState = Simulation.Simulate(CurrentState, InputContext);
+      var state = CurrentState;
+      Simulation.Simulate(ref state, InputContext);
+      CurrentState = state;
     }
 
     void SendLocalInput() {
