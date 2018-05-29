@@ -87,6 +87,7 @@ public class MatchState : INetworkSerializable {
     }
   }
 
+  // TODO(james7132): Change to ref indexer when C# 7 is available.
   public PlayerState GetPlayerState(int index) => playerStates[index];
   public void SetPlayerState(int index, PlayerState state) {
     state.MatchState = this;
