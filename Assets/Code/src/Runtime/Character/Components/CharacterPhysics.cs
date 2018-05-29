@@ -21,11 +21,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public bool IsGrounded { get; private set; }
 
-  CharacterStateMachine StateMachine;
-
   public Task Initialize(PlayerConfig config, bool isView) {
-    StateMachine = GetComponent<CharacterStateMachine>();
-
     if (LedgeGrabBone == null) {
       LedgeGrabBone = transform;
     }

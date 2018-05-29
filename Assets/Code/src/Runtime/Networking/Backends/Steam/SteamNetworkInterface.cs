@@ -12,9 +12,11 @@ public sealed class SteamNetworkInterface : NetworkInterface {
   readonly IDictionary<int, CSteamID> connectionUsers;
   readonly IDictionary<CSteamID, int> connectionIds;
 
+#pragma warning disable 0414
   Callback<P2PSessionRequest_t> callbackP2PSesssionRequest;
   Callback<P2PSessionConnectFail_t> callbackP2PConnectFail;
   Callback<LobbyChatUpdate_t> callbackLobbyChatUpdate;
+#pragma warning restore 0414
   
   const int kMaxMessageSize = 1200;
   int lastConnectionId;
