@@ -66,7 +66,8 @@ public class Hitbox : AbstractHitDetector {
     }
 
     foreach (var effect in VisualEffects) {
-      var instance = PrefabPool.Get(effect).Rent();
+      var instance = PrefabPool.Get(effect)?.Rent();
+      if (instance == null) continue;
       instance.transform.position = position;
       foreach (var vfx in instance.GetComponentsInChildren<HitEffect>()) {
         vfx.Setup(hitInfo);

@@ -33,6 +33,7 @@ public class SoundEffect : ScriptableObject {
   }
 
   public void Play(Vector3 position = default(Vector3)) {
+    if (AudioManager.Instance == null) return;
     var audioSource = AudioManager.Instance.Rent();
     audioSource.transform.position = position;
     Apply(audioSource);

@@ -133,9 +133,10 @@ GameObject:
   - component: {fileID: 114209513861547228}
   - component: {fileID: 114147230044848370}
   - component: {fileID: 114173882155944486}
+  - component: {fileID: 114432504162126714}
   m_Layer: 0
   m_Name: Game Controller
-  m_TagString: EditorOnly
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -314,6 +315,17 @@ MonoBehaviour:
   BundleSearch:
   - scene/*/info
   - characters/*/info
+--- !u!114 &114432504162126714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996456345168662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab49439928e3f03448a7b61d79b725bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114483807599550652
 MonoBehaviour:
   m_ObjectHideFlags: 1

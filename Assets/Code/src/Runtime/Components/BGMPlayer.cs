@@ -31,13 +31,14 @@ public class BGMPlayer : MonoBehaviour {
   }
 
   public async Task LoadBGM(BGM bgm) {
-    if (AudioSource == null) return;
     var clip = await bgm.Clip.LoadAsync();
+    if (AudioSource == null || clip == null) return;
     AudioSource.clip = clip;
   }
 
   public async Task PlayBGM(BGM bgm) {
     await LoadBGM(bgm);
+    if (AudioSource == null) return;
     AudioSource.Play();
   }
 
