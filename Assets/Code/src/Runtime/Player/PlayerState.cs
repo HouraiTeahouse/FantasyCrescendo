@@ -11,7 +11,12 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
 [Serializable]
 public struct PlayerState : INetworkSerializable {
 
-  [NonSerialized] public MatchState MatchState;
+  MatchState matchState_;
+  public MatchState MatchState { 
+    get { return matchState_; } 
+    set { matchState_ = value; } 
+  }
+
   public bool IsActive => Stocks > 0;
   public bool IsGrabbingLedge => GrabbedLedgeID != 0;
   public bool IsRespawning => RespawnTimeRemaining > 0;

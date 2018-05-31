@@ -40,6 +40,10 @@ public class GameSetupMenu : MonoBehaviour {
     Debug.Log("Building Setup Menu");
 
     var stages = Registry.Get<SceneData>().Where(scene => scene.IsSelectable && scene.IsVisible && scene.Type == SceneType.Stage).ToArray();
+    foreach (var stage in Registry.Get<SceneData>()) {
+      Debug.LogWarning($"{stage.name} {stage.IsDebug} {stage.IsSelectable} {stage.IsVisible} {stage.Type}");
+    }
+    Debug.LogWarning(stages.Count());
 
     StageDropdwon.options = stages.Select(scene => 
       new Dropdown.OptionData { text = scene.Name }

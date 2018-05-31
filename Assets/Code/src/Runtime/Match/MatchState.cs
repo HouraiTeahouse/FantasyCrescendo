@@ -79,20 +79,14 @@ public class MatchState : INetworkSerializable {
     PlayerCount = mask & 15;
     playerStates = ArrayPool<PlayerState>.Shared.Rent(PlayerCount);
     for (var i = 0; i < PlayerCount; i++) {
-      var state = new PlayerState();
       if ((mask & (1 << (i + 4))) != 0) {
-        state.Deserialize(deserializer);
+        playerStates[i].Deserialize(deserializer);
       }
-      SetPlayerState(i, state);
     }
+    UpdatePlayerStates();
   }
 
-  // TODO(james7132): Change to ref indexer when C# 7 is available.
-  public PlayerState GetPlayerState(int index) => playerStates[index];
-  public void SetPlayerState(int index, PlayerState state) {
-    state.MatchState = this;
-    playerStates[index] = state;
-  }
+  public ref PlayerState this[int index] => ref playerStates[index]; 
 
   public override string ToString() {
     var players = string.Join(" ", playerStates.Take(PlayerCount).Select(p => p.GetHashCode().ToString()));
