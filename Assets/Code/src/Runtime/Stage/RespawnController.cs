@@ -25,7 +25,7 @@ public class RespawnController : MonoBehaviour {
       var bounds = new Bounds(respawnPosition.position, RespawnBounds);
       bool occupied = false;
       for (var i = 0; i < state.PlayerCount; i++) {
-        occupied |= bounds.Contains(state[i].Position);
+        occupied |= bounds.Contains(state.GetPlayerState(i).Position);
       }
       if (occupied) continue;
       var resetEvent = new PlayerResetEvent(evt);

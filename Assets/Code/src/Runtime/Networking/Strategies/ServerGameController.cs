@@ -35,8 +35,10 @@ public abstract class ServerGameController : MatchController, IDisposable {
 
   void DestroyPlayer(int playerId) {
     if (playerId < 0 || playerId >= CurrentState.PlayerCount) return;
+    var playerState = CurrentState.GetPlayerState(playerId);
     // TODO(james7132): Disable player properly
-    CurrentState[playerId].Stocks = 0;
+    playerState.Stocks = 0;
+    CurrentState.SetPlayerState(playerId, playerState);
   }
 
 }

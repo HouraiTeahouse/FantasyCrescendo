@@ -67,8 +67,10 @@ public class RollbackStrategy : INetworkStrategy {
     }
 
     void OnRemovePlayer(int playerId) {
-      CurrentState[playerId].Stocks = sbyte.MinValue;
-      Assert.IsTrue(!CurrentState[playerId].IsActive);
+      var playerState = CurrentState.GetPlayerState(playerId);
+      playerState.Stocks = sbyte.MinValue;
+      Assert.IsTrue(!playerState.IsActive);
+      CurrentState.SetPlayerState(playerId, playerState);
     }
 
     void BroadcastInputs() {

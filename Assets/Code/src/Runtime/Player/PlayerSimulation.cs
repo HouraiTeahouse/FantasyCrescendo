@@ -29,7 +29,7 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
     await task;
   }
 
-  public void Presimulate(ref PlayerState state) {
+  public void Presimulate(PlayerState state) {
     if (PlayerSimulationComponents == null) return;
     foreach (var component in PlayerSimulationComponents) {
       component.Presimulate(ref state);

@@ -34,16 +34,23 @@ public class MatchPlayerSimulation : IMatchSimulation {
     Assert.AreEqual(PlayerSimulations.Length, state.PlayerCount);
     Assert.AreEqual(PlayerSimulations.Length, input.PlayerInputs.Length);
     for (var i = 0; i < state.PlayerCount; i++) {
-      PlayerSimulations[i].Presimulate(ref state[i]);
+      PlayerSimulations[i].Presimulate(state.GetPlayerState(i));
     }
     for (var i = 0; i < state.PlayerCount; i++) {
-      PlayerSimulations[i].Simulate(ref state[i], input.PlayerInputs[i]);
+      var playerState = state.GetPlayerState(i);
+      var simulation = PlayerSimulations[i];
+      var playerInput = input.PlayerInputs[i];
+      simulation.Simulate(ref playerState, playerInput);
+      state.SetPlayerState(i, playerState);
     }
   }
 
   public MatchState ResetState(MatchState state) {
     for (var i = 0; i < state.PlayerCount; i++) {
-      PlayerSimulations[i].ResetState(ref state[i]);
+      // TODO(james7132): Replace this with ref return/locals
+      var playerState = state.GetPlayerState(i);
+      PlayerSimulations[i].ResetState(ref playerState);
+      state.SetPlayerState(i, playerState);
     }
     return state;
   }

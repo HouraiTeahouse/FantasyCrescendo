@@ -13,7 +13,7 @@ public class MatchEndUI : MonoBehaviour {
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   void Awake() {
-    Mediator.Global.CreateUnityContext(this).SubscribeAsync<MatchEndEvent>(OnMatchEnd);
+    Mediator.Global.CreateUnityContext(this).Subscribe<MatchEndEvent>(OnMatchEnd);
   }
 
   async Task OnMatchEnd(MatchEndEvent evt) {

@@ -1,5 +1,4 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Players;
-using HouraiTeahouse.FantasyCrescendo.Matches.Rules;
+﻿using HouraiTeahouse.FantasyCrescendo.Matches.Rules;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -71,9 +70,10 @@ public abstract class Match {
     startPositions = startPositions.OrderBy(s => s.transform.GetSiblingIndex()).ToArray();
     for (int i = 0; i < initialState.PlayerCount; i++) {
       var startPos = startPositions[i % startPositions.Length].transform;
-      ref PlayerState state = ref initialState[i];
+      var state = initialState.GetPlayerState(i);
       state.Position = startPos.position;
       state.Direction = startPos.transform.forward.x >= 0;
+      initialState.SetPlayerState(i, state);
     }
     return initialState;
   }
@@ -81,7 +81,9 @@ public abstract class Match {
   MatchState CreateInitialStateSimple(MatchConfig config) {
     var initialState = new MatchState(config);
     for (var i = 0; i < initialState.PlayerCount; i++) {
-      initialState[i].Position = new Vector3((int)i * 2 - 3, 1, 0);
+      var state = initialState.GetPlayerState(i);
+      state.Position = new Vector3((int)i * 2 - 3, 1, 0);
+      initialState.SetPlayerState(i, state);
     }
     return initialState;
   }

@@ -29,7 +29,7 @@ public sealed class TimeMatchRule : IMatchRule {
     int winner = -1;
     int maxStocks = int.MinValue;
     for (var i = 0; i < state.PlayerCount; i++) {
-      var playerStocks = state[i].Stocks;
+      var playerStocks = state.GetPlayerState(i).Stocks;
       if (playerStocks > maxStocks) {
         winner = i;
         maxStocks = (int)playerStocks;
