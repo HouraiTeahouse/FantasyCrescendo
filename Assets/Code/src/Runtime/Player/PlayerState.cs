@@ -11,7 +11,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
 [Serializable]
 public struct PlayerState : INetworkSerializable {
 
-  [NonSerialized] MatchState matchState_;
+  MatchState matchState_;
   public MatchState MatchState { 
     get { return matchState_; } 
     set { matchState_ = value; } 
