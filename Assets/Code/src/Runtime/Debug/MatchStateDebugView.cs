@@ -16,7 +16,7 @@ public class MatchStateDebugView : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-    if (Manager == null) return;
+    if (Manager == null || Manager.MatchController == null) return;
     State = Manager.MatchController.CurrentState;
 	}
 

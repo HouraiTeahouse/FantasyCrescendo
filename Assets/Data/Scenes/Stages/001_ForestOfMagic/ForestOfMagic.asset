@@ -13,11 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 3845802808
   IsSelectable: 1
-  IsVisible: 0
+  IsVisible: 1
   IsDebug: 0
-  IsStage: 1
+  Type: 1
   Name: Forest of Magic
-  _scene: 
+  _scene: scene/forest/scene:Assets/Data/Scenes/Stages/001_ForestOfMagic/ForestOfMagic.unity
+  _icon: icons:marisa_icon
+  _previewImage: icons:marisa_icon
+  LoadPriority: 0
   Music:
   - {fileID: 11400000, guid: cd2bd088745641d44a30d42c0206a03f, type: 2}
   - {fileID: 11400000, guid: a493e7e3573521f46ac9c6c3add510fa, type: 2}

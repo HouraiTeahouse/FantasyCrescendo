@@ -13,13 +13,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 2578672494
   IsSelectable: 1
-  IsVisible: 0
+  IsVisible: 1
   IsDebug: 0
   Type: 1
   Name: Netherworld
   _scene: scene/netherworld/scene:Assets/Data/Scenes/Stages/003_Netherworld/Netherworld.unity
-  _icon: 
-  _previewImage: 
+  _icon: icons:marisa_icon
+  _previewImage: icons:marisa_icon
   LoadPriority: 0
   Music:
   - {fileID: 11400000, guid: 042bdef5bc24eda4cb2f4c7a1d76d9f3, type: 2}
