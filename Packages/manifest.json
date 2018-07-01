@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.houraiteahouse.config": "file:HouraiConfig",
+    "com.houraiteahouse.core": "file:HouraiCore",
+    "com.houraiteahouse.discord": "file:discord-rpc-unity",
+    "com.houraiteahouse.editorattributes": "file:EditorAttributes",
+    "com.houraiteahouse.incontrol": "file:InControl",
+    "com.houraiteahouse.loadables": "file:Loadables",
+    "com.houraiteahouse.localization": "file:HouraiLocalization",
+    "com.houraiteahouse.options": "file:HouraiOptions",
+    "com.houraiteahouse.lz4": "file:LZF",
     "com.unity.assetbundlebrowser": "1.6.0",
     "com.unity.postprocessing": "2.0.7-preview",
     "com.unity.ads": "exclude",
