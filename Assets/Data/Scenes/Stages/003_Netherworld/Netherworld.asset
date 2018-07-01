@@ -15,9 +15,12 @@ MonoBehaviour:
   IsSelectable: 1
   IsVisible: 0
   IsDebug: 0
-  IsStage: 1
+  Type: 1
   Name: Netherworld
-  _scene: scene/forest/scene:Assets/Data/Scenes/Stages/003_Netherworld/Netherworld.unity
+  _scene: scene/netherworld/scene:Assets/Data/Scenes/Stages/003_Netherworld/Netherworld.unity
+  _icon: 
+  _previewImage: 
+  LoadPriority: 0
   Music:
   - {fileID: 11400000, guid: 042bdef5bc24eda4cb2f4c7a1d76d9f3, type: 2}
   - {fileID: 11400000, guid: 6dcd25a76398f464299cddcb299afd32, type: 2}

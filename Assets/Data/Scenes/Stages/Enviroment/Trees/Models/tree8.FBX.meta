@@ -3,28 +3,45 @@ guid: 3ee840dc3934caf499d146fcbd1068af
 timeCreated: 1498851137
 licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     100002: SakuraFlowers
     100004: SakuraTrunk
+    100006: SakuraTrunk_UV
     400000: //RootNode
     400002: SakuraFlowers
     400004: SakuraTrunk
+    400006: SakuraTrunk_UV
     2300000: //RootNode
     2300002: SakuraFlowers
     2300004: SakuraTrunk
+    2300006: SakuraTrunk_UV
     3300000: //RootNode
     3300002: SakuraFlowers
     3300004: SakuraTrunk
+    3300006: SakuraTrunk_UV
     4300000: Cylinder002
     4300002: SakuraTrunk
     4300004: SakuraFlowers
+    4300006: SakuraTrunk_UV
     9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SakuraFlowers
+    second: {fileID: 2100000, guid: 21d1d49994df26b4ab3cfb9de3c3b4fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tree8
+    second: {fileID: 2100000, guid: 7ac7d41ccac4f4e40adf922447537e5d, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -37,6 +54,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -61,6 +79,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
