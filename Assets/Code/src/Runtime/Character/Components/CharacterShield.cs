@@ -37,9 +37,7 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
 
   GameObject Shield;
   Transform ShieldTransform;
-  Hurtbox ShieldHurtbox;
   Renderer[] ShieldRenderers;
-  bool isShieldView;
 
   public bool IsShieldActive(ref PlayerState state) => StateMachine.GetControllerState(ref state) is ShieldState;
   public bool IsShieldBroken(ref PlayerState state) => state.ShieldDamage >= MaxShieldHealth;

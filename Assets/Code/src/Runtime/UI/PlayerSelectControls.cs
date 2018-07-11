@@ -35,7 +35,6 @@ public class PlayerSelectControls : MonoBehaviour {
   public List<Button> LocalOnlyButtons;
   public Object[] ActiveComponents;
 
-  bool isLocal;
   IStateView<PlayerConfig>[] Views;
 
   /// <summary>
