@@ -83,16 +83,11 @@ public class MatchState : INetworkSerializable {
       if ((mask & (1 << (i + 4))) != 0) {
         state.Deserialize(deserializer);
       }
-      SetPlayerState(i, state);
+      this[i] = state;
     }
   }
 
-  // TODO(james7132): Change to ref indexer when C# 7 is available.
-  public PlayerState GetPlayerState(int index) => playerStates[index];
-  public void SetPlayerState(int index, PlayerState state) {
-    state.MatchState = this;
-    playerStates[index] = state;
-  }
+  public ref PlayerState this[int playerId] => ref playerStates[playerId];
 
   public override string ToString() {
     var players = string.Join(" ", playerStates.Take(PlayerCount).Select(p => p.GetHashCode().ToString()));

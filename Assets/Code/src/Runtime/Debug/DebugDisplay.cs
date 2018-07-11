@@ -1,4 +1,5 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using HouraiTeahouse.FantasyCrescendo.Matches;
 using HouraiTeahouse.FantasyCrescendo.Networking;
 using System.Collections;
 using System.Collections.Generic;
@@ -76,7 +77,7 @@ public class DebugDisplay : MonoBehaviour {
     builder.AppendLine($"{TPSCounter.FPS:0.0}TPS {GetEllapsedTime(tick)}");
     GetNetworkStats(tick);
     for (var i = 0; i < state.PlayerCount; i++) {
-      var player = state.GetPlayerState(i);
+      ref PlayerState player = ref state[i];
       builder.AppendLine($"P{i+1}: S:{player.StateID} T:{player.StateTick}");
     }
     GUILayout.Label(builder.ToString());

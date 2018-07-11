@@ -61,10 +61,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
       Physics.SyncTransforms();
       CreateCollisions();
       for (var i = 0; i < Config.PlayerCount; i++) {
-        var playerState = state.GetPlayerState(i);
-        var collisions = CollisionManager.PlayerCollisions[i];
-        ApplyCollisions(collisions, ref playerState, state);
-        state.SetPlayerState(i,  playerState);
+        ApplyCollisions(CollisionManager.PlayerCollisions[i], ref state[i], state);
       }
     }
     CollisionManager.Clear();
@@ -83,11 +80,10 @@ public class MatchHitboxSimulation : IMatchSimulation {
     bool isHit = false;
     foreach (var collision in collisions) {
       var source = collision.Source;
-      int srcPlayerId = (int)collision.Source.PlayerID;
       int dstPlayerId = (int)collision.Destination.PlayerID;
       switch (collision.Destination.Type) {
         case HurtboxType.Damageable:
-          var sourceState = match.GetPlayerState((int)source.PlayerID);
+          ref PlayerState sourceState = ref match[(int)source.PlayerID];
 
           // Check if hit is valid.
           if (isShielded || isHit || sourceState.HasHit(dstPlayerId)) continue;
@@ -106,7 +102,6 @@ public class MatchHitboxSimulation : IMatchSimulation {
 
           // Mark the source as having hit the destination.
           sourceState.HitPlayer(dstPlayerId);
-          match.SetPlayerState(srcPlayerId, sourceState);
 
           collision.PlayEffect(new HitInfo { 
             Source = collision.Source, 

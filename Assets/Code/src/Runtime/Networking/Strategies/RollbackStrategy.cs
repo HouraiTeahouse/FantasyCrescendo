@@ -1,4 +1,5 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using HouraiTeahouse.FantasyCrescendo.Matches;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,10 +68,9 @@ public class RollbackStrategy : INetworkStrategy {
     }
 
     void OnRemovePlayer(int playerId) {
-      var playerState = CurrentState.GetPlayerState(playerId);
+      ref PlayerState playerState = ref CurrentState[playerId];
       playerState.Stocks = sbyte.MinValue;
       Assert.IsTrue(!playerState.IsActive);
-      CurrentState.SetPlayerState(playerId, playerState);
     }
 
     void BroadcastInputs() {
