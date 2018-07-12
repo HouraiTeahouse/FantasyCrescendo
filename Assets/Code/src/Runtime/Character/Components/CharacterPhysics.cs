@@ -61,9 +61,10 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
         state.ReleaseLedge();
       }
     } else {
+      var wasGrounded = IsCharacterGrounded(state);
       CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
       state.Position = transform.position;
-      if (IsCharacterGrounded(state)) {
+      if (wasGrounded) {
         state = SnapToGround(state);
       }
       if (state.GrabbedLedgeTimer < 0) {
@@ -125,11 +126,8 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     var count = Physics.CapsuleCastNonAlloc(top, bottom, CharacterController.radius, Vector3.down, hits, 
                                             distance, config.StageLayers, QueryTriggerInteraction.Ignore);
     if (count > 0) {
-      // TODO(james7132): Properly transform this back.
-      var pos = hits[0].point;
-      if (Mathf.Approximately(pos.x, state.Position.x)) {
-        state.Position = hits[0].point;
-      }
+      CharacterController.Move(-Vector3.up * distance);
+      state.Position = transform.position;
     }
     pool.Return(hits);
     return state;
