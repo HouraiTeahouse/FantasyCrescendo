@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Name: InputConfig
   m_EditorClassIdentifier: 
   DeadZone: 0.3
-  SmashThreshold: 0.7
+  SmashThreshold: 0.65
+  SmashFrameWindow: 3
