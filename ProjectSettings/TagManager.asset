@@ -7,6 +7,7 @@ TagManager:
   - Character
   - Ledge
   - Spawn
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - 
   - Character
   - Hurtbox
-  - 
+  - PostProcessing
   - 
   - 
   - 
