@@ -169,7 +169,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     Func<Func<PlayerInputContext, DirectionalInput>, Func<CharacterContext, bool>>
         movementContext = func => {
           var downMove = DirectionInput(Direction.Down);
-          var lateralMovement = Input(i => Mathf.Abs(func(i).Value.x) > DirectionalInput.DeadZone);
+          var lateralMovement = Input(i => InputUtil.OutsideDeadZone(func(i).Value.x));
           return ctx => !downMove(ctx) && lateralMovement(ctx);
         };
 

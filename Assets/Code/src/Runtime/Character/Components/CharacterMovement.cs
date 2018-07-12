@@ -71,9 +71,10 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   void ApplyDirection(ref PlayerState state, Vector2 movement, CharacterStateData data) {
     switch (data.DirectionMode) {
       case DirectionMode.PlayerControlled:
-        if (movement.x > DirectionalInput.DeadZone) {
+        var deadZone = Config.Get<InputConfig>().DeadZone;
+        if (movement.x > deadZone) {
           state.Direction = true;
-        } else if (movement.x < -DirectionalInput.DeadZone) {
+        } else if (movement.x < -deadZone) {
           state.Direction = false;
         }
         break;
@@ -140,7 +141,8 @@ internal class AerialMovement : CharacterMover {
   public override bool ShouldMove(ref PlayerState state) => !Character.Physics.IsGrounded;
 
   public override void Move(ref PlayerState state, PlayerInputContext input) {
-    if (input.Smash.Value.y < -DirectionalInput.DeadZone) {
+    var smashY = input.Smash.Value.y;
+    if (smashY < 0 && InputUtil.OutsideDeadZone(smashY)) {
       state.IsFastFalling = true;
     }
     Character.ApplyControlledMovement(ref state, input.Movement.Value);

@@ -147,7 +147,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1996456345168662}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -501,6 +501,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83e17abaeb9983e43a1a7437cf852a24, type: 2}
   - {fileID: 11400000, guid: b62ed0214c8a3f7479e6b51e15a6ba24, type: 2}
   - {fileID: 11400000, guid: ff01e45d237116746a0cd3e36a52e4f8, type: 2}
+  - {fileID: 11400000, guid: 770f7af36aeb2694b989793e999b8d20, type: 2}
 --- !u!222 &222196419908616946
 CanvasRenderer:
   m_ObjectHideFlags: 1
