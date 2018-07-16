@@ -199,6 +199,8 @@ public struct Vector2b {
   }
 
   public override int GetHashCode() => unchecked(31 * X + Y);
+  
+  public override string ToString() => $"Vector2b<{(Vector2)this}>";
 
 }
 
@@ -216,30 +218,65 @@ public struct ButtonContext {
 
 }
 
-public struct DirectionalInput {
+public static class InputUtil {
 
-  // TODO(james7132): Move this to a Config
-  public const float DeadZone = 0.3f;
+  static InputConfig InputConfig;
 
-  public Vector2 Value;
-  public Direction Direction {
-    get {
-      var absX = Mathf.Abs(Value.x);
-      var absY = Mathf.Abs(Value.y);
-      if (absX > absY) {
-        if (Value.x < -DeadZone) return Direction.Left;
-        if (Value.x > DeadZone) return Direction.Right;
-      }
-      if (absX <= absY) {
-        if (Value.y < -DeadZone) return Direction.Down;
-        if (Value.y > DeadZone) return Direction.Up;
-      }
-      return Direction.Neutral;
+  static InputConfig GetConfig() {
+    if (InputConfig == null) {
+      InputConfig = Config.Get<InputConfig>();
+    }
+    return InputConfig;
+  }
+
+  public static Vector2 MaxComponent(Vector2 value) {
+    if (Math.Abs(value.x) >= Mathf.Abs(value.y)) {
+      return new Vector2(value.x, 0f);
+    } else {
+      return new Vector2(value.y, 0f);
     }
   }
 
+  public static bool OutsideDeadZone(float value, float? deadZone = null) {
+    float zone = deadZone ?? GetConfig().DeadZone;
+    return Mathf.Abs(value) >= zone;
+  }
+
+  public static bool OutsideDeadZone(Vector2 value, float? deadZone = null) {
+    return OutsideDeadZone(value.x, deadZone) || OutsideDeadZone(value.y, deadZone);
+  }
+
+  public static Vector2 EnforceDeadZone(Vector2 input, float? deadZone = null) {
+    return new Vector2 (
+      OutsideDeadZone(input.x, deadZone) ? input.x : 0.0f,
+      OutsideDeadZone(input.y, deadZone) ? input.y : 0.0f
+    );
+  }
+
+}
+
+public struct DirectionalInput {
+
+  public Vector2 Value;
+  public Direction Direction => GetDirection(Value);
+
   public static implicit operator DirectionalInput(Vector2 dir) {
     return new DirectionalInput { Value = dir };
+  }
+
+  public static Direction GetDirection(Vector2 dir) {
+    dir = InputUtil.EnforceDeadZone(dir);
+    var absX = Mathf.Abs(dir.x);
+    var absY = Mathf.Abs(dir.y);
+    if (absX > absY) {
+      if (dir.x < 0) return Direction.Left;
+      if (dir.x > 0) return Direction.Right;
+    }
+    if (absX <= absY) {
+      if (dir.y < 0) return Direction.Down;
+      if (dir.y > 0) return Direction.Up;
+    }
+    return Direction.Neutral;
   }
 
 }
