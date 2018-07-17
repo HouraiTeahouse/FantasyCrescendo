@@ -11,12 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a16366b738b940268931ec61af436f0, type: 3}
   m_Name: PhysicsConfig
   m_EditorClassIdentifier: 
+  GroundedSnapOffset: 0.5
+  GroundedSnapDistance: 1.5
   StageLayers:
     serializedVersion: 2
     m_Bits: 1
   HurtboxLayer: 9
-  GroundedSnapOffset: 0.5
-  GroundedSnapDistance: 1.5
   GlobalKnockbackScaling: 0.1
   BaseHitlag: 3
   HitlagScaling: 3
+  ShortJumpGravityMultiplier: 2
+  DownwardGravityMultiplier: 5

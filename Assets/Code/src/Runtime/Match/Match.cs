@@ -24,7 +24,7 @@ public abstract class Match {
     }
     var additionalScenes = Config.Get<SceneConfig>().AdditionalStageScenes;
     await Task.WhenAll(additionalScenes.Select(s => s.LoadAsync(LoadSceneMode.Additive)));
-    var matchManager = Object.FindObjectOfType<MatchManager>();
+    var matchManager = MatchManager.Instance;
     matchManager.enabled = false;
     matchManager.Config = config;
     try {
