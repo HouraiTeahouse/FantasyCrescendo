@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -13,9 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 2864495283
   IsSelectable: 1
-  IsVisible: 0
+  IsVisible: 1
   IsDebug: 1
-  IsStage: 1
+  Type: 1
   Name: Makai
-  _scene: 
-  Music: []
+  _scene: Assets/Data/Scenes/Stages/004_Makai/Makai.unity
+  _icon: icons:marisa_icon
+  _previewImage: icons:marisa_icon
+  LoadPriority: 0
+  Music:
+  - {fileID: 11400000, guid: 45dbe2262dfb5df48be6363499e356e8, type: 2}
+  - {fileID: 11400000, guid: 13bb1f877996c5e48a5f19b99dbad13f, type: 2}
+  - {fileID: 11400000, guid: cbe816f84086fb04783be7750cea4caf, type: 2}
+  - {fileID: 11400000, guid: 918d510a87159e843bea30f1c97e1fdc, type: 2}
+  - {fileID: 11400000, guid: d3c0f2ac4838a2941a6b9636d69e9067, type: 2}
