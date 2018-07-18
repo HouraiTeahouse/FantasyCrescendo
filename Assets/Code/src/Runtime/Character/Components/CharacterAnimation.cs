@@ -1,9 +1,11 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
@@ -27,6 +29,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
   }
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
+    SetupBindings();
     if (!isView) {
       var animator = GetComponentInChildren<Animator>();
       if (animator != null){
@@ -58,6 +61,19 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
   }
 
   public void ResetState(ref PlayerState state) {}
+
+  void SetupBindings() {
+    var animator = GetComponentInChildren<Animator>();
+    if (animator == null) return;
+    var animGameObject = animator.gameObject;
+    foreach (var state in StateMachine.StateController.States) {
+      TimelineAsset timeline = state.Data.Timeline;
+      if (timeline == null) continue;
+      foreach (var track in timeline.GetOutputTracks().OfType<AnimationTrack>()) {
+        Director.SetGenericBinding(track, animator.gameObject);
+      }
+    }
+  }
 
 }
 

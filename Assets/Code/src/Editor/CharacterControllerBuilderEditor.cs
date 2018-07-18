@@ -43,9 +43,6 @@ public class CharacterControllerBuilderEditor : UnityEditor.Editor {
     EditorGUILayout.PropertyField(prefabProperty);
     filter = EditorGUILayout.TextField("Filter", filter);
     var text = prefabProperty.objectReferenceValue != null ? "Update Animator Controller" : "Create Animation Controller";
-    if (GUILayout.Button(text)) {
-      UpdateAnimatorController(prefabProperty);
-    }
     EditorGUILayout.Space();
     HandleDefaults();
     EditorGUILayout.Space();
@@ -97,37 +94,6 @@ public class CharacterControllerBuilderEditor : UnityEditor.Editor {
         setFunc(relativeField, newValue);
       }
     }
-  }
-
-  void UpdateAnimatorController(SerializedProperty prefabProperty) {
-    var directory = Path.GetDirectoryName(AssetDatabase.GetAssetPath(target));
-    var builder = target as CharacterControllerBuilder;
-    var prefab = prefabProperty.objectReferenceValue as GameObject;
-    var director = prefab == null ? null : prefab.GetComponentInChildren<PlayableDirector>();
-    var animator = prefab == null ? null : prefab.GetComponentInChildren<Animator>();
-    var animatorGo = animator == null ? null : animator.gameObject;
-    foreach (var state in builder.Builder.States) {
-      TimelineAsset timeline = state.Data.Timeline;
-      if (state.Data.Timeline == null) {
-        timeline = ScriptableObject.CreateInstance<TimelineAsset>();
-        AssetDatabase.CreateAsset(timeline, Path.Combine(directory, builder.name + "_" + state.Name + ".playable"));
-        state.Data.Timeline = timeline;
-      }
-      var baseAnimationTrack = GetOrCreateAnimationTrack($"base_animation_{state.Name}", timeline);
-      var hitboxAnimationTrack = GetOrCreateAnimationTrack($"hitbox_animation_{state.Name}", timeline);
-
-      if (director != null && animator != null) {
-        director.SetGenericBinding(baseAnimationTrack, animatorGo);
-        director.SetGenericBinding(hitboxAnimationTrack, animatorGo);
-      }
-
-      EditorUtility.SetDirty(timeline);
-      EditorUtility.SetDirty(baseAnimationTrack);
-      EditorUtility.SetDirty(hitboxAnimationTrack);
-    }
-    EditorUtility.SetDirty(prefab);
-    EditorUtility.SetDirty(target);
-    AssetDatabase.SaveAssets();
   }
 
 }
