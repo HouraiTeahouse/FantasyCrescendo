@@ -3,13 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using Random = UnityEngine.Random;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 [CreateAssetMenu]
 public class SoundEffect : ScriptableObject {
 
-  public AudioClip Clip;
+  public enum ClipSelectionMethod {
+    Random, Cycle
+  }
+
+  public AudioClip[] Clips;
+  public ClipSelectionMethod SelectionMethod;
   public AudioMixerGroup Output;
   [Range(0, 256)] public int Priority = 128;
   [Range(0, 1)] public float Volume = 1f;
@@ -20,7 +26,7 @@ public class SoundEffect : ScriptableObject {
     if (audioSource == null) {
       throw new ArgumentNullException(nameof(audioSource));
     }
-    audioSource.clip = Clip;
+    audioSource.clip = SelectAudioClip();
     audioSource.priority = Priority;
     audioSource.volume = Volume;
     audioSource.outputAudioMixerGroup = Output;
@@ -41,6 +47,13 @@ public class SoundEffect : ScriptableObject {
   }
 
   public void Play(Transform transform) => Play(transform.position);
+
+  AudioClip SelectAudioClip() {
+    switch (SelectionMethod) {
+      case ClipSelectionMethod.Random: return Clips[Mathf.FloorToInt(Random.value * Clips.Length)];
+      default: return Clips[0];
+    }
+  }
 
 }
 

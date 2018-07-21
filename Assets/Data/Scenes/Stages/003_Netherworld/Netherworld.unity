@@ -6431,10 +6431,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1996456345168662, guid: bf625dd01f80d7b41a53783c50b4317d, type: 2}
-      propertyPath: m_Name
-      value: Game Controller
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf625dd01f80d7b41a53783c50b4317d, type: 2}
   m_IsPrefabAsset: 0
@@ -71950,6 +71946,11 @@ Prefab:
         type: 2}
       propertyPath: Config.PlayerConfigs.Array.data[3].Selection.Pallete
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114727785565368142, guid: 9e2ceb2d0c8a9504a943fa50028134a9,
+        type: 2}
+      propertyPath: Config.PlayerConfigs.Array.data[0].Selection.CharacterID
+      value: 3660741799
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e2ceb2d0c8a9504a943fa50028134a9, type: 2}

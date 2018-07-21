@@ -63,16 +63,31 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
   public void ResetState(ref PlayerState state) {}
 
   void SetupBindings() {
-    var animator = GetComponentInChildren<Animator>();
-    if (animator == null) return;
-    var animGameObject = animator.gameObject;
+    SetupBindings<Animator, AnimationTrack>(GetComponentInChildren<Animator>());
+    SetupBindings<AudioSource, AudioTrack>(GetAudioSource());
+  }
+
+  void SetupBindings<TComponent, TTrack>(TComponent component) 
+      where TComponent : Component 
+      where TTrack : UnityEngine.Object {
+    if (component == null) return;
     foreach (var state in StateMachine.StateController.States) {
       TimelineAsset timeline = state.Data.Timeline;
       if (timeline == null) continue;
-      foreach (var track in timeline.GetOutputTracks().OfType<AnimationTrack>()) {
-        Director.SetGenericBinding(track, animator.gameObject);
+      foreach (var track in timeline.GetOutputTracks().OfType<TTrack>()) {
+        Director.SetGenericBinding(track, component.gameObject);
       }
     }
+  }
+
+  AudioSource GetAudioSource() {
+    var source = GetComponentInChildren<AudioSource>();
+    if (source == null) { 
+      source = new GameObject(gameObject.name + "_Audio").AddComponent<AudioSource>();
+      source.transform.parent = transform;
+      source.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+    }
+    return source;
   }
 
 }
