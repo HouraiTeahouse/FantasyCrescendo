@@ -142,10 +142,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraTarget: {fileID: 350548761}
-  CameraSpeed: 1
+  SmoothTime: 0.5
   FoVRange: {x: 30, y: 90}
-  Padding: {x: 0, y: 0}
+  WidthPadding: 5
   TargetPositionBias: {x: 0, y: 1.5, z: 0}
+  MaxSpreadDistance: 50
   Targets: []
 --- !u!114 &350548761
 MonoBehaviour:
@@ -291,7 +292,7 @@ Prefab:
         type: 2}
       propertyPath: Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 350548761}
     - target: {fileID: 114872650196101328, guid: 7a5f56393098bdf429da82c1cc54b467,
         type: 2}
       propertyPath: MatchManager
