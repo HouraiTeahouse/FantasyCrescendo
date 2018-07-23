@@ -11,7 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8eb6be7816504428a70e46d5cf80f6, type: 3}
   m_Name: Grass_Impact
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: d98f51f6f9e094c428936dc058c2b713, type: 3}
+  Clips:
+  - {fileID: 8300000, guid: d98f51f6f9e094c428936dc058c2b713, type: 3}
+  SelectionMethod: 0
   Output: {fileID: 24300002, guid: f638e977ac876e647a1faa7d5a354751, type: 2}
   Priority: 128
   Volume: 1

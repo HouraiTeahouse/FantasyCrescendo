@@ -42,7 +42,6 @@ public class CharacterControllerBuilderEditor : UnityEditor.Editor {
     var prefabProperty = serializedObject.FindProperty("_prefab");
     EditorGUILayout.PropertyField(prefabProperty);
     filter = EditorGUILayout.TextField("Filter", filter);
-    var text = prefabProperty.objectReferenceValue != null ? "Update Animator Controller" : "Create Animation Controller";
     EditorGUILayout.Space();
     HandleDefaults();
     EditorGUILayout.Space();

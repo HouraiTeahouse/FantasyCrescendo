@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8eb6be7816504428a70e46d5cf80f6, type: 3}
   m_Name: Hit_Punch_1
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: 3f5aece27d92d7345b1f75dc72fc1e4e, type: 3}
+  Clips: []
+  SelectionMethod: 0
   Output: {fileID: 24300002, guid: f638e977ac876e647a1faa7d5a354751, type: 2}
   Priority: 128
   Volume: 1

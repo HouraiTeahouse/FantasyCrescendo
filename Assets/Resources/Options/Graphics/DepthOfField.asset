@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d103a1f1de483944c800d246f074e1c9, type: 3}
+  m_Name: DepthOfField
+  m_EditorClassIdentifier: 
+  Path: graphics/dof
+  Type: 2
+  MinValue: 0
+  MaxValue: 1
+  DefaultValue: 1
+  Category: Graphics
+  DisplayName: Depth of Field
+  SortOrder: 1
+  IsDebug: 0
+  EnumType: UnityEngine.Rendering.PostProcessing.PostProcessLayer+Antialiasing, com.unity.postprocessing.Runtime
+  EnumOptions:
+  - Value: 0
+    DisplayName: None
+  - Value: 1
+    DisplayName: FXAA
+  - Value: 2
+    DisplayName: SMAA
+  - Value: 3
+    DisplayName: TAA
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null

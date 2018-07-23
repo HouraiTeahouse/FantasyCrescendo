@@ -11,7 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8eb6be7816504428a70e46d5cf80f6, type: 3}
   m_Name: Plastic_Step_1
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: 6f06f0c152ed3c949b51f2681352b070, type: 3}
+  Clips:
+  - {fileID: 8300000, guid: 6f06f0c152ed3c949b51f2681352b070, type: 3}
+  - {fileID: 8300000, guid: 1d26544373153434eb9c9fc9c914e13e, type: 3}
+  - {fileID: 8300000, guid: f267e8834f88e2e4fac8d56c2e31ab1c, type: 3}
+  SelectionMethod: 1
   Output: {fileID: 24300002, guid: f638e977ac876e647a1faa7d5a354751, type: 2}
   Priority: 128
   Volume: 1

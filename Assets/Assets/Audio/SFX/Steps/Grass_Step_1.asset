@@ -11,7 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8eb6be7816504428a70e46d5cf80f6, type: 3}
   m_Name: Grass_Step_1
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: 4c96169378062534f8d2302827ad555c, type: 3}
+  Clips:
+  - {fileID: 8300000, guid: 4c96169378062534f8d2302827ad555c, type: 3}
+  - {fileID: 8300000, guid: 9358d4f4565369e4e8747a9b2ca0ea18, type: 3}
+  - {fileID: 8300000, guid: 63220a0aeec26e0439227ea454d757c7, type: 3}
+  SelectionMethod: 1
   Output: {fileID: 24300002, guid: f638e977ac876e647a1faa7d5a354751, type: 2}
   Priority: 128
   Volume: 1
