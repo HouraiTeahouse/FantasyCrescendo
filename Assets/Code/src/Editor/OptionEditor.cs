@@ -79,6 +79,16 @@ public class OptionEditor : Editor {
       return;
     }
     EnumField(kDefaultValueField, enumType);
+    var values = Enum.GetValues(enumType);
+    float min = float.MaxValue;
+    float max = float.MinValue;
+    for (var i = 0; i < values.Length; i++) {
+      int intValue = Convert.ToInt32(values.GetValue(i));
+      min = Mathf.Min(min, intValue);
+      max = Mathf.Max(max, intValue);
+    }
+    SetProperty(kMinValueField, min);
+    SetProperty(kMaxValueField, max);
     EnumDisplayValues(enumType);
   }
 

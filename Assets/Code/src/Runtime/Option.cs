@@ -61,6 +61,7 @@ public class Option : ScriptableObject {
   }
 
   public void Set<T>(T input, bool save = true) {
+    Debug.LogWarning(input);
     switch (Type) {
       case OptionType.Float: 
         CurrentRawValue = Cast<float>(input);
@@ -82,7 +83,7 @@ public class Option : ScriptableObject {
   }
 
   public void Save() {
-    if (CurrentRawValue == null) {
+    if (!IsLoaded) {
       LoadValue();
     }
     OptionsStorage.SaveOption(Path, CurrentRawValue.Value);
@@ -91,14 +92,14 @@ public class Option : ScriptableObject {
   T Cast<T>(object source) => (T)Convert.ChangeType(source, typeof(T));
 
   float? GetRawValue() {
-    if (CurrentRawValue == null)  {
+    if (!IsLoaded)  {
       CurrentRawValue = LoadValue();
     }
     return CurrentRawValue.Value;
   }
 
   void EnforceMinMax() {
-    if (CurrentRawValue == null) return;
+    if (!IsLoaded) return;
     CurrentRawValue = Mathf.Clamp(CurrentRawValue.Value, MinValue, MaxValue);
   }
 

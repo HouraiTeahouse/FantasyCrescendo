@@ -30,6 +30,8 @@ public class OptionsUIBuilder : MonoBehaviour {
 
   public string GroupInjectionPoint;
 
+  public bool AutoSave;
+
   public OptionMenuElement[] AdditionalObjects;
 
   [Serializable]
@@ -77,6 +79,7 @@ public class OptionsUIBuilder : MonoBehaviour {
     var label = CreateLabel(option.GetDisplayName());
     // Create Control
     var control = Instantiate(controlPrefab).GetComponent<RectTransform>();
+    SetUpControl(option, control.gameObject);
     LayoutLabelAndControl(element.Object, label, control);
     return element;
   }
@@ -147,6 +150,54 @@ public class OptionsUIBuilder : MonoBehaviour {
       option.Object.SetParent(injectionPoint, false);
     }
     return container;
+  }
+
+  void SetUpControl(Option option, GameObject control) {
+    if (option == null) return;
+    switch (option.Type) {
+      case OptionType.Integer: 
+      case OptionType.Float:
+        SetUpSlider(option, control);
+        break;
+      case OptionType.Boolean:
+        SetUpToggle(option, control);
+        break; 
+      case OptionType.Enum:
+        SetUpDropdown(option, control);
+        break;
+      default:
+        return;
+    }
+  }
+
+  void SetUpSlider(Option option, GameObject control) {
+    var slider = control.GetComponentInChildren<Slider>();
+    slider.maxValue = option.MaxValue;
+    slider.minValue = option.MinValue;
+    slider.wholeNumbers = option.Type == OptionType.Integer;
+    if (slider.wholeNumbers) {
+      slider.value = option.Get<int>();
+      slider.onValueChanged.AddListener(value => option.Set<int>((int)value, AutoSave));
+    } else {
+      slider.value = option.Get<float>();
+      slider.onValueChanged.AddListener(value => option.Set<float>(value, AutoSave));
+    }
+  }
+
+  void SetUpToggle(Option option, GameObject control) {
+    var toggle = control.GetComponentInChildren<Toggle>();
+    toggle.isOn = option.Get<bool>();
+    toggle.onValueChanged.AddListener(value => option.Set<bool>(value, AutoSave));
+  }
+
+  void SetUpDropdown(Option option, GameObject control) {
+    var dropdown = control.GetComponentInChildren<TMP_Dropdown>();
+    var currentValue = option.Get<int>();
+    var options = option.EnumOptions.ToList();
+    dropdown.ClearOptions();
+    dropdown.AddOptions(options.Select(opt => new TMP_Dropdown.OptionData(opt.DisplayName)).ToList());
+    dropdown.value = options.FindIndex(opt => opt.Value == currentValue);
+    dropdown.onValueChanged.AddListener(index => option.Set<int>(options[index].Value, AutoSave));
   }
 
   GameObject GetPrefab(Option option) {
