@@ -47,37 +47,40 @@ public class Option : ScriptableObject {
 
   public T Get<T>() {
     var rawValue = GetRawValue();
-    switch (Type) {
-      case OptionType.Float: 
-        return Cast<T>(rawValue);
-      case OptionType.Integer: 
-        return Cast<T>((int)rawValue);
-      case OptionType.Enum:
-        return (T)Enum.Parse(typeof(T), ((int)rawValue).ToString());
-      case OptionType.Boolean:
-        return Cast<T>(rawValue != 0);
-      default:
-        throw new InvalidOperationException($"Cannot laod option with undefined type: {(int)Type}");
+    var readType = typeof(T);
+
+    if (readType == typeof(float)) {
+      return Cast<T>(rawValue);;
+    } else if (readType == typeof(int)) {
+      return Cast<T>((int)rawValue);
+    } else if (readType == typeof(bool)) {
+      return Cast<T>(rawValue != 0);
+    } else if (readType.IsEnum) {
+      return (T)Enum.Parse(typeof(T), ((int)rawValue).ToString());
+    } else {
+      throw new InvalidOperationException($"Cannot laod option with unsupported type: {readType}");
     }
   }
 
   public void Set<T>(T input, bool save = true) {
     Debug.LogWarning(input);
-    switch (Type) {
-      case OptionType.Float: 
-        CurrentRawValue = Cast<float>(input);
-        break;
-      case OptionType.Integer: 
-      case OptionType.Enum:
-        CurrentRawValue = (float)Cast<int>(input);
-        break;
-      case OptionType.Boolean:
-        CurrentRawValue = Cast<bool>(input) ? 1.0f : 0.0f;
-        break;
-      default:
-        throw new InvalidOperationException($"Cannot set option with undefined type: {(int)Type}");
+    var oldValue = CurrentRawValue;
+    var writeType = typeof(T);
+    if (writeType == typeof(float)) {
+      CurrentRawValue = Cast<float>(input);
+    } else if (writeType == typeof(int)) {
+      CurrentRawValue = (float)Cast<int>(input);
+    } else if (writeType == typeof(bool)) {
+      CurrentRawValue = Cast<bool>(input) ? 1.0f : 0.0f;
+    } else if (writeType.IsEnum) {
+      CurrentRawValue = (float)Cast<int>(input);
+    } else {
+      throw new InvalidOperationException($"Cannot save option with unsupported type: {writeType}");
     }
     EnforceMinMax();
+    if (oldValue != null && CurrentRawValue != oldValue) {
+      OnValueChanged.Invoke();
+    }
     if (save) {
       Save();
     }

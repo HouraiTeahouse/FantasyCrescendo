@@ -34,6 +34,8 @@ public class OptionsUIBuilder : MonoBehaviour {
 
   public OptionMenuElement[] AdditionalObjects;
 
+  List<GameObject> TabDisplays;
+
   [Serializable]
   public struct OptionMenuElement {
     public string Category;
@@ -46,6 +48,7 @@ public class OptionsUIBuilder : MonoBehaviour {
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   void Awake() {
+    TabDisplays = new List<GameObject>();
     if (LoadFromResources) {
       LoadOptionsFromResources();
     }
@@ -54,6 +57,7 @@ public class OptionsUIBuilder : MonoBehaviour {
     }
     WarnDuplicates();
     BuildUI();
+    SetActiveTab(0);
   }
 
   void BuildUI() {
@@ -218,8 +222,15 @@ public class OptionsUIBuilder : MonoBehaviour {
   void AddTab(string tabName, RectTransform groupContainer) {
     var root = Instantiate(TabPrefab);
     var instance = root.GetComponentInChildren<TextMeshProUGUI>();
+    var button =  root.GetComponentInChildren<Button>();
     instance.text = tabName;
     root.SetParent(TabContainer, false);
+    if (button != null) {
+      var id = TabDisplays.Count;
+      Debug.LogError(id);
+      button.onClick.AddListener(() => SetActiveTab(id));
+    }
+    TabDisplays.Add(groupContainer.gameObject);
   }
 
   void LoadOptionsFromResources() {
@@ -238,6 +249,13 @@ public class OptionsUIBuilder : MonoBehaviour {
       } else {
         set.Add(option.Path);
       }
+    }
+  }
+
+  void SetActiveTab(int tabIndex) {
+    Debug.LogWarning(tabIndex);
+    for (var i = 0; i < TabDisplays.Count; i++) {
+      TabDisplays[i].SetActive(i == tabIndex);
     }
   }
 

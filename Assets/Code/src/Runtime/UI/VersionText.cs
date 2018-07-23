@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public class VersionText : MonoBehaviour {
 
-  public Text Text;
+  public TMP_Text Text;
   public string Format;
 
   /// <summary>

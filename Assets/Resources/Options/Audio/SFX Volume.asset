@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d103a1f1de483944c800d246f074e1c9, type: 3}
-  m_Name: Fullscreen
+  m_Name: SFX Volume
   m_EditorClassIdentifier: 
-  Path: graphics/fullscreen
-  Type: 2
-  MinValue: 0
-  MaxValue: 1
-  DefaultValue: 1
+  Path: audio/sfx_volume
+  Type: 1
+  MinValue: -80
+  MaxValue: 20
+  DefaultValue: 0
   Category: Audio
-  DisplayName: Fullscreen
-  SortOrder: 0
+  DisplayName: SFX Volume
+  SortOrder: -31998
   IsDebug: 0
   EnumType: UnityEngine.Rendering.PostProcessing.PostProcessLayer+Antialiasing, com.unity.postprocessing.Runtime
   EnumOptions:

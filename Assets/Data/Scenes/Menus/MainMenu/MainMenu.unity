@@ -8534,7 +8534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.69803923}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -10118,7 +10118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.69803923}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -10406,17 +10406,6 @@ Prefab:
     - target: {fileID: 4689883820397484, guid: 7aa58a9b833787746b1e477f9394cf1a, type: 2}
       propertyPath: m_RootOrder
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114743560758432366, guid: 7aa58a9b833787746b1e477f9394cf1a,
-        type: 2}
-      propertyPath: Scene
-      value: 
-      objectReference: {fileID: 11400000, guid: 31aebd4c2791e654bb7624d8640f92ce,
-        type: 2}
-    - target: {fileID: 114743560758432366, guid: 7aa58a9b833787746b1e477f9394cf1a,
-        type: 2}
-      propertyPath: PlayOnAwake
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7aa58a9b833787746b1e477f9394cf1a, type: 2}
@@ -13848,8 +13837,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1702412895583098, guid: bf625dd01f80d7b41a53783c50b4317d, type: 2}
-      propertyPath: m_IsActive
+    - target: {fileID: 114155364561766628, guid: bf625dd01f80d7b41a53783c50b4317d,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114155364561766628, guid: bf625dd01f80d7b41a53783c50b4317d,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
