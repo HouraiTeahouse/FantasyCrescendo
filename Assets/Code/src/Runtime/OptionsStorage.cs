@@ -12,11 +12,18 @@ public interface IOptionsStorage {
 
 public class PlayerPrefsOptionsStorage : IOptionsStorage {
   public bool IsOptionSet(string path) => PlayerPrefs.HasKey(path);
+
   public void SaveOption(string path, float value) {
-    Debug.LogWarning($"Saved: {value}");
+    Debug.Log($"Saved Option \"{path}\": {value}");
     PlayerPrefs.SetFloat(path, value);
   }
-  public float GetOption(string path) => PlayerPrefs.GetFloat(path);
+
+  public float GetOption(string path) {
+    var value = PlayerPrefs.GetFloat(path);
+    Debug.Log($"Loaded Option \"{path}\": {value}");
+    return value;
+  }
+
 }
 
 }

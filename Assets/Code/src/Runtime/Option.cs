@@ -51,8 +51,9 @@ public class Option : ScriptableObject {
       case OptionType.Float: 
         return Cast<T>(rawValue);
       case OptionType.Integer: 
-      case OptionType.Enum:
         return Cast<T>((int)rawValue);
+      case OptionType.Enum:
+        return (T)Enum.Parse(typeof(T), ((int)rawValue).ToString());
       case OptionType.Boolean:
         return Cast<T>(rawValue != 0);
       default:
