@@ -34,6 +34,12 @@
         "files": [
           "images/**"
         ]
+      },
+      {
+        "files": [
+          "../Assets/Assets/Sprites/logo.png"
+        ],
+        "dst": "images"
       }
     ],
     "overwrite": [
@@ -48,7 +54,16 @@
       }
     ],
     "dest": "_site",
-    "globalMetadataFiles": [],
+    "globalMetadata": {
+      "_appTitle": "Fantasy Crescendo",
+      "_appLogoPath": "images/logo.png",
+      "_appFaviconPath": "images/logo.png",
+      "_enableSearch": true,
+      "_gitContribute": {
+        "repo": "https://github.com/HouraiTeahouse/FantasyCrescendo",
+        "branch": "develop"
+      }
+    },
     "fileMetadataFiles": [],
     "template": [
       "default"

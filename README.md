@@ -59,14 +59,10 @@ Non-code assets like BGM or 3D models are best sent through and collaborated
 on in our development Discord server, linked above. For more information, 
 please read [CONTRIBUTING.md](./.github/CONTRIBUTING.md).
 
-### Setup
-This project uses git submodules extensively to manage remote dependencies 
-(due to a general lack of a user-facing package manager for Unity3D).To 
-properly clone the entire project use `git clone --recursive ...` to check 
-out all submodules and dependencies. If using an older version of git or to
-check out and initialize in a normally cloned repo, use the following command:
-`git submodule update --init --recursive`. This command is also used to update
-submodules that may have been updated by remote changes.
+For documentation while contributing, including how to set up the project, refer
+to the [project documentation site](https://docs.houraiteahouse.net/FantasyCrescendo/), 
+which has detailed guides on how to [set up the project])(https://docs.houraiteahouse.net/FantasyCrescendo/guides/project-setup),
+as well as the [API reference](https://docs.houraiteahouse.net/FantasyCrescendo/api/index.html).
 
 ### License
 First and foremost, *Fantasy Crescendo ~ Rumble Dream Ensemble* is a derivative
