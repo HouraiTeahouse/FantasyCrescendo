@@ -227,7 +227,6 @@ public class OptionsUIBuilder : MonoBehaviour {
     root.SetParent(TabContainer, false);
     if (button != null) {
       var id = TabDisplays.Count;
-      Debug.LogError(id);
       button.onClick.AddListener(() => SetActiveTab(id));
     }
     TabDisplays.Add(groupContainer.gameObject);
@@ -253,7 +252,6 @@ public class OptionsUIBuilder : MonoBehaviour {
   }
 
   void SetActiveTab(int tabIndex) {
-    Debug.LogWarning(tabIndex);
     for (var i = 0; i < TabDisplays.Count; i++) {
       TabDisplays[i].SetActive(i == tabIndex);
     }
