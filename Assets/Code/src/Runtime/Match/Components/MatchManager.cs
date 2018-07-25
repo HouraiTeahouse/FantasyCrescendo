@@ -49,6 +49,10 @@ public class MatchManager : MonoBehaviour {
       throw new InvalidOperationException("Cannot run match without a match controller");
     }
     Debug.Log("Running match...");
+
+    // Start countdown, when finished, continue
+
+    // Starts match, delay this then
     MatchTask = new TaskCompletionSource<MatchResult>();
     Mediator.Global.Publish(new MatchStartEvent {
       MatchConfig = Config,
