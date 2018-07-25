@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 114147230044848370}
   - component: {fileID: 114173882155944486}
   - component: {fileID: 114432504162126714}
+  - component: {fileID: 114128713614494998}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: GameController
@@ -155,6 +156,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114128713614494998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996456345168662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9f7b38065c346429ced73289d35dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  QualityLevelOption: {fileID: 11400000, guid: 34ef9c18baafd6543b081d83b4d47fde, type: 2}
+  TextureQualityOption: {fileID: 11400000, guid: 40ca63c76a99a8843aafa19ed818e396,
+    type: 2}
+  _bypassTextureQuality: 0
 --- !u!114 &114147230044848370
 MonoBehaviour:
   m_ObjectHideFlags: 1
