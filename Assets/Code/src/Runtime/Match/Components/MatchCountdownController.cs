@@ -20,31 +20,25 @@ public class MatchCountdownController : MonoBehaviour
         Mediator.Global.CreateUnityContext(this).Subscribe<MatchStartCountdownEvent>(StartCooldown);
     }
 
-    void StartCooldown(MatchStartCountdownEvent evt)
+    async Task StartCooldown(MatchStartCountdownEvent evt)
     {
-        // TODO: Change const 3 to a value that could changed by matchConfig
-        StartCoroutine(CooldownCoroutine(3));
-    }
-
-    IEnumerator CooldownCoroutine(int timer)
-    {
-        // Iterate numbers
+        // TODO: Make timer value based on evt
+        var timer = 3;
         while (timer > 0)
         {
-            UpdateTextUI(timer.ToString());
-            yield return new WaitForSeconds(1);
+            await UpdateTextUI(timer.ToString(), 1);
             timer--;
         }
-        // TODO: Add control enabler
         // TODO: Make GO! string into localization string 
-        UpdateTextUI("GO!");
-        yield return new WaitForSeconds(GoDuration);
-        gameObject.SetActive(false);
+        UpdateTextUI("GO!", GoDuration, true);
     }
 
-    void UpdateTextUI(string _text)
+    async Task UpdateTextUI(string _text, float timer, bool autoDisappear=false)
     {
         TextUI.text = _text;
+        await Task.Delay((int)(timer * 1000));
+        if (autoDisappear)
+            gameObject.SetActive(false);
     }
 }
 

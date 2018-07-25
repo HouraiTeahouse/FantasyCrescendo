@@ -15,6 +15,7 @@ public class MatchManager : MonoBehaviour {
 
   public bool IsLocal => Config.IsLocal;
   public bool IsPaused { get; private set; }
+  public bool isControllerLocked { get; private set; }
 
   TaskCompletionSource<MatchResult> MatchTask;
 
@@ -48,16 +49,23 @@ public class MatchManager : MonoBehaviour {
     if (MatchController == null) {
       throw new InvalidOperationException("Cannot run match without a match controller");
     }
+
+    Debug.Log("Starting cooldown...");
+    isControllerLocked = true;
+    await Mediator.Global.PublishAsync(new MatchStartCountdownEvent
+    {
+        MatchConfig = Config,
+        MatchState = MatchController.CurrentState
+    });
+    isControllerLocked = false;
+
     Debug.Log("Running match...");
-
-    // Start countdown, when finished, continue
-
-    // Starts match, delay this then
     MatchTask = new TaskCompletionSource<MatchResult>();
     Mediator.Global.Publish(new MatchStartEvent {
       MatchConfig = Config,
       MatchState = MatchController.CurrentState
     });
+
     // TODO(james7132): Properly evaluate the match result here.
     var result = await MatchTask.Task;
     await Mediator.Global.PublishAsync(new MatchEndEvent {

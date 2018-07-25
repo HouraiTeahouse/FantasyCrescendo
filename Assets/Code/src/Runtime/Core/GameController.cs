@@ -19,10 +19,12 @@ public class MatchController : IMatchController {
     inputContext = new MatchInputContext(new MatchInput(config));
   }
 
-  public virtual void Update() {
-    var input = InputSource.SampleInput();
-    Assert.IsTrue(input.IsValid);
-    inputContext.Update(input);
+public virtual void Update() {
+    if (!MatchManager.Instance.isControllerLocked){
+        var input = InputSource.SampleInput();
+        Assert.IsTrue(input.IsValid);
+        inputContext.Update(input);
+    }
 
     var state = CurrentState;
     Simulation.Simulate(ref state, inputContext);
