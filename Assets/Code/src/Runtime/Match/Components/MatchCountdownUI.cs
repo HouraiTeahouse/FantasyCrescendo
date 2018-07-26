@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
 
@@ -15,32 +12,29 @@ public class MatchCountdownUI : MonoBehaviour
     // In other words, you can still access it, but it won't be in the autocomplete list
     // If variables are null, look for them
     [Header("Component References")]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public TextMeshProUGUI _TextUI;
+    [SerializeField] private TextMeshProUGUI _textUI;
     public TextMeshProUGUI TextUI {
         get {
-            if (!_TextUI)
-                _TextUI = GetComponentInChildren<TextMeshProUGUI>();
-            return _TextUI;
+            if (_textUI == null)
+                _textUI = GetComponentInChildren<TextMeshProUGUI>();
+            return _textUI;
             }
         }
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public AudioSource _AudioPlayer;
+    [SerializeField] private AudioSource _audioPlayer;
     public AudioSource AudioPlayer
     {
         get
         {
-            if (!_AudioPlayer)
-                _AudioPlayer = GetComponentInChildren<AudioSource>();
-            return _AudioPlayer;
+            if (_audioPlayer == null)
+                _audioPlayer = GetComponentInChildren<AudioSource>();
+            return _audioPlayer;
         }
     }
 
     [Header("Timings")]
     public float InitialDelay = 1f;
-    public float GoDuration = 1.25f;
 
-    [Header("Countdown Clips (0 = 'GO', 1-10 = Time)")]
+    [Header("Countdown Clips (0 = 'GO', 1-3 = Time)")]
     public AudioClip[] CountdownClips;
 
     [Header("Debug")]
@@ -55,15 +49,16 @@ public class MatchCountdownUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts countdown UI. Counts from given starting number to 1 to GO!
-    /// Returns when GO! is reached, but GO! will continue to be displayed for a short duration
+    /// Starts countdown UI. Based on Stage GUI's CountdownClips array.
+    /// Each Countdown Audio Clip's length influences how long the text is displayed
+    /// Returns when GO! is reached, but GO! will continue to be displayed for its duration
     /// </summary>
     /// <param name="evt"></param>
     /// <returns></returns>
     async Task StartCountdown(MatchStartCountdownEvent evt)
     {
         // For Debug purposes
-        if (DisableCountdown) return;
+        if (DisableCountdown && Debug.isDebugBuild) return;
 
         // Wait for initial delay
         await Task.Delay((int)(InitialDelay * 1000));
@@ -71,15 +66,14 @@ public class MatchCountdownUI : MonoBehaviour
         // Enable Text GUI in case
         ObjectUtil.SetActive(TextUI.gameObject, true);
 
-        // TODO: Make timer value based on evt
-        var timer = 3;
+        var timer = CountdownClips.Length - 1;
         while (timer > 0)
         {
-            await UpdateTextUI(timer.ToString(), CountdownClips[timer], 1);
+            await UpdateTextUI(timer.ToString(), CountdownClips[timer]);
             timer--;
         }
         // TODO: Make GO! string into localization string 
-        UpdateTextUI("GO!", CountdownClips[0], GoDuration, true);
+        UpdateTextUI("GO!", CountdownClips[0], true);
     }
 
     /// <summary>
@@ -90,7 +84,7 @@ public class MatchCountdownUI : MonoBehaviour
     /// <param name="timer"></param>
     /// <param name="autoDisappear"></param>
     /// <returns></returns>
-    async Task UpdateTextUI(string text, AudioClip audio, float timer, bool autoDisappear=false)
+    async Task UpdateTextUI(string text, AudioClip audio, bool autoDisappear=false)
     {
         // Update Text and play Audio
         TextUI.text = text;
@@ -98,7 +92,7 @@ public class MatchCountdownUI : MonoBehaviour
         AudioPlayer.Play();
 
         // Wait and maybe disable UI afterwards
-        await Task.Delay((int)(timer * 1000));
+        await Task.Delay((int)(audio.length * 1000));
         if (autoDisappear)
             ObjectUtil.SetActive(TextUI.gameObject, false);
     }

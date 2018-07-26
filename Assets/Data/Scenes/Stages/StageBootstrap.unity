@@ -605,21 +605,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24719b722b21d6a4f8e7d49b203aa6c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _TextUI: {fileID: 749607224}
-  _AudioPlayer: {fileID: 817061433}
+  _textUI: {fileID: 749607224}
+  _audioPlayer: {fileID: 817061433}
   InitialDelay: 1.5
-  GoDuration: 1.25
   CountdownClips:
   - {fileID: 8300000, guid: d98f51f6f9e094c428936dc058c2b713, type: 3}
   - {fileID: 8300000, guid: 4c96169378062534f8d2302827ad555c, type: 3}
   - {fileID: 8300000, guid: 9358d4f4565369e4e8747a9b2ca0ea18, type: 3}
   - {fileID: 8300000, guid: 63220a0aeec26e0439227ea454d757c7, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   DisableCountdown: 0
 --- !u!82 &817061433
 AudioSource:
