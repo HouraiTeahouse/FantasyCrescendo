@@ -293,15 +293,6 @@ Prefab:
       propertyPath: Target
       value: 
       objectReference: {fileID: 350548761}
-    - target: {fileID: 114872650196101328, guid: 7a5f56393098bdf429da82c1cc54b467,
-        type: 2}
-      propertyPath: MatchManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1858135900578872, guid: 7a5f56393098bdf429da82c1cc54b467, type: 2}
-      propertyPath: m_Name
-      value: Main Camera
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a5f56393098bdf429da82c1cc54b467, type: 2}
   m_IsPrefabAsset: 0
