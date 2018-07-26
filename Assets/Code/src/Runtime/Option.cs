@@ -17,9 +17,9 @@ public struct EnumOption {
 [CreateAssetMenu]
 public class Option : ScriptableObject {
 
-  static IOptionsStorage OptionsStorage;
+  public static IOptionsStorage Storage;
   static Option() {
-    OptionsStorage = new PlayerPrefsOptionsStorage();
+    Storage = new PlayerPrefsOptionsStorage();
   }
 
   public string Path;
@@ -63,7 +63,6 @@ public class Option : ScriptableObject {
   }
 
   public void Set<T>(T input, bool save = true) {
-    Debug.LogWarning(input);
     var oldValue = CurrentRawValue;
     var writeType = typeof(T);
     if (writeType == typeof(float)) {
@@ -90,7 +89,7 @@ public class Option : ScriptableObject {
     if (!IsLoaded) {
       LoadValue();
     }
-    OptionsStorage.SaveOption(Path, CurrentRawValue.Value);
+    Storage.SaveOption(Path, CurrentRawValue.Value);
   }
 
   T Cast<T>(object source) => (T)Convert.ChangeType(source, typeof(T));
@@ -108,11 +107,11 @@ public class Option : ScriptableObject {
   }
 
   float LoadValue() {
-    if (!OptionsStorage.IsOptionSet(Path)) {
-      OptionsStorage.SaveOption(Path, DefaultValue);
+    if (!Storage.IsOptionSet(Path)) {
+      Storage.SaveOption(Path, DefaultValue);
       return DefaultValue;
     }
-    return OptionsStorage.GetOption(Path);
+    return Storage.GetOption(Path);
   }
 
 }

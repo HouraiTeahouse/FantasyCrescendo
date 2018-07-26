@@ -60,6 +60,11 @@ public class OptionsUIBuilder : MonoBehaviour {
     SetActiveTab(0);
   }
 
+  /// <summary>
+  /// This function is called when the MonoBehaviour will be destroyed.
+  /// </summary>
+  void OnDestroy() => Option.Storage?.SaveChanges();
+
   void BuildUI() {
     var optionElements = Options.Select<Option, OptionMenuElement>(CreateElement);
     var additionalElements = AdditionalObjects.Select<OptionMenuElement, OptionMenuElement>(CreateElement);
