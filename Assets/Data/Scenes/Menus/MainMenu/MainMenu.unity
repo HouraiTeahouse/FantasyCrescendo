@@ -433,7 +433,11 @@ MonoBehaviour:
     type: 2}
   GroupInjectionPoint: Content
   AutoSave: 1
-  AdditionalObjects: []
+  AdditionalObjects:
+  - Category: Other
+    Label: Data Privacy
+    SortPriority: 2147483647
+    Object: {fileID: 224341478698991096, guid: 61cc6c9436ff4ab4d90728c5ad8d500d, type: 2}
 --- !u!1 &97324166
 GameObject:
   m_ObjectHideFlags: 0

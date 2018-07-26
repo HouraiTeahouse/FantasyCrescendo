@@ -4,7 +4,7 @@ Before attempting to make any contributions or work with the game at all, we sug
 ## Installing Tools
 Fantasy Crescendo is a video game, pulling together multiple creative and technical disciplines. We use a variety of tools to finish the necessary tasks.
 
-### For Game Desginers/Programmers
+### For Game Designers/Programmers
 Fantasy Creacendo is developed with the Unity3D engine. If you plan on directly changing game assets or code, you will need Unity 2018.2. It's suggested to use the [Unity Hub](https://forum.unity.com/threads/unity-hub-preview-0-18-1-is-now-available.539353/) to manage and install Unity.
 
 To also get the project files and push changes, you will also need a **Git client**. There's multiple choices for this: [git bash](https://git-scm.com/) (Command-line), [SourceTree](https://www.sourcetreeapp.com/) (GUI), [GitHub Desktop](https://desktop.github.com/) (GUI). Any git client works, choose one that you feel you work with best.

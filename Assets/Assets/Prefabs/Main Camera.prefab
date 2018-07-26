@@ -164,7 +164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PostProcessLayer: {fileID: 114890186897579434}
+  GlobalVolume: {fileID: 114032290879023464}
   Antialiasing: {fileID: 11400000, guid: b3f51d965812f2a49a7217bdafe10e3f, type: 2}
+  BloomOption: {fileID: 11400000, guid: 19d0cb557088a104789b8dccbb50fec8, type: 2}
+  DepthOfFieldOption: {fileID: 11400000, guid: ea0566618797209419a0db18b8fd56f7, type: 2}
 --- !u!114 &114872650196101328
 MonoBehaviour:
   m_ObjectHideFlags: 1

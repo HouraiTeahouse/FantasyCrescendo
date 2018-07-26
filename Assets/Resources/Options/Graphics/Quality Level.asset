@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d103a1f1de483944c800d246f074e1c9, type: 3}
+  m_Name: Quality Level
+  m_EditorClassIdentifier: 
+  Path: graphics/quality_level
+  Type: 3
+  MinValue: 0
+  MaxValue: 5
+  DefaultValue: 2
+  Category: Graphics
+  DisplayName: Quality Level
+  SortOrder: -100
+  IsDebug: 0
+  EnumType: 
+  EnumOptions:
+  - Value: 5
+    DisplayName: Ultra
+  - Value: 4
+    DisplayName: Very High
+  - Value: 3
+    DisplayName: High
+  - Value: 2
+    DisplayName: Medium
+  - Value: 1
+    DisplayName: Low
+  - Value: 0
+    DisplayName: Very Low
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
