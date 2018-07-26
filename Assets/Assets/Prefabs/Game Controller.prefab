@@ -390,6 +390,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MasterMixer: {fileID: 24100000, guid: 2ce8e3a914aaaae4ba5e35416afaf05b, type: 2}
+  MaxVolume: 0
+  MinVolume: -50
   OptionBindings:
   - ControlId: MasterVolume
     Option: {fileID: 11400000, guid: b3f51d965812f2a49a7217bdafe10e3f, type: 2}

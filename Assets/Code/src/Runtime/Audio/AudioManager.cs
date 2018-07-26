@@ -24,6 +24,9 @@ public class AudioManager : MonoBehaviour {
   /// <summary> The AudioMixer for the entire game </summary>
   public AudioMixer MasterMixer;
 
+  [Range(-80f, 20f)] public float MaxVolume = 0f;
+  [Range(-80f, 20f)] public float MinVolume = -80f;
+
   /// <summary> The set of all bindings between AudioMixer volume controls and Options. </summary>
   public VolumeOptionBinding[] OptionBindings;
 
@@ -35,6 +38,14 @@ public class AudioManager : MonoBehaviour {
   void Awake() {
     Instance = this;
     CreatePool();
+  }
+
+  /// <summary>
+  /// Start is called on the frame when a script is enabled just before
+  /// any of the Update methods is called the first time.
+  /// </summary>
+  void Start() {
+    // This is in Start so that the AudioMixer set can initialize itself before loading the volumes
     BindOptions();
   }
 
@@ -69,11 +80,17 @@ public class AudioManager : MonoBehaviour {
   void BindOptions() {
     foreach (var binding in OptionBindings) {
       if (binding.Option == null) continue;
-      MasterMixer.SetFloat(binding.ControlId, binding.Option.Get<float>());
+      SetVolume(binding.ControlId, binding.Option.Get<float>());
       binding.Option.OnValueChanged.AddListener(() => {
-        MasterMixer.SetFloat(binding.ControlId, binding.Option.Get<float>());
+        SetVolume(binding.ControlId, binding.Option.Get<float>());
       });
     }
+  }
+
+  void SetVolume(string controlId, float optionValue) {
+    float sqrt = Mathf.Sqrt(optionValue);
+    float dbValue = Mathf.Lerp(MinVolume, MaxVolume, sqrt);
+    MasterMixer.SetFloat(controlId, dbValue);
   }
 
 }
