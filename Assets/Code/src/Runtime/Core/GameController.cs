@@ -20,7 +20,8 @@ public class MatchController : IMatchController {
   }
 
 public virtual void Update() {
-    if (!MatchManager.Instance.isControllerLocked){
+    // BIG TODO: Find a better workaround instead of calling for MatchManager variables
+    if (MatchManager.Instance.IsControllerRunning){
         var input = InputSource.SampleInput();
         Assert.IsTrue(input.IsValid);
         inputContext.Update(input);

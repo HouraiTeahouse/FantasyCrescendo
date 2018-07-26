@@ -15,7 +15,7 @@ public class MatchManager : MonoBehaviour {
 
   public bool IsLocal => Config.IsLocal;
   public bool IsPaused { get; private set; }
-  public bool isControllerLocked { get; private set; }
+  public bool IsControllerRunning { get; private set; } = false;
 
   TaskCompletionSource<MatchResult> MatchTask;
 
@@ -51,13 +51,13 @@ public class MatchManager : MonoBehaviour {
     }
 
     Debug.Log("Starting cooldown...");
-    isControllerLocked = true;
+    IsControllerRunning = false;
     await Mediator.Global.PublishAsync(new MatchStartCountdownEvent
     {
         MatchConfig = Config,
         MatchState = MatchController.CurrentState
     });
-    isControllerLocked = false;
+    IsControllerRunning = true;
 
     Debug.Log("Running match...");
     MatchTask = new TaskCompletionSource<MatchResult>();
