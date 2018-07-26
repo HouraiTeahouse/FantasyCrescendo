@@ -33,9 +33,12 @@ public class OptionsUIBuilder : MonoBehaviour {
 
   public bool AutoSave;
 
+  public float SaveTimer = 5f;
+
   public OptionMenuElement[] AdditionalObjects;
 
   List<GameObject> TabDisplays;
+  float timeSinceLastSave;
 
   [Serializable]
   public struct OptionMenuElement {
@@ -59,12 +62,24 @@ public class OptionsUIBuilder : MonoBehaviour {
     WarnDuplicates();
     BuildUI();
     SetActiveTab(0);
+    timeSinceLastSave = SaveTimer;
   }
 
   /// <summary>
-  /// This function is called when the MonoBehaviour will be destroyed.
+  /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
-  void OnDestroy() => Option.Storage?.SaveChanges();
+  void Update() {
+    timeSinceLastSave -= Time.unscaledDeltaTime;
+    if (timeSinceLastSave < 0f) {
+      Option.Storage?.SaveChanges();
+      timeSinceLastSave = SaveTimer;
+    }
+  }
+
+  /// <summary>
+  /// This function is called when the behaviour becomes disabled or inactive.
+  /// </summary>
+  void OnDisable() => Option.Storage?.SaveChanges();
 
   void BuildUI() {
     var optionElements = Options.Select<Option, OptionMenuElement>(CreateElement);
