@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
+public enum MatchStateID { Intro, InGame, Pause, End }
+
 /// <summary>
 /// A complete representation of a given game's state at a given tick.
 /// </summary>
@@ -17,6 +19,7 @@ public class MatchState : INetworkSerializable {
 
   PlayerState[] playerStates;
   public int PlayerCount { get; private set; }
+  public MatchStateID StateID { get; set; } = MatchStateID.Intro;
 
   public MatchState() : this((int)GameMode.GlobalMaxPlayers) { }
 
