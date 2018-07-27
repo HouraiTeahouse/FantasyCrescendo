@@ -8,8 +8,6 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches
 public class MatchCountdownUI : MonoBehaviour
 {
     // Component References
-    // EditorBrowsable attribute hides the public variables from intellisense
-    // In other words, you can still access it, but it won't be in the autocomplete list
     // If variables are null, look for them
     [Header("Component References")]
     [SerializeField] private TextMeshProUGUI _textUI;
@@ -57,7 +55,7 @@ public class MatchCountdownUI : MonoBehaviour
     /// <returns></returns>
     async Task StartCountdown(MatchStartCountdownEvent evt)
     {
-        // For Debug purposes
+        // For Debug purposes and you don't want to wait
         if (DisableCountdown && Debug.isDebugBuild) return;
 
         // Wait for initial delay
