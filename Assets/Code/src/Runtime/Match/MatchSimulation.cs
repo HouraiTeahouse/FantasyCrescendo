@@ -23,14 +23,19 @@ public class MatchSimulation : IMatchSimulation {
   }
 
   public void Simulate(ref MatchState state, MatchInputContext input) {
-    SimulationComponents.Simulate(ref state, input);
+	 if(state.StateID == MatchStateID.InGame)
+		SimulationComponents.Simulate(ref state, input);
+	 else if (state.StateID == MatchStateID.Intro)
+		SimulateRestrict(ref state, input, typeof(MatchPlayerSimulation));
+	 else if (state.StateID == MatchStateID.End)
+		SimulateRestrict(ref state, input, typeof(MatchPlayerSimulation), typeof(MatchHitboxSimulation));
   }
 
   public MatchState ResetState(MatchState state) {
-    foreach (var component in SimulationComponents) {
-      state = component.ResetState(state);
-    }
-    return state;
+	 foreach (var component in SimulationComponents) {
+		state = component.ResetState(state);
+	 }
+	 return state;
   }
 
   public void Dispose() {
@@ -39,6 +44,14 @@ public class MatchSimulation : IMatchSimulation {
     }
   }
 
-}
+  void SimulateRestrict(ref MatchState state, MatchInputContext input, params Type[] restrictions) {
+	 foreach (var SimComponent in SimulationComponents) {
+		if (restrictions.Contains(SimComponent.GetType()))
+		  SimComponent.Simulate(ref state, input);
+  }
+  
+  }
+
+  }
     
 }
