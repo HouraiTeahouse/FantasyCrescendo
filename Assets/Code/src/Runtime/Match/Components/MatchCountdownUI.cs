@@ -8,28 +8,9 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches
 public class MatchCountdownUI : MonoBehaviour
 {
     // Component References
-    // EditorBrowsable attribute hides the public variables from intellisense
-    // In other words, you can still access it, but it won't be in the autocomplete list
-    // If variables are null, look for them
     [Header("Component References")]
-    [SerializeField] private TextMeshProUGUI _textUI;
-    public TextMeshProUGUI TextUI {
-        get {
-            if (_textUI == null)
-                _textUI = GetComponentInChildren<TextMeshProUGUI>();
-            return _textUI;
-            }
-        }
-    [SerializeField] private AudioSource _audioPlayer;
-    public AudioSource AudioPlayer
-    {
-        get
-        {
-            if (_audioPlayer == null)
-                _audioPlayer = GetComponentInChildren<AudioSource>();
-            return _audioPlayer;
-        }
-    }
+    public TextMeshProUGUI TextUI;
+    public AudioSource AudioPlayer;
 
     [Header("Timings")]
     public float InitialDelay = 1f;
@@ -43,9 +24,11 @@ public class MatchCountdownUI : MonoBehaviour
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
-    void Awake()
-    {
-        Mediator.Global.CreateUnityContext(this).Subscribe<MatchStartCountdownEvent>(StartCountdown);
+    void Awake() {
+        Mediator.Global.CreateUnityContext(this)
+            .Subscribe<MatchStartCountdownEvent>(StartCountdown);
+        TextUI = GetComponentInChildren<TextMeshProUGUI>();
+        AudioPlayer = GetComponentInChildren<AudioSource>();
     }
 
     /// <summary>
@@ -55,20 +38,15 @@ public class MatchCountdownUI : MonoBehaviour
     /// </summary>
     /// <param name="evt"></param>
     /// <returns></returns>
-    async Task StartCountdown(MatchStartCountdownEvent evt)
-    {
-        // For Debug purposes
+    async Task StartCountdown(MatchStartCountdownEvent evt) {
+        // For Debug purposes and you don't want to wait
         if (DisableCountdown && Debug.isDebugBuild) return;
 
-        // Wait for initial delay
         await Task.Delay((int)(InitialDelay * 1000));
-
-        // Enable Text GUI in case
         ObjectUtil.SetActive(TextUI.gameObject, true);
 
         var timer = CountdownClips.Length - 1;
-        while (timer > 0)
-        {
+        while (timer > 0) {
             await UpdateTextUI(timer.ToString(), CountdownClips[timer]);
             timer--;
         }
@@ -84,8 +62,7 @@ public class MatchCountdownUI : MonoBehaviour
     /// <param name="timer"></param>
     /// <param name="autoDisappear"></param>
     /// <returns></returns>
-    async Task UpdateTextUI(string text, AudioClip audio, bool autoDisappear=false)
-    {
+    async Task UpdateTextUI(string text, AudioClip audio, bool autoDisappear=false) {
         // Update Text and play Audio
         TextUI.text = text;
         AudioPlayer.clip = audio;
