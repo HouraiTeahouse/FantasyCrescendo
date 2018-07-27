@@ -390,6 +390,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MasterMixer: {fileID: 24100000, guid: 2ce8e3a914aaaae4ba5e35416afaf05b, type: 2}
+  MaxVolume: 0
+  MinVolume: -50
   OptionBindings:
   - ControlId: MasterVolume
     Option: {fileID: 11400000, guid: b3f51d965812f2a49a7217bdafe10e3f, type: 2}
@@ -652,6 +654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bde28572b02ea4db7c258aa7c2e9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LanguageOption: {fileID: 11400000, guid: b983caafd32a10d4cafaba2ee2dbc3b6, type: 2}
   _defaultLanguage: en
   _dontDestroyOnLoad: 0
   localizationDirectory: lang

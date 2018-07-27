@@ -13,9 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: audio/sfx_volume
   Type: 1
-  MinValue: -80
-  MaxValue: 20
-  DefaultValue: 0
+  MinValue: 0
+  MaxValue: 1
+  DefaultValue: 1
   Category: Audio
   DisplayName: SFX Volume
   SortOrder: -31998
