@@ -28,8 +28,9 @@ public class MatchManager : MonoBehaviour {
   /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
   /// </summary>
   void FixedUpdate() {
-    if (MatchController.CurrentState.StateID != MatchStateID.Pause)
-      MatchController?.Update();
+    if (MatchController?.CurrentProgressionID != MatchProgressionState.Pause) {
+      MatchController.Update();
+    }
 
   }
 
@@ -48,15 +49,15 @@ public class MatchManager : MonoBehaviour {
     }
 
     Debug.Log("Starting cooldown...");
-	 MatchController.CurrentState.StateID = MatchStateID.Intro;
-	 await Mediator.Global.PublishAsync(new MatchStartCountdownEvent
+    MatchController.CurrentProgressionID = MatchProgressionState.Intro;
+    await Mediator.Global.PublishAsync(new MatchStartCountdownEvent
     {
         MatchConfig = Config,
         MatchState = MatchController.CurrentState
     });
 		
 	 Debug.Log("Running match...");
-	 MatchController.CurrentState.StateID = MatchStateID.InGame;
+	 MatchController.CurrentProgressionID = MatchProgressionState.InGame;
 	 MatchTask = new TaskCompletionSource<MatchResult>();
     Mediator.Global.Publish(new MatchStartEvent {
       MatchConfig = Config,
@@ -69,16 +70,16 @@ public class MatchManager : MonoBehaviour {
       MatchConfig = Config,
       MatchState = MatchController.CurrentState
     });
-	 MatchController.CurrentState.StateID = MatchStateID.End;
+	 MatchController.CurrentProgressionID = MatchProgressionState.End;
 	 return result;
   }
 
   public void SetPaused(bool paused) {
     if (!IsLocal) return;
 
-	 var pauseID = paused ? MatchStateID.Pause : MatchStateID.InGame;
-	 bool changed = pauseID != MatchController.CurrentState.StateID;
-	 MatchController.CurrentState.StateID = pauseID;
+	 var pauseID = paused ? MatchProgressionState.Pause : MatchProgressionState.InGame;
+	 bool changed = pauseID != MatchController.CurrentProgressionID;
+	 MatchController.CurrentProgressionID = pauseID;
     if (changed) {
       Mediator.Global.Publish(new MatchPauseStateChangedEvent {
         MatchConfig = Config,

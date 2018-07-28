@@ -20,6 +20,11 @@ public interface IMatchController {
   MatchState CurrentState { get; set; }
 
   /// <summary>
+  /// Ease of use accessor for the match progress ID for the current game state.
+  /// </summary>
+  MatchProgressionState CurrentProgressionID { get; set; }
+
+  /// <summary>
   /// Update the game state. Expected to be called once per Unity FixedUpdate.
   /// </summary>
   void Update();
