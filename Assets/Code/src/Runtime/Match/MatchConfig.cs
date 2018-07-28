@@ -12,6 +12,9 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 [Serializable]
 public struct MatchConfig : IValidatable, INetworkSerializable {
 
+  /// <summary>
+  /// The ID of the stage that the match will be played on.
+  /// </summary>
   public uint StageID;
 
   /// <summary>

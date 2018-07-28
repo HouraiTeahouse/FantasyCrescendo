@@ -5,7 +5,6 @@ using UnityEngine;
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public class MatchManager : MonoBehaviour {
-
   public static MatchManager Instance { get; private set; }
 
   public MatchConfig Config;
@@ -14,8 +13,15 @@ public class MatchManager : MonoBehaviour {
   public IStateView<MatchState> View;
 
   public bool IsLocal => Config.IsLocal;
-  public bool IsPaused { get; private set; }
-  public bool IsControllerRunning { get; private set; } = false;
+
+  public MatchProgressionState CurrentProgressionID {
+    get{
+      return MatchController.CurrentState.StateID;
+    }
+    set{
+      MatchController.CurrentState.StateID = value;
+    }
+  }
 
   TaskCompletionSource<MatchResult> MatchTask;
 
@@ -31,9 +37,10 @@ public class MatchManager : MonoBehaviour {
   /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
   /// </summary>
   void FixedUpdate() {
-    if (!IsPaused) {
-      MatchController?.Update();
+    if (MatchController != null && CurrentProgressionID != MatchProgressionState.Pause) {
+      MatchController.Update();
     }
+
   }
 
   /// <summary>
@@ -51,16 +58,16 @@ public class MatchManager : MonoBehaviour {
     }
 
     Debug.Log("Starting cooldown...");
-    IsControllerRunning = false;
+    CurrentProgressionID = MatchProgressionState.Intro;
     await Mediator.Global.PublishAsync(new MatchStartCountdownEvent
     {
         MatchConfig = Config,
         MatchState = MatchController.CurrentState
     });
-    IsControllerRunning = true;
-
-    Debug.Log("Running match...");
-    MatchTask = new TaskCompletionSource<MatchResult>();
+		
+	 Debug.Log("Running match...");
+    CurrentProgressionID = MatchProgressionState.InGame;
+	 MatchTask = new TaskCompletionSource<MatchResult>();
     Mediator.Global.Publish(new MatchStartEvent {
       MatchConfig = Config,
       MatchState = MatchController.CurrentState
@@ -72,13 +79,16 @@ public class MatchManager : MonoBehaviour {
       MatchConfig = Config,
       MatchState = MatchController.CurrentState
     });
-    return result;
+    CurrentProgressionID = MatchProgressionState.End;
+	 return result;
   }
 
   public void SetPaused(bool paused) {
     if (!IsLocal) return;
-    bool changed = paused != IsPaused;
-    IsPaused = paused;
+
+    var pauseID = paused ? MatchProgressionState.Pause : MatchProgressionState.InGame;
+    bool changed = pauseID != CurrentProgressionID;
+    CurrentProgressionID = pauseID;
     if (changed) {
       Mediator.Global.Publish(new MatchPauseStateChangedEvent {
         MatchConfig = Config,

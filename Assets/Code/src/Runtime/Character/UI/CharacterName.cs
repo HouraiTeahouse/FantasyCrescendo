@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks; 
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters.UI {
 
 public class CharacterName : CharacterUIBase {
 
-  public Text Text;
+  public TMP_Text Text;
   public bool UseLongName;
   public bool Uppercase;
 

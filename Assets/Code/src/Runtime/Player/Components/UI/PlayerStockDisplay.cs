@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 namespace HouraiTeahouse.FantasyCrescendo.Players {
 
 public class PlayerStockDisplay : MonoBehaviour, IStateView<PlayerState> {
 
-  public Text ExcessDisplay;
+  public TMP_Text ExcessDisplay;
   public GameObject[] standardIndicators;
   public string ExcessFormat = "{0}x";
 

@@ -12,7 +12,7 @@ public sealed class NetworkHostController : IMatchController {
     }
   }
 
-  public MatchState CurrentState  {
+  public MatchState CurrentState {
     get { return ClientController.CurrentState; }
     set {
       ClientController.CurrentState = value;
