@@ -20,14 +20,6 @@ public sealed class NetworkHostController : IMatchController {
     }
   }
 
-  public MatchProgressionState CurrentProgressionID {
-    get { return ClientController.CurrentProgressionID; }
-    set {
-      ClientController.CurrentProgressionID = value;
-      ServerController.CurrentProgressionID = value;
-    }
-  }
-
   public ISimulation<MatchState, MatchInputContext> Simulation {
     get { return ClientController.Simulation; }
     set {

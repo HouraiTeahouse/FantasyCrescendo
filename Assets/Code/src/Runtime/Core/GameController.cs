@@ -10,11 +10,6 @@ public class MatchController : IMatchController {
 
   public virtual uint Timestep { get; set; }
   public virtual MatchState CurrentState { get; set; }
-  public virtual MatchProgressionState CurrentProgressionID {
-    get { return CurrentState.StateID; }
-    set { CurrentState.StateID = value; }
-  }
-
   public virtual ISimulation<MatchState, MatchInputContext> Simulation { get; set; }
   public virtual IMatchInputSource InputSource { get; set; }
 
@@ -25,7 +20,7 @@ public class MatchController : IMatchController {
   }
 
   public virtual void Update() {
-    if (CurrentProgressionID != MatchProgressionState.Intro) {
+    if (CurrentState.StateID != MatchProgressionState.Intro) {
 	   var input = InputSource.SampleInput();
 	   Assert.IsTrue(input.IsValid);
 	   inputContext.Update(input);
