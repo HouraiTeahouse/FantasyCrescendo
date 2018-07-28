@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91892d3c02226f4e87bfbc5da4e9c71, type: 3}
   m_Name: SceneConfig
   m_EditorClassIdentifier: 
-  _mainMenuScene: scene/main_menu/scene:Assets/Data/Scenes/Menus/MainMenu.unity
+  _mainMenuScene: scene/main_menu/scene:Assets/Data/Scenes/Menus/MainMenu/MainMenu.unity
   _matchEndScene: scene/match_end/scene:Assets/Data/Scenes/Menus/MatchEnd.unity
   _errorScene: Assets/Data/Scenes/ErrorDisplay.unity
   _additionalStageScenes:
-  - scene/stage_bootstrap:Assets/Data/Scenes/Stages/StageBootstrap.unity
+  - scene/stage_bootstrap:Assets/Data/Scenes/Stages/Common/StageBootstrap.unity
   SpawnTag: Spawn
