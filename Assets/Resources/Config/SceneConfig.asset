@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainMenuScene: scene/main_menu/scene:Assets/Data/Scenes/Menus/MainMenu/MainMenu.unity
   _matchEndScene: scene/match_end/scene:Assets/Data/Scenes/Menus/MatchEnd.unity
-  _errorScene: Assets/Data/Scenes/ErrorDisplay.unity
+  _errorScene: Assets/Data/Scenes/Base/ErrorDisplay.unity
   _additionalStageScenes:
   - scene/stage_bootstrap:Assets/Data/Scenes/Stages/Common/StageBootstrap.unity
   SpawnTag: Spawn
