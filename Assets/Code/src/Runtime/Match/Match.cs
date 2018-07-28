@@ -59,10 +59,14 @@ public abstract class Match {
   protected MatchState CreateInitialState(MatchConfig config) {
     var tag = Config.Get<SceneConfig>().SpawnTag;
     var startPositions = GameObject.FindGameObjectsWithTag(tag);
+    MatchState state;
     if (startPositions.Length > 0) {
-      return CreateInitialStateByTransform(config, startPositions);
-    } 
-    return CreateInitialStateSimple(config);
+      state = CreateInitialStateByTransform(config, startPositions);
+    } else {
+      state = CreateInitialStateSimple(config);
+    }
+    SetDefaultDamages(config, state);
+    return state;
   }
 
   MatchState CreateInitialStateByTransform(MatchConfig config, GameObject[] startPositions) {
@@ -86,6 +90,14 @@ public abstract class Match {
       initialState.SetPlayerState(i, state);
     }
     return initialState;
+  }
+
+  void SetDefaultDamages(MatchConfig config, MatchState initialState) {
+    for (int i = 0; i < initialState.PlayerCount; i++) {
+      var state = initialState.GetPlayerState(i);
+      state.Damage = config.PlayerConfigs[i].DefaultDamage;
+      initialState.SetPlayerState(i, state);
+    }
   }
 
 }
