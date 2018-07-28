@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 namespace HouraiTeahouse.FantasyCrescendo.Players {
 
@@ -8,7 +8,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
 /// </summary>
 public class PlayerDamage : MonoBehaviour, IStateView<PlayerState> {
 
-  public Text DisplayText;
+  public TMP_Text DisplayText;
   public string Format;
   public Gradient DisplayColor;
   public float MinDamage;
