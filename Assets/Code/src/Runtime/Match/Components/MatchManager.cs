@@ -15,12 +15,8 @@ public class MatchManager : MonoBehaviour {
   public bool IsLocal => Config.IsLocal;
 
   public MatchProgressionState CurrentProgressionID {
-    get{
-      return MatchController.CurrentState.StateID;
-    }
-    set{
-      MatchController.CurrentState.StateID = value;
-    }
+    get { return MatchController.CurrentState.StateID; }
+    set { MatchController.CurrentState.StateID = value; }
   }
 
   TaskCompletionSource<MatchResult> MatchTask;
@@ -40,7 +36,6 @@ public class MatchManager : MonoBehaviour {
     if (MatchController != null && CurrentProgressionID != MatchProgressionState.Pause) {
       MatchController.Update();
     }
-
   }
 
   /// <summary>
@@ -83,7 +78,7 @@ public class MatchManager : MonoBehaviour {
 	 return result;
   }
 
-  public void SetPaused(bool paused) {
+  public void SetPaused(bool paused, int pausedPlayer) {
     if (!IsLocal) return;
 
     var pauseID = paused ? MatchProgressionState.Pause : MatchProgressionState.InGame;
@@ -93,7 +88,8 @@ public class MatchManager : MonoBehaviour {
       Mediator.Global.Publish(new MatchPauseStateChangedEvent {
         MatchConfig = Config,
         MatchState = MatchController.CurrentState,
-        Paused = paused
+        IsPaused = paused,
+        PausedPlayerID = pausedPlayer
       });
     }
   }

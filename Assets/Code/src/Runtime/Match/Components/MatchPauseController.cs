@@ -6,9 +6,11 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class MatchPauseController : MonoBehaviour {
 
-  public MatchManager MatchManager { get { return MatchManager.Instance; } }
+  public MatchManager MatchManager => MatchManager.Instance;
   public KeyCode PlayerOneKey = KeyCode.Return;
   public InputControlType PauseButton = InputControlType.Start;
+
+  public int PausedPlayer;
 
   // TODO(james7132): Add support for non-keyboard reset.
   public KeyCode[] ResetKeys = new KeyCode[] {
@@ -17,8 +19,6 @@ public class MatchPauseController : MonoBehaviour {
     KeyCode.Q,
     KeyCode.E,
   };
-
-  uint PausedPlayer;
 
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -38,7 +38,7 @@ public class MatchPauseController : MonoBehaviour {
     }
     var wasPressed = WasPressed(PausedPlayer);
     if (wasPressed == true) {
-      MatchManager.SetPaused(false);
+      MatchManager.SetPaused(false, PausedPlayer);
     }
   }
 
@@ -46,15 +46,15 @@ public class MatchPauseController : MonoBehaviour {
     if (InputManager.Devices.Count <= 0) {
       PlayerUnpausedCheck(0);
     } else {
-      for (uint i = 0; i < InputManager.Devices.Count; i++) {
+      for (var i = 0; i < InputManager.Devices.Count; i++) {
         PlayerUnpausedCheck(i);
       }
     }
   }
 
-  void PlayerUnpausedCheck(uint player) {
+  void PlayerUnpausedCheck(int player) {
     if (WasPressed(player) == true) {
-      MatchManager.SetPaused(true);
+      MatchManager.SetPaused(true, player);
       PausedPlayer = player;
     }
   }
@@ -75,7 +75,7 @@ public class MatchPauseController : MonoBehaviour {
     return true;
   }
 
-  bool? WasPressed(uint player) {
+  bool? WasPressed(int player) {
     if (player >= InputManager.Devices.Count) {
       if (player == 0) {
         return Input.GetKeyDown(PlayerOneKey);
@@ -83,7 +83,7 @@ public class MatchPauseController : MonoBehaviour {
         return null;
       }
     }
-    return InputManager.Devices[(int)player].GetControl(PauseButton).WasPressed ||
+    return InputManager.Devices[player].GetControl(PauseButton).WasPressed ||
            (player == 0 && Input.GetKeyDown(PlayerOneKey));
   }
 
