@@ -17,7 +17,7 @@ public class PauseVisibility : MonoBehaviour {
   void Awake() {
     Mediator.Global.CreateUnityContext(this)
       .Subscribe<MatchPauseStateChangedEvent>(args => {
-        SetActive(Invert ? !args.Paused : args.Paused);
+        SetActive(Invert ? !args.IsPaused : args.IsPaused);
       });
     SetActive(DefaultState);
   }
