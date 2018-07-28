@@ -25,9 +25,9 @@ public class MatchPauseController : MonoBehaviour {
   /// </summary>
   void Update() {
     if (MatchManager == null || !MatchManager.IsLocal) return;
-    if (MatchManager.MatchController.CurrentProgressionID == MatchProgressionState.Pause) {
+    if (MatchManager.CurrentProgressionID == MatchProgressionState.Pause) {
       PausedCheck();
-    } else if (MatchManager.MatchController.CurrentProgressionID == MatchProgressionState.InGame) {
+    } else if (MatchManager.CurrentProgressionID == MatchProgressionState.InGame) {
       UnpausedCheck();
     }
   }

@@ -14,6 +14,15 @@ public class MatchManager : MonoBehaviour {
 
   public bool IsLocal => Config.IsLocal;
 
+  public MatchProgressionState CurrentProgressionID {
+    get{
+      return MatchController.CurrentState.StateID;
+    }
+    set{
+      MatchController.CurrentState.StateID = value;
+    }
+  }
+
   TaskCompletionSource<MatchResult> MatchTask;
 
   /// <summary>
@@ -28,7 +37,7 @@ public class MatchManager : MonoBehaviour {
   /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
   /// </summary>
   void FixedUpdate() {
-    if (MatchController?.CurrentProgressionID != MatchProgressionState.Pause) {
+    if (MatchController != null && CurrentProgressionID != MatchProgressionState.Pause) {
       MatchController.Update();
     }
 
@@ -49,7 +58,7 @@ public class MatchManager : MonoBehaviour {
     }
 
     Debug.Log("Starting cooldown...");
-    MatchController.CurrentProgressionID = MatchProgressionState.Intro;
+    CurrentProgressionID = MatchProgressionState.Intro;
     await Mediator.Global.PublishAsync(new MatchStartCountdownEvent
     {
         MatchConfig = Config,
@@ -57,7 +66,7 @@ public class MatchManager : MonoBehaviour {
     });
 		
 	 Debug.Log("Running match...");
-	 MatchController.CurrentProgressionID = MatchProgressionState.InGame;
+    CurrentProgressionID = MatchProgressionState.InGame;
 	 MatchTask = new TaskCompletionSource<MatchResult>();
     Mediator.Global.Publish(new MatchStartEvent {
       MatchConfig = Config,
@@ -70,16 +79,16 @@ public class MatchManager : MonoBehaviour {
       MatchConfig = Config,
       MatchState = MatchController.CurrentState
     });
-	 MatchController.CurrentProgressionID = MatchProgressionState.End;
+    CurrentProgressionID = MatchProgressionState.End;
 	 return result;
   }
 
   public void SetPaused(bool paused) {
     if (!IsLocal) return;
 
-	 var pauseID = paused ? MatchProgressionState.Pause : MatchProgressionState.InGame;
-	 bool changed = pauseID != MatchController.CurrentProgressionID;
-	 MatchController.CurrentProgressionID = pauseID;
+    var pauseID = paused ? MatchProgressionState.Pause : MatchProgressionState.InGame;
+    bool changed = pauseID != CurrentProgressionID;
+    CurrentProgressionID = pauseID;
     if (changed) {
       Mediator.Global.Publish(new MatchPauseStateChangedEvent {
         MatchConfig = Config,

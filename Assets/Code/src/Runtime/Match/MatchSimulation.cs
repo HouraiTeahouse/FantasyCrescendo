@@ -14,33 +14,24 @@ public class MatchSimulation : IMatchSimulation {
   // Contains all simulations
   readonly IMatchSimulation[] SimulationComponents;
   // Contains simulations pertaining to the MatchProgressionState
-  Dictionary<MatchProgressionState, IMatchSimulation[]> SimulationDictionary;
+  Dictionary<MatchProgressionState, IMatchSimulation[]> Simulations;
 
   public MatchSimulation(IEnumerable<IMatchSimulation> simulationComponents) {
     SimulationComponents = simulationComponents.ToArray();
 
-    SimulationDictionary = new Dictionary<MatchProgressionState, IMatchSimulation[]>();
-    SimulationDictionary.Add(
-      MatchProgressionState.Intro,
-      CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation))
-    );
-    SimulationDictionary.Add(
-      MatchProgressionState.InGame, 
-      SimulationComponents
-    );
-    SimulationDictionary.Add(
-      MatchProgressionState.End,
-      CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation), typeof(MatchHitboxSimulation))
-    );
-
-    }
+    Simulations = new Dictionary<MatchProgressionState, IMatchSimulation[]>(){
+    { MatchProgressionState.Intro, CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation)) },
+    { MatchProgressionState.InGame, SimulationComponents},
+    { MatchProgressionState.End, CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation), typeof(MatchHitboxSimulation)) }
+    };
+  }
 
   public Task Initialize(MatchConfig config) {
     return Task.WhenAll(SimulationComponents.Select(comp => comp.Initialize(config)));
   }
 
   public void Simulate(ref MatchState state, MatchInputContext input) {
-    SimulationDictionary[state.StateID].Simulate(ref state, input);
+    Simulations[state.StateID].Simulate(ref state, input);
   }
 
   public MatchState ResetState(MatchState state) {
@@ -57,14 +48,9 @@ public class MatchSimulation : IMatchSimulation {
   }
 
   IMatchSimulation[] CreateSimulations(IMatchSimulation[] matchSimulations, params Type[] restrictions) {
-    var Simulation = new List<IMatchSimulation>();
-    foreach (var simComponent in matchSimulations) {
-      if (restrictions.Contains(simComponent.GetType())) {
-        Simulation.Add(simComponent);
-      }
-    }
-    return Simulation.ToArray();
+    return matchSimulations.Where(s => restrictions.Contains(s.GetType())).ToArray();    
   }
+
   
 }
     
