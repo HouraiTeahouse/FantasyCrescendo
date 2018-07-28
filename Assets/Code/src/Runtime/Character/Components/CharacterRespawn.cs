@@ -10,9 +10,11 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
 
   public Vector3 Offset;
 
+  float defaultDamage;
   GameObject platform;
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
+    defaultDamage = config.DefaultDamage;
     if (isView) {
       var prefab = Config.Get<VisualConfig>().RespawnPlatformPrefab;
       if (prefab != null) {
@@ -36,7 +38,7 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
   }
 
   public void ResetState(ref PlayerState state) {
-    state.Damage = 0f;
+    state.Damage = defaultDamage;
     state.ShieldDamage = 0;
   }
 

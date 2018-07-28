@@ -151,7 +151,7 @@ public class Deserializer {
   }
 
   public char ReadChar() => (char)m_buf.ReadByte();
-  public bool ReadBoolean() => m_buf.ReadByte() == 1;
+  public bool ReadBoolean() => m_buf.ReadByte() != 0;
 
   public byte[] ReadBytes(int count) {
     if (count < 0) {
