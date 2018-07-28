@@ -7,6 +7,28 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
+  /// <summary>
+  /// Represents the match's state in game
+  /// </summary>
+public enum MatchProgressionState { 
+  /// <summary>
+  /// Before the game begins. Represents the countdown sequence.
+  /// </summary>
+  Intro, 
+  /// <summary>
+  /// Represents the game in progress.
+  /// </summary>
+  InGame, 
+  /// <summary>
+  /// Represents the game while paused. Can only be paused during InGame.
+  /// </summary>
+  Pause, 
+  /// <summary>
+  /// After the game results are in. Represents the GAME/TIME sequence.
+  /// </summary>
+  End 
+}
+
 /// <summary>
 /// A complete representation of a given game's state at a given tick.
 /// </summary>
@@ -17,6 +39,7 @@ public class MatchState : INetworkSerializable {
 
   PlayerState[] playerStates;
   public int PlayerCount { get; private set; }
+  public MatchProgressionState StateID = MatchProgressionState.Intro;
 
   public MatchState() : this((int)GameMode.GlobalMaxPlayers) { }
 
@@ -72,6 +95,7 @@ public class MatchState : INetworkSerializable {
         playerStates[i].Serialize(writer);
       }
     }
+    writer.Write((byte)StateID);
   }
 
   public void Deserialize(Deserializer deserializer) {
@@ -85,6 +109,7 @@ public class MatchState : INetworkSerializable {
       }
       SetPlayerState(i, state);
     }
+    StateID = (MatchProgressionState)deserializer.ReadByte();
   }
 
   // TODO(james7132): Change to ref indexer when C# 7 is available.

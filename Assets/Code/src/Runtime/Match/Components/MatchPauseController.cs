@@ -6,7 +6,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class MatchPauseController : MonoBehaviour {
 
-  public MatchManager MatchManager;
+  public MatchManager MatchManager { get { return MatchManager.Instance; } }
   public KeyCode PlayerOneKey = KeyCode.Return;
   public InputControlType PauseButton = InputControlType.Start;
 
@@ -25,9 +25,9 @@ public class MatchPauseController : MonoBehaviour {
   /// </summary>
   void Update() {
     if (MatchManager == null || !MatchManager.IsLocal) return;
-    if (MatchManager.IsPaused) {
+    if (MatchManager.CurrentProgressionID == MatchProgressionState.Pause) {
       PausedCheck();
-    } else {
+    } else if (MatchManager.CurrentProgressionID == MatchProgressionState.InGame) {
       UnpausedCheck();
     }
   }

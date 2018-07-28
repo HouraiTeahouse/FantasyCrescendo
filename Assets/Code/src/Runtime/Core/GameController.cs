@@ -14,19 +14,18 @@ public class MatchController : IMatchController {
   public virtual IMatchInputSource InputSource { get; set; }
 
   readonly MatchInputContext inputContext;
-
+  
   public MatchController(MatchConfig config) {
     inputContext = new MatchInputContext(new MatchInput(config));
   }
 
-public virtual void Update() {
-    // BIG TODO: Find a better workaround instead of calling for MatchManager variables
-    if (MatchManager.Instance.IsControllerRunning){
-        var input = InputSource.SampleInput();
-        Assert.IsTrue(input.IsValid);
-        inputContext.Update(input);
+  public virtual void Update() {
+    if (CurrentState.StateID != MatchProgressionState.Intro) {
+	   var input = InputSource.SampleInput();
+	   Assert.IsTrue(input.IsValid);
+	   inputContext.Update(input);
     }
-
+    
     var state = CurrentState;
     Simulation.Simulate(ref state, inputContext);
     CurrentState = state;

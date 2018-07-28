@@ -23,6 +23,11 @@ public struct PlayerConfig : IValidatable, INetworkSerializable {
   public sbyte LocalPlayerID;
   public PlayerSelection Selection;
 
+  /// <summary>
+  /// The default amount of damage the player will have on (re)spawning.
+  /// </summary>
+  public float DefaultDamage;
+
   public bool IsLocal => LocalPlayerID >= 0;
   public bool IsValid => Selection.IsValid;
 
@@ -30,12 +35,14 @@ public struct PlayerConfig : IValidatable, INetworkSerializable {
     serializer.Write(PlayerID);
     serializer.Write(LocalPlayerID);
     serializer.Write(Selection);
+    serializer.Write(DefaultDamage);
   }
 
   public void Deserialize(Deserializer deserializer) {
     PlayerID = deserializer.ReadByte();
     LocalPlayerID = deserializer.ReadSByte();
     Selection = deserializer.Read<PlayerSelection>();
+    DefaultDamage = deserializer.ReadSingle();
   }
 
   public override string ToString() => Selection.ToString();
