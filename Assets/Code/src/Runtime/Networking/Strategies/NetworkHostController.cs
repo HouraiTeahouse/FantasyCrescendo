@@ -12,11 +12,19 @@ public sealed class NetworkHostController : IMatchController {
     }
   }
 
-  public MatchState CurrentState  {
+  public MatchState CurrentState {
     get { return ClientController.CurrentState; }
     set {
       ClientController.CurrentState = value;
       ServerController.CurrentState = value;
+    }
+  }
+
+  public MatchProgressionState CurrentProgressionID {
+    get { return ClientController.CurrentProgressionID; }
+    set {
+      ClientController.CurrentProgressionID = value;
+      ServerController.CurrentProgressionID = value;
     }
   }
 

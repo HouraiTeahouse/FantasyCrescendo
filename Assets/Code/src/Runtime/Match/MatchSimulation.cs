@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,23 +11,36 @@ public interface IMatchSimulation : IInitializable<MatchConfig>, ISimulation<Mat
 
 public class MatchSimulation : IMatchSimulation {
 
+  // Contains all simulations
   readonly IMatchSimulation[] SimulationComponents;
+  // Contains simulations pertaining to the MatchProgressionState
+  Dictionary<MatchProgressionState, IMatchSimulation[]> SimulationDictionary;
 
   public MatchSimulation(IEnumerable<IMatchSimulation> simulationComponents) {
     SimulationComponents = simulationComponents.ToArray();
-  }
+
+    SimulationDictionary = new Dictionary<MatchProgressionState, IMatchSimulation[]>();
+    SimulationDictionary.Add(
+      MatchProgressionState.Intro,
+      CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation))
+    );
+    SimulationDictionary.Add(
+      MatchProgressionState.InGame, 
+      SimulationComponents
+    );
+    SimulationDictionary.Add(
+      MatchProgressionState.End,
+      CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation), typeof(MatchHitboxSimulation))
+    );
+
+    }
 
   public Task Initialize(MatchConfig config) {
     return Task.WhenAll(SimulationComponents.Select(comp => comp.Initialize(config)));
   }
 
   public void Simulate(ref MatchState state, MatchInputContext input) {
-	 if(state.StateID == MatchStateID.InGame)
-		SimulationComponents.Simulate(ref state, input);
-	 else if (state.StateID == MatchStateID.Intro)
-		SimulateRestrict(ref state, input, typeof(MatchPlayerSimulation));
-	 else if (state.StateID == MatchStateID.End)
-		SimulateRestrict(ref state, input, typeof(MatchPlayerSimulation), typeof(MatchHitboxSimulation));
+    SimulationDictionary[state.StateID].Simulate(ref state, input);
   }
 
   public MatchState ResetState(MatchState state) {
@@ -44,14 +56,16 @@ public class MatchSimulation : IMatchSimulation {
     }
   }
 
-  void SimulateRestrict(ref MatchState state, MatchInputContext input, params Type[] restrictions) {
-	 foreach (var SimComponent in SimulationComponents) {
-		if (restrictions.Contains(SimComponent.GetType()))
-		  SimComponent.Simulate(ref state, input);
+  IMatchSimulation[] CreateSimulations(IMatchSimulation[] matchSimulations, params Type[] restrictions) {
+    var Simulation = new List<IMatchSimulation>();
+    foreach (var simComponent in matchSimulations) {
+      if (restrictions.Contains(simComponent.GetType())) {
+        Simulation.Add(simComponent);
+      }
+    }
+    return Simulation.ToArray();
   }
   
-  }
-
-  }
+}
     
 }
