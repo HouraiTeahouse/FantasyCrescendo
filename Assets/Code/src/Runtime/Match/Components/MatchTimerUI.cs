@@ -2,12 +2,13 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public class MatchTimerUI : ViewFactory<MatchState, MatchConfig>, IStateView<MatchState> {
 
-  public Text DisplayText;
+  public TMP_Text DisplayText;
 
   int? lastMinutes;
   int? lastSeconds;

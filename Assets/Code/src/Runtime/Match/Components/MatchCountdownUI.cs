@@ -2,11 +2,10 @@
 using UnityEngine;
 using TMPro;
 
-namespace HouraiTeahouse.FantasyCrescendo.Matches
-{
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
-public class MatchCountdownUI : MonoBehaviour
-{
+public class MatchCountdownUI : MonoBehaviour {
+
   // Component References
   [Header("Component References")]
   public TextMeshProUGUI TextUI;
@@ -14,9 +13,10 @@ public class MatchCountdownUI : MonoBehaviour
 
   [Header("Timings")]
   public float InitialDelay = 1f;
+  public float MinimumDelay = 1f;
 
   [Header("Countdown Clips (0 = 'GO', 1-3 = Time)")]
-  public AudioClip[] CountdownClips;
+  public MatchStateDisplayData[] CountdownClips;
 
   [Header("Debug")]
   public bool DisableCountdown = false;
@@ -27,8 +27,12 @@ public class MatchCountdownUI : MonoBehaviour
   void Awake() {
     Mediator.Global.CreateUnityContext(this)
         .Subscribe<MatchStartCountdownEvent>(StartCountdown);
-    TextUI = GetComponentInChildren<TextMeshProUGUI>();
-    AudioPlayer = GetComponentInChildren<AudioSource>();
+    if (TextUI == null) {
+      TextUI = GetComponentInChildren<TextMeshProUGUI>();
+    }
+    if (AudioPlayer == null) {
+      AudioPlayer = GetComponentInChildren<AudioSource>();
+    }
   }
 
   /// <summary>
@@ -42,16 +46,18 @@ public class MatchCountdownUI : MonoBehaviour
     // For Debug purposes and you don't want to wait
     if (DisableCountdown && Debug.isDebugBuild) return;
 
-    await Task.Delay((int)(InitialDelay * 1000));
+    if (InitialDelay > 0) {
+      await Task.Delay((int)(InitialDelay * 1000));
+    }
     ObjectUtil.SetActive(TextUI.gameObject, true);
 
-    var timer = CountdownClips.Length - 1;
-    while (timer > 0) {
-      await UpdateTextUI(timer.ToString(), CountdownClips[timer]);
-      timer--;
+    for (var i = 0; i < CountdownClips.Length; i++) {
+      if (i < CountdownClips.Length -1) {
+        await UpdateTextUI(CountdownClips[i]);
+      } else {
+        UpdateTextUIGO(CountdownClips[i]);
+      }
     }
-    // TODO: Make GO! string into localization string 
-    UpdateTextUIGO("GO!", CountdownClips[0]);
   }
 
   /// <summary>
@@ -61,12 +67,17 @@ public class MatchCountdownUI : MonoBehaviour
   /// <param name="text"></param>
   /// <param name="audio"></param>
   /// <returns></returns>
-  async Task UpdateTextUI(string text, AudioClip audio) {
-    TextUI.text = text;
-    AudioPlayer.clip = audio;
-    AudioPlayer.Play();
+  async Task UpdateTextUI(MatchStateDisplayData data) {
+    // Update Text and play Audio
+    data.Apply(AudioPlayer, TextUI);
 
-    await Task.Delay((int)(audio.length * 1000));
+    float delay = MinimumDelay;
+    if (data.Clip != null) {
+      delay = Mathf.Min(delay, data.Clip.length);
+    }
+
+    // Wait and maybe disable UI afterwards
+    await Task.Delay((int)(delay * 1000));
   }
 
   /// <summary>
@@ -75,12 +86,11 @@ public class MatchCountdownUI : MonoBehaviour
   /// </summary>
   /// <param name="text"></param>
   /// <param name="audio"></param>
-  async void UpdateTextUIGO(string text, AudioClip audio){
-    await UpdateTextUI(text, audio);
+  async void UpdateTextUIGO(MatchStateDisplayData data){
+    await UpdateTextUI(data);
     ObjectUtil.SetActive(TextUI.gameObject, false);
   }
 
-    
 }
 
 }
