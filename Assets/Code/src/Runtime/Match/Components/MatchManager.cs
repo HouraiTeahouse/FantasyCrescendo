@@ -15,7 +15,7 @@ public class MatchManager : MonoBehaviour {
   public bool IsLocal => Config.IsLocal;
 
   public MatchProgressionState CurrentProgressionID {
-    get { return MatchController.CurrentState.StateID; }
+    get { return MatchController?.CurrentState?.StateID ?? default(MatchProgressionState); }
     set { MatchController.CurrentState.StateID = value; }
   }
 
