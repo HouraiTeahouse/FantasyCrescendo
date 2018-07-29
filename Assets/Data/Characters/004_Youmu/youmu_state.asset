@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -795,6 +795,15 @@ MonoBehaviour:
       EntryPolicy: 0
       MovementType: 1
       DirectionMode: 1
+      KnockbackResistance: 0
+  - Name: Teeter
+    Data:
+      Timeline: {fileID: 11400000, guid: c51459cf178200440920a5a4bfb1ff80, type: 2}
+      MinMoveSpeed: 0
+      MaxMoveSpeed: 0
+      EntryPolicy: 0
+      MovementType: 0
+      DirectionMode: 0
       KnockbackResistance: 0
   _default:
     Timeline: {fileID: 0}

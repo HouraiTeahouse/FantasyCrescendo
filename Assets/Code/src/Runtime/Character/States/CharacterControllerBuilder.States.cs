@@ -11,6 +11,7 @@ public partial class CharacterControllerBuilder {
   // Ground Movement States
   // -----------------------------------------------
   public CharacterState Idle { get; private set; }
+  public CharacterState Teeter { get; private set; }
   public CharacterState Walk { get; private set; }
 
   // Crouch States

@@ -90,7 +90,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     InjectState(this);
 
     // Ground Attacks
-    new [] {Idle, Walk, CrouchStart, Crouch, CrouchEnd}
+    new [] {Idle, Teeter, Walk, CrouchStart, Crouch, CrouchEnd}
         // Smash Attacks
         .AddTransitions<CharacterState, CharacterContext>(context => {
             var input = context.Input;
@@ -155,7 +155,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     AerialAttackLand.AddTransitionTo(Idle);
 
     // Aerial Movement
-    new [] {Idle, Walk, Dash, Run, RunTurn, RunBrake, CrouchStart, Crouch, CrouchEnd, Shield.Main} 
+    new [] {Idle, Teeter, Walk, Dash, Run, RunTurn, RunBrake, CrouchStart, Crouch, CrouchEnd, Shield.Main} 
         .AddTransitions(JumpStart, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump);
     new[] {JumpStart, JumpAerial}.AddTransitionTo(Jump);
     new[] {Jump, Fall}.AddTransitions(JumpAerial, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump)
@@ -174,7 +174,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
         };
 
     // Running States
-    Idle.AddTransition(Dash, movementContext(i => i.Smash));
+    new[] { Idle, Teeter}.AddTransitions(Dash, movementContext(i => i.Smash));
     Dash.AddTransitionTo(Idle, DirectionInput(Direction.Neutral));
     new[] {Dash, RunTurn}.AddTransitionTo(Run);
     Run.AddTransition(RunBrake, DirectionInput(Direction.Neutral));
@@ -183,12 +183,13 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     RunBrake.AddTransitionTo(Idle);
 
     // Ground Movement 
-    new[] {Idle, Walk, Run}
+    new[] {Idle, Teeter, Walk, Run}
         .AddTransitions(CrouchStart, DirectionInput(Direction.Down))
         .AddTransitions(Fall, ctx => !ctx.IsGrounded);
 
-    Idle.AddTransition(Walk, movementContext(i => i.Movement));
+    new[] {Idle, Teeter}.AddTransitions(Walk, movementContext(i => i.Movement));
     Walk.AddTransition(Idle, DirectionInput(Direction.Neutral));
+    Idle.AddTransition(Teeter, ctx => ctx.State.IsTeetering);
 
     // Crouching States
     CrouchStart.AddTransitionTo(Crouch);
@@ -209,7 +210,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
         .AddTransitions(Fall, ctx => ctx.NormalizedStateTime >= 1.0f && !ctx.IsGrounded);
 
     // Shielding
-    Idle.AddTransition(Shield.On, Input(i => i.Shield.Current));
+    new[] {Idle, Teeter}.AddTransitions(Shield.On, Input(i => i.Shield.Current));
     Shield.On.AddTransition(Shield.Perfect, ctx => ctx.State.IsHit)
         .AddTransitionTo(Shield.Main);
     Shield.Main.AddTransition(Shield.Broken, ctx => ctx.ShieldBroken)
