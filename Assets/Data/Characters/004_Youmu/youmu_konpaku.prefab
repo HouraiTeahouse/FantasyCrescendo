@@ -316,6 +316,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1171742197498472
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4078963557474528}
+  m_Layer: 0
+  m_Name: ROOT_CenterOfMass
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1185151853587396
 GameObject:
   m_ObjectHideFlags: 1
@@ -1895,6 +1910,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1981701739324718
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4599112734491402}
+  - component: {fileID: 114269142807599770}
+  m_Layer: 0
+  m_Name: Teeter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1998540478224566
 GameObject:
   m_ObjectHideFlags: 1
@@ -2023,6 +2054,20 @@ Transform:
   m_Father: {fileID: 4346777635352482}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4078963557474528
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1171742197498472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4599112734491402}
+  m_Father: {fileID: 4861363944447056}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4087833861863018
 Transform:
   m_ObjectHideFlags: 1
@@ -2132,7 +2177,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4861363944447056}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4137182118262110
 Transform:
@@ -2840,6 +2885,19 @@ Transform:
   m_Father: {fileID: 4109252711542392}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4599112734491402
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981701739324718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4078963557474528}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4600687059220998
 Transform:
   m_ObjectHideFlags: 1
@@ -3042,7 +3100,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4861363944447056}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4687542876373610
 Transform:
@@ -3232,7 +3290,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4861363944447056}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4788465637901660
 Transform:
@@ -3358,6 +3416,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4952714536558830}
+  - {fileID: 4078963557474528}
   - {fileID: 4134021799909158}
   - {fileID: 4777618747728902}
   - {fileID: 4684461706639392}
@@ -3783,6 +3842,20 @@ MonoBehaviour:
   JumpPower:
   - 7
   - 7
+--- !u!114 &114269142807599770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981701739324718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a54c1f3d098d8247a04eaf26d145123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CheckRegions:
+  - m_Center: {x: -0.2, y: 0.1, z: 0}
+    m_Extent: {x: 0.2, y: 0.1, z: 0.4}
 --- !u!114 &114287619279767586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3929,9 +4002,11 @@ MonoBehaviour:
     Selection:
       CharacterID: 0
       Pallete: 0
+    DefaultDamage: 0
   State:
     Direction: 0
     IsFastFalling: 0
+    IsTeetering: 0
     JumpCount: 0
     RespawnTimeRemaining: 0
     StateID: 0
@@ -4789,6 +4864,10 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 114208184752909874, guid: 54aa710641f24d94e88fe076e9bf3dfc, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114561152038242340, guid: 54aa710641f24d94e88fe076e9bf3dfc, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
