@@ -1,6 +1,6 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
-using InControl;
 using UnityEngine;
+using UnityEngine.Experimental.Input;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -8,7 +8,7 @@ public class MatchPauseController : MonoBehaviour {
 
   public MatchManager MatchManager => MatchManager.Instance;
   public KeyCode PlayerOneKey = KeyCode.Return;
-  public InputControlType PauseButton = InputControlType.Start;
+  //public InputControlType PauseButton = InputControlType.Start;
 
   public int PausedPlayer;
 
@@ -42,10 +42,10 @@ public class MatchPauseController : MonoBehaviour {
   }
 
   void UnpausedCheck() {
-    if (InputManager.Devices.Count <= 0) {
+    if (Gamepad.all.Count <= 0) {
       PlayerUnpausedCheck(0);
     } else {
-      for (var i = 0; i < InputManager.Devices.Count; i++) {
+      for (var i = 0; i < Gamepad.all.Count; i++) {
         PlayerUnpausedCheck(i);
       }
     }
@@ -75,14 +75,14 @@ public class MatchPauseController : MonoBehaviour {
   }
 
   bool? WasPressed(int player) {
-    if (player >= InputManager.Devices.Count) {
+    if (player >= Gamepad.all.Count) {
       if (player == 0) {
         return Input.GetKeyDown(PlayerOneKey);
       } else {
         return null;
       }
     }
-    return InputManager.Devices[player].GetControl(PauseButton).WasPressed ||
+    return Gamepad.all[player].startButton.wasJustPressed ||
            (player == 0 && Input.GetKeyDown(PlayerOneKey));
   }
 
