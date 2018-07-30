@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using InControl;
+using UnityEngine.Experimental.Input;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -14,8 +14,8 @@ public class PauseCamera : MonoBehaviour {
   public Vector3 StartOffset;
   public Vector3 TranslationSpeed = Vector3.one * 5f;
   public Vector2 RotationSpeed = Vector2.one * 20f;
-  public InputControlType ZoomInControl = InputControlType.Action3;
-  public InputControlType ZoomOutControl  = InputControlType.Action4;
+  //public InputControlType ZoomInControl = InputControlType.Action3;
+  //public InputControlType ZoomOutControl  = InputControlType.Action4;
 
   MatchConfig MatchConfig;
   CameraTarget _originalTarget;
@@ -62,12 +62,12 @@ public class PauseCamera : MonoBehaviour {
   void Update() {
     if (pausedPlayerID == null) return;
     var localPlayerId = MatchConfig.PlayerConfigs[pausedPlayerID.Value].LocalPlayerID;
-    var controller = InputManager.Devices[localPlayerId];
-    Vector3 translation = Vector3.Scale(controller.RightStick, TranslationSpeed);
-    Vector3 rotation = Vector3.Scale(controller.LeftStick, RotationSpeed);
+    var controller = Gamepad.all[localPlayerId];
+    Vector3 translation = Vector3.Scale(controller.rightStick.ReadRawValue(), TranslationSpeed);
+    Vector3 rotation = Vector3.Scale(controller.leftStick.ReadRawValue(), RotationSpeed);
     float inOut = 0f;
-    if (controller.GetControl(ZoomInControl)) inOut -= 1f;
-    if (controller.GetControl(ZoomOutControl)) inOut += 1f;
+    if (controller.buttonWest.isPressed) inOut -= 1f;
+    if (controller.buttonNorth.isPressed) inOut += 1f;
     var dt = Time.unscaledDeltaTime;
     rotation = new Vector3(rotation.y, -rotation.x) * dt;
     rotation += transform.eulerAngles;
