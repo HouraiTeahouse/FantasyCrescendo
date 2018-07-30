@@ -5,10 +5,6 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class ErrorManager : MonoBehaviour {
 
-  [RuntimeInitializeOnLoadMethod]
-  static void OnAssemblyLoad() {
-  }
-
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
@@ -25,18 +21,18 @@ public class ErrorManager : MonoBehaviour {
 
   void OnLog(string message, string stackTrace, LogType type) {
     if (type != LogType.Exception) return;
-    TriggerError(message, false);
+    TriggerError(message);
   }
 
-  public static void TriggerError(Exception exception, bool isFatal = false) {
+  public static void TriggerError(Exception exception) {
     TriggerError(exception?.Message ?? string.Empty);
   }
 
-  public static async void TriggerError(string error, bool isFatal = false) {
+  public static async void TriggerError(string error) {
     await Config.Get<SceneConfig>().ErrorScene.LoadAsync();
     var errorScreen = FindObjectOfType<ErrorScreen>();
     if (errorScreen == null) return;
-    errorScreen.SetError(error, isFatal);
+    errorScreen.SetError(error);
   }
 
 }
