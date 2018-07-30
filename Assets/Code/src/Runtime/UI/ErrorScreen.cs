@@ -13,31 +13,12 @@ public class ErrorScreen : MonoBehaviour {
   public GameObject FatalView;
   public GameObject NormalView;
 
-  [RuntimeInitializeOnLoadMethod]
-  static void OnAssemblyLoad() {
-    Application.logMessageReceived += (m, _, type) => {
-      if (type != LogType.Exception) return;
-      TriggerError(m, false);
-    };
-  }
-
-  public static void TriggerError(Exception exception, bool isFatal = false) {
-    TriggerError(exception?.Message ?? string.Empty);
-  }
-
-  public static async void TriggerError(string error, bool isFatal = false) {
-    await Config.Get<SceneConfig>().ErrorScene.LoadAsync();
-    var errorScreen = FindObjectOfType<ErrorScreen>();
-    if (errorScreen == null) return;
-    errorScreen.SetError(error, isFatal);
-  }
-
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   void Awake() => SetFatal(false);
 
-  void SetError(string error, bool isFatal = false) {
+  public void SetError(string error, bool isFatal = false) {
     if (ErrorText == null || ErrorText.Length <= 0) return;
     if (string.IsNullOrEmpty(error)) {
       SetText(string.Empty);
