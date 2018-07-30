@@ -44,11 +44,6 @@ public abstract class MatchInputSourceBase<T> : IMatchInputSource where T : IInp
 
 }
 
-public class InControlInputSource : MatchInputSourceBase<InControlPlayerInputSource> {
-  public InControlInputSource(MatchConfig config) : base(config) {
-  }
-}
-
 public class UnityInputSource : MatchInputSourceBase<UnityPlayerInputSource> {
   public UnityInputSource(MatchConfig config) : base(config) {
   }
