@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 10ce163cdc9c3da48aa64ccabec322f3
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: Eye_Left_1
     100002: Eye_Left_2
@@ -112,6 +112,7 @@ ModelImporter:
     100212: Spine_3
     100214: Spine_4
     100216: //RootNode
+    100218: Skeleton_Grp
     400000: Eye_Left_1
     400002: Eye_Left_2
     400004: Eye_Left_3
@@ -221,6 +222,7 @@ ModelImporter:
     400212: Spine_3
     400214: Spine_4
     400216: //RootNode
+    400218: Skeleton_Grp
     7400000: run_turn
     9500000: //RootNode
     2186277476908879412: ImportLogs
@@ -236,30 +238,11 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Inbetween bone
-      rotation in copied configuration does not match rotation in animation file:\n\t'L_ball'
-      : rotation error = 1.112780 deg\n\t'R_ball' : rotation error = 1.122221 deg\n"
+    rigImportErrors: "Copied Avatar Rig Configuration mis-match. Transform hierarchy
+      does not match:\n\tTransform 'Skeleton_Grp' not found in HumanDescription.\n"
+    rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Spine_1' is inbetween humanoid transforms and
-      has rotation animation that will be discarded.\n\t'Head' has translation animation
-      that will be discarded.\n\t'R_Shoulder' is inbetween humanoid transforms and
-      has rotation animation that will be discarded.\n\t'R_forearm_roll' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'R_thumb1'
-      has translation animation that will be discarded.\n\t'R_index1' has translation
-      animation that will be discarded.\n\t'R_middle1' has translation animation that
-      will be discarded.\n\t'R_ring1' has translation animation that will be discarded.\n\t'R_pinkie1'
-      has translation animation that will be discarded.\n\t'L_Shoulder' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'L_forearm_roll'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'L_thumb1'
-      has translation animation that will be discarded.\n\t'L_index1' has translation
-      animation that will be discarded.\n\t'L_middle1' has translation animation that
-      will be discarded.\n\t'L_ring1' has translation animation that will be discarded.\n\t'L_pinkie1'
-      has translation animation that will be discarded.\n\t'L_ball' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'R_ball' is
-      inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -323,6 +306,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

@@ -3795,6 +3795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Director: {fileID: 320255256925329766}
+  OriginalRig: {fileID: 100218, guid: 189a0391f7d41544aaac6c29f562dd28, type: 3}
 --- !u!114 &114303514114498256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3929,6 +3930,7 @@ MonoBehaviour:
     Selection:
       CharacterID: 0
       Pallete: 0
+    DefaultDamage: 0
   State:
     Direction: 0
     IsFastFalling: 0
@@ -4789,6 +4791,10 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 114208184752909874, guid: 54aa710641f24d94e88fe076e9bf3dfc, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114561152038242340, guid: 54aa710641f24d94e88fe076e9bf3dfc, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []

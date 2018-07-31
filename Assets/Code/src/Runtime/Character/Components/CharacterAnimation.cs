@@ -30,7 +30,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
     SetupBindings();
-    OptimizeHierarchy();
+    //OptimizeHierarchy();
     if (!isView) {
       var animator = GetComponentInChildren<Animator>();
       if (animator != null){

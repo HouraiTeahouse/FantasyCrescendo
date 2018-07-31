@@ -82,6 +82,7 @@ public class SoundEffect : ScriptableObject {
   public void Play(Transform transform) => Play(transform.position);
 
   AudioClip SelectAudioClip() {
+    if (Clips.Length <= 0) return null;
     switch (SelectionMethod) {
       case ClipSelectionMethod.Random: return Clips[Mathf.FloorToInt(Random.value * Clips.Length)];
       default: return Clips[0];
