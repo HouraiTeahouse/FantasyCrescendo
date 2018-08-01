@@ -6,10 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: FoMfoliage
-  m_Shader: {fileID: 4800000, guid: bc1efe4c463f63a42a66489c881d2ab6, type: 3}
-  m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 1
+  m_Name: AngelStatue
+  m_Shader: {fileID: 4800000, guid: 73def1932c5112841afbca3b79846c7b, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: d6fde8f9ec804974297c89baaa935fe4, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -39,7 +39,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9aa728ca87ae16f41be5a7cf4902c39b, type: 3}
+        m_Texture: {fileID: 2800000, guid: cd58e418ceea0dd4faf648effbd8de4a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -57,11 +57,8 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _Cutoff2: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EmissionBrightness: 0
-    - _EmissionLevel: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -69,7 +66,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Shininess: 0.078125
+    - _RimPower: 1.68
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -77,11 +74,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorTint: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-<<<<<<< HEAD
-    - _WaveAndDistance: {r: 25.951109, g: -3.384219, b: 1, a: 0.07}
-=======
-    - _WaveAndDistance: {r: 23.518272, g: -2.154041, b: 1, a: 0.07}
->>>>>>> Makai
-    - _WavingTint: {r: 0.7, g: 0.6, b: 0.5, a: 0}
+    - _RimColor: {r: 0.38679248, g: 0, b: 0, a: 1}
