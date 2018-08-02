@@ -12,13 +12,16 @@ namespace HouraiTeahouse {
     public class CCGeneral{
       public string Name = "Default Name";
       public int Id;
-      public List<int> Links = new List<int>();
       public Rect Window = Rect.zero;
+
+      public Rect LinkRect;
+      public Vector2 GetLinkCenter => LinkRect.center + Window.position;
     }
 
     [System.Serializable]
     public class CCCharacterStates: CCGeneral{
       public string CharacterStates;
+      public List<int> Links = new List<int>();
     }
 
     [System.Serializable]
@@ -72,10 +75,10 @@ namespace HouraiTeahouse {
     }
 
     public static CCBuilderScriptableObject GetCCBuilder(){
-      var myInstance = (CCBuilderScriptableObject)Resources.Load("CCBuilder") as CCBuilderScriptableObject;
+      var myInstance = (CCBuilderScriptableObject)Resources.Load("CCBuilder/CCBuilder") as CCBuilderScriptableObject;
       if (myInstance == null) {
         myInstance = CreateInstance<CCBuilderScriptableObject>();
-        AssetDatabase.CreateAsset(myInstance, "Assets/Resources/CCBuilder.asset");
+        AssetDatabase.CreateAsset(myInstance, "Assets/Resources/CCBuilder/CCBuilder.asset");
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
       }
