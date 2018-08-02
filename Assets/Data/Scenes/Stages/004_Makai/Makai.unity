@@ -311,40 +311,7 @@ Prefab:
         type: 2}
       propertyPath: Target
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114872650196101328, guid: 7a5f56393098bdf429da82c1cc54b467,
-        type: 2}
-      propertyPath: MatchManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1858135900578872, guid: 7a5f56393098bdf429da82c1cc54b467, type: 2}
-      propertyPath: m_Name
-      value: Main Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 114890186897579434, guid: 7a5f56393098bdf429da82c1cc54b467,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1858135900578872, guid: 7a5f56393098bdf429da82c1cc54b467, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114890186897579434, guid: 7a5f56393098bdf429da82c1cc54b467,
-        type: 2}
-      propertyPath: m_ShowCustomSorter
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 20833329910027792, guid: 7a5f56393098bdf429da82c1cc54b467,
-        type: 2}
-      propertyPath: field of view
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 20833329910027792, guid: 7a5f56393098bdf429da82c1cc54b467,
-        type: 2}
-      propertyPath: m_projectionMatrixMode
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 350548761}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a5f56393098bdf429da82c1cc54b467, type: 2}
   m_IsPrefabAsset: 0
@@ -470,11 +437,6 @@ Prefab:
     - target: {fileID: 4619880170444376, guid: bf625dd01f80d7b41a53783c50b4317d, type: 2}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114890420545811106, guid: bf625dd01f80d7b41a53783c50b4317d,
-        type: 2}
-      propertyPath: Text
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114155364561766628, guid: bf625dd01f80d7b41a53783c50b4317d,
         type: 2}
@@ -989,11 +951,6 @@ Prefab:
     - target: {fileID: 4935029060846326, guid: 9e2ceb2d0c8a9504a943fa50028134a9, type: 2}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114727785565368142, guid: 9e2ceb2d0c8a9504a943fa50028134a9,
-        type: 2}
-      propertyPath: Config.PlayerConfigs.Array.data[1].Selection.CharacterID
-      value: 3660741799
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e2ceb2d0c8a9504a943fa50028134a9, type: 2}
