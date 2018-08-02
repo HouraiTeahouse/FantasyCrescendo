@@ -7,6 +7,8 @@ namespace HouraiTeahouse {
   public class CCBuilderWindow : EditorWindow {
     private const float UpperTabHeight = 20;
 
+    public bool updateAssets;
+
     public bool initDone = false;
     public CCBuilderScriptableObject CCBuilder;
     public GUIStyle textAreaStyle;
@@ -51,13 +53,19 @@ namespace HouraiTeahouse {
       if (!initDone) 
         InitStyles();
 
+      updateAssets = false;
+
       // Draw top bar buttons
       GUILayout.BeginHorizontal(GUILayout.MaxHeight(UpperTabHeight));
       if (GUILayout.Button("Add Character State")){
         CCBuilder.AddCharacterState();
+        updateAssets = true;
       }
       if (GUILayout.Button("Add Function")) {
         CCBuilder.AddFunction();
+      }
+      if (GUILayout.Button("Build")) {
+        CCBuilder.UpdateFile();
       }
       GUILayout.EndHorizontal();
 
@@ -78,6 +86,8 @@ namespace HouraiTeahouse {
 
       if (LinkingCC != null)
         Repaint();
+
+      EditorUtility.SetDirty(CCBuilder);
     }
 
     private void OnCharacterStateWindow(int id){
@@ -167,6 +177,10 @@ namespace HouraiTeahouse {
       }
 
       Handles.EndGUI();
+    }
+
+    private void BuildScript(){
+      
     }
 
     /// <summary>

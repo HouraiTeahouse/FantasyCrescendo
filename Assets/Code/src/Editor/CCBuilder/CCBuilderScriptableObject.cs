@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
+using System.IO;
+
 namespace HouraiTeahouse {
   public class CCBuilderScriptableObject : ScriptableObject {
     public int IdCounter = 0;
@@ -83,6 +85,55 @@ namespace HouraiTeahouse {
         AssetDatabase.Refresh();
       }
       return myInstance;
+    }
+
+    public void UpdateFile(){
+      var fileContents = new List<string>() {
+        "using HouraiTeahouse.FantasyCrescendo.Players;",
+        "using System;",
+        "using System.Collections.Generic;",
+        "using System.Linq;",
+        "using UnityEngine;",
+        "namespace HouraiTeahouse.FantasyCrescendo.Characters {",
+        "",
+        "public partial class CharacterControllerBuilder {",
+        "  public StateController<CharacterState, CharacterContext> BuildCharacterControllerImpl(StateControllerBuilder<CharacterState, CharacterContext> builder) {",
+        "    Builder = builder;",
+        "    InjectState(this);",
+        ""
+        };
+
+      foreach(var item in CCCharacterStateList.Where(i => i.Links.Count > 0)){
+        var singleItem = false;
+        if (item.CharacterStates.Contains(',')){
+          fileContents.Add(string.Format("    new[] {{{0}}}", item.CharacterStates.Trim()));
+        } else {
+          singleItem = true;
+          fileContents.Add(string.Format("    {0}", item.CharacterStates.Trim()));
+        }
+        foreach (var linkItem in item.Links.Select(i => CCDictionary[i] as CCFunction)){
+          if (linkItem.IsCharacterStateMulti){
+            fileContents.Add(string.Format("      .AddTransition{0}<CharacterState, CharacterContext>(", 
+                              singleItem ? "" : "s"));
+            fileContents.Add(string.Format("        {0})", linkItem.Function));
+          } else {
+            fileContents.Add(string.Format("      .AddTransition{0}({1}, {2})",
+                              singleItem ? "" : "s", linkItem.CharacterState.Trim(), linkItem.Function));
+          }
+        }
+        fileContents[fileContents.Count - 1] += ";";
+      }
+
+      fileContents.AddRange(new List<string>() {
+        "",
+        "    Builder.WithDefaultState(Idle);",
+        "    BuildCharacterController();",
+        "    return Builder.Build();",
+        "  }",
+        "}",
+        "}"
+        });
+      File.WriteAllLines(Application.dataPath + @"/Code/src/Runtime/Character/States/CharacterControllerBuilder.Template.cs", fileContents);
     }
   }
 }

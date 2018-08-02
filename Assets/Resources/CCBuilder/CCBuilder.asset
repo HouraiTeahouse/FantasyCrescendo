@@ -11,28 +11,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bbdb8c18ca5f5142955e49dd0ba3e69, type: 3}
   m_Name: CCBuilder
   m_EditorClassIdentifier: 
-  IdCounter: 2
+  IdCounter: 5
   CCCharacterStateList:
   - Name: Default Name
     Id: 0
-    Links: 
     Window:
       serializedVersion: 2
       x: 135
       y: 183
-      width: 184
-      height: 43
-    CharacterStates: asd
+      width: 0
+      height: 0
+    LinkRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 1
+      height: 1
+    CharacterStates: Idle
+    Links: 01000000
+  - Name: Default Name
+    Id: 2
+    Window:
+      serializedVersion: 2
+      x: 371
+      y: 52
+      width: 0
+      height: 0
+    LinkRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 1
+      height: 1
+    CharacterStates: Walk, Run
+    Links: 0100000003000000
+  - Name: Default Name
+    Id: 4
+    Window:
+      serializedVersion: 2
+      x: 36
+      y: 51
+      width: 0
+      height: 0
+    LinkRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 1
+      height: 1
+    CharacterStates: 
+    Links: 
   CCFuncitonList:
   - Name: Default Name
     Id: 1
-    Links: 
     Window:
       serializedVersion: 2
-      x: 420
-      y: 186
-      width: 260
-      height: 80
+      x: 552
+      y: 336
+      width: 0
+      height: 0
+    LinkRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 1
+      height: 1
     IsCharacterStateMulti: 0
-    CharacterState: dawd
-    Function: awdasd
+    CharacterState: SmashUp.Charge
+    Function: ctx => ctx.IsGrounded
+  - Name: Default Name
+    Id: 3
+    Window:
+      serializedVersion: 2
+      x: 733
+      y: 52
+      width: 0
+      height: 0
+    LinkRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 1
+      height: 1
+    IsCharacterStateMulti: 1
+    CharacterState: 
+    Function: "context => {\r\n            var input = context.Input;\r\n            if
+      (!input.Attack.WasPressed)\r\n                return null;\r\n            switch
+      (input.Smash.Direction) {\r\n                case Direction.Right:\r\n                case
+      Direction.Left:\r\n                    return SmashSide.Charge;\r\n                case
+      Direction.Up:\r\n                    return SmashUp.Charge;\r\n                case
+      Direction.Down:\r\n                    return SmashDown.Charge;\r\n            }\r\n
+      \           return null;\r\n        }"
