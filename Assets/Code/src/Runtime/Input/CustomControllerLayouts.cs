@@ -44,11 +44,11 @@ public class CustomControllerLayouts : MonoBehaviour {
         { ""name"" : ""leftTrigger"", ""offset"" : 7, ""format"" : ""BYTE"" },
         { ""name"" : ""rightTrigger"", ""offset"" : 8, ""format"" : ""BYTE"" },
         { ""name"" : ""leftStick"", ""offset"" : 3, ""format"" : ""VC2S"" },
-        { ""name"" : ""leftStick/x"", ""offset"" : 0, ""format"" : ""BYTE"",  ""parameters"" : ""normalize,normalizeMin=-0.000001,normalizeMax=1"" },
-        { ""name"" : ""leftStick/y"", ""offset"" : 1, ""format"" : ""BYTE"",  ""parameters"" : ""normalize,normalizeMin=-0.000001,normalizeMax=1,invert"" },
+        { ""name"" : ""leftStick/x"", ""offset"" : 0, ""format"" : ""BYTE"",  ""parameters"" : ""normalize,normalizeMin=-0,normalizeZero=0.5,normalizeMax=1"" },
+        { ""name"" : ""leftStick/y"", ""offset"" : 1, ""format"" : ""BYTE"",  ""parameters"" : ""normalize,normalizeMin=-0,normalizeZero=0.5,normalizeMax=1,invert"" },
         { ""name"" : ""rightStick"", ""offset"" : 5, ""format"" : ""VC2S"" },
-        { ""name"" : ""rightStick/y"", ""offset"" : 0, ""format"" : ""BYTE"",  ""parameters"" : ""normalize,normalizeMin=-0.000001,normalizeMax=1,invert""},
-        { ""name"" : ""rightStick/x"", ""offset"" : 1, ""format"" : ""BYTE"",   ""parameters"" : ""normalize,normalizeMin=-0.000001,normalizeMax=1"" }
+        { ""name"" : ""rightStick/y"", ""offset"" : 0, ""format"" : ""BYTE"",  ""parameters"" : ""normalize,normalizeMin=-0,normalizeZero=0.5,normalizeMax=1,invert""},
+        { ""name"" : ""rightStick/x"", ""offset"" : 1, ""format"" : ""BYTE"",   ""parameters"" : ""normalize,normalizeMin=-0,normalizeZero=0.5,normalizeMax=1"" }
     ]
 }
     ");
