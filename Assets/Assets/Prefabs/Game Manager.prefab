@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4196703080495454}
   - component: {fileID: 114070187349190498}
   - component: {fileID: 114286316001963736}
+  - component: {fileID: 114030854213002886}
   m_Layer: 0
   m_Name: EditorQuickMatch
   m_TagString: EditorOnly
@@ -229,6 +230,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114030854213002886
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1211042657356302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceae2eac6dd2a8642aab56c28665529b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MatchManager: {fileID: 114727785565368142}
 --- !u!114 &114070187349190498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -288,8 +301,6 @@ MonoBehaviour:
   StartOffset: {x: 0, y: 0, z: 0}
   TranslationSpeed: {x: 1, y: 1, z: 1}
   RotationSpeed: {x: 20, y: 20}
-  ZoomInControl: 13
-  ZoomOutControl: 14
 --- !u!114 &114710496242346924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -302,7 +313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerOneKey: 13
-  PauseButton: 20
   PausedPlayer: 0
   ResetKeys: 300100000d0000007100000065000000
 --- !u!114 &114727785565368142
@@ -330,7 +340,7 @@ MonoBehaviour:
     - PlayerID: 1
       LocalPlayerID: 1
       Selection:
-        CharacterID: 3660741799
+        CharacterID: 3548088660
         Pallete: 1
       DefaultDamage: 0
     - PlayerID: 2
