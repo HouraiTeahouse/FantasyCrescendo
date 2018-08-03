@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class ShieldState : CharacterState {
+public class ShieldState : State {
 }
 
 }

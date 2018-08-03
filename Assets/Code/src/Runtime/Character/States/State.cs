@@ -1,13 +1,16 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Players;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterState : State<CharacterContext>, IEntity, IStateView<PlayerState>,
-                              ISimulation<PlayerState, PlayerInputContext> {
+public class State : IEntity, IStateView<PlayerState>,
+                     ISimulation<PlayerState, PlayerInputContext> {
+
+  public delegate State Transition(CharacterContext context);
 
   public string Name { get; private set; }
   public uint Id { get; private set; }
@@ -26,17 +29,46 @@ public class CharacterState : State<CharacterContext>, IEntity, IStateView<Playe
   public virtual Task Initalize(PlayerConfig config, GameObject gameObject, 
                                 bool isView) => null;
 
-  public override void OnStateEnter(CharacterContext context) {
+  readonly List<Transition> _transitions;
+  public ReadOnlyCollection<Transition> Transitions { get; }
+
+  protected State() {
+    _transitions = new List<Transition>();
+    Transitions = new ReadOnlyCollection<Transition>(_transitions);
+  }
+
+  public State AddTransition(Transition transition) {
+    Argument.NotNull(transition);
+    _transitions.Add(transition);
+    return this;
+  }
+
+  public virtual State Passthrough(CharacterContext context) => EvaluateTransitions(context);
+
+  public State EvaluateTransitions(CharacterContext context) {
+    foreach (var transition in _transitions) {
+      var newState = transition(context);
+      if (newState != null && newState?.Data?.EntryPolicy != StateEntryPolicy.Blocked) {
+        return newState;
+      }
+    }
+    return null;
+  }
+
+  public virtual StateEntryPolicy GetEntryPolicy(CharacterContext context) => StateEntryPolicy.Normal;
+
+  public virtual void OnStateEnter(CharacterContext context) {
     context.State.StateTick = 0;
     context.State.ResetPlayersHit();
   }
+  public virtual void OnStateUpdate(CharacterContext context) {}
+  public virtual void OnStateExit(CharacterContext context) {}
 
   public void Simulate(ref PlayerState state, PlayerInputContext simulate) {}
-
   public void ApplyState(ref PlayerState state) {}
 
-  public CharacterState AddTransitionTo(CharacterState state, 
-                                        Func<CharacterContext, bool> extraCheck = null) {
+  public State AddTransitionTo(State state, 
+                               Func<CharacterContext, bool> extraCheck = null) {
     if (extraCheck != null)
       AddTransition(ctx => ctx.NormalizedStateTime >= 1.0f && extraCheck(ctx) ? state : null);
     else
@@ -44,17 +76,7 @@ public class CharacterState : State<CharacterContext>, IEntity, IStateView<Playe
     return this;
   }
 
-  public override State<CharacterContext> Passthrough(CharacterContext context) {
-    var altContext = context.Clone();
-    altContext.State.StateTick = uint.MaxValue;
-    return EvaluateTransitions(altContext);
-  }
-
-  public override StateEntryPolicy GetEntryPolicy (CharacterContext context) {
-    return Data.EntryPolicy;
-  }
-
-  public static bool operator ==(CharacterState lhs, CharacterState rhs) {
+  public static bool operator ==(State lhs, State rhs) {
     if (object.ReferenceEquals(lhs, null) && object.ReferenceEquals(rhs, null))
       return true;
     if (object.ReferenceEquals(lhs, null) ^ object.ReferenceEquals(rhs, null))
@@ -62,12 +84,12 @@ public class CharacterState : State<CharacterContext>, IEntity, IStateView<Playe
     return lhs.AnimatorHash == rhs.AnimatorHash;
   }
 
-  public static bool operator !=(CharacterState lhs, CharacterState rhs) {
+  public static bool operator !=(State lhs, State rhs) {
     return !(lhs == rhs);
   }
 
   public override bool Equals(object obj) {
-    var state = obj as CharacterState;
+    var state = obj as State;
     return object.ReferenceEquals(state, null) ? false : state == this;
   }
 
@@ -79,17 +101,17 @@ public class CharacterState : State<CharacterContext>, IEntity, IStateView<Playe
 
 public static class CharacterStateExtensions {
 
-public static IEnumerable<CharacterState> AddTransitionTo(this IEnumerable<CharacterState> states,
-                                                          State<CharacterContext> state) {
-  foreach (CharacterState characterState in states) {
+public static IEnumerable<State> AddTransitionTo(this IEnumerable<State> states,
+                                                 State state) {
+  foreach (State characterState in states) {
     characterState.AddTransition(ctx => ctx.NormalizedStateTime >= 1.0f ? state : null);
   }
   return states;
 }
 
-public static void Chain(this IEnumerable<CharacterState> states) {
-  CharacterState last = null;
-  foreach (CharacterState state in states) {
+public static void Chain(this IEnumerable<State> states) {
+  State last = null;
+  foreach (State state in states) {
     if (state == null) continue;
     if (last != null) last.AddTransitionTo(state);
     last = state;

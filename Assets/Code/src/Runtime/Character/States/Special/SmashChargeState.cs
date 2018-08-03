@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class SmashChargeState : CharacterState {
+public class SmashChargeState : State {
 
   public override void OnStateEnter(CharacterContext context) {
     context.State.Charge = 0;

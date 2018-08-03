@@ -21,7 +21,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
   public CharacterStateData _default;
   Dictionary<string, CharacterStateData> _dataMap;
 
-  public StateControllerBuilder<CharacterState, CharacterContext> Builder { get; set; }
+  public StateControllerBuilder Builder { get; set; }
 
   CharacterStateData GetStateData(string key) {
     _dataMap = _dataMap ?? new Dictionary<string, CharacterStateData>();
@@ -47,7 +47,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
       if (!string.IsNullOrEmpty(path))
         propertyName = path + "." + propertyName;
       object instance = Activator.CreateInstance(propertyInfo.PropertyType);
-      var state = instance as CharacterState;
+      var state = instance as State;
       propertyInfo.SetValue(obj, instance, null);
       if (state != null) {
         state.Initalize(propertyName, currentId++, GetStateData(propertyName));
@@ -85,14 +85,14 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     return Input(i => direction == i.Smash.Direction);
   }
 
-  public StateController<CharacterState, CharacterContext> BuildCharacterControllerImpl(StateControllerBuilder<CharacterState, CharacterContext> builder) {
+  public StateController BuildCharacterControllerImpl(StateControllerBuilder builder) {
     Builder = builder;
     InjectState(this);
 
     // Ground Attacks
     new [] {Idle, Walk, CrouchStart, Crouch, CrouchEnd}
         // Smash Attacks
-        .AddTransitions<CharacterState, CharacterContext>(context => {
+        .AddTransitions(context => {
             var input = context.Input;
             if (!input.Attack.WasPressed)
                 return null;
@@ -108,7 +108,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
             return null;
         })
         // Tilt Attacks
-        .AddTransitions<CharacterState, CharacterContext>(context => {
+        .AddTransitions(context => {
             var input = context.Input;
             if (!input.Attack.WasPressed)
                 return null;
@@ -133,7 +133,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     new [] {Fall, Jump, JumpAerial}
         .AddTransitions(Land, ctx => ctx.IsGrounded)
         // Aerial Attacks
-        .AddTransitions<CharacterState, CharacterContext>(context => {
+        .AddTransitions(context => {
             var input = context.Input;
             if (!input.Attack.WasPressed)
                 return null;
