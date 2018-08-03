@@ -4,38 +4,44 @@ using System.Linq;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class StateControllerBuilder<T, TContext> where T : State<TContext> {
+public class StateControllerBuilder {
 
-  internal readonly HashSet<T> _states;
-  public T DefaultState { get; set; }
-  public IEnumerable<T> States =>  _states.Select(x => x);
+  internal readonly HashSet<State> _states;
+  public State DefaultState { get; set; }
+  public IEnumerable<State> States =>  _states.Select(x => x);
 
   public StateControllerBuilder() {
-    _states = new HashSet<T>();
+    _states = new HashSet<State>();
   }
 
-  public StateController<T, TContext> Build() {
-    if (DefaultState == null)
+  public StateController Build() {
+    if (DefaultState == null) {
       throw new InvalidOperationException();
-    if (!_states.Contains(DefaultState))
+    }
+    if (!_states.Contains(DefaultState)) {
       throw new InvalidOperationException();
-    return new StateController<T, TContext>(this);
+    }
+    return new StateController(this);
   }
 
-  public StateControllerBuilder<T, TContext> WithDefaultState(T state) {
-    if (state == null)
+  public StateControllerBuilder WithDefaultState(State state) {
+    if (state == null) {
       throw new ArgumentNullException("state");
-    if (!_states.Contains(state))
+    }
+    if (!_states.Contains(state)) {
       AddState(state);
+    }
     DefaultState = state;
     return this;
   }
 
-  public StateControllerBuilder<T, TContext> AddState(T state) {
-    if (state == null)
+  public StateControllerBuilder AddState(State state) {
+    if (state == null) {
       throw new ArgumentNullException("state");
-    if (_states.Contains(state))
+    }
+    if (_states.Contains(state)) {
       throw new ArgumentException($"States cannot be added multiple times: {state}");
+    }
     _states.Add(state);
     return this;
   }
