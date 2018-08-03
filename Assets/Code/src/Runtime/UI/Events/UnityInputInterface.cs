@@ -11,7 +11,7 @@ public class UnityInputInterface : BaseInput {
 
   public override bool mousePresent => Mouse.current != null;
   public override Vector2 mousePosition => Mouse.current?.position?.ReadValue() ?? Vector2.zero;
-  public override Vector2 mouseScrollDelta => Mouse.current?.scroll?.ReadValue() ?? Vector2.zero;
+  //public override Vector2 mouseScrollDelta => Mouse.current?.scroll?.ReadValue() ?? Vector2.zero;
 
   public override bool GetMouseButton(int button) => GetMouseButtonControl(button)?.isPressed ?? false;
   public override bool GetMouseButtonDown(int button) => GetMouseButtonControl(button)?.wasJustPressed ?? false;
@@ -20,7 +20,9 @@ public class UnityInputInterface : BaseInput {
   public override bool GetButtonDown(string controlPath) {
     foreach (var control in InputSystem.GetControls(controlPath)) {
       var button = control as ButtonControl;
-      if (button != null && button.wasJustPressed) {
+      var isMouse = control.device is Mouse;
+      // Ignore mouse buttons
+      if (button != null && !isMouse && button.wasJustPressed) {
         return true;
       }
     }
@@ -31,10 +33,12 @@ public class UnityInputInterface : BaseInput {
     float sum = 0.0f;
     foreach (var control in InputSystem.GetControls(controlPath)) {
       var axis = control as AxisControl;
-      if (axis == null) continue;
+      var isMouse = control.device is Mouse;
+      // Ignore mouse axes
+      if (axis == null && !isMouse) continue;
       sum += axis.ReadValue();
     }
-    return Mathf.Clamp(sum, -1.0f, 1.0f);
+    return 0.0f; //Mathf.Clamp(sum, -1.0f, 1.0f);
   }
 
   ButtonControl GetMouseButtonControl(int buttonId) {
