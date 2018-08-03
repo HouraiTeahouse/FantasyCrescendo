@@ -12,18 +12,52 @@ namespace HouraiTeahouse {
 
     [System.Serializable]
     public class CCGeneral{
-      public string Name = "Default Name";
       public int Id;
       public Rect Window = Rect.zero;
 
-      public Rect LinkRect;
-      public Vector2 GetLinkCenter => LinkRect.center + Window.position;
+      public List<int> Links = new List<int>();
+      public List<int> LinkTargets = new List<int>();
+
+      public List<Rect> LinkButtons = new List<Rect>();
+      public Vector2 GetLinkCenter(int index) => LinkButtons[index].center + Window.position;
+      public Vector2 GetLinkFreeCenter => GetLinkCenter(LinkButtons.Count - 1);
+
+      public CCGeneral(CCBuilderScriptableObject reference, int ID){
+        Id = ID;
+        LinkButtons.Add(Rect.zero);
+
+        reference.CCDictionary.Add(ID, this);
+      }
+
+      public int AddLink(int ID, int TargetID){
+        Links.Add(ID);
+        LinkTargets.Add(TargetID);
+
+        LinkButtons.Add(Rect.zero);
+        return LinkButtons.Count - 2;
+      }
+
+      public void SetLinkTarget(int TargetID){
+        LinkTargets[LinkTargets.Count - 1] = TargetID;
+      }
+
+      public void RemoveLink(int ButtonID, out int itemID, out int linkTargetID){
+        itemID = Links[ButtonID];
+        linkTargetID = LinkTargets[ButtonID];
+
+        Links.RemoveAt(ButtonID);
+        LinkTargets.RemoveAt(ButtonID);
+        LinkButtons.RemoveAt(ButtonID);
+      }
     }
 
     [System.Serializable]
     public class CCCharacterStates: CCGeneral{
       public string CharacterStates;
-      public List<int> Links = new List<int>();
+
+      public CCCharacterStates(CCBuilderScriptableObject reference, int ID) : base(reference, ID){
+        reference.CCCharacterStateList.Add(this);
+      }
     }
 
     [System.Serializable]
@@ -31,15 +65,16 @@ namespace HouraiTeahouse {
       public bool IsCharacterStateMulti;
       public string CharacterState;
       public string Function;
+
+      public CCFunction(CCBuilderScriptableObject reference, int ID) : base(reference, ID) {
+        reference.CCFuncitonList.Add(this);
+      }
     }
 
     public Dictionary<int, CCGeneral> CCDictionary = new Dictionary<int, CCGeneral>();
-    [SerializeField] private List<CCCharacterStates> CCCharacterStateList = new List<CCCharacterStates>();
-    [SerializeField] private List<CCFunction> CCFuncitonList = new List<CCFunction>();
-    [SerializeField] private Stack<int> IdDisposeStack = new Stack<int>();
-
-    public List<CCCharacterStates> GetCharacterStates => CCCharacterStateList;
-    public List<CCFunction> GetFunctions => CCFuncitonList;
+    public List<CCCharacterStates> CCCharacterStateList = new List<CCCharacterStates>();
+    public List<CCFunction> CCFuncitonList = new List<CCFunction>();
+    [SerializeField] private List<int> IdDisposeStack = new List<int>();
 
     public void OnEnable() {
       CCDictionary = new Dictionary<int, CCGeneral>(CCCharacterStateList.Count + CCFuncitonList.Count);
@@ -49,28 +84,26 @@ namespace HouraiTeahouse {
 
     public int AddCharacterState(){
       var ID = GetID();
-
-      var temp = new CCCharacterStates();
-      temp.Id = ID;
-      CCCharacterStateList.Add(temp);
-      CCDictionary.Add(ID, temp);
+      var temp = new CCCharacterStates(this, ID);
       return ID;
     }
 
     public int AddFunction() {
       var ID = GetID();
-
-      var temp = new CCFunction();
-      temp.Id = ID;
-      CCFuncitonList.Add(temp);
-      CCDictionary.Add(ID, temp);
+      var temp = new CCFunction(this, ID);
       return ID;
+    }
+
+    public static bool isDifferentNodes(CCGeneral item1, CCGeneral item2){
+      var conItem1 = item1 is CCCharacterStates ? item1 as CCCharacterStates : item2 as CCCharacterStates;
+      var conItem2 = item1 is CCFunction ? item1 as CCFunction : item2 as CCFunction;
+      return conItem1 != null && conItem2 != null;
     }
 
     private int GetID(){
       var ID = -1;
       if (IdDisposeStack.Count > 0)
-        ID = IdDisposeStack.Pop();
+        ID = IdDisposeStack[IdDisposeStack.Count - 1];
       else
         ID = IdCounter++;
       return ID;

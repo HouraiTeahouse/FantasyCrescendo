@@ -15,7 +15,8 @@ namespace HouraiTeahouse {
     public Material material;
 
     public Texture2D lineTexture;
-    public Texture linkTexture;
+    public Texture linkFreeTexture;
+    public Texture linkFullTexture;
 
     public CCBuilderScriptableObject.CCGeneral LinkingCC = null;
 
@@ -42,7 +43,8 @@ namespace HouraiTeahouse {
       lineTexture.SetPixel(0, 1, Color.white);
       lineTexture.Apply();
 
-      linkTexture = Resources.Load("CCBuilder/LinkButton") as Texture;
+      linkFreeTexture = Resources.Load("CCBuilder/LinkButtonFree") as Texture;
+      linkFullTexture = Resources.Load("CCBuilder/LinkButtonFull") as Texture;
     }
 
     private void OnGUI() {
@@ -53,13 +55,10 @@ namespace HouraiTeahouse {
       if (!initDone) 
         InitStyles();
 
-      updateAssets = false;
-
       // Draw top bar buttons
       GUILayout.BeginHorizontal(GUILayout.MaxHeight(UpperTabHeight));
       if (GUILayout.Button("Add Character State")){
         CCBuilder.AddCharacterState();
-        updateAssets = true;
       }
       if (GUILayout.Button("Add Function")) {
         CCBuilder.AddFunction();
@@ -71,12 +70,12 @@ namespace HouraiTeahouse {
 
       // Draw each window
       BeginWindows();
-      foreach (var item in CCBuilder.GetCharacterStates) {
+      foreach (var item in CCBuilder.CCCharacterStateList) {
         item.Window = GUILayout.Window(item.Id, new Rect(item.Window.position, Vector2.zero), OnCharacterStateWindow, "Character States");
         item.Window.position = new Vector2(Mathf.Max(0, item.Window.position.x), Mathf.Max(UpperTabHeight, item.Window.position.y));
       }
 
-      foreach (var item in CCBuilder.GetFunctions) {
+      foreach (var item in CCBuilder.CCFuncitonList) {
         item.Window = GUILayout.Window(item.Id, new Rect(item.Window.position, Vector2.zero), OnFunctionWindow, "Function");
         item.Window.position = new Vector2(Mathf.Max(0, item.Window.position.x), Mathf.Max(UpperTabHeight, item.Window.position.y));
       }
@@ -84,10 +83,12 @@ namespace HouraiTeahouse {
 
       DrawLines();
 
+      EditorUtility.SetDirty(CCBuilder);
+    }
+
+    private void OnInspectorUpdate() {
       if (LinkingCC != null)
         Repaint();
-
-      EditorUtility.SetDirty(CCBuilder);
     }
 
     private void OnCharacterStateWindow(int id){
@@ -97,10 +98,7 @@ namespace HouraiTeahouse {
       var textHeight = textAreaStyle.CalcHeight(new GUIContent(item.CharacterStates), 150);
       item.CharacterStates = TextArea(item.CharacterStates, textAreaStyle, GUILayout.Width(150), GUILayout.Height(textHeight));
 
-      if(GUILayout.Button(linkTexture, GUIStyle.none)){
-        HandleLinkButton(item);
-      }
-      item.LinkRect = GUILayoutUtility.GetLastRect();
+      DrawLinkButtons(item);
 
       GUILayout.EndHorizontal();
 
@@ -112,10 +110,7 @@ namespace HouraiTeahouse {
 
       GUILayout.BeginHorizontal();
 
-      if (GUILayout.Button(linkTexture, GUIStyle.none)) {
-        HandleLinkButton(item);
-      }
-      item.LinkRect = GUILayoutUtility.GetLastRect();
+      DrawLinkButtons(item);
 
       GUILayout.BeginVertical();
       if (GUILayout.Button(item.IsCharacterStateMulti ? "Func<CharacterState, CharacterContext>" :
@@ -138,29 +133,40 @@ namespace HouraiTeahouse {
       GUI.DragWindow();
     }
 
-    private void HandleLinkButton(CCBuilderScriptableObject.CCGeneral incomingLink) {
+    private void TryToConnectTwoNodes(CCBuilderScriptableObject.CCGeneral incomingLink) {
       if (LinkingCC == null){
         LinkingCC = incomingLink;
       } else if (LinkingCC.Id == incomingLink.Id){
         LinkingCC = null;
       } else {
-        CCBuilderScriptableObject.CCCharacterStates CStemp = null;
-        CCBuilderScriptableObject.CCFunction FNtemp = null;
-        if (LinkingCC is CCBuilderScriptableObject.CCCharacterStates) {
-          CStemp = (CCBuilderScriptableObject.CCCharacterStates)LinkingCC;
-          FNtemp = (CCBuilderScriptableObject.CCFunction)incomingLink;
-        } else if (incomingLink is CCBuilderScriptableObject.CCCharacterStates) {
-          CStemp = (CCBuilderScriptableObject.CCCharacterStates)incomingLink;
-          FNtemp = (CCBuilderScriptableObject.CCFunction)LinkingCC;
-        }
-
-        if (CStemp != null){
-          if (!CStemp.Links.Contains(FNtemp.Id)) {
-            CStemp.Links.Add(FNtemp.Id);
+        if (CCBuilderScriptableObject.isDifferentNodes(LinkingCC, incomingLink)) {
+          if (!LinkingCC.Links.Contains(incomingLink.Id)) {
+            incomingLink.SetLinkTarget(LinkingCC.AddLink(incomingLink.Id, incomingLink.AddLink(LinkingCC.Id, -1)));
             LinkingCC = null;
           }
         }
       }
+    }
+
+    private void DrawLinkButtons(CCBuilderScriptableObject.CCGeneral item) {
+      GUILayout.BeginVertical();
+      for (var i = 0; i < item.LinkButtons.Count; i++) {
+        if (i < item.LinkButtons.Count - 1){
+          if (GUILayout.Button(linkFullTexture, GUIStyle.none) && LinkingCC == null) {
+            int tempID;
+            int targetID;            
+            item.RemoveLink(i, out tempID, out targetID);
+            CCBuilder.CCDictionary[tempID].RemoveLink(targetID, out tempID, out targetID);
+          }
+        } else{
+          if (GUILayout.Button(linkFreeTexture, GUIStyle.none)) {
+            TryToConnectTwoNodes(item);
+          }
+        }
+        
+        item.LinkButtons[i] = GUILayoutUtility.GetLastRect();
+      }
+      GUILayout.EndVertical();
     }
 
     private void DrawLines(){
@@ -168,19 +174,16 @@ namespace HouraiTeahouse {
       Handles.color = Color.black;
 
       if (LinkingCC != null)
-        Handles.DrawAAPolyLine(lineTexture, 5, LinkingCC.GetLinkCenter, Event.current.mousePosition);
+        Handles.DrawAAPolyLine(lineTexture, 4, LinkingCC.GetLinkFreeCenter, Event.current.mousePosition);
 
-      foreach (var item in CCBuilder.GetCharacterStates) {
-        foreach (var linkItem in item.Links) {
-          Handles.DrawAAPolyLine(lineTexture, 5, item.GetLinkCenter, CCBuilder.CCDictionary[linkItem].GetLinkCenter);
+      foreach (var item in CCBuilder.CCCharacterStateList) {
+        for(var i = 0; i < item.Links.Count; i++) {
+          Handles.DrawAAPolyLine(lineTexture, 3, item.GetLinkCenter(i), 
+                                  CCBuilder.CCDictionary[item.Links[i]].GetLinkCenter(item.LinkTargets[i]));
         }
       }
 
       Handles.EndGUI();
-    }
-
-    private void BuildScript(){
-      
     }
 
     /// <summary>
