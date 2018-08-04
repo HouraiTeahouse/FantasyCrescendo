@@ -12,122 +12,50 @@ MonoBehaviour:
   m_Name: CCBuilder
   m_EditorClassIdentifier: 
   IdCounter: 5
-  CCCharacterStateList:
+  NodeList:
   - Id: 0
     Window:
       serializedVersion: 2
-      x: 24
-      y: 197
-      width: 174
-      height: 45
-    Links: 03000000
-    LinkTargets: 00000000
-    LinkButtons:
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-    CharacterStates: 
-  - Id: 2
-    Window:
-      serializedVersion: 2
-      x: 35
-      y: 272
-      width: 174
-      height: 55
-    Links: 0100000004000000
-    LinkTargets: 0000000000000000
-    LinkButtons:
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-    CharacterStates: 
-  CCFuncitonList:
+      x: 291
+      y: 430
+      width: 120
+      height: 50
+    Content: 
+    Links: 0300000002000000
   - Id: 1
     Window:
       serializedVersion: 2
-      x: 287
-      y: 231
-      width: 274
-      height: 80
-    Links: 02000000
-    LinkTargets: 00000000
-    LinkButtons:
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-    IsCharacterStateMulti: 0
-    CharacterState: 
-    Function: 
+      x: 651
+      y: 191
+      width: 120
+      height: 50
+    Content: 
+    Links: 0000000004000000
+  - Id: 2
+    Window:
+      serializedVersion: 2
+      x: 207
+      y: 193
+      width: 120
+      height: 50
+    Content: 
+    Links: 0100000003000000
   - Id: 3
     Window:
       serializedVersion: 2
-      x: 298
-      y: 65
-      width: 274
-      height: 80
-    Links: 00000000
-    LinkTargets: 00000000
-    LinkButtons:
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-    IsCharacterStateMulti: 0
-    CharacterState: 
-    Function: 
+      x: 427
+      y: 59
+      width: 120
+      height: 50
+    Content: 
+    Links: 0400000001000000
   - Id: 4
     Window:
       serializedVersion: 2
-      x: 293
-      y: 345
-      width: 274
-      height: 80
-    Links: 02000000
-    LinkTargets: 01000000
-    LinkButtons:
-    - serializedVersion: 2
-      x: 5
-      y: 20
-      width: 10
-      height: 10
-    - serializedVersion: 2
-      x: 5
-      y: 30
-      width: 10
-      height: 10
-    IsCharacterStateMulti: 0
-    CharacterState: 
-    Function: 
+      x: 579
+      y: 433
+      width: 120
+      height: 50
+    Content: 
+    Links: 0200000000000000
   IdDisposeStack: 
