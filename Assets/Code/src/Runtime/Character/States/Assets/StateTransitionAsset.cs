@@ -6,29 +6,49 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public struct StateTransitionCondition {
-
-  public Func<CharacterContext, bool> BuildPredicate() {
-    throw new NotImplementedException();
-  }
-}
-
 public class StateTransitionAsset : ScriptableObject {
+
+  public enum ConditionRequirement {
+    TransitionIfAll,
+    TransitionIfAny,
+    TransitionIfNone
+  }
 
   public StateAsset SourceState;
   public StateAsset DestinationState;
+  public ConditionRequirement TransitionRequirement;
   public List<StateTransitionCondition> Conditions;
   public bool Muted;
 
   public State.Transition BuildTransition(State targetState) {
     Func<CharacterContext, bool>[] predicates = BuildPredicates(Conditions);
-    return (context) => {
-      if (Muted) return null;
-      foreach (var predicate in predicates) {
-        if (!predicate(context)) return null;
-      }
-      return targetState;
-    };
+    switch (TransitionRequirement) {
+      default:
+      case ConditionRequirement.TransitionIfAll:
+        return (context) => {
+          if (Muted) return null;
+          foreach (var predicate in predicates) {
+            if (!predicate(context)) return null;
+          }
+          return targetState;
+        };
+      case ConditionRequirement.TransitionIfAny:
+        return (context) => {
+          if (Muted) return null;
+          foreach (var predicate in predicates) {
+            if (predicate(context)) return targetState;
+          }
+          return null;
+        };
+      case ConditionRequirement.TransitionIfNone:
+        return (context) => {
+          if (Muted) return null;
+          foreach (var predicate in predicates) {
+            if (predicate(context)) return null;
+          }
+          return targetState;
+        };
+    }
   }
 
   static Func<CharacterContext, bool>[] BuildPredicates(IEnumerable<StateTransitionCondition> conditions) {
