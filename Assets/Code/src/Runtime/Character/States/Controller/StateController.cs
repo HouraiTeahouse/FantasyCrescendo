@@ -42,28 +42,17 @@ public class StateController {
   /// </summary>
   /// <param name="context">the context object for evaluating the chnage against</param>
   /// <returns>the new current state</returns>
-  public State UpdateState(State src, CharacterContext context) => UpdateState(src, context, false);
-
-  State UpdateState(State src, 
-                             CharacterContext context, 
-                             bool passthrough) {
+  public State UpdateState(State src, CharacterContext context) {
     State dst;
-    if (passthrough) {
-      dst = src.Passthrough(context);
-    } else {
-      src?.OnStateUpdate(context);
-      dst = src.EvaluateTransitions(context);
-    }
+    src?.OnStateUpdate(context);
+    dst = src.EvaluateTransitions(context);
     if (dst == null) { 
       return src;
     } else {
       switch (dst.GetEntryPolicy(context)) {
         case StateEntryPolicy.Normal:
-          ChangeState(src, dst, context);
-          break;
         case StateEntryPolicy.Passthrough:
           ChangeState(src, dst, context);
-          dst = UpdateState(dst, context, true);
           break;
         case StateEntryPolicy.Blocked:
           break;
