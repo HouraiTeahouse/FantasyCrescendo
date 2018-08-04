@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
+using System.Reflection;
 
 namespace HouraiTeahouse {
   public class CCBuilderWindow : EditorWindow {
     private const float UpperTabHeight = 20;
-
-    public bool updateAssets;
+    private readonly Vector2 NodeSize = new Vector2(120, 50);
+    private readonly Vector2 NodeTextSize = new Vector2(60, 20);
 
     public bool initDone = false;
     public CCBuilderScriptableObject CCBuilder;
-    public GUIStyle textAreaStyle;
-    public Material material;
+    public GUIStyle labelStyle;
 
     public Texture2D lineTexture;
     public Texture linkFreeTexture;
     public Texture linkFullTexture;
 
-    public CCBuilderScriptableObject.CCGeneral LinkingCC = null;
+    public CCBuilderScriptableObject.CCNode LinkingCC = null;
 
     [MenuItem("Window/Character State Builder")]
     static void Init() {
@@ -30,13 +31,13 @@ namespace HouraiTeahouse {
       LinkingCC = null;
     }
 
-    private void InitStyles(){
+    private void InitStyles() {
       initDone = true;
-    
-      textAreaStyle = new GUIStyle(GUI.skin.textArea);
-      textAreaStyle.wordWrap = true;
 
-      material = new Material(Shader.Find("Hidden/Internal-Colored"));
+      labelStyle = GUI.skin.label;
+      labelStyle.alignment = TextAnchor.MiddleCenter;
+      labelStyle.richText = true;
+      labelStyle.fontSize = 15;
 
       lineTexture = new Texture2D(1, 2);
       lineTexture.SetPixel(0, 0, new Color(0, 0, 0, 0.5f));
@@ -52,36 +53,31 @@ namespace HouraiTeahouse {
       if (CCBuilder == null)
         CCBuilder = CCBuilderScriptableObject.GetCCBuilder();
 
-      if (!initDone) 
+      if (!initDone)
         InitStyles();
+
+      // Draw lines (underneath all)
+      DrawLinkLines();
 
       // Draw top bar buttons
       GUILayout.BeginHorizontal(GUILayout.MaxHeight(UpperTabHeight));
-      if (GUILayout.Button("Add Character State")){
-        CCBuilder.AddCharacterState();
-      }
-      if (GUILayout.Button("Add Function")) {
-        CCBuilder.AddFunction();
+      if (GUILayout.Button("Add Node")) {
+        CCBuilder.AddNode();
       }
       if (GUILayout.Button("Build")) {
-        CCBuilder.UpdateFile();
+        //CCBuilder.UpdateFile();
       }
       GUILayout.EndHorizontal();
 
       // Draw each window
       BeginWindows();
-      foreach (var item in CCBuilder.CCCharacterStateList) {
-        item.Window = GUILayout.Window(item.Id, new Rect(item.Window.position, Vector2.zero), OnCharacterStateWindow, "Character States");
-        item.Window.position = new Vector2(Mathf.Max(0, item.Window.position.x), Mathf.Max(UpperTabHeight, item.Window.position.y));
-      }
-
-      foreach (var item in CCBuilder.CCFuncitonList) {
-        item.Window = GUILayout.Window(item.Id, new Rect(item.Window.position, Vector2.zero), OnFunctionWindow, "Function");
-        item.Window.position = new Vector2(Mathf.Max(0, item.Window.position.x), Mathf.Max(UpperTabHeight, item.Window.position.y));
+      foreach (var item in CCBuilder.NodeList) {
+        item.Window = GUI.Window(item.Id, new Rect(item.Window.position, NodeSize), DrawNode, "", GUIStyle.none);
       }
       EndWindows();
 
-      DrawLines();
+      HandleLinkInput();
+      DrawMouseLine();
 
       EditorUtility.SetDirty(CCBuilder);
     }
@@ -91,95 +87,90 @@ namespace HouraiTeahouse {
         Repaint();
     }
 
-    private void OnCharacterStateWindow(int id){
-      var item = (CCBuilderScriptableObject.CCCharacterStates)CCBuilder.CCDictionary[id];
+    private void DrawNode(int id) {
+      var item = CCBuilder.NodeDictionary[id];
+      var e = Event.current;
 
-      GUILayout.BeginHorizontal();
-      var textHeight = textAreaStyle.CalcHeight(new GUIContent(item.CharacterStates), 150);
-      item.CharacterStates = TextArea(item.CharacterStates, textAreaStyle, GUILayout.Width(150), GUILayout.Height(textHeight));
-
-      DrawLinkButtons(item);
-
-      GUILayout.EndHorizontal();
-
-      GUI.DragWindow();
-    }
-
-    private void OnFunctionWindow(int id) {
-      var item = (CCBuilderScriptableObject.CCFunction)CCBuilder.CCDictionary[id];
-
-      GUILayout.BeginHorizontal();
-
-      DrawLinkButtons(item);
-
-      GUILayout.BeginVertical();
-      if (GUILayout.Button(item.IsCharacterStateMulti ? "Func<CharacterState, CharacterContext>" :
-                                      "Func<CharacterState, bool>")) {
-        item.IsCharacterStateMulti = !item.IsCharacterStateMulti;
+      // Reposition so it doesn't get too out of screen
+      item.Window.position = new Vector2(Mathf.Max(item.Window.position.x, 0), Mathf.Max(item.Window.position.y, UpperTabHeight));
+      
+      // If touched, switch to that node's scriptable object
+      if (e.button == 0 && e.type == EventType.MouseDown){
+        Selection.activeObject = CCBuilder;
       }
 
-      if (!item.IsCharacterStateMulti){
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Character State");
-        item.CharacterState = TextField(item.CharacterState, GUILayout.Width(125));
-        GUILayout.EndHorizontal();
+      // Draw the damn box and text
+      GUILayout.BeginArea(new Rect(Vector2.zero, item.Window.size), new GUIStyle("Box"));
+      var rect = new Rect((item.Window.size - NodeTextSize) / 2, NodeTextSize);
+      GUI.Label(rect, new GUIContent(item.Content), labelStyle);
+      GUILayout.EndArea();
+
+      // If right clicking, don't even try to drag
+      if (e.button != 1) {
+        GUI.DragWindow();
       }
-
-      var textHeight = textAreaStyle.CalcHeight(new GUIContent(item.Function), 250);
-      item.Function = TextArea(item.Function, textAreaStyle, GUILayout.Width(250), GUILayout.Height(textHeight));
-      GUILayout.EndVertical();
-
-      GUILayout.EndHorizontal();
-      GUI.DragWindow();
     }
 
-    private void TryToConnectTwoNodes(CCBuilderScriptableObject.CCGeneral incomingLink) {
-      if (LinkingCC == null){
-        LinkingCC = incomingLink;
-      } else if (LinkingCC.Id == incomingLink.Id){
-        LinkingCC = null;
-      } else {
-        if (CCBuilderScriptableObject.isDifferentNodes(LinkingCC, incomingLink)) {
-          if (!LinkingCC.Links.Contains(incomingLink.Id)) {
-            incomingLink.SetLinkTarget(LinkingCC.AddLink(incomingLink.Id, incomingLink.AddLink(LinkingCC.Id, -1)));
-            LinkingCC = null;
-          }
+    private void TryToConnectTwoNodes(CCBuilderScriptableObject.CCNode incomingLink) {
+      if (incomingLink != null && LinkingCC != incomingLink && !LinkingCC.Links.Contains(incomingLink.Id)) {
+        LinkingCC.AddLink(incomingLink.Id);
+      }
+      LinkingCC = null;
+      Repaint();
+    }
+
+    private void HandleLinkInput(){
+      Event e = Event.current;
+      if (e.button == 1) {
+        switch (e.type) {
+          case EventType.MouseDown:
+            foreach (var item in CCBuilder.NodeList) {
+              if (item.Window.Contains(e.mousePosition)) {
+                LinkingCC = item;
+                break;
+              }
+            }
+            break;
+          case EventType.MouseUp:
+            if (LinkingCC == null) break;
+            CCBuilderScriptableObject.CCNode temp = null;
+            foreach (var item in CCBuilder.NodeList) {
+              if (item.Window.Contains(e.mousePosition)) {
+                temp = item;
+                break;
+              }
+            }
+            TryToConnectTwoNodes(temp);
+            break;
         }
       }
     }
 
-    private void DrawLinkButtons(CCBuilderScriptableObject.CCGeneral item) {
-      GUILayout.BeginVertical();
-      for (var i = 0; i < item.LinkButtons.Count; i++) {
-        if (i < item.LinkButtons.Count - 1){
-          if (GUILayout.Button(linkFullTexture, GUIStyle.none) && LinkingCC == null) {
-            int tempID;
-            int targetID;            
-            item.RemoveLink(i, out tempID, out targetID);
-            CCBuilder.CCDictionary[tempID].RemoveLink(targetID, out tempID, out targetID);
-          }
-        } else{
-          if (GUILayout.Button(linkFreeTexture, GUIStyle.none)) {
-            TryToConnectTwoNodes(item);
-          }
-        }
-        
-        item.LinkButtons[i] = GUILayoutUtility.GetLastRect();
-      }
-      GUILayout.EndVertical();
-    }
-
-    private void DrawLines(){
+    private void DrawMouseLine(){
       Handles.BeginGUI();
       Handles.color = Color.black;
 
-      if (LinkingCC != null)
-        Handles.DrawAAPolyLine(lineTexture, 4, LinkingCC.GetLinkFreeCenter, Event.current.mousePosition);
+      if (LinkingCC != null) {
+        var direction = (Event.current.mousePosition - LinkingCC.GetCenter).normalized;
+        Handles.DrawAAPolyLine(lineTexture, 3, LinkingCC.GetDrawLineEnd(direction), Event.current.mousePosition);
+      }
 
-      foreach (var item in CCBuilder.CCCharacterStateList) {
-        for(var i = 0; i < item.Links.Count; i++) {
-          Handles.DrawAAPolyLine(lineTexture, 3, item.GetLinkCenter(i), 
-                                  CCBuilder.CCDictionary[item.Links[i]].GetLinkCenter(item.LinkTargets[i]));
+      Handles.EndGUI();
+    }
+
+    private void DrawLinkLines() {
+      Handles.BeginGUI();
+      Handles.color = Color.black;
+
+      foreach (var item in CCBuilder.NodeList) {
+        foreach (var link in item.Links.Select(c => CCBuilder.NodeDictionary[c])) {
+          var direction = (link.GetCenter - item.GetCenter).normalized;
+          var startPoint = item.GetDrawLineEnd(direction);
+          var endPoint = link.GetDrawLineEnd(direction);
+          var midPoint = (endPoint + startPoint) / 2;
+          Handles.DrawAAPolyLine(lineTexture, 2, startPoint, endPoint);
+          Handles.DrawAAPolyLine(lineTexture, 2, item.GetDrawLineArrowEnd(direction, midPoint, Vector3.forward), midPoint,
+                                                  item.GetDrawLineArrowEnd(direction, midPoint, Vector3.back));
         }
       }
 
@@ -198,8 +189,7 @@ namespace HouraiTeahouse {
           if (e.commandName == "Copy" || e.commandName == "Paste" || e.commandName == "SelectAll" || e.commandName == "Cut") {
             e.Use();
           }
-        }
-        else if (e.type == EventType.ExecuteCommand){
+        } else if (e.type == EventType.ExecuteCommand) {
           TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
           if (e.commandName == "Copy") {
             editor.Copy();
@@ -208,7 +198,7 @@ namespace HouraiTeahouse {
             return editor.text;
           } else if (e.commandName == "SelectAll") {
             editor.SelectAll();
-          } else if (e.commandName == "Cut"){
+          } else if (e.commandName == "Cut") {
             editor.Cut();
             return editor.text;
           }
@@ -220,7 +210,7 @@ namespace HouraiTeahouse {
     /// <summary>
     /// TextField with copy-paste support
     /// </summary>
-    public static string TextField(string value, params GUILayoutOption[] options) {
+    public static string TextField(Rect rect, string value, GUIStyle style) {
       int textFieldID = GUIUtility.GetControlID("TextField".GetHashCode(), FocusType.Keyboard) + 1;
       if (textFieldID == 0)
         return value;
@@ -228,23 +218,8 @@ namespace HouraiTeahouse {
       // Handle custom copy-paste
       value = HandleCopyPaste(textFieldID) ?? value;
 
-      return GUILayout.TextField(value, options);
-    }
-
-    /// <summary>
-    /// TextField with copy-paste support
-    /// </summary>
-    public static string TextArea(string value, GUIStyle style, params GUILayoutOption[] options) {
-      int textFieldID = GUIUtility.GetControlID("TextField".GetHashCode(), FocusType.Keyboard) + 1;
-      if (textFieldID == 0)
-        return value;
-
-      // Handle custom copy-paste
-      value = HandleCopyPaste(textFieldID) ?? value;
-
-      return GUILayout.TextArea(value, style, options);
+      GUI.SetNextControlName("NodeTextField");
+      return GUI.TextField(rect, value, style);
     }
   }
-
-
 }
