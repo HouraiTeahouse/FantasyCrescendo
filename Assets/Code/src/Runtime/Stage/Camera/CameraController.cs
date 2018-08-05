@@ -4,7 +4,15 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class CameraController : MonoBehaviour {
 
-  public static CameraController Instance { get; set; }
+  static CameraController _instance;
+  public static CameraController Instance {
+    get {
+      if (_instance == null) {
+        _instance = FindObjectOfType<CameraController>();
+      }
+      return _instance;
+    }
+  }
   public CameraTarget Target;
   public Camera Camera;
 
@@ -12,6 +20,7 @@ public class CameraController : MonoBehaviour {
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   void Awake() {
+    _instance = this;
     if (Camera == null) {
       Camera = GetComponentInChildren<Camera>();
     }

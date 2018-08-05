@@ -1,9 +1,6 @@
 [submodule "Assets/Code/deps/EditorAttributes"]
 	path = Packages/EditorAttributes
 	url = https://github.com/HouraiTeahouse/EditorAttributes
-[submodule "Assets/Code/deps/InControl"]
-	path = Packages/InControl
-	url = https://github.com/HouraiTeahouse/InControl
 [submodule "Assets/Code/deps/HouraiCore"]
 	path = Packages/HouraiCore
 	url = https://github.com/HouraiTeahouse/HouraiCore
@@ -28,3 +25,6 @@
 [submodule "Packages/Steamworks.NET"]
 	path = Packages/Steamworks.NET
 	url = https://github.com/HouraiTeahouse/Steamworks.NET.git
+[submodule "Packages/InputSystem"]
+	path = Packages/InputSystem
+	url = https://github.com/HouraiTeahouse/InputSystem.git

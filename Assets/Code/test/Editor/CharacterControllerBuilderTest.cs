@@ -10,14 +10,14 @@ using UnityEngine;
 [Parallelizable]
 public class CharacterControllerBuilderTest {
 
-  static StateController<CharacterState, CharacterContext> _stateController;
-  static Dictionary<string, CharacterState> _stateMap;
+  static StateController _stateController;
+  static Dictionary<string, State> _stateMap;
 
   [SetUp]
   public void Setup() {
     if (_stateMap != null && _stateController != null) return;
     var instance = ScriptableObject.CreateInstance<CharacterControllerBuilder>();
-    var builder = new StateControllerBuilder<CharacterState, CharacterContext>();
+    var builder = new StateControllerBuilder();
     _stateController = instance.BuildCharacterControllerImpl(builder);
     _stateMap = _stateController.States.ToDictionary(s => s.Name, s => s);
     UnityEngine.Object.DestroyImmediate(instance);

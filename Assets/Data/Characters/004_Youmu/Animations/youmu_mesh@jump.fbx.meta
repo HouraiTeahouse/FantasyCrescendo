@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 55afce5ced792a44b9eaa84338c4bb6a
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: Eye_Left_1
     100002: Eye_Left_2
@@ -310,9 +310,233 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ROOT_Pelvis
+        weight: 1
+      - path: ROOT_Pelvis/L_hip
+        weight: 1
+      - path: ROOT_Pelvis/L_hip/L_knee
+        weight: 1
+      - path: ROOT_Pelvis/L_hip/L_knee/L_ankle
+        weight: 1
+      - path: ROOT_Pelvis/L_hip/L_knee/L_ankle/L_ball
+        weight: 1
+      - path: ROOT_Pelvis/L_hip/L_knee/L_ankle/L_ball/L_toe
+        weight: 1
+      - path: ROOT_Pelvis/Myon
+        weight: 1
+      - path: ROOT_Pelvis/R_hip
+        weight: 1
+      - path: ROOT_Pelvis/R_hip/R_knee
+        weight: 1
+      - path: ROOT_Pelvis/R_hip/R_knee/R_ankle
+        weight: 1
+      - path: ROOT_Pelvis/R_hip/R_knee/R_ankle/R_ball
+        weight: 1
+      - path: ROOT_Pelvis/R_hip/R_knee/R_ankle/R_ball/R_toe
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Primary_Scabbard/Primary_Sword/Primary_Sword_tassle/Primary_Sword_tassle_end
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Secondary_Scabbard
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Secondary_Scabbard/Secondary_Sword
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_1/Skirt_mid_1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_1/Skirt_mid_1/Skirt_end_1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_1/Skirt_mid_1/Skirt_end_1/Skirt_Hem_1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_2/Skirt_mid_2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_2/Skirt_mid_2/Skirt_end_2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_2/Skirt_mid_2/Skirt_end_2/Skirt_Hem_2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_3/Skirt_mid_3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_3/Skirt_mid_3/Skirt_end_3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_3/Skirt_mid_3/Skirt_end_3/Skirt_Hem_3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_4
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_4/Skirt_mid_4
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_4/Skirt_mid_4/Skirt_end_4
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_4/Skirt_mid_4/Skirt_end_4/Skirt_Hem_4
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_5
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_5/Skirt_mid_5
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_5/Skirt_mid_5/Skirt_end_5
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_5/Skirt_mid_5/Skirt_end_5/Skirt_Hem_5
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_6
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_6/Skirt_mid_6
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_6/Skirt_mid_6/Skirt_end_6
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Skirt_waist_6/Skirt_mid_6/Skirt_end_6/Skirt_Hem_6
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_index1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_index1/L_index2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_index1/L_index2/L_index3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_middle1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_middle1/L_middle2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_middle1/L_middle2/L_middle3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_palm
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_palm/L_pinkie1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_palm/L_pinkie1/L_pinkie2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_palm/L_pinkie1/L_pinkie2/L_pinkie3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_palm/L_ring1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_palm/L_ring1/L_ring2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_palm/L_ring1/L_ring2/L_ring3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_thumb1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_thumb1/L_thumb2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/L_Clavicle/L_Shoulder/L_upperarm/L_forearm/L_forearm_roll/L_wrist/L_thumb1/L_thumb2/L_thumb3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Left_1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Left_2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Left_3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Left_4
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Left_5
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Left_6
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Right_1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Right_2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Right_3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Right_4
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Right_5
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Eye_Right_6
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Mouth_Left
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Mouth_Lower
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Mouth_Right
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/Neck_base/Head/Mouth_Upper
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_index1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_index1/R_index2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_index1/R_index2/R_index3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_middle1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_middle1/R_middle2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_middle1/R_middle2/R_middle3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_pinkie1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_pinkie1/R_pinkie2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_pinkie1/R_pinkie2/R_pinkie3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_ring1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_ring1/R_ring2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_palm/R_ring1/R_ring2/R_ring3
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_thumb1
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_thumb1/R_thumb2
+        weight: 1
+      - path: ROOT_Pelvis/Spine_1/Spine_2/Spine_3/Spine_4/R_Clavicle/R_Shoulder/R_upperarm/R_forearm/R_forearm_roll/R_wrist/R_thumb1/R_thumb2/R_thumb3
+        weight: 1
+      - path: YoumuMesh_Body
+        weight: 1
+      - path: YoumuMesh_PrimarySword
+        weight: 1
+      - path: YoumuMesh_SecondarySword
+        weight: 1
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: 7be0b64f86bf25a439e2179239c46339, type: 2}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: jump_start
@@ -365,6 +589,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 0.012499999
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
