@@ -30,6 +30,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
     SetupBindings();
+    //OptimizeHierarchy();
     if (!isView) {
       var animator = GetComponentInChildren<Animator>();
       if (animator != null){
@@ -77,6 +78,19 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
       foreach (var track in timeline.GetOutputTracks().OfType<TTrack>()) {
         Director.SetGenericBinding(track, component.gameObject);
       }
+    }
+  }
+
+  void OptimizeHierarchy() {
+    var animator = GetComponentInChildren<Animator>();
+    foreach (var animators in GetComponentsInChildren<Animator>()) {
+      var root = animator.gameObject;
+      var transforms = root.GetComponentsInChildren<Component>()
+                           .Where(comp => !(comp is Transform))
+                           .Select(comp => comp.name)
+                           .Distinct()
+                           .ToArray();
+      AnimatorUtility.OptimizeTransformHierarchy(root, transforms);
     }
   }
 

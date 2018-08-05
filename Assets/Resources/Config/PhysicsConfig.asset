@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: PhysicsConfig
   m_EditorClassIdentifier: 
   GroundedSnapOffset: 0.5
-  GroundedSnapDistance: 1.5
+  GroundedSnapDistance: 0.5
   StageLayers:
     serializedVersion: 2
     m_Bits: 1

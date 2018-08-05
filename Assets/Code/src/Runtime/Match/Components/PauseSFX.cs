@@ -18,7 +18,7 @@ public class PauseSFX : MonoBehaviour {
     Mediator.Global.CreateUnityContext(this)
       .Subscribe<MatchPauseStateChangedEvent>(args => {
         if (AudioSource == null) return;
-        var clip = args.Paused ? PauseClip : UnpauseClip;
+        var clip = args.IsPaused ? PauseClip : UnpauseClip;
         AudioSource.Stop();
         AudioSource.clip = clip;
         AudioSource.Play();

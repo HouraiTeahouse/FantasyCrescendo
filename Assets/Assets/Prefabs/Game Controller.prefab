@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 114715350892547174}
   - component: {fileID: 114974252137424500}
   - component: {fileID: 114423664066748220}
-  - component: {fileID: 114546086463323548}
   - component: {fileID: 114851974053767234}
   - component: {fileID: 114636917838261216}
   - component: {fileID: 114397010500727212}
@@ -134,9 +133,10 @@ GameObject:
   - component: {fileID: 114173882155944486}
   - component: {fileID: 114432504162126714}
   - component: {fileID: 114128713614494998}
+  - component: {fileID: 114512974970822564}
   m_Layer: 0
   m_Name: Game Controller
-  m_TagString: GameController
+  m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,7 +147,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1996456345168662}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -413,6 +413,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114512974970822564
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996456345168662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64825340ec94fed4db243671657386c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114539850339243256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -434,23 +445,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114546086463323548
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1996456345168662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logDebugInfo: 0
-  invertYAxis: 0
-  enableXInput: 0
-  useFixedUpdate: 1
-  dontDestroyOnLoad: 0
-  customProfiles: []
 --- !u!114 &114596792253477106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -645,6 +639,11 @@ MonoBehaviour:
   _defaultLanguage: en
   _dontDestroyOnLoad: 0
   localizationDirectory: lang
+  _onLanguageChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: HouraiTeahouse.Localization.LanguageChangedEvent, com.houraiteahouse.localization.Runtime,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114890420545811106
 MonoBehaviour:
   m_ObjectHideFlags: 1

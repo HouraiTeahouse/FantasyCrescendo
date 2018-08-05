@@ -22,7 +22,7 @@ public class CharacterControllerBuilderEditor : UnityEditor.Editor {
 
   void OnEnable() {
     var builder = target as CharacterControllerBuilder;
-    builder.BuildCharacterControllerImpl(new StateControllerBuilder<CharacterState, CharacterContext>());
+    builder.BuildCharacterControllerImpl(new StateControllerBuilder());
     EditorUtility.SetDirty(builder);
   }
 

@@ -1,14 +1,16 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
-using InControl;
 using UnityEngine;
+using UnityEngine.Experimental.Input;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 public class MatchPauseController : MonoBehaviour {
 
-  public MatchManager MatchManager { get { return MatchManager.Instance; } }
+  public MatchManager MatchManager => MatchManager.Instance;
   public KeyCode PlayerOneKey = KeyCode.Return;
-  public InputControlType PauseButton = InputControlType.Start;
+  //public InputControlType PauseButton = InputControlType.Start;
+
+  public int PausedPlayer;
 
   // TODO(james7132): Add support for non-keyboard reset.
   public KeyCode[] ResetKeys = new KeyCode[] {
@@ -18,17 +20,14 @@ public class MatchPauseController : MonoBehaviour {
     KeyCode.E,
   };
 
-  uint PausedPlayer;
-
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
   void Update() {
     if (MatchManager == null || !MatchManager.IsLocal) return;
-    if (MatchManager.CurrentProgressionID == MatchProgressionState.Pause) {
-      PausedCheck();
-    } else if (MatchManager.CurrentProgressionID == MatchProgressionState.InGame) {
-      UnpausedCheck();
+    switch (MatchManager.CurrentProgressionID) {
+      case MatchProgressionState.Pause: PausedCheck(); break;
+      case MatchProgressionState.InGame: UnpausedCheck(); break;
     }
   }
 
@@ -38,23 +37,23 @@ public class MatchPauseController : MonoBehaviour {
     }
     var wasPressed = WasPressed(PausedPlayer);
     if (wasPressed == true) {
-      MatchManager.SetPaused(false);
+      MatchManager.SetPaused(false, PausedPlayer);
     }
   }
 
   void UnpausedCheck() {
-    if (InputManager.Devices.Count <= 0) {
+    if (Gamepad.all.Count <= 0) {
       PlayerUnpausedCheck(0);
     } else {
-      for (uint i = 0; i < InputManager.Devices.Count; i++) {
+      for (var i = 0; i < Gamepad.all.Count; i++) {
         PlayerUnpausedCheck(i);
       }
     }
   }
 
-  void PlayerUnpausedCheck(uint player) {
+  void PlayerUnpausedCheck(int player) {
     if (WasPressed(player) == true) {
-      MatchManager.SetPaused(true);
+      MatchManager.SetPaused(true, player);
       PausedPlayer = player;
     }
   }
@@ -75,15 +74,15 @@ public class MatchPauseController : MonoBehaviour {
     return true;
   }
 
-  bool? WasPressed(uint player) {
-    if (player >= InputManager.Devices.Count) {
+  bool? WasPressed(int player) {
+    if (player >= Gamepad.all.Count) {
       if (player == 0) {
         return Input.GetKeyDown(PlayerOneKey);
       } else {
         return null;
       }
     }
-    return InputManager.Devices[(int)player].GetControl(PauseButton).WasPressed ||
+    return Gamepad.all[player].startButton.wasJustPressed ||
            (player == 0 && Input.GetKeyDown(PlayerOneKey));
   }
 
