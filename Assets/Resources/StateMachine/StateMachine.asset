@@ -11,14 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9939747bfa0274ab89120de308628c, type: 3}
   m_Name: StateMachine
   m_EditorClassIdentifier: 
-  _states:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _transitions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _states: []
+  _transitions: []

@@ -19,19 +19,10 @@ public class StateMachineAsset : BaseStateMachineAsset {
 
   [SerializeField] List<StateAsset> _states;
   [SerializeField] List<StateTransitionAsset> _transitions;
+  StateMachineMetadata _metadata;
 
   public ReadOnlyCollection<StateAsset> States => new ReadOnlyCollection<StateAsset>(_states);
-
-  #if UNITY_EDITOR
-  // Editor window purposes
-  int idCounter = 0;
-  Dictionary<int, StateMachineNode> _nodeDictionary;
-  List<StateMachineNode> _stateNodes;
-  List<int> idDisposeStack;
-
-  public ReadOnlyDictionary<int, StateMachineNode> NodeDictionary => new ReadOnlyDictionary<int, StateMachineNode>(_nodeDictionary);
-  public ReadOnlyCollection<StateMachineNode> StateNodes => new ReadOnlyCollection<StateMachineNode>(_stateNodes);
-  #endif
+  public StateMachineMetadata Metadata => _metadata ?? (_metadata = GetMetadataAsset());
 
   /// <summary>
   /// This function is called when the object becomes enabled and active.
@@ -93,82 +84,44 @@ public class StateMachineAsset : BaseStateMachineAsset {
   void Initialize() {
     _states = _states ?? new List<StateAsset>();
     _transitions = _transitions ?? new List<StateTransitionAsset>();
-
-    #if UNITY_EDITOR
-    if (_nodeDictionary == null) {
-      _nodeDictionary = new Dictionary<int, StateMachineNode>(StateNodes.Count);
-      foreach (var item in StateNodes) _nodeDictionary.Add(item.Id, item);
-    }
-
-    _stateNodes = _stateNodes ?? new List<StateMachineNode>();
-    idDisposeStack = idDisposeStack ?? new List<int>();
-  #endif
   }
 
 #if UNITY_EDITOR
 
-    #region EditorWindow
-
-    /// <summary>
-    /// Used to save the editor window's state between sessions.
-    /// </summary>
-    [Serializable]
-    public class StateMachineNode {
-      public int Id;
-      public Rect Window = Rect.zero;
-
-      public StateAsset Asset;
-      public List<int> DestinationIds;
-
-      public Vector2 GetCenter => Window.center;
-      public Vector2 GetDrawLineEnd(Vector2 Direction) => Window.center + (Vector2)Vector3.Cross(Direction, Vector3.forward) * 5;
-      public Vector2 GetDrawLineArrowEnd(Vector2 Direction, Vector2 LineCenter, Vector3 CrossVector) => LineCenter - (5 * Direction) + (Vector2)Vector3.Cross(Direction, CrossVector) * 5;
-
-      public StateMachineNode(int id, StateAsset asset) {
-        Id = id;
-        Asset = asset;
-        DestinationIds = new List<int>();
-      }
+  /// <summary>
+  /// Returns state machine asset
+  /// </summary>
+  /// <returns></returns>
+  public static StateMachineAsset GetStateMachineAsset() {
+    var myInstance = (StateMachineAsset)Resources.Load("StateMachine/StateMachine") as StateMachineAsset;
+    Debug.Log("getting state machine");
+    if (myInstance == null) {
+      myInstance = CreateInstance<StateMachineAsset>();
+      AssetDatabase.CreateAsset(myInstance, "Assets/Resources/StateMachine/StateMachine.asset");
+      AssetDatabase.SaveAssets();
+      AssetDatabase.Refresh();
+      Debug.Log("made new state machine");
     }
+    return myInstance;
+  }
 
-    public void AddNode() {
-      var ID = GetNodeID();
-      var asset = StateAsset.Create(ID.ToString());
-      var temp = new StateMachineNode(ID, asset);
-
-      _states.Add(asset);
-      _stateNodes.Add(temp);
-      _nodeDictionary.Add(ID, temp);
+  /// <summary>
+  /// Returns metadata to build editor window
+  /// </summary>
+  /// <returns></returns>
+  public StateMachineMetadata GetMetadataAsset() {
+    var path = AssetDatabase.GetAssetPath(this);
+    if (string.IsNullOrEmpty(path)) {
+      throw new InvalidOperationException("State Controller is not a saved asset. Cannot create meta data.");
     }
-
-    public void AddTransitionNode(StateMachineNode source, StateMachineNode destination){
-      var asset = StateTransitionAsset.Create(source.Asset, destination.Asset);
-
-      _transitions.Add(asset);
-      source.DestinationIds.Add(destination.Id);
+    Debug.LogFormat("path: {0}", path);
+    var asset = AssetDatabase.LoadAllAssetsAtPath(path).OfType<StateMachineMetadata>().FirstOrDefault();
+    if (asset == null){
+      asset = StateMachineMetadata.Create();
+      AssetDatabase.AddObjectToAsset(asset, path);
     }
-
-    public bool TransitionNodeExists(StateMachineNode source, StateMachineNode destination)
-      => GetTransitions(source.Asset).Any(t => t.DestinationState == destination.Asset); 
-
-    private int GetNodeID() => idDisposeStack.Count > 0 ? idDisposeStack[idDisposeStack.Count - 1] : idCounter++;
-
-    /// <summary>
-    /// Returns state machine asset to build editor window
-    /// </summary>
-    /// <returns></returns>
-    public static StateMachineAsset GetStateMachineAsset() {
-      var myInstance = (StateMachineAsset)Resources.Load("StateMachineBuilder/StateMachine") as StateMachineAsset;
-      if (myInstance == null) {
-        myInstance = CreateInstance<StateMachineAsset>();
-        AssetDatabase.CreateAsset(myInstance, "Assets/Resources/StateMachineBuilder/StateMachine.asset");
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-      }
-      return myInstance;
-    }
-
-    #endregion
+    return asset;
+  }
 
   /// <summary>
   /// Creates a StateAsset and adds it to the state machine's list of states.
@@ -185,7 +138,6 @@ public class StateMachineAsset : BaseStateMachineAsset {
       throw new InvalidOperationException("State Controller is not a saved asset. Cannot create state.");
     }
     var state = StateAsset.Create();
-    AssetDatabase.AddObjectToAsset(state, path);
     AppendSubAsset(path, state, _states);
     return state;
   }
