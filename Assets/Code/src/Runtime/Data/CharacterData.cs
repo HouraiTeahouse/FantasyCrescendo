@@ -27,6 +27,10 @@ public class CharacterData : GameDataBase {
   public Vector2 PortraitCropCenter;
   public float PortraitCropSize;
 
+  [Header("Misc")]
+  public TouhouGame SourceGame;
+  public GameOrder GameOrder;
+
   public Rect PortraitCropRect {
     get {
       var size = Vector2.one * PortraitCropSize;
@@ -58,6 +62,42 @@ public class CharacterData : GameDataBase {
 
   public override string ToString() => $"Character ({name})";
 
+}
+
+public enum TouhouGame {
+  HighlyResponsiveToPrayers = 0,
+  StoryOfEasternWonderland,
+  PhantasmagoriaOfDimDream,
+  LotusLandStory,
+  MysticSquare,
+  EmbodimentOfScarletDevil,
+  PerfectCherryBlossom,
+  ImmaterialAndMissingPower,
+  ImperishableNight,
+  PhantasmagoriaOfFlowerView,
+  ShootTheBullet,
+  MountainOfFaith,
+  ScarletWeatherRhapsody,
+  SubterraneanAnimism,
+  UndefinedFantasticObject,
+  Hisoutensoku,
+  DoubleSpoiler,
+  GreatFairyWars,
+  TenDesires,
+  HopelessMasquerade,
+  DoubleDealingCharacter,
+  ImpossibleSpellCard,
+  UrbanLegendInLimbo,
+  LegacyOfLunaticKingdom,
+  AntinomyOfCommonFlowers,
+  HiddenStarInFourSeasons,
+  VioletDetector,
+  PrintWorks = 65534,
+  Other = 65535
+}
+
+public enum GameOrder {
+  PlayableCharacter = 0, Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, ExtraStage, PhantasmStage, Misc
 }
 
 }

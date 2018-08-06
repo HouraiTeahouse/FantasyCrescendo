@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -18,9 +18,15 @@ MonoBehaviour:
   ShortName: Debug
   LongName: Debug Character
   _prefab: 
+  _homeStage: 
+  _victoryTheme: 
   _icon: icons:marisa_icon
   _portraits:
   - characters/marisa/portraits:marisa_portrait_1
   - characters/marisa/portraits:marisa_portrait_2
   - characters/marisa/portraits:marisa_portrait_3
   - characters/marisa/portraits:marisa_portrait_4
+  PortraitCropCenter: {x: 0, y: 0}
+  PortraitCropSize: 0
+  SourceGame: 0
+  GameOrder: 9

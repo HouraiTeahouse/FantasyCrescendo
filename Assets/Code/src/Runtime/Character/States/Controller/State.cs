@@ -17,7 +17,7 @@ public abstract class State<T> {
   readonly List<Func<T, State<T>>> _transitions;
   public ReadOnlyCollection<Func<T, State<T>>> Transitions { get; }
 
-  protected State() {
+  public State() {
     _transitions = new List<Func<T, State<T>>>();
     Transitions = new ReadOnlyCollection<Func<T, State<T>>>(_transitions);
   }

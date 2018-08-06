@@ -13,9 +13,8 @@ public class CharacterControllerBuilderTest {
   static StateController<CharacterState, CharacterContext> _stateController;
   static Dictionary<string, CharacterState> _stateMap;
 
-  [SetUp]
-  public void Setup() {
-    if (_stateMap != null && _stateController != null) return;
+  [OneTimeSetUp]
+  public void OneTimeSetup() {
     var instance = ScriptableObject.CreateInstance<CharacterControllerBuilder>();
     var builder = new StateControllerBuilder<CharacterState, CharacterContext>();
     _stateController = instance.BuildCharacterControllerImpl(builder);
@@ -25,37 +24,37 @@ public class CharacterControllerBuilderTest {
 
   static PlayerInputContext CreateInput(PlayerInput input) => new PlayerInputContext { Current = input };
 
-  static IEnumerable<object[]> LedgeTestCases() {
+  static IEnumerable<TestCaseData> LedgeTestCases() {
     var ledgeState = new PlayerState { GrabbedLedgeID = 20 };
-    yield return new object[] { "Idle", "LedgeGrab", new CharacterContext { 
+    yield return TestCase("Idle", "LedgeGrab", new CharacterContext { 
       State = ledgeState,
       IsGrounded = true
-    }};
+    });
     foreach (var src in new[] {"Fall", "FallHelpless"}) {
-      yield return new object[] { src, "LedgeGrab", new CharacterContext { 
+      yield return TestCase(src, "LedgeGrab", new CharacterContext { 
         State = ledgeState,
         IsGrounded = false
-      }};
+      });
     }
-    yield return new object[] {"LedgeGrab", "LedgeIdle", new CharacterContext { 
+    yield return TestCase("LedgeGrab", "LedgeIdle", new CharacterContext { 
       State = new PlayerState { StateTick = 101 },
       StateLength = 100 * Time.fixedDeltaTime
-    }};
-    yield return new object[] {"LedgeIdle", "LedgeRelease", new CharacterContext {
+    });
+    yield return TestCase("LedgeIdle", "LedgeRelease", new CharacterContext {
       Input = CreateInput(new PlayerInput { Movement = new Vector2(0, -1) })
-    }};
-    yield return new object[] {"LedgeIdle", "LedgeAttack", new CharacterContext {
+    });
+    yield return TestCase("LedgeIdle", "LedgeAttack", new CharacterContext {
       State = ledgeState,
       Input = CreateInput(new PlayerInput { Attack =  true })
-    }};
-    yield return new object[] {"LedgeIdle", "LedgeJump", new CharacterContext {
+    });
+    yield return TestCase("LedgeIdle", "LedgeJump", new CharacterContext {
       State = ledgeState,
       CanJump = true,
       Input = CreateInput(new PlayerInput { Jump =  true })
-    }};
+    });
   }
 
-  static IEnumerable<object[]> MovementTestCases() {
+  static IEnumerable<TestCaseData> MovementTestCases() {
     Func<float, float, bool, bool, CharacterContext>
       context = (x, y, d, g) => new CharacterContext {
         State = new PlayerState { Direction = d },
@@ -64,44 +63,48 @@ public class CharacterControllerBuilderTest {
       };
     foreach (var dir in new[] {true, false}) {
       foreach (var src in new[] {"Idle", "Walk"}) {
-        yield return new object[] {src, "Idle", context(0f, 0f, dir, true)};
-        yield return new object[] {src, "Walk", context(1f, 0f, dir, true)};
+        yield return TestCase(src, "Idle", context(0f, 0f, dir, true));
+        yield return TestCase(src, "Walk", context(1f, 0f, dir, true));
       }
       foreach (var src in new[] {"Idle", "Walk", "CrouchStart", "Crouch", "CrouchEnd"}) {
-        yield return new object[] {src, "Fall", context(0f, 0f, dir, false)};
+        yield return TestCase(src, "Fall", context(0f, 0f, dir, false));
       }
       foreach (var src in new[] {"FallHelpless", "Fall", "EscapeAir"}) {
-        yield return new object[] {src, "Land", context(0f, 0f, dir, true)};
+        yield return TestCase(src, "Land", context(0f, 0f, dir, true));
       }
       var direction = dir ? 1.0f : -1.0f;
       var directionState = new PlayerState { Direction = dir };
-      yield return new object[] {"Idle", "Dash", new CharacterContext {
+      yield return TestCase("Idle", "Dash", new CharacterContext {
         State = directionState,
         IsGrounded = true,
         Input = CreateInput(new PlayerInput { Smash = -Vector2.right })
-      }};
-      yield return new object[] {"Run", "RunTurn", new CharacterContext {
+      });
+      yield return TestCase("Run", "RunTurn", new CharacterContext {
         State = directionState,
         IsGrounded = true,
         Input = CreateInput(new PlayerInput { Movement = Vector2.right * -direction })
-      }};
-      yield return new object[] {"Run", "Run", new CharacterContext {
+      });
+      yield return TestCase("Run", "Run", new CharacterContext {
         State = directionState,
         IsGrounded = true,
         Input = CreateInput(new PlayerInput { Movement = Vector2.right * direction })
-      }};
+      });
       foreach (var src in new [] {"Idle", "Walk", "Dash", "Run", "RunTurn", "RunBrake", "CrouchStart", "Crouch", "CrouchEnd", "Shield.Main"}) {
-        yield return new object[] {src, "JumpStart", new CharacterContext {
+        yield return TestCase(src, "JumpStart", new CharacterContext {
           State = new PlayerState { Direction = dir },
           IsGrounded = true,
           CanJump = true,
           Input = CreateInput(new PlayerInput { Jump = true })
-        }};
+        });
       }
     }
   }
 
-  static IEnumerable<object[]> AttackTestCases() {
+  static TestCaseData TestCase(string src, string dst, CharacterContext context) {
+    return new TestCaseData(src, context).SetName($"{src} -> {dst}").Returns(dst);
+  }
+
+  static IEnumerable<TestCaseData> AttackTestCases() {
     Func<float, float, bool, bool, CharacterContext>
       context = (x, y, d, g) => new CharacterContext {
         State = new PlayerState { Direction = d },
@@ -113,23 +116,23 @@ public class CharacterControllerBuilderTest {
     const float magnitude = 1.0f;
     foreach (var src in new[] {"Idle", "Walk", "CrouchStart", "Crouch", "CrouchEnd"}) {
       foreach (var dir in new[] {true, false}) {
-        yield return new object[] {src, "Neutral", context(0f, 0f, dir, true)};
-        yield return new object[] {src, "TiltUp", context(0f, magnitude, dir, true)};
-        yield return new object[] {src, "TiltDown", context(0f, -magnitude, dir, true)};
-        yield return new object[] {src, "TiltSide", context(magnitude, 0f, dir, true)};
-        yield return new object[] {src, "TiltSide", context(-magnitude, 0f, dir, true)};
+        yield return TestCase(src, "Neutral", context(0f, 0f, dir, true));
+        yield return TestCase(src, "TiltUp", context(0f, magnitude, dir, true));
+        yield return TestCase(src, "TiltDown", context(0f, -magnitude, dir, true));
+        yield return TestCase(src, "TiltSide", context(magnitude, 0f, dir, true));
+        yield return TestCase(src, "TiltSide", context(-magnitude, 0f, dir, true));
       }
     }
     foreach (var src in new[] {"Fall", "Jump", "JumpAerial"}) {
       foreach (var dir in new[] {true, false}) {
-        yield return new object[] {src, "AerialNeutral", context(0f, 0f, dir, false)};
-        yield return new object[] {src, "AerialUp", context(0f, magnitude, dir, false)};
-        yield return new object[] {src, "AerialDown", context(0f, -magnitude, dir, false)};
+        yield return TestCase(src, "AerialNeutral", context(0f, 0f, dir, false));
+        yield return TestCase(src, "AerialUp", context(0f, magnitude, dir, false));
+        yield return TestCase(src, "AerialDown", context(0f, -magnitude, dir, false));
       }
-      yield return new object[] {src, "AerialForward", context(magnitude, 0f, true, false)};
-      yield return new object[] {src, "AerialBackward", context(-magnitude, 0f, true, false)};
-      yield return new object[] {src, "AerialBackward", context(magnitude, 0f, false, false)};
-      yield return new object[] {src, "AerialForward", context(-magnitude, 0f, false, false)};
+      yield return TestCase(src, "AerialForward", context(magnitude, 0f, true, false));
+      yield return TestCase(src, "AerialBackward", context(-magnitude, 0f, true, false));
+      yield return TestCase(src, "AerialBackward", context(magnitude, 0f, false, false));
+      yield return TestCase(src, "AerialForward", context(-magnitude, 0f, false, false));
     }
     // TODO(james7132): Dash Attacks
     // foreach (var src in new[] {"Dash", "Run", "RunTurn", "RunBrake"}) {
@@ -139,7 +142,7 @@ public class CharacterControllerBuilderTest {
     // }
   }
 
-  static IEnumerable<object[]> AutomaticTestCases() {
+  static IEnumerable<TestCaseData> AutomaticTestCases() {
     var cases = new Dictionary<string, string>{
       {"Shield.On", "Shield.Main"},
       {"Shield.Broken", "Shield.Stunned"},
@@ -171,33 +174,32 @@ public class CharacterControllerBuilderTest {
       {"CrouchStart", "Crouch"},
     };
     foreach(var kvp in cases) {
-      yield return new object[] {kvp.Key, kvp.Value, new CharacterContext {
+      yield return TestCase(kvp.Key, kvp.Value, new CharacterContext {
         State = new PlayerState { StateTick = 101 },
         StateLength = 100 * Time.fixedDeltaTime,
         CanJump = true,
         Input = CreateInput(new PlayerInput())
-      }};
+      });
     }
-    yield return new object[] {"TiltDown", "Crouch", new CharacterContext {
+    yield return TestCase("TiltDown", "Crouch", new CharacterContext {
       State = new PlayerState { StateTick = 100 },
       StateLength = 100 * Time.fixedDeltaTime,
       Input = CreateInput(new PlayerInput { Movement = -Vector2.up })
-    }};
-    yield return new object[] {"Dash", "Run", new CharacterContext {
+    });
+    yield return TestCase("Dash", "Run", new CharacterContext {
       State = new PlayerState { StateTick = 100 },
       StateLength = 100 * Time.fixedDeltaTime,
       Input = CreateInput(new PlayerInput { Movement = Vector2.right})
-    }};
+    });
   }
 
-  void TestTransition(string src, string dst, CharacterContext context) {
-    var newState = _stateController.UpdateState(_stateMap[src], context);
-    Assert.AreEqual(dst, newState.Name);
+  string TestTransition(string src, CharacterContext context) {
+    return _stateController.UpdateState(_stateMap[src], context).Name;
   }
 
   [Test, TestCaseSource("AutomaticTestCases")]
-  public void automatic_exits(string src, string dst, CharacterContext context = null) {
-    TestTransition(src, dst, context ?? new CharacterContext {
+  public string automatic_exits(string src, CharacterContext context = null) {
+    return TestTransition(src, context ?? new CharacterContext {
       State = new PlayerState {
         StateTick = 101,
         ShieldDamage = 100
@@ -207,18 +209,18 @@ public class CharacterControllerBuilderTest {
   }        
 
   [Test, TestCaseSource("AttackTestCases")]
-  public void attack_transitions(string src, string dst, CharacterContext context) {
-    TestTransition(src, dst, context);
+  public string attack_transitions(string src, CharacterContext context) {
+    return TestTransition(src, context);
   }
 
   [Test, TestCaseSource("MovementTestCases")]
-  public void movement_transitions(string src, string dst, CharacterContext context) {
-    TestTransition(src, dst, context);
+  public string movement_transitions(string src,CharacterContext context) {
+    return TestTransition(src, context);
   }
 
   [Test, TestCaseSource("LedgeTestCases")]
-  public void ledge_transitions(string src, string dst, CharacterContext context) {
-    TestTransition(src, dst, context);
+  public string ledge_transitions(string src, CharacterContext context) {
+    return TestTransition(src, context);
   }
 
 }

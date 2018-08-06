@@ -6,13 +6,15 @@ using UnityEngine.UI;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters.UI {
 
-public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, IStateView<PlayerConfig> {
+public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, IStateView<PlayerConfig>,
+                                 IInitializable<CharacterData> {
 
   public Graphic Image;
   public AspectRatioFitter Fitter;
   public Vector2 RectBias;
   public bool Cropped;
   public Color DisabledTint = Color.grey;
+  public int DefaultPallete = 0;
 
   public Rect CropRect;
   Color DefaultColor;
@@ -29,12 +31,17 @@ public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, ISta
     }
   }
 
+  public async Task Initialize(CharacterData character) => await SetCharacter(character, DefaultPallete);
+
   public async Task Initialize(PlayerConfig config) {
-    if (Image == null) return;
     var selection = config.Selection;
     var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
-    if (character == null) return;
-    var portrait = await character.Portraits[(int)selection.Pallete % character.Portraits.Count].LoadAsync();
+    await SetCharacter(character, selection.Pallete);
+  }
+
+  async Task SetCharacter(CharacterData character, int pallete) {
+    if (Image == null || character == null) return;
+    var portrait = await character.Portraits[(int)pallete % character.Portraits.Count].LoadAsync();
     SetImage(portrait);
     Image.color = (character.IsSelectable && character.IsVisible) ? DefaultColor : DisabledTint;
     Image.enabled = true;
