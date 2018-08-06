@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 
 using Node = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.StateMachineNode;
+using Transition = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.StateMachineTransitionNode;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
   public class StateMachineBuilderWindow : EditorWindow {
@@ -53,6 +54,9 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       if (!initDone)
         InitStyles();
 
+      // Update position vectors for transitions
+      metaData.UpdateTransitionNodes();
+
       // Draw lines (underneath all)
       DrawLinkLines();
 
@@ -73,7 +77,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       }
       EndWindows();
 
-      HandleLinkInput();
+      HandleMouseInput();
       DrawMouseLine();
 
       EditorUtility.SetDirty(metaData);
@@ -85,21 +89,23 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
     }
 
     private void DrawNode(int id) {
-      var node = metaData.NodeDictionary[id];
+      var node = metaData.StateDictionary[id];
       var e = Event.current;
 
-      // Reposition so it doesn't get too out of screen
-      node.Window.position = new Vector2(Mathf.Max(node.Window.position.x, 0), Mathf.Max(node.Window.position.y, UpperTabHeight));
-      
-      // If touched, switch to that node's scriptable object
+      // Select once clicked
       if (e.button == 0 && e.type == EventType.MouseDown){
         Selection.activeObject = node.Asset;
       }
 
+      // Reposition so it doesn't get too out of screen
+      node.Window.position = new Vector2(Mathf.Max(node.Window.position.x, 0), Mathf.Max(node.Window.position.y, UpperTabHeight));
+
       // Draw the damn box and text
       GUILayout.BeginArea(new Rect(Vector2.zero, node.Window.size), new GUIStyle("Box"));
       var rect = new Rect((node.Window.size - NodeTextSize) / 2, NodeTextSize);
-      GUI.Label(rect, new GUIContent(node.Asset.name), labelStyle);
+      GUI.Label(rect, 
+        new GUIContent(string.Format(Selection.activeObject == node.Asset ? "<b>{0}</b>": "{0}", node.Asset.name)), 
+        labelStyle);
       GUILayout.EndArea();
 
       // If right clicking, don't even try to drag
@@ -118,8 +124,27 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       Repaint();
     }
 
-    private void HandleLinkInput(){
+    private void HandleMouseInput(){
       Event e = Event.current;
+      switch (e.button){
+        // Left Click
+        case 0:
+          if (e.type == EventType.MouseDown) {
+            foreach (var item in metaData.TransitionNodes){
+              if (item.Contains(e.mousePosition)){
+                Selection.activeObject = item.Asset;
+                Repaint();
+                return;
+              }
+            }
+          }
+
+          break;
+        // Right Click
+        case 1:
+
+          break;
+      }
       if (e.button == 1) {
         switch (e.type) {
           case EventType.MouseDown:
@@ -151,7 +176,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
       if (sourceNode != null) {
         var direction = (Event.current.mousePosition - sourceNode.GetCenter).normalized;
-        Handles.DrawAAPolyLine(lineTexture, 3, sourceNode.GetDrawLineEnd(direction), Event.current.mousePosition);
+        Handles.DrawAAPolyLine(lineTexture, 3, sourceNode.GetCenter, Event.current.mousePosition);
       }
 
       Handles.EndGUI();
@@ -159,21 +184,22 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
     private void DrawLinkLines() {
       Handles.BeginGUI();
-      Handles.color = Color.black;
 
-      foreach (var node in metaData.StateNodes) {
-        foreach (var transition in node.DestinationIds.Select(t => metaData.NodeDictionary[t])) {
-          var direction = (transition.GetCenter - node.GetCenter).normalized;
-          var startPoint = node.GetDrawLineEnd(direction);
-          var endPoint = transition.GetDrawLineEnd(direction);
-          var midPoint = (endPoint + startPoint) / 2;
-          Handles.DrawAAPolyLine(lineTexture, 2, startPoint, endPoint);
-          Handles.DrawAAPolyLine(lineTexture, 2, node.GetDrawLineArrowEnd(direction, midPoint, Vector3.forward), midPoint,
-                                                  node.GetDrawLineArrowEnd(direction, midPoint, Vector3.back));
+      foreach (var node in metaData.TransitionNodes) {
+        if (Selection.activeObject == node.Asset){
+          Handles.color = Color.magenta;
+        } else {
+          Handles.color = Color.black;
         }
+
+        Handles.DrawAAPolyLine(lineTexture, 2, node.CenterSource, node.CenterDestination);
+        Handles.DrawAAPolyLine(lineTexture, 2, node.ArrowLeftEnd, node.Center, node.ArrowRightEnd);
       }
 
       Handles.EndGUI();
     }
+
   }
+
+  
 }
