@@ -94,13 +94,11 @@ public class StateMachineAsset : BaseStateMachineAsset {
   /// <returns></returns>
   public static StateMachineAsset GetStateMachineAsset() {
     var myInstance = (StateMachineAsset)Resources.Load("StateMachine/StateMachine") as StateMachineAsset;
-    Debug.Log("getting state machine");
     if (myInstance == null) {
       myInstance = CreateInstance<StateMachineAsset>();
       AssetDatabase.CreateAsset(myInstance, "Assets/Resources/StateMachine/StateMachine.asset");
       AssetDatabase.SaveAssets();
       AssetDatabase.Refresh();
-      Debug.Log("made new state machine");
     }
     return myInstance;
   }
@@ -114,7 +112,6 @@ public class StateMachineAsset : BaseStateMachineAsset {
     if (string.IsNullOrEmpty(path)) {
       throw new InvalidOperationException("State Controller is not a saved asset. Cannot create meta data.");
     }
-    Debug.LogFormat("path: {0}", path);
     var asset = AssetDatabase.LoadAllAssetsAtPath(path).OfType<StateMachineMetadata>().FirstOrDefault();
     if (asset == null){
       asset = StateMachineMetadata.Create();
@@ -181,10 +178,10 @@ public class StateMachineAsset : BaseStateMachineAsset {
     var invalidTransitions = _transitions.Where(t => t.Involves(state)).ToArray();
     _transitions.RemoveAll(t => invalidTransitions.Contains(t));
     foreach (var transition in invalidTransitions) {
-      Object.DestroyImmediate(transition);
+      Object.DestroyImmediate(transition, true);
     }
 
-    Object.DestroyImmediate(state);
+    Object.DestroyImmediate(state, true);
     SaveAsset();
   }
 
@@ -199,7 +196,7 @@ public class StateMachineAsset : BaseStateMachineAsset {
   public void RemoveTransition(StateTransitionAsset transition) {
     if (transition == null) return;
     _transitions.Remove(transition);
-    Object.DestroyImmediate(transition);
+    Object.DestroyImmediate(transition, true);
     SaveAsset();
   }
 
