@@ -5,6 +5,8 @@ using UnityEditor;
 using System.Linq;
 using System.Reflection;
 
+using Node = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.StateMachineNode;
+
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
   public class StateMachineBuilderWindow : EditorWindow {
     private const float UpperTabHeight = 20;
@@ -12,12 +14,12 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
     private readonly Vector2 NodeTextSize = new Vector2(60, 20);
 
     private bool initDone = false;
-    private StateMachineAsset smAsset;
+    private StateMachineMetadata metaData;
     private GUIStyle labelStyle;
 
     private Texture2D lineTexture;
 
-    private StateMachineAsset.StateMachineNode sourceNode = null;
+    private Node sourceNode = null;
 
     [MenuItem("Window/State Machine Builder Window")]
     static void Init() {
@@ -45,8 +47,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
     private void OnGUI() {
       // Initialize
-      if (smAsset == null)
-        smAsset = StateMachineAsset.GetStateMachineAsset();
+      if (metaData == null)
+        metaData = StateMachineAsset.GetStateMachineAsset().Metadata;
 
       if (!initDone)
         InitStyles();
@@ -57,7 +59,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       // Draw top bar buttons
       GUILayout.BeginHorizontal(GUILayout.MaxHeight(UpperTabHeight));
       if (GUILayout.Button("Add Node")) {
-        smAsset.AddNode();
+        metaData.AddNode();
       }
       if (GUILayout.Button("Build")) {
         //CCBuilder.UpdateFile();
@@ -66,7 +68,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
       // Draw each window
       BeginWindows();
-      foreach (var item in smAsset.StateNodes) {
+      foreach (var item in metaData.StateNodes) {
         item.Window = GUI.Window(item.Id, new Rect(item.Window.position, NodeSize), DrawNode, "", GUIStyle.none);
       }
       EndWindows();
@@ -74,7 +76,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       HandleLinkInput();
       DrawMouseLine();
 
-      EditorUtility.SetDirty(smAsset);
+      EditorUtility.SetDirty(metaData);
     }
 
     private void OnInspectorUpdate() {
@@ -83,7 +85,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
     }
 
     private void DrawNode(int id) {
-      var node = smAsset.NodeDictionary[id];
+      var node = metaData.NodeDictionary[id];
       var e = Event.current;
 
       // Reposition so it doesn't get too out of screen
@@ -106,11 +108,11 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       }
     }
 
-    private void TryToConnectTwoNodes(StateMachineAsset.StateMachineNode destinationNode) {
+    private void TryToConnectTwoNodes(Node destinationNode) {
       if (destinationNode != null 
         && sourceNode != destinationNode 
-        && !smAsset.TransitionNodeExists(sourceNode, destinationNode)) {
-        smAsset.AddTransitionNode(sourceNode, destinationNode);
+        && !metaData.TransitionNodeExists(sourceNode, destinationNode)) {
+        metaData.AddTransitionNode(sourceNode, destinationNode);
       }
       sourceNode = null;
       Repaint();
@@ -121,7 +123,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       if (e.button == 1) {
         switch (e.type) {
           case EventType.MouseDown:
-            foreach (var item in smAsset.StateNodes) {
+            foreach (var item in metaData.StateNodes) {
               if (item.Window.Contains(e.mousePosition)) {
                 sourceNode = item;
                 break;
@@ -130,8 +132,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
             break;
           case EventType.MouseUp:
             if (sourceNode == null) break;
-            StateMachineAsset.StateMachineNode temp = null;
-            foreach (var item in smAsset.StateNodes) {
+            Node temp = null;
+            foreach (var item in metaData.StateNodes) {
               if (item.Window.Contains(e.mousePosition)) {
                 temp = item;
                 break;
@@ -159,8 +161,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       Handles.BeginGUI();
       Handles.color = Color.black;
 
-      foreach (var node in smAsset.StateNodes) {
-        foreach (var transition in node.DestinationIds.Select(t => smAsset.NodeDictionary[t])) {
+      foreach (var node in metaData.StateNodes) {
+        foreach (var transition in node.DestinationIds.Select(t => metaData.NodeDictionary[t])) {
           var direction = (transition.GetCenter - node.GetCenter).normalized;
           var startPoint = node.GetDrawLineEnd(direction);
           var endPoint = transition.GetDrawLineEnd(direction);
