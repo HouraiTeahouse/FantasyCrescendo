@@ -19,8 +19,10 @@ public class StateMachineAsset : BaseStateMachineAsset {
 
   [SerializeField] List<StateAsset> _states;
   [SerializeField] List<StateTransitionAsset> _transitions;
+  StateMachineMetadata _metadata;
 
   public ReadOnlyCollection<StateAsset> States => new ReadOnlyCollection<StateAsset>(_states);
+  public StateMachineMetadata Metadata => _metadata ?? (_metadata = GetMetadataAsset());
 
   /// <summary>
   /// This function is called when the object becomes enabled and active.
@@ -85,6 +87,39 @@ public class StateMachineAsset : BaseStateMachineAsset {
   }
 
 #if UNITY_EDITOR
+
+  /// <summary>
+  /// Returns state machine asset
+  /// </summary>
+  /// <returns></returns>
+  public static StateMachineAsset GetStateMachineAsset() {
+    var myInstance = (StateMachineAsset)Resources.Load("StateMachine/StateMachine") as StateMachineAsset;
+    if (myInstance == null) {
+      myInstance = CreateInstance<StateMachineAsset>();
+      AssetDatabase.CreateAsset(myInstance, "Assets/Resources/StateMachine/StateMachine.asset");
+      AssetDatabase.SaveAssets();
+      AssetDatabase.Refresh();
+    }
+    return myInstance;
+  }
+
+  /// <summary>
+  /// Returns metadata to build editor window
+  /// </summary>
+  /// <returns></returns>
+  public StateMachineMetadata GetMetadataAsset() {
+    var path = AssetDatabase.GetAssetPath(this);
+    if (string.IsNullOrEmpty(path)) {
+      throw new InvalidOperationException("State Controller is not a saved asset. Cannot create meta data.");
+    }
+    var asset = AssetDatabase.LoadAllAssetsAtPath(path).OfType<StateMachineMetadata>().FirstOrDefault();
+    if (asset == null){
+      asset = StateMachineMetadata.Create();
+      AssetDatabase.AddObjectToAsset(asset, path);
+    }
+    return asset;
+  }
+
   /// <summary>
   /// Creates a StateAsset and adds it to the state machine's list of states.
   /// </summary>
@@ -100,7 +135,6 @@ public class StateMachineAsset : BaseStateMachineAsset {
       throw new InvalidOperationException("State Controller is not a saved asset. Cannot create state.");
     }
     var state = StateAsset.Create();
-    AssetDatabase.AddObjectToAsset(state, path);
     AppendSubAsset(path, state, _states);
     return state;
   }
@@ -144,10 +178,10 @@ public class StateMachineAsset : BaseStateMachineAsset {
     var invalidTransitions = _transitions.Where(t => t.Involves(state)).ToArray();
     _transitions.RemoveAll(t => invalidTransitions.Contains(t));
     foreach (var transition in invalidTransitions) {
-      Object.DestroyImmediate(transition);
+      Object.DestroyImmediate(transition, true);
     }
 
-    Object.DestroyImmediate(state);
+    Object.DestroyImmediate(state, true);
     SaveAsset();
   }
 
@@ -162,7 +196,7 @@ public class StateMachineAsset : BaseStateMachineAsset {
   public void RemoveTransition(StateTransitionAsset transition) {
     if (transition == null) return;
     _transitions.Remove(transition);
-    Object.DestroyImmediate(transition);
+    Object.DestroyImmediate(transition, true);
     SaveAsset();
   }
 

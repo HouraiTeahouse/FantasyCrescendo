@@ -1,0 +1,265 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e9939747bfa0274ab89120de308628c, type: 3}
+  m_Name: StateMachine
+  m_EditorClassIdentifier: 
+  _states:
+  - {fileID: 114484728362069646}
+  - {fileID: 114277787639829880}
+  - {fileID: 114424909714324790}
+  - {fileID: 114548320817810734}
+  _transitions:
+  - {fileID: 114711969793961924}
+  - {fileID: 114538207874217708}
+  - {fileID: 114642215216664066}
+--- !u!114 &114078206928317358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a7a72a05d3baca418906d9da5d78f4f, type: 3}
+  m_Name: Metadata
+  m_EditorClassIdentifier: 
+  idCounter: 12
+  _stateNodes:
+  - Id: 5
+    Window:
+      serializedVersion: 2
+      x: 404
+      y: 50
+      width: 120
+      height: 50
+    PreviousWindow:
+      serializedVersion: 2
+      x: 404
+      y: 50
+      width: 120
+      height: 50
+    Asset: {fileID: 114484728362069646}
+    Transitions: 060000000b0000000300000000000000
+  - Id: 9
+    Window:
+      serializedVersion: 2
+      x: 328
+      y: 216
+      width: 120
+      height: 50
+    PreviousWindow:
+      serializedVersion: 2
+      x: 328
+      y: 216
+      width: 120
+      height: 50
+    Asset: {fileID: 114277787639829880}
+    Transitions: 0a0000000600000008000000
+  - Id: 7
+    Window:
+      serializedVersion: 2
+      x: 148
+      y: 63
+      width: 120
+      height: 50
+    PreviousWindow:
+      serializedVersion: 2
+      x: 148
+      y: 63
+      width: 120
+      height: 50
+    Asset: {fileID: 114424909714324790}
+    Transitions: 0a00000006000000
+  - Id: 10
+    Window:
+      serializedVersion: 2
+      x: 84
+      y: 175
+      width: 120
+      height: 50
+    PreviousWindow:
+      serializedVersion: 2
+      x: 84
+      y: 175
+      width: 120
+      height: 50
+    Asset: {fileID: 114548320817810734}
+    Transitions: 04000000
+  _transitionNodes:
+  - Id: 6
+    SourceId: 7
+    DestinationId: 9
+    Asset: {fileID: 114711969793961924}
+    CornerSource: {x: 208, y: 88}
+    CornerSourceAway: {x: 217.71472, y: 76.57091}
+    CornerDestination: {x: 388, y: 241}
+    CornerDestinationAway: {x: 397.71472, y: 229.5709}
+    Center: {x: 302.85736, y: 158.78546}
+    CenterSource: {x: 212.85736, y: 82.28545}
+    CenterDestination: {x: 392.85736, y: 235.28546}
+    ArrowLeftEnd: {x: 294.0189, y: 146.02298}
+    ArrowRightEnd: {x: 288.83768, y: 152.1185}
+    Area: 3543.589
+  - Id: 0
+    SourceId: 5
+    DestinationId: 9
+    Asset: {fileID: 114538207874217708}
+    CornerSource: {x: 464, y: 75}
+    CornerSourceAway: {x: 477.63855, y: 81.24416}
+    CornerDestination: {x: 388, y: 241}
+    CornerDestinationAway: {x: 401.63855, y: 247.24416}
+    Center: {x: 432.81927, y: 161.12207}
+    CenterSource: {x: 470.81927, y: 78.122086}
+    CenterDestination: {x: 394.81927, y: 244.12207}
+    ArrowLeftEnd: {x: 442.7004, y: 149.14862}
+    ArrowRightEnd: {x: 435.42648, y: 145.81839}
+    Area: 2738.5557
+  - Id: 4
+    SourceId: 10
+    DestinationId: 9
+    Asset: {fileID: 114642215216664066}
+    CornerSource: {x: 144, y: 200}
+    CornerSourceAway: {x: 146.48564, y: 185.20738}
+    CornerDestination: {x: 388, y: 241}
+    CornerDestinationAway: {x: 390.48566, y: 226.20738}
+    Center: {x: 267.24283, y: 213.1037}
+    CenterSource: {x: 145.24283, y: 192.6037}
+    CenterDestination: {x: 389.24283, y: 233.6037}
+    ArrowLeftEnd: {x: 253.11305, y: 206.67336}
+    ArrowRightEnd: {x: 251.78737, y: 214.56276}
+    Area: 3711.3103
+  _idDisposeStack: 010000000b000000030000000800000002000000
+  _stateMachine: {fileID: 11400000}
+--- !u!114 &114277787639829880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
+  m_Name: State
+  m_EditorClassIdentifier: 
+  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.JumpState
+  StateData:
+    Timeline: {fileID: 0}
+    MinMoveSpeed: 0
+    MaxMoveSpeed: 0
+    EntryPolicy: 0
+    MovementType: 0
+    DirectionMode: 0
+    KnockbackResistance: 0
+--- !u!114 &114424909714324790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
+  m_Name: State
+  m_EditorClassIdentifier: 
+  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.JumpState
+  StateData:
+    Timeline: {fileID: 0}
+    MinMoveSpeed: 0
+    MaxMoveSpeed: 0
+    EntryPolicy: 0
+    MovementType: 0
+    DirectionMode: 0
+    KnockbackResistance: 0
+--- !u!114 &114484728362069646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
+  m_Name: State
+  m_EditorClassIdentifier: 
+  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.JumpState
+  StateData:
+    Timeline: {fileID: 0}
+    MinMoveSpeed: 0
+    MaxMoveSpeed: 0
+    EntryPolicy: 0
+    MovementType: 0
+    DirectionMode: 0
+    KnockbackResistance: 0
+--- !u!114 &114538207874217708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SourceState: {fileID: 114484728362069646}
+  DestinationState: {fileID: 114277787639829880}
+  TransitionRequirement: 0
+  Muted: 0
+--- !u!114 &114548320817810734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
+  m_Name: State
+  m_EditorClassIdentifier: 
+  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.JumpState
+  StateData:
+    Timeline: {fileID: 0}
+    MinMoveSpeed: 0
+    MaxMoveSpeed: 0
+    EntryPolicy: 0
+    MovementType: 0
+    DirectionMode: 0
+    KnockbackResistance: 0
+--- !u!114 &114642215216664066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SourceState: {fileID: 114548320817810734}
+  DestinationState: {fileID: 114277787639829880}
+  TransitionRequirement: 0
+  Muted: 0
+--- !u!114 &114711969793961924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SourceState: {fileID: 114424909714324790}
+  DestinationState: {fileID: 114277787639829880}
+  TransitionRequirement: 0
+  Muted: 0

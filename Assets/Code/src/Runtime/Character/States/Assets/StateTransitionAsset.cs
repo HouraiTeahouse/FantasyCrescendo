@@ -67,7 +67,7 @@ public class StateTransitionAsset : ScriptableObject {
     Argument.NotNull(dst);
     var transition = ScriptableObject.CreateInstance<StateTransitionAsset>();
     transition.SourceState = src;
-    transition.SourceState = dst;
+    transition.DestinationState = dst;
     transition.Conditions = new List<StateTransitionCondition>();
     return transition;
   }
