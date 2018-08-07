@@ -55,6 +55,7 @@ public struct PlayerState : INetworkSerializable {
   // Direction: True => Right, False => Left
   public bool Direction;                              // One bit
   public bool IsFastFalling;                          // One bit
+  public bool IsTeetering;                            // One bit
 
   public uint JumpCount;                              // 1-4 bytes
 
