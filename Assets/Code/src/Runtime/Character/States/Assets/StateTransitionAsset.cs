@@ -14,8 +14,8 @@ public class StateTransitionAsset : ScriptableObject {
     TransitionIfNone
   }
 
-  public StateAsset SourceState;
-  public StateAsset DestinationState;
+  public BaseStateAsset SourceState;
+  public BaseStateAsset DestinationState;
   public ConditionRequirement TransitionRequirement;
   public List<StateTransitionCondition> Conditions;
   public bool Muted;
