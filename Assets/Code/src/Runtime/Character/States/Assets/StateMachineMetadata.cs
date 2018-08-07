@@ -5,22 +5,25 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class StateMachineMetadata : ScriptableObject {
 
   [SerializeField] int idCounter = 0;
 
-  Dictionary<int, StateMachineStateNode> _stateDictionary;
-  [SerializeField] List<StateMachineStateNode> _stateNodes;
-  [SerializeField] List<StateMachineTransitionNode> _transitionNodes;
-  [SerializeField] List<int> _idDisposeStack;
+  Dictionary<int, StateNode> _stateDictionary;
+  [SerializeField] List<StateNode> _stateNodes;
+  [SerializeField] List<TransitionNode> _transitionNodes;
 
   public StateMachineAsset _stateMachine;
 
-  public ReadOnlyDictionary<int, StateMachineStateNode> StateDictionary => new ReadOnlyDictionary<int, StateMachineStateNode>(_stateDictionary);
-  public ReadOnlyCollection<StateMachineStateNode> StateNodes => new ReadOnlyCollection<StateMachineStateNode>(_stateNodes);
-  public ReadOnlyCollection<StateMachineTransitionNode> TransitionNodes => new ReadOnlyCollection<StateMachineTransitionNode>(_transitionNodes);
+  public ReadOnlyDictionary<int, StateNode> StateDictionary => new ReadOnlyDictionary<int, StateNode>(_stateDictionary);
+  public ReadOnlyCollection<StateNode> StateNodes => new ReadOnlyCollection<StateNode>(_stateNodes);
+  public ReadOnlyCollection<TransitionNode> TransitionNodes => new ReadOnlyCollection<TransitionNode>(_transitionNodes);
 
   /// <summary>
   /// This function is called when the object becomes enabled and active.
@@ -29,12 +32,11 @@ public class StateMachineMetadata : ScriptableObject {
 
   void Initialize() {
     _stateMachine = _stateMachine ?? StateMachineAsset.GetStateMachineAsset();
-    _stateNodes = _stateNodes ?? new List<StateMachineStateNode>();
-    _transitionNodes = _transitionNodes ?? new List<StateMachineTransitionNode>();
-    _idDisposeStack = _idDisposeStack ?? new List<int>();
+    _stateNodes = _stateNodes ?? new List<StateNode>();
+    _transitionNodes = _transitionNodes ?? new List<TransitionNode>();
 
     if (_stateDictionary == null) {
-      _stateDictionary = new Dictionary<int, StateMachineStateNode>(StateNodes.Count);
+      _stateDictionary = new Dictionary<int, StateNode>(StateNodes.Count);
       foreach (var node in StateNodes) _stateDictionary.Add(node.Id, node);
     }
   }
@@ -43,34 +45,31 @@ public class StateMachineMetadata : ScriptableObject {
   /// Used to save the editor window's state between sessions.
   /// </summary>
   [Serializable]
-  public class StateMachineNode{
-    public int Id;
-
-    public StateMachineNode(int id) {
-      Id = id;
-    }
+  public class Node<T> where T : ScriptableObject {
+    public int Id => Asset.GetInstanceID();
+    public T Asset;
+#if UNITY_EDITOR
+    public bool IsSelected => Selection.objects.Contains(Asset);
+#endif
   }
 
   [Serializable]
-  public class StateMachineStateNode : StateMachineNode{
+  public class StateNode : Node<StateAsset> {
     public Rect Window = Rect.zero;
     public Rect PreviousWindow = Rect.zero;
-    public Vector2 GetCenter => Window.center;
+    public Vector2 Center => Window.center;
 
-    public StateAsset Asset;
     public List<int> Transitions;
 
-    public StateMachineStateNode(int id, StateAsset asset) : base(id){
-      Asset = asset;
+    public StateNode(StateAsset asset) {
       Transitions = new List<int>();
     }
   }
 
   [Serializable]
-  public class StateMachineTransitionNode: StateMachineNode{
-    public int SourceId;
-    public int DestinationId;
-    public StateTransitionAsset Asset;
+  public class TransitionNode: Node<StateTransitionAsset> {
+    public int SourceId => Asset.SourceState.GetInstanceID();
+    public int DestinationId => Asset.DestinationState.GetInstanceID();
 
     public Vector2 CornerSource;
     public Vector2 CornerSourceAway;
@@ -89,24 +88,21 @@ public class StateMachineMetadata : ScriptableObject {
     public const float TransitionSize = 15f;
     public const float ArrowSize = 4f;
 
-    public StateMachineTransitionNode(int id, StateTransitionAsset asset, int src, int dst) : base(id){
+    public TransitionNode(StateTransitionAsset asset) {
       Asset = asset;
-
-      SourceId = src;
-      DestinationId = dst;
     }
 
     public bool Involves(int id) => SourceId == id || DestinationId == id; 
 
-    public void UpdateVectors(StateMachineStateNode src, StateMachineStateNode dst, bool force = false){
+    public void UpdateVectors(StateNode src, StateNode dst, bool force = false){
       // Prevent updating every gui call if the window didn't move
       if (!force && src.PreviousWindow == src.Window && dst.PreviousWindow == dst.Window) return;
 
-      var Direction = (dst.GetCenter - src.GetCenter).normalized;
+      var Direction = (dst.Center - src.Center).normalized;
       var CornerOffet = GetCornerOffset(Direction);
-      CornerSource = src.GetCenter;
+      CornerSource = src.Center;
       CornerSourceAway = CornerSource + CornerOffet;
-      CornerDestination = dst.GetCenter;
+      CornerDestination = dst.Center;
       CornerDestinationAway = CornerDestination + CornerOffet;
 
       CenterSource = GetMiddle(CornerSource, CornerSourceAway);
@@ -137,51 +133,47 @@ public class StateMachineMetadata : ScriptableObject {
 
     private float GetAreaOfRectangle(Vector2 a, Vector2 b, Vector2 c)
         => Mathf.Sqrt(Vector2.SqrMagnitude(a - b) * Vector2.SqrMagnitude(b - c));
-    }
+  }
+
+  public StateNode FindState(StateAsset asset) => _stateNodes.FirstOrDefault(s => s.Asset == asset);
+  public TransitionNode FindTransition(StateTransitionAsset asset) => _transitionNodes.FirstOrDefault(s => s.Asset == asset);
 
   /// <summary>
   /// Creates state editor node alongside a StateMachineAsset
   /// </summary>
-  public StateMachineStateNode AddStateNode() {
-    var ID = GetNodeID();
-    var asset = _stateMachine.CreateState(ID.ToString());
-    var temp = new StateMachineStateNode(ID, asset);
+  public StateNode AddStateNode() {
+    var asset = _stateMachine.CreateState("State");
+    var state = new StateNode(asset);
 
-    _stateNodes.Add(temp);
-    _stateDictionary.Add(ID, temp);
-    return temp;
+    _stateNodes.Add(state);
+    _stateDictionary.Add(state.Id, state);
+    return state;
   }
 
   /// <summary>
   /// Creates transition editor node alongside a StateTransitionAsset
   /// </summary>
-  public StateMachineTransitionNode AddTransitionNode(StateMachineStateNode src, StateMachineStateNode dst) {
-    var ID = GetNodeID();
+  public TransitionNode AddTransitionNode(StateNode src, StateNode dst) {
     var asset = _stateMachine.CreateTransition(src.Asset, dst.Asset);
-    var temp = new StateMachineTransitionNode(ID, asset, src.Id, dst.Id);
-    temp.UpdateVectors(src, dst, true);
+    var node = new TransitionNode(asset);
+    node.UpdateVectors(src, dst, true);
 
-    src.Transitions.Add(ID);
-    _transitionNodes.Add(temp);
-    return temp;
+    src.Transitions.Add(node.Id);
+    _transitionNodes.Add(node);
+    return node;
   }
 
   /// <summary>
   /// Removes state editor node from metadata and state machine
   /// </summary>
   /// <param name="node"></param>
-  public void RemoveStateNode(StateMachineStateNode node){
+  public void RemoveStateNode(StateNode node){
     if (node == null) return;
     _stateDictionary.Remove(node.Id);
     _stateNodes.Remove(node);
 
     var invalidTransitions = _transitionNodes.Where(t => t.Involves(node.Id)).ToArray();
     _transitionNodes.RemoveAll(t => invalidTransitions.Contains(t));
-    foreach (var transition in invalidTransitions) {
-      _idDisposeStack.Add(transition.Id);
-    }
-    _idDisposeStack.Add(node.Id);
-
     _stateMachine.RemoveState(node.Asset);
   }
 
@@ -189,12 +181,10 @@ public class StateMachineMetadata : ScriptableObject {
   /// Removes transition editor node from metadata and state machine
   /// </summary>
   /// <param name="node"></param>
-  public void RemoveTransitionNode(StateMachineTransitionNode node){
+  public void RemoveTransitionNode(TransitionNode node){
     if (node == null) return;
     StateDictionary[node.SourceId].Transitions.Remove(node.Id);
     _transitionNodes.Remove(node);
-    _idDisposeStack.Add(node.Id);
-
     _stateMachine.RemoveTransition(node.Asset);
   }
 
@@ -212,19 +202,8 @@ public class StateMachineMetadata : ScriptableObject {
   /// <param name="src"></param>
   /// <param name="dst"></param>
   /// <returns>if transition exists</returns>
-  public bool TransitionNodeExists(StateMachineStateNode src, StateMachineStateNode dst)
+  public bool TransitionNodeExists(StateNode src, StateNode dst)
     => TransitionNodes.Any(t => t.SourceId == src.Id && t.DestinationId == dst.Id);
-
-  private int GetNodeID() {
-    var ID = -1;
-    if (_idDisposeStack.Count > 0){
-      ID = _idDisposeStack[_idDisposeStack.Count - 1];
-      _idDisposeStack.RemoveAt(_idDisposeStack.Count - 1);
-    } else {
-      ID = idCounter++;
-    }
-    return ID;
-  }
 
   public static StateMachineMetadata Create() {
     var meta = ScriptableObject.CreateInstance<StateMachineMetadata>();

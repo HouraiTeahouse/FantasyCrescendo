@@ -5,26 +5,26 @@ using UnityEditor;
 using System.Linq;
 using System.Reflection;
 
-using Node = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.StateMachineNode;
-using StateNode = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.StateMachineStateNode;
-using TransitionNode = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.StateMachineTransitionNode;
+using StateNode = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.StateNode;
+using TransitionNode = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.TransitionNode;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
+
   public class StateMachineBuilderWindow : EditorWindow {
-    private const float UpperTabHeight = 20;
-    private readonly Vector2 NodeSize = new Vector2(120, 50);
-    private readonly Vector2 NodeTextSize = new Vector2(60, 20);
 
-    private bool initDone = false;
-    private StateMachineMetadata metaData;
+    const float UpperTabHeight = 20;
+    readonly Vector2 NodeSize = new Vector2(120, 50);
+    readonly Vector2 NodeTextSize = new Vector2(60, 20);
 
-    private GUIStyle labelStyle;
-    private GUIStyle nodeStyle;
+    bool initDone = false;
+    StateMachineMetadata metaData;
 
-    private Texture2D lineTexture;
+    GUIStyle labelStyle;
+    GUIStyle nodeStyle;
 
-    private StateNode sourceNode = null;
-    private Node selectedNode = null;
+    Texture2D lineTexture;
+
+    StateNode sourceNode = null;
 
     Vector2 gridOffset;
     Vector2 gridDrag;
@@ -103,7 +103,24 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       var temp = metaData.AddStateNode();
       temp.Window.position = position;
       Selection.activeObject = temp.Asset;
-      selectedNode = temp;
+    }
+
+    void DeleteNodes(IEnumerable<Object> objects) {
+      foreach (var obj in objects) {
+        var state = obj as StateAsset;
+        var transition = obj as StateTransitionAsset;
+        if (state != null) {
+          var node = metaData.FindState(state);
+          if (node != null) {
+            metaData.RemoveStateNode(node);
+          }
+        } else if (transition != null) {
+          var node = metaData.FindTransition(transition);
+          if (node != null) {
+            metaData.RemoveTransitionNode(node);
+          }
+        }
+      }
     }
 
     void DrawToolBar() {
@@ -111,13 +128,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       if (GUILayout.Button("Add State Node", EditorStyles.toolbarButton)) {
         AddNode();
       }
-      if (GUILayout.Button("Delete Selected Node", EditorStyles.toolbarButton) && selectedNode != null){
-        if (selectedNode is StateNode) {
-          metaData.RemoveStateNode(selectedNode as StateNode);
-        } else if (selectedNode is TransitionNode) {
-          metaData.RemoveTransitionNode(selectedNode as TransitionNode);
-        }
-        selectedNode = null;
+      if (GUILayout.Button("Delete Selected Node", EditorStyles.toolbarButton)){
+        DeleteNodes(Selection.objects);
       }
       if (GUILayout.Button("Build", EditorStyles.toolbarButton)) {
         //CCBuilder.UpdateFile();
@@ -138,7 +150,6 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       // Select once clicked
       if (e.button == 0 && e.type == EventType.MouseDown){
         Selection.activeObject = node.Asset;
-        selectedNode = node;
       }
 
       // Reposition so it doesn't get too out of screen
@@ -148,7 +159,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       GUILayout.BeginArea(new Rect(Vector2.zero, node.Window.size));
       var rect = new Rect((node.Window.size - NodeTextSize) / 2, NodeTextSize);
       GUI.Label(rect, 
-        new GUIContent(string.Format(selectedNode == node ? "<b>{0}</b>": "{0}", node.Asset.name)), 
+        new GUIContent(string.Format(node.IsSelected ? "<b>{0}</b>": "{0}", node.Asset.name)), 
         labelStyle);
       GUILayout.EndArea();
 
@@ -158,19 +169,18 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       }
     }
 
-    private void TryToConnectTwoNodes(StateNode destinationNode) {
+    void TryToConnectTwoNodes(StateNode destinationNode) {
       if (destinationNode != null 
         && sourceNode != destinationNode 
         && !metaData.TransitionNodeExists(sourceNode, destinationNode)) {
           var temp = metaData.AddTransitionNode(sourceNode, destinationNode);
           Selection.activeObject = temp.Asset;
-          selectedNode = temp;
       }
       sourceNode = null;
       Repaint();
     }
 
-    private void HandleMouseInput(){
+    void HandleMouseInput(){
       Event evt = Event.current;
       switch (evt.button){
         // Left Click
@@ -179,7 +189,6 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
             foreach (var item in metaData.TransitionNodes){
               if (item.Contains(evt.mousePosition)){
                 Selection.activeObject = item.Asset;
-                selectedNode = item;
                 Repaint();
                 return;
               }
@@ -224,23 +233,23 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       genericMenu.ShowAsContext();
     }
 
-    private void DrawMouseLine(){
+    void DrawMouseLine(){
       Handles.BeginGUI();
       Handles.color = Color.black;
 
       if (sourceNode != null) {
-        var direction = (Event.current.mousePosition - sourceNode.GetCenter).normalized;
-        Handles.DrawAAPolyLine(lineTexture, 3, sourceNode.GetCenter, Event.current.mousePosition);
+        var direction = (Event.current.mousePosition - sourceNode.Center).normalized;
+        Handles.DrawAAPolyLine(lineTexture, 3, sourceNode.Center, Event.current.mousePosition);
       }
 
       Handles.EndGUI();
     }
 
-    private void DrawLinkLines() {
+    void DrawLinkLines() {
       Handles.BeginGUI();
 
       foreach (var node in metaData.TransitionNodes) {
-        if (selectedNode == node){
+        if (node.IsSelected){
           Handles.color = Color.magenta;
         } else {
           Handles.color = Color.black;
