@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class StateAsset : ScriptableObject {
+public class StateAsset : BaseStateAsset {
 
   [Type(typeof(State)), SerializeField]
   string _stateType;
@@ -28,10 +28,8 @@ public class StateAsset : ScriptableObject {
     }
   }
 
-  public static StateAsset Create(string name = null) {
-    var state = ScriptableObject.CreateInstance<StateAsset>();
-    state.name = name ?? "State";
-    return state;
+  public override IEnumerable<StateAsset> GetBaseStates() {
+    yield return this;
   }
 
 }

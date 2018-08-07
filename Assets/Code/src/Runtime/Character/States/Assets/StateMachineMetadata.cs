@@ -53,11 +53,15 @@ public class StateMachineMetadata : ScriptableObject {
 
   [Serializable]
   public class StateNode : Node<StateAsset> {
-    readonly Vector2 NodeSize = new Vector2(120, 50);
 
     public Vector2 Center;
     [NonSerialized] public Vector2 PreviousCenter;
-    public Rect Window => new Rect(Center - NodeSize / 2, NodeSize);
+    public Rect Window {
+      get {
+        var nodeSize  = new Vector2(120, 50);
+        return new Rect(Center - nodeSize / 2, nodeSize);
+      }
+    }
     public bool HasMoved => Center != PreviousCenter;
 
     public StateNode(StateAsset asset) {
@@ -141,7 +145,7 @@ public class StateMachineMetadata : ScriptableObject {
   /// Creates state editor node alongside a StateMachineAsset
   /// </summary>
   public StateNode AddStateNode() {
-    var asset = _stateMachine.CreateState("State");
+    var asset = _stateMachine.CreateState<StateAsset>("State");
     var state = new StateNode(asset);
 
     _stateNodes.Add(state);

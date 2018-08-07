@@ -17,11 +17,11 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 /// </summary>
 public class StateMachineAsset : BaseStateMachineAsset {
 
-  [SerializeField] List<StateAsset> _states;
+  [SerializeField] List<BaseStateAsset> _states;
   [SerializeField] List<StateTransitionAsset> _transitions;
   StateMachineMetadata _metadata;
 
-  public ReadOnlyCollection<StateAsset> States => new ReadOnlyCollection<StateAsset>(_states);
+  public ReadOnlyCollection<BaseStateAsset> States => new ReadOnlyCollection<BaseStateAsset>(_states);
   public StateMachineMetadata Metadata => _metadata ?? (_metadata = GetMetadataAsset());
 
   /// <summary>
@@ -52,15 +52,18 @@ public class StateMachineAsset : BaseStateMachineAsset {
   }
 
   static Dictionary<StateAsset, State> BuildStates(StateControllerBuilder builder,
-                                                   List<StateAsset> stateAssets) {
+                                                   List<BaseStateAsset> stateAssets) {
     var stateMap = new Dictionary<StateAsset, State>();
     uint id = 0;
-    foreach (var stateAsset in stateAssets) {
-      if (stateAsset == null) continue;
-      State state = stateAsset.BuildState(id);
-      builder.AddState(state);
-      stateMap[stateAsset] = state;
-      id++;
+    foreach (var baseStateAsset in stateAssets) {
+      if (baseStateAsset == null) continue;
+      foreach (var stateAsset in baseStateAsset.GetBaseStates()) {
+        if (stateAsset == null || stateMap.ContainsKey(stateAsset)) continue;
+        State state = stateAsset.BuildState(id);
+        builder.AddState(state);
+        stateMap[stateAsset] = state;
+        id++;
+      }
     }
     return stateMap;
   }
@@ -71,18 +74,23 @@ public class StateMachineAsset : BaseStateMachineAsset {
       if (transitionAsset == null || 
           transitionAsset.SourceState == null ||
           transitionAsset.DestinationState == null) continue;
-      State srcState, dstState;
-      if (stateMap.TryGetValue(transitionAsset.SourceState, out srcState) &&
-          stateMap.TryGetValue(transitionAsset.DestinationState, out dstState)) {
+      var sourceStates = transitionAsset.SourceState.GetBaseStates();
+      var destStates = transitionAsset.DestinationState.GetBaseStates();
+      foreach (var destState in destStates) {
+        State srcState, dstState;
+        if (destState == null || !stateMap.TryGetValue(destState, out dstState)) continue;
         var transition = transitionAsset.BuildTransition(dstState);
         if (transition == null) continue;
-        srcState.AddTransition(transition);
+        foreach (var sourceState in sourceStates) {
+          if (sourceState == null || !stateMap.TryGetValue(sourceState, out srcState)) continue;
+          srcState.AddTransition(transition);
+        }
       }
     }
   }
 
   void Initialize() {
-    _states = _states ?? new List<StateAsset>();
+    _states = _states ?? new List<BaseStateAsset>();
     _transitions = _transitions ?? new List<StateTransitionAsset>();
   }
 
@@ -113,7 +121,7 @@ public class StateMachineAsset : BaseStateMachineAsset {
       throw new InvalidOperationException("State Controller is not a saved asset. Cannot create meta data.");
     }
     var asset = AssetDatabase.LoadAllAssetsAtPath(path).OfType<StateMachineMetadata>().FirstOrDefault();
-    if (asset == null){
+    if (asset == null) {
       asset = StateMachineMetadata.Create();
       AssetDatabase.AddObjectToAsset(asset, path);
     }
@@ -128,13 +136,13 @@ public class StateMachineAsset : BaseStateMachineAsset {
   /// </remarks>
   /// <param name="name">the name of the state</param>
   /// <returns>the created state asset</returns>
-  public StateAsset CreateState(string name) {
+  public T CreateState<T>(string name) where T : BaseStateAsset {
     Initialize();
     string path = AssetDatabase.GetAssetPath(this);
     if (string.IsNullOrEmpty(path)) {
       throw new InvalidOperationException("State Controller is not a saved asset. Cannot create state.");
     }
-    var state = StateAsset.Create();
+    var state = BaseStateAsset.Create<T>();
     AppendSubAsset(path, state, _states);
     return state;
   }
