@@ -88,7 +88,8 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       // Draw each window
       BeginWindows();
       foreach (var item in metaData.StateNodes) {
-        item.Window = GUI.Window(item.Id, new Rect(item.Window.position, NodeSize), DrawNode, "", nodeStyle);
+        var window = GUI.Window(item.Id, item.Window, DrawNode, "", nodeStyle);
+        item.Center = window.center;
       }
       EndWindows();
 
@@ -100,9 +101,9 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
     }
 
     void AddNode(Vector2 position = default(Vector2)) {
-      var temp = metaData.AddStateNode();
-      temp.Window.position = position;
-      Selection.activeObject = temp.Asset;
+      var node = metaData.AddStateNode();
+      node.Center = position;
+      Selection.activeObject = node.Asset;
     }
 
     void DeleteNodes(IEnumerable<Object> objects) {
@@ -142,9 +143,9 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
         Repaint();
     }
 
-    private void DrawNode(int id) {
-      if (!metaData.StateDictionary.ContainsKey(id)) return;
-      var node = metaData.StateDictionary[id];
+    void DrawNode(int id) {
+      StateNode node;
+      if (!metaData.StateDictionary.TryGetValue(id, out node)) return;
       var e = Event.current;
 
       // Select once clicked
@@ -153,7 +154,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
       }
 
       // Reposition so it doesn't get too out of screen
-      node.Window.position = new Vector2(Mathf.Max(node.Window.position.x, 0), Mathf.Max(node.Window.position.y, UpperTabHeight));
+      node.Center = new Vector2(Mathf.Max(node.Center.x, 0), Mathf.Max(node.Center.y, UpperTabHeight));
 
       // Draw the damn box and text
       GUILayout.BeginArea(new Rect(Vector2.zero, node.Window.size));
