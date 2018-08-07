@@ -1,13 +1,11 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using UnityEngine;
-
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
@@ -55,14 +53,15 @@ public class StateMachineMetadata : ScriptableObject {
 
   [Serializable]
   public class StateNode : Node<StateAsset> {
-    public Rect Window = Rect.zero;
-    public Rect PreviousWindow = Rect.zero;
-    public Vector2 Center => Window.center;
+    readonly Vector2 NodeSize = new Vector2(120, 50);
 
-    public List<int> Transitions;
+    public Vector2 Center;
+    [NonSerialized] public Vector2 PreviousCenter;
+    public Rect Window => new Rect(Center - NodeSize / 2, NodeSize);
+    public bool HasMoved => Center != PreviousCenter;
 
     public StateNode(StateAsset asset) {
-      Transitions = new List<int>();
+      Asset = asset;
     }
   }
 
@@ -71,19 +70,19 @@ public class StateMachineMetadata : ScriptableObject {
     public int SourceId => Asset.SourceState.GetInstanceID();
     public int DestinationId => Asset.DestinationState.GetInstanceID();
 
-    public Vector2 CornerSource;
-    public Vector2 CornerSourceAway;
-    public Vector2 CornerDestination;
-    public Vector2 CornerDestinationAway;
+    [NonSerialized] public Vector2 CornerSource;
+    [NonSerialized] public Vector2 CornerSourceAway;
+    [NonSerialized] public Vector2 CornerDestination;
+    [NonSerialized] public Vector2 CornerDestinationAway;
 
-    public Vector2 Center;
-    public Vector2 CenterSource;
-    public Vector2 CenterDestination;
+    [NonSerialized] public Vector2 Center;
+    [NonSerialized] public Vector2 CenterSource;
+    [NonSerialized] public Vector2 CenterDestination;
     
-    public Vector2 ArrowLeftEnd;
-    public Vector2 ArrowRightEnd;
+    [NonSerialized] public Vector2 ArrowLeftEnd;
+    [NonSerialized] public Vector2 ArrowRightEnd;
 
-    public float Area;
+    [NonSerialized] public float Area;
 
     public const float TransitionSize = 15f;
     public const float ArrowSize = 4f;
@@ -96,7 +95,7 @@ public class StateMachineMetadata : ScriptableObject {
 
     public void UpdateVectors(StateNode src, StateNode dst, bool force = false){
       // Prevent updating every gui call if the window didn't move
-      if (!force && src.PreviousWindow == src.Window && dst.PreviousWindow == dst.Window) return;
+      if (!force && (src.HasMoved || dst.HasMoved)) return;
 
       var Direction = (dst.Center - src.Center).normalized;
       var CornerOffet = GetCornerOffset(Direction);
@@ -158,7 +157,6 @@ public class StateMachineMetadata : ScriptableObject {
     var node = new TransitionNode(asset);
     node.UpdateVectors(src, dst, true);
 
-    src.Transitions.Add(node.Id);
     _transitionNodes.Add(node);
     return node;
   }
@@ -183,7 +181,6 @@ public class StateMachineMetadata : ScriptableObject {
   /// <param name="node"></param>
   public void RemoveTransitionNode(TransitionNode node){
     if (node == null) return;
-    StateDictionary[node.SourceId].Transitions.Remove(node.Id);
     _transitionNodes.Remove(node);
     _stateMachine.RemoveTransition(node.Asset);
   }
@@ -192,8 +189,8 @@ public class StateMachineMetadata : ScriptableObject {
   /// Updates transition's vectors to drawing lines and detecting selection
   /// </summary>
   public void UpdateTransitionNodes(){
-    foreach (var node in TransitionNodes) node.UpdateVectors(StateDictionary[node.SourceId], StateDictionary[node.DestinationId]);
-    foreach (var node in StateNodes) node.PreviousWindow = node.Window;
+    foreach (var node in TransitionNodes) node.UpdateVectors(_stateDictionary[node.SourceId], _stateDictionary[node.DestinationId]);
+    foreach (var node in StateNodes) node.PreviousCenter = node.Center;
   }
 
   /// <summary>
@@ -214,3 +211,5 @@ public class StateMachineMetadata : ScriptableObject {
 
   }
 }
+
+#endif
