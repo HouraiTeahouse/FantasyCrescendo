@@ -11,20 +11,27 @@ using TransitionNode = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMe
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class StateMachineBuilderWindow : LockableEditorWindow {
-
-  const float UpperTabHeight = 20;
+  // Window drawing purposes
+  static Matrix4x4 _prevGuiMatrix;
+  readonly float editorWindowHeight = 21;
+  readonly float tabHeight = 17;
+  readonly Vector2 displayArea = new Vector2(1600, 1200);
   readonly Vector2 NodeTextSize = new Vector2(60, 20);
 
+  readonly float minZoomScale = 0.5f;
+  readonly float maxZoomScale = 2.0f;
+
+  // Other vars
   bool initDone = false;
   StateMachineMetadata metaData;
-
-  GUIStyle labelStyle;
-  GUIStyle nodeStyle;
-
-  Texture2D lineTexture;
-
   StateNode sourceNode = null;
 
+  // Styles and Textures
+  GUIStyle labelStyle;
+  GUIStyle nodeStyle;
+  Texture2D lineTexture;
+
+  // Grid
   Vector2 gridOffset;
   Vector2 gridDrag;
 
@@ -60,48 +67,68 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     // Initialize
     if (metaData == null)
       metaData = StateMachineAsset.GetStateMachineAsset().Metadata;
-
     if (!initDone)
       InitStyles();
 
-    DrawGrid(20, 0.2f, Color.gray);
-    DrawGrid(100, 0.4f, Color.gray);
+    // Draw environment (inclusing zoom and position)
+    BeginMainWindow(metaData.WindowOffset, metaData.WindowZoomPivot, metaData.WindowZoom);
 
-    // Update position vectors for transitions
-    metaData.UpdateTransitionNodes();
+    DrawGrid(displayArea, 20, 0.2f, Color.gray);
+    DrawGrid(displayArea, 100, 0.4f, Color.gray);
 
-    // Draw lines (underneath all)
     DrawLinkLines();
+
+    BeginWindows();
+    foreach (var item in metaData.StateNodes) {
+      item.Center = GUI.Window(item.Id, item.Window, DrawNode, "", nodeStyle).center;
+    }
+    EndWindows();
+    DrawMouseLine();
+
+    EndMainWindow();
+
+    // Handle input (mouse and keyboard)
+    HandleEvents();
 
     // Draw UI (top bars and instructions)
     GUILayout.BeginVertical();
     DrawToolBar();
     GUILayout.FlexibleSpace();
     GUILayout.BeginHorizontal();
+    GUILayout.Label(new GUIContent("Middle button to pan and zoom."));
     GUILayout.FlexibleSpace();
     GUILayout.Label(new GUIContent("Right click to create transitions"));
-
     GUILayout.EndHorizontal();
     GUILayout.EndVertical();
 
-    // Draw each window
-    BeginWindows();
-    foreach (var item in metaData.StateNodes) {
-      item.Center = GUI.Window(item.Id, item.Window, DrawNode, "", nodeStyle).center;
-    }
-    EndWindows();
-
-    // Gather input and draw line to mouse (if attempting a link)
-    HandleEvents();
-    DrawMouseLine();
-
     EditorUtility.SetDirty(metaData);
+  }
+
+  void OnInspectorUpdate() {
+    if (sourceNode != null)
+      Repaint();
+  }
+
+  void BeginMainWindow(Vector2 offset, Vector2 pivot, float zoomScale) {
+    GUI.EndGroup();
+    var mainWindowArea = new Rect(offset * zoomScale, displayArea);
+    mainWindowArea.y += tabHeight + editorWindowHeight;
+    GUI.BeginGroup(mainWindowArea);
+
+    _prevGuiMatrix = GUI.matrix;
+    GUIUtility.ScaleAroundPivot(Vector2.one * zoomScale, pivot + offset);
+  }
+
+  void EndMainWindow() {
+    GUI.matrix = _prevGuiMatrix;
+    GUI.EndGroup();
+    GUI.BeginGroup(new Rect(0, editorWindowHeight, Screen.width, Screen.height));
   }
 
   void AddNode(Vector2 position = default(Vector2)) {
     var node = metaData.AddStateNode();
     node.Center = position;
-    Selection.activeObject = node.Asset;
+    SelectObject(node.Asset);
   }
 
   void DeleteNodes(IEnumerable<Object> objects) {
@@ -128,11 +155,6 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     }
   }
 
-  void OnInspectorUpdate() {
-    if (sourceNode != null)
-      Repaint();
-  }
-
   void DrawToolBar() {
     GUILayout.BeginHorizontal(EditorStyles.toolbar);
     EditorGUILayout.LabelField(metaData._stateMachine.name);
@@ -145,36 +167,53 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     var e = Event.current;
 
     // Select once clicked
-    if (e.button == 0 && e.type == EventType.MouseDown){
+    if (e.button == 0 && e.type == EventType.MouseDown) {
       Selection.activeObject = node.Asset;
     }
 
-    // Reposition so it doesn't get too out of screen
-    node.Center = new Vector2(Mathf.Max(node.Center.x, 0), Mathf.Max(node.Center.y, UpperTabHeight));
+    // Reposition box if out of bounds
+    node.Center.x = Mathf.Clamp(node.Center.x, node.Window.size.x / 2, displayArea.x - node.Window.size.x / 2);
+    node.Center.y = Mathf.Clamp(node.Center.y, node.Window.size.y / 2, displayArea.y - node.Window.size.y / 2);
 
     // Draw the damn box and text
     GUILayout.BeginArea(new Rect(Vector2.zero, node.Window.size));
     var rect = new Rect((node.Window.size - NodeTextSize) / 2, NodeTextSize);
-    GUI.Label(rect, 
-      new GUIContent(string.Format(node.IsSelected ? "<b>{0}</b>": "{0}", node.Asset.name)), 
-      labelStyle);
+    GUI.Label(rect, new GUIContent(node.GetRichText()), labelStyle);
     GUILayout.EndArea();
 
-    // If right clicking, don't even try to drag
-    if (e.button != 1) {
+    // If left clicking, then drag
+    if (e.button == 0) {
       GUI.DragWindow();
     }
   }
 
+  void ProcessContextMenu(Vector2 mousePosition) {
+    GenericMenu genericMenu = new GenericMenu();
+    genericMenu.AddItem(new GUIContent("Add State"), false, () => AddNode(mousePosition));
+    genericMenu.ShowAsContext();
+  }
+
   void TryToConnectTwoNodes(StateNode destinationNode) {
-    if (destinationNode != null && 
-        sourceNode != destinationNode && 
+    Object asset = null;
+    if (destinationNode != null &&
+        sourceNode != destinationNode &&
         !metaData.TransitionNodeExists(sourceNode, destinationNode)) {
-      Selection.activeObject = metaData.AddTransitionNode(sourceNode, destinationNode).Asset;
+        asset = metaData.AddTransitionNode(sourceNode, destinationNode).Asset;
     }
     sourceNode = null;
+    SelectObject(asset);
+  }
+
+  void SelectObject(Object obj){
+    Selection.activeObject = obj;
     Repaint();
   }
+
+  void SelectObjects(Object[] objs) {
+    Selection.objects = objs;
+    Repaint();
+  }
+
 
   void HandleEvents() {
     HandleMouseInput();
@@ -188,24 +227,29 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
       case KeyCode.Delete:
         DeleteNodes(Selection.objects);
         break;
+      case KeyCode.Escape:
+        SelectObject(null);
+        break;
     }
   }
 
   void HandleMouseInput() {
     Event evt = Event.current;
-    switch (evt.button){
+    if (evt.mousePosition.y < tabHeight) return;
+    var areaPosition = ScreenToZoomPosition(evt.mousePosition);
+    switch (evt.button) {
       // Left Click
       case 0:
+        // Finding transitions
         if (evt.type == EventType.MouseDown) {
-          foreach (var item in metaData.TransitionNodes){
-            if (item.Contains(evt.mousePosition)){
-              Selection.activeObject = item.Asset;
-              Repaint();
+          foreach (var item in metaData.TransitionNodes) {
+            if (item.Contains(areaPosition)) {
+              SelectObject(item.Asset);
+              evt.Use();
               return;
             }
           }
         }
-
         break;
       // Right Click
       case 1:
@@ -213,21 +257,23 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
           // Start link
           case EventType.MouseDown:
             foreach (var item in metaData.StateNodes) {
-              if (item.Window.Contains(evt.mousePosition)) {
+              if (item.Window.Contains(areaPosition)) {
                 sourceNode = item;
+                evt.Use();
                 return;
               }
             }
             // No node found, expose context menu
-            ProcessContextMenu(evt.mousePosition);
+            ProcessContextMenu(areaPosition);
             break;
           // End link
           case EventType.MouseUp:
             if (sourceNode == null) break;
             StateNode temp = null;
             foreach (var item in metaData.StateNodes) {
-              if (item.Window.Contains(evt.mousePosition)) {
+              if (item.Window.Contains(areaPosition)) {
                 temp = item;
+                evt.Use();
                 break;
               }
             }
@@ -235,16 +281,28 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
             break;
         }
         break;
+      // Scroll Wheel (Click and Dragging)
+      case 2:
+        if (evt.type == EventType.MouseDrag) {
+          metaData.WindowOffset += evt.delta / metaData.WindowZoom;
+          evt.Use();
+        }
+        break;
+    }
+    // Scroll Whell
+    if (evt.type == EventType.ScrollWheel) {
+      metaData.WindowZoomPivot = areaPosition;
+      metaData.WindowZoom = Mathf.Clamp(metaData.WindowZoom + evt.delta.y / -25.0f, minZoomScale, maxZoomScale);
+      metaData.WindowOffset += (ScreenToZoomPosition(evt.mousePosition) - areaPosition) * metaData.WindowZoom;
+      evt.Use();
     }
   }
 
-  void ProcessContextMenu(Vector2 mousePosition) {
-    GenericMenu genericMenu = new GenericMenu();
-    genericMenu.AddItem(new GUIContent("Add State"), false, () => AddNode(mousePosition)); 
-    genericMenu.ShowAsContext();
-  }
+  // -------------------
+  // Draw line functions
+  // -------------------
 
-  void DrawMouseLine(){
+  void DrawMouseLine() {
     Handles.BeginGUI();
     Handles.color = Color.black;
 
@@ -257,10 +315,11 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
   }
 
   void DrawLinkLines() {
+    metaData.UpdateTransitionNodes();
     Handles.BeginGUI();
 
     foreach (var node in metaData.TransitionNodes) {
-      if (node.IsSelected){
+      if (node.IsSelected) {
         Handles.color = Color.magenta;
       } else {
         Handles.color = Color.black;
@@ -273,9 +332,9 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     Handles.EndGUI();
   }
 
-  void DrawGrid(float gridSpacing, float gridOpacity, Color gridColor) {
-    int widthDivs = Mathf.CeilToInt(position.width / gridSpacing);
-    int heightDivs = Mathf.CeilToInt(position.height / gridSpacing);
+  void DrawGrid(Vector2 area, float gridSpacing, float gridOpacity, Color gridColor) {
+    int widthDivs = Mathf.CeilToInt(area.x / gridSpacing);
+    int heightDivs = Mathf.CeilToInt(area.y / gridSpacing);
 
     Handles.BeginGUI();
     Handles.color = new Color(gridColor.r, gridColor.g, gridColor.b, gridOpacity);
@@ -284,18 +343,26 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     Vector3 newOffset = new Vector3(gridOffset.x % gridSpacing, gridOffset.y % gridSpacing, 0);
 
     for (int i = 0; i < widthDivs; i++) {
-      Handles.DrawLine(new Vector3(gridSpacing * i, -gridSpacing, 0) + newOffset, new Vector3(gridSpacing * i, position.height, 0f) + newOffset);
+      Handles.DrawLine(new Vector3(gridSpacing * i, -gridSpacing, 0) + newOffset, new Vector3(gridSpacing * i, area.y, 0f) + newOffset);
     }
 
     for (int j = 0; j < heightDivs; j++) {
-      Handles.DrawLine(new Vector3(-gridSpacing, gridSpacing * j, 0) + newOffset, new Vector3(position.width, gridSpacing * j, 0f) + newOffset);
+      Handles.DrawLine(new Vector3(-gridSpacing, gridSpacing * j, 0) + newOffset, new Vector3(area.x, gridSpacing * j, 0f) + newOffset);
     }
 
     Handles.color = Color.white;
     Handles.EndGUI();
   }
 
+  /// <summary>
+  /// Converts screen position (typically from event.current.mouseposition)
+  /// to position of GUI.Group()
+  /// </summary>
+  /// <param name="screenPosition"></param>
+  /// <returns>position of GUI.Group()</returns>
+  private Vector2 ScreenToZoomPosition(Vector2 screenPosition)
+    => (screenPosition - new Vector2(0, tabHeight) - metaData.WindowOffset) 
+      / metaData.WindowZoom + (metaData.WindowZoomPivot - metaData.WindowZoomPivot / metaData.WindowZoom);
 }
-
 
 }

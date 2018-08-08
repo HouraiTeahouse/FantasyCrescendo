@@ -11,7 +11,9 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class StateMachineMetadata : ScriptableObject {
 
-  [SerializeField] int idCounter = 0;
+  public Vector2 WindowOffset = Vector2.zero;
+  public Vector2 WindowZoomPivot = Vector2.zero;
+  public float WindowZoom = 1.0f;
 
   Dictionary<int, StateNode> _stateDictionary;
   [SerializeField] List<StateNode> _stateNodes;
@@ -67,6 +69,13 @@ public class StateMachineMetadata : ScriptableObject {
     public StateNode(StateAsset asset) {
       Asset = asset;
     }
+
+    public string GetRichText(){
+      if (IsSelected){
+        return string.Format("<b><color=#{0}>{1}</color></b>", "ffff00ff", Asset.name);
+      }
+      return string.Format("<color=#{0}>{1}</color>", "ffffffff", Asset.name);
+      }
   }
 
   [Serializable]
