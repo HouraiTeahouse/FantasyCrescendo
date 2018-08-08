@@ -45,12 +45,14 @@ public class StateMachineMetadata : ScriptableObject {
   /// Used to save the editor window's state between sessions.
   /// </summary>
   [Serializable]
-  public class Node<T> where T : ScriptableObject {
+  public abstract class Node<T> where T : ScriptableObject {
     public int Id => Asset.GetInstanceID();
     public T Asset;
 #if UNITY_EDITOR
     public bool IsSelected => Selection.objects.Contains(Asset);
 #endif
+
+    public abstract bool Contains(Vector2 position);
   }
 
   [Serializable]
@@ -70,12 +72,14 @@ public class StateMachineMetadata : ScriptableObject {
       Asset = asset;
     }
 
-    public string GetRichText(){
+    public override bool Contains(Vector2 position) => Window.Contains(position);
+
+    public string GetRichText() {
       if (IsSelected){
         return string.Format("<b><color=#{0}>{1}</color></b>", "ffff00ff", Asset.name);
       }
       return string.Format("<color=#{0}>{1}</color>", "ffffffff", Asset.name);
-      }
+    }
   }
 
   [Serializable]
@@ -110,6 +114,9 @@ public class StateMachineMetadata : ScriptableObject {
       // Prevent updating every gui call if the window didn't move
       if (!force && (src.HasMoved || dst.HasMoved)) return;
 
+      Asset.name = $"{src.Asset.name} -> {dst.Asset.name}";
+      Asset.hideFlags = HideFlags.HideInHierarchy;
+
       var Direction = (dst.Center - src.Center).normalized;
       var CornerOffet = GetCornerOffset(Direction);
       CornerSource = src.Center;
@@ -133,7 +140,7 @@ public class StateMachineMetadata : ScriptableObject {
     private Vector2 GetArrowEnd(Vector2 Direction, Vector2 LineCenter, Vector3 CrossVector) 
       => LineCenter - (TransitionSize * Direction) + (Vector2)Vector3.Cross(Direction, CrossVector) * ArrowSize;
 
-    public bool Contains(Vector2 e){
+    public override bool Contains(Vector2 e){
       return Mathf.Approximately(Area, GetAreaOfTriangle(CornerSource, CornerSourceAway, e)
                                     + GetAreaOfTriangle(CornerSourceAway, CornerDestinationAway, e)
                                     + GetAreaOfTriangle(CornerDestinationAway, CornerDestination, e)
@@ -166,6 +173,14 @@ public class StateMachineMetadata : ScriptableObject {
   /// Creates transition editor node alongside a StateTransitionAsset
   /// </summary>
   public TransitionNode AddTransitionNode(StateNode src, StateNode dst) {
+    Argument.NotNull(src);
+    Argument.NotNull(dst);
+    if (src == dst) {
+      throw new InvalidOperationException("Cannot create a transition from a state to itself");
+    }
+    if (TransitionNodeExists(src, dst))  {
+      throw new InvalidOperationException("Cannot create a transition that already exists");
+    }
     var asset = _stateMachine.CreateTransition(src.Asset, dst.Asset);
     var node = new TransitionNode(asset);
     node.UpdateVectors(src, dst, true);
@@ -178,41 +193,51 @@ public class StateMachineMetadata : ScriptableObject {
   /// Removes state editor node from metadata and state machine
   /// </summary>
   /// <param name="node"></param>
-  public void RemoveStateNode(StateNode node){
-    if (node == null) return;
-    _stateDictionary.Remove(node.Id);
-    _stateNodes.Remove(node);
-
-    var invalidTransitions = _transitionNodes.Where(t => t.Involves(node.Id)).ToArray();
-    _transitionNodes.RemoveAll(t => invalidTransitions.Contains(t));
-    _stateMachine.RemoveState(node.Asset);
+  public bool RemoveStateNode(StateNode node){
+    if (node == null) return false;
+    bool success = _stateDictionary.Remove(node.Id);
+    
+    if (success) {
+      _stateNodes.Remove(node); 
+      var invalidTransitions = _transitionNodes.Where(t => t.Involves(node.Id)).ToArray();
+      _transitionNodes.RemoveAll(t => invalidTransitions.Contains(t));
+      _stateMachine.RemoveState(node.Asset);
+    }
+    return success;
   }
 
   /// <summary>
   /// Removes transition editor node from metadata and state machine
   /// </summary>
   /// <param name="node"></param>
-  public void RemoveTransitionNode(TransitionNode node){
-    if (node == null) return;
-    _transitionNodes.Remove(node);
-    _stateMachine.RemoveTransition(node.Asset);
+  /// <returns>true if the node was removed, false otherwise.</returns>
+  public bool RemoveTransitionNode(TransitionNode node){
+    if (node == null) return false;
+    bool success = _transitionNodes.Remove(node);
+    if (success) {
+      _stateMachine.RemoveTransition(node.Asset);
+    }
+    return success;
   }
 
   /// <summary>
-  /// Updates transition's vectors to drawing lines and detecting selection
+  /// Updates transition's vectors to drawing lines and detecting selection.
   /// </summary>
   public void UpdateTransitionNodes(){
     foreach (var node in TransitionNodes) node.UpdateVectors(_stateDictionary[node.SourceId], _stateDictionary[node.DestinationId]);
-    foreach (var node in StateNodes) node.PreviousCenter = node.Center;
+    foreach (var node in StateNodes) {
+      node.PreviousCenter = node.Center;
+      node.Asset.hideFlags = HideFlags.HideInHierarchy;
+    }
   }
 
   /// <summary>
-  /// Checks if a transition exists between two nodes
+  /// Checks if a transition exists between two nodes.
   /// </summary>
-  /// <param name="src"></param>
-  /// <param name="dst"></param>
-  /// <returns>if transition exists</returns>
-  public bool TransitionNodeExists(StateNode src, StateNode dst)
+  /// <param name="src">the source node</param>
+  /// <param name="dst">the target node</param>
+  /// <returns>true if such a transition exists, false otherwise</returns>
+  public bool TransitionNodeExists(StateNode src, StateNode dst) 
     => TransitionNodes.Any(t => t.SourceId == src.Id && t.DestinationId == dst.Id);
 
   public static StateMachineMetadata Create() {

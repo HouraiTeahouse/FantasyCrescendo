@@ -1,16 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using System.Reflection;
-
-using StateNode = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.StateNode;
-using TransitionNode = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMetadata.TransitionNode;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
+using StateNode = StateMachineMetadata.StateNode;
+using TransitionNode = StateMachineMetadata.TransitionNode;
+
 public class StateMachineBuilderWindow : LockableEditorWindow {
+
+  const EventModifiers kSelectionAddModifiers = EventModifiers.Control | EventModifiers.Command;
+
   // Window drawing purposes
   static Matrix4x4 _prevGuiMatrix;
   readonly float editorWindowHeight = 21;
@@ -36,9 +41,7 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
   Vector2 gridDrag;
 
   [MenuItem("Window/State Machine Builder Window")]
-  static void Init() {
-    GetWindow(typeof(StateMachineBuilderWindow)).Show();
-  }
+  static void Init() => GetWindow(typeof(StateMachineBuilderWindow), false, "State Machine").Show();
 
   void OnEnable() {
     initDone = false;
@@ -63,7 +66,7 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     lineTexture.Apply();
   }
 
-  private void OnGUI() {
+  void OnGUI() {
     // Initialize
     if (metaData == null)
       metaData = StateMachineAsset.GetStateMachineAsset().Metadata;
@@ -105,8 +108,9 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
   }
 
   void OnInspectorUpdate() {
-    if (sourceNode != null)
+    if (sourceNode != null) {
       Repaint();
+    }
   }
 
   void BeginMainWindow(Vector2 offset, Vector2 pivot, float zoomScale) {
@@ -138,16 +142,10 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
       var transition = obj as StateTransitionAsset;
       if (state != null) {
         var node = metaData.FindState(state);
-        if (node != null) {
-          metaData.RemoveStateNode(node);
-          deleted = true;
-        }
+        deleted |= metaData.RemoveStateNode(node);
       } else if (transition != null) {
         var node = metaData.FindTransition(transition);
-        if (node != null) {
-          metaData.RemoveTransitionNode(node);
-          deleted = true;
-        }
+        deleted |= metaData.RemoveTransitionNode(node);
       }
     }
     if (deleted) {
@@ -168,7 +166,7 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
 
     // Select once clicked
     if (e.button == 0 && e.type == EventType.MouseDown) {
-      Selection.activeObject = node.Asset;
+      SelectObject(node.Asset);
     }
 
     // Reposition box if out of bounds
@@ -195,17 +193,27 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
 
   void TryToConnectTwoNodes(StateNode destinationNode) {
     Object asset = null;
-    if (destinationNode != null &&
-        sourceNode != destinationNode &&
-        !metaData.TransitionNodeExists(sourceNode, destinationNode)) {
-        asset = metaData.AddTransitionNode(sourceNode, destinationNode).Asset;
+    try {
+      asset = metaData.AddTransitionNode(sourceNode, destinationNode).Asset;
+      SelectObject(asset);
+    } catch (InvalidOperationException) {
+      // InvalidOperations are discarded
+    } finally {
+      sourceNode = null;
     }
-    sourceNode = null;
-    SelectObject(asset);
   }
 
   void SelectObject(Object obj){
-    Selection.activeObject = obj;
+    var selection = new List<Object>(Selection.objects);
+    if (selection.Contains(obj)) {
+      selection.Remove(obj);
+    } else if ((Event.current.modifiers & kSelectionAddModifiers) == EventModifiers.None) {
+      selection = new List<Object>(new[] {obj});
+      Selection.activeObject = obj;
+    } else {
+      selection.Add(obj);
+    }
+    Selection.objects = selection.ToArray();
     Repaint();
   }
 
@@ -213,7 +221,6 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     Selection.objects = objs;
     Repaint();
   }
-
 
   void HandleEvents() {
     HandleMouseInput();
@@ -224,13 +231,14 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     Event evt = Event.current;
     if (!evt.isKey) return;
     switch (evt.keyCode) {
-      case KeyCode.Delete:
-        DeleteNodes(Selection.objects);
-        break;
-      case KeyCode.Escape:
-        SelectObject(null);
-        break;
+      case KeyCode.Delete: DeleteNodes(Selection.objects); break;
+      case KeyCode.Escape: SelectObject(null); break;
     }
+  }
+
+  T FindObject<T, TAsset>(IEnumerable<T> nodes, Vector2 position) where T : StateMachineMetadata.Node<TAsset>
+                                                                 where TAsset : ScriptableObject {
+    return nodes.FirstOrDefault(n => n.Contains(position));
   }
 
   void HandleMouseInput() {
@@ -242,13 +250,10 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
       case 0:
         // Finding transitions
         if (evt.type == EventType.MouseDown) {
-          foreach (var item in metaData.TransitionNodes) {
-            if (item.Contains(areaPosition)) {
-              SelectObject(item.Asset);
-              evt.Use();
-              return;
-            }
-          }
+          var transition = FindObject<TransitionNode, StateTransitionAsset>(metaData.TransitionNodes, areaPosition);
+          if (transition == null) break;
+          SelectObject(transition.Asset);
+          evt.Use();
         }
         break;
       // Right Click
@@ -256,27 +261,20 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
         switch (evt.type) {
           // Start link
           case EventType.MouseDown:
-            foreach (var item in metaData.StateNodes) {
-              if (item.Window.Contains(areaPosition)) {
-                sourceNode = item;
-                evt.Use();
-                return;
-              }
+            var state = FindObject<StateNode, StateAsset>(metaData.StateNodes, areaPosition);
+            if (state == null) {
+              // No node found, expose context menu
+              ProcessContextMenu(areaPosition);
+            } else {
+              sourceNode = state;
+              evt.Use();
+              return;
             }
-            // No node found, expose context menu
-            ProcessContextMenu(areaPosition);
             break;
           // End link
           case EventType.MouseUp:
             if (sourceNode == null) break;
-            StateNode temp = null;
-            foreach (var item in metaData.StateNodes) {
-              if (item.Window.Contains(areaPosition)) {
-                temp = item;
-                evt.Use();
-                break;
-              }
-            }
+            var temp = FindObject<StateNode, StateAsset>(metaData.StateNodes, areaPosition);
             TryToConnectTwoNodes(temp);
             break;
         }
