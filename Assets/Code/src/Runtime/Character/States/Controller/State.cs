@@ -32,7 +32,7 @@ public class State : IEntity, IStateView<PlayerState>,
   readonly List<Transition> _transitions;
   public ReadOnlyCollection<Transition> Transitions { get; }
 
-  internal State() {
+  public State() {
     _transitions = new List<Transition>();
     Transitions = new ReadOnlyCollection<Transition>(_transitions);
   }
