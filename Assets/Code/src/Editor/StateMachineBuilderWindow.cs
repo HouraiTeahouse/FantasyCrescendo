@@ -11,20 +11,27 @@ using TransitionNode = HouraiTeahouse.FantasyCrescendo.Characters.StateMachineMe
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class StateMachineBuilderWindow : LockableEditorWindow {
-
-  const float UpperTabHeight = 20;
+  // Window drawing purposes
+  static Matrix4x4 _prevGuiMatrix;
+  readonly float editorWindowHeight = 21;
+  readonly float tabHeight = 17;
+  readonly Rect _zoomArea = new Rect(0, 0, 800, 600);
   readonly Vector2 NodeTextSize = new Vector2(60, 20);
 
+  readonly float minZoomScale = 0.5f;
+  readonly float maxZoomScale = 2.0f;
+
+  // Other vars
   bool initDone = false;
   StateMachineMetadata metaData;
-
-  GUIStyle labelStyle;
-  GUIStyle nodeStyle;
-
-  Texture2D lineTexture;
-
   StateNode sourceNode = null;
 
+  // Styles and Textures
+  GUIStyle labelStyle;
+  GUIStyle nodeStyle;
+  Texture2D lineTexture;
+
+  // Grid
   Vector2 gridOffset;
   Vector2 gridDrag;
 
@@ -60,18 +67,28 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     // Initialize
     if (metaData == null)
       metaData = StateMachineAsset.GetStateMachineAsset().Metadata;
-
     if (!initDone)
       InitStyles();
+
+    // Draw environment (inclusing zoom and position)
+    BeginMainWindow(metaData.WindowOrigin, metaData.WindowZoomPivot, metaData.WindowZoom);
 
     DrawGrid(20, 0.2f, Color.gray);
     DrawGrid(100, 0.4f, Color.gray);
 
-    // Update position vectors for transitions
-    metaData.UpdateTransitionNodes();
-
-    // Draw lines (underneath all)
     DrawLinkLines();
+
+    BeginWindows();
+    foreach (var item in metaData.StateNodes) {
+      item.Center = GUI.Window(item.Id, item.Window, DrawNode, "", nodeStyle).center;
+    }
+    EndWindows();
+    DrawMouseLine();
+
+    EndMainWindow();
+
+    // Handle input (mouse and keyboard)
+    HandleEvents();
 
     // Draw UI (top bars and instructions)
     GUILayout.BeginVertical();
@@ -80,22 +97,31 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     GUILayout.BeginHorizontal();
     GUILayout.FlexibleSpace();
     GUILayout.Label(new GUIContent("Right click to create transitions"));
-
     GUILayout.EndHorizontal();
     GUILayout.EndVertical();
 
-    // Draw each window
-    BeginWindows();
-    foreach (var item in metaData.StateNodes) {
-      item.Center = GUI.Window(item.Id, item.Window, DrawNode, "", nodeStyle).center;
-    }
-    EndWindows();
-
-    // Gather input and draw line to mouse (if attempting a link)
-    HandleEvents();
-    DrawMouseLine();
-
     EditorUtility.SetDirty(metaData);
+  }
+
+  void OnInspectorUpdate() {
+    if (sourceNode != null)
+      Repaint();
+  }
+
+  void BeginMainWindow(Vector2 offset, Vector2 pivot, float zoomScale){
+      GUI.EndGroup();
+      var mainWindowArea = new Rect(offset * zoomScale, new Vector2(800,600));
+      mainWindowArea.y += tabHeight + editorWindowHeight;
+      GUI.BeginGroup(mainWindowArea);
+
+      _prevGuiMatrix = GUI.matrix;
+      GUIUtility.ScaleAroundPivot(Vector2.one * zoomScale, pivot + offset);
+    }
+
+  void EndMainWindow(){
+    GUI.matrix = _prevGuiMatrix;
+      GUI.EndGroup();
+      GUI.BeginGroup(new Rect(0, editorWindowHeight, Screen.width, Screen.height));
   }
 
   void AddNode(Vector2 position = default(Vector2)) {
@@ -128,11 +154,6 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     }
   }
 
-  void OnInspectorUpdate() {
-    if (sourceNode != null)
-      Repaint();
-  }
-
   void DrawToolBar() {
     GUILayout.BeginHorizontal(EditorStyles.toolbar);
     EditorGUILayout.LabelField(metaData._stateMachine.name);
@@ -149,15 +170,10 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
       Selection.activeObject = node.Asset;
     }
 
-    // Reposition so it doesn't get too out of screen
-    node.Center = new Vector2(Mathf.Max(node.Center.x, 0), Mathf.Max(node.Center.y, UpperTabHeight));
-
     // Draw the damn box and text
     GUILayout.BeginArea(new Rect(Vector2.zero, node.Window.size));
     var rect = new Rect((node.Window.size - NodeTextSize) / 2, NodeTextSize);
-    GUI.Label(rect, 
-      new GUIContent(string.Format(node.IsSelected ? "<b>{0}</b>": "{0}", node.Asset.name)), 
-      labelStyle);
+    GUI.Label(rect, new GUIContent(node.GetRichText()), labelStyle);
     GUILayout.EndArea();
 
     // If right clicking, don't even try to drag
@@ -204,6 +220,9 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
               return;
             }
           }
+        } else if (evt.type == EventType.MouseDrag) {
+          metaData.WindowOrigin += evt.delta / metaData.WindowZoom;
+          evt.Use();
         }
 
         break;
@@ -236,6 +255,14 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
         }
         break;
     }
+    // Scroll Whell
+    if (evt.type == EventType.ScrollWheel){
+        metaData.WindowZoomPivot = ScreenToZoomPosition(evt.mousePosition, metaData.WindowOrigin, PivotToOrigPosition(metaData.WindowZoomPivot, metaData.WindowZoom), metaData.WindowZoom);
+        var temp = metaData.WindowZoom;
+        metaData.WindowZoom = Mathf.Clamp(metaData.WindowZoom + evt.delta.y / -100.0f, minZoomScale, maxZoomScale);
+        metaData.WindowOrigin += (ScreenToZoomPosition(evt.mousePosition, metaData.WindowOrigin, PivotToOrigPosition(metaData.WindowZoomPivot, metaData.WindowZoom), metaData.WindowZoom) - metaData.WindowZoomPivot) * metaData.WindowZoom;
+        evt.Use();
+    }
   }
 
   void ProcessContextMenu(Vector2 mousePosition) {
@@ -257,6 +284,7 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
   }
 
   void DrawLinkLines() {
+    metaData.UpdateTransitionNodes();
     Handles.BeginGUI();
 
     foreach (var node in metaData.TransitionNodes) {
@@ -295,7 +323,57 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     Handles.EndGUI();
   }
 
-}
+  private Vector2 PivotToOrigPosition(Vector2 pivot, float zoomScale)
+    => pivot - pivot / zoomScale;
 
+  private Vector2 ScreenToZoomPosition(Vector2 screenPosition, Vector2 windowOrigin, Vector2 windowOffset, float windowZoom)
+    => (screenPosition - new Vector2(0, tabHeight) - windowOrigin) / windowZoom + windowOffset;
+
+    private Vector2 ZoomToScreenPosition(Vector2 zoomPosition, Vector2 windowOffset, float windowZoom)
+      => (zoomPosition * windowZoom) + new Vector2(0, tabHeight) - metaData.WindowOrigin;
+
+  }
+
+public static class RectExtensions
+{
+    public static Vector2 TopLeft(this Rect rect)
+    {
+        return new Vector2(rect.xMin, rect.yMin);
+    }
+    public static Rect ScaleSizeBy(this Rect rect, float scale)
+    {
+        return rect.ScaleSizeBy(scale, rect.center);
+    }
+    public static Rect ScaleSizeBy(this Rect rect, float scale, Vector2 pivotPoint)
+    {
+        Rect result = rect;
+        result.x -= pivotPoint.x;
+        result.y -= pivotPoint.y;
+        result.xMin *= scale;
+        result.xMax *= scale;
+        result.yMin *= scale;
+        result.yMax *= scale;
+        result.x += pivotPoint.x;
+        result.y += pivotPoint.y;
+        return result;
+    }
+    public static Rect ScaleSizeBy(this Rect rect, Vector2 scale)
+    {
+        return rect.ScaleSizeBy(scale, rect.center);
+    }
+    public static Rect ScaleSizeBy(this Rect rect, Vector2 scale, Vector2 pivotPoint)
+    {
+        Rect result = rect;
+        result.x -= pivotPoint.x;
+        result.y -= pivotPoint.y;
+        result.xMin *= scale.x;
+        result.xMax *= scale.x;
+        result.yMin *= scale.y;
+        result.yMax *= scale.y;
+        result.x += pivotPoint.x;
+        result.y += pivotPoint.y;
+        return result;
+    }
+}
 
 }
