@@ -11,7 +11,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class StateMachineMetadata : ScriptableObject {
 
-  public Vector2 WindowOrigin = Vector2.zero;
+  public Vector2 WindowOffset = Vector2.zero;
   public Vector2 WindowZoomPivot = Vector2.zero;
   public float WindowZoom = 1.0f;
 
