@@ -8,7 +8,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class StateAsset : BaseStateAsset {
 
-  [Type(typeof(State)), SerializeField]
+  [Type(typeof(State), CommonName = "State"), SerializeField]
   string _stateType;
 
   public CharacterStateData StateData;

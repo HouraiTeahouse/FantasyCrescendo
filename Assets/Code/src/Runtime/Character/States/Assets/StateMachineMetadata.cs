@@ -74,12 +74,7 @@ public class StateMachineMetadata : ScriptableObject {
 
     public override bool Contains(Vector2 position) => Window.Contains(position);
 
-    public string GetRichText() {
-      if (IsSelected){
-        return string.Format("<b><color=#{0}>{1}</color></b>", "ffff00ff", Asset.name);
-      }
-      return string.Format("<color=#{0}>{1}</color>", "ffffffff", Asset.name);
-    }
+    public string GetRichText() => Asset.name;
   }
 
   [Serializable]
