@@ -13,16 +13,28 @@ using UnityEditor;
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 /// <summary>
-/// The serializable asset representation of a Character's 
+/// The serializable asset representation of a State Controller.
 /// </summary>
 public class StateMachineAsset : BaseStateMachineAsset {
 
   [SerializeField] List<BaseStateAsset> _states;
-  [SerializeField] List<StateTransitionAsset> _transitions;
+
+    // TODO(james7132): Move this so StateMachineAsset doesn't have any reference to the metadata.
   StateMachineMetadata _metadata;
 
+  /// <summary>
+  /// Gets a read-only collection of all states within the state machine.
+  /// </summary>
   public ReadOnlyCollection<BaseStateAsset> States => new ReadOnlyCollection<BaseStateAsset>(_states);
+  
+  /// <summary>
+  /// Gets an enumeration of all transitions within the state machine.
+  /// </summary>
+  public IEnumerable<StateTransitionAsset> Transitions => _states.SelectMany(s => s.Transitions);
+
+#if UNITY_EDITOR
   public StateMachineMetadata Metadata => _metadata ?? (_metadata = GetMetadataAsset());
+#endif
 
   /// <summary>
   /// This function is called when the object becomes enabled and active.
@@ -34,21 +46,8 @@ public class StateMachineAsset : BaseStateMachineAsset {
     Initialize();
     var builder = new StateControllerBuilder();
     var stateMap = BuildStates(builder, _states);
-    BuildTransitions(_transitions, stateMap);
+    BuildTransitions(Transitions, stateMap);
     return builder.Build();
-  }
-
-  /// <summary>
-  /// Gets all transitions related to a state.
-  /// </summary>
-  /// <param name="source">the source state to get the transitions for</param>
-  /// <returns>an enumeration of all transitions to be made.</returns>
-  public IEnumerable<StateTransitionAsset> GetTransitions(StateAsset source) {
-    Initialize();
-    if (source == null) {
-      return Enumerable.Empty<StateTransitionAsset>();
-    }
-    return _transitions.Where(t => t.SourceState == source);
   }
 
   static Dictionary<StateAsset, State> BuildStates(StateControllerBuilder builder,
@@ -68,9 +67,9 @@ public class StateMachineAsset : BaseStateMachineAsset {
     return stateMap;
   }
 
-  static void BuildTransitions(List<StateTransitionAsset> transitionAssets,
+  static void BuildTransitions(IEnumerable<StateTransitionAsset> transitions,
                                Dictionary<StateAsset, State> stateMap) {
-    foreach (var transitionAsset in transitionAssets) {
+    foreach (var transitionAsset in transitions) {
       if (transitionAsset == null || 
           transitionAsset.SourceState == null ||
           transitionAsset.DestinationState == null) continue;
@@ -91,7 +90,50 @@ public class StateMachineAsset : BaseStateMachineAsset {
 
   void Initialize() {
     _states = _states ?? new List<BaseStateAsset>();
-    _transitions = _transitions ?? new List<StateTransitionAsset>();
+  }
+
+  /// <summary>
+  /// Creates a StateAsset and adds it to the state machine's list of states.
+  /// </summary>
+  /// <remarks>
+  /// This will save any unsaved changes with the state machine.
+  /// </remarks>
+  /// <param name="name">the name of the state</param>
+  /// <returns>the created state asset</returns>
+  public T CreateState<T>(string name) where T : BaseStateAsset {
+    Initialize();
+    var state = BaseStateAsset.Create<T>(this);
+    _states.Add(state);
+#if UNITY_EDITOR
+    AppendSubAsset(state);
+#endif
+    return state;
+  }
+
+  /// <summary>
+  /// Removes a state from the state machine.
+  /// </summary>
+  /// <remarks>
+  /// This will also destroy all transitions related to the state (i.e. transitions starting from or ending 
+  /// with the state).
+  /// 
+  /// Does nothing if the state is null.
+  /// This will save any unsaved changes with the state machine to disk.
+  /// </remarks>
+  /// <param name="state">the state to remove</param>
+  public void RemoveState(StateAsset state) {
+    Initialize();
+    if (state == null || !_states.Contains(state)) return;
+    _states.RemoveAll(s => s == state);
+
+    foreach (var src in _states) {
+      src.RemoveTransitionsTo(state);
+    }
+
+    state.Destroy();
+#if UNITY_EDITOR
+    SaveAsset();
+#endif
   }
 
 #if UNITY_EDITOR
@@ -116,102 +158,26 @@ public class StateMachineAsset : BaseStateMachineAsset {
   /// </summary>
   /// <returns></returns>
   public StateMachineMetadata GetMetadataAsset() {
-    var path = AssetDatabase.GetAssetPath(this);
-    if (string.IsNullOrEmpty(path)) {
-      throw new InvalidOperationException("State Controller is not a saved asset. Cannot create meta data.");
-    }
-    var asset = AssetDatabase.LoadAllAssetsAtPath(path).OfType<StateMachineMetadata>().FirstOrDefault();
+    var asset = AssetDatabase.LoadAllAssetsAtPath(GetAssetPath()).OfType<StateMachineMetadata>().FirstOrDefault();
     if (asset == null) {
       asset = StateMachineMetadata.Create();
-      AssetDatabase.AddObjectToAsset(asset, path);
+      AppendSubAsset(asset);
     }
     return asset;
   }
 
-  /// <summary>
-  /// Creates a StateAsset and adds it to the state machine's list of states.
-  /// </summary>
-  /// <remarks>
-  /// This will save any unsaved changes with the state machine.
-  /// </remarks>
-  /// <param name="name">the name of the state</param>
-  /// <returns>the created state asset</returns>
-  public T CreateState<T>(string name) where T : BaseStateAsset {
-    Initialize();
-    string path = AssetDatabase.GetAssetPath(this);
+  public void AppendSubAsset<T>(T subasset) where T : Object {
+    if (EditorApplication.isPlayingOrWillChangePlaymode) return;
+    AssetDatabase.AddObjectToAsset(subasset, GetAssetPath());
+    SaveAsset();
+  }
+
+  string GetAssetPath() {
+    var path = AssetDatabase.GetAssetPath(this);
     if (string.IsNullOrEmpty(path)) {
       throw new InvalidOperationException("State Controller is not a saved asset. Cannot create state.");
     }
-    var state = BaseStateAsset.Create<T>();
-    AppendSubAsset(path, state, _states);
-    return state;
-  }
-
-  /// <summary>
-  /// Creates a StateTransitionAsset and adds it to the state machine's set of transitions.
-  /// </summary>
-  /// <remarks>
-  /// This will save any unsaved changes with the state machine to disk.
-  /// </remarks>
-  /// <param name="src">the source state for the transition</param>
-  /// <param name="dst">the target state for the transition</param>
-  /// <returns>the created transition asset</returns>
-  public StateTransitionAsset CreateTransition(StateAsset src, StateAsset dst) {
-    Initialize();
-    string path = AssetDatabase.GetAssetPath(this);
-    if (string.IsNullOrEmpty(path)) {
-      throw new InvalidOperationException("State Controller is not a saved asset. Cannot create transition.");
-    }
-    var transition = StateTransitionAsset.Create(src, dst);
-    AppendSubAsset(path, transition, _transitions);
-    return transition;
-  }
-
-  /// <summary>
-  /// Removes a state fro the state machine.
-  /// </summary>
-  /// <remarks>
-  /// This will also destroy all transitions related to the state (i.e. transitions starting from or ending 
-  /// with the state).
-  /// 
-  /// Does nothing if the state is null.
-  /// This will save any unsaved changes with the state machine to disk.
-  /// </remarks>
-  /// <param name="state">the state to remove</param>
-  public void RemoveState(StateAsset state) {
-    Initialize();
-    if (state == null) return;
-    _states.RemoveAll(s => s == state);
-
-    var invalidTransitions = _transitions.Where(t => t.Involves(state)).ToArray();
-    _transitions.RemoveAll(t => invalidTransitions.Contains(t));
-    foreach (var transition in invalidTransitions) {
-      Object.DestroyImmediate(transition, true);
-    }
-
-    Object.DestroyImmediate(state, true);
-    SaveAsset();
-  }
-
-  /// <summary>
-  /// Removes a transition from the state machine.
-  /// </summary>
-  /// <remarks>
-  /// Does nothing if the transition is null.
-  /// This will save any unsaved changes with the state machine to disk.
-  /// </remarks>
-  /// <param name="transition">the transition to remove.</param>
-  public void RemoveTransition(StateTransitionAsset transition) {
-    if (transition == null) return;
-    _transitions.Remove(transition);
-    Object.DestroyImmediate(transition, true);
-    SaveAsset();
-  }
-
-  void AppendSubAsset<T>(string path, T subasset, List<T> collection) where T : Object {
-    AssetDatabase.AddObjectToAsset(subasset, path);
-    collection.Add(subasset);
-    SaveAsset();
+    return path;
   }
 
   void SaveAsset() {

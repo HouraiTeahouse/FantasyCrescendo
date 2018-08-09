@@ -24,6 +24,7 @@ public class BaseStateAssetEditor : Editor {
   void OnTransitionGUI() {
     EditorGUILayout.Space();
     EditorGUILayout.LabelField("Transitions", EditorStyles.boldLabel);
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("_transitions"), true);
   }
 
   protected sealed override void OnHeaderGUI() {
