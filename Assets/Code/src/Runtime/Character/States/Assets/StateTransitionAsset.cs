@@ -14,8 +14,11 @@ public class StateTransitionAsset : ScriptableObject {
     TransitionIfNone
   }
 
-  public BaseStateAsset SourceState;
-  public BaseStateAsset DestinationState;
+  [SerializeField] BaseStateAsset _sourceState;
+  [SerializeField] BaseStateAsset _destinationState;
+  public BaseStateAsset SourceState => _sourceState;
+  public BaseStateAsset DestinationState => _destinationState;
+  public StateMachineAsset StateMachine => _sourceState.StateMachine;
   public ConditionRequirement TransitionRequirement;
   public List<StateTransitionCondition> Conditions;
   public bool Muted;
@@ -56,18 +59,24 @@ public class StateTransitionAsset : ScriptableObject {
   }
 
   /// <summary>
+  /// Destroys the transition. This removes it from the list of transitions in the source state as well.
+  /// </summary>
+  public void Destroy() => _sourceState.RemoveTransition(this);
+
+  /// <summary>
   /// Checks if the transition is related to a given state.
   /// </summary>
   /// <param name="state">the state to check against</param>
   /// <returns>true if the state is involved in the transition, false otherwise.</returns>
-  public bool Involves(StateAsset state) => SourceState == state || DestinationState == state;
+  public bool Involves(StateAsset state) => _sourceState == state || _destinationState == state;
 
-  internal static StateTransitionAsset Create(StateAsset src, StateAsset dst) {
+  internal static StateTransitionAsset Create(BaseStateAsset src, BaseStateAsset dst) {
     Argument.NotNull(src);
     Argument.NotNull(dst);
     var transition = ScriptableObject.CreateInstance<StateTransitionAsset>();
-    transition.SourceState = src;
-    transition.DestinationState = dst;
+    transition.hideFlags = HideFlags.HideInHierarchy;
+    transition._sourceState = src;
+    transition._destinationState = dst;
     transition.Conditions = new List<StateTransitionCondition>();
     return transition;
   }

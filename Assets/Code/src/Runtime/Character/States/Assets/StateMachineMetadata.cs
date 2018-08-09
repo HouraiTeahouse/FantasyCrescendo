@@ -109,9 +109,6 @@ public class StateMachineMetadata : ScriptableObject {
       // Prevent updating every gui call if the window didn't move
       if (!force && (src.HasMoved || dst.HasMoved)) return;
 
-      Asset.name = $"{src.Asset.name} -> {dst.Asset.name}";
-      Asset.hideFlags = HideFlags.HideInHierarchy;
-
       var Direction = (dst.Center - src.Center).normalized;
       var CornerOffet = GetCornerOffset(Direction);
       CornerSource = src.Center;
@@ -176,7 +173,7 @@ public class StateMachineMetadata : ScriptableObject {
     if (TransitionNodeExists(src, dst))  {
       throw new InvalidOperationException("Cannot create a transition that already exists");
     }
-    var asset = _stateMachine.CreateTransition(src.Asset, dst.Asset);
+    var asset = src.Asset.CreateTransition(dst.Asset);
     var node = new TransitionNode(asset);
     node.UpdateVectors(src, dst, true);
 
@@ -190,15 +187,13 @@ public class StateMachineMetadata : ScriptableObject {
   /// <param name="node"></param>
   public bool RemoveStateNode(StateNode node){
     if (node == null) return false;
-    bool success = _stateDictionary.Remove(node.Id);
-    
-    if (success) {
-      _stateNodes.Remove(node); 
-      var invalidTransitions = _transitionNodes.Where(t => t.Involves(node.Id)).ToArray();
-      _transitionNodes.RemoveAll(t => invalidTransitions.Contains(t));
+    if (_stateDictionary.Remove(node.Id)) {
       _stateMachine.RemoveState(node.Asset);
+      _stateNodes.RemoveAll(n => n.Asset == null); 
+      _transitionNodes.RemoveAll(t => t.Asset.SourceState == null || t.Asset.DestinationState == null);
+      return true;
     }
-    return success;
+    return false;
   }
 
   /// <summary>
@@ -208,11 +203,11 @@ public class StateMachineMetadata : ScriptableObject {
   /// <returns>true if the node was removed, false otherwise.</returns>
   public bool RemoveTransitionNode(TransitionNode node){
     if (node == null) return false;
-    bool success = _transitionNodes.Remove(node);
-    if (success) {
-      _stateMachine.RemoveTransition(node.Asset);
+    if (_transitionNodes.Remove(node)) {
+      node.Asset.Destroy();
+      return true;
     }
-    return success;
+    return false;
   }
 
   /// <summary>
@@ -220,10 +215,7 @@ public class StateMachineMetadata : ScriptableObject {
   /// </summary>
   public void UpdateTransitionNodes(){
     foreach (var node in TransitionNodes) node.UpdateVectors(_stateDictionary[node.SourceId], _stateDictionary[node.DestinationId]);
-    foreach (var node in StateNodes) {
-      node.PreviousCenter = node.Center;
-      node.Asset.hideFlags = HideFlags.HideInHierarchy;
-    }
+    foreach (var node in StateNodes) node.PreviousCenter = node.Center;
   }
 
   /// <summary>
