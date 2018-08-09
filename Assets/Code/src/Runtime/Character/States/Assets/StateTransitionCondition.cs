@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
+[Serializable]
 public class StateTransitionCondition {
 
   public enum ConditionType {

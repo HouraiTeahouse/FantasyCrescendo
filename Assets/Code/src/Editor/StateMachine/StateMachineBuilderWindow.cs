@@ -54,7 +54,7 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     labelStyle = GUI.skin.label;
     labelStyle.alignment = TextAnchor.MiddleCenter;
     labelStyle.richText = true;
-    labelStyle.fontSize = 15;
+    labelStyle.fontSize = 12;
 
     nodeStyle = new GUIStyle();
     nodeStyle.normal.background = EditorGUIUtility.Load("builtin skins/darkskin/images/node1.png") as Texture2D;
@@ -83,7 +83,8 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
 
     BeginWindows();
     foreach (var item in metaData.StateNodes) {
-      item.Center = GUI.Window(item.Id, item.Window, DrawNode, "", nodeStyle).center;
+      string styleName = item.IsSelected ? "flow node 0 on" : "flow node 0";
+      item.Center = GUI.Window(item.Id, item.Window, DrawNode, "", GUI.skin.GetStyle(styleName)).center;
     }
     EndWindows();
     DrawMouseLine();
@@ -174,8 +175,8 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     node.Center.y = Mathf.Clamp(node.Center.y, node.Window.size.y / 2, displayArea.y - node.Window.size.y / 2);
 
     // Draw the damn box and text
-    GUILayout.BeginArea(new Rect(Vector2.zero, node.Window.size));
-    var rect = new Rect((node.Window.size - NodeTextSize) / 2, NodeTextSize);
+    var rect = new Rect(Vector2.zero, node.Window.size);
+    GUILayout.BeginArea(rect);
     GUI.Label(rect, new GUIContent(node.GetRichText()), labelStyle);
     GUILayout.EndArea();
 
@@ -302,7 +303,7 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
 
   void DrawMouseLine() {
     Handles.BeginGUI();
-    Handles.color = Color.black;
+    Handles.color = Color.white;
 
     if (sourceNode != null) {
       var direction = (Event.current.mousePosition - sourceNode.Center).normalized;
@@ -318,13 +319,17 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
 
     foreach (var node in metaData.TransitionNodes) {
       if (node.IsSelected) {
-        Handles.color = Color.magenta;
+        Handles.color = new Color(0.5f, 0.5f, 1.0f);
       } else {
-        Handles.color = Color.black;
+        Handles.color = Color.white;
       }
 
-      Handles.DrawAAPolyLine(lineTexture, 2, node.CenterSource, node.CenterDestination);
-      Handles.DrawAAPolyLine(lineTexture, 2, node.ArrowLeftEnd, node.Center, node.ArrowRightEnd);
+      Handles.DrawAAPolyLine(lineTexture, 3, node.CenterSource, node.CenterDestination);
+      if (node.Asset.Muted) {
+        Handles.color = Color.red;
+      }
+
+      Handles.DrawAAPolyLine(lineTexture, 3, node.ArrowLeftEnd, node.Center, node.ArrowRightEnd);
     }
 
     Handles.EndGUI();
