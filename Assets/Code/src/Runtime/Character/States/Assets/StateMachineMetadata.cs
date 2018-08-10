@@ -214,8 +214,10 @@ public class StateMachineMetadata : ScriptableObject {
   /// Updates transition's vectors to drawing lines and detecting selection.
   /// </summary>
   public void UpdateTransitionNodes(){
-    foreach (var node in TransitionNodes) node.UpdateVectors(_stateDictionary[node.SourceId], _stateDictionary[node.DestinationId]);
-    foreach (var node in StateNodes) node.PreviousCenter = node.Center;
+    _transitionNodes.RemoveAll(node => node.Asset == null);
+    _stateNodes.RemoveAll(node => node.Asset == null);
+    foreach (var node in _transitionNodes) node.UpdateVectors(_stateDictionary[node.SourceId], _stateDictionary[node.DestinationId]);
+    foreach (var node in _stateNodes) node.PreviousCenter = node.Center;
   }
 
   /// <summary>

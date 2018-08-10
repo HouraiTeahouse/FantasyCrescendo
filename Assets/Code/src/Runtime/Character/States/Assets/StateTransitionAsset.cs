@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -16,11 +17,14 @@ public class StateTransitionAsset : ScriptableObject {
 
   [SerializeField] BaseStateAsset _sourceState;
   [SerializeField] BaseStateAsset _destinationState;
+  [SerializeField] List<StateTransitionCondition> _conditions;
   public BaseStateAsset SourceState => _sourceState;
   public BaseStateAsset DestinationState => _destinationState;
   public StateMachineAsset StateMachine => _sourceState.StateMachine;
+  public string DefaultName => $"{SourceState.name} -> {DestinationState.name}";
+  public string DisplayName => string.IsNullOrEmpty(name) ? DefaultName : name;
   public ConditionRequirement TransitionRequirement;
-  public List<StateTransitionCondition> Conditions;
+  public ReadOnlyCollection<StateTransitionCondition> Conditions => new ReadOnlyCollection<StateTransitionCondition>(_conditions);
   public bool Muted;
 
   public State.Transition BuildTransition(State targetState) {
@@ -77,7 +81,7 @@ public class StateTransitionAsset : ScriptableObject {
     transition.hideFlags = HideFlags.HideInHierarchy;
     transition._sourceState = src;
     transition._destinationState = dst;
-    transition.Conditions = new List<StateTransitionCondition>();
+    transition._conditions = new List<StateTransitionCondition>();
     return transition;
   }
 
