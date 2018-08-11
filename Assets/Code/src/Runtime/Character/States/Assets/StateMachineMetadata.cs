@@ -56,7 +56,7 @@ public class StateMachineMetadata : ScriptableObject {
   }
 
   [Serializable]
-  public class StateNode : Node<StateAsset> {
+  public class StateNode : Node<BaseStateAsset> {
 
     public Vector2 Center;
     [NonSerialized] public Vector2 PreviousCenter;
@@ -68,7 +68,7 @@ public class StateMachineMetadata : ScriptableObject {
     }
     public bool HasMoved => Center != PreviousCenter;
 
-    public StateNode(StateAsset asset) {
+    public StateNode(BaseStateAsset asset) {
       Asset = asset;
     }
 
@@ -152,8 +152,8 @@ public class StateMachineMetadata : ScriptableObject {
   /// <summary>
   /// Creates state editor node alongside a StateMachineAsset
   /// </summary>
-  public StateNode AddStateNode() {
-    var asset = _stateMachine.CreateState<StateAsset>("State");
+  public StateNode AddStateNode<T>() where T : BaseStateAsset {
+    var asset = _stateMachine.CreateState<T>("State");
     var state = new StateNode(asset);
 
     _stateNodes.Add(state);
@@ -185,7 +185,7 @@ public class StateMachineMetadata : ScriptableObject {
   /// Removes state editor node from metadata and state machine
   /// </summary>
   /// <param name="node"></param>
-  public bool RemoveStateNode(StateNode node){
+  public bool RemoveStateNode(StateNode node) {
     if (node == null) return false;
     if (_stateDictionary.Remove(node.Id)) {
       _stateMachine.RemoveState(node.Asset);

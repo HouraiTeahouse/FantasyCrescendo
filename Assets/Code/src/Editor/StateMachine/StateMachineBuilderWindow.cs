@@ -16,6 +16,40 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
 
   const EventModifiers kSelectionAddModifiers = EventModifiers.Control | EventModifiers.Command;
 
+  class NodeStyles {
+
+    readonly Dictionary<Type, GUIStyle> _normalNodeStyles;
+    readonly Dictionary<Type, GUIStyle> _selectedNodeStyles;
+    readonly GUIStyle _defaultNodeStyle;
+    readonly GUIStyle _selectedDefaultNodeStyle;
+
+    public NodeStyles() {
+      _defaultNodeStyle =  GUI.skin.GetStyle("flow node 0");
+      _selectedDefaultNodeStyle =  GUI.skin.GetStyle("flow node o on");
+      _normalNodeStyles = new Dictionary<Type, GUIStyle> {
+        { typeof(StateAsset), GUI.skin.GetStyle("flow node 0") },
+        { typeof(StateGroupAsset), GUI.skin.GetStyle("flow node hex 5") }
+      };
+      _selectedNodeStyles = new Dictionary<Type, GUIStyle> {
+        { typeof(StateAsset), GUI.skin.GetStyle("flow node 0 on") },
+        { typeof(StateGroupAsset), GUI.skin.GetStyle("flow node hex 5 on") }
+      };
+    }
+
+    public GUIStyle GetStyle(StateNode node) {
+      var type = node.Asset.GetType();
+      GUIStyle style;
+      if (node.IsSelected) {
+        if (_selectedNodeStyles.TryGetValue(type, out style)) return style;
+        return _selectedDefaultNodeStyle;
+      } else {
+        if (_normalNodeStyles.TryGetValue(type, out style)) return style;
+        return _defaultNodeStyle;
+      }
+    }
+
+  }
+
   // Window drawing purposes
   static Matrix4x4 _prevGuiMatrix;
   readonly float editorWindowHeight = 21;
@@ -32,6 +66,7 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
   StateNode sourceNode = null;
 
   // Styles and Textures
+  NodeStyles _nodeStyles;
   GUIStyle labelStyle;
   GUIStyle nodeStyle;
   Texture2D lineTexture;
@@ -51,14 +86,12 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
   void InitStyles() {
     initDone = true;
 
+    _nodeStyles = new NodeStyles();
+
     labelStyle = GUI.skin.label;
     labelStyle.alignment = TextAnchor.MiddleCenter;
     labelStyle.richText = true;
     labelStyle.fontSize = 12;
-
-    nodeStyle = new GUIStyle();
-    nodeStyle.normal.background = EditorGUIUtility.Load("builtin skins/darkskin/images/node1.png") as Texture2D;
-    nodeStyle.border = new RectOffset(12, 12, 12, 12);
 
     lineTexture = new Texture2D(1, 2);
     lineTexture.SetPixel(0, 0, new Color(0, 0, 0, 0.5f));
@@ -82,9 +115,8 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     DrawLinkLines();
 
     BeginWindows();
-    foreach (var item in metaData.StateNodes) {
-      string styleName = item.IsSelected ? "flow node 0 on" : "flow node 0";
-      item.Center = GUI.Window(item.Id, item.Window, DrawNode, "", GUI.skin.GetStyle(styleName)).center;
+    foreach (var node in metaData.StateNodes) {
+      node.Center = GUI.Window(node.Id, node.Window, DrawNode, "", _nodeStyles.GetStyle(node)).center;
     }
     EndWindows();
     DrawMouseLine();
@@ -130,8 +162,8 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
     GUI.BeginGroup(new Rect(0, editorWindowHeight, Screen.width, Screen.height));
   }
 
-  void AddNode(Vector2 position = default(Vector2)) {
-    var node = metaData.AddStateNode();
+  void AddNode<T>(Vector2 position = default(Vector2)) where T : BaseStateAsset {
+    var node = metaData.AddStateNode<T>();
     node.Center = position;
     SelectObject(node.Asset);
   }
@@ -188,7 +220,8 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
 
   void ProcessContextMenu(Vector2 mousePosition) {
     GenericMenu genericMenu = new GenericMenu();
-    genericMenu.AddItem(new GUIContent("Add State"), false, () => AddNode(mousePosition));
+    genericMenu.AddItem(new GUIContent("Add State"), false, () => AddNode<StateAsset>(mousePosition));
+    genericMenu.AddItem(new GUIContent("Add State Group"), false, () => AddNode<StateGroupAsset>(mousePosition));
     genericMenu.ShowAsContext();
   }
 
@@ -262,7 +295,7 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
         switch (evt.type) {
           // Start link
           case EventType.MouseDown:
-            var state = FindObject<StateNode, StateAsset>(metaData.StateNodes, areaPosition);
+            var state = FindObject<StateNode, BaseStateAsset>(metaData.StateNodes, areaPosition);
             if (state == null) {
               // No node found, expose context menu
               ProcessContextMenu(areaPosition);
@@ -275,7 +308,7 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
           // End link
           case EventType.MouseUp:
             if (sourceNode == null) break;
-            var temp = FindObject<StateNode, StateAsset>(metaData.StateNodes, areaPosition);
+            var temp = FindObject<StateNode, BaseStateAsset>(metaData.StateNodes, areaPosition);
             TryToConnectTwoNodes(temp);
             break;
         }
