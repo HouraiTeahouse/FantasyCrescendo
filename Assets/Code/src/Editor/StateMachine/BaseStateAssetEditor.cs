@@ -18,7 +18,7 @@ public class BaseStateAssetEditor : Editor {
   /// <summary>
   /// This function is called when the object becomes enabled and active.
   /// </summary>
-  void OnEnable() {
+  protected virtual void OnEnable() {
     _transitionEditors = new Dictionary<Object, Editor>();
 
     _transitionList = new ReorderableList(

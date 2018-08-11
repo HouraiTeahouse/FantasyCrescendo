@@ -46,7 +46,15 @@ public class StateMachineAsset : BaseStateMachineAsset {
     Initialize();
     var builder = new StateControllerBuilder();
     var stateMap = BuildStates(builder, _states);
-    BuildTransitions(Transitions, stateMap);
+
+    var typeOrder = new Type[] {
+      typeof(StateAsset),
+      typeof(StateGroupAsset), 
+    };
+    var transitions = _states.OrderBy(s => Array.IndexOf(typeOrder, s.GetType()))
+                             .SelectMany(s => s.Transitions);
+    BuildTransitions(transitions, stateMap);
+
     return builder.Build();
   }
 
@@ -54,15 +62,12 @@ public class StateMachineAsset : BaseStateMachineAsset {
                                                    List<BaseStateAsset> stateAssets) {
     var stateMap = new Dictionary<StateAsset, State>();
     uint id = 0;
-    foreach (var baseStateAsset in stateAssets) {
-      if (baseStateAsset == null) continue;
-      foreach (var stateAsset in baseStateAsset.GetBaseStates()) {
-        if (stateAsset == null || stateMap.ContainsKey(stateAsset)) continue;
-        State state = stateAsset.BuildState(id);
-        builder.AddState(state);
-        stateMap[stateAsset] = state;
-        id++;
-      }
+    foreach (var stateAsset in stateAssets.OfType<StateAsset>().OrderBy(s => s.name)) {
+      if (stateAsset == null || stateMap.ContainsKey(stateAsset)) continue;
+      State state = stateAsset.BuildState(id);
+      builder.AddState(state);
+      stateMap[stateAsset] = state;
+      id++;
     }
     return stateMap;
   }
@@ -121,7 +126,7 @@ public class StateMachineAsset : BaseStateMachineAsset {
   /// This will save any unsaved changes with the state machine to disk.
   /// </remarks>
   /// <param name="state">the state to remove</param>
-  public void RemoveState(StateAsset state) {
+  public void RemoveState(BaseStateAsset state) {
     Initialize();
     if (state == null || !_states.Contains(state)) return;
     _states.RemoveAll(s => s == state);
