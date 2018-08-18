@@ -25,8 +25,9 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
   public void Presimulate(ref PlayerState state) => ApplyState(ref state);
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
+    dir = state.Direction;
     if (!state.IsGrabbingLedge && state.GrabbedLedgeTimer >= 0) {
-      var ledge = CheckForLedges(state);
+      var ledge = LedgeUtil.CheckForLedges(state, CheckRegions, transform.position);
       if (ledge?.IsOccupied(state.MatchState) == false) {
         state.GrabLedge(ledge);
       }
@@ -40,34 +41,6 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
     state.GrabbedLedgeTimer = 0;
   }
 
-  Ledge CheckForLedges(PlayerState state) {
-    dir = state.Direction;
-    Ledge ledge = null;
-    var arrayPool = ArrayPool<Collider>.Shared;
-    var layerMask = Config.Get<PhysicsConfig>().StageLayers;
-    var colliders = arrayPool.Rent(256);
-    foreach (var region in CheckRegions) {
-      var worldRegion = GetWorldRegion(region, state.Direction);
-      var colliderCount = Physics.OverlapBoxNonAlloc(worldRegion.center, worldRegion.extents, colliders, Quaternion.identity, layerMask, QueryTriggerInteraction.Collide);
-      for (var i = 0; i < colliderCount; i++) {
-        ledge = colliders[i].GetComponent<Ledge>();
-        if (ledge != null) break;
-      }
-      if (ledge != null) break;
-    }
-    arrayPool.Return(colliders);
-    return ledge;
-  }
-
-  Bounds GetWorldRegion(Bounds region, bool direction) {
-    var center = region.center;
-    if (direction) {
-      center.x *= -1;
-    }
-    region.center = center + transform.position;
-    return region;
-  }
-
   /// <summary>
   /// Callback to draw gizmos that are pickable and always drawn.
   /// </summary>
@@ -78,7 +51,7 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
 #endif
     using (GizmoUtil.With(Color.white))  {
       foreach (var region in CheckRegions) {
-        GizmoUtil.DrawBox(GetWorldRegion(region, dir));
+        GizmoUtil.DrawBox(LedgeUtil.GetWorldRegion(region, transform.position, dir));
       }
     }
   }

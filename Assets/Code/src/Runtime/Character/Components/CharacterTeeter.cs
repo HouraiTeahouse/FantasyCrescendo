@@ -24,14 +24,20 @@ public class CharacterTeeter : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public void Presimulate(ref PlayerState state) => ApplyState(ref state);
 
+  // TODO: Fix bug where pressing down+right/down+left will switch your direction but you do not move
+  // As such, you continue to teeter even in the wrong direction
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
+    dir = state.Direction;
     if (state.IsTeetering) {
       if (state.Velocity != Vector2.zero) {
         state.IsTeetering = false;
       }
     } else {
       if (state.Velocity == Vector2.zero) {
-        state.IsTeetering = CheckForTeeter(state);
+        var ledge = LedgeUtil.CheckForLedges(state, CheckRegions, transform.position);
+        if (ledge != null){
+          state.IsTeetering = ledge.Direction ^ dir;
+        }
       }
     }
   }
@@ -40,39 +46,6 @@ public class CharacterTeeter : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
   public void ResetState(ref PlayerState state) {
     state.IsTeetering = false;
-  }
-
-  bool CheckForTeeter(PlayerState state) {
-    dir = state.Direction;
-    Ledge ledge = null;
-    var arrayPool = ArrayPool<Collider>.Shared;
-    var layerMask = Config.Get<PhysicsConfig>().StageLayers;
-    var colliders = arrayPool.Rent(256);
-    foreach (var region in CheckRegions) {
-      var worldRegion = GetWorldRegion(region, state.Direction);
-      var colliderCount = Physics.OverlapBoxNonAlloc(worldRegion.center, worldRegion.extents, colliders, Quaternion.identity, layerMask, QueryTriggerInteraction.Collide);
-      for (var i = 0; i < colliderCount; i++) {
-        ledge = colliders[i].GetComponent<Ledge>();
-        if (ledge != null) break;
-      }
-      if (ledge != null) break;
-    }
-    arrayPool.Return(colliders);
-    
-    if (ledge == null) {
-      return false;
-    } else {
-      return dir ^ ledge.Direction;
-    }
-  }
-
-  Bounds GetWorldRegion(Bounds region, bool direction) {
-    var center = region.center;
-    if (direction) {
-      center.x *= -1;
-    }
-    region.center = center + transform.position;
-    return region;
   }
 
   /// <summary>
@@ -85,7 +58,7 @@ public class CharacterTeeter : MonoBehaviour, IPlayerSimulation, IPlayerView {
 #endif
     using (GizmoUtil.With(Color.white))  {
       foreach (var region in CheckRegions) {
-        GizmoUtil.DrawBox(GetWorldRegion(region, dir));
+        GizmoUtil.DrawBox(LedgeUtil.GetWorldRegion(region, transform.position, dir));
       }
     }
   }
