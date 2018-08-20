@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class LedgeState : CharacterState {
+public class LedgeState : State {
 }
 
 }

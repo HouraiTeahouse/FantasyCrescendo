@@ -293,6 +293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 209838018}
   - component: {fileID: 209838017}
+  - component: {fileID: 209838019}
   - component: {fileID: 209838016}
   m_Layer: 0
   m_Name: EventSystem
@@ -309,16 +310,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 209838015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fde4fc02ff31e6142a7f9e0df29b3c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &209838017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,6 +340,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &209838019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 209838015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c94346238533de47a1069d26f2c346e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+  InputInterface: {fileID: 209838016}
 --- !u!1 &220020722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,7 +1623,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -998.5293, y: -100}
+  m_SizeDelta: {x: -695, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1215880794
 MonoBehaviour:

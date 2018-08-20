@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e9939747bfa0274ab89120de308628c, type: 3}
+  m_Name: StateMachine
+  m_EditorClassIdentifier: 
+  _states:
+  - {fileID: 114214883133146244}
+  - {fileID: 114862697135579352}
+--- !u!114 &114165026013793590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: State -> State
+  m_EditorClassIdentifier: 
+  _sourceState: {fileID: 114214883133146244}
+  _destinationState: {fileID: 114862697135579352}
+  TransitionRequirement: 0
+  Conditions: []
+  Muted: 0
+--- !u!114 &114214883133146244
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
+  m_Name: State
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 11400000}
+  _transitions:
+  - {fileID: 114165026013793590}
+  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.State
+  StateData:
+    Timeline: {fileID: 0}
+    MinMoveSpeed: 0
+    MaxMoveSpeed: 0
+    EntryPolicy: 0
+    MovementType: 0
+    DirectionMode: 0
+    KnockbackResistance: 0
+--- !u!114 &114336536611537822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: State -> State
+  m_EditorClassIdentifier: 
+  _sourceState: {fileID: 114862697135579352}
+  _destinationState: {fileID: 114214883133146244}
+  TransitionRequirement: 0
+  Conditions: []
+  Muted: 0
+--- !u!114 &114660375724661250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a7a72a05d3baca418906d9da5d78f4f, type: 3}
+  m_Name: Metadata
+  m_EditorClassIdentifier: 
+  WindowOffset: {x: 0, y: 0}
+  WindowZoomPivot: {x: 0, y: 0}
+  WindowZoom: 1
+  _stateNodes:
+  - Asset: {fileID: 114214883133146244}
+    Center: {x: 309, y: 168}
+  - Asset: {fileID: 114862697135579352}
+    Center: {x: 557, y: 168}
+  _transitionNodes:
+  - Asset: {fileID: 114165026013793590}
+  - Asset: {fileID: 114336536611537822}
+  _stateMachine: {fileID: 11400000}
+--- !u!114 &114862697135579352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
+  m_Name: State
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 11400000}
+  _transitions:
+  - {fileID: 114336536611537822}
+  _stateType: 
+  StateData:
+    Timeline: {fileID: 0}
+    MinMoveSpeed: 0
+    MaxMoveSpeed: 0
+    EntryPolicy: 0
+    MovementType: 0
+    DirectionMode: 0
+    KnockbackResistance: 0

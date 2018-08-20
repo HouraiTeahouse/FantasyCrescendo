@@ -1,42 +1,134 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Assertions;
+using UnityEngine.Audio;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 [RequireComponent(typeof(CharacterStateMachine))]
 public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView {
 
-  public PlayableDirector Director;
+  class ControllerInfo {
+
+    const int kMinOutputCount = 2;
+
+    public PlayableGraph Graph;
+    public GameObject Owner;
+    public AnimationMixerPlayable Animation;
+    public AudioMixerPlayable Audio;
+
+    public Playable CreatePlayable(TimelineAsset timeline) {
+      var playable = timeline.CreatePlayable(Graph, Owner);
+      if (playable.GetOutputCount() < kMinOutputCount) {
+        playable.SetOutputCount(kMinOutputCount);
+      }
+      return playable;
+    }
+
+    public void Connect(int index, Playable timeline) {
+      if (!Animation.IsNull() && Animation.IsValid()) Animation.ConnectInput(index, timeline, 0);
+      if (!Audio.IsNull() && Audio.IsValid()) Audio.ConnectInput(index, timeline, 1);
+    }
+
+    public void Disconnect(int index) {
+      if (!Animation.IsNull() && Animation.IsValid()) Animation.DisconnectInput(index);
+      if (!Audio.IsNull() && Audio.IsValid()) Audio.DisconnectInput(index);
+    }
+
+    public void SetWeight(int index, float weight) {
+      if (!Animation.IsNull() && Animation.IsValid()) Animation.SetInputWeight(index, weight);
+      if (!Audio.IsNull() && Audio.IsValid()) Audio.SetInputWeight(index, weight);
+    }
+
+  }
+
+  class StateInfo {
+
+    public readonly State State;
+    public readonly ControllerInfo Controller;
+
+    readonly Playable TimelinePlayable;
+    readonly double Duration;
+    readonly int MixerIndex;
+
+    public StateInfo(State state, ControllerInfo controller, int mixerIndex = 0) {
+      State = state;
+      Controller = controller;
+      MixerIndex = mixerIndex;
+
+      var timeline = State.Data.Timeline;
+      Duration = timeline.duration;
+      TimelinePlayable = controller.CreatePlayable(timeline);
+    }
+
+    public void Connect() => Controller.Connect(MixerIndex, TimelinePlayable);
+    public void Disconnect() => Controller.Disconnect(MixerIndex);
+    public void SetWeight(float weight) => Controller.SetWeight(MixerIndex, weight);
+    public void SetTime(ref PlayerState state) => TimelinePlayable.SetTime(state.StateTime % Duration);
+
+  }
 
   CharacterStateMachine StateMachine;
-  double stateDuration;
+  PlayableGraph _playableGraph;
+  Dictionary<uint, StateInfo> _stateMap;
+  StateInfo[] _states;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   void Awake() {
     StateMachine = GetComponent<CharacterStateMachine>();
-    if (Director == null) {
-      Director = GetComponent<PlayableDirector>();
+    ObjectUtil.DestroyAll<PlayableDirector>(this);
+  }
+
+  /// <summary>
+  /// This function is called when the MonoBehaviour will be destroyed.
+  /// </summary>
+  void OnDestroy() {
+    if (_playableGraph.IsValid()) {
+      _playableGraph.Destroy();
     }
-    Director.timeUpdateMode = DirectorUpdateMode.Manual;
   }
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
-    SetupBindings();
+    var animator = ObjectUtil.GetFirst<Animator>(this);
+    if (animator == null) return Task.CompletedTask;
     //OptimizeHierarchy();
-    if (!isView) {
-      var animator = GetComponentInChildren<Animator>();
-      if (animator != null){
-        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-      }
+
+    _playableGraph = PlayableGraph.Create(name);
+    _playableGraph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
+
+    var controller = new ControllerInfo { 
+      Graph = _playableGraph, 
+      Owner = gameObject,
+    };
+
+    _stateMap = new Dictionary<uint, StateInfo>();
+    // TODO(james7132): Set up proper state blending
+    foreach (var state in StateMachine.StateController.States) {
+      _stateMap[state.Id] = new StateInfo(state, controller);
+      _stateMap[state.Id].Disconnect();
     }
+    _states = _stateMap.Values.ToArray();
+
+    controller.Animation = CreateAnimationBinding(_playableGraph, animator);
+    controller.Audio = CreateAudioBinding(_playableGraph, GetAudioSource());
+
+    if (!isView) {
+      animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+    }
+
+    Assert.IsTrue(_playableGraph.IsValid());
+
     return Task.CompletedTask;
   }
 
@@ -49,43 +141,56 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
 
   public void ApplyState(ref PlayerState state) {
     StateMachine.Presimulate(ref state);
-    var timeline = StateMachine.GetControllerState(ref state).Data.Timeline;
-    if (timeline != Director.playableAsset) {
-      Director.Play(timeline);
-      stateDuration = Director.duration;
-      if (stateDuration == 0) {
-        stateDuration = 1;
-      }
+    var stateInfo = GetControllerState(ref state);
+    if (stateInfo == null) return;
+    foreach (var controllerState in _states) {
+      controllerState.Disconnect();
+      controllerState.SetWeight(0f);
     }
-    Director.time = state.StateTime % stateDuration;
-    Director.Evaluate();
+
+    stateInfo.Connect();
+    stateInfo.SetWeight(1f);
+    stateInfo.SetTime(ref state);
+    _playableGraph.Evaluate();
+  }
+
+  StateInfo GetControllerState(ref PlayerState state) {
+    StateInfo controllerState;
+    if (_stateMap.TryGetValue(state.StateID, out controllerState)) {
+      return controllerState;
+    } else {
+      return null;
+    }
   }
 
   public void ResetState(ref PlayerState state) {}
 
-  void SetupBindings() {
-    SetupBindings<Animator, AnimationTrack>(GetComponentInChildren<Animator>());
-    SetupBindings<AudioSource, AudioTrack>(GetAudioSource());
-  }
-
-  void SetupBindings<TComponent, TTrack>(TComponent component) 
-      where TComponent : Component 
-      where TTrack : UnityEngine.Object {
-    if (component == null) return;
-    foreach (var state in StateMachine.StateController.States) {
-      TimelineAsset timeline = state.Data.Timeline;
-      if (timeline == null) continue;
-      foreach (var track in timeline.GetOutputTracks().OfType<TTrack>()) {
-        Director.SetGenericBinding(track, component.gameObject);
-      }
+  static AnimationMixerPlayable CreateAnimationBinding(PlayableGraph graph, Animator animator) {
+    var mixerPlayable = AnimationMixerPlayable.Create(graph, 1);
+    var output = (AnimationPlayableOutput)graph.GetOutputByType<AnimationPlayableOutput>(0);
+    if (!output.IsOutputNull()) {
+      output.SetTarget(animator);
+      output.SetSourcePlayable(mixerPlayable);
+      Assert.IsTrue(output.IsOutputValid());
     }
+    return mixerPlayable;
   }
 
-  void OptimizeHierarchy() {
-    var animator = GetComponentInChildren<Animator>();
-    foreach (var animators in GetComponentsInChildren<Animator>()) {
+  static AudioMixerPlayable CreateAudioBinding(PlayableGraph graph, AudioSource audioSource) {
+    var mixerPlayable = AudioMixerPlayable.Create(graph, 1);
+    var output = (AudioPlayableOutput)graph.GetOutputByType<AudioPlayableOutput>(0);
+    if (!output.IsOutputNull()) {
+      output.SetTarget(audioSource);
+      output.SetSourcePlayable(mixerPlayable);
+      Assert.IsTrue(output.IsOutputValid());
+    }
+    return mixerPlayable;
+  }
+
+  void OptimizeHierarchy(Animator animator) {
+    foreach (var animators in ObjectUtil.GetAll<Animator>(this)) {
       var root = animator.gameObject;
-      var transforms = root.GetComponentsInChildren<Component>()
+      var transforms = ObjectUtil.GetAll<Component>(root)
                            .Where(comp => !(comp is Transform))
                            .Select(comp => comp.name)
                            .Distinct()
@@ -95,7 +200,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
   }
 
   AudioSource GetAudioSource() {
-    var source = GetComponentInChildren<AudioSource>();
+    var source = ObjectUtil.GetFirst<AudioSource>(this);
     if (source == null) { 
       source = new GameObject(gameObject.name + "_Audio").AddComponent<AudioSource>();
       source.transform.parent = transform;

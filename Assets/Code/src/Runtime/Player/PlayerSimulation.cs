@@ -1,7 +1,9 @@
+using System;
 using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo.Players {
 
@@ -46,6 +48,7 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
   }
 
   public void ResetState(ref PlayerState state) {
+    if (PlayerSimulationComponents == null) return;
     foreach (var component in PlayerSimulationComponents) {
       component.ResetState(ref state);
     }
