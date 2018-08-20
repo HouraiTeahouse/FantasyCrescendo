@@ -11,9 +11,9 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
 
   public CharacterControllerBuilder States;
 
-  public StateController<CharacterState, CharacterContext> StateController { get; private set; }
+  public StateController StateController { get; private set; }
 
-  Dictionary<uint, CharacterState> stateMap;
+  Dictionary<uint, State> stateMap;
   CharacterContext context = new CharacterContext();
 
   CharacterPhysics Physics;
@@ -31,7 +31,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
 
   public Task Initialize(PlayerConfig config, bool isView = false) {
     States = Instantiate(States); // Create a per-player copy of the builder.
-    StateController = States.BuildCharacterControllerImpl(new StateControllerBuilder<CharacterState, CharacterContext>());
+    StateController = States.BuildCharacterControllerImpl(new StateControllerBuilder());
     stateMap = StateController.States.ToDictionary(s => s.Id, s => s);
     return Task.WhenAll(stateMap.Values.Select(s => s.Initalize(config, gameObject, isView)).Where(t => t != null));
   }
@@ -56,10 +56,10 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     state.StateID = controllerState.Id;
   }
 
-  public CharacterState GetControllerState(ref PlayerState state) =>  GetControllerState(state.StateID);
+  public State GetControllerState(ref PlayerState state) =>  GetControllerState(state.StateID);
 
-  public CharacterState GetControllerState(uint id) {
-    CharacterState controllerState;
+  public State GetControllerState(uint id) {
+    State controllerState;
     if (stateMap.TryGetValue(id, out controllerState)) {
       return controllerState;
     } else {

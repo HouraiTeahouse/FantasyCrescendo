@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class StateController<T, TContext> where T : State<TContext> {
+public class StateController {
 
-  public T DefaultState { get; private set; }
-  public ReadOnlyCollection<T> States { get; private set; }
+  public State DefaultState { get; private set; }
+  public ReadOnlyCollection<State> States { get; private set; }
 
-  public event Action<T, T> OnStateChange;
+  public event Action<State, State> OnStateChange;
 
-  internal StateController(StateControllerBuilder<T, TContext> builder) {
+  internal StateController(StateControllerBuilder builder) {
     DefaultState = builder.DefaultState;
-    States = new ReadOnlyCollection<T>(builder.States.ToArray());
+    States = new ReadOnlyCollection<State>(builder.States.ToArray());
   }
 
   /// <summary>
@@ -26,9 +26,9 @@ public class StateController<T, TContext> where T : State<TContext> {
   /// <param name="dst">the state to change to</param>
   /// <exception cref="System.ArgumentException"><paramref cref="state">/ is not a state of the StateController</exception>
   /// <exception cref="System.ArgumentNullException"><paramref cref="state"/> is null</exception>
-  public void ChangeState(T src, T dst) => ChangeState(src, dst, default(TContext));
+  public void ChangeState(State src, State dst) => ChangeState(src, dst, null);
 
-  void ChangeState(T src, T dst, TContext context) {
+  void ChangeState(State src, State dst, CharacterContext context) {
     if (src == dst) return;
     if (context != null) {
       src?.OnStateExit(context);
@@ -42,26 +42,17 @@ public class StateController<T, TContext> where T : State<TContext> {
   /// </summary>
   /// <param name="context">the context object for evaluating the chnage against</param>
   /// <returns>the new current state</returns>
-  public T UpdateState(T src, TContext context) => UpdateState(src, context, false);
-
-  T UpdateState(T src, TContext context, bool passthrough) {
-    T dst;
-    if (passthrough) {
-      dst = src.Passthrough(context) as T;
-    } else {
-      src?.OnStateUpdate(context);
-      dst = src.EvaluateTransitions(context) as T;
-    }
+  public State UpdateState(State src, CharacterContext context) {
+    State dst;
+    src?.OnStateUpdate(context);
+    dst = src.EvaluateTransitions(context);
     if (dst == null) { 
       return src;
     } else {
       switch (dst.GetEntryPolicy(context)) {
         case StateEntryPolicy.Normal:
-          ChangeState(src, dst, context);
-          break;
         case StateEntryPolicy.Passthrough:
           ChangeState(src, dst, context);
-          dst = UpdateState(dst, context, true);
           break;
         case StateEntryPolicy.Blocked:
           break;

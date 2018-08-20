@@ -21,7 +21,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
   public CharacterStateData _default;
   Dictionary<string, CharacterStateData> _dataMap;
 
-  public StateControllerBuilder<CharacterState, CharacterContext> Builder { get; set; }
+  public StateControllerBuilder Builder { get; set; }
 
   CharacterStateData GetStateData(string key) {
     _dataMap = _dataMap ?? new Dictionary<string, CharacterStateData>();
@@ -47,7 +47,7 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
       if (!string.IsNullOrEmpty(path))
         propertyName = path + "." + propertyName;
       object instance = Activator.CreateInstance(propertyInfo.PropertyType);
-      var state = instance as CharacterState;
+      var state = instance as State;
       propertyInfo.SetValue(obj, instance, null);
       if (state != null) {
         state.Initalize(propertyName, currentId++, GetStateData(propertyName));
@@ -85,85 +85,85 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
     return Input(i => direction == i.Smash.Direction);
   }
 
-  public StateController<CharacterState, CharacterContext> BuildCharacterControllerImpl(StateControllerBuilder<CharacterState, CharacterContext> builder) {
+  public StateController BuildCharacterControllerImpl(StateControllerBuilder builder) {
     Builder = builder;
     InjectState(this);
 
     // Ground Attacks
-    new [] {Idle, Teeter, Walk, CrouchStart, Crouch, CrouchEnd}
+    new [] {Idle, LedgeTeeter, Walk, CrouchStart, Crouch, CrouchEnd}
         // Smash Attacks
-        .AddTransitions<CharacterState, CharacterContext>(context => {
-            var input = context.Input;
-            if (!input.Attack.WasPressed)
-                return null;
-            switch (input.Smash.Direction) {
-                case Direction.Right:
-                case Direction.Left:
-                    return SmashSide.Charge;
-                case Direction.Up:
-                    return SmashUp.Charge;
-                case Direction.Down:
-                    return SmashDown.Charge;
-            }
+        .AddTransitions(context => {
+          var input = context.Input;
+          if (!input.Attack.WasPressed)
             return null;
+          switch (input.Smash.Direction) {
+            case Direction.Right:
+            case Direction.Left:
+              return SmashSide.Charge;
+            case Direction.Up:
+              return SmashUp.Charge;
+            case Direction.Down:
+              return SmashDown.Charge;
+          }
+          return null;
         })
         // Tilt Attacks
-        .AddTransitions<CharacterState, CharacterContext>(context => {
-            var input = context.Input;
-            if (!input.Attack.WasPressed)
-                return null;
-            switch (input.Movement.Direction) {
-                case Direction.Right:
-                case Direction.Left:
-                    return TiltSide;
-                case Direction.Up:
-                    return TiltUp;
-                case Direction.Down:
-                    return TiltDown;
-            }
-            return Neutral;
+        .AddTransitions(context => {
+          var input = context.Input;
+          if (!input.Attack.WasPressed)
+            return null;
+          switch (input.Movement.Direction) {
+            case Direction.Right:
+            case Direction.Left:
+              return TiltSide;
+            case Direction.Up:
+              return TiltUp;
+            case Direction.Down:
+              return TiltDown;
+          }
+          return Neutral;
         });
     SmashUp.Charge.AddTransitionTo(SmashUp.Attack);
     SmashDown.Charge.AddTransitionTo(SmashDown.Attack);
     SmashSide.Charge.AddTransitionTo(SmashSide.Attack);
     TiltDown.AddTransitionTo(Crouch, Input(i => i.Movement.Direction == Direction.Down));
-    new[] {Neutral, TiltUp, TiltDown, TiltSide, SmashUp.Attack, SmashDown.Attack, SmashSide.Attack}
+    new[] { Neutral, TiltUp, TiltDown, TiltSide, SmashUp.Attack, SmashDown.Attack, SmashSide.Attack }
         .AddTransitionTo(Idle);
 
-    new [] {Fall, Jump, JumpAerial}
+    new[] { Fall, Jump, JumpAerial }
         .AddTransitions(Land, ctx => ctx.IsGrounded)
         // Aerial Attacks
-        .AddTransitions<CharacterState, CharacterContext>(context => {
-            var input = context.Input;
-            if (!input.Attack.WasPressed)
-                return null;
-            switch (input.Movement.Direction) {
-                case Direction.Right:
-                    return context.Direction >= 0f ? AerialForward : AerialBackward;
-                case Direction.Left:
-                    return context.Direction >= 0f ? AerialBackward : AerialForward;
-                case Direction.Up:
-                    return AerialUp;
-                case Direction.Down:
-                    return AerialDown;
-            }
-            return AerialNeutral;
+        .AddTransitions(context => {
+          var input = context.Input;
+          if (!input.Attack.WasPressed)
+            return null;
+          switch (input.Movement.Direction) {
+            case Direction.Right:
+              return context.Direction >= 0f ? AerialForward : AerialBackward;
+            case Direction.Left:
+              return context.Direction >= 0f ? AerialBackward : AerialForward;
+            case Direction.Up:
+              return AerialUp;
+            case Direction.Down:
+              return AerialDown;
+          }
+          return AerialNeutral;
         });
-    new[] {AerialForward, AerialBackward, AerialDown, AerialUp, AerialNeutral}
+    new[] { AerialForward, AerialBackward, AerialDown, AerialUp, AerialNeutral }
         .AddTransitions(AerialAttackLand, ctx => ctx.IsGrounded)
         .AddTransitionTo(Fall);
     AerialAttackLand.AddTransitionTo(Idle);
 
     // Aerial Movement
-    new [] {Idle, Teeter, Walk, Dash, Run, RunTurn, RunBrake, CrouchStart, Crouch, CrouchEnd, Shield.Main} 
+    new[] { Idle, Walk, Dash, Run, RunTurn, RunBrake, CrouchStart, Crouch, CrouchEnd, Shield.Main }
         .AddTransitions(JumpStart, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump);
-    new[] {JumpStart, JumpAerial}.AddTransitionTo(Jump);
-    new[] {Jump, Fall}.AddTransitions(JumpAerial, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump)
+    new[] { JumpStart, JumpAerial }.AddTransitionTo(Jump);
+    new[] { Jump, Fall }.AddTransitions(JumpAerial, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump)
                       .AddTransitions(EscapeAir, Input(i => i.Shield.WasPressed));
     Jump.AddTransition(Idle, ctx => ctx.NormalizedStateTime >= 1.0f && ctx.IsGrounded)
         .AddTransition(Fall, ctx => ctx.NormalizedStateTime >= 1.0f && !ctx.IsGrounded);
     EscapeAir.AddTransitionTo(FallHelpless);
-    new[] {Fall, FallHelpless, EscapeAir}.AddTransitions(Land, ctx => ctx.IsGrounded);
+    new[] { Fall, FallHelpless, EscapeAir }.AddTransitions(Land, ctx => ctx.IsGrounded);
     Land.AddTransitionTo(Idle);
 
     Func<Func<PlayerInputContext, DirectionalInput>, Func<CharacterContext, bool>>
@@ -174,80 +174,80 @@ public partial class CharacterControllerBuilder : ScriptableObject, ISerializati
         };
 
     // Running States
-    new[] { Idle, Teeter}.AddTransitions(Dash, movementContext(i => i.Smash));
+    new[] { Idle, LedgeTeeter}.AddTransitions(Dash, movementContext(i => i.Smash));
     Dash.AddTransitionTo(Idle, DirectionInput(Direction.Neutral));
-    new[] {Dash, RunTurn}.AddTransitionTo(Run);
+    new[] { Dash, RunTurn }.AddTransitionTo(Run);
     Run.AddTransition(RunBrake, DirectionInput(Direction.Neutral));
     Run.AddTransition(RunTurn,
         ctx => !Mathf.Approximately(Mathf.Sign(ctx.Input.Movement.Value.x), Mathf.Sign(ctx.Direction)));
     RunBrake.AddTransitionTo(Idle);
 
     // Ground Movement 
-    new[] {Idle, Teeter, Walk, Run}
+    new[] {Idle, LedgeTeeter, Walk, Run}
         .AddTransitions(CrouchStart, DirectionInput(Direction.Down))
         .AddTransitions(Fall, ctx => !ctx.IsGrounded);
 
-    new[] {Idle, Teeter}.AddTransitions(Walk, movementContext(i => i.Movement));
+    new[] {Idle, LedgeTeeter}.AddTransitions(Walk, movementContext(i => i.Movement));
     Walk.AddTransition(Idle, DirectionInput(Direction.Neutral));
-    Idle.AddTransition(Teeter, ctx => ctx.State.IsTeetering);
+    Idle.AddTransition(LedgeTeeter, ctx => ctx.State.IsTeetering);
 
     // Crouching States
     CrouchStart.AddTransitionTo(Crouch);
     CrouchEnd.AddTransitionTo(Idle);
-    new[] {CrouchStart, Crouch, CrouchEnd}.AddTransitions(Fall, ctx => !ctx.IsGrounded);
+    new[] { CrouchStart, Crouch, CrouchEnd }.AddTransitions(Fall, ctx => !ctx.IsGrounded);
     Crouch.AddTransition(CrouchEnd, Input(i => i.Movement.Direction != Direction.Down));
 
     // Ledge States
-    new[] {Idle, Fall, FallHelpless}.AddTransitions(LedgeGrab, ctx => ctx.State.IsGrabbingLedge);
+    new[] { Idle, Fall, FallHelpless }.AddTransitions(LedgeGrab, ctx => ctx.State.IsGrabbingLedge);
     LedgeGrab.AddTransitionTo(LedgeIdle);
     LedgeIdle.AddTransition(LedgeRelease, ctx => !ctx.State.IsGrabbingLedge)
         .AddTransition(LedgeClimb, DirectionInput(Direction.Up))
         .AddTransition(LedgeJump, ctx => ctx.Input.Jump.WasPressed && ctx.CanJump)
         .AddTransition(LedgeAttack, Attack());
     LedgeJump.AddTransitionTo(Jump);
-    new[] {LedgeRelease, LedgeClimb, LedgeEscape, LedgeAttack}
+    new[] { LedgeRelease, LedgeClimb, LedgeEscape, LedgeAttack }
         .AddTransitions(Idle, ctx => ctx.NormalizedStateTime >= 1.0f && ctx.IsGrounded)
         .AddTransitions(Fall, ctx => ctx.NormalizedStateTime >= 1.0f && !ctx.IsGrounded);
 
     // Shielding
-    new[] {Idle, Teeter}.AddTransitions(Shield.On, Input(i => i.Shield.Current));
+    new[] {Idle, LedgeTeeter}.AddTransitions(Shield.On, Input(i => i.Shield.Current));
     Shield.On.AddTransition(Shield.Perfect, ctx => ctx.State.IsHit)
         .AddTransitionTo(Shield.Main);
     Shield.Main.AddTransition(Shield.Broken, ctx => ctx.ShieldBroken)
         .AddTransition(Shield.Off, Input(i => !i.Shield.Current));
     Shield.Off.AddTransitionTo(Idle);
-    new[] {Shield.Broken, Shield.Stunned, Idle}.Chain();
-    
+    new[] { Shield.Broken, Shield.Stunned, Idle }.Chain();
+
     // Rolls/Sidesteps
     var leftSmash = DirectionalSmash(Direction.Left);
     var rightSmash = DirectionalSmash(Direction.Right);
     Shield.Main
     .AddTransition(EscapeForward, ctx => {
-        if (ctx.Direction > 0f)
-            return rightSmash(ctx);
-        else
-            return leftSmash(ctx);
+      if (ctx.Direction > 0f)
+        return rightSmash(ctx);
+      else
+        return leftSmash(ctx);
     })
     .AddTransition(EscapeBackward, ctx => {
-        if (ctx.Direction > 0f)
-            return leftSmash(ctx);
-        else
-            return rightSmash(ctx);
-        })
+      if (ctx.Direction > 0f)
+        return leftSmash(ctx);
+      else
+        return rightSmash(ctx);
+    })
     .AddTransition(Escape, DirectionInput(Direction.Down));
-    new[] {Escape, EscapeForward, EscapeBackward}.AddTransitionTo(Shield.Main);
+    new[] { Escape, EscapeForward, EscapeBackward }.AddTransitionTo(Shield.Main);
 
     Builder.WithDefaultState(Idle);
     BuildCharacterController();
     return Builder.Build();
-}
+  }
 
   protected virtual void BuildCharacterController() {
   }
 
   void ISerializationCallbackReceiver.OnBeforeSerialize() {
     if (_dataMap == null) return;
-    _data = _dataMap.Select(kvp => new StateData {Name = kvp.Key, Data = kvp.Value}).ToArray();
+    _data = _dataMap.Select(kvp => new StateData { Name = kvp.Key, Data = kvp.Value }).ToArray();
   }
 
   void ISerializationCallbackReceiver.OnAfterDeserialize() {

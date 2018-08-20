@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class JumpState : CharacterState {
+public class JumpState : State {
 
   CharacterMovement component;
 
