@@ -34,10 +34,7 @@ public class CharacterTeeter : MonoBehaviour, IPlayerSimulation, IPlayerView {
       }
     } else {
       if (state.Velocity == Vector2.zero) {
-        var ledge = LedgeUtil.CheckForLedges(state, CheckRegions, transform.position);
-        if (ledge != null){
-          state.IsTeetering = ledge.Direction ^ dir;
-        }
+        state.IsTeetering = LedgeUtil.CheckForLedges(state, CheckRegions, transform.position, state.Direction) != null;
       }
     }
   }
