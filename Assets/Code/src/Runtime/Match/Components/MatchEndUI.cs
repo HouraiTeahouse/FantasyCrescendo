@@ -23,7 +23,7 @@ public class MatchEndUI : MonoBehaviour {
   /// </summary>
   void Awake() {
     Mediator.Global.CreateUnityContext(this)
-        .Subscribe<MatchEndEvent>(OnMatchEnd);
+        .SubscribeAsync<MatchEndEvent>(OnMatchEnd);
     if (TextUI == null) {
       TextUI = GetComponentInChildren<TextMeshProUGUI>();
     }

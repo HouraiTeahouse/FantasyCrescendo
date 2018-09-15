@@ -26,7 +26,7 @@ public class MatchCountdownUI : MonoBehaviour {
   /// </summary>
   void Awake() {
     Mediator.Global.CreateUnityContext(this)
-        .Subscribe<MatchStartCountdownEvent>(StartCountdown);
+        .SubscribeAsync<MatchStartCountdownEvent>(StartCountdown);
     if (TextUI == null) {
       TextUI = GetComponentInChildren<TextMeshProUGUI>();
     }

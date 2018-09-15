@@ -66,7 +66,8 @@ class EditorCommands {
         }
       }
       Selection.objects = hitboxes.Select(h => h.gameObject).ToArray();
-      Undo.SetCurrentGroupName($"Generate {type} Hitbox{hitboxes.Count > 0 ? "es" : string.Empty}");
+      string suffix = (hitboxes.Count > 0) ? "es" : string.Empty;
+      Undo.SetCurrentGroupName($"Generate {type} Hitbox{suffix}");
     }
 
 }

@@ -70,12 +70,10 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
   public unsafe MatchInput MergeWith(MatchInput other, MatchInputMergeStrategy strategy) {
     Assert.IsTrue(PlayerCount >= other.PlayerCount);
     var newInput = this;
-    fixed (byte* newData = newInput.Data, 
-                 selfData = Data, 
-                 otherData = other.Data) {
-      var newInputs = (PlayerInput*)newData;
+    fixed (byte* selfData = Data) {
+      var newInputs = (PlayerInput*)newInput.Data;
       var selfInputs = (PlayerInput*)selfData;
-      var otherInputs = (PlayerInput*)otherData;
+      var otherInputs = (PlayerInput*)other.Data;
       switch (strategy) {
         case MatchInputMergeStrategy.FullMerge:
           for (int i = 0; i < PlayerCount; i++) {
