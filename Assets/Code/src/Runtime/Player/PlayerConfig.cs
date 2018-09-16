@@ -78,7 +78,9 @@ public struct PlayerSelection : IValidatable, INetworkSerializable {
   }
 
   public CharacterData GetCharacter() => Registry.Get<CharacterData>().Get(CharacterID);
+  public CharacterPallete GetPallete() => GetCharacter()?.GetPallete(Pallete);
 
+  public string GetPrettyString() => $"{GetCharacter().name}, {Pallete}";
   public override string ToString() => $"Selection({CharacterID},{Pallete})";
 
 }

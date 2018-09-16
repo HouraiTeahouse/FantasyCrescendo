@@ -10,8 +10,6 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
 /// </summary>
 public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> {
 
-  GameObject View;
-
   IStateView<PlayerState>[] ViewComponents;
 
   readonly IEnumerable<IViewFactory<PlayerState, PlayerConfig>> viewFactories;
@@ -21,16 +19,9 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
   }
 
   public async Task Initialize(PlayerConfig config) {
-    var selection = config.Selection;
-    var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
-    var prefab = await character.GetPallete(selection.Pallete).Prefab.LoadAsync();
+    var view = await PlayerUtil.Instantiate(config, true);
 
-    View = Object.Instantiate(prefab);
-    View.name = $"Player {config.PlayerID + 1} View ({character.name}, {selection.Pallete})";
-
-    PlayerUtil.DestroyAll(View, typeof(Collider), typeof(Hurtbox), typeof(Hitbox));
-
-    var task = View.Broadcast<IPlayerComponent>( component => component.Initialize(config, true));
+    var task = view.Broadcast<IPlayerComponent>(component => component.Initialize(config, true));
 
     var viewTasks = from factory in viewFactories
                     where factory != null
@@ -39,13 +30,11 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
     await task;
 
     // TODO(james7132): Move character view components to it's own factory
-    ViewComponents = View.GetComponentsInChildren<IStateView<PlayerState>>().Concat(views).ToArray();
+    ViewComponents = view.GetComponentsInChildren<IStateView<PlayerState>>().Concat(views).ToArray();
   }
 
   public void UpdateView(in PlayerState state) {
-    if (ViewComponents == null) {
-      return;
-    }
+    if (ViewComponents == null) return;
     foreach (var component in ViewComponents) {
       component.UpdateView(state);
     }
