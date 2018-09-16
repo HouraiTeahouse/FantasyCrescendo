@@ -63,7 +63,7 @@ public struct PlayerSelection : IValidatable, INetworkSerializable {
     get {
       var character = Registry.Get<CharacterData>().Get(CharacterID);
       if (character == null) return false;
-      return Pallete < character.Portraits.Count;
+      return Pallete < character.PalleteCount;
     }
   }
 

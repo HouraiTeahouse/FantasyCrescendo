@@ -23,7 +23,7 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
   public async Task Initialize(PlayerConfig config) {
     var selection = config.Selection;
     var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
-    var prefab = await character.Prefab.LoadAsync();
+    var prefab = await character.GetPallete(selection.Pallete).Prefab.LoadAsync();
 
     View = Object.Instantiate(prefab);
     View.name = $"Player {config.PlayerID + 1} View ({character.name}, {selection.Pallete})";

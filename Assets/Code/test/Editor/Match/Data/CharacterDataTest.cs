@@ -4,6 +4,7 @@ using HouraiTeahouse.FantasyCrescendo.Characters;
 using HouraiTeahouse.FantasyCrescendo.Players;
 using NUnit.Framework;
 using System;  
+using System.Linq;
 using System.Collections;
 using UnityEngine;
 using UnityEditor;
@@ -19,7 +20,9 @@ using UnityEngine.TestTools;
 [Parallelizable]
 internal class CharacterDataTest : AbstractDataTest<CharacterData> {
 
-  public static IEnumerable ComponentCases() => Permutation.Generate(AllData, RequiredTypes);
+  public static IEnumerable Palletes => Enumerable.Range(0, (int)GameMode.GlobalMaxPlayers);
+  public static IEnumerable PalleteCases() => Permutation.Generate(AllData, Palletes);
+  public static IEnumerable ComponentCases() => Permutation.GenerateAll(AllData, Palletes, RequiredTypes);
 
   static Type[] RequiredTypes => new Type[] {
     typeof(CharacterAnimation),
@@ -29,37 +32,26 @@ internal class CharacterDataTest : AbstractDataTest<CharacterData> {
     typeof(CharacterCamera),
     typeof(CharacterRespawn),
     typeof(CharacterStateMachine),
-    typeof(CharacterColor),
     typeof(CharacterShield),
     typeof(PlayerActive),
     typeof(CharacterHitboxController),
-    typeof(CharacterMovement),
+    typeof(CharacterMovement)
   };
 
-  [Test, TestCaseSource("AllData")]
-  public void has_a_prefab(CharacterData character) {
-    Assert.NotNull(character.Prefab.Load());
-  }
-
-  [Test, TestCaseSource("AllData")]
-  public void has_equal_pallete_and_portrait_counts(CharacterData character) {
-    var swap = character.Prefab.Load().GetComponent<CharacterColor>();
-    Assert.NotNull(swap);
-    Assert.AreEqual(swap.Count, character.Portraits.Count);
+  [Test, TestCaseSource("PalleteCases")]
+  public void every_pallete_has_a_prefab(CharacterData character, int pallete) {
+    Assert.NotNull(character.GetPallete(pallete).Prefab.Load());
   }
 
   [TestCaseSource("ComponentCases")]
-  public void has_component(CharacterData character, Type type) {
-    var prefab = character.Prefab.Load();
+  public void has_component(CharacterData character, int pallete, Type type) {
+    var prefab = character.GetPallete(pallete).Prefab.Load();
     Assert.IsNotNull(prefab.GetComponentInChildren(type));
   }
 
-  [Test, TestCaseSource("AllData")]
-  public void has_valid_portraits(CharacterData character) {
-    var portraits = character.Portraits;
-    foreach (var portrait in character.Portraits) {
-      Assert.NotNull(portrait.Load());
-    }
+  [Test, TestCaseSource("PalleteCases")]
+  public void every_pallete_has_a_portrait(CharacterData character, int pallete) {
+    Assert.NotNull(character.GetPallete(pallete).Portrait.Load());
   }
 
   [Test, TestCaseSource("AllData")]

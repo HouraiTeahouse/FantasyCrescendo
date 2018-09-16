@@ -3,9 +3,26 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 namespace HouraiTeahouse.FantasyCrescendo {
+
+[Serializable]
+public class CharacterPallete {
+
+  [SerializeField, Resource(typeof(Sprite))] string _portrait;
+  [SerializeField, Resource(typeof(GameObject))] string _prefab;
+
+  public IAsset<Sprite> Portrait => Asset.Get<Sprite>(_portrait);
+  public IAsset<GameObject> Prefab => Asset.Get<GameObject>(_prefab);
+
+  public void Unload() {
+    Portrait.Unload();
+    Prefab.Unload();
+  }
+
+}
 
 /// <summary>
 /// A data object representing a playable character.
@@ -18,12 +35,11 @@ public class CharacterData : GameDataBase {
   public string ShortName;
   public string LongName;
 
-  [SerializeField, Resource(typeof(GameObject))] string _prefab;
   [SerializeField, Resource(typeof(SceneData))] string _homeStage;
   [SerializeField, Resource(typeof(AudioClip))] string _victoryTheme;
   [Header("Visuals")]
   [SerializeField, Resource(typeof(Sprite))] string _icon;
-  [SerializeField, Resource(typeof(Sprite))] string[] _portraits;
+  [SerializeField] CharacterPallete[] _palletes;
   public Vector2 PortraitCropCenter;
   public float PortraitCropSize;
 
@@ -35,25 +51,18 @@ public class CharacterData : GameDataBase {
     }
   }
 
-  public IAsset<GameObject> Prefab => Asset.Get<GameObject>(_prefab);
   public IAsset<Sprite> Icon => Asset.Get<Sprite>(_icon);
   public IAsset<SceneData> HomeStage => Asset.Get<SceneData>(_homeStage);
   public IAsset<AudioClip> VictoryTheme => Asset.Get<AudioClip>(_victoryTheme);
 
-  public ReadOnlyCollection<IAsset<Sprite>> Portraits {
-    get {
-      if (_portraitsAssets == null) {
-        var portraitAssets = _portraits.Select(path => Asset.Get<Sprite>(path)).ToArray();
-        _portraitsAssets = new ReadOnlyCollection<IAsset<Sprite>>(portraitAssets);
-      }
-      return _portraitsAssets;
-    }
-  }
+  public int PalleteCount => _palletes.Length;
+  public CharacterPallete GetPallete(int index) => _palletes[index % PalleteCount];
 
   public void Unload() {
-    new ILoadable[] { Prefab, Icon, HomeStage, VictoryTheme }
-      .Concat(Portraits)
-      .UnloadAll();
+    new ILoadable[] { Icon, HomeStage, VictoryTheme }.UnloadAll();
+    foreach (var pallete in _palletes) {
+      pallete.Unload();
+    }
   }
 
   public override string ToString() => $"Character ({name})";
