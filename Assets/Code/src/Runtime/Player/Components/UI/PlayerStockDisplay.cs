@@ -14,7 +14,7 @@ public class PlayerStockDisplay : MonoBehaviour, IStateView<PlayerState> {
 
   int? lastShownExcess;
 
-  public void ApplyState(ref PlayerState state) {
+  public void ApplyState(in PlayerState state) {
     if (!state.IsActive) {
       SetActive(ExcessDisplay.gameObject, false);
       SetActive(false);

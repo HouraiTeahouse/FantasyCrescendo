@@ -27,7 +27,7 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(ref PlayerState state) {}
+  public void Presimulate(in PlayerState state) {}
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
     if (state.RespawnTimeRemaining > 0) {
@@ -42,7 +42,7 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
     state.ShieldDamage = 0;
   }
 
-  public void ApplyState(ref PlayerState state) {
+  public void ApplyState(in PlayerState state) {
     if (platform == null) return;
     platform.SetActive(state.RespawnTimeRemaining > 0);
   }

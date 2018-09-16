@@ -51,8 +51,8 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(ref PlayerState state) {
-    ApplyState(ref state);
+  public void Presimulate(in PlayerState state) {
+    ApplyState(state);
     IsGrounded = IsCharacterGrounded(state);
   }
 
@@ -83,7 +83,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     }
   }
 
-  public void ApplyState(ref PlayerState state) {
+  public void ApplyState(in PlayerState state) {
     transform.position = state.Position;
     var offset = 90f;
     if (!state.Direction) {

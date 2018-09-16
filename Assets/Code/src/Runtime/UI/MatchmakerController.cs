@@ -39,11 +39,11 @@ public class MatchmakerController : MonoBehaviour {
     if (networkManager == null) return;
     var lobbies = await networkManager.Matchmaker.GetLobbies();
     foreach (var display in GetComponentsInChildren<IStateView<IEnumerable<LobbyInfo>>>()) {
-      display.ApplyState(ref lobbies);
+      display.ApplyState(lobbies);
     }
     foreach (var display in GetComponentsInChildren<IStateView<MatchmakerController>>()) {
       var matchMaker = this;
-      display.ApplyState(ref matchMaker);
+      display.ApplyState(matchMaker);
     }
   }
 

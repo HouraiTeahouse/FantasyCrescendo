@@ -22,7 +22,7 @@ public class CharacterTeeter : MonoBehaviour, IPlayerSimulation, IPlayerView {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(ref PlayerState state) => ApplyState(ref state);
+  public void Presimulate(in PlayerState state) => ApplyState(state);
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
     if (state.IsTeetering) {
@@ -36,7 +36,7 @@ public class CharacterTeeter : MonoBehaviour, IPlayerSimulation, IPlayerView {
     }
   }
 
-  public void ApplyState(ref PlayerState state) => dir = state.Direction;
+  public void ApplyState(in PlayerState state) => dir = state.Direction;
 
   public void ResetState(ref PlayerState state) {
     state.IsTeetering = false;

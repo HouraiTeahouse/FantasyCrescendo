@@ -36,12 +36,12 @@ public class CharacterIndicator : MonoBehaviour, IPlayerView {
     await Indicator.gameObject.Broadcast<IPlayerComponent>(comp => comp.Initialize(config, isView));
   }
 
-  public void ApplyState(ref PlayerState state) {
+  public void ApplyState(in PlayerState state) {
     if (Indicator == null) return;
     AdjustActiveState(state);
     AdjustIndicatorPosition(state);
     foreach (var view in ViewComponents) {
-      view.ApplyState(ref state);
+      view.ApplyState(state);
     }
   }
 

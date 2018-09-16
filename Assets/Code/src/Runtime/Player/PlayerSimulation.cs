@@ -34,7 +34,7 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
   public void Presimulate(PlayerState state) {
     if (PlayerSimulationComponents == null) return;
     foreach (var component in PlayerSimulationComponents) {
-      component.Presimulate(ref state);
+      component.Presimulate(state);
     }
   }
 

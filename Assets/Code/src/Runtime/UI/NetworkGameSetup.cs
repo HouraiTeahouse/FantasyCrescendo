@@ -144,7 +144,7 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
   }
 
   void OnClientUpdatedConfig(MatchConfig config)  {
-    CharacterSelectMenu.ApplyState(ref config); 
+    CharacterSelectMenu.ApplyState(config); 
   }
 
   async void OnClientMatchStarted(MatchConfig config) {

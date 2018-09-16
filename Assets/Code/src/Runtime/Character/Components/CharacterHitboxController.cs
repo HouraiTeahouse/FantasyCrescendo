@@ -23,7 +23,7 @@ public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
     return Task.CompletedTask;
   }
 
-  public void Presimulate(ref PlayerState state) { 
+  public void Presimulate(in PlayerState state) { 
     foreach (var hitbox in Hitboxes) {
       hitbox.Presimulate();
       // Deactivate all hitboxes, let them be driven solely by tick to tick animation
