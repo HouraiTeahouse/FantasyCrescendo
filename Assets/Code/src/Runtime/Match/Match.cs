@@ -74,10 +74,8 @@ public abstract class Match {
     startPositions = startPositions.OrderBy(s => s.transform.GetSiblingIndex()).ToArray();
     for (int i = 0; i < initialState.PlayerCount; i++) {
       var startPos = startPositions[i % startPositions.Length].transform;
-      var state = initialState.GetPlayerState(i);
-      state.Position = startPos.position;
-      state.Direction = startPos.transform.forward.x >= 0;
-      initialState.SetPlayerState(i, state);
+      initialState[i].Position = startPos.position;
+      initialState[i].Direction = startPos.transform.forward.x >= 0;
     }
     return initialState;
   }
@@ -85,18 +83,14 @@ public abstract class Match {
   MatchState CreateInitialStateSimple(MatchConfig config) {
     var initialState = new MatchState(config);
     for (var i = 0; i < initialState.PlayerCount; i++) {
-      var state = initialState.GetPlayerState(i);
-      state.Position = new Vector3((int)i * 2 - 3, 1, 0);
-      initialState.SetPlayerState(i, state);
+      initialState[i].Position = new Vector3((int)i * 2 - 3, 1, 0);
     }
     return initialState;
   }
 
   void SetDefaultDamages(MatchConfig config, MatchState initialState) {
     for (int i = 0; i < initialState.PlayerCount; i++) {
-      var state = initialState.GetPlayerState(i);
-      state.Damage = config.PlayerConfigs[i].DefaultDamage;
-      initialState.SetPlayerState(i, state);
+      initialState[i].Damage = config.PlayerConfigs[i].DefaultDamage;
     }
   }
 

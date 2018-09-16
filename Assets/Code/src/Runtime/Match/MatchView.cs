@@ -39,9 +39,7 @@ public class MatchView : IInitializable<MatchConfig>, IStateView<MatchState> {
 
   void ApplyPlayerStates(MatchState state) {
     for (var i = 0; i < PlayerViews.Length; i++) {
-      // TODO(james7132): Use ref returns when 7.2 is available
-      var playerState = state.GetPlayerState(i);
-      PlayerViews[i].ApplyState(playerState);
+      PlayerViews[i].ApplyState(state[i]);
     }
   }
 
