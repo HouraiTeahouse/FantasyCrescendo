@@ -10,11 +10,11 @@ public class PlayerName : MonoBehaviour, IInitializable<PlayerConfig>, IStateVie
   public string Format;
 
   public Task Initialize(PlayerConfig config) {
-    ApplyState(config);
+    UpdateView(config);
     return Task.CompletedTask;
   }
 
-  public void ApplyState(in PlayerConfig config) {
+  public void UpdateView(in PlayerConfig config) {
     if (Text == null) return;
     Text.text = string.Format(Format, config.PlayerID + 1);
   }

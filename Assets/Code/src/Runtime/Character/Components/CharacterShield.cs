@@ -74,7 +74,7 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     return Task.CompletedTask;
   }
 
-  public void Presimulate(in PlayerState state) => ApplyState(state);
+  public void Presimulate(in PlayerState state) => UpdateView(state);
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
     if (IsShieldActive(state)) {
@@ -88,7 +88,7 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     }
   }
 
-  public void ApplyState(in PlayerState state) {
+  public void UpdateView(in PlayerState state) {
     var shieldHealth = MaxShieldHealth - state.ShieldDamage;
     var shieldSizeRatio = shieldHealth / (float)MaxShieldHealth;
     ObjectUtil.SetActive(Shield, IsShieldActive(state));

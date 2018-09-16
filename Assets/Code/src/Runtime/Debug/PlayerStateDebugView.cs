@@ -18,7 +18,7 @@ public class PlayerStateDebugView : MonoBehaviour, IPlayerView {
     return Task.CompletedTask;
   }
 
-  public void ApplyState(in PlayerState state) => State = state;
+  public void UpdateView(in PlayerState state) => State = state;
 
 }
     

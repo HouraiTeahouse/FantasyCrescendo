@@ -44,7 +44,7 @@ public class MatchManager : MonoBehaviour {
   void Update() {
     if (View == null) return;
     var state = MatchController.CurrentState;
-    View?.ApplyState(state);
+    View?.UpdateView(state);
   }
 
   public async Task<MatchResult> RunMatch() {

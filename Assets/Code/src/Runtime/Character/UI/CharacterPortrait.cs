@@ -60,7 +60,7 @@ public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, ISta
     }
   }
 
-  public void ApplyState(in PlayerConfig config) => Initialize(config);
+  public void UpdateView(in PlayerConfig config) => Initialize(config);
 
   protected override void OnRectTransformDimensionsChange() => SetRect();
 

@@ -42,7 +42,7 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
     state.ShieldDamage = 0;
   }
 
-  public void ApplyState(in PlayerState state) {
+  public void UpdateView(in PlayerState state) {
     if (platform == null) return;
     platform.SetActive(state.RespawnTimeRemaining > 0);
   }

@@ -20,7 +20,7 @@ public class EditorQuickMatchResults : MonoBehaviour {
     await Task.WhenAll(Results.PlayerStats.Select(async playerStats => {
       var views = await DisplayFactory.CreateViews(playerStats.Config);
       foreach (var view in views) {
-        view.ApplyState(playerStats);
+        view.UpdateView(playerStats);
       }
     }));
   }

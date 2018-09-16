@@ -12,13 +12,13 @@ public class PlayerActive : MonoBehaviour, IStateView<PlayerState>, IPlayerSimul
 
   public Task Initialize(PlayerConfig config, bool isView = false) => Task.CompletedTask;
 
-  public void Presimulate(in PlayerState state) => ApplyState(state);
+  public void Presimulate(in PlayerState state) => UpdateView(state);
 
   public void ResetState(ref PlayerState state) {}
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {}
 
-  public void ApplyState(in PlayerState state) {
+  public void UpdateView(in PlayerState state) {
     var isActive = state.IsActive;
     if (Invert) isActive = !isActive;
     foreach (var target in TargetObjects) {
