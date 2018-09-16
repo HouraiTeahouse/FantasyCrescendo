@@ -42,10 +42,8 @@ public sealed class TimeMatchRule : IMatchRule {
   }
 
   void OnPlayerDied(PlayerDiedEvent evt) {
-    var state = evt.PlayerState;
-    state.Stocks--;
-    evt.PlayerState = state;
-    if (state.Stocks > 0) {
+    evt.PlayerState.Stocks--;
+    if (evt.PlayerState.Stocks > 0) {
       PlayerUtil.RespawnPlayer(evt);
     }
   }

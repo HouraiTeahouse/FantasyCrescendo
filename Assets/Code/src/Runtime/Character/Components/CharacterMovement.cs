@@ -51,8 +51,8 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     }
   }
 
-  public bool CanJump(PlayerState state) => state.JumpCount < MaxJumpCount;
-  public float GetJumpPower(PlayerState state) => JumpPower[state.JumpCount];
+  public bool CanJump(in PlayerState state) => state.JumpCount < MaxJumpCount;
+  public float GetJumpPower(in PlayerState state) => JumpPower[state.JumpCount];
 
   public void Jump(ref PlayerState state) {
     if (CanJump(state)) {
@@ -109,7 +109,6 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     }
     state.VelocityX = dir * speed;
   }
-
 
 }
 

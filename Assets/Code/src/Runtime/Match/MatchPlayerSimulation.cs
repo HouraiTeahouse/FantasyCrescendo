@@ -49,9 +49,7 @@ public class MatchPlayerSimulation : IMatchSimulation {
   }
 
   void ResetPlayer(PlayerResetEvent evt) {
-    var state = evt.PlayerState;
-    PlayerSimulations[evt.PlayerID].ResetState(ref state);
-    evt.PlayerState = state;
+    PlayerSimulations[evt.PlayerID].ResetState(ref evt.PlayerState);
   }
 
   public void Dispose() => context.Dispose();

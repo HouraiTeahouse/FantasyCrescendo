@@ -175,8 +175,7 @@ public class MatchInputContext {
 
   public void Predict() {
     for (int i = 0; i < PlayerInputs.Length; i++) {
-      PlayerInputs[i].Current.IsValid = true;
-      PlayerInputs[i].Previous.IsValid = true;
+      PlayerInputs[i].ForceValid(true);
     }
   }
 

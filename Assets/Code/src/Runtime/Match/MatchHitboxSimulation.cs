@@ -69,7 +69,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
     ActiveHurtboxes.Clear();
   }
 
-  static bool IsPlayerInvincible(PlayerState state) {
+  static bool IsPlayerInvincible(in PlayerState state) {
     return state.RespawnTimeRemaining > 0 || !state.IsActive;
   }
 

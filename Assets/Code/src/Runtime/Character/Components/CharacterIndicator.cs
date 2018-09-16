@@ -45,13 +45,13 @@ public class CharacterIndicator : MonoBehaviour, IPlayerView {
     }
   }
 
-  void AdjustActiveState(PlayerState state) {
+  void AdjustActiveState(in PlayerState state) {
     if (Indicator.gameObject.activeSelf != state.IsActive) {
       Indicator.gameObject.SetActive(state.IsActive);
     }
   }
 
-  void AdjustIndicatorPosition(PlayerState state) {
+  void AdjustIndicatorPosition(in PlayerState state) {
     var camera = CameraController.Instance?.Camera ?? Camera.main;
     Vector3 worldPosition = TargetTransform.position + PositionBias;
     Vector2 viewportPosition = camera.WorldToViewportPoint(worldPosition);

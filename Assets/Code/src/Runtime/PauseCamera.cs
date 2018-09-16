@@ -47,7 +47,7 @@ public class PauseCamera : MonoBehaviour {
     if (enabled) {
       pausedPlayerID = evt.PausedPlayerID;
       var currentState = MatchManager.Instance.MatchController.CurrentState;
-      var playerState = currentState[pausedPlayerID.Value];
+      ref var playerState = ref currentState[pausedPlayerID.Value];
       transform.position = (Vector3)playerState.Position + StartOffset;
       transform.localRotation = _defaultRotation;
       CameraTarget.transform.localPosition = Vector3.forward * _defaultDistance;

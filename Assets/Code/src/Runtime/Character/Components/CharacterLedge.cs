@@ -40,7 +40,7 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
     state.GrabbedLedgeTimer = 0;
   }
 
-  Ledge CheckForLedges(PlayerState state) {
+  Ledge CheckForLedges(in PlayerState state) {
     dir = state.Direction;
     Ledge ledge = null;
     var arrayPool = ArrayPool<Collider>.Shared;
