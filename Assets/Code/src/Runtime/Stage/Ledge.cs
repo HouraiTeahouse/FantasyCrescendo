@@ -35,7 +35,7 @@ public sealed class Ledge : RegisteredBehaviour<Ledge, byte> {
   public bool IsOccupied(MatchState state) {
     bool occupied = false;
     for (var i = 0; i < state.PlayerCount; i++) {
-      occupied |= state.GetPlayerState(i).GrabbedLedgeID == Id;
+      occupied |= state[i].GrabbedLedgeID == Id;
     }
     return occupied;
   }
