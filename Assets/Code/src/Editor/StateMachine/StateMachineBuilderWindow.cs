@@ -170,15 +170,15 @@ public class StateMachineBuilderWindow : LockableEditorWindow {
 
   void DeleteNodes(IEnumerable<Object> objects) {
     bool deleted = false;
+
     foreach (var obj in objects) {
-      var state = obj as StateAsset;
-      var transition = obj as StateTransitionAsset;
-      if (state != null) {
-        var node = metaData.FindState(state);
-        deleted |= metaData.RemoveStateNode(node);
-      } else if (transition != null) {
-        var node = metaData.FindTransition(transition);
-        deleted |= metaData.RemoveTransitionNode(node);
+      switch (obj) {
+        case StateAsset state:
+          deleted |= metaData.RemoveStateNode(metaData.FindState(state));
+          break;
+        case StateTransitionAsset transition:
+          deleted |= metaData.RemoveTransitionNode(metaData.FindTransition(transition));
+          break;
       }
     }
     if (deleted) {

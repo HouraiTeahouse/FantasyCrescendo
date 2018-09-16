@@ -9,7 +9,6 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 public class DefaultMatch : Match {
 
   protected override async Task InitializeMatch(MatchManager gameManager, MatchConfig config) {
-    var gameView = new MatchView();
     var gameSim = CreateSimulation(config);
     var controller = CreateMatchController(config);
 
@@ -19,19 +18,28 @@ public class DefaultMatch : Match {
     controller.InputSource = Config.Get<GameplayConfig>().CreateInputSource(config);
     controller.Simulation = gameSim;
 
-    gameManager.MatchController = controller;
-    gameManager.View = gameView;
+    var viewTask = BuildView(config);
 
-    var simTask = gameSim.Initialize(config).ContinueWith(task => {
+    gameManager.MatchController = controller;
+    gameManager.View = await viewTask;
+
+    await gameSim.Initialize(config).ContinueWith(task => {
       Debug.Log("Simulation initialized.");
     });
-    var viewTask = gameView.Initialize(config).ContinueWith(task => {
-      Debug.Log("View initialized.");
-    });
 
-    await Task.WhenAll(viewTask, simTask);
     controller.CurrentState = gameSim.ResetState(controller.CurrentState);
     Debug.Log("Match initialized.");
+  }
+
+  async Task<IStateView<MatchState>> BuildView(MatchConfig config) {
+    var playerView = new MatchPlayerView();
+    var view = new ViewBuilder<MatchState>()
+      .AddSubitem(playerView)
+      .AddSubitems(await CoreUtility.CreateAllViews<MatchState, MatchConfig>(config))
+      .Build();
+    await playerView.Initialize(config);
+    Debug.Log("View initialized.");
+    return view;
   }
 
 }
