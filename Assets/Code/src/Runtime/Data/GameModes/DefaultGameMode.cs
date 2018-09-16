@@ -25,7 +25,7 @@ public class DefaultGameMode : GameMode {
   async Task BuildResultViews(PlayerMatchStats playerStats, 
                               ViewFactory<PlayerMatchStats, PlayerConfig>[] viewFactories) {
     var viewSets = await viewFactories.CreateViews(playerStats.Config);
-    viewSets.ApplyState(playerStats);
+    viewSets.UpdateView(playerStats);
   }
 
 }

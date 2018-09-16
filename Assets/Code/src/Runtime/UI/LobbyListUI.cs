@@ -30,7 +30,7 @@ public class LobbyListUI : MonoBehaviour, IStateView<IEnumerable<LobbyInfo>> {
     }
   }
 
-  public void ApplyState(in IEnumerable<LobbyInfo> state) {
+  public void UpdateView(in IEnumerable<LobbyInfo> state) {
     int index = 0;
     foreach (var lobby in state) {
       LobbyDisplay display;
@@ -42,7 +42,7 @@ public class LobbyListUI : MonoBehaviour, IStateView<IEnumerable<LobbyInfo>> {
       }
       var lobbyInfo = lobby;
       display.gameObject.SetActive(true);
-      display.ApplyState(lobbyInfo);
+      display.UpdateView(lobbyInfo);
       index++;
     }
     for (; index < displays?.Count; index++) {

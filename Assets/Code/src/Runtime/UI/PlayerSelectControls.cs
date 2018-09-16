@@ -46,7 +46,7 @@ public class PlayerSelectControls : MonoBehaviour {
   }
 
   void UpdatePlayerInfo() { 
-    Views.ApplyState(Config); 
+    Views.UpdateView(Config); 
     foreach (var button in Buttons) {
       var interactable = Config.IsLocal;
       if (LocalOnlyButtons.Contains(button)) {

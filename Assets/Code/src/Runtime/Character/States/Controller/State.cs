@@ -65,7 +65,7 @@ public class State : IEntity, IStateView<PlayerState>,
   public virtual void OnStateExit(CharacterContext context) {}
 
   public void Simulate(ref PlayerState state, PlayerInputContext simulate) {}
-  public void ApplyState(in PlayerState state) {}
+  public void UpdateView(in PlayerState state) {}
 
   public State AddTransitionTo(State state, 
                                Func<CharacterContext, bool> extraCheck = null) {

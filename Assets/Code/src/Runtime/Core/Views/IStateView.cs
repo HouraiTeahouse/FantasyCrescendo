@@ -15,7 +15,7 @@ public interface IStateView<S> {
   /// data represented by a state.
   /// </summary>
   /// <param name="state">the state to display.</param>
-  void ApplyState(in S state);
+  void UpdateView(in S state);
 
 }
 
@@ -27,9 +27,9 @@ public static class CoreUtility {
     }
   }
 
-  public static void ApplyState<T>(this IStateView<T>[] views, T state) {
+  public static void UpdateView<T>(this IStateView<T>[] views, T state) {
     foreach (var view in views) {
-      view?.ApplyState(state);
+      view?.UpdateView(state);
     }
   }
   

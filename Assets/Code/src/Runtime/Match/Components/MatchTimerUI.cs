@@ -31,7 +31,7 @@ public class MatchTimerUI : ViewFactory<MatchState, MatchConfig>, IStateView<Mat
     return Task.FromResult(views);
   }
 
-  public void ApplyState(in MatchState state) {
+  public void UpdateView(in MatchState state) {
     if (DisplayText == null) return;
     int seconds = Mathf.FloorToInt(state.Time * Time.fixedDeltaTime);
     int minutes = seconds / 60;

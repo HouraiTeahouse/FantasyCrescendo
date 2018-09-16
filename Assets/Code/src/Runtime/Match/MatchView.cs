@@ -32,20 +32,20 @@ public class MatchView : IInitializable<MatchConfig>, IStateView<MatchState> {
     MatchViews = await CoreUtility.CreateAllViews<MatchState, MatchConfig>(config);
   }
 
-  public void ApplyState(in MatchState state) {
+  public void UpdateView(in MatchState state) {
     ApplyPlayerStates(state);
     ApplyOtherStates(state);
   }
 
   void ApplyPlayerStates(MatchState state) {
     for (var i = 0; i < PlayerViews.Length; i++) {
-      PlayerViews[i].ApplyState(state[i]);
+      PlayerViews[i].UpdateView(state[i]);
     }
   }
 
   void ApplyOtherStates(MatchState state) {
     foreach (var view in MatchViews) {
-      view.ApplyState(state);
+      view.UpdateView(state);
     }
   }
 

@@ -136,10 +136,10 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
     state.StateTick++;
-    ApplyState(state);
+    UpdateView(state);
   }
 
-  public void ApplyState(in PlayerState state) {
+  public void UpdateView(in PlayerState state) {
     StateMachine.Presimulate(state);
     var stateInfo = GetControllerState(state);
     if (stateInfo == null) return;

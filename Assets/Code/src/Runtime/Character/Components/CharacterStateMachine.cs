@@ -36,9 +36,9 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     return Task.WhenAll(stateMap.Values.Select(s => s.Initalize(config, gameObject, isView)).Where(t => t != null));
   }
 
-  public void Presimulate(in PlayerState state) => ApplyState(state);
+  public void Presimulate(in PlayerState state) => UpdateView(state);
 
-  public void ApplyState(in PlayerState state) => GetControllerState(state)?.ApplyState(state);
+  public void UpdateView(in PlayerState state) => GetControllerState(state)?.UpdateView(state);
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
     var controllerState = GetControllerState(state);
