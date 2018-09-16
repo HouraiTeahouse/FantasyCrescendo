@@ -41,7 +41,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     state.IsFastFalling = false;
   }
 
-  public void Presimulate(ref PlayerState state) {}
+  public void Presimulate(in PlayerState state) {}
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
     foreach (var mover in Movers) {
@@ -63,7 +63,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
   }
 
   public void ApplyControlledMovement(ref PlayerState state, Vector2 movementInput) {
-    var data = StateMachine.GetControllerState(ref state).Data;
+    var data = StateMachine.GetControllerState(state).Data;
     ApplyDirection(ref state, movementInput, data);
     ApplyMovement(ref state, movementInput, data);
   }

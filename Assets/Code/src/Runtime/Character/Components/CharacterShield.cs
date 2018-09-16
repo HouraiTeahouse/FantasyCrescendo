@@ -41,8 +41,8 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
   Renderer[] ShieldRenderers;
   bool isShieldView;
 
-  public bool IsShieldActive(ref PlayerState state) => StateMachine.GetControllerState(ref state) is ShieldState;
-  public bool IsShieldBroken(ref PlayerState state) => state.ShieldDamage >= MaxShieldHealth;
+  public bool IsShieldActive(in PlayerState state) => StateMachine.GetControllerState(state) is ShieldState;
+  public bool IsShieldBroken(in PlayerState state) => state.ShieldDamage >= MaxShieldHealth;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
@@ -74,10 +74,10 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     return Task.CompletedTask;
   }
 
-  public void Presimulate(ref PlayerState state) => ApplyState(ref state);
+  public void Presimulate(in PlayerState state) => ApplyState(state);
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
-    if (IsShieldActive(ref state)) {
+    if (IsShieldActive(state)) {
       state.ShieldDamage = Math.Min(MaxShieldHealth, state.ShieldDamage + DepletionRate);
       state.ShieldRecoveryCooldown = RecoveryCooldown;
     } else {
@@ -88,10 +88,10 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     }
   }
 
-  public void ApplyState(ref PlayerState state) {
+  public void ApplyState(in PlayerState state) {
     var shieldHealth = MaxShieldHealth - state.ShieldDamage;
     var shieldSizeRatio = shieldHealth / (float)MaxShieldHealth;
-    ObjectUtil.SetActive(Shield, IsShieldActive(ref state));
+    ObjectUtil.SetActive(Shield, IsShieldActive(state));
     ShieldTransform.localScale = Vector3.one * ShieldScale * ShieldSize.Evaluate(shieldSizeRatio);
     if (TargetBone != null) {
       ShieldTransform.localPosition = transform.InverseTransformPoint(TargetBone.position);

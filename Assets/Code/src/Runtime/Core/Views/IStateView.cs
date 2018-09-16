@@ -10,14 +10,12 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// </summary>
 public interface IStateView<S> {
 
-  // TODO(james7132): Change ref -> in when C# 7.2 is available.
-
   /// <summary>
   /// Alters the outward appearance of the view to match the d
   /// data represented by a state.
   /// </summary>
   /// <param name="state">the state to display.</param>
-  void ApplyState(ref S state);
+  void ApplyState(in S state);
 
 }
 
@@ -31,7 +29,7 @@ public static class CoreUtility {
 
   public static void ApplyState<T>(this IStateView<T>[] views, T state) {
     foreach (var view in views) {
-      view?.ApplyState(ref state);
+      view?.ApplyState(state);
     }
   }
   

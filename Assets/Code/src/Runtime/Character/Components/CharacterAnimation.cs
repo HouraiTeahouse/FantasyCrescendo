@@ -73,7 +73,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     public void Connect() => Controller.Connect(MixerIndex, TimelinePlayable);
     public void Disconnect() => Controller.Disconnect(MixerIndex);
     public void SetWeight(float weight) => Controller.SetWeight(MixerIndex, weight);
-    public void SetTime(ref PlayerState state) => TimelinePlayable.SetTime(state.StateTime % Duration);
+    public void SetTime(in PlayerState state) => TimelinePlayable.SetTime(state.StateTime % Duration);
 
   }
 
@@ -132,16 +132,16 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     return Task.CompletedTask;
   }
 
-  public void Presimulate(ref PlayerState state) {}
+  public void Presimulate(in PlayerState state) {}
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
     state.StateTick++;
-    ApplyState(ref state);
+    ApplyState(state);
   }
 
-  public void ApplyState(ref PlayerState state) {
-    StateMachine.Presimulate(ref state);
-    var stateInfo = GetControllerState(ref state);
+  public void ApplyState(in PlayerState state) {
+    StateMachine.Presimulate(state);
+    var stateInfo = GetControllerState(state);
     if (stateInfo == null) return;
     foreach (var controllerState in _states) {
       controllerState.Disconnect();
@@ -150,11 +150,11 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
 
     stateInfo.Connect();
     stateInfo.SetWeight(1f);
-    stateInfo.SetTime(ref state);
+    stateInfo.SetTime(state);
     _playableGraph.Evaluate();
   }
 
-  StateInfo GetControllerState(ref PlayerState state) {
+  StateInfo GetControllerState(in PlayerState state) {
     StateInfo controllerState;
     if (_stateMap.TryGetValue(state.StateID, out controllerState)) {
       return controllerState;

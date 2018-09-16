@@ -42,12 +42,12 @@ public class PlayerView : IInitializable<PlayerConfig>, IStateView<PlayerState> 
     ViewComponents = View.GetComponentsInChildren<IStateView<PlayerState>>().Concat(views).ToArray();
   }
 
-  public void ApplyState(ref PlayerState state) {
+  public void ApplyState(in PlayerState state) {
     if (ViewComponents == null) {
       return;
     }
     foreach (var component in ViewComponents) {
-      component.ApplyState(ref state);
+      component.ApplyState(state);
     }
   }
 

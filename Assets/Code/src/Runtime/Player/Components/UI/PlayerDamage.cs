@@ -16,7 +16,7 @@ public class PlayerDamage : MonoBehaviour, IStateView<PlayerState> {
 
   float? lastDamage;
 
-  public void ApplyState(ref PlayerState state) {
+  public void ApplyState(in PlayerState state) {
     if (DisplayText == null) {
       Debug.LogWarning($"{name} has a PlayerDamage without a Text display.");
       return;

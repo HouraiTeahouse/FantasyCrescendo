@@ -36,15 +36,15 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     return Task.WhenAll(stateMap.Values.Select(s => s.Initalize(config, gameObject, isView)).Where(t => t != null));
   }
 
-  public void Presimulate(ref PlayerState state) => ApplyState(ref state);
+  public void Presimulate(in PlayerState state) => ApplyState(state);
 
-  public void ApplyState(ref PlayerState state) => GetControllerState(ref state)?.ApplyState(ref state);
+  public void ApplyState(in PlayerState state) => GetControllerState(state)?.ApplyState(state);
 
   public void Simulate(ref PlayerState state, PlayerInputContext input) {
-    var controllerState = GetControllerState(ref state);
+    var controllerState = GetControllerState(state);
     context.State = state;
     context.Input = input;
-    context.ShieldBroken = Shield.IsShieldBroken(ref state);
+    context.ShieldBroken = Shield.IsShieldBroken(state);
     context.IsGrounded = Physics.IsGrounded;
     context.CanJump = Movement.CanJump(state);
     context.StateLength = controllerState.Data.Length;
@@ -56,7 +56,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     state.StateID = controllerState.Id;
   }
 
-  public State GetControllerState(ref PlayerState state) =>  GetControllerState(state.StateID);
+  public State GetControllerState(in PlayerState state) =>  GetControllerState(state.StateID);
 
   public State GetControllerState(uint id) {
     State controllerState;
