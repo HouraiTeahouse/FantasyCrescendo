@@ -159,6 +159,11 @@ public struct PlayerInputContext : IValidatable {
     Previous = Current;
     Current = input;
   }
+  
+  public void ForceValid(bool valid) {
+    Previous.IsValid = valid;
+    Current.IsValid = valid;
+  }
 
   public bool IsValid => Previous.IsValid && Current.IsValid;
 

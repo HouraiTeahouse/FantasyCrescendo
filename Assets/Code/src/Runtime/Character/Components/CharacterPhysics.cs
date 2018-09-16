@@ -75,7 +75,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
       CharacterController.Move(state.Velocity * Time.fixedDeltaTime);
       state.Position = transform.position;
       if (wasGrounded) {
-        state = SnapToGround(state);
+        SnapToGround(ref state);
       }
       if (state.GrabbedLedgeTimer < 0) {
         state.GrabbedLedgeTimer++;
@@ -132,7 +132,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     }
   }
 
-  PlayerState SnapToGround(PlayerState state) {
+  void SnapToGround(ref PlayerState state) {
     var pool = ArrayPool<RaycastHit>.Shared;
     var hits = pool.Rent(1);
     var offset = Vector3.up * CharacterController.height * 0.5f;
@@ -147,10 +147,9 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
       state.Position = transform.position;
     }
     pool.Return(hits);
-    return state;
   }
 
-  bool IsCharacterGrounded(PlayerState state) {
+  bool IsCharacterGrounded(in PlayerState state) {
     if (state.VelocityY > 0) return false;
     if (state.RespawnTimeRemaining > 0) return true;
     var center = Vector3.zero;

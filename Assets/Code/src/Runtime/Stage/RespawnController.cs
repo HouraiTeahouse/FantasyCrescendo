@@ -18,7 +18,7 @@ public class RespawnController : MonoBehaviour {
   }
 
   void OnPlayerDied(PlayerRespawnEvent evt) {
-    var playerState = evt.PlayerState;
+    ref var playerState = ref evt.PlayerState;
     var state = evt.MatchState;
     foreach (var respawnPosition in RespawnPositions) {
       if (respawnPosition == null) continue;
@@ -30,12 +30,10 @@ public class RespawnController : MonoBehaviour {
       if (occupied) continue;
       var resetEvent = new PlayerResetEvent(evt);
       Mediator.Global.Publish(resetEvent);
-      playerState = resetEvent.PlayerState;
-      playerState.Position = respawnPosition.position;
+      resetEvent.PlayerState.Position = respawnPosition.position;
       break;
     }
     playerState.RespawnTimeRemaining = (uint)Mathf.FloorToInt(RespawnTime / Time.fixedDeltaTime);
-    evt.PlayerState = playerState;
   }
 
   /// <summary>
