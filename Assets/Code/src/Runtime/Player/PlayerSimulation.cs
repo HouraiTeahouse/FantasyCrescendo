@@ -9,24 +9,16 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
 
 public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<PlayerState, PlayerInputContext> {
 
-  GameObject Model;
   IPlayerSimulation[] PlayerSimulationComponents;
   ISimulation<PlayerState, PlayerInputContext>[] SimulationComponents;
 
   public async Task Initialize(PlayerConfig config) {
-    var selection = config.Selection;
-    var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
-    var prefab = await character.GetPallete(selection.Pallete).Prefab.LoadAsync();
-    Assert.IsNotNull(prefab);
-    Model = Object.Instantiate(prefab);
-    Model.name = $"Player {config.PlayerID + 1} Simulation ({character.name}, {selection.Pallete})";
+    var model = await PlayerUtil.Instantiate(config, false);
 
-    PlayerUtil.DestroyAll(Model, typeof(Renderer), typeof(MeshFilter));
-
-    var task = Model.Broadcast<IPlayerComponent>(
+    var task = model.Broadcast<IPlayerComponent>(
         component => component.Initialize(config, false));
 
-    SimulationComponents = Model.GetComponentsInChildren<ISimulation<PlayerState, PlayerInputContext>>();
+    SimulationComponents = model.GetComponentsInChildren<ISimulation<PlayerState, PlayerInputContext>>();
     PlayerSimulationComponents = SimulationComponents.OfType<IPlayerSimulation>().ToArray();
     await task;
   }
