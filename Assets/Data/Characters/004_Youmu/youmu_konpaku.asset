@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -17,14 +18,17 @@ MonoBehaviour:
   IsDebug: 0
   ShortName: Youmu
   LongName: Youmu Konpaku
-  _prefab: characters/youmu/player:youmu_konpaku
   _homeStage: scene/netherworld/info:Netherworld
   _victoryTheme: bgm/netherworld:Mary_the_Magician
   _icon: icons:youmu_icon
-  _portraits:
-  - characters/youmu/portraits:youmu_portrait_1
-  - characters/youmu/portraits:youmu_portrait_2
-  - characters/youmu/portraits:youmu_portrait_3
-  - characters/youmu/portraits:youmu_portrait_4
+  _palletes:
+  - _portrait: characters/youmu/portraits:youmu_portrait_1
+    _prefab: characters/youmu/player:youmu_konpaku_1
+  - _portrait: characters/youmu/portraits:youmu_portrait_2
+    _prefab: characters/youmu/player:youmu_konpaku_2
+  - _portrait: characters/youmu/portraits:youmu_portrait_3
+    _prefab: characters/youmu/player:youmu_konpaku_3
+  - _portrait: characters/youmu/portraits:youmu_portrait_4
+    _prefab: characters/youmu/player:youmu_konpaku_4
   PortraitCropCenter: {x: 0.5, y: 0.8}
   PortraitCropSize: 0.22

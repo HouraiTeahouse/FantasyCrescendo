@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5513484910941759191
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1872841189430122, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}
+      propertyPath: m_Name
+      value: youmu_konpaku_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721612826610312, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1736.1301
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721612826610312, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1207.4182
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721612826610312, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1731.1823
+      objectReference: {fileID: 0}
+    - target: {fileID: 137747126268554948, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ebe81e8c654d384192b5102d589934d, type: 2}
+    - target: {fileID: 137747126268554948, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4a8b71a84ffd2a44ebd27d7f33e26840, type: 2}
+    - target: {fileID: 137747126268554948, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4a8b71a84ffd2a44ebd27d7f33e26840, type: 2}
+    - target: {fileID: 137747126268554948, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: f720970af611d6440816693a33b9557e, type: 2}
+    - target: {fileID: 137747126268554948, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4a8b71a84ffd2a44ebd27d7f33e26840, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7f2b5bd4573318b40a8f65fb79824228, type: 3}

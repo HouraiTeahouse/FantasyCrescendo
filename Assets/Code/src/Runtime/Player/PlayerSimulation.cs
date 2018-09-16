@@ -16,7 +16,7 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
   public async Task Initialize(PlayerConfig config) {
     var selection = config.Selection;
     var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
-    var prefab = await character.Prefab.LoadAsync();
+    var prefab = await character.GetPallete(selection.Pallete).Prefab.LoadAsync();
     Assert.IsNotNull(prefab);
     Model = Object.Instantiate(prefab);
     Model.name = $"Player {config.PlayerID + 1} Simulation ({character.name}, {selection.Pallete})";

@@ -90,7 +90,7 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
       CharacterID = character.Id,
       Pallete = playerId
     };
-    return GetNextAvailableSelection(baseSelection, character.Portraits.Count);
+    return GetNextAvailableSelection(baseSelection, character.PalleteCount);
   }
 
   public uint NextCharacterID(uint currentId, bool backwards) {
@@ -110,7 +110,7 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
       selection.Pallete = (byte)(((backwards ? -1 : 1) + selection.Pallete) % GameMode.GlobalMaxPlayers);
       return selection;
     }
-    return GetNextAvailableSelection(selection, character.Portraits.Count, backwards);
+    return GetNextAvailableSelection(selection, character.PalleteCount, backwards);
   }
 
   PlayerSelection GetNextAvailableSelection(PlayerSelection selection, int limit, bool backwards = false) {
