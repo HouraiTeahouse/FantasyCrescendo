@@ -19,7 +19,7 @@ public class PlayerDisplayFactory : PlayerViewFactory<PlayerState> {
 
   protected override void Preinitialize(PlayerConfig config, GameObject view) {
     var viewTransform = view.transform as RectTransform;
-    if  (viewTransform == null) return;
+    if (viewTransform == null) return;
     viewTransform.SetParent(Container, false);
     
     // As all of the character views are loaded asynchronously. Some players
