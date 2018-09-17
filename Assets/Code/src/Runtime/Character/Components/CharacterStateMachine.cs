@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerView {
+public class CharacterStateMachine : PlayerComponent {
 
   public CharacterControllerBuilder States;
 
@@ -29,18 +29,16 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     Shield = GetComponentInChildren<CharacterShield>();
   }
 
-  public Task Initialize(PlayerConfig config, bool isView = false) {
+  public override Task Initialize(PlayerConfig config, bool isView = false) {
     States = Instantiate(States); // Create a per-player copy of the builder.
     StateController = States.BuildCharacterControllerImpl(new StateControllerBuilder());
     stateMap = StateController.States.ToDictionary(s => s.Id, s => s);
     return Task.WhenAll(stateMap.Values.Select(s => s.Initalize(config, gameObject, isView)).Where(t => t != null));
   }
 
-  public void Presimulate(in PlayerState state) => UpdateView(state);
+  public override void UpdateView(in PlayerState state) => GetControllerState(state)?.UpdateView(state);
 
-  public void UpdateView(in PlayerState state) => GetControllerState(state)?.UpdateView(state);
-
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
     var controllerState = GetControllerState(state);
     context.State = state;
     context.Input = input;
@@ -67,7 +65,7 @@ public class CharacterStateMachine : MonoBehaviour, IPlayerSimulation, IPlayerVi
     }
   }
 
-  public void ResetState(ref PlayerState state) {
+  public override void ResetState(ref PlayerState state) {
     state.StateID = StateController.DefaultState.Id;
   }
 

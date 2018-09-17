@@ -44,7 +44,19 @@ public class MatchManager : MonoBehaviour {
   void Update() {
     if (View == null) return;
     var state = MatchController.CurrentState;
-    View?.UpdateView(state);
+    View.UpdateView(state);
+  }
+
+  /// <summary>
+  /// This function is called when the MonoBehaviour will be destroyed.
+  /// </summary>
+  void OnDestroy() {
+    if (View != null) {
+      View.Dispose();
+    }
+    if (MatchController != null) {
+      MatchController.Dispose();
+    }
   }
 
   public async Task<MatchResult> RunMatch() {

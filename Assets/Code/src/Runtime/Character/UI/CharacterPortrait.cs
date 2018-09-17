@@ -64,6 +64,8 @@ public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, ISta
 
   protected override void OnRectTransformDimensionsChange() => SetRect();
 
+  public void Dispose() => ObjectUtil.Destroy(this);
+
   void SetRect() {
     var rawImage = Image as RawImage;
     if (RectTransform == null || rawImage == null || rawImage.texture == null) return;

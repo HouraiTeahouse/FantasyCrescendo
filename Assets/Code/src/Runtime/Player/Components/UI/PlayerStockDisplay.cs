@@ -6,7 +6,7 @@ using TMPro;
 
 namespace HouraiTeahouse.FantasyCrescendo.Players {
 
-public class PlayerStockDisplay : MonoBehaviour, IStateView<PlayerState> {
+public class PlayerStockDisplay : PlayerComponent {
 
   public TMP_Text ExcessDisplay;
   public GameObject[] standardIndicators;
@@ -14,10 +14,10 @@ public class PlayerStockDisplay : MonoBehaviour, IStateView<PlayerState> {
 
   int? lastShownExcess;
 
-  public void UpdateView(in PlayerState state) {
+  public override void UpdateView(in PlayerState state) {
     if (!state.IsActive) {
       SetActive(ExcessDisplay.gameObject, false);
-      SetActive(false);
+      SetActive(0);
       return;
     }
 
@@ -35,12 +35,6 @@ public class PlayerStockDisplay : MonoBehaviour, IStateView<PlayerState> {
     if (ExcessDisplay == null || stocks == lastShownExcess) return;
     ExcessDisplay.text = string.Format(ExcessFormat, stocks);
     lastShownExcess = stocks;
-  }
-
-  void SetActive(bool active) {
-    for (var i = 0; i < standardIndicators.Length; i++) {
-      SetActive(standardIndicators[i], active);
-    }
   }
 
   void SetActive(int max) {

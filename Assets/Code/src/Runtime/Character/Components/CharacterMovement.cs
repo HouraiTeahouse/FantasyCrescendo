@@ -6,7 +6,7 @@ using UnityEngine;
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 [RequireComponent(typeof(CharacterPhysics))]
-public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
+public class CharacterMovement : PlayerComponent {
 
   public CharacterPhysics Physics;
   public CharacterStateMachine StateMachine;
@@ -17,7 +17,7 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
 
   CharacterMover[] Movers;
 
-  public Task Initialize(PlayerConfig config, bool isView) {
+  public override Task Initialize(PlayerConfig config, bool isView) {
     if (Physics == null) {
       Physics = GetComponent<CharacterPhysics>();
     }
@@ -37,13 +37,11 @@ public class CharacterMovement : MonoBehaviour, IPlayerSimulation {
     return Task.CompletedTask;
   }
   
-  public void ResetState(ref PlayerState state) {
+  public override void ResetState(ref PlayerState state) {
     state.IsFastFalling = false;
   }
 
-  public void Presimulate(in PlayerState state) {}
-
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
     foreach (var mover in Movers) {
       if (mover.ShouldMove(ref state)) {
         mover.Move(ref state, input);

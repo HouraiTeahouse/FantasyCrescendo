@@ -15,7 +15,7 @@ using Object = UnityEngine.Object;
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 [RequireComponent(typeof(CharacterStateMachine))]
-public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView {
+public class CharacterAnimation : PlayerComponent {
 
   class ControllerInfo {
 
@@ -99,7 +99,7 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     }
   }
 
-  public Task Initialize(PlayerConfig config, bool isView = false) {
+  public override Task Initialize(PlayerConfig config, bool isView = false) {
     var animator = ObjectUtil.GetFirst<Animator>(this);
     if (animator == null) return Task.CompletedTask;
     //OptimizeHierarchy();
@@ -132,14 +132,15 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
     return Task.CompletedTask;
   }
 
-  public void Presimulate(in PlayerState state) {}
+  // By default presimulation calls UpdateView, this should be avoided here.
+  public override void Presimulate(in PlayerState state) {}
 
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
     state.StateTick++;
     UpdateView(state);
   }
 
-  public void UpdateView(in PlayerState state) {
+  public override void UpdateView(in PlayerState state) {
     StateMachine.Presimulate(state);
     var stateInfo = GetControllerState(state);
     if (stateInfo == null) return;
@@ -162,8 +163,6 @@ public class CharacterAnimation : MonoBehaviour, IPlayerSimulation, IPlayerView 
       return null;
     }
   }
-
-  public void ResetState(ref PlayerState state) {}
 
   static AnimationMixerPlayable CreateAnimationBinding(PlayableGraph graph, Animator animator) {
     var mixerPlayable = AnimationMixerPlayable.Create(graph, 1);

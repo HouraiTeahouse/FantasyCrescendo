@@ -25,6 +25,8 @@ public class PlayerColor : MonoBehaviour, IInitializable<PlayerConfig>, IStateVi
     }
   }
 
+  public void Dispose() => ObjectUtil.Destroy(this);
+
 }
 
 }

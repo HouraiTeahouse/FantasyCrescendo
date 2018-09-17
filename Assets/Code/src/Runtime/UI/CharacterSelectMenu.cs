@@ -113,6 +113,8 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
     return GetNextAvailableSelection(selection, character.PalleteCount, backwards);
   }
 
+  public void Dispose() => ObjectUtil.Destroy(this);
+
   PlayerSelection GetNextAvailableSelection(PlayerSelection selection, int limit, bool backwards = false) {
     int diff = backwards ? -1 : 1;
     for (var i = 1; i < limit; i++) {

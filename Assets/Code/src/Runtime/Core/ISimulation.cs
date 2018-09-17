@@ -1,10 +1,11 @@
+using System;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
 /// <summary>
 /// A stateless simulation for advancing states through time given some external input.
 /// </summary>
-public interface ISimulation<S, I> {
+public interface ISimulation<S, I> : IDisposable {
 
   /// <summary>
   /// Advances a state by one timestep given the corresponding input.

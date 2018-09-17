@@ -21,9 +21,9 @@ public class MatchController : IMatchController {
 
   public virtual void Update() {
     if (CurrentState.StateID != MatchProgressionState.Intro) {
-	   var input = InputSource.SampleInput();
-	   Assert.IsTrue(input.IsValid);
-	   inputContext.Update(input);
+      var input = InputSource.SampleInput();
+      Assert.IsTrue(input.IsValid);
+      inputContext.Update(input);
     }
     
     var state = CurrentState;
@@ -31,6 +31,12 @@ public class MatchController : IMatchController {
     CurrentState = state;
 
     Timestep++;
+  }
+
+  public void Dispose() {
+    if (Simulation != null) {
+      Simulation.Dispose();
+    }
   }
 
 }

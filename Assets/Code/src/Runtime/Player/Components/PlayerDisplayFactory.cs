@@ -23,7 +23,7 @@ public class PlayerDisplayFactory : PlayerViewFactory<PlayerState> {
     viewTransform.SetParent(Container, false);
     
     // As all of the character views are loaded asynchronously. Some players
-    // may load in out ofo order. This forcibly reorders all children to assure that 
+    // may load in out of order. This forcibly reorders all children to assure that 
     // the display is ordered properly by Player IDs.
     var playerId = config.PlayerID;
     if (playerId < 0 || playerId > views.Length) return;
