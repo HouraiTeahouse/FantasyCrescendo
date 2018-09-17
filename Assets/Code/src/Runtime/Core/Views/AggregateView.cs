@@ -4,29 +4,44 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
     
-public class AggregateView<T> : IStateView<T> {
+public class AggregateView<T> : AggregateObject<IStateView<T>>, IStateView<T> {
 
-  readonly IStateView<T>[] _subviews;
-
-  public AggregateView(IEnumerable<IStateView<T>> subviews) {
-    var flattenedSubviews = new List<IStateView<T>>();
-    BuildSubviews(subviews, flattenedSubviews);
-    _subviews = flattenedSubviews.ToArray();
+  public AggregateView(IEnumerable<IStateView<T>> views) : base(views) {
   }
 
   public void UpdateView(in T state) {
-    foreach (var view in _subviews) {
+    foreach (var view in Subitems) {
+      if (view == null) continue;
       view.UpdateView(state);
     }
   }
 
-  static void BuildSubviews(IEnumerable<IStateView<T>> views, List<IStateView<T>> flattened) {
-    foreach (var view in views) {
-      if (view is AggregateView<T> aggregateView) {
-        BuildSubviews(aggregateView._subviews, flattened);
-      } else {
-        flattened.Add(view);
-      }
+  public void Dispose() {
+    foreach (var view in Subitems) {
+      if (view == null) continue;
+      view.Dispose();
+    }
+  }
+
+}
+
+public class AggregateSimulation<TState, TContext> : AggregateObject<ISimulation<TState, TContext>>,
+                                                     ISimulation<TState, TContext> {
+
+  public AggregateSimulation(IEnumerable<ISimulation<TState, TContext>> simulations) : base(simulations) {
+  }
+
+  public void Simulate(ref TState state, TContext context) {
+    foreach (var simulation in Subitems) {
+      if (simulation == null) continue;
+      simulation.Simulate(ref state, context);
+    }
+  }
+
+  public void Dispose() {
+    foreach (var simulation in Subitems) {
+      if (simulation == null) continue;
+      simulation.Dispose();
     }
   }
 

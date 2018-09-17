@@ -5,20 +5,12 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Players {
     
-public class PlayerActive : MonoBehaviour, IStateView<PlayerState>, IPlayerSimulation {
+public class PlayerActive : PlayerComponent {
 
   public Object[] TargetObjects;
   public bool Invert;
 
-  public Task Initialize(PlayerConfig config, bool isView = false) => Task.CompletedTask;
-
-  public void Presimulate(in PlayerState state) => UpdateView(state);
-
-  public void ResetState(ref PlayerState state) {}
-
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {}
-
-  public void UpdateView(in PlayerState state) {
+  public override void UpdateView(in PlayerState state) {
     var isActive = state.IsActive;
     if (Invert) isActive = !isActive;
     foreach (var target in TargetObjects) {

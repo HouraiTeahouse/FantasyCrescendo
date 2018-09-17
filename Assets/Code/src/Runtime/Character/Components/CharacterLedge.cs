@@ -10,21 +10,19 @@ using UnityEditor;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
+public class CharacterLedge : PlayerComponent {
 
   public Bounds[] CheckRegions;
 
   bool isView; 
   bool dir;
 
-  public Task Initialize(PlayerConfig config, bool isView) {
+  public override Task Initialize(PlayerConfig config, bool isView) {
     this.isView = isView;
-    return Task.CompletedTask;
+    return base.Initialize(config, isView);
   }
 
-  public void Presimulate(in PlayerState state) => UpdateView(state);
-
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
     if (!state.IsGrabbingLedge && state.GrabbedLedgeTimer >= 0) {
       var ledge = CheckForLedges(state);
       if (ledge?.IsOccupied(state.MatchState) == false) {
@@ -33,9 +31,9 @@ public class CharacterLedge : MonoBehaviour, IPlayerSimulation, IPlayerView {
     }
   }
 
-  public void UpdateView(in PlayerState state) => dir = state.Direction;
+  public override void UpdateView(in PlayerState state) => dir = state.Direction;
 
-  public void ResetState(ref PlayerState state) {
+  public override void ResetState(ref PlayerState state) {
     state.GrabbedLedgeID = 0;
     state.GrabbedLedgeTimer = 0;
   }

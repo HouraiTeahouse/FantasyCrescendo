@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 [RequireComponent(typeof(CharacterStateMachine))]
-public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
+public class CharacterPhysics : PlayerComponent {
 
   static Collider[] colliderDummy = new Collider[1];
   static PhysicsConfig PhysicsConfig;
@@ -31,7 +31,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     }
   }
 
-  public Task Initialize(PlayerConfig config, bool isView) {
+  public override Task Initialize(PlayerConfig config, bool isView) {
     if (LedgeGrabBone == null) {
       LedgeGrabBone = transform;
     }
@@ -48,15 +48,15 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     rigidbody.isKinematic = true;
     rigidbody.hideFlags = HideFlags.HideInInspector;
 
-    return Task.CompletedTask;
+    return base.Initialize(config, isView);
   }
 
-  public void Presimulate(in PlayerState state) {
-    UpdateView(state);
+  public override void Presimulate(in PlayerState state) {
+    base.Presimulate(state);
     IsGrounded = IsCharacterGrounded(state);
   }
 
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
     ApplyGravity(ref state);
     LimitFallSpeed(ref state);
 
@@ -83,7 +83,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     }
   }
 
-  public void UpdateView(in PlayerState state) {
+  public override void UpdateView(in PlayerState state) {
     transform.position = state.Position;
     var offset = 90f;
     if (!state.Direction) {
@@ -102,7 +102,7 @@ public class CharacterPhysics : MonoBehaviour, IPlayerSimulation, IPlayerView {
     state.JumpCount = 0;
   }
 
-  public void ResetState(ref PlayerState state) {
+  public override void ResetState(ref PlayerState state) {
     state.Velocity = Vector2.zero;
   }
 

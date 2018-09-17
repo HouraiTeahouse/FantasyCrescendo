@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterIndicator : MonoBehaviour, IPlayerView {
+public class CharacterIndicator : PlayerComponent {
 
   public Transform TargetTransform;
   public Vector3 PositionBias = new Vector3(0, 1, 0);
@@ -25,7 +25,7 @@ public class CharacterIndicator : MonoBehaviour, IPlayerView {
     }
   }
 
-  public async Task Initialize(PlayerConfig config, bool isView = false) {
+  public override async Task Initialize(PlayerConfig config, bool isView = false) {
     var factoryInstance = PlayerIndicatorFactory.Instance; 
     if (!isView || !factoryInstance) return;
     Indicator = factoryInstance.CreateIndicator();
@@ -34,9 +34,10 @@ public class CharacterIndicator : MonoBehaviour, IPlayerView {
     CanvasTransform = Indicator.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
     await Indicator.gameObject.Broadcast<IInitializable<PlayerConfig>>(comp => comp.Initialize(config));
     await Indicator.gameObject.Broadcast<IPlayerComponent>(comp => comp.Initialize(config, isView));
+    await base.Initialize(config, isView);
   }
 
-  public void UpdateView(in PlayerState state) {
+  public override void UpdateView(in PlayerState state) {
     if (Indicator == null) return;
     AdjustActiveState(state);
     AdjustIndicatorPosition(state);

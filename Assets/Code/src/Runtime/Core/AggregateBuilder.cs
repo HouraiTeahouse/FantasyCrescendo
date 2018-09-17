@@ -1,8 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
+
+public abstract class AggregateObject<T> {
+
+  protected ReadOnlyCollection<T> Subitems { get; }
+
+  protected AggregateObject(IEnumerable<T> subitems) {
+    var flattenedSubitems = new List<T>();
+    FlattenSubitems(subitems, flattenedSubitems);
+    Subitems = new ReadOnlyCollection<T>(flattenedSubitems.ToArray());
+  }
+
+  static void FlattenSubitems(IEnumerable<T> views, List<T> flattened) {
+    foreach (var view in views) {
+      if (view is AggregateObject<T> aggregateObject) {
+        FlattenSubitems(aggregateObject.Subitems, flattened);
+      } else {
+        flattened.Add(view);
+      }
+    }
+  }
+
+}
     
 /// <summary>
 /// Abstract class for building aggregate interfaces.
@@ -40,6 +63,19 @@ public abstract class AggregateBuilder<T, TBuilder> where TBuilder : class {
 public class ViewBuilder<T> : AggregateBuilder<IStateView<T>, ViewBuilder<T>> {
 
   protected override IStateView<T> BuildImpl(IEnumerable<IStateView<T>> views) => new AggregateView<T>(views);
+
+}
+
+/// <summary>
+/// Builder object for <see cref="AggregateSimulation{TState, TContext}"/> objects.
+/// </summary>
+/// <typeparam name="TState">the target state type</typeparam>
+/// <typeparam name="TContext">the context for the simulation</typeparam>
+public class SimulationBuilder<TState, TContext> : AggregateBuilder<ISimulation<TState, TContext>, 
+                                                                    SimulationBuilder<TState, TContext>> {
+
+  protected override ISimulation<TState, TContext> BuildImpl(IEnumerable<ISimulation<TState, TContext>> simulations) => 
+    new AggregateSimulation<TState, TContext>(simulations);
 
 }
 

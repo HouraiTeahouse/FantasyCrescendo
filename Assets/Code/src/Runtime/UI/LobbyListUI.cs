@@ -50,6 +50,11 @@ public class LobbyListUI : MonoBehaviour, IStateView<IEnumerable<LobbyInfo>> {
     }
   }
 
+  public void Dispose() {
+    ObjectUtil.Destroy(this);
+    ObjectUtil.Destroy(Container);
+  }
+
   LobbyDisplay CreateDisplay() {
     var display = Instantiate(DisplayPrefab);
     display.transform.SetParent(Container, false);

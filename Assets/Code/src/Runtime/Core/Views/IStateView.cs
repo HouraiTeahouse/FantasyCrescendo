@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// <summary>
 /// A player-facing display for showing a state.
 /// </summary>
-public interface IStateView<S> {
+public interface IStateView<S> : IDisposable {
 
   /// <summary>
   /// Alters the outward appearance of the view to match the d
@@ -42,7 +43,7 @@ public static class CoreUtility {
   }
 
   public static Task<IStateView<T>[]> CreateAllViews<T, TConfig>(TConfig config) {
-    var factories = Object.FindObjectsOfType<ViewFactory<T, TConfig>>();
+    var factories = UnityEngine.Object.FindObjectsOfType<ViewFactory<T, TConfig>>();
     return factories.CreateViews(config);
   }
 

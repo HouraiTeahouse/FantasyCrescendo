@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 [RequireComponent(typeof(CharacterStateMachine))]
-public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerView {
+public sealed class CharacterShield : PlayerComponent {
 
   public CharacterStateMachine StateMachine;
   public GameObject ShieldPrefab;
@@ -69,14 +69,12 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     }
   }
 
-  public Task Initialize(PlayerConfig config, bool isView) {
+  public override Task Initialize(PlayerConfig config, bool isView) {
     SetShieldColor(Config.Get<VisualConfig>().GetPlayerColor(config.PlayerID));
-    return Task.CompletedTask;
+    return base.Initialize(config, isView);
   }
 
-  public void Presimulate(in PlayerState state) => UpdateView(state);
-
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
     if (IsShieldActive(state)) {
       state.ShieldDamage = Math.Min(MaxShieldHealth, state.ShieldDamage + DepletionRate);
       state.ShieldRecoveryCooldown = RecoveryCooldown;
@@ -88,7 +86,7 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
     }
   }
 
-  public void UpdateView(in PlayerState state) {
+  public override void UpdateView(in PlayerState state) {
     var shieldHealth = MaxShieldHealth - state.ShieldDamage;
     var shieldSizeRatio = shieldHealth / (float)MaxShieldHealth;
     ObjectUtil.SetActive(Shield, IsShieldActive(state));
@@ -97,8 +95,6 @@ public sealed class CharacterShield : MonoBehaviour, IPlayerSimulation, IPlayerV
       ShieldTransform.localPosition = transform.InverseTransformPoint(TargetBone.position);
     }
   }
-
-  public void ResetState(ref PlayerState state) {}
 
   void SetShieldColor(Color color) {
     foreach (var renderer in ShieldRenderers) {

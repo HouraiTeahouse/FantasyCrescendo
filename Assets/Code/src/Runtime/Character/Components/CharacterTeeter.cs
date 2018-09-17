@@ -10,21 +10,19 @@ using UnityEditor;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterTeeter : MonoBehaviour, IPlayerSimulation, IPlayerView {
+public class CharacterTeeter : PlayerComponent {
 
   public Bounds[] CheckRegions;
 
   bool isView; 
   bool dir;
 
-  public Task Initialize(PlayerConfig config, bool isView) {
+  public override Task Initialize(PlayerConfig config, bool isView) {
     this.isView = isView;
     return Task.CompletedTask;
   }
 
-  public void Presimulate(in PlayerState state) => UpdateView(state);
-
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
     if (state.IsTeetering) {
       if (state.Velocity != Vector2.zero) {
         state.IsTeetering = false;
@@ -36,9 +34,9 @@ public class CharacterTeeter : MonoBehaviour, IPlayerSimulation, IPlayerView {
     }
   }
 
-  public void UpdateView(in PlayerState state) => dir = state.Direction;
+  public override void UpdateView(in PlayerState state) => dir = state.Direction;
 
-  public void ResetState(ref PlayerState state) {
+  public override void ResetState(ref PlayerState state) {
     state.IsTeetering = false;
   }
 

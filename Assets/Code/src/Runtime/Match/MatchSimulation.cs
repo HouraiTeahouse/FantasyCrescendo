@@ -14,15 +14,15 @@ public class MatchSimulation : IMatchSimulation {
   // Contains all simulations
   readonly IMatchSimulation[] SimulationComponents;
   // Contains simulations pertaining to the MatchProgressionState
-  Dictionary<MatchProgressionState, IMatchSimulation[]> Simulations;
+  readonly Dictionary<MatchProgressionState, IMatchSimulation[]> Simulations;
 
   public MatchSimulation(IEnumerable<IMatchSimulation> simulationComponents) {
     SimulationComponents = simulationComponents.ToArray();
 
     Simulations = new Dictionary<MatchProgressionState, IMatchSimulation[]>(){
-    { MatchProgressionState.Intro, CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation)) },
-    { MatchProgressionState.InGame, SimulationComponents},
-    { MatchProgressionState.End, CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation), typeof(MatchHitboxSimulation)) }
+      { MatchProgressionState.Intro, CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation)) },
+      { MatchProgressionState.InGame, SimulationComponents},
+      { MatchProgressionState.End, CreateSimulations(SimulationComponents, typeof(MatchPlayerSimulation), typeof(MatchHitboxSimulation)) }
     };
   }
 
@@ -35,10 +35,10 @@ public class MatchSimulation : IMatchSimulation {
   }
 
   public MatchState ResetState(MatchState state) {
-	 foreach (var component in SimulationComponents) {
-		state = component.ResetState(state);
-	 }
-	 return state;
+    foreach (var component in SimulationComponents) {
+      state = component.ResetState(state);
+    }
+    return state;
   }
 
   public void Dispose() {
@@ -50,7 +50,6 @@ public class MatchSimulation : IMatchSimulation {
   IMatchSimulation[] CreateSimulations(IMatchSimulation[] matchSimulations, params Type[] restrictions) {
     return matchSimulations.Where(s => restrictions.Contains(s.GetType())).ToArray();    
   }
-
   
 }
     

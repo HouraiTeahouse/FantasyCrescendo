@@ -42,6 +42,11 @@ public class MatchTimerUI : ViewFactory<MatchState, MatchConfig>, IStateView<Mat
     lastSeconds = seconds;
   }
 
+  public void Dispose() {
+    ObjectUtil.Destroy(this);
+    ObjectUtil.Destroy(DisplayText);
+  }
+
 }
 
 }

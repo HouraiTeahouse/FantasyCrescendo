@@ -8,22 +8,22 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
+public class CharacterHitboxController : PlayerComponent {
 
   Hitbox[] Hitboxes;
   Hurtbox[] Hurtboxes;
 
-  public Task Initialize(PlayerConfig config, bool isView = false) {
+  public override Task Initialize(PlayerConfig config, bool isView = false) {
     var hitDetectors = GetComponentsInChildren<AbstractHitDetector>();
     Hitboxes = hitDetectors.OfType<Hitbox>().ToArray();
     Hurtboxes = hitDetectors.OfType<Hurtbox>().ToArray();
     foreach (var hitDetector in hitDetectors) {
       hitDetector.PlayerID = config.PlayerID;
     }
-    return Task.CompletedTask;
+    return base.Initialize(config, isView);
   }
 
-  public void Presimulate(in PlayerState state) { 
+  public override void Presimulate(in PlayerState state) { 
     foreach (var hitbox in Hitboxes) {
       hitbox.Presimulate();
       // Deactivate all hitboxes, let them be driven solely by tick to tick animation
@@ -31,7 +31,7 @@ public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
     }
   }
 
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
     var matchHitboxes = MatchHitboxSimulation.Instance?.ActiveHitboxes;
     var matchHurtboxes = MatchHitboxSimulation.Instance?.ActiveHurtboxes;
     if (matchHitboxes != null) {
@@ -47,8 +47,6 @@ public class CharacterHitboxController : MonoBehaviour, IPlayerSimulation {
       }
     }
   }
-
-  public void ResetState(ref PlayerState state) {}
 
 }
 

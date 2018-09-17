@@ -6,7 +6,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
 /// <summary>
 /// A UI Component that allows displaying a players current damage.
 /// </summary>
-public class PlayerDamage : MonoBehaviour, IStateView<PlayerState> {
+public class PlayerDamage : PlayerComponent {
 
   public TMP_Text DisplayText;
   public string Format;
@@ -16,7 +16,7 @@ public class PlayerDamage : MonoBehaviour, IStateView<PlayerState> {
 
   float? lastDamage;
 
-  public void UpdateView(in PlayerState state) {
+  public override void UpdateView(in PlayerState state) {
     if (DisplayText == null) {
       Debug.LogWarning($"{name} has a PlayerDamage without a Text display.");
       return;

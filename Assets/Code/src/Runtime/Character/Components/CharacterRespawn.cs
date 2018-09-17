@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
+public class CharacterRespawn : PlayerComponent {
 
   public Vector3 Offset;
 
   float defaultDamage;
   GameObject platform;
 
-  public Task Initialize(PlayerConfig config, bool isView = false) {
+  public override Task Initialize(PlayerConfig config, bool isView = false) {
     defaultDamage = config.DefaultDamage;
     if (isView) {
       var prefab = Config.Get<VisualConfig>().RespawnPlatformPrefab;
@@ -24,12 +24,10 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
         platform.transform.localPosition = Offset;
       }
     }
-    return Task.CompletedTask;
+    return base.Initialize(config, isView);
   }
 
-  public void Presimulate(in PlayerState state) {}
-
-  public void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
     if (state.RespawnTimeRemaining > 0) {
       state.RespawnTimeRemaining--;
     } else {
@@ -37,12 +35,12 @@ public class CharacterRespawn : MonoBehaviour, IPlayerView, IPlayerSimulation {
     }
   }
 
-  public void ResetState(ref PlayerState state) {
+  public override void ResetState(ref PlayerState state) {
     state.Damage = defaultDamage;
     state.ShieldDamage = 0;
   }
 
-  public void UpdateView(in PlayerState state) {
+  public override void UpdateView(in PlayerState state) {
     if (platform == null) return;
     platform.SetActive(state.RespawnTimeRemaining > 0);
   }

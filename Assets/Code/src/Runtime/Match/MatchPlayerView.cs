@@ -41,7 +41,15 @@ public class MatchPlayerView : IInitializable<MatchConfig>, IStateView<MatchStat
 
   public void UpdateView(in MatchState state) {
     for (var i = 0; i < PlayerViews.Length; i++) {
-      PlayerViews[i]?.UpdateView(state[i]);
+      if (PlayerViews[i] == null) continue;
+      PlayerViews[i].UpdateView(state[i]);
+    }
+  }
+
+  public void Dispose() {
+    foreach (var view in PlayerViews) {
+      if (view == null) continue;
+      view.Dispose();
     }
   }
 

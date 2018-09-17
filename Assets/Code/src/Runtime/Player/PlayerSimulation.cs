@@ -42,7 +42,16 @@ public class PlayerSimulation : IInitializable<PlayerConfig>, ISimulation<Player
   public void ResetState(ref PlayerState state) {
     if (PlayerSimulationComponents == null) return;
     foreach (var component in PlayerSimulationComponents) {
+      if (component == null) continue;
       component.ResetState(ref state);
+    }
+  }
+
+  public void Dispose() {
+    if (PlayerSimulationComponents == null) return;
+    foreach (var component in PlayerSimulationComponents) {
+      if (component == null) continue;
+      component.Dispose();
     }
   }
 

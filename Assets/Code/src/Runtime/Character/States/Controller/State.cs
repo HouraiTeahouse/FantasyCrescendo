@@ -7,8 +7,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class State : IEntity, IStateView<PlayerState>,
-                     ISimulation<PlayerState, PlayerInputContext> {
+public class State : IEntity, IStateView<PlayerState>, ISimulation<PlayerState, PlayerInputContext> {
 
   public delegate State Transition(CharacterContext context);
 
@@ -64,8 +63,9 @@ public class State : IEntity, IStateView<PlayerState>,
   public virtual void OnStateUpdate(CharacterContext context) {}
   public virtual void OnStateExit(CharacterContext context) {}
 
-  public void Simulate(ref PlayerState state, PlayerInputContext simulate) {}
-  public void UpdateView(in PlayerState state) {}
+  public virtual void Simulate(ref PlayerState state, PlayerInputContext simulate) {}
+  public virtual void UpdateView(in PlayerState state) {}
+  public virtual void Dispose() {}
 
   public State AddTransitionTo(State state, 
                                Func<CharacterContext, bool> extraCheck = null) {
