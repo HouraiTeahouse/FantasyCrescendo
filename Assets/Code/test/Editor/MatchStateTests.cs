@@ -25,10 +25,11 @@ public class MatchStateTests {
       input.Serialize(networkWriter);
       var bytes = networkWriter.AsArray();
       sizes.Add(networkWriter.Position);
-      var networkReader = new Deserializer(bytes);
-      var deserialized = new MatchState(playerCount);
-      deserialized.Deserialize(networkReader);
-      Assert.AreEqual(input, deserialized);
+      using (var networkReader = new Deserializer(bytes)) {
+        var deserialized = new MatchState(playerCount);
+        deserialized.Deserialize(networkReader);
+        Assert.AreEqual(input, deserialized);
+      }
     }
     Debug.Log($"Average Message Size ({playerCount}): {sizes.Average()}");
 	}

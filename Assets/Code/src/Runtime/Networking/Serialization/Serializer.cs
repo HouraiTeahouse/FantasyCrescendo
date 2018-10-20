@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class Serializer {
+public class Serializer : IDisposable {
 
   const int k_MaxStringLength = 1024 * 32;
   NetBuffer writeBuffer;
@@ -309,25 +309,11 @@ public class Serializer {
     Write(value.m33);
   }
 
-  public void Write(INetworkSerializable msg) => msg.Serialize(this);
+  public void Write<T>(in T msg) where T : INetworkSerializable => msg.Serialize(this);
 
   public void SeekZero() => writeBuffer.SeekZero();
 
-  public void StartMessage(short msgType) {
-    SeekZero();
-
-    // two bytes for size, will be filled out in FinishMessage
-    writeBuffer.WriteByte2(0, 0);
-
-    // two bytes for message type
-    Write(msgType);
-  }
-
-  public void FinishMessage()
-  {
-      // writes correct size into space at start of buffer
-      writeBuffer.FinishMessage();
-  }
+  public void Dispose() => writeBuffer.Dispose();
 
   static ulong EncodeZigZag(long value, int bitLength) {
     unchecked {

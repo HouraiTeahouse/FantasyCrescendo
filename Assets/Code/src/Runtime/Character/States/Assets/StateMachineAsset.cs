@@ -19,8 +19,10 @@ public class StateMachineAsset : BaseStateMachineAsset {
 
   [SerializeField] List<BaseStateAsset> _states;
 
+#if UNITY_EDITOR
     // TODO(james7132): Move this so StateMachineAsset doesn't have any reference to the metadata.
   StateMachineMetadata _metadata;
+#endif
 
   /// <summary>
   /// Gets a read-only collection of all states within the state machine.

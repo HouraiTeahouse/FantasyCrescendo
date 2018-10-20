@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-class NetBuffer {
+class NetBuffer : IDisposable {
 
   byte[] Buffer;
   uint position;
@@ -19,6 +19,12 @@ class NetBuffer {
 
   public NetBuffer() {
     Buffer = ArrayPool<byte>.Shared.Rent(kInitialSize);
+  }
+
+  public void Dispose() {
+    if (Buffer == null) return;
+    ArrayPool<byte>.Shared.Return(Buffer);
+    Buffer = null;
   }
 
   // this does NOT copy the buffer

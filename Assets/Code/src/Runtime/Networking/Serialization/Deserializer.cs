@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class Deserializer {
+public class Deserializer : IDisposable {
 
   NetBuffer m_buf;
 
@@ -249,7 +249,7 @@ public class Deserializer {
     }
   }
 
-
+  public void Dispose() => m_buf.Dispose();
 
 }
 

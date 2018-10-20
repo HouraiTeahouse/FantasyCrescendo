@@ -19,10 +19,11 @@ public class PlayerStateTests {
       state.Serialize(networkWriter);
       var bytes = networkWriter.AsArray();
       sizes.Add(networkWriter.Position);
-      var networkReader = new Deserializer(bytes);
-      var deserializedState = new PlayerState();
-      deserializedState.Deserialize(networkReader);
-      Assert.AreEqual(state, deserializedState);
+      using (var networkReader = new Deserializer(bytes)) {
+        var deserializedState = new PlayerState();
+        deserializedState.Deserialize(networkReader);
+        Assert.AreEqual(state, deserializedState);
+      }
     }
     Debug.Log($"Message Size: {sizes.Average()}");
 	}

@@ -23,33 +23,42 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
 
   // TODO(james7132): Benchmark using AggressiveInlining on these
   public bool IsValid {
-    get { return (Buttons & 1) != 0; }
-    set{ Buttons = (byte)(value ? (Buttons | 1) : (Buttons & ~1)); }
+    get { return GetBit(Buttons, 0); }
+    set { SetBit(ref Buttons, 0, value); }
   }
 
   public bool Attack {
-    get { return (Buttons & 2) != 0; }
-    set{ Buttons = (byte)(value ? (Buttons | 2) : (Buttons & ~2)); }
+    get { return GetBit(Buttons, 1); }
+    set { SetBit(ref Buttons, 1, value); }
   }
 
   public bool Special {
-    get { return (Buttons & 4) != 0; }
-    set{ Buttons = (byte)(value ? (Buttons | 4) : (Buttons & ~4)); }
+    get { return GetBit(Buttons, 2); }
+    set { SetBit(ref Buttons, 2, value); }
   }
 
   public bool Jump {
-    get { return (Buttons & 8) != 0; }
-    set{ Buttons = (byte)(value ? (Buttons | 8) : (Buttons & ~8)); }
+    get { return GetBit(Buttons, 3); }
+    set { SetBit(ref Buttons, 3, value); }
   }
 
   public bool Shield {
-    get { return (Buttons & 16) != 0; }
-    set{ Buttons = (byte)(value ? (Buttons | 16) : (Buttons & ~16)); }
+    get { return GetBit(Buttons, 4); }
+    set { SetBit(ref Buttons, 4, value); }
   }
 
   public bool Grab {
-    get { return (Buttons & 32) != 0; }
-    set{ Buttons = (byte)(value ? (Buttons | 32) : (Buttons & ~32)); }
+    get { return GetBit(Buttons, 5); }
+    set { SetBit(ref Buttons, 5, value); }
+  }
+
+  static bool GetBit(byte value, int bit) {
+    return (value & (1 << bit)) != 0;
+  }
+
+  static void SetBit(ref byte value, int bit, bool bitValue) {
+    var mask = 1 << bit;
+    value = (byte)(bitValue ? (value | mask) : (value & ~mask));
   }
 
   bool IValidatable.IsValid => IsValid;
@@ -170,11 +179,11 @@ public struct PlayerInputContext : IValidatable {
   public DirectionalInput Movement => (Vector2)Current.Movement;
   public DirectionalInput Smash => (Vector2)Current.Smash;
 
-  public ButtonContext Attack => new ButtonContext { Previous = Previous.Attack, Current  = Current.Attack };
-  public ButtonContext Special => new ButtonContext { Previous = Previous.Special, Current = Current.Special };
-  public ButtonContext Jump => new ButtonContext { Previous = Previous.Jump, Current = Current.Jump };
-  public ButtonContext Shield => new ButtonContext { Previous = Previous.Shield, Current = Current.Shield };
-  public ButtonContext Grab => new ButtonContext { Previous = Previous.Grab, Current = Current.Grab };
+  public ButtonContext Attack => new ButtonContext(Previous.Attack, Current.Attack);
+  public ButtonContext Special => new ButtonContext(Previous.Special, Current.Special);
+  public ButtonContext Jump => new ButtonContext(Previous.Jump, Current.Jump);
+  public ButtonContext Shield => new ButtonContext(Previous.Shield, Current.Shield);
+  public ButtonContext Grab => new ButtonContext(Previous.Grab, Current.Grab);
 
 }
 
@@ -213,10 +222,15 @@ public struct Vector2b {
 /// A simple data object for managing the state and change of a single
 /// button over two ticks of gameplay.
 /// </summary>
-public struct ButtonContext {
+public readonly struct ButtonContext {
 
-  public bool Previous;
-  public bool Current;
+  public readonly bool Previous;
+  public readonly bool Current;
+
+  public ButtonContext(bool previous, bool current) {
+    Previous = previous;
+    Current = current;
+  }
 
   public bool WasPressed => !Previous && Current;
   public bool WasReleased => Previous && !Current;
@@ -234,11 +248,11 @@ public static class InputUtil {
     return InputConfig;
   }
 
-  public static Vector2 MaxComponent(Vector2 value) {
+  public static Vector2 MaxComponent(in Vector2 value) {
     if (Math.Abs(value.x) >= Mathf.Abs(value.y)) {
       return new Vector2(value.x, 0f);
     } else {
-      return new Vector2(value.y, 0f);
+      return new Vector2(0f, value.y);
     }
   }
 
@@ -247,11 +261,11 @@ public static class InputUtil {
     return Mathf.Abs(value) >= zone;
   }
 
-  public static bool OutsideDeadZone(Vector2 value, float? deadZone = null) {
+  public static bool OutsideDeadZone(in Vector2 value, float? deadZone = null) {
     return OutsideDeadZone(value.x, deadZone) || OutsideDeadZone(value.y, deadZone);
   }
 
-  public static Vector2 EnforceDeadZone(Vector2 input, float? deadZone = null) {
+  public static Vector2 EnforceDeadZone(in Vector2 input, float? deadZone = null) {
     return new Vector2 (
       OutsideDeadZone(input.x, deadZone) ? input.x : 0.0f,
       OutsideDeadZone(input.y, deadZone) ? input.y : 0.0f
@@ -260,17 +274,25 @@ public static class InputUtil {
 
 }
 
-public struct DirectionalInput {
+public readonly struct DirectionalInput {
 
-  public Vector2 Value;
+  public readonly Vector2 Value;
   public Direction Direction => GetDirection(Value);
 
-  public static implicit operator DirectionalInput(Vector2 dir) {
-    return new DirectionalInput { Value = dir };
+  public DirectionalInput(in Vector2 dir) {
+    Value = dir;
   }
 
-  public static Direction GetDirection(Vector2 dir) {
-    dir = InputUtil.EnforceDeadZone(dir);
+  public static implicit operator DirectionalInput(in Vector2 dir) {
+    return new DirectionalInput(dir);
+  }
+
+  public static implicit operator Vector2(DirectionalInput dir) {
+    return dir.Value;
+  }
+
+  public static Direction GetDirection(in Vector2 direction ) {
+    var dir = InputUtil.EnforceDeadZone(direction);
     var absX = Mathf.Abs(dir.x);
     var absY = Mathf.Abs(dir.y);
     if (absX > absY) {

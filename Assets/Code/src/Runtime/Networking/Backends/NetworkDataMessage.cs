@@ -2,7 +2,7 @@
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public struct NetworkDataMessage {
+public readonly struct NetworkDataMessage {
 
   public readonly NetworkConnection Connection;
   public readonly Deserializer NetworkReader;

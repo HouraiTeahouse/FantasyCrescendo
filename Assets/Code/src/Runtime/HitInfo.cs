@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public struct HitInfo {
+public ref struct HitInfo {
   public Hitbox Source;
   public Hurtbox Destination;
   public MatchState MatchState;
