@@ -22,7 +22,7 @@ public class CustomControllerLayouts : MonoBehaviour {
 
   [RuntimeInitializeOnLoadMethod]
   static void RegisterControllerLayouts() {
-    InputSystem.RegisterControlLayout(@"
+    InputSystem.RegisterLayout(@"
 {
     ""name"" : ""Mayflash GameCube Controller Adapter"",
     ""extend"" : ""Gamepad"",

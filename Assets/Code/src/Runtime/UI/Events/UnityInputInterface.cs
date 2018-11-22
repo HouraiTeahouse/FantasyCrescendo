@@ -18,7 +18,7 @@ public class UnityInputInterface : BaseInput {
   public override bool GetMouseButtonUp(int button) => GetMouseButtonControl(button)?.wasJustReleased ?? false;
 
   public override bool GetButtonDown(string controlPath) {
-    foreach (var control in InputSystem.GetControls(controlPath)) {
+    foreach (var control in InputSystem.FindControls(controlPath)) {
       var button = control as ButtonControl;
       var isMouse = control.device is Mouse;
       // Ignore mouse buttons
@@ -31,7 +31,7 @@ public class UnityInputInterface : BaseInput {
 
   public override float GetAxisRaw(string controlPath) {
     float sum = 0.0f;
-    foreach (var control in InputSystem.GetControls(controlPath)) {
+    foreach (var control in InputSystem.FindControls(controlPath)) {
       var axis = control as AxisControl;
       var isMouse = control.device is Mouse;
       // Ignore mouse axes
