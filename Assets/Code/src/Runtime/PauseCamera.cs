@@ -63,8 +63,8 @@ public class PauseCamera : MonoBehaviour {
     if (pausedPlayerID == null) return;
     var localPlayerId = MatchConfig.PlayerConfigs[pausedPlayerID.Value].LocalPlayerID;
     var controller = Gamepad.all[localPlayerId];
-    Vector3 translation = Vector3.Scale(controller.rightStick.ReadRawValue(), TranslationSpeed);
-    Vector3 rotation = Vector3.Scale(controller.leftStick.ReadRawValue(), RotationSpeed);
+    Vector3 translation = Vector3.Scale(controller.rightStick.ReadValue(), TranslationSpeed);
+    Vector3 rotation = Vector3.Scale(controller.leftStick.ReadValue(), RotationSpeed);
     float inOut = 0f;
     if (controller.buttonWest.isPressed) inOut -= 1f;
     if (controller.buttonNorth.isPressed) inOut += 1f;
