@@ -21,6 +21,7 @@ MonoBehaviour:
   m_buildSettings:
     m_compileScriptsInVirtualMode: 0
     m_cleanupStreamingAssetsAfterBuilds: 1
+    m_logResourceManagerExceptions: 1
     m_bundleBuildPath: Temp/com.unity.addressables/AssetBundles
   m_profileSettings:
     m_profiles:
@@ -58,4 +59,26 @@ MonoBehaviour:
   m_labelTable:
     m_labelNames:
     - default
+  m_schemaTemplates:
+  - m_displayName: Packed Assets
+    m_description: Pack asset sinto asset bundles.
+    m_schemaTypes:
+    - m_assemblyName: Unity.Addressables.Editor, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      m_className: UnityEditor.AddressableAssets.BundledAssetGroupSchema
+    - m_assemblyName: Unity.Addressables.Editor, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      m_className: UnityEditor.AddressableAssets.ContentUpdateGroupSchema
+  m_initializationObjects: []
+  m_activePlayerDataBuilderIndex: 2
+  m_activePlayModeDataBuilderIndex: 0
+  m_dataBuilders:
+  - {fileID: 11400000, guid: c26fb8e3168d5624f838ee4fb529d5e2, type: 2}
+  - {fileID: 11400000, guid: d0b447a2839f045489f9b4a0f2060c6a, type: 2}
+  - {fileID: 11400000, guid: 143b6c6f11f5ad248b60ebf85f6f19ca, type: 2}
   m_activeProfileId: ad50d181eb8e45446878fc143b868eeb
+  m_hostingServicesManager:
+    m_hostingServiceInfos: []
+    m_settings: {fileID: 11400000}
+    m_nextInstanceId: 0
+    m_registeredServiceTypeRefs: []

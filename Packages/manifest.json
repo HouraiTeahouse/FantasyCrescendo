@@ -1,24 +1,26 @@
 {
+  "registry": "https://staging-packages.unity.com",
   "dependencies": {
-    "com.houraiteahouse.config": "file:HouraiConfig",
-    "com.houraiteahouse.core": "file:HouraiCore",
-    "com.houraiteahouse.discord": "file:discord-rpc-unity",
-    "com.houraiteahouse.editorattributes": "file:EditorAttributes",
-    "com.houraiteahouse.loadables": "file:Loadables",
-    "com.houraiteahouse.localization": "file:HouraiLocalization",
-    "com.houraiteahouse.lz4": "file:LZF",
-    "com.houraiteahouse.options": "file:HouraiOptions",
-    "com.rlabrecque.steamworks": "file:Steamworks.NET",
-    "com.unity.addressables": "0.4.6-preview",
+    "com.houraiteahouse.config": "https://github.com/HouraiTeahouse/HouraiConfig.git",
+    "com.houraiteahouse.core": "https://github.com/HouraiTeahouse/HouraiCore.git",
+    "com.houraiteahouse.discord": "https://github.com/HouraiTeahouse/discord-rpc-unity.git",
+    "com.houraiteahouse.editorattributes": "https://github.com/HouraiTeahouse/EditorAttributes.git",
+    "com.houraiteahouse.loadables": "https://github.com/HouraiTeahouse/Loadables.git",
+    "com.houraiteahouse.localization": "https://github.com/HouraiTeahouse/HouraiLocalization.git",
+    "com.houraiteahouse.lz4": "https://github.com/HouraiTeahouse/LZF.git#a3aaf9",
+    "com.houraiteahouse.options": "https://github.com/HouraiTeahouse/HouraiOptions.git",
+    "com.rlabrecque.steamworks": "https://github.com/HouraiTeahouse/Steamworks.NET.git",
+    "com.unity.addressables": "0.4.8-preview",
     "com.unity.assetbundlebrowser": "1.6.0",
-    "com.unity.inputsystem": "file:InputSystem",
-    "com.unity.package-manager-ui": "2.0.2",
-    "com.unity.postprocessing": "2.0.12-preview",
+    "com.unity.inputsystem": "0.0.12-preview",
+    "com.unity.package-manager-ui": "2.0.3",
+    "com.unity.postprocessing": "2.0.17-preview",
     "com.unity.textmeshpro": "1.3.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
     "com.unity.modules.audio": "1.0.0",
     "com.unity.modules.director": "1.0.0",
+    "com.unity.modules.imageconversion": "1.0.0",
     "com.unity.modules.imgui": "1.0.0",
     "com.unity.modules.jsonserialize": "1.0.0",
     "com.unity.modules.particlesystem": "1.0.0",
@@ -33,7 +35,46 @@
     "com.unity.modules.unitywebrequestaudio": "1.0.0",
     "com.unity.modules.unitywebrequesttexture": "1.0.0",
     "com.unity.modules.unitywebrequestwww": "1.0.0",
+    "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
+  },
+  "lock": {
+    "com.houraiteahouse.lz4": {
+      "hash": "a3aaf97edebba81e8388891ce22633815783a94e",
+      "revision": "a3aaf9"
+    },
+    "com.rlabrecque.steamworks": {
+      "hash": "c6eb8dfeb2779229a2bd8beb6be9c3980bc94d78",
+      "revision": "HEAD"
+    },
+    "com.houraiteahouse.config": {
+      "hash": "0b7490068889c1ba1b21d4ec539c463d4eb1f140",
+      "revision": "HEAD"
+    },
+    "com.houraiteahouse.core": {
+      "hash": "abe201982a3cce89d14d9773ecef58b787de938d",
+      "revision": "HEAD"
+    },
+    "com.houraiteahouse.discord": {
+      "hash": "eaf960196f33fda6db53f675b50e86f3266c0af6",
+      "revision": "HEAD"
+    },
+    "com.houraiteahouse.editorattributes": {
+      "hash": "9d235a6f0ba36ce8f17094e55bcb213c00693dff",
+      "revision": "HEAD"
+    },
+    "com.houraiteahouse.loadables": {
+      "hash": "3587e195f960a6aaaf86d4f9199ae0f7b155f11e",
+      "revision": "HEAD"
+    },
+    "com.houraiteahouse.localization": {
+      "hash": "2f6420a80d4e8ba50964385c6c3119fee8735495",
+      "revision": "HEAD"
+    },
+    "com.houraiteahouse.options": {
+      "hash": "2e7f6154c9c4e7d16a79f4ffae281e7846f39694",
+      "revision": "HEAD"
+    }
   }
 }
