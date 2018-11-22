@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: bgm-netherworld
+  m_EditorClassIdentifier: 
+  m_name: bgm-netherworld
+  m_data:
+    m_serializedData: []
+  m_guid: 3d5cf173e6f2e73439edf1fc9d55af94
+  m_serializeEntries:
+  - m_guid: 1d3d49a89856ca145ab2bf8f04925b91
+    m_address: Assets/Data/Scenes/Stages/003_Netherworld/Music/Bloom_Nobly_Ink-Black_Cherry_Blossoms.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 546b989a41f2a714593cfda8a63fd301
+    m_address: Assets/Data/Scenes/Stages/003_Netherworld/Music/Mary_the_Magician.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 1f72ceeb13f56b0418354695307a0a26, type: 2}
+    - {fileID: 11400000, guid: c3dd248c8276ec74c9a92049564fec69, type: 2}

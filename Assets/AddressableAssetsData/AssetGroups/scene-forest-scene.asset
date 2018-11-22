@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: scene-forest-scene
+  m_EditorClassIdentifier: 
+  m_name: scene-forest-scene
+  m_data:
+    m_serializedData: []
+  m_guid: 32973ba3a1b67a643ae8a356c37a93da
+  m_serializeEntries:
+  - m_guid: 4580ce3accb761c4283ad97ed51cd2a3
+    m_address: Assets/Data/Scenes/Stages/006_ScarletDevilMansion/ScarletDevilMansion.unity
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 7a1d3fdcc6ce4554389aa7ef959f1d5f
+    m_address: Assets/Data/Scenes/Stages/002_HakureiShrine/HakureiShrine.unity
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: af7fe850479b5db4084063cd758f3e05
+    m_address: Assets/Data/Scenes/Stages/001_ForestOfMagic/ForestOfMagic.unity
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: b7e20f2acef72ad44b4c1ac3944a64b6
+    m_address: Assets/Data/Scenes/Stages/005_PalaquinShip/PalaquinShip.unity
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 1d21f162e31665b4bbfcef3d51735dd4, type: 2}
+    - {fileID: 11400000, guid: 9efba2b41ee00804eaf8643110a542e1, type: 2}

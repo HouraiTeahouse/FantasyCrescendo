@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: characters-marisa-player
+  m_EditorClassIdentifier: 
+  m_name: characters-marisa-player
+  m_data:
+    m_serializedData: []
+  m_guid: 37a18b16539e136468d088a52c334f5c
+  m_serializeEntries:
+  - m_guid: 1a1c528838af4704fa0850456ba221d8
+    m_address: Assets/Data/Characters/001_Marisa/2/marisa_kirisame_2.prefab
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 36781d3b611add440b23a4e3fa39b09b
+    m_address: Assets/Data/Characters/001_Marisa/4/marisa_kirisame_4.prefab
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 9ce206b907fde1f409f31a191a92a3b9
+    m_address: Assets/Data/Characters/001_Marisa/1/marisa_kirisame_1.prefab
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: ed37135c201bf5043a821bbfe24411d7
+    m_address: Assets/Data/Characters/001_Marisa/3/marisa_kirisame_3.prefab
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 7ada5cdf03555b842a0939527c151271, type: 2}
+    - {fileID: 11400000, guid: 8dc913d763f6bdc4c9d912bb9950c12d, type: 2}

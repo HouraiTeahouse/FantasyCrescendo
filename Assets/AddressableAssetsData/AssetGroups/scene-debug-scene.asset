@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: scene-debug-scene
+  m_EditorClassIdentifier: 
+  m_name: scene-debug-scene
+  m_data:
+    m_serializedData: []
+  m_guid: c7dc420e301181c43809fe28f5cbe795
+  m_serializeEntries:
+  - m_guid: 3c93374069ffbc54783494484b9276d9
+    m_address: Assets/Data/Scenes/Stages/000_Debug/DebugStage.unity
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 2f3bb17ab1e34ee4db89f08efe895d38, type: 2}
+    - {fileID: 11400000, guid: d990b86373ec13b419ce048efcc3d122, type: 2}

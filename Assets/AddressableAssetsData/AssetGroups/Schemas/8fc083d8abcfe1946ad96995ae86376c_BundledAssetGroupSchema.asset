@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d17a21594effb4e9591490b009e7aa, type: 3}
+  m_Name: 8fc083d8abcfe1946ad96995ae86376c_BundledAssetGroupSchema
+  m_EditorClassIdentifier: 
+  m_group: {fileID: 11400000, guid: 61fb4a60245ae374d9c49cb76f006e50, type: 2}
+  m_useAssetBundleCache: 1
+  m_timeout: 0
+  m_chunkedTransfer: 0
+  m_redirectLimit: -1
+  m_retryCount: 0
+  m_buildPath:
+    m_id: c5e7ba445b91b974f90ae15d9cfe35f4
+  m_loadPath:
+    m_id: 44298116ffbe7dc47bf762d5bf55a3ee
+  m_bundleMode: 0
+  m_assetBundleProviderType:
+    m_assemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_className: UnityEngine.ResourceManagement.AssetBundleProvider

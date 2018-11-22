@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: bgm-main_menu
+  m_EditorClassIdentifier: 
+  m_name: bgm-main_menu
+  m_data:
+    m_serializedData: []
+  m_guid: c1e7372f2baed534693b1995feda2562
+  m_serializeEntries:
+  - m_guid: 19194b4217a6e0f4ebb3dc2d97fb5fec
+    m_address: Assets/Data/Scenes/Menus/MainMenu/BGM/Did You See That Shadow.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 6cbaca2731accf34b9ad7227f4562b29
+    m_address: Assets/Data/Scenes/Menus/MainMenu/BGM/Shinkirou Orchestra.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: a60dca073c7c01d4784836d739088af1
+    m_address: Assets/Data/Scenes/Menus/MainMenu/BGM/Selection.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: c24175da64e4c30459a9b1dd6ef0caf7
+    m_address: Assets/Data/Scenes/Menus/MainMenu/BGM/Memory of Forgathering Dream.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 44d99c5983bb1ea428f6a5a3164c543c, type: 2}
+    - {fileID: 11400000, guid: ad41405f90e13624f9f180dda8119083, type: 2}

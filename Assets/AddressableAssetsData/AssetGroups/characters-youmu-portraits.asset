@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: characters-youmu-portraits
+  m_EditorClassIdentifier: 
+  m_name: characters-youmu-portraits
+  m_data:
+    m_serializedData: []
+  m_guid: ad2daabc55cf5c74a8bb76f96fddab5a
+  m_serializeEntries:
+  - m_guid: 3e7d3018e03cf304db0e9d9098c6d44c
+    m_address: Assets/Data/Characters/004_Youmu/2/youmu_portrait_2.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 5e4efdf01c4da32448097f4ec6bd6852
+    m_address: Assets/Data/Characters/004_Youmu/1/youmu_portrait_1.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 77ab5eec8917b5842bd85479054e8b7d
+    m_address: Assets/Data/Characters/004_Youmu/3/youmu_portrait_3.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: b6b5a580d58afa54c9b87fe4d8475a75
+    m_address: Assets/Data/Characters/004_Youmu/4/youmu_portrait_4.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: a6184297e8dd31e48a4cfa9b1d73102f, type: 2}
+    - {fileID: 11400000, guid: fd0ec84368be3cb4bb6b3a3319bc2cd9, type: 2}

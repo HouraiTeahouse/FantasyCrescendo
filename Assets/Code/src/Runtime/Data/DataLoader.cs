@@ -82,10 +82,10 @@ public class DataLoader : MonoBehaviour {
   }
 
   async Task<Object> LoadMainAsset(LoadedAssetBundle bundle) {
-    var assetBundle = bundle.AssetBundle;
-    var mainPath = assetBundle.GetAllAssetNames()[0];
-    var request = await assetBundle.LoadAssetAsync<Object>(mainPath);
-    return request.asset;
+    //var assetBundle = bundle.AssetBundle;
+    //var mainPath = assetBundle.GetAllAssetNames()[0];
+    //var request = await assetBundle.LoadAssetAsync<Object>(mainPath);
+    return null; //request.asset;
   }
 
   void ProcessLoadedAsset(Object asset, string path) {

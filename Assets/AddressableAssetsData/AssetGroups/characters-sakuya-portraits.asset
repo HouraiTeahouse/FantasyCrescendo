@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: characters-sakuya-portraits
+  m_EditorClassIdentifier: 
+  m_name: characters-sakuya-portraits
+  m_data:
+    m_serializedData: []
+  m_guid: f353469d0a1322d48a96c0a99d414ee4
+  m_serializeEntries:
+  - m_guid: 16d1f11948b7e244aa4bcbdca2d78fd7
+    m_address: Assets/Data/Characters/005_Sakuya/Portraits/sakuya_portrait_3.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 8558cce18de1b744a8f0655ed8a4a683
+    m_address: Assets/Data/Characters/005_Sakuya/Portraits/sakuya_portrait_2.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 879ac156e473ea645a7f9f91489c8ea6
+    m_address: Assets/Data/Characters/005_Sakuya/Portraits/sakuya_portrait_4.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: dbfc01b93c5702341931efc372d8027b
+    m_address: Assets/Data/Characters/005_Sakuya/Portraits/sakuya_portrait_1.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 9505fd482cb4f874180573479f0aabd9, type: 2}
+    - {fileID: 11400000, guid: aedc250faae7ecd4ea07734369362d90, type: 2}

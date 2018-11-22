@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: bgm-makai
+  m_EditorClassIdentifier: 
+  m_name: bgm-makai
+  m_data:
+    m_serializedData: []
+  m_guid: 3aa0df230ded75241b68f30c4e001cf2
+  m_serializeEntries:
+  - m_guid: 2af05e6f5b0bc064c8d5a449e26976aa
+    m_address: Assets/Data/Scenes/Stages/004_Makai/Music/Legendary Illusion (Sylvy).ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 43b21429830138548bb1895056307d28
+    m_address: Assets/Data/Scenes/Stages/004_Makai/Music/Legend of KAGE.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: a4bc4521886594649ba4f8ee552c58cb
+    m_address: Assets/Data/Scenes/Stages/004_Makai/Music/Legendary Illusion.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: c26883856c0773046a7278e067d21df2
+    m_address: Assets/Data/Scenes/Stages/004_Makai/Music/Now, Until The Moment You
+      Die.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: f50676833500dec478608e3fd23648a3
+    m_address: Assets/Data/Scenes/Stages/004_Makai/Music/Alice in Wonderland.ogg
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 60782da0cd162ad4e96002d64bce334b, type: 2}
+    - {fileID: 11400000, guid: 752831b4f567992498009cf23c8471d8, type: 2}
