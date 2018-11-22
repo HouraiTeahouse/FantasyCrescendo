@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: characters-murasa-portraits
+  m_EditorClassIdentifier: 
+  m_name: characters-murasa-portraits
+  m_data:
+    m_serializedData: []
+  m_guid: c8f2153b56850dd4b99fbbf45206a945
+  m_serializeEntries:
+  - m_guid: 5070d1e84bc1e8744ae03348b9febb79
+    m_address: Assets/Data/Characters/008_Murasa/Portraits/murasa_portrait_1.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 6736f305d683dac408bdcbe49c8d31c1
+    m_address: Assets/Data/Characters/008_Murasa/Portraits/murasa_portrait_3.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: c5781415cb191ec4ab02b4c9c24828ac
+    m_address: Assets/Data/Characters/008_Murasa/Portraits/murasa_portrait_4.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: efcec1ef8dceefe4186dc06e3d730ac4
+    m_address: Assets/Data/Characters/008_Murasa/Portraits/murasa_portrait_2.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: f7265ff07d6d240498edfe6f2a620e88, type: 2}
+    - {fileID: 11400000, guid: c13f53f12c21a9848added99ad5ac15b, type: 2}

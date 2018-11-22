@@ -14,26 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: Default Local Group
   m_data:
-    m_serializedData:
-    - m_assemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      m_className: System.String
-      m_data: 570d62e62bd529340a38cb87c2fdf264
-      m_key: BuildPath
-    - m_assemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      m_className: System.String
-      m_data: 995bf2ffae4b2db4ea0e720e38696ea6
-      m_key: LoadPath
-    - m_assemblyName: Unity.Addressables.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_className: UnityEditor.AddressableAssets.BundledAssetGroupProcessor+BundleMode
-      m_data: PackTogether
-      m_key: BundleMode
-    - m_assemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      m_className: System.Boolean
-      m_data: True
-      m_key: StaticContent
-  m_guid: 56d12a7dc399e9e479918ffbb0bf5318
-  m_processorAssembly: Unity.Addressables.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_processorClass: UnityEditor.AddressableAssets.BundledAssetGroupProcessor
+    m_serializedData: []
+  m_guid: 26a06e2e1fc14694bb5d824430beb207
   m_serializeEntries: []
   m_readOnly: 0
   m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 34ab66a785f9e754cb64ac9efbb3e7fc, type: 2}
+    - {fileID: 11400000, guid: d892b6951ab99024f9cc7b4a1cfce6d3, type: 2}

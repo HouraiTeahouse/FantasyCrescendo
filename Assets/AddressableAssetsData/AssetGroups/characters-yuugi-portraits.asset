@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: characters-yuugi-portraits
+  m_EditorClassIdentifier: 
+  m_name: characters-yuugi-portraits
+  m_data:
+    m_serializedData: []
+  m_guid: 38a2b6955dcc731459449582aff5fdfc
+  m_serializeEntries:
+  - m_guid: 71c2cb04c59ab15449f94f3b4f35d4a3
+    m_address: Assets/Data/Characters/007_Yuugi/Portraits/yuugi_portrait_1.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 933b1cc324d3af5449f430966a98936d
+    m_address: Assets/Data/Characters/007_Yuugi/Portraits/yuugi_portrait_2.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: aa2daeca6566f7943be8199b5f9fc22f
+    m_address: Assets/Data/Characters/007_Yuugi/Portraits/yuugi_portrait_3.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: ff9d92580a898654a8ac0d16c95d7a7a
+    m_address: Assets/Data/Characters/007_Yuugi/Portraits/yuugi_portrait_4.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 79ab7b9e0faf5e142b9c810d6813b3c6, type: 2}
+    - {fileID: 11400000, guid: 93bc7e354c6c1ac42966a6dc51ef66d8, type: 2}

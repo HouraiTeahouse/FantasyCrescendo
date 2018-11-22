@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: characters-marisa-portraits
+  m_EditorClassIdentifier: 
+  m_name: characters-marisa-portraits
+  m_data:
+    m_serializedData: []
+  m_guid: 967a5cdcccaa99946ae98ce18da103bd
+  m_serializeEntries:
+  - m_guid: 1096dcd85679e3642bed3a2224d0dfac
+    m_address: Assets/Data/Characters/001_Marisa/2/marisa_portrait_2.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 9432ea51c4b5fcd4b83b748bc92cd781
+    m_address: Assets/Data/Characters/001_Marisa/4/marisa_portrait_4.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: a44678091daad23459c4a01c2be02741
+    m_address: Assets/Data/Characters/001_Marisa/1/marisa_portrait_1.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: e54a17584c8c96646996a3e0fdc5f696
+    m_address: Assets/Data/Characters/001_Marisa/3/marisa_portrait_3.png
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 59c5b5b30da1f114fa05748c1cffe38f, type: 2}
+    - {fileID: 11400000, guid: 1de9206bf1434ba44811bd1d6b12e4de, type: 2}

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: characters-youmu-2
+  m_EditorClassIdentifier: 
+  m_name: characters-youmu-2
+  m_data:
+    m_serializedData: []
+  m_guid: aaa9b4f7433695b408edd5bfbe165205
+  m_serializeEntries:
+  - m_guid: 76a1b08baec65b04db70bbd2a3360769
+    m_address: Assets/Data/Characters/004_Youmu/2/Materials/youmu_body_2.mat
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: 853c4026bc226524eb90c0db8fc4e53f
+    m_address: Assets/Data/Characters/004_Youmu/_Common/Materials/youmu_sword.mat
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: d56ab2d6784543e4992fcf2d5464fe0c
+    m_address: Assets/Data/Characters/004_Youmu/2/Materials/youmu_clothes_2.mat
+    m_readOnly: 0
+    m_serializedLabels: []
+  - m_guid: fb7afa084193f27468401a51a36e8a7c
+    m_address: Assets/Data/Characters/004_Youmu/2/Materials/youmu_eye_2.mat
+    m_readOnly: 0
+    m_serializedLabels: []
+  m_readOnly: 0
+  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_schemaSet:
+    m_schemas:
+    - {fileID: 11400000, guid: 0814595b14bbcbf429bb3e67d7301791, type: 2}
+    - {fileID: 11400000, guid: 790498d84e4674741916a2db3d4e127b, type: 2}
