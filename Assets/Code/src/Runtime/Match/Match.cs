@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
@@ -20,10 +21,11 @@ public abstract class Match {
     if (loadScene) {
       var stage = Registry.Get<SceneData>().Get(config.StageID);
       Assert.IsTrue(stage != null && stage.Type == SceneType.Stage);
-      await stage.GameScene.LoadAsync();
+      await Addressables.LoadScene(stage.Scene);
     }
     var additionalScenes = Config.Get<SceneConfig>().AdditionalStageScenes;
-    await Task.WhenAll(additionalScenes.Select(s => s.LoadAsync(LoadSceneMode.Additive)));
+    await Task.WhenAll(
+      additionalScenes.Select(async s => await Addressables.LoadScene(s, LoadSceneMode.Additive)));
     var matchManager = MatchManager.Instance;
     matchManager.enabled = false;
     matchManager.Config = config;

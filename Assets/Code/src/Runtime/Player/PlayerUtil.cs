@@ -19,9 +19,7 @@ public static class PlayerUtil {
 
   public static async Task<GameObject> Instantiate(PlayerConfig config, bool isView = false) {
     var selection = config.Selection;
-    var prefab = await selection.GetPallete().Prefab.LoadAsync();
-
-    var obj = Object.Instantiate(prefab);
+    var obj = await selection.GetPallete().Prefab.Instantiate<GameObject>();
     var type = isView ? "View" : "Simulation";
     obj.name = $"Player {config.PlayerID + 1} {type} ({selection.GetPrettyString()})";
 

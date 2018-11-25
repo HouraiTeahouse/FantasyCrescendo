@@ -1,9 +1,8 @@
-using HouraiTeahouse.Loadables;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.AddressableAssets;
 using Random = System.Random;
 
 namespace HouraiTeahouse.FantasyCrescendo {
@@ -11,15 +10,12 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [Serializable]
 public class CharacterPallete {
 
-  [SerializeField, Resource(typeof(Sprite))] string _portrait;
-  [SerializeField, Resource(typeof(GameObject))] string _prefab;
-
-  public IAsset<Sprite> Portrait => Asset.Get<Sprite>(_portrait);
-  public IAsset<GameObject> Prefab => Asset.Get<GameObject>(_prefab);
+  [AssetReferenceTypeRestriction(typeof(Sprite))] public AssetReference Portrait;
+  [AssetReferenceTypeRestriction(typeof(GameObject))] public AssetReference Prefab;
 
   public void Unload() {
-    Portrait.Unload();
-    Prefab.Unload();
+    Portrait.ReleaseAsset<Sprite>();
+    Prefab.ReleaseAsset<GameObject>();
   }
 
 }
@@ -30,16 +26,14 @@ public class CharacterPallete {
 [CreateAssetMenu(menuName = "Fantasy Crescendo/Character")]
 public class CharacterData : GameDataBase {
 
-  ReadOnlyCollection<IAsset<Sprite>> _portraitsAssets;
-
   public string ShortName;
   public string LongName;
 
-  [SerializeField, Resource(typeof(SceneData))] string _homeStage;
-  [SerializeField, Resource(typeof(AudioClip))] string _victoryTheme;
+  [AssetReferenceTypeRestriction(typeof(SceneData))] public AssetReference HomeStage;
+  [AssetReferenceTypeRestriction(typeof(AudioClip))] public AssetReference VictoryTheme;
   [Header("Visuals")]
-  [SerializeField, Resource(typeof(Sprite))] string _icon;
-  [SerializeField] CharacterPallete[] _palletes;
+  [AssetReferenceTypeRestriction(typeof(Sprite))] public AssetReference Icon;
+  public CharacterPallete[] Palletes;
   public Vector2 PortraitCropCenter;
   public float PortraitCropSize;
 
@@ -51,18 +45,10 @@ public class CharacterData : GameDataBase {
     }
   }
 
-  public IAsset<Sprite> Icon => Asset.Get<Sprite>(_icon);
-  public IAsset<SceneData> HomeStage => Asset.Get<SceneData>(_homeStage);
-  public IAsset<AudioClip> VictoryTheme => Asset.Get<AudioClip>(_victoryTheme);
-
-  public int PalleteCount => _palletes.Length;
-  public CharacterPallete GetPallete(int index) => _palletes[index % PalleteCount];
-
   public void Unload() {
-    new ILoadable[] { Icon, HomeStage, VictoryTheme }.UnloadAll();
-    foreach (var pallete in _palletes) {
-      pallete.Unload();
-    }
+    Icon.ReleaseAsset<Sprite>();
+    HomeStage.ReleaseAsset<SceneData>();
+    VictoryTheme.ReleaseAsset<AudioClip>();
   }
 
   public override string ToString() => $"Character ({name})";

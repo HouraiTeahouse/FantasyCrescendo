@@ -64,7 +64,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 0d10ca0c65849be4fbb752ed2454b800, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -73,6 +74,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+  m_UseSpriteMesh: 0
 --- !u!114 &114269918881832616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +262,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -456,11 +459,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Loading...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 246ed6ab8c6046a42bca88e6e97872a3, type: 2}
-  m_sharedMaterial: {fileID: 21850859882574798, guid: 246ed6ab8c6046a42bca88e6e97872a3, type: 2}
+  m_sharedMaterial: {fileID: 21850859882574798, guid: 246ed6ab8c6046a42bca88e6e97872a3,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -616,7 +621,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -625,6 +631,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+  m_UseSpriteMesh: 0
 --- !u!1 &1996456345168662
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,7 +649,6 @@ GameObject:
   - component: {fileID: 114397010500727212}
   - component: {fileID: 114209513861547228}
   - component: {fileID: 114147230044848370}
-  - component: {fileID: 114173882155944486}
   - component: {fileID: 114432504162126714}
   - component: {fileID: 114128713614494998}
   - component: {fileID: 114512974970822564}
@@ -736,7 +742,8 @@ MonoBehaviour:
   _onLanguageChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: HouraiTeahouse.Localization.LanguageChangedEvent, com.houraiteahouse.localization.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: HouraiTeahouse.Localization.LanguageChangedEvent, com.houraiteahouse.localization.Runtime,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114636917838261216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -794,18 +801,6 @@ MonoBehaviour:
   ApplicationId: 
   AutoRegister: 0
   OptionalSteamID: 
---- !u!114 &114173882155944486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1996456345168662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef4bffeda13d7a748973ff9204401c07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114432504162126714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,7 +830,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   QualityLevelOption: {fileID: 11400000, guid: 34ef9c18baafd6543b081d83b4d47fde, type: 2}
-  TextureQualityOption: {fileID: 11400000, guid: 40ca63c76a99a8843aafa19ed818e396, type: 2}
+  TextureQualityOption: {fileID: 11400000, guid: 40ca63c76a99a8843aafa19ed818e396,
+    type: 2}
   _bypassTextureQuality: 0
 --- !u!114 &114512974970822564
 MonoBehaviour:

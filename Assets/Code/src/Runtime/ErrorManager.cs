@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -29,7 +30,7 @@ public class ErrorManager : MonoBehaviour {
   }
 
   public static async void TriggerError(string error) {
-    await Config.Get<SceneConfig>().ErrorScene.LoadAsync();
+    await Addressables.LoadScene(Config.Get<SceneConfig>().ErrorScene);
     var errorScreen = FindObjectOfType<ErrorScreen>();
     if (errorScreen == null) return;
     errorScreen.SetError(error);

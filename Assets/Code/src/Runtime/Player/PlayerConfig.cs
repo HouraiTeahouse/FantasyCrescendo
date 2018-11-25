@@ -63,7 +63,7 @@ public struct PlayerSelection : IValidatable, INetworkSerializable {
     get {
       var character = Registry.Get<CharacterData>().Get(CharacterID);
       if (character == null) return false;
-      return Pallete < character.PalleteCount;
+      return Pallete < character.Palletes.Length;
     }
   }
 
@@ -78,7 +78,7 @@ public struct PlayerSelection : IValidatable, INetworkSerializable {
   }
 
   public CharacterData GetCharacter() => Registry.Get<CharacterData>().Get(CharacterID);
-  public CharacterPallete GetPallete() => GetCharacter()?.GetPallete(Pallete);
+  public CharacterPallete GetPallete() => GetCharacter()?.Palletes[Pallete];
 
   public string GetPrettyString() => $"{GetCharacter().name}, {Pallete}";
   public override string ToString() => $"Selection({CharacterID},{Pallete})";
