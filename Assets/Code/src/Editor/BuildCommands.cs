@@ -1,5 +1,4 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Characters;
-using HouraiTeahouse.Loadables.AssetBundles;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +28,7 @@ public static class BuildCommands {
       Debug.Log("Starting pre-build cleanup...");
 #endif
       Debug.Log("Building asset bundles.");
-      BuildScript.BuildAssetBundles();
+      // BuildScript.BuildAssetBundles();
       Debug.Log("Finished cleanup.");
   }
 

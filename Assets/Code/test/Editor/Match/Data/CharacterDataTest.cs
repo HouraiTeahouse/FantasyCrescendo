@@ -38,36 +38,35 @@ internal class CharacterDataTest : AbstractDataTest<CharacterData> {
     typeof(CharacterMovement)
   };
 
-  [Test, TestCaseSource("PalleteCases")]
-  public void every_pallete_has_a_prefab(CharacterData character, int pallete) {
-    Assert.NotNull(character.GetPallete(pallete).Prefab.Load());
-  }
+  // [Test, TestCaseSource("PalleteCases")]
+  // public void every_pallete_has_a_prefab(CharacterData character, int pallete) {
+  //   Assert.NotNull(character.GetPallete(pallete).Prefab.Load());
+  // }
 
-  [TestCaseSource("ComponentCases")]
-  public void has_component(CharacterData character, int pallete, Type type) {
-    var prefab = character.GetPallete(pallete).Prefab.Load();
-    Assert.IsNotNull(prefab.GetComponentInChildren(type));
-  }
+  // [TestCaseSource("ComponentCases")]
+  // public void has_component(CharacterData character, int pallete, Type type) {
+  //   var prefab = character.GetPallete(pallete).Prefab.Load();
+  //   Assert.IsNotNull(prefab.GetComponentInChildren(type));
+  // }
 
-  [Test, TestCaseSource("PalleteCases")]
-  public void every_pallete_has_a_portrait(CharacterData character, int pallete) {
-    Assert.NotNull(character.GetPallete(pallete).Portrait.Load());
-  }
+  // [Test, TestCaseSource("PalleteCases")]
+  // public void every_pallete_has_a_portrait(CharacterData character, int pallete) {
+  //   Assert.NotNull(character.GetPallete(pallete).Portrait.Load());
+  // }
 
-  [Test, TestCaseSource("AllData")]
-  public void has_valid_icons(CharacterData character) {
-    Assert.NotNull(character.Icon.Load());
-  }
+  // [Test, TestCaseSource("AllData")]
+  // public void has_valid_icons(CharacterData character) {
+  //   Assert.NotNull(character.Icon.Load());
+  // }
 
-  [Test, TestCaseSource("AllData")]
-  public void has_valid_home_stage(CharacterData character) {
-    Assert.NotNull(character.HomeStage);
-  }
+  // [Test, TestCaseSource("AllData")]
+  // public void has_valid_home_stage(CharacterData character) {
+  //   Assert.NotNull(character.HomeStage);
+  // }
 
-  [Test, TestCaseSource("AllData")]
-  public void has_valid_victory_theme(CharacterData character) {
-    Assert.NotNull(character.VictoryTheme.Load());
-  }
-
+  // [Test, TestCaseSource("AllData")]
+  // public void has_valid_victory_theme(CharacterData character) {
+  //   Assert.NotNull(character.VictoryTheme.Load());
+  // }
 
 }

@@ -5,7 +5,6 @@
     "com.houraiteahouse.core": "https://github.com/HouraiTeahouse/HouraiCore.git",
     "com.houraiteahouse.discord": "https://github.com/HouraiTeahouse/discord-rpc-unity.git",
     "com.houraiteahouse.editorattributes": "https://github.com/HouraiTeahouse/EditorAttributes.git",
-    "com.houraiteahouse.loadables": "https://github.com/HouraiTeahouse/Loadables.git",
     "com.houraiteahouse.localization": "https://github.com/HouraiTeahouse/HouraiLocalization.git",
     "com.houraiteahouse.lz4": "https://github.com/HouraiTeahouse/LZF.git",
     "com.houraiteahouse.options": "https://github.com/HouraiTeahouse/HouraiOptions.git",
@@ -25,6 +24,7 @@
     "com.unity.modules.jsonserialize": "1.0.0",
     "com.unity.modules.particlesystem": "1.0.0",
     "com.unity.modules.physics": "1.0.0",
+    "com.unity.modules.physics2d": "1.0.0",
     "com.unity.modules.screencapture": "1.0.0",
     "com.unity.modules.ui": "1.0.0",
     "com.unity.modules.uielements": "1.0.0",
@@ -58,10 +58,6 @@
     },
     "com.houraiteahouse.editorattributes": {
       "hash": "9d235a6f0ba36ce8f17094e55bcb213c00693dff",
-      "revision": "HEAD"
-    },
-    "com.houraiteahouse.loadables": {
-      "hash": "3587e195f960a6aaaf86d4f9199ae0f7b155f11e",
       "revision": "HEAD"
     },
     "com.houraiteahouse.localization": {

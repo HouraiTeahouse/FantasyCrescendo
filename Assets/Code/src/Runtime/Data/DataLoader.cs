@@ -1,15 +1,10 @@
 using System.Threading.Tasks;
-using HouraiTeahouse.Loadables;
-using HouraiTeahouse.Loadables.AssetBundles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-using Object = UnityEngine.Object;
+using UnityEngine.AddressableAssets;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -26,9 +21,9 @@ public class DataLoader : MonoBehaviour {
   /// </summary>
   public GameMode[] GameModes;
 
-  public string[] BundleSearch;
+  public AssetLabelReference[] LoadedLabels;
 
-  Type[] ValidImportTypes = new [] {
+  static Type[] ValidImportTypes = new [] {
     typeof(GameMode),
     typeof(SceneData),
     typeof(CharacterData)
@@ -37,63 +32,41 @@ public class DataLoader : MonoBehaviour {
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
-#if UNITY_EDITOR
-  void Awake() {
-    foreach (var type in ValidImportTypes) {
-      RegisterAll(EditorAssetUtil.LoadAll(type));
-    }
-#else
   async void Awake() {
     LoadingScreen.Await(LoadTask.Task);
     RegisterAll(GameModes);
-    var paths = await GetAllValidPaths(BundleSearch);
-    var bundles = paths.Select(async path => {
-      var bundle = await AssetBundleManager.LoadAssetBundleAsync(path);
-      var asset = await LoadMainAsset(bundle);
-      ProcessLoadedAsset(asset, path);
+    var subtasks = LoadedLabels.Select(async label => {
+      return Addressables.LoadAssets<UnityEngine.Object>(label, async infoOp => {
+        var info = await infoOp;
+        if (info != null && !Register(info)) {
+          Addressables.ReleaseAsset(info);
+        }
+      });
     });
-    await Task.WhenAll(bundles);
-#endif
+    await Task.WhenAll(subtasks);
     LoadTask.TrySetResult(new object());
     Debug.Log("Finished loading data");
   }
 
-  void RegisterAll(IEnumerable<Object> data) {
+  void RegisterAll(IEnumerable<UnityEngine.Object> data) {
     foreach (var datum in data) {
       Register(datum);
     }
   }
 
-  bool Register(Object data) {
+  bool Register(UnityEngine.Object data) {
+    var dataObj = data as IEntity;
+    if (dataObj == null) {
+      return false;
+    }
     foreach (var type in ValidImportTypes) {
-      var dataObj = data as IEntity;
-      if (dataObj != null && type.IsInstanceOfType(data)) {
+      if (type.IsInstanceOfType(data)) {
         Registry.Register(type, dataObj);
         Debug.Log($"Registered {type.Name}: {data.name} ({dataObj.Id})");
         return true;
       }
     }
     return false;
-  }
-
-  async Task<IEnumerable<string>> GetAllValidPaths(string[] searchPatterns) {
-    var allSets = await Task.WhenAll(searchPatterns.Select(pattern => AssetBundleManager.GetValidBundlePaths(pattern)));
-    return allSets.SelectMany(s => s).Distinct();
-  }
-
-  async Task<Object> LoadMainAsset(LoadedAssetBundle bundle) {
-    //var assetBundle = bundle.AssetBundle;
-    //var mainPath = assetBundle.GetAllAssetNames()[0];
-    //var request = await assetBundle.LoadAssetAsync<Object>(mainPath);
-    return null; //request.asset;
-  }
-
-  void ProcessLoadedAsset(Object asset, string path) {
-    var identifiable = asset as IEntity;
-    if (identifiable == null || !Register(asset)) {
-      Resources.UnloadAsset(asset);
-      AssetBundleManager.UnloadAssetBundle(path);
-    }
   }
 
 }
