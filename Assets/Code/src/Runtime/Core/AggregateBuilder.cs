@@ -15,6 +15,7 @@ public abstract class AggregateObject<T> {
     Subitems = new ReadOnlyCollection<T>(flattenedSubitems.ToArray());
   }
 
+  // Optimization: flattens subitems into a single enumeration to avoid traversing a tree during execution.
   static void FlattenSubitems(IEnumerable<T> views, List<T> flattened) {
     foreach (var view in views) {
       if (view is AggregateObject<T> aggregateObject) {
@@ -32,7 +33,7 @@ public abstract class AggregateObject<T> {
 /// </summary>
 /// <typeparam name="T">the interface to build</typeparam>
 /// <typeparam name="TBuilder">self referential generic parameter</typeparam>
-public abstract class AggregateBuilder<T, TBuilder> where TBuilder : class {
+public abstract class AggregateBuilder<T> {
 
   readonly List<T> _subitems;
 
@@ -40,14 +41,14 @@ public abstract class AggregateBuilder<T, TBuilder> where TBuilder : class {
     _subitems = new List<T>();
   }
 
-  public TBuilder AddSubitem(T view) {
+  public AggregateBuilder<T> AddSubitem(T view) {
     _subitems.Add(view);
-    return this as TBuilder;
+    return this;
   }
 
-  public TBuilder AddSubitems(IEnumerable<T> view) {
+  public AggregateBuilder<T> AddSubitems(IEnumerable<T> view) {
     _subitems.AddRange(view);
-    return this as TBuilder;
+    return this;
   }
 
   public T Build() => BuildImpl(_subitems);
@@ -57,25 +58,68 @@ public abstract class AggregateBuilder<T, TBuilder> where TBuilder : class {
 }
 
 /// <summary>
-/// Builder object for <see cref="AggregateView{T}"/> objects.
+/// Builder object for an aggregated view object. 
 /// </summary>
 /// <typeparam name="T">the state type for the view to build</typeparam>
-public class ViewBuilder<T> : AggregateBuilder<IStateView<T>, ViewBuilder<T>> {
+public class ViewBuilder<T> : AggregateBuilder<IStateView<T>> {
+    
+  class AggregateView : AggregateObject<IStateView<T>>, IStateView<T> {
 
-  protected override IStateView<T> BuildImpl(IEnumerable<IStateView<T>> views) => new AggregateView<T>(views);
+    public AggregateView(IEnumerable<IStateView<T>> views) : base(views) {
+    }
+
+    public void UpdateView(in T state) {
+      foreach (var view in Subitems) {
+        if (view == null) continue;
+        view.UpdateView(state);
+      }
+    }
+
+    public void Dispose() {
+      foreach (var view in Subitems) {
+        if (view == null) continue;
+        view.Dispose();
+      }
+    }
+
+  }
+
+  protected override IStateView<T> BuildImpl(IEnumerable<IStateView<T>> views) => new AggregateView(views);
 
 }
 
 /// <summary>
-/// Builder object for <see cref="AggregateSimulation{TState, TContext}"/> objects.
+/// Builder for an aggregated simulation object. Simulation children are executed in the order they are
+/// added to the parent.
 /// </summary>
 /// <typeparam name="TState">the target state type</typeparam>
 /// <typeparam name="TContext">the context for the simulation</typeparam>
-public class SimulationBuilder<TState, TContext> : AggregateBuilder<ISimulation<TState, TContext>, 
-                                                                    SimulationBuilder<TState, TContext>> {
+public class SimulationBuilder<TState, TContext> : AggregateBuilder<ISimulation<TState, TContext>> {
+
+  class AggregateSimulation : AggregateObject<ISimulation<TState, TContext>>,
+                              ISimulation<TState, TContext> {
+
+    public AggregateSimulation(IEnumerable<ISimulation<TState, TContext>> simulations) : base(simulations) {
+    }
+
+    public void Simulate(ref TState state, TContext context) {
+      foreach (var simulation in Subitems) {
+        if (simulation == null) continue;
+        simulation.Simulate(ref state, context);
+      }
+    }
+
+    public void Dispose() {
+      foreach (var simulation in Subitems) {
+        if (simulation == null) continue;
+        simulation.Dispose();
+      }
+    }
+
+  }
 
   protected override ISimulation<TState, TContext> BuildImpl(IEnumerable<ISimulation<TState, TContext>> simulations) => 
-    new AggregateSimulation<TState, TContext>(simulations);
+    new AggregateSimulation(simulations);
 
 }
 

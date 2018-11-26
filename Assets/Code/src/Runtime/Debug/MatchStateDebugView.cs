@@ -1,10 +1,12 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
+/// <summary>
+/// An Editor-only component that makes it eaiser to read the game state information at runtime.
+/// This component instantly destroys itself on instantiation in a non-Editor build.
+/// </summary>
 public class MatchStateDebugView : MonoBehaviour {
 
   public MatchManager Manager;

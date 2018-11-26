@@ -1,6 +1,5 @@
 using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
-using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
@@ -56,7 +55,16 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
     }
   }
 
-  public bool IsValid => PlayerConfigs.IsAllValid();
+  public bool IsValid { 
+    get {
+      foreach (var config in PlayerConfigs) {
+        if (!config.IsValid) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
 
   public override bool Equals(object obj) {
     if (typeof(MatchConfig) != obj.GetType()) return false;

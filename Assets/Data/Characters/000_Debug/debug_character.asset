@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -17,10 +18,39 @@ MonoBehaviour:
   IsDebug: 0
   ShortName: Debug
   LongName: Debug Character
-  _prefab: 
-  _icon: icons:marisa_icon
-  _portraits:
-  - characters/marisa/portraits:marisa_portrait_1
-  - characters/marisa/portraits:marisa_portrait_2
-  - characters/marisa/portraits:marisa_portrait_3
-  - characters/marisa/portraits:marisa_portrait_4
+  HomeStage:
+    m_assetGUID: 
+    m_cachedAsset: {fileID: 0}
+  VictoryTheme:
+    m_assetGUID: 
+    m_cachedAsset: {fileID: 0}
+  Icon:
+    m_assetGUID: 
+    m_cachedAsset: {fileID: 0}
+  Palletes:
+  - Portrait:
+      m_assetGUID: 
+      m_cachedAsset: {fileID: 0}
+    Prefab:
+      m_assetGUID: 
+      m_cachedAsset: {fileID: 0}
+  - Portrait:
+      m_assetGUID: 
+      m_cachedAsset: {fileID: 0}
+    Prefab:
+      m_assetGUID: 
+      m_cachedAsset: {fileID: 0}
+  - Portrait:
+      m_assetGUID: 
+      m_cachedAsset: {fileID: 0}
+    Prefab:
+      m_assetGUID: 
+      m_cachedAsset: {fileID: 0}
+  - Portrait:
+      m_assetGUID: 
+      m_cachedAsset: {fileID: 0}
+    Prefab:
+      m_assetGUID: 
+      m_cachedAsset: {fileID: 0}
+  PortraitCropCenter: {x: 0, y: 0}
+  PortraitCropSize: 0

@@ -7,7 +7,9 @@ using Random = UnityEngine.Random;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-/// <summary> A </summary>
+/// <summary>
+/// A poolable ScriptableObject representing one or more AudioClips that forms a sound effect.
+/// </summary>
 [CreateAssetMenu]
 public class SoundEffect : ScriptableObject {
 
@@ -27,20 +29,34 @@ public class SoundEffect : ScriptableObject {
   /// </summary>
   public AudioClip[] Clips;
 
-  /// <summary> The methodology for which clip is selected from <see cref="Clips"/>. </summary>
+  /// <summary> 
+  /// The methodology for which clip is selected from <see cref="Clips"/>. 
+  /// </summary>
   public ClipSelectionMethod SelectionMethod;
 
-  /// <summary> Which AudioMixerGroup to output the audio to. </summary>
+  /// <summary> 
+  /// Which AudioMixerGroup to output the audio to. 
+  /// </summary>
   public AudioMixerGroup Output;
+
+  /// <summary> 
+  /// The precedence of the effect in the audio system.
+  /// </summary>
   [Range(0, 256)] public int Priority = 128;
 
-  /// <summary> How loud the sound effect will be. </summary>
+  /// <summary> 
+  /// How loud the sound effect will be.  Range from 0.0 to 1.0;
+  /// </summary>
   [Range(0, 1)] public float Volume = 1f;
 
-  /// <summary> What pitch to play the sound effect at. Note: lower pitches will stretch the length of the effect </summary>
+  /// <summary>
+  /// What pitch to play the sound effect at. Note: lower pitches will stretch the length of the effect.
+  /// </summary>
   [Range(-3, 3)] public float Pitch = 1f;
 
-  /// <summary> What pitch to play the sound effect at. Note: lower pitches will stretch the length of the effect </summary>
+  /// <summary> 
+  /// What pitch to play the sound effect at. Lower pitches will stretch out the length of the effect.
+  /// </summary>
   [Range(0, 1)] public float SpatialBlend;
 
   /// <summary>
@@ -74,12 +90,6 @@ public class SoundEffect : ScriptableObject {
     Apply(audioSource);
     audioSource.Play();
   }
-
-  /// <summary>
-  /// Plays the sound effect at the position of a Transform.
-  /// </summary>
-  /// <param name="transform"> the object to play the sound effect at </param>
-  public void Play(Transform transform) => Play(transform.position);
 
   AudioClip SelectAudioClip() {
     if (Clips.Length <= 0) return null;

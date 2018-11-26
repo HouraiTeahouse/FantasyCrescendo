@@ -33,24 +33,4 @@ public interface IValidator<T> {
 
 }
 
-/// <summary>
-/// A set of extension methods for <see cref="IValidatable"/> objects
-/// and their enumerations.
-/// </summary>
-public static class IValidatableExtensions {
-
-  /// <summary>
-  /// Gets whether all of a given validatable set are valid or not.
-  /// </summary>
-  /// <param name="group">the objects to validate.</param>
-  /// <returns>true, if all objects are valid, false otherwise.</returns>
-  public static bool IsAllValid<T>(this IEnumerable<T> group) where T : IValidatable {
-    if (group == null) {
-      return false;
-    }
-    return group.All(v => v.IsValid);
-  }
-
-}
-
 }

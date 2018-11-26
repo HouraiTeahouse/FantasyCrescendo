@@ -7,28 +7,42 @@ using UnityEngine.Audio;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-/// <summary> Singleton manager of all audio related functions in the game. </summary>
+/// <summary> 
+/// Singleton manager of all audio related functions in the game. 
+///</summary>
 public class AudioManager : MonoBehaviour {
 
-  /// <summary> Gets the singleton instance of the AudioManager. </summary>
+  /// <summary> 
+  /// Gets the singleton instance of the AudioManager. 
+  /// </summary>
   public static AudioManager Instance { get; private set; }
 
-  /// <summary> A serializable binding between an Option and a AudioMixer control. </summary>
+  /// <summary> 
+  /// A serializable binding between an Option and a AudioMixer control. 
+  /// </summary>
   [Serializable]
   public struct VolumeOptionBinding {
-    /// <summary> The control ID. This is the same string that is used as a exposed parameter.</summary>
+    /// <summary> 
+    /// The control ID. This is the same string that is used as a exposed parameter.
+    /// </summary>
     public string ControlId;
-    /// <summary> The Option bound to the volume control </summary>
+    /// <summary> 
+    /// The Option bound to the volume control 
+    /// </summary>
     public Option Option;
   }
 
-  /// <summary> The AudioMixer for the entire game </summary>
+  /// <summary> 
+  /// The AudioMixer for the entire game. 
+  /// </summary>
   public AudioMixer MasterMixer;
 
   [Range(-80f, 20f)] public float MaxVolume = 0f;
   [Range(-80f, 20f)] public float MinVolume = -80f;
 
-  /// <summary> The set of all bindings between AudioMixer volume controls and Options. </summary>
+  /// <summary> 
+  /// The set of all bindings between AudioMixer volume controls and Options. 
+  /// </summary>
   public VolumeOptionBinding[] OptionBindings;
 
   PrefabPool<ManagedAudio> Pool;
@@ -50,7 +64,9 @@ public class AudioManager : MonoBehaviour {
     BindOptions();
   }
 
-  /// <summary> Rents an AudioSource from the sound effects pool. </summary>
+  /// <summary> 
+  /// Rents an AudioSource from the sound effects pool. 
+  /// </summary>
   /// <remarks>
   /// There is no need to return the AudioSource to the pool. It will automatically be cleaned up
   /// when the sound effect is no longer playing or is destroyed.
