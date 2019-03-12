@@ -17,7 +17,7 @@ public abstract class ClientGameController : MatchController, IDisposable {
 
   public override void Update() => NetworkClient.Update();
 
-  public virtual void Dispose() {
+  public override void Dispose() {
     NetworkClient.OnDisconnect -= Dispose;
     var matchManager = MatchManager.Instance;
     if (matchManager != null) {
@@ -25,6 +25,7 @@ public abstract class ClientGameController : MatchController, IDisposable {
         Resolution = MatchResolution.NoContest
       });
     }
+    base.Dispose();
   }
 
 }

@@ -10,8 +10,8 @@ public class SceneData : GameDataBase {
   public string Name;
 
   public AssetReference Scene;
-  [AssetReferenceTypeRestriction(typeof(Sprite))] public AssetReference Icon;
-  [AssetReferenceTypeRestriction(typeof(GameObject))] public AssetReference PreviewImage;
+  public AssetReference Icon;
+  public AssetReference PreviewImage;
 
   public int LoadPriority;
 

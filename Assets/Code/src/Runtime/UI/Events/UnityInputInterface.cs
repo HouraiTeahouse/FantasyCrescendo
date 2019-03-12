@@ -14,15 +14,15 @@ public class UnityInputInterface : BaseInput {
   //public override Vector2 mouseScrollDelta => Mouse.current?.scroll?.ReadValue() ?? Vector2.zero;
 
   public override bool GetMouseButton(int button) => GetMouseButtonControl(button)?.isPressed ?? false;
-  public override bool GetMouseButtonDown(int button) => GetMouseButtonControl(button)?.wasJustPressed ?? false;
-  public override bool GetMouseButtonUp(int button) => GetMouseButtonControl(button)?.wasJustReleased ?? false;
+  public override bool GetMouseButtonDown(int button) => GetMouseButtonControl(button)?.wasPressedThisFrame ?? false;
+  public override bool GetMouseButtonUp(int button) => GetMouseButtonControl(button)?.wasReleasedThisFrame ?? false;
 
   public override bool GetButtonDown(string controlPath) {
     foreach (var control in InputSystem.FindControls(controlPath)) {
       var button = control as ButtonControl;
       var isMouse = control.device is Mouse;
       // Ignore mouse buttons
-      if (button != null && !isMouse && button.wasJustPressed) {
+      if (button != null && !isMouse && button.wasPressedThisFrame) {
         return true;
       }
     }

@@ -82,7 +82,7 @@ public class MatchPauseController : MonoBehaviour {
         return null;
       }
     }
-    return Gamepad.all[player].startButton.wasJustPressed ||
+    return Gamepad.all[player].startButton.wasPressedThisFrame ||
            (player == 0 && Input.GetKeyDown(PlayerOneKey));
   }
 
