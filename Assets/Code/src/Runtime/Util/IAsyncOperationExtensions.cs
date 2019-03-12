@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo {

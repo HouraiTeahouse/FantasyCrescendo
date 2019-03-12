@@ -33,7 +33,7 @@ public class MatchController : IMatchController {
     Timestep++;
   }
 
-  public void Dispose() => Simulation?.Dispose();
+  public virtual void Dispose() => Simulation?.Dispose();
 
 }
 

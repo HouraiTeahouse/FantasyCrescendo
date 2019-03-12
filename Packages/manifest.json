@@ -1,5 +1,4 @@
 {
-  "registry": "https://staging-packages.unity.com",
   "dependencies": {
     "com.houraiteahouse.config": "https://github.com/HouraiTeahouse/HouraiConfig.git",
     "com.houraiteahouse.core": "https://github.com/HouraiTeahouse/HouraiCore.git",
@@ -9,11 +8,11 @@
     "com.houraiteahouse.lz4": "https://github.com/HouraiTeahouse/LZF.git",
     "com.houraiteahouse.options": "https://github.com/HouraiTeahouse/HouraiOptions.git",
     "com.rlabrecque.steamworks": "https://github.com/HouraiTeahouse/Steamworks.NET.git",
-    "com.unity.addressables": "0.4.8-preview",
-    "com.unity.assetbundlebrowser": "1.6.0",
-    "com.unity.inputsystem": "0.0.10-preview",
-    "com.unity.package-manager-ui": "2.0.3",
-    "com.unity.postprocessing": "2.0.17-preview",
+    "com.unity.addressables": "0.6.7-preview",
+    "com.unity.assetbundlebrowser": "1.7.0",
+    "com.unity.inputsystem": "0.2.0-preview",
+    "com.unity.package-manager-ui": "2.0.7",
+    "com.unity.postprocessing": "2.1.4",
     "com.unity.textmeshpro": "1.3.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
@@ -42,7 +41,7 @@
   "lock": {
     "com.houraiteahouse.lz4": {
       "hash": "a3aaf97edebba81e8388891ce22633815783a94e",
-      "revision": "a3aaf9"
+      "revision": "HEAD"
     },
     "com.houraiteahouse.config": {
       "hash": "0b7490068889c1ba1b21d4ec539c463d4eb1f140",
@@ -70,7 +69,7 @@
     },
     "com.rlabrecque.steamworks": {
       "hash": "c94bbaaf0ffe7c22c5bee86b71eb75ca1b860248",
-      "revision": "c94bba"
+      "revision": "HEAD"
     }
   }
 }

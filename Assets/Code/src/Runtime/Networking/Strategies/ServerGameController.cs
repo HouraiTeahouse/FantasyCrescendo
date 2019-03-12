@@ -17,8 +17,9 @@ public abstract class ServerGameController : MatchController, IDisposable {
 
   public override void Update() => NetworkServer.Update();
 
-  public virtual void Dispose() {
+  public override void Dispose() {
     NetworkServer.PlayerRemoved -= OnPlayerDisconnected;
+    base.Dispose();
   }
 
   void OnPlayerDisconnected(int playerId) {

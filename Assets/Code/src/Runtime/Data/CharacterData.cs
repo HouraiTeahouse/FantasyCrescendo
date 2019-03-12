@@ -10,12 +10,12 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [Serializable]
 public class CharacterPallete {
 
-  [AssetReferenceTypeRestriction(typeof(Sprite))] public AssetReference Portrait;
-  [AssetReferenceTypeRestriction(typeof(GameObject))] public AssetReference Prefab;
+  public SpriteReference Portrait;
+  public GameObjectReference Prefab;
 
   public void Unload() {
-    Portrait.ReleaseAsset<Sprite>();
-    Prefab.ReleaseAsset<GameObject>();
+    Portrait.ReleaseAsset();
+    Prefab.ReleaseAsset();
   }
 
 }
@@ -29,10 +29,10 @@ public class CharacterData : GameDataBase {
   public string ShortName;
   public string LongName;
 
-  [AssetReferenceTypeRestriction(typeof(SceneData))] public AssetReference HomeStage;
-  [AssetReferenceTypeRestriction(typeof(AudioClip))] public AssetReference VictoryTheme;
+  public SceneDataReference HomeStage;
+  public AudioClipReference VictoryTheme;
   [Header("Visuals")]
-  [AssetReferenceTypeRestriction(typeof(Sprite))] public AssetReference Icon;
+  public SpriteReference Icon;
   public CharacterPallete[] Palletes;
   public Vector2 PortraitCropCenter;
   public float PortraitCropSize;
@@ -46,9 +46,9 @@ public class CharacterData : GameDataBase {
   }
 
   public void Unload() {
-    Icon.ReleaseAsset<Sprite>();
-    HomeStage.ReleaseAsset<SceneData>();
-    VictoryTheme.ReleaseAsset<AudioClip>();
+    Icon.ReleaseAsset();
+    HomeStage.ReleaseAsset();
+    VictoryTheme.ReleaseAsset();
   }
 
   public override string ToString() => $"Character ({name})";
