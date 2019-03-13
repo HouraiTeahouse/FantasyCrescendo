@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -15,9 +16,16 @@ MonoBehaviour:
   IsSelectable: 1
   IsVisible: 1
   IsDebug: 1
-  IsStage: 1
+  Type: 1
   Name: Debug Stage
-  _scene: scene/debug/scene:Assets/Data/Scenes/Stages/000_Debug/DebugStage.unity
-  _icon: icons:marisa_icon
-  _previewImage: icons:marisa_icon
+  Scene:
+    m_AssetGUID: 3c93374069ffbc54783494484b9276d9
+    m_CachedAsset: {fileID: 102900000, guid: 3c93374069ffbc54783494484b9276d9, type: 3}
+  Icon:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  PreviewImage:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  LoadPriority: 0
   Music: []

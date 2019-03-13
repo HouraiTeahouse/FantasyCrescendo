@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -17,9 +18,15 @@ MonoBehaviour:
   IsDebug: 0
   Type: 0
   Name: Main Menu
-  _scene: scene/main_menu/scene:Assets/Data/Scenes/Menus/MainMenu/MainMenu.unity
-  _icon: 
-  _previewImage: 
+  Scene:
+    m_AssetGUID: da1c90b397c2bfc4d9fb342dd396198f
+    m_CachedAsset: {fileID: 102900000, guid: da1c90b397c2bfc4d9fb342dd396198f, type: 3}
+  Icon:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  PreviewImage:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
   LoadPriority: 0
   Music:
   - {fileID: 11400000, guid: 89b14f26127485c46bc7173adacf672b, type: 2}
