@@ -10,28 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: scene-forest-scene
+  m_Name: core
   m_EditorClassIdentifier: 
-  m_GroupName: scene-forest-scene
+  m_GroupName: core
   m_Data:
     m_SerializedData: []
-  m_GUID: 32973ba3a1b67a643ae8a356c37a93da
+  m_GUID: 49c83758a84d42b4e88f2d682d8bef1a
   m_SerializeEntries:
-  - m_GUID: 4580ce3accb761c4283ad97ed51cd2a3
-    m_Address: ScarletDevilMansion_Scene
+  - m_GUID: a0d981819a38842caa4b6f7c919c0452
+    m_Address: StageBootstrap
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 7a1d3fdcc6ce4554389aa7ef959f1d5f
-    m_Address: HakureiShrine_Scene
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: b7e20f2acef72ad44b4c1ac3944a64b6
-    m_Address: PalaquinShip_Scene
+  - m_GUID: f649de709cb070b478cb473e7e0d0fd4
+    m_Address: MatchEnd
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 1d21f162e31665b4bbfcef3d51735dd4, type: 2}
-    - {fileID: 11400000, guid: 9efba2b41ee00804eaf8643110a542e1, type: 2}
+    - {fileID: 11400000, guid: b25462cc932d4df4a8c8deb9edab8f36, type: 2}
+    - {fileID: 11400000, guid: cfcbe03aa2096744f8df734129990913, type: 2}
