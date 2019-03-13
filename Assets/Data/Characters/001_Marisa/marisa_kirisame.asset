@@ -18,17 +18,39 @@ MonoBehaviour:
   IsDebug: 1
   ShortName: Marisa
   LongName: Marisa Kirisame
-  _homeStage: scene/forest/info:ForestOfMagic
-  _victoryTheme: bgm/forest:Magus Night
-  _icon: icons:marisa_icon
-  _palletes:
-  - _portrait: characters/marisa/portraits:marisa_portrait_1
-    _prefab: characters/marisa/player:marisa_kirisame_1
-  - _portrait: characters/marisa/portraits:marisa_portrait_2
-    _prefab: characters/marisa/player:marisa_kirisame_2
-  - _portrait: characters/marisa/portraits:marisa_portrait_3
-    _prefab: characters/marisa/player:marisa_kirisame_3
-  - _portrait: characters/marisa/portraits:marisa_portrait_4
-    _prefab: characters/marisa/player:marisa_kirisame_4
+  HomeStage:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  VictoryTheme:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  Icon:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  Palletes:
+  - Portrait:
+      m_AssetGUID: 
+      m_CachedAsset: {fileID: 0}
+    Prefab:
+      m_AssetGUID: 
+      m_CachedAsset: {fileID: 0}
+  - Portrait:
+      m_AssetGUID: 
+      m_CachedAsset: {fileID: 0}
+    Prefab:
+      m_AssetGUID: 
+      m_CachedAsset: {fileID: 0}
+  - Portrait:
+      m_AssetGUID: 
+      m_CachedAsset: {fileID: 0}
+    Prefab:
+      m_AssetGUID: 
+      m_CachedAsset: {fileID: 0}
+  - Portrait:
+      m_AssetGUID: 
+      m_CachedAsset: {fileID: 0}
+    Prefab:
+      m_AssetGUID: 
+      m_CachedAsset: {fileID: 0}
   PortraitCropCenter: {x: 0.45, y: 0.8}
   PortraitCropSize: 0.22

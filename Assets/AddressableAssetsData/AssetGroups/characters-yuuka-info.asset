@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: characters-yuuka-info
   m_EditorClassIdentifier: 
-  m_name: characters-yuuka-info
-  m_data:
-    m_serializedData: []
-  m_guid: 134502d70e4deff4f97136d845fe9000
-  m_serializeEntries:
-  - m_guid: f08a2c10748552544a53c59f8d1fbd50
-    m_address: Assets/Data/Characters/006_Yuuka/yuuka_kazami.asset
-    m_readOnly: 0
-    m_serializedLabels: []
-  m_readOnly: 0
-  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
-  m_schemaSet:
-    m_schemas:
+  m_GroupName: characters-yuuka-info
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 134502d70e4deff4f97136d845fe9000
+  m_SerializeEntries:
+  - m_GUID: f08a2c10748552544a53c59f8d1fbd50
+    m_Address: Assets/Data/Characters/006_Yuuka/yuuka_kazami.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - characters
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
     - {fileID: 11400000, guid: 44c5ae0e98d4e3340aa4796d004ec71f, type: 2}
     - {fileID: 11400000, guid: 0e025593a8adbba499e54c4336302b8d, type: 2}

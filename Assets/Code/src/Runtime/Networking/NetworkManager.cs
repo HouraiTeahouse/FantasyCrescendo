@@ -84,7 +84,7 @@ public class NetworkManager : MonoBehaviour {
 		Host = new NetworkHost();
 	}
 
-	/// <summary>
+  /// <summary>
 	/// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
 	/// </summary>
 	void FixedUpdate() => Host.Update();

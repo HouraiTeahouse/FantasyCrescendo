@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: Default Local Group
   m_EditorClassIdentifier: 
-  m_name: Default Local Group
-  m_data:
-    m_serializedData: []
-  m_guid: 26a06e2e1fc14694bb5d824430beb207
-  m_serializeEntries: []
-  m_readOnly: 0
-  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
-  m_schemaSet:
-    m_schemas:
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 26a06e2e1fc14694bb5d824430beb207
+  m_SerializeEntries: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
     - {fileID: 11400000, guid: 34ab66a785f9e754cb64ac9efbb3e7fc, type: 2}
     - {fileID: 11400000, guid: d892b6951ab99024f9cc7b4a1cfce6d3, type: 2}

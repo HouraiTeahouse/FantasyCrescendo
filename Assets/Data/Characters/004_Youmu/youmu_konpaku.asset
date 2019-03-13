@@ -18,17 +18,43 @@ MonoBehaviour:
   IsDebug: 0
   ShortName: Youmu
   LongName: Youmu Konpaku
-  _homeStage: scene/netherworld/info:Netherworld
-  _victoryTheme: bgm/netherworld:Mary_the_Magician
-  _icon: icons:youmu_icon
-  _palletes:
-  - _portrait: characters/youmu/portraits:youmu_portrait_1
-    _prefab: characters/youmu/player:youmu_konpaku_1
-  - _portrait: characters/youmu/portraits:youmu_portrait_2
-    _prefab: characters/youmu/player:youmu_konpaku_2
-  - _portrait: characters/youmu/portraits:youmu_portrait_3
-    _prefab: characters/youmu/player:youmu_konpaku_3
-  - _portrait: characters/youmu/portraits:youmu_portrait_4
-    _prefab: characters/youmu/player:youmu_konpaku_4
+  HomeStage:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  VictoryTheme:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  Icon:
+    m_AssetGUID: 1edc8c82bdc999843819716f41e225aa
+    m_CachedAsset: {fileID: 2800000, guid: 1edc8c82bdc999843819716f41e225aa, type: 3}
+  Palletes:
+  - Portrait:
+      m_AssetGUID: 5e4efdf01c4da32448097f4ec6bd6852
+      m_CachedAsset: {fileID: 2800000, guid: 5e4efdf01c4da32448097f4ec6bd6852, type: 3}
+    Prefab:
+      m_AssetGUID: 266237fe84415ba46bd031921776cf6e
+      m_CachedAsset: {fileID: 5513938690071197117, guid: 266237fe84415ba46bd031921776cf6e,
+        type: 3}
+  - Portrait:
+      m_AssetGUID: 3e7d3018e03cf304db0e9d9098c6d44c
+      m_CachedAsset: {fileID: 2800000, guid: 3e7d3018e03cf304db0e9d9098c6d44c, type: 3}
+    Prefab:
+      m_AssetGUID: ab7534933f1b11e45a4ab3ed41b951e9
+      m_CachedAsset: {fileID: 5513938690071197117, guid: ab7534933f1b11e45a4ab3ed41b951e9,
+        type: 3}
+  - Portrait:
+      m_AssetGUID: 77ab5eec8917b5842bd85479054e8b7d
+      m_CachedAsset: {fileID: 2800000, guid: 77ab5eec8917b5842bd85479054e8b7d, type: 3}
+    Prefab:
+      m_AssetGUID: f5c914b4ce363cf4ab71bda6b0d9953a
+      m_CachedAsset: {fileID: 5513938690071197117, guid: f5c914b4ce363cf4ab71bda6b0d9953a,
+        type: 3}
+  - Portrait:
+      m_AssetGUID: b6b5a580d58afa54c9b87fe4d8475a75
+      m_CachedAsset: {fileID: 2800000, guid: b6b5a580d58afa54c9b87fe4d8475a75, type: 3}
+    Prefab:
+      m_AssetGUID: b4dadc33ee574fb4ba0bb0e3cc46bd9e
+      m_CachedAsset: {fileID: 5513938690071197117, guid: b4dadc33ee574fb4ba0bb0e3cc46bd9e,
+        type: 3}
   PortraitCropCenter: {x: 0.5, y: 0.8}
   PortraitCropSize: 0.22

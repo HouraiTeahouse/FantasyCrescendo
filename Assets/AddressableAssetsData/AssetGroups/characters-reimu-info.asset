@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: characters-reimu-info
   m_EditorClassIdentifier: 
-  m_name: characters-reimu-info
-  m_data:
-    m_serializedData: []
-  m_guid: 8b96149979e4b1147b08c4c1f973a39e
-  m_serializeEntries:
-  - m_guid: 5e880f14252814f4fa2087507048cb7a
-    m_address: Assets/Data/Characters/002_Reimu/reimu_hakurei.asset
-    m_readOnly: 0
-    m_serializedLabels: []
-  m_readOnly: 0
-  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
-  m_schemaSet:
-    m_schemas:
+  m_GroupName: characters-reimu-info
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 8b96149979e4b1147b08c4c1f973a39e
+  m_SerializeEntries:
+  - m_GUID: 5e880f14252814f4fa2087507048cb7a
+    m_Address: Assets/Data/Characters/002_Reimu/reimu_hakurei.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - characters
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
     - {fileID: 11400000, guid: da2ab1489b709e445afe6ed7d1584c70, type: 2}
     - {fileID: 11400000, guid: bff12e0ca515e114db9eafaae846440c, type: 2}
