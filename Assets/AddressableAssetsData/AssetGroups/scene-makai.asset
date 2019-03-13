@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: scene-makai
+  m_EditorClassIdentifier: 
+  m_GroupName: scene-makai
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c0e552145db028c4897af65e2fcf012a
+  m_SerializeEntries:
+  - m_GUID: 1a84bcc5375ff034699c02996d02bef2
+    m_Address: Makai_Scene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2af05e6f5b0bc064c8d5a449e26976aa
+    m_Address: Legendary Illusion (Sylvy)
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 43b21429830138548bb1895056307d28
+    m_Address: Legend of KAGE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a4bc4521886594649ba4f8ee552c58cb
+    m_Address: Legendary Illusion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c26883856c0773046a7278e067d21df2
+    m_Address: Now, Until The Moment You Die
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e683bbef61dbcc14b9a1fc5139ce6275
+    m_Address: Makai
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - scenes
+  - m_GUID: f50676833500dec478608e3fd23648a3
+    m_Address: Alice in Wonderland
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 73437e3412377154492b0ddeb2052785, type: 2}
+    - {fileID: 11400000, guid: b4dc7ae0c3315be4e80a5581c3d4c350, type: 2}

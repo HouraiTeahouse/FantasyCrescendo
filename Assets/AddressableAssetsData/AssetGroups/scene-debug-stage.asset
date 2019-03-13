@@ -10,28 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: scene-forest-scene
+  m_Name: scene-debug-stage
   m_EditorClassIdentifier: 
-  m_GroupName: scene-forest-scene
+  m_GroupName: scene-debug-stage
   m_Data:
     m_SerializedData: []
-  m_GUID: 32973ba3a1b67a643ae8a356c37a93da
+  m_GUID: fccf6e2afe632314d92c44ff194ffd46
   m_SerializeEntries:
-  - m_GUID: 4580ce3accb761c4283ad97ed51cd2a3
-    m_Address: ScarletDevilMansion_Scene
+  - m_GUID: 3c93374069ffbc54783494484b9276d9
+    m_Address: DebugStage_Scene
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 7a1d3fdcc6ce4554389aa7ef959f1d5f
-    m_Address: HakureiShrine_Scene
+  - m_GUID: 6b725c909f12fc64f9108422a7b8a0a6
+    m_Address: DebugStage
     m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: b7e20f2acef72ad44b4c1ac3944a64b6
-    m_Address: PalaquinShip_Scene
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - scenes
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 1d21f162e31665b4bbfcef3d51735dd4, type: 2}
-    - {fileID: 11400000, guid: 9efba2b41ee00804eaf8643110a542e1, type: 2}
+    - {fileID: 11400000, guid: 441514568cf482b468f0ae1beda7abe1, type: 2}
+    - {fileID: 11400000, guid: e99d005c3099077498c7b4e06aebf55b, type: 2}

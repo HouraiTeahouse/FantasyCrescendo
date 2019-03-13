@@ -10,28 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: scene-forest-scene
+  m_Name: scene-netherworld
   m_EditorClassIdentifier: 
-  m_GroupName: scene-forest-scene
+  m_GroupName: scene-netherworld
   m_Data:
     m_SerializedData: []
-  m_GUID: 32973ba3a1b67a643ae8a356c37a93da
+  m_GUID: 69ad5a3efdb570e48932c2c46d8a8344
   m_SerializeEntries:
-  - m_GUID: 4580ce3accb761c4283ad97ed51cd2a3
-    m_Address: ScarletDevilMansion_Scene
+  - m_GUID: 1d3d49a89856ca145ab2bf8f04925b91
+    m_Address: Bloom_Nobly_Ink-Black_Cherry_Blossoms
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 7a1d3fdcc6ce4554389aa7ef959f1d5f
-    m_Address: HakureiShrine_Scene
+  - m_GUID: 546b989a41f2a714593cfda8a63fd301
+    m_Address: Mary_the_Magician
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: b7e20f2acef72ad44b4c1ac3944a64b6
-    m_Address: PalaquinShip_Scene
+  - m_GUID: 6224ceb15e489e64e868f674dd925830
+    m_Address: Netherworld_Scene
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 991f6c51973167948a2c4b9b460948b1
+    m_Address: Netherworld
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - scenes
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 1d21f162e31665b4bbfcef3d51735dd4, type: 2}
-    - {fileID: 11400000, guid: 9efba2b41ee00804eaf8643110a542e1, type: 2}
+    - {fileID: 11400000, guid: 40c78c1f80907054fab04a37e90d127a, type: 2}
+    - {fileID: 11400000, guid: 6437718cca42ef241b6a5e7782ad2ec5, type: 2}

@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -17,14 +18,43 @@ MonoBehaviour:
   IsDebug: 0
   ShortName: Murasa
   LongName: Minamitsu Murasa
-  _prefab: 
-  _homeStage: 
-  _victoryTheme: 
-  _icon: icons:murasa_icon
-  _portraits:
-  - characters/murasa/portraits:murasa_portrait_1
-  - characters/murasa/portraits:murasa_portrait_2
-  - characters/murasa/portraits:murasa_portrait_3
-  - characters/murasa/portraits:murasa_portrait_4
+  HomeStage:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  VictoryTheme:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  Icon:
+    m_AssetGUID: a1027471e73273640ad9f789ccb55058
+    m_CachedAsset: {fileID: 2800000, guid: a1027471e73273640ad9f789ccb55058, type: 3}
+  Palletes:
+  - Portrait:
+      m_AssetGUID: 5070d1e84bc1e8744ae03348b9febb79
+      m_CachedAsset: {fileID: 2800000, guid: 5070d1e84bc1e8744ae03348b9febb79, type: 3}
+    Prefab:
+      m_AssetGUID: 35c609891f43ef74baf52f0f3b03ab7a
+      m_CachedAsset: {fileID: 4777335654953838477, guid: 35c609891f43ef74baf52f0f3b03ab7a,
+        type: 3}
+  - Portrait:
+      m_AssetGUID: efcec1ef8dceefe4186dc06e3d730ac4
+      m_CachedAsset: {fileID: 2800000, guid: efcec1ef8dceefe4186dc06e3d730ac4, type: 3}
+    Prefab:
+      m_AssetGUID: 34cf3ad2a9b034c4e91dfc775eb5c5f9
+      m_CachedAsset: {fileID: 8698948746645093023, guid: 34cf3ad2a9b034c4e91dfc775eb5c5f9,
+        type: 3}
+  - Portrait:
+      m_AssetGUID: 6736f305d683dac408bdcbe49c8d31c1
+      m_CachedAsset: {fileID: 2800000, guid: 6736f305d683dac408bdcbe49c8d31c1, type: 3}
+    Prefab:
+      m_AssetGUID: e5b6381b83cb8614fab903d14ff4b2b2
+      m_CachedAsset: {fileID: 4777335654953838477, guid: e5b6381b83cb8614fab903d14ff4b2b2,
+        type: 3}
+  - Portrait:
+      m_AssetGUID: c5781415cb191ec4ab02b4c9c24828ac
+      m_CachedAsset: {fileID: 2800000, guid: c5781415cb191ec4ab02b4c9c24828ac, type: 3}
+    Prefab:
+      m_AssetGUID: fa091df2b2a924e40ab2231a836df3d0
+      m_CachedAsset: {fileID: 4777335654953838477, guid: fa091df2b2a924e40ab2231a836df3d0,
+        type: 3}
   PortraitCropCenter: {x: 0.5, y: 0.8}
   PortraitCropSize: 0.22
