@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: characters-wriggle-info
   m_EditorClassIdentifier: 
-  m_name: characters-wriggle-info
-  m_data:
-    m_serializedData: []
-  m_guid: d98e16de90e640140811ad5f2c92dd7f
-  m_serializeEntries:
-  - m_guid: eced8acc9876143699a398b6b82408b0
-    m_address: Assets/Data/Characters/003_Wriggle/wriggle_nightbug.asset
-    m_readOnly: 0
-    m_serializedLabels: []
-  m_readOnly: 0
-  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
-  m_schemaSet:
-    m_schemas:
+  m_GroupName: characters-wriggle-info
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d98e16de90e640140811ad5f2c92dd7f
+  m_SerializeEntries:
+  - m_GUID: eced8acc9876143699a398b6b82408b0
+    m_Address: Assets/Data/Characters/003_Wriggle/wriggle_nightbug.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - characters
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
     - {fileID: 11400000, guid: 3476236e9e4b1b54c93366e94e3bf532, type: 2}
     - {fileID: 11400000, guid: 99d11240d849526479c958f8e4dae4cc, type: 2}

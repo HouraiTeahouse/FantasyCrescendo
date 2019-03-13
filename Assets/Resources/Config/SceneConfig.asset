@@ -4,16 +4,24 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c91892d3c02226f4e87bfbc5da4e9c71, type: 3}
   m_Name: SceneConfig
   m_EditorClassIdentifier: 
-  _mainMenuScene: scene/main_menu/scene:Assets/Data/Scenes/Menus/MainMenu/MainMenu.unity
-  _matchEndScene: scene/match_end/scene:Assets/Data/Scenes/Menus/MatchEnd.unity
-  _errorScene: Assets/Data/Scenes/Base/ErrorDisplay.unity
-  _additionalStageScenes:
-  - scene/stage_bootstrap:Assets/Data/Scenes/Stages/Common/StageBootstrap.unity
+  MainMenuScene:
+    m_AssetGUID: da1c90b397c2bfc4d9fb342dd396198f
+    m_CachedAsset: {fileID: 102900000, guid: da1c90b397c2bfc4d9fb342dd396198f, type: 3}
+  MatchEndScene:
+    m_AssetGUID: f649de709cb070b478cb473e7e0d0fd4
+    m_CachedAsset: {fileID: 102900000, guid: f649de709cb070b478cb473e7e0d0fd4, type: 3}
+  ErrorScene:
+    m_AssetGUID: 34f53487d5f67004d85ed3f6e6275256
+    m_CachedAsset: {fileID: 102900000, guid: 34f53487d5f67004d85ed3f6e6275256, type: 3}
+  AdditionalStageScenes:
+  - m_AssetGUID: a0d981819a38842caa4b6f7c919c0452
+    m_CachedAsset: {fileID: 102900000, guid: a0d981819a38842caa4b6f7c919c0452, type: 3}
   SpawnTag: Spawn

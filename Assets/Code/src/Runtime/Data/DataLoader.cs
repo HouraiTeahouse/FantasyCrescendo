@@ -32,18 +32,17 @@ public class DataLoader : MonoBehaviour {
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
-  async void Awake() {
+  async void Start() {
     LoadingScreen.Await(LoadTask.Task);
     RegisterAll(GameModes);
-    var subtasks = LoadedLabels.Select(async label => {
-      return Addressables.LoadAssets<UnityEngine.Object>(label, async infoOp => {
+    await Task.WhenAll(LoadedLabels.Select(async label => {
+      return Addressables.LoadAssets<UnityEngine.Object>(label.labelString, async infoOp => {
         var info = await infoOp;
         if (info != null && !Register(info)) {
           Addressables.ReleaseAsset(info);
         }
       });
-    });
-    await Task.WhenAll(subtasks);
+    }));
     LoadTask.TrySetResult(new object());
     Debug.Log("Finished loading data");
   }

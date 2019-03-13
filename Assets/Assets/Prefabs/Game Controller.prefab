@@ -721,8 +721,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c68019df2e4ef49be40ec419a85549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameModes: []
-  BundleSearch: []
+  GameModes:
+  - {fileID: 11400000, guid: ce1f27b7856194045a3e3c7c1a9fae24, type: 2}
+  - {fileID: 11400000, guid: 78bd7db234c5c1b4b9a90fb575179e49, type: 2}
+  - {fileID: 11400000, guid: 911d2a37d116762439b0925e8d2122e2, type: 2}
+  LoadedLabels:
+  - m_LabelString: characters
 --- !u!114 &114851974053767234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,8 +772,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e5f3e5abc00ae48a70c684a6751a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultNetworkInterface: HouraiTeahouse.FantasyCrescendo.Networking.LocalInterface
-  networkStrategy: HouraiTeahouse.FantasyCrescendo.Networking.LockstepStrategy
+  defaultNetworkInterface: HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface
+  networkStrategy: HouraiTeahouse.FantasyCrescendo.Networking.RollbackStrategy
   matchmaker: HouraiTeahouse.FantasyCrescendo.Matchmaking.SteamMatchmaker
 --- !u!114 &114209513861547228
 MonoBehaviour:
@@ -813,7 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab49439928e3f03448a7b61d79b725bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MasterMixer: {fileID: 0}
+  MasterMixer: {fileID: 24100000, guid: 2ce8e3a914aaaae4ba5e35416afaf05b, type: 2}
   MaxVolume: 0
   MinVolume: -80
   OptionBindings: []

@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: Built In Data
   m_EditorClassIdentifier: 
-  m_name: Built In Data
-  m_data:
-    m_serializedData: []
-  m_guid: dba928d53791d9243963d778e2deb27d
-  m_serializeEntries:
-  - m_guid: EditorSceneList
-    m_address: EditorSceneList
-    m_readOnly: 1
-    m_serializedLabels: []
-  - m_guid: Resources
-    m_address: Resources
-    m_readOnly: 1
-    m_serializedLabels: []
-  m_readOnly: 0
-  m_settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
-  m_schemaSet:
-    m_schemas:
+  m_GroupName: Built In Data
+  m_Data:
+    m_SerializedData: []
+  m_GUID: dba928d53791d9243963d778e2deb27d
+  m_SerializeEntries:
+  - m_GUID: EditorSceneList
+    m_Address: EditorSceneList
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: Resources
+    m_Address: Resources
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
     - {fileID: 11400000, guid: de4153a51efddbd48af2d6ffcbd85947, type: 2}
