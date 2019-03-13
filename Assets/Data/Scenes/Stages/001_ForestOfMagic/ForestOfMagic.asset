@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -17,9 +18,15 @@ MonoBehaviour:
   IsDebug: 0
   Type: 1
   Name: Forest of Magic
-  _scene: scene/forest/scene:Assets/Data/Scenes/Stages/001_ForestOfMagic/ForestOfMagic.unity
-  _icon: icons:marisa_icon
-  _previewImage: icons:marisa_icon
+  Scene:
+    m_AssetGUID: af7fe850479b5db4084063cd758f3e05
+    m_CachedAsset: {fileID: 102900000, guid: af7fe850479b5db4084063cd758f3e05, type: 3}
+  Icon:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
+  PreviewImage:
+    m_AssetGUID: 
+    m_CachedAsset: {fileID: 0}
   LoadPriority: 0
   Music:
   - {fileID: 11400000, guid: cd2bd088745641d44a30d42c0206a03f, type: 2}
