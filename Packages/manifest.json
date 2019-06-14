@@ -8,12 +8,14 @@
     "com.houraiteahouse.lz4": "https://github.com/HouraiTeahouse/LZF.git",
     "com.houraiteahouse.options": "https://github.com/HouraiTeahouse/HouraiOptions.git",
     "com.rlabrecque.steamworks": "https://github.com/HouraiTeahouse/Steamworks.NET.git",
-    "com.unity.addressables": "0.6.7-preview",
+    "com.unity.addressables": "0.8.6-preview",
     "com.unity.assetbundlebrowser": "1.7.0",
-    "com.unity.inputsystem": "0.2.0-preview",
-    "com.unity.package-manager-ui": "2.0.7",
-    "com.unity.postprocessing": "2.1.4",
-    "com.unity.textmeshpro": "1.3.0",
+    "com.unity.inputsystem": "0.2.10-preview",
+    "com.unity.multiplayer-hlapi": "1.0.4",
+    "com.unity.package-manager-ui": "2.1.2",
+    "com.unity.postprocessing": "2.1.7",
+    "com.unity.textmeshpro": "2.0.1",
+    "com.unity.timeline": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
     "com.unity.modules.audio": "1.0.0",
@@ -39,10 +41,6 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
-    "com.houraiteahouse.lz4": {
-      "hash": "a3aaf97edebba81e8388891ce22633815783a94e",
-      "revision": "HEAD"
-    },
     "com.houraiteahouse.config": {
       "hash": "0b7490068889c1ba1b21d4ec539c463d4eb1f140",
       "revision": "HEAD"
@@ -61,6 +59,10 @@
     },
     "com.houraiteahouse.localization": {
       "hash": "2f6420a80d4e8ba50964385c6c3119fee8735495",
+      "revision": "HEAD"
+    },
+    "com.houraiteahouse.lz4": {
+      "hash": "a3aaf97edebba81e8388891ce22633815783a94e",
       "revision": "HEAD"
     },
     "com.houraiteahouse.options": {

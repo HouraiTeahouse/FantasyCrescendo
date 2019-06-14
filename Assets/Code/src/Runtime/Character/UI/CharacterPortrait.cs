@@ -34,7 +34,7 @@ public class CharacterPortrait : UIBehaviour, IInitializable<PlayerConfig>, ISta
     var selection = config.Selection;
     var character = Registry.Get<CharacterData>().Get(selection.CharacterID);
     if (character == null) return;
-    var portrait = await character.Palletes[(int)selection.Pallete].Portrait.LoadAsset<Sprite>();
+    var portrait = await character.Palletes[(int)selection.Pallete].Portrait.LoadAssetAsync<Sprite>();
     SetImage(portrait);
     Image.color = (character.IsSelectable && character.IsVisible) ? DefaultColor : DisabledTint;
     Image.enabled = true;

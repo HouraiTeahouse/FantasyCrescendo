@@ -10,7 +10,7 @@ public class TrainingGameMode : GameMode {
 
   protected override async Task RunGame(MatchConfig config, bool loadStage = true) {
     await new TrainingMatch().RunMatch(config, loadStage);
-    await Addressables.LoadScene(Config.Get<SceneConfig>().MainMenuScene);
+    await Addressables.LoadSceneAsync(Config.Get<SceneConfig>().MainMenuScene);
   }
 
 }

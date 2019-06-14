@@ -10,7 +10,7 @@ public class CharacterIcon : CharacterUIBase {
 
   public override async Task Initialize(CharacterData character) {
     if (Image == null) return;
-    Image.sprite = await character.Icon.LoadAsset<Sprite>();
+    Image.sprite = await character.Icon.LoadAssetAsync<Sprite>();
   }
 
 }

@@ -1,6 +1,6 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
 using UnityEngine;
-using UnityEngine.Experimental.Input;
+using UnityEngine.InputSystem;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 

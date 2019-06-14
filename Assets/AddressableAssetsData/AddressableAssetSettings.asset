@@ -53,9 +53,9 @@ MonoBehaviour:
       - m_Id: 02cabd781d6fb7b4fa094f34bfc2e30f
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: c5e7ba445b91b974f90ae15d9cfe35f4
-        m_Value: Assets/StreamingAssets/com.unity.addressables/[BuildTarget]
+        m_Value: Assets/StreamingAssets/[BuildTarget]
       - m_Id: 44298116ffbe7dc47bf762d5bf55a3ee
-        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+        m_Value: Assets/StreamingAssets/[BuildTarget]
       - m_Id: 20fc36782d5ad8a4c8873f83605df608
         m_Value: ServerData/[BuildTarget]
       - m_Id: 980219feb46b32840b12a18d29fdf791
@@ -81,19 +81,15 @@ MonoBehaviour:
     m_LabelNames:
     - characters
     - scenes
-  m_SchemaTemplates:
-  - m_DisplayName: Packed Assets
-    m_Description: Pack asset sinto asset bundles.
-    m_SchemaTypes:
-    - m_AssemblyName: Unity.Addressables.Editor, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      m_ClassName: UnityEditor.AddressableAssets.Settings.GroupSchemas.BundledAssetGroupSchema
-    - m_AssemblyName: Unity.Addressables.Editor, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      m_ClassName: UnityEditor.AddressableAssets.Settings.GroupSchemas.ContentUpdateGroupSchema
+  m_SchemaTemplates: []
+  m_GroupTemplateObjects:
+  - {fileID: 11400000, guid: ada100c55618e5c4288dcb45cde90d3d, type: 2}
   m_InitializationObjects: []
+  m_CertificateHandlerType:
+    m_AssemblyName: 
+    m_ClassName: 
   m_ActivePlayerDataBuilderIndex: 2
-  m_ActivePlayModeDataBuilderIndex: 0
+  m_ActivePlayModeDataBuilderIndex: 1
   m_DataBuilders:
   - {fileID: 11400000, guid: c26fb8e3168d5624f838ee4fb529d5e2, type: 2}
   - {fileID: 11400000, guid: d0b447a2839f045489f9b4a0f2060c6a, type: 2}
