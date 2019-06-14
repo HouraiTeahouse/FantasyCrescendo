@@ -9,10 +9,13 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 [Serializable]
 public class GameObjectReference : AssetReferenceT<GameObject> {
+    public GameObjectReference(string guid) : base(guid) {}
 }
 
 [Serializable]
 public class SpriteReference : AssetReferenceT<Sprite> {
+
+    public SpriteReference(string guid) : base(guid) {}
 
     public override bool ValidateAsset(string path) {
 #if UNITY_EDITOR
@@ -30,10 +33,12 @@ public class SpriteReference : AssetReferenceT<Sprite> {
 
 [Serializable]
 public class SceneDataReference : AssetReferenceT<SceneData> {
+    public SceneDataReference(string guid) : base(guid) {}
 }
 
 [Serializable]
 public class AudioClipReference : AssetReferenceT<AudioClip> {
+    public AudioClipReference(string guid) : base(guid) {}
 }
     
 }

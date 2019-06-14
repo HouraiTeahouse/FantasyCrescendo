@@ -36,10 +36,9 @@ public class DataLoader : MonoBehaviour {
     LoadingScreen.Await(LoadTask.Task);
     RegisterAll(GameModes);
     await Task.WhenAll(LoadedLabels.Select(async label => {
-      await Addressables.LoadAssets<UnityEngine.Object>(label.labelString, async infoOp => {
-        var info = await infoOp;
+      await Addressables.LoadAssetsAsync<UnityEngine.Object>(label.labelString, async info => {
         if (info != null && !Register(info)) {
-          Addressables.ReleaseAsset(info);
+          Addressables.Release(info);
         }
       });
     }));

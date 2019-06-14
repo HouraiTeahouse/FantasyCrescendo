@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Experimental.Input;
-using UnityEngine.Experimental.Input.Controls;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 

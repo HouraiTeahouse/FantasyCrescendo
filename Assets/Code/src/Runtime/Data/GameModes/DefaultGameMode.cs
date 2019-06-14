@@ -13,7 +13,7 @@ public class DefaultGameMode : GameMode {
 
   protected override async Task RunGame(MatchConfig config, bool loadStage = true) {
     var results = await CreateMatch(config).RunMatch(config, loadStage);
-    await Addressables.LoadScene(Config.Get<SceneConfig>().MatchEndScene);
+    await Addressables.LoadSceneAsync(Config.Get<SceneConfig>().MatchEndScene);
     var viewFactories = Object.FindObjectsOfType<ViewFactory<PlayerMatchStats, PlayerConfig>>();
     await Task.WhenAll(results.PlayerStats.Select(p => BuildResultViews(p, viewFactories)));
   }

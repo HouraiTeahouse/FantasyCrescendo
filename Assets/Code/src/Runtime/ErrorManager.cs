@@ -30,7 +30,7 @@ public class ErrorManager : MonoBehaviour {
   }
 
   public static async void TriggerError(string error) {
-    await Addressables.LoadScene(Config.Get<SceneConfig>().ErrorScene);
+    await Addressables.LoadSceneAsync(Config.Get<SceneConfig>().ErrorScene);
     var errorScreen = FindObjectOfType<ErrorScreen>();
     if (errorScreen == null) return;
     errorScreen.SetError(error);

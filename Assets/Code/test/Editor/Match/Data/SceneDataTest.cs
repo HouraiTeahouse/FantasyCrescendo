@@ -30,7 +30,7 @@ internal class SceneDataTest : AbstractDataTest<SceneData> {
   [Test, TestCaseSource("AllData")]
   public void has_all_valid_music(SceneData scene) {
     foreach (var bgm in scene.Music) {
-      Assert.NotNull(bgm.Clip.LoadAsset<AudioClip>().Result);
+      Assert.NotNull(bgm.Clip.LoadAssetAsync<AudioClip>().Result);
     }
   }
 

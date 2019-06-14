@@ -22,7 +22,7 @@ public class SceneLoader : MonoBehaviour {
   }
 
   public async Task LoadScenes() {
-    await Task.WhenAll(Scenes.Select(async s => await Addressables.LoadScene(s, Mode)));
+    await Task.WhenAll(Scenes.Select(async s => await Addressables.LoadSceneAsync(s, Mode)));
     Debug.Log("Scenes loaded!");
   }
 
