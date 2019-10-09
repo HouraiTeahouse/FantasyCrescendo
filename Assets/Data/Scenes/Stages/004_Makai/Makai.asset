@@ -4,8 +4,7 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -18,15 +17,9 @@ MonoBehaviour:
   IsDebug: 1
   Type: 1
   Name: Makai
-  Scene:
-    m_AssetGUID: 1a84bcc5375ff034699c02996d02bef2
-    m_CachedAsset: {fileID: 102900000, guid: 1a84bcc5375ff034699c02996d02bef2, type: 3}
-  Icon:
-    m_AssetGUID: 
-    m_CachedAsset: {fileID: 0}
-  PreviewImage:
-    m_AssetGUID: 
-    m_CachedAsset: {fileID: 0}
+  _scene: Assets/Data/Scenes/Stages/004_Makai/Makai.unity
+  _icon: icons:marisa_icon
+  _previewImage: icons:marisa_icon
   LoadPriority: 0
   Music:
   - {fileID: 11400000, guid: 45dbe2262dfb5df48be6363499e356e8, type: 2}

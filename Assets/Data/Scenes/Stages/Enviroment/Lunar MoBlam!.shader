@@ -10,7 +10,7 @@
 		_TintColorA("Tint Color A", Color) = (1, 1, 1, 1)
 		_TintColorB("Tint Color B", Color) = (1, 1, 1, 1)
 		_TintMask("Tint Mask", 2D) = "black"
-		_Occlusion("Occlusion Map", 2D) = "white" {}
+		_Occlusion("Roughness Map", 2D) = "white" {}
 		
 	}
 		SubShader{
@@ -53,12 +53,12 @@
 		albedo.rgb *= tint;
 
 		o.Metallic = _Metallic;
-		o.Smoothness = _Glossiness;
+		o.Smoothness = _Glossiness-Occ.rgb;
 	
 		fixed3 normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
 		normal.z = normal.z/_BumpScale;
 		//o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
-		o.Albedo = albedo.rgb * Occ.rgb;
+		o.Albedo = albedo.rgb;
 		o.Emission = albedo.rgb * emmap * _EmissionLevel;
 
 		//o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
