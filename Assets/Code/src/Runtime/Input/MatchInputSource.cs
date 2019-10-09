@@ -2,6 +2,7 @@
 using HouraiTeahouse.FantasyCrescendo.Players;
 using System;
 using UnityEngine;
+using PlayerInput = HouraiTeahouse.FantasyCrescendo.Players.PlayerInput;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
