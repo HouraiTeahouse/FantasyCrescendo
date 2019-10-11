@@ -18,7 +18,7 @@ public class UnityPlayerInputSource : IInputSource<PlayerInput> {
     var devices = Gamepad.all;
     var playerId = _config.LocalPlayerID;
     if (!_config.IsLocal || playerId >= devices.Count) {
-      input = new PlayerInput { IsValid = _config.IsLocal };
+      input = new PlayerInput();
     } else {
       UpdatePlayerInput(devices[(int)playerId]);
     }
@@ -27,7 +27,6 @@ public class UnityPlayerInputSource : IInputSource<PlayerInput> {
 
   void UpdatePlayerInput(Gamepad device) {
     // TODO(james7132): Add PlayerControllerMapping support
-    input.IsValid = true;
     input.Movement = device.leftStick.ReadValue();
     input.Attack = device.buttonSouth.isPressed;
     input.Special = device.buttonEast.isPressed;

@@ -30,15 +30,17 @@ public class MatchInputTest {
     var match1 = new MatchInput(4);
     var match2 = new MatchInput(4);
 
-    match1[0] = new PlayerInput { Special = true, IsValid = false };
-    match1[1] = new PlayerInput { Movement = Vector2.right, IsValid = true };
-    match1[2] = new PlayerInput { IsValid = false };
-    match1[3] = new PlayerInput { Movement = Vector2.left, IsValid = true };
+    match1[0] = new PlayerInput();
+    match1[1] = new PlayerInput { Movement = Vector2.right };
+    match1[2] = new PlayerInput();
+    match1[3] = new PlayerInput { Movement = Vector2.left };
+    match1.ValidMask = (byte)10;
 
-    match2[0] = new PlayerInput { Attack = true, IsValid = false };
-    match2[1] = new PlayerInput { Movement = Vector2.up, IsValid = false };
-    match2[2] = new PlayerInput { Shield = true, IsValid = true };
-    match2[3] = new PlayerInput { Smash = Vector2.up, IsValid = true };
+    match2[0] = new PlayerInput { Attack = true };
+    match2[1] = new PlayerInput { Movement = Vector2.up };
+    match2[2] = new PlayerInput { Shield = true };
+    match2[3] = new PlayerInput { Smash = Vector2.up };
+    match2.ValidMask = (byte)12;
 
     MatchInput merged = match1.MergeWith(match2);
 
@@ -46,16 +48,6 @@ public class MatchInputTest {
     Assert.AreEqual(match1[1], merged[1]);
     Assert.AreEqual(match2[2], merged[2]);
     Assert.AreEqual(match1[3], merged[3]);
-  }
-
-  [TestCaseSource("TestCases")]
-  public void MatchInput_prodcues_proper_valid_masks(int playerCount) {
-    for (var i = 0; i < 1000; i++) {
-      byte mask = (byte)(Mathf.FloorToInt(Random.value) & ~(1 << playerCount));
-      var input = InputUtility.RandomInput(playerCount);
-      InputUtility.ForceValid(ref input, mask);
-      Assert.AreEqual(mask, input.CreateValidMask());
-    }
   }
 
 }

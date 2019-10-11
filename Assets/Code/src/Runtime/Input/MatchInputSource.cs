@@ -6,23 +6,22 @@ using PlayerInput = HouraiTeahouse.FantasyCrescendo.Players.PlayerInput;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public abstract class MatchInputSourceBase<T> : IMatchInputSource where T : IInputSource<PlayerInput> {
+public abstract class MatchInputSourceBase<T> : IInputSource<MatchInput> where T : IInputSource<PlayerInput> {
 
-  public byte ValidMask { get; }
+  byte _validMask;
 
   MatchInput input;
   readonly IInputSource<PlayerInput>[] playerInputs;
 
   protected MatchInputSourceBase(MatchConfig config) {
     input = new MatchInput(config);
-    ValidMask = 0;
+    _validMask = 0;
     playerInputs = new IInputSource<PlayerInput>[config.PlayerCount];
     for (var i = 0; i < config.PlayerCount; i++) {
       playerInputs[i] = BuildPlayerInputSource(ref config.PlayerConfigs[i]);
-      if (!config.PlayerConfigs[i].IsLocal) continue;
-      ValidMask |= (byte)(1 << i);
+      BitUtil.SetBit(ref _validMask, i, config.PlayerConfigs[i].IsLocal);
     }
-    Debug.Log($"Valid Mask: {ValidMask}");
+    Debug.Log($"Valid Mask: {_validMask}");
   }
 
   IInputSource<PlayerInput> BuildPlayerInputSource(ref PlayerConfig config) {
@@ -37,8 +36,11 @@ public abstract class MatchInputSourceBase<T> : IMatchInputSource where T : IInp
   
   public MatchInput SampleInput() {
     input = new MatchInput(input.PlayerCount);
+    input.ValidMask = _validMask;
     for (var i = 0; i < input.PlayerCount; i++) {
-      input[i] = playerInputs[i].SampleInput();
+      if (input.IsPlayerValid(i)) {
+        input[i] = playerInputs[i].SampleInput();
+      }
     }
     return input;
   }

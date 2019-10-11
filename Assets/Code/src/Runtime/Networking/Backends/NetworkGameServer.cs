@@ -70,9 +70,9 @@ public class NetworkGameServer : INetworkServer {
     }
 	}
 
-  public void BroadcastInput(uint timestamp, byte validMask, IEnumerable<MatchInput> inputs) {
+  public void BroadcastInput(uint timestamp, IEnumerable<MatchInput> inputs) {
     foreach (var client in clients.Values) {
-      client.SendInputs(timestamp, validMask, inputs);
+      client.SendInputs(timestamp, inputs);
     }
   }
 

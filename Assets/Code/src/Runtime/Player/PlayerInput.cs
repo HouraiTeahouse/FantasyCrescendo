@@ -9,113 +9,83 @@ namespace HouraiTeahouse.FantasyCrescendo.Players {
 /// A data object representing the complete input of one player for a given
 /// tick.
 /// </summary>
-public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
+public struct PlayerInput {
 
-  // One Player Total: 5 bytes
-  // Four Player Total: 20 bytes
-  //
-  // 60 times one: 300 bytes
-  // 60 times four: 1200 bytes
+  public const int kAttackBit  = 0;
+  public const int kSpecialBit = 1;
+  public const int kJumpBit    = 2;
+  public const int kShieldBit  = 3;
+  public const int kGrabBit    = 4;
 
-  public Vector2b Movement;                     // 2 bytes
-  public Vector2b Smash;                        // 2 bytes
-  public byte Buttons;                          // 1 byte
-
-  // TODO(james7132): Benchmark using AggressiveInlining on these
-  public bool IsValid {
-    get { return GetBit(Buttons, 0); }
-    set { SetBit(ref Buttons, 0, value); }
-  }
+  public byte Buttons;
+  public Vector2b Movement;
+  public Vector2b Smash;
 
   public bool Attack {
-    get { return GetBit(Buttons, 1); }
-    set { SetBit(ref Buttons, 1, value); }
+    get => BitUtil.GetBit(Buttons, kAttackBit);
+    set => BitUtil.SetBit(ref Buttons, kAttackBit, value);
   }
 
   public bool Special {
-    get { return GetBit(Buttons, 2); }
-    set { SetBit(ref Buttons, 2, value); }
+    get => BitUtil.GetBit(Buttons, kSpecialBit);
+    set => BitUtil.SetBit(ref Buttons, kSpecialBit, value);
   }
 
   public bool Jump {
-    get { return GetBit(Buttons, 3); }
-    set { SetBit(ref Buttons, 3, value); }
+    get => BitUtil.GetBit(Buttons, kJumpBit);
+    set => BitUtil.SetBit(ref Buttons, kJumpBit, value);
   }
 
   public bool Shield {
-    get { return GetBit(Buttons, 4); }
-    set { SetBit(ref Buttons, 4, value); }
+    get => BitUtil.GetBit(Buttons, kJumpBit);
+    set => BitUtil.SetBit(ref Buttons, kJumpBit, value);
   }
 
   public bool Grab {
-    get { return GetBit(Buttons, 5); }
-    set { SetBit(ref Buttons, 5, value); }
+    get => BitUtil.GetBit(Buttons, kGrabBit);
+    set => BitUtil.SetBit(ref Buttons, kGrabBit, value);
   }
 
-  static bool GetBit(byte value, int bit) {
-    return (value & (1 << bit)) != 0;
-  }
-
-  static void SetBit(ref byte value, int bit, bool bitValue) {
-    var mask = 1 << bit;
-    value = (byte)(bitValue ? (value | mask) : (value & ~mask));
-  }
-
-  bool IValidatable.IsValid => IsValid;
-
-  public PlayerInput MergeWith(PlayerInput other) {
-    return new PlayerInput {
-      IsValid = IsValid || other.IsValid,
-      Movement = (Vector2)Movement + (Vector2)other.Movement,
-      Smash = (Vector2)Smash + (Vector2)other.Smash,
-      Buttons = (byte)(Buttons | other.Buttons)
-    };
-  }
-
-  public override bool Equals(object obj) {
-    if (!(obj is PlayerInput)) return false;
-    var other = (PlayerInput)obj;
-    if (!IsValid && !other.IsValid) return true;
-    var equals = IsValid == other.IsValid;
-    equals &= Movement.Equals(other.Movement);
-    equals &= Smash.Equals(other.Smash);
-    equals &= (Buttons & 63) == (other.Buttons & 63);
+  public static bool operator ==(PlayerInput a, PlayerInput b) {
+    var equals = (a.Buttons & 31) == (b.Buttons & 31);
+    equals &= a.Movement == b.Movement;
+    equals &= a.Smash == b.Smash;
     return equals;
   }
+
+  public static bool operator !=(PlayerInput a, PlayerInput b) => !(a == b);
 
   public override string ToString() {
     var buttons = Convert.ToString(Buttons, 2).PadLeft(8, '0');
     return $"PlayerInput(({Movement.x}, {Movement.y}), ({Smash.x}, {Smash.y}), {buttons})";
   }
 
-  public override int GetHashCode() => 31 * Movement.GetHashCode() + 17 * Smash.GetHashCode() + Buttons.GetHashCode();
+  public override int GetHashCode() => 
+    31 * Movement.GetHashCode() + 
+    17 * Smash.GetHashCode() + 
+    Buttons.GetHashCode();
+
+  public PlayerInput MergeWith(PlayerInput other) {
+    return new PlayerInput {
+      Movement = (Vector2)Movement + (Vector2)other.Movement,
+      Smash = (Vector2)Smash + (Vector2)other.Smash,
+      Buttons = (byte)((Buttons | other.Buttons) & 31)
+    };
+  }
 
   public void Serialize(Serializer serializer, PlayerInput? previous = null) {
     bool cutMovement, cutSmash;
-    if (!IsValid) {
-      serializer.Write((byte)0);
-      return;
-    }
-    if (previous != null && previous.Value.IsValid) {
-      cutMovement = Movement.Equals(previous.Value.Movement);
-      cutSmash = Smash.Equals(previous.Value.Smash);
+    if (previous != null) {
+      cutMovement = Movement == previous.Value.Movement;
+      cutSmash = Smash == previous.Value.Smash;
     } else {
       cutMovement = Movement.X == 0 && Movement.Y == 0;
       cutSmash = Smash.X == 0 && Smash.Y == 0;
     }
-    unchecked {
-      if (cutMovement) {
-        Buttons &= (byte)~64;
-      } else  {
-        Buttons |= 64;
-      }
-      if (cutSmash) {
-        Buttons &= (byte)~128;
-      } else  {
-        Buttons |= 128;
-      }
-    }
-    serializer.Write(Buttons);
+    byte header = Buttons;
+    BitUtil.SetBit(ref header, 5, !cutMovement);
+    BitUtil.SetBit(ref header, 6, !cutSmash);
+    serializer.Write(header);
     if (!cutMovement) {
       serializer.Write(Movement.X);
       serializer.Write(Movement.Y);
@@ -126,31 +96,33 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
     }
   }
 
-  public static PlayerInput Deserialize(Deserializer deserializer, PlayerInput? previous = null) {
-    var input = new PlayerInput();
-    input.Buttons = deserializer.ReadByte();
-    if (!input.IsValid) return input;
-    if ((input.Buttons & 64) != 0) {
-      input.Movement.X = deserializer.ReadSByte();
-      input.Movement.Y = deserializer.ReadSByte();
+  public static void Deserialize(Deserializer deserializer, ref PlayerInput input) {
+      PlayerInput? previous = null;
+      Deserialize(deserializer, ref input, ref previous);
+  }
+  public static void Deserialize(Deserializer deserializer, 
+                                 ref PlayerInput input,
+                                 ref PlayerInput? previous) {
+    var header = deserializer.ReadByte();
+    input.Buttons = (byte)(header & 31);
+    DeserializeVector(BitUtil.GetBit(header, 5), ref input.Movement, deserializer, 
+                      previous?.Movement);
+    DeserializeVector(BitUtil.GetBit(header, 6), ref input.Smash, deserializer, 
+                      previous?.Smash);
+  }
+
+  static void DeserializeVector(bool read, ref Vector2b vec, Deserializer deserializer,
+                                Vector2b? previous) {
+    if (read) {
+      vec.X = deserializer.ReadSByte();
+      vec.Y = deserializer.ReadSByte();
     } else {
-      if (previous != null && previous.Value.IsValid) {
-        input.Movement = previous.Value.Movement;
+      if (previous != null) {
+        vec = previous.Value;
       } else {
-        input.Movement.X = input.Movement.Y = 0;
+        vec.X = vec.Y = 0;
       }
     }
-    if ((input.Buttons & 128) != 0) {
-      input.Smash.X = deserializer.ReadSByte();
-      input.Smash.Y = deserializer.ReadSByte();
-    } else {
-      if (previous != null && previous.Value.IsValid) {
-        input.Smash = previous.Value.Smash;
-      } else {
-        input.Smash.X = input.Smash.Y = 0;
-      }
-    }
-    return input;
   }
 
 }
@@ -159,31 +131,41 @@ public struct PlayerInput : IValidatable, IMergable<PlayerInput> {
 /// A data object for managing the state and change of a single
 /// player's input over two ticks of gameplay.
 /// </summary>
-public struct PlayerInputContext : IValidatable {
+public readonly struct PlayerInputContext {
 
-  public PlayerInput Previous;
-  public PlayerInput Current;
+  readonly byte _prev;
+  readonly byte _cur;
+  public readonly DirectionalInput Movement;
+  public readonly DirectionalInput Smash;
 
-  public void Update(PlayerInput input) {
-    Previous = Current;
-    Current = input;
+  public PlayerInputContext(ref PlayerInput previous,
+                            ref PlayerInput current) {
+    Movement = (Vector2)current.Movement;
+    Smash = (Vector2)current.Smash;
+    _prev = previous.Buttons;
+    _cur = current.Buttons;
   }
-  
-  public void ForceValid(bool valid) {
-    Previous.IsValid = valid;
-    Current.IsValid = valid;
+
+  public ButtonContext Attack => new ButtonContext(_prev, _cur, PlayerInput.kAttackBit);
+  public ButtonContext Special => new ButtonContext(_prev, _cur, PlayerInput.kSpecialBit);
+  public ButtonContext Jump => new ButtonContext(_prev, _cur, PlayerInput.kJumpBit);
+  public ButtonContext Shield => new ButtonContext(_prev, _cur, PlayerInput.kShieldBit);
+  public ButtonContext Grab => new ButtonContext(_prev, _cur, PlayerInput.kGrabBit);
+
+}
+
+public readonly struct ButtonContext {
+
+  public readonly bool Previous;
+  public readonly bool Current;
+
+  public ButtonContext(byte previous, byte current, int bit) {
+    Previous = BitUtil.GetBit(previous, bit);
+    Current = BitUtil.GetBit(current, bit);
   }
 
-  public bool IsValid => Previous.IsValid && Current.IsValid;
-
-  public DirectionalInput Movement => (Vector2)Current.Movement;
-  public DirectionalInput Smash => (Vector2)Current.Smash;
-
-  public ButtonContext Attack => new ButtonContext(Previous.Attack, Current.Attack);
-  public ButtonContext Special => new ButtonContext(Previous.Special, Current.Special);
-  public ButtonContext Jump => new ButtonContext(Previous.Jump, Current.Jump);
-  public ButtonContext Shield => new ButtonContext(Previous.Shield, Current.Shield);
-  public ButtonContext Grab => new ButtonContext(Previous.Grab, Current.Grab);
+  public bool WasPressed => !Previous && Current;
+  public bool WasReleased => Previous && !Current;
 
 }
 
@@ -192,12 +174,12 @@ public struct Vector2b {
   public sbyte Y;
 
   public float x  {
-    get { return ToFloat(X); }
-    set { X = FromFloat(value); }
+    get => ToFloat(X);
+    set => X = FromFloat(value);
   }
   public float y  {
-    get { return ToFloat(Y); }
-    set { Y = FromFloat(value); }
+    get => ToFloat(Y);
+    set => Y = FromFloat(value);
   }
 
   public static implicit operator Vector2b(Vector2 vector) => new Vector2b { x = vector.x, y = vector.y };
@@ -206,11 +188,8 @@ public struct Vector2b {
   float ToFloat(sbyte val) => (float)val / sbyte.MaxValue;
   sbyte FromFloat(float val) => (sbyte)(Mathf.Clamp(val, -1, 1) * sbyte.MaxValue);
 
-  public override bool Equals(object obj) {
-    if (!(obj is Vector2b)) return false;
-    var other = (Vector2b)obj;
-    return X == other.X && Y == other.Y;
-  }
+  public static bool operator ==(Vector2b a, Vector2b b) => a.X == b.X && a.Y == b.Y;
+  public static bool operator !=(Vector2b a, Vector2b b) => !(a == b);
 
   public override int GetHashCode() => unchecked(31 * X + Y);
   
@@ -218,24 +197,6 @@ public struct Vector2b {
 
 }
 
-/// <summary>
-/// A simple data object for managing the state and change of a single
-/// button over two ticks of gameplay.
-/// </summary>
-public readonly struct ButtonContext {
-
-  public readonly bool Previous;
-  public readonly bool Current;
-
-  public ButtonContext(bool previous, bool current) {
-    Previous = previous;
-    Current = current;
-  }
-
-  public bool WasPressed => !Previous && Current;
-  public bool WasReleased => Previous && !Current;
-
-}
 
 public static class InputUtil {
 

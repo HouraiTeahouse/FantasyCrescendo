@@ -25,7 +25,7 @@ public interface INetworkClient : IDisposable {
   void Disconnect();
 
   // Unreliable
-  void SendInput(uint startTimestamp, byte validMask, IEnumerable<MatchInput> inputs);
+  void SendInput(uint startTimestamp, IEnumerable<MatchInput> inputs);
 
   // Reliable
   void SetReady(bool isReady);

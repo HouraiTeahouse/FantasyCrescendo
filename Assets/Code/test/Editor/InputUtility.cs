@@ -14,21 +14,13 @@ public static class InputUtility {
     return new PlayerInput {
       Movement = UnityEngine.Random.insideUnitCircle,
       Smash = random.NextDouble() > 0.5 ? UnityEngine.Random.insideUnitCircle : Vector2.zero,
-      Buttons = (byte)random.Next(0, 255),
+      Buttons = (byte)random.Next(0, 31),
     };
-  }
-
-  public static void ForceValid(ref MatchInput input, int mask) {
-    for (var i = 0; i < input.PlayerCount; i++) {
-      var playerInput = input[i];
-      playerInput.IsValid = (mask & (1 << i)) != 0;
-      input[i] = playerInput;
-    }
   }
 
   public static void ForceValid(MatchInput[] inputs, int mask) {
     for (var i = 0; i < inputs.Length; i++) {
-      ForceValid(ref inputs[i], mask);
+      inputs[i].ValidMask = (byte)mask;
     }
   }
 

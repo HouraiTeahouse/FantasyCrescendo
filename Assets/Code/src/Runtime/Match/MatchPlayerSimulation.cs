@@ -32,12 +32,12 @@ public class MatchPlayerSimulation : IMatchSimulation {
   public void Simulate(ref MatchState state, MatchInputContext input) {
     Assert.IsTrue(input.IsValid);
     Assert.AreEqual(PlayerSimulations.Length, state.PlayerCount);
-    Assert.AreEqual(PlayerSimulations.Length, input.PlayerInputs.Length);
+    Assert.AreEqual(PlayerSimulations.Length, input.PlayerCount);
     for (var i = 0; i < state.PlayerCount; i++) {
       PlayerSimulations[i].Presimulate(state[i]);
     }
     for (var i = 0; i < state.PlayerCount; i++) {
-      PlayerSimulations[i].Simulate(ref state[i], input.PlayerInputs[i]);
+      PlayerSimulations[i].Simulate(ref state[i], input[i]);
     }
   }
 

@@ -35,7 +35,7 @@ public struct ServerStateMessage : INetworkSerializable {
     } else {
       var input = new MatchInput(count);
       for (var i = 0; i < count; i++) {
-        input[i] = PlayerInput.Deserialize(deserializer);
+        PlayerInput.Deserialize(deserializer, ref input[i]);
       }
       LatestInput = input;
     }

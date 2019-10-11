@@ -23,7 +23,10 @@ public class CharacterControllerBuilderTest {
     UnityEngine.Object.DestroyImmediate(instance);
   }
 
-  static PlayerInputContext CreateInput(PlayerInput input) => new PlayerInputContext { Current = input };
+  static PlayerInputContext CreateInput(PlayerInput input) {
+    var emptyInput = new PlayerInput();
+    return new PlayerInputContext(ref emptyInput, ref input);
+  }
 
   static IEnumerable<object[]> LedgeTestCases() {
     var ledgeState = new PlayerState { GrabbedLedgeID = 20 };
@@ -108,7 +111,8 @@ public class CharacterControllerBuilderTest {
         Input = CreateInput(new PlayerInput {
           Movement = new Vector2(x, y),
           Attack = true
-        }) 
+        }),
+        IsGrounded = g
       };
     const float magnitude = 1.0f;
     foreach (var src in new[] {"Idle", "Walk", "CrouchStart", "Crouch", "CrouchEnd"}) {

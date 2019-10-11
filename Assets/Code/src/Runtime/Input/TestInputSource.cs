@@ -4,19 +4,14 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class TestInputSource : IMatchInputSource {
-
-  public byte ValidMask => MatchInput.AllValid;
+public class TestInputSource : IInputSource<MatchInput> {
 
   MatchInput input;
 
   public TestInputSource(MatchConfig config) {
     input = new MatchInput(config);
-    for (int i = 0; i < input.PlayerCount; i++) {
-      var playerInput = input[i];
-      playerInput.IsValid = true;
-      input[i] = playerInput;
-    }
+    // Force all inputs to be valid by "predicting" it.
+    input.Predict();
   }
 
   public MatchInput SampleInput() {
@@ -24,7 +19,6 @@ public class TestInputSource : IMatchInputSource {
       Movement = new Vector2(ButtonAxis(KeyCode.A, KeyCode.D), ButtonAxis(KeyCode.S, KeyCode.W)),
       //TODO(james7132): Make Tap Jump Configurable
       Jump = Input.GetKey(KeyCode.W),
-      IsValid = true
     };
     var inputValue = input;
     for (int i = 0; i < inputValue.PlayerCount; i++) {

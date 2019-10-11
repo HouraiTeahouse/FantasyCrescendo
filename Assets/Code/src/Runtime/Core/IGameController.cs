@@ -14,7 +14,7 @@ public interface IMatchController : IDisposable {
 
 	ISimulation<MatchState, MatchInputContext> Simulation { get; set; }
 
-	IMatchInputSource InputSource { get; set; }
+	IInputSource<MatchInput> InputSource { get; set; }
 
   /// <summary>
   /// The current game state of the game.
