@@ -56,7 +56,7 @@ public class CharacterPhysics : PlayerComponent {
     IsGrounded = IsCharacterGrounded(state);
   }
 
-  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
     ApplyGravity(ref state);
     LimitFallSpeed(ref state);
 

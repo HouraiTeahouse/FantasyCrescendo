@@ -27,7 +27,7 @@ public class CharacterRespawn : PlayerComponent {
     return base.Initialize(config, isView);
   }
 
-  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
     if (state.RespawnTimeRemaining > 0) {
       state.RespawnTimeRemaining--;
     } else {

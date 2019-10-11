@@ -29,7 +29,7 @@ public class MatchPlayerSimulation : IMatchSimulation {
     return Task.WhenAll(tasks);
   }
 
-  public void Simulate(ref MatchState state, MatchInputContext input) {
+  public void Simulate(ref MatchState state, in MatchInputContext input) {
     Assert.IsTrue(input.IsValid);
     Assert.AreEqual(PlayerSimulations.Length, state.PlayerCount);
     Assert.AreEqual(PlayerSimulations.Length, input.PlayerCount);

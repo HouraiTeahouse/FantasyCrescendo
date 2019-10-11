@@ -22,7 +22,7 @@ public class CharacterTeeter : PlayerComponent {
     return Task.CompletedTask;
   }
 
-  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
     if (state.IsTeetering) {
       if (state.Velocity != Vector2.zero) {
         state.IsTeetering = false;

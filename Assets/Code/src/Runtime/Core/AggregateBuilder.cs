@@ -102,7 +102,7 @@ public class SimulationBuilder<TState, TContext> : AggregateBuilder<ISimulation<
     public AggregateSimulation(IEnumerable<ISimulation<TState, TContext>> simulations) : base(simulations) {
     }
 
-    public void Simulate(ref TState state, TContext context) {
+    public void Simulate(ref TState state, in TContext context) {
       foreach (var simulation in Subitems) {
         if (simulation == null) continue;
         simulation.Simulate(ref state, context);

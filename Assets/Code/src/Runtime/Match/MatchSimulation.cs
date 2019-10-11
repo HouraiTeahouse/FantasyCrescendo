@@ -30,7 +30,7 @@ public class MatchSimulation : IMatchSimulation {
     return Task.WhenAll(SimulationComponents.Select(comp => comp.Initialize(config)));
   }
 
-  public void Simulate(ref MatchState state, MatchInputContext input) {
+  public void Simulate(ref MatchState state, in MatchInputContext input) {
     Simulations[state.StateID].Simulate(ref state, input);
   }
 
