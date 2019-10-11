@@ -31,7 +31,7 @@ public class CharacterHitboxController : PlayerComponent {
     }
   }
 
-  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
     var matchHitboxes = MatchHitboxSimulation.Instance?.ActiveHitboxes;
     var matchHurtboxes = MatchHitboxSimulation.Instance?.ActiveHurtboxes;
     if (matchHitboxes != null) {

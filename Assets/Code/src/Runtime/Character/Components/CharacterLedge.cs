@@ -22,7 +22,7 @@ public class CharacterLedge : PlayerComponent {
     return base.Initialize(config, isView);
   }
 
-  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
     if (!state.IsGrabbingLedge && state.GrabbedLedgeTimer >= 0) {
       var ledge = CheckForLedges(state);
       if (ledge?.IsOccupied(state.MatchState) == false) {

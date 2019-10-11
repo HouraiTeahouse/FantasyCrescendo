@@ -41,7 +41,7 @@ public class CharacterMovement : PlayerComponent {
     state.IsFastFalling = false;
   }
 
-  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
     foreach (var mover in Movers) {
       if (mover.ShouldMove(ref state)) {
         mover.Move(ref state, input);

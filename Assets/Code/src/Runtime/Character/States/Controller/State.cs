@@ -63,7 +63,7 @@ public class State : IEntity, IStateView<PlayerState>, ISimulation<PlayerState, 
   public virtual void OnStateUpdate(CharacterContext context) {}
   public virtual void OnStateExit(CharacterContext context) {}
 
-  public virtual void Simulate(ref PlayerState state, PlayerInputContext simulate) {}
+  public virtual void Simulate(ref PlayerState state, in PlayerInputContext simulate) {}
   public virtual void UpdateView(in PlayerState state) {}
   public virtual void Dispose() {}
 

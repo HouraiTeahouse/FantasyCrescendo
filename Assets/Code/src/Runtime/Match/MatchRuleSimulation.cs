@@ -29,7 +29,7 @@ public class MatchRuleSimulation : IMatchSimulation {
     return Task.WhenAll(Rules.Select(rule => rule.Initialize(config)));
   } 
 
-  public void Simulate(ref MatchState state, MatchInputContext input) {
+  public void Simulate(ref MatchState state, in MatchInputContext input) {
     foreach (var rule in Rules) {
       rule.Simulate(ref state, input);
     }

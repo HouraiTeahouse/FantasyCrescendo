@@ -74,7 +74,7 @@ public sealed class CharacterShield : PlayerComponent {
     return base.Initialize(config, isView);
   }
 
-  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
     if (IsShieldActive(state)) {
       state.ShieldDamage = Math.Min(MaxShieldHealth, state.ShieldDamage + DepletionRate);
       state.ShieldRecoveryCooldown = RecoveryCooldown;

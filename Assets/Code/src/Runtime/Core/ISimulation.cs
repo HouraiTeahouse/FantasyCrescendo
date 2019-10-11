@@ -12,7 +12,7 @@ public interface ISimulation<S, I> : IDisposable {
   /// </summary>
   /// <param name="state">the previous timestep's state.</param>
   /// <param name="input">the input for the timestep.</param>
-  void Simulate(ref S state, I input);
+  void Simulate(ref S state, in I input);
 
 }
 

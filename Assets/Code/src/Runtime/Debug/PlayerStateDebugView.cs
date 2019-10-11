@@ -12,7 +12,7 @@ public abstract class PlayerComponent : MonoBehaviour, IPlayerView, IPlayerSimul
 
   public virtual void Presimulate(in PlayerState state) => UpdateView(state);
 
-  public virtual void Simulate(ref PlayerState state, PlayerInputContext input) {}
+  public virtual void Simulate(ref PlayerState state, in PlayerInputContext input) {}
 
   public virtual void UpdateView(in PlayerState state) {}
 

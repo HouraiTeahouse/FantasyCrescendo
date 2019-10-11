@@ -135,7 +135,7 @@ public class CharacterAnimation : PlayerComponent {
   // By default presimulation calls UpdateView, this should be avoided here.
   public override void Presimulate(in PlayerState state) {}
 
-  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
     state.StateTick++;
     UpdateView(state);
   }

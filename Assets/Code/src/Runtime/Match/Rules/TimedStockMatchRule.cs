@@ -4,7 +4,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches.Rules {
 
 public class TimeStockMatchRule : StockMatchRule {
 
-  public override void Simulate(ref MatchState state, MatchInputContext input) {
+  public override void Simulate(ref MatchState state, in MatchInputContext input) {
     state.Time--;
   }
 

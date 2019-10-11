@@ -56,7 +56,7 @@ public class MatchHitboxSimulation : IMatchSimulation {
     CollisionManager = new PlayerCollisionManager(config);
   }
 
-  public void Simulate(ref MatchState state, MatchInputContext input) {
+  public void Simulate(ref MatchState state, in MatchInputContext input) {
     if (ActiveHitboxes.Count + ActiveHurtboxes.Count > 0) {
       Physics.SyncTransforms();
       CreateCollisions();

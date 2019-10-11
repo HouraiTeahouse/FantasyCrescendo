@@ -38,7 +38,7 @@ public class CharacterStateMachine : PlayerComponent {
 
   public override void UpdateView(in PlayerState state) => GetControllerState(state)?.UpdateView(state);
 
-  public override void Simulate(ref PlayerState state, PlayerInputContext input) {
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
     var controllerState = GetControllerState(state);
     context.State = state;
     context.Input = input;
