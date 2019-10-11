@@ -15,17 +15,4 @@ public interface IInputSource<I> {
 
 }
 
-public interface IMatchInputSource : IInputSource<MatchInput> {
-
-  /// <summary>
-  /// Gets the bitmask of what inputs are valid. 
-  /// </summary>
-  /// <remarks>
-  /// Lowest signifgant bit is Player 1.
-  /// Highest signifigant bit is Player 8.
-  /// </remarks>
-  byte ValidMask { get; }
-
-}
-
 }

@@ -31,7 +31,7 @@ public class MatchStateTests {
         Assert.AreEqual(input, deserialized);
       }
     }
-    Debug.Log($"Average Message Size ({playerCount}): {sizes.Average()}");
+    Debug.Log($"Match Input: Average Message Size ({playerCount}): {sizes.Average()}");
 	}
 
 }

@@ -25,7 +25,7 @@ public interface INetworkServer : IDisposable {
 	void SetReady(bool ready);
 
   // Unreliable
-  void BroadcastInput(uint startTimestamp, byte validMask, IEnumerable<MatchInput> input); 
+  void BroadcastInput(uint startTimestamp, IEnumerable<MatchInput> input); 
 
   // Unreliable Sequenced
   void BroadcastState(uint timestamp, MatchState state, MatchInput? latestInput = null);

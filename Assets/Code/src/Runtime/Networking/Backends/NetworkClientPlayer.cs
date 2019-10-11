@@ -44,14 +44,13 @@ public class NetworkClientPlayer {
     });
   }
 
-  public void SendInputs(uint timestamp, byte validMask, IEnumerable<MatchInput> inputs) {
+  public void SendInputs(uint timestamp, IEnumerable<MatchInput> inputs) {
     int size;
     var inputArray = ArrayUtil.ConvertToArray(inputs, out size);
     if (size <= 0) return;
     Connection.Send(MessageCodes.UpdateInput, new InputSetMessage {
       StartTimestamp = timestamp,
       InputCount = (uint)size,
-      ValidMask = MatchInput.AllValid,
       Inputs = inputArray,
     }, NetworkReliablity.Unreliable);
   }

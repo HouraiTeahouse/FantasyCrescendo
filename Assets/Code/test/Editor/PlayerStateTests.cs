@@ -25,7 +25,7 @@ public class PlayerStateTests {
         Assert.AreEqual(state, deserializedState);
       }
     }
-    Debug.Log($"Message Size: {sizes.Average()}");
+    Debug.Log($"Player State: Average Message Size: {sizes.Average()}");
 	}
 
 }

@@ -129,7 +129,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
         clientTimestamp = t;
         clientInputs = inputs.ToArray();
       };
-      Host.Server.BroadcastInput(serverTimestamp, MatchInput.AllValid, serverInputs);
+      Host.Server.BroadcastInput(serverTimestamp, serverInputs);
     }, () => clientTimestamp != null && clientInputs != null, () => {
       Assert.AreEqual(serverTimestamp, clientTimestamp);
       CollectionAssert.AreEqual(serverInputs, clientInputs);
@@ -192,7 +192,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
         serverTimestamp = t;
         serverInputs = inputs.ToArray();
       };
-      Host.Client.SendInput(clientTimestamp, MatchInput.AllValid, clientInputs);
+      Host.Client.SendInput(clientTimestamp, clientInputs);
     }, () => serverTimestamp != null && serverInputs == null, () => {
       Assert.AreEqual(clientTimestamp, serverTimestamp);
       CollectionAssert.AreEqual(clientInputs, serverInputs);
@@ -246,7 +246,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
         clientTimestamp = t;
         clientInputs = inputs.ToArray();
       };
-      Host.Server.BroadcastInput(serverTimestamp, MatchInput.AllValid, serverInputs);
+      Host.Server.BroadcastInput(serverTimestamp, serverInputs);
     }, () => clientTimestamp != null && clientInputs != null, () => {
       Assert.AreEqual(serverTimestamp, clientTimestamp);
       CollectionAssert.AreEqual(serverInputs, clientInputs);
@@ -309,7 +309,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
         serverTimestamp = t;
         serverInputs = inputs.ToArray();
       };
-      Host.Client.SendInput(clientTimestamp, MatchInput.AllValid, clientInputs);
+      Host.Client.SendInput(clientTimestamp, clientInputs);
     }, () => serverTimestamp != null && serverInputs == null, () => {
       Assert.AreEqual(clientTimestamp, serverTimestamp);
       CollectionAssert.AreEqual(clientInputs, serverInputs);

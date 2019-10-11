@@ -77,7 +77,7 @@ public class RollbackStrategy : INetworkStrategy {
         var inputs = InputHistory.StartingWith(clientTimestep);
         var timestep = inputs.FirstOrDefault().Timestep;
         if (timestep < clientTimestep) continue;
-        client.SendInputs(timestep, MatchInput.AllValid, inputs.Select(i => i.Input).TakeWhile(i => i.IsValid));
+        client.SendInputs(timestep, inputs.Select(i => i.Input).TakeWhile(i => i.IsValid));
       }
     }
 
@@ -185,7 +185,8 @@ public class RollbackStrategy : INetworkStrategy {
         InputHistory.Current = current;
       }
       if (latestServerInput != null) {
-        input = input.MergeWith(latestServerInput.Value, MatchInputMergeStrategy.KeepValidity);
+        input = input.MergeWith(latestServerInput.Value, 
+                                MatchInput.MergeStrategy.KeepValidity);
       }
       input = InputHistory.Append(input);
 
@@ -201,9 +202,8 @@ public class RollbackStrategy : INetworkStrategy {
       InputSendTimer++;
       if (InputSendTimer < NetworkConfig.InputSendRate) return;
       var timestamp = InputHistory.Oldest.Timestep;
-      var mask = InputSource.ValidMask;
       var inputs = InputHistory.Take(kMaxInputsSent).Select(i => i.Input);
-      NetworkClient.SendInput(timestamp, mask, inputs);
+      NetworkClient.SendInput(timestamp, inputs);
       InputSendTimer = 0;
     }
 

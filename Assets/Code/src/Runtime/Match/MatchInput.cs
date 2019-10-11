@@ -2,90 +2,76 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
 using Mask = System.Byte;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
-public enum MatchInputMergeStrategy {
-  FullMerge,        // Completely copies over the new inputs
-  KeepValidity      // Copies over everything except for the validity of the new inputs
-}
-
 public unsafe struct MatchInput : IMergable<MatchInput> {
+
+  static MatchInput() {
+    Assert.IsTrue(UnsafeUtility.IsBlittable<PlayerInput>());
+    Assert.IsTrue(UnsafeUtility.SizeOf<PlayerInput>() <= kPlayerInputSize);
+    Assert.IsTrue(sizeof(Mask) * 8 >= kMaxSupportedPlayers);
+  }
+
+  public enum MergeStrategy {
+    FullMerge,        // Completely copies over the new inputs
+    KeepValidity      // Copies over everything except for the validity of the new inputs
+  }
 
   const int kPlayerInputSize = 5;
   public const int kMaxSupportedPlayers = (int)GameMode.GlobalMaxPlayers;
-  public const Mask AllValid = (byte)((1 << kMaxSupportedPlayers) - 1);
+  Mask AllValid => BitUtil.AllBits(PlayerCount); 
 
   public int PlayerCount { get; }
-
-  fixed byte Data[kMaxSupportedPlayers * kPlayerInputSize];
+  public Mask ValidMask;
+  fixed byte _inputs[kPlayerInputSize * kMaxSupportedPlayers];
 
   /// <summary>
-  /// Gets the input for the player at a given frame.
+  /// Gets the input for the given player.
   /// </summary>
-  /// <remarks>
-  /// This indexer does **not** do any bounds checking. Be sure to do a
-  /// check against 0 and PlayerCount before using it.
-  /// </remarks>
   /// <param name="index">the index of the player's inputs.</param>
-  public unsafe ref PlayerInput this[int index] {
-    get { 
-      fixed (byte* inputPtr = Data) {
-        return ref ((PlayerInput*)inputPtr)[index];
+  public unsafe ref PlayerInput this[int idx] {
+    get {
+      fixed (byte* inputPtr = _inputs) {
+        return ref ((PlayerInput*)inputPtr)[idx];
       }
     }
   }
 
   public MatchInput(int playerCount) {
+    ValidMask = (Mask)0;
     PlayerCount = Mathf.Min(playerCount, kMaxSupportedPlayers);
   }
 
   public MatchInput(MatchConfig config) : this(config.PlayerConfigs.Length) {}
+  public bool IsValid => (ValidMask & AllValid) != 0;
 
-  public bool IsValid {
-    get { 
-      fixed (byte* data = Data) {
-        bool isValid = true;
-        var inputs = (PlayerInput*)data;
-        for (int i = 0; i < PlayerCount; i++) {
-          isValid &= inputs[i].IsValid;
-        }
-        return isValid;
-      }
-    }
-  }
-
-  public void Predict() => ForceValid(true);
-
-  public unsafe MatchInput MergeWith(MatchInput other) => MergeWith(other, MatchInputMergeStrategy.FullMerge);
-
-  public unsafe MatchInput MergeWith(MatchInput other, MatchInputMergeStrategy strategy) {
+  MatchInput IMergable<MatchInput>.MergeWith(MatchInput other) => MergeWith(other);
+  public unsafe MatchInput MergeWith(MatchInput other, 
+                                     MergeStrategy strategy = MergeStrategy.FullMerge) {
     Assert.IsTrue(PlayerCount >= other.PlayerCount);
     var newInput = this;
-    fixed (byte* selfData = Data) {
-      var newInputs = (PlayerInput*)newInput.Data;
+    fixed (byte* selfData = _inputs) {
+      var newInputs = (PlayerInput*)newInput._inputs;
       var selfInputs = (PlayerInput*)selfData;
-      var otherInputs = (PlayerInput*)other.Data;
+      var otherInputs = (PlayerInput*)other._inputs;
       switch (strategy) {
-        case MatchInputMergeStrategy.FullMerge:
+        case MergeStrategy.FullMerge:
+          newInput.ValidMask = (byte)(ValidMask | other.ValidMask);
           for (int i = 0; i < PlayerCount; i++) {
-            if (!selfInputs[i].IsValid && otherInputs[i].IsValid) {
+            if (!IsPlayerValid(i) && other.IsPlayerValid(i)) {
               newInputs[i] = otherInputs[i];
-            } else {
-              newInputs[i] = selfInputs[i];
-            }
+            } 
           }
           break;
-        case MatchInputMergeStrategy.KeepValidity:
+        case MergeStrategy.KeepValidity:
           for (int i = 0; i < PlayerCount; i++) {
-            if (!selfInputs[i].IsValid) {
+            if (!IsPlayerValid(i)) {
               newInputs[i] = otherInputs[i];
-              newInputs[i].IsValid = false;
-            } else {
-              newInputs[i] = selfInputs[i];
             }
           }
           break;
@@ -94,42 +80,26 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
     return newInput;
   }
 
-  internal void Reset() => ForceValid(false);
+  public bool IsPlayerValid(int playerId) => BitUtil.GetBit(ValidMask, playerId);
+  public void Predict() => ValidMask = AllValid;
+  internal void Reset() => ValidMask = 0;
 
-  unsafe void ForceValid(bool valid) {
-    fixed (byte* data = Data) {
-      var inputs = (PlayerInput*)data;
-      for (int i = 0; i < PlayerCount; i++) {
-        inputs[i].IsValid = valid;
-      }
-    }
-  }
-
-  public override bool Equals(object obj) {
-    if (!(obj is MatchInput)) return false;
-    var other = (MatchInput)obj;
-    var maxPlayerCount = Mathf.Max(PlayerCount, other.PlayerCount);
+  public static bool operator ==(MatchInput a, MatchInput b) {
+    if (a.PlayerCount != b.PlayerCount) return false;
     bool equal = true;
-    for (var i = 0; i < maxPlayerCount; i++) {
-      if (i < PlayerCount && i < other.PlayerCount) {
-        equal &= this[i].Equals(other[i]);
-      } else if (i < PlayerCount) {
-        if (this[i].IsValid) return false;
-      } else if (i < other.PlayerCount) {
-        if (other[i].IsValid) return false;
-      } else {
-        break;
-      }
-      // Debug.Log($"{i} {PlayerCount} {other.PlayerCount} {this[i]} {other[i]} {equal}");
+    for (var i = 0; i < a.PlayerCount; i++) {
+      equal &= a._inputs[i] == b._inputs[i];
     }
     return equal;
   }
+
+  public static bool operator !=(MatchInput a, MatchInput b) => !(a == b);
 
   public override int GetHashCode() {
     unchecked {
       var hash = PlayerCount;
       for (var i = 0; i < PlayerCount; i++) {
-        hash += this[i].GetHashCode();
+        hash = (hash << 3) + _inputs[i].GetHashCode();
       }
       return hash;
     }
@@ -137,23 +107,12 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
 
   public override string ToString() => $"MatchInput({PlayerCount}, {GetHashCode():X})";
 
-  public Mask CreateValidMask() {
-    Assert.IsTrue(PlayerCount <= kMaxSupportedPlayers);
-    Mask mask = 0;
-    fixed (byte* data = Data) {
-      var inputs = (PlayerInput*)data;
-      for (int i = 0; i < PlayerCount; i++) {
-        mask |= (Mask)(inputs[i].IsValid ? (1 << i) : 0);
-      }
-    }
-    return mask;
-  }
-
 }
 
 public class MatchInputContext {
 
-  public PlayerInputContext[] PlayerInputs;
+  MatchInput before;
+  MatchInput current;
 
   public MatchInputContext(MatchConfig config) : this(new MatchInput(config)) {
   }
@@ -163,43 +122,28 @@ public class MatchInputContext {
     Predict();
   }
 
-  public bool IsValid {
-    get {
-      bool isValid = true;
-      for (int i = 0; i < PlayerInputs.Length; i++) {
-        isValid &= PlayerInputs[i].IsValid;
-      }
-      return isValid;
-    }
-  }
+  public PlayerInputContext this[int idx] => 
+    new PlayerInputContext(ref before[idx], ref current[idx]);
+
+  public bool IsValid => before.IsValid && current.IsValid;
+  public int PlayerCount => current.PlayerCount;
 
   public void Predict() {
-    for (int i = 0; i < PlayerInputs.Length; i++) {
-      PlayerInputs[i].ForceValid(true);
-    }
+    before.Predict();
+    current.Predict();
   }
 
-  public void Reset(MatchInput current) {
-    if (PlayerInputs?.Length != current.PlayerCount) {
-      PlayerInputs = new PlayerInputContext[current.PlayerCount];
-    }
-    for (int i = 0; i < PlayerInputs.Length; i++) {
-      PlayerInputs[i] = new PlayerInputContext {
-        Current = current[i]
-      };
-    }
-  }
+  public void Reset(MatchInput input) => current = input;
 
   public void Reset(MatchInput previous, MatchInput current) {
     Reset(previous);
     Update(current);
   }
 
-  public void Update(MatchInput input) {
-    Assert.AreEqual(PlayerInputs.Length, input.PlayerCount);
-    for (int i = 0; i < input.PlayerCount; i++) {
-      PlayerInputs[i].Update(input[i]);
-    }
+  public void Update(MatchInput next) {
+    Assert.AreEqual(current.PlayerCount, next.PlayerCount);
+    before = current;
+    current = next;
   }
 
 }

@@ -12,17 +12,18 @@ public class PlayerInputTests {
 	[Test]
 	public void PlayerInput_serializes_and_deserializes_properly() {
     var sizes = new List<int>();
-    for (var i = 0; i < 1000; i++) {
+    for (var i = 0; i < 10000; i++) {
       var state = InputUtility.RandomPlayerInput();
       var networkWriter = new Serializer();
       state.Serialize(networkWriter);
       var bytes = networkWriter.AsArray();
       sizes.Add(networkWriter.Position);
       var networkReader = new Deserializer(bytes);
-      var deserialized = PlayerInput.Deserialize(networkReader);
+      var deserialized = new PlayerInput();
+      PlayerInput.Deserialize(networkReader, ref deserialized);
       Assert.AreEqual(state, deserialized);
     }
-    Debug.Log($"Average Message Size: {sizes.Average()}");
+    Debug.Log($"Player Input: Average Message Size: {sizes.Average()}");
 	}
 
 }

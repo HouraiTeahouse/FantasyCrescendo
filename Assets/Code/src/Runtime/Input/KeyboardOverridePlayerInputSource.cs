@@ -34,7 +34,6 @@ public class KeyboardOverridePlayerInputSource : IInputSource<PlayerInput> {
       Shield = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift),
       //TODO(james7132): Make Tap Jump Configurable
       Jump = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow),
-      IsValid = true
     };
   }
 

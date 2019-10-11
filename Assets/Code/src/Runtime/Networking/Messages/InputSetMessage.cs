@@ -14,7 +14,6 @@ public struct InputSetMessage : INetworkSerializable, IDisposable {
 
   public uint StartTimestamp;
   public uint InputCount;
-  public byte ValidMask;
   public MatchInput[] Inputs;
 
   public ArraySegment<MatchInput> AsArraySegment() => new ArraySegment<MatchInput>(Inputs, 0, (int)InputCount);
@@ -26,18 +25,19 @@ public struct InputSetMessage : INetworkSerializable, IDisposable {
     var firstInput = Inputs[0];
     var playerCount = (byte)firstInput.PlayerCount;
 
+    var mask = GetValidMask();
     // The number of players is encoded as the N + 1 bit in the ValidMask
-    // The highest bit's position represents the number of players stored
+    // The number of bits represents the number of players stored.
     // As the size of the mask is one byte, the maximum supported players
     // is (8 bits - 1 for count) => 7 players.
     Assert.IsTrue(playerCount < sizeof(Mask) * 8);
-    ValidMask &= (byte)((1 << playerCount + 1) - 1);        // Disable all bits higher than N + 1
-    ValidMask |= (byte)(1 << playerCount);                  // Set the count bit to 1.
+    mask &= (byte)((1 << playerCount + 1) - 1);        // Disable all bits higher than N + 1
+    mask |= (byte)(1 << playerCount);                  // Set the count bit to 1.
 
-    serializer.Write(ValidMask);                            // 1 byte
+    serializer.Write(mask);                            // 1 byte
     serializer.Write(StartTimestamp);                       // 1-4 bytes
     for (var i = 0; i < playerCount; i++) {
-      if ((ValidMask & (1 << i)) == 0) continue;
+      if (!BitUtil.GetBit(mask, i)) continue;
       PlayerInput? lastInput= null;
       for (int j = 0; j < InputCount; j++) {                // 1-5 * playerCount * Inputs.Length bytes
         var currentInput = Inputs[j][i];                    // (Only valid inputs)
@@ -50,20 +50,21 @@ public struct InputSetMessage : INetworkSerializable, IDisposable {
   public void Deserialize(Deserializer deserializer) {
     InputCount = deserializer.ReadUInt32();
     if (InputCount <= 0) return;
-    ValidMask = deserializer.ReadByte();
+    byte mask = deserializer.ReadByte();
+    int playerCount = BitUtil.GetBitCount(mask);
     StartTimestamp = deserializer.ReadUInt32();
-    byte playerCount = GetPlayerCount(ValidMask);
     Inputs = ArrayPool<MatchInput>.Shared.Rent((int)InputCount);
-    for (int i = 0; i < InputCount; i++) {
+    for (var i = 0; i < InputCount; i++) {
       Inputs[i] = new MatchInput(playerCount);
+      Inputs[i].ValidMask = mask;
     }
     for (var i = 0; i < playerCount; i++) {
-      if ((ValidMask & (1 << i)) == 0) continue;
-      PlayerInput? lastInput= null;
+      if (!BitUtil.GetBit(mask, i)) continue;
+      PlayerInput? lastInput = null;
       for (int j = 0; j < InputCount; j++) {
-        var currentInput = PlayerInput.Deserialize(deserializer, lastInput);
-        Inputs[j][i] = currentInput;
-        lastInput = currentInput;
+        PlayerInput.Deserialize(deserializer, ref Inputs[j][i], 
+                                ref lastInput);
+        lastInput = Inputs[j][i];
       }
     }
   }
@@ -74,12 +75,13 @@ public struct InputSetMessage : INetworkSerializable, IDisposable {
     Inputs = null;
   }
 
-  byte GetPlayerCount(byte val) {
-    byte bit = sizeof(Mask) * 8 - 1;
-    while (bit >= 0 && (val & (1 << bit)) == 0) {
-      bit--;
+  byte GetValidMask() {
+    if (Inputs.Length <= 0) return 0;
+    byte mask = 255;
+    for (var i = 0; i < Inputs.Length; i++) {
+      mask &= Inputs[i].ValidMask;
     }
-    return bit;
+    return mask;
   }
 
 }
