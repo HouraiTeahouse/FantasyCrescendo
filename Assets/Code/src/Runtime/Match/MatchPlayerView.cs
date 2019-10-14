@@ -15,7 +15,7 @@ public class MatchPlayerView : IInitializable<MatchConfig>, IStateView<MatchStat
     var tasks = new List<Task>();
     var factories = Object.FindObjectsOfType<ViewFactory<PlayerState, PlayerConfig>>();
     for (var i = 0; i < PlayerViews.Length; i++) {
-      tasks.Add(CreatePlayerView(i, config.PlayerConfigs[i], factories));
+      tasks.Add(CreatePlayerView(i, config[i], factories));
     }
     await Task.WhenAll(tasks);
   }

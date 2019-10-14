@@ -61,7 +61,7 @@ public class PauseCamera : MonoBehaviour {
   /// </summary>
   void Update() {
     if (pausedPlayerID == null) return;
-    var localPlayerId = MatchConfig.PlayerConfigs[pausedPlayerID.Value].LocalPlayerID;
+    var localPlayerId = MatchConfig[pausedPlayerID.Value].LocalPlayerID;
     var controller = Gamepad.all[localPlayerId];
     Vector3 translation = Vector3.Scale(controller.rightStick.ReadValue(), TranslationSpeed);
     Vector3 rotation = Vector3.Scale(controller.leftStick.ReadValue(), RotationSpeed);

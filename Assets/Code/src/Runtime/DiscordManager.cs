@@ -74,7 +74,7 @@ public class DiscordManager : MonoBehaviour {
     int minLocalPlayer = int.MaxValue;
     CharacterData data = null;
     for (var i = 0; i < config.PlayerCount; i++) {
-      var player = config.PlayerConfigs[i];
+      ref var player = ref config[i];
       if (!player.IsLocal || player.LocalPlayerID >= minLocalPlayer) continue;
       var character = player.Selection.GetCharacter();
       if (character == null) continue;

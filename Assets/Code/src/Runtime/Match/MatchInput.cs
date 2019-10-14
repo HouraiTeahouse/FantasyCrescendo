@@ -47,7 +47,7 @@ public unsafe struct MatchInput : IMergable<MatchInput> {
     PlayerCount = Mathf.Min(playerCount, kMaxSupportedPlayers);
   }
 
-  public MatchInput(MatchConfig config) : this(config.PlayerConfigs.Length) {}
+  public MatchInput(MatchConfig config) : this(config.PlayerCount) {}
   public bool IsValid => (ValidMask & AllValid) != 0;
 
   MatchInput IMergable<MatchInput>.MergeWith(MatchInput other) => MergeWith(other);

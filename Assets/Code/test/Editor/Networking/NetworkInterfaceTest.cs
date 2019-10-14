@@ -84,15 +84,8 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
 
 	[UnityTest]
 	public IEnumerator Server_StartMatch() {
-    var server = new MatchConfig { 
-      Time = 100,
-      PlayerConfigs = new PlayerConfig[] {
-        new PlayerConfig(),
-        new PlayerConfig(),
-        new PlayerConfig(),
-        new PlayerConfig(),
-      }
-    };
+    var server = new MatchConfig { Time = 100 };
+    server.SetPlayerConfigs(new PlayerConfig[4]);
     MatchConfig? client = null;
 
     return RunTest(() => {
@@ -201,15 +194,8 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
 
 	[UnityTest]
 	public IEnumerator LocalServer_StartMatch() {
-    var server = new MatchConfig { 
-      Time = 100,
-      PlayerConfigs = new PlayerConfig[] {
-        new PlayerConfig(),
-        new PlayerConfig(),
-        new PlayerConfig(),
-        new PlayerConfig(),
-      }
-    };
+    var server = new MatchConfig { Time = 100 };
+    server.SetPlayerConfigs(new PlayerConfig[4]);
     MatchConfig? client = null;
 
     return RunLocalTest(() => {

@@ -106,16 +106,18 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
   MatchConfig ServerBuildBaseConfig() {
     var baseConfig = GameSetupMenu.Config;
     var server = NetworkManager.Instance.Server;
-    baseConfig.PlayerConfigs = (from client in server.Clients orderby client.PlayerID select client.Config).ToArray();
+    baseConfig.SetPlayerConfigs(from client in server.Clients 
+                                orderby client.PlayerID 
+                                select client.Config);
     return baseConfig;
   }
 
   MatchConfig BuildConfigForPlayer(MatchConfig baseConfig, uint playerId) {
     // TODO(james7132): Generalize this to work with multiple players per client
-    for (var i = 0; i < baseConfig.PlayerConfigs.Length; i++) {
-      baseConfig.PlayerConfigs[i].LocalPlayerID = -1;
+    for (var i = 0; i < baseConfig.PlayerCount; i++) {
+      baseConfig[i].LocalPlayerID = -1;
     }
-    baseConfig.PlayerConfigs[playerId].LocalPlayerID = 0;
+    baseConfig[(int)playerId].LocalPlayerID = 0;
     return baseConfig;
   }
 

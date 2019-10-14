@@ -19,7 +19,7 @@ public abstract class GameMode : GameDataBase {
   protected abstract Task RunGame(MatchConfig config, bool loadStage = true);
 
   public virtual bool IsValidConfig(MatchConfig config) {
-    var players = config.PlayerConfigs?.Length; 
+    var players = config.PlayerCount; 
     return players >= MinPlayers && players <= MaxPlayers;
   }
 

@@ -18,8 +18,8 @@ public abstract class MatchInputSourceBase<T> : IInputSource<MatchInput> where T
     _validMask = 0;
     playerInputs = new IInputSource<PlayerInput>[config.PlayerCount];
     for (var i = 0; i < config.PlayerCount; i++) {
-      playerInputs[i] = BuildPlayerInputSource(ref config.PlayerConfigs[i]);
-      BitUtil.SetBit(ref _validMask, i, config.PlayerConfigs[i].IsLocal);
+      playerInputs[i] = BuildPlayerInputSource(ref config[i]);
+      BitUtil.SetBit(ref _validMask, i, config[i].IsLocal);
     }
     Debug.Log($"Valid Mask: {_validMask}");
   }
