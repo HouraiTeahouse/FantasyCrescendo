@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace HouraiTeahouse.FantasyCrescendo.Players {
+namespace HouraiTeahouse.FantasyCrescendo {
 
 /// <summary>
 /// A data object representing the complete input of one player for a given

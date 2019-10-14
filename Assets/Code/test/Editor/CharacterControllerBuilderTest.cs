@@ -1,4 +1,5 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Characters;
+﻿using HouraiTeahouse.FantasyCrescendo;
+using HouraiTeahouse.FantasyCrescendo.Characters;
 using HouraiTeahouse.FantasyCrescendo.Players;
 using HouraiTeahouse.FantasyCrescendo.Matches;
 using NUnit.Framework;

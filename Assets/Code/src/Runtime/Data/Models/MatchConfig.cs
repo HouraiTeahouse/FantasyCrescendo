@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace HouraiTeahouse.FantasyCrescendo.Matches {
+namespace HouraiTeahouse.FantasyCrescendo {
 
 /// <summary>
 /// A data object for configuring a game between multiple players.

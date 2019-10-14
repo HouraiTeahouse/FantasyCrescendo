@@ -1,9 +1,8 @@
-using HouraiTeahouse.FantasyCrescendo.Matches;
 using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo.Players {
+namespace HouraiTeahouse.FantasyCrescendo {
 
 /// <summary>
 /// A complete representation of a player's state at a given tick.

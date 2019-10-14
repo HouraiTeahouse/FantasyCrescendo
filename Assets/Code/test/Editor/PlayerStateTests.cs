@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Players;
+﻿using HouraiTeahouse.FantasyCrescendo;
 using HouraiTeahouse.FantasyCrescendo.Networking;
 using System.Collections.Generic;
 using System.Linq;
