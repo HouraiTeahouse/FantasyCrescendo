@@ -44,7 +44,7 @@ public class AnalyticsManager : MonoBehaviour {
 
   void OnMatchEnd(MatchEndEvent evt) {
     new CustomEventBuilder("matchCompleted")
-      .AddParameter("players", evt.MatchConfig.PlayerConfigs?.Length)
+      .AddParameter("players", evt.MatchConfig.PlayerCount)
       .AddParameter("stage", evt.MatchConfig.StageID)
       .AddParameter("stocks", evt.MatchConfig.Stocks)
       .AddParameter("time", evt.MatchConfig.Time)

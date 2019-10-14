@@ -71,16 +71,16 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
     foreach (var player in players) {
       player.IsActive = false;
     }
-    foreach (var player in config.PlayerConfigs) {
+    foreach (var player in config.GetPlayerConfigs()) {
       players[player.PlayerID].IsActive = true;
       players[player.PlayerID].Config = player;
     }
   }
 
   public MatchConfig BuildMatchConfig(MatchConfig baseConfig) {
-    baseConfig.PlayerConfigs = (from player in players
-                               where player.IsActive
-                               select player.Config).ToArray();
+    baseConfig.SetPlayerConfigs(from player in players 
+                                where player.IsActive 
+                                select player.Config);
     return baseConfig;
   }
 

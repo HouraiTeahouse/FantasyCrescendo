@@ -92,7 +92,7 @@ public abstract class Match {
 
   void SetDefaultDamages(MatchConfig config, MatchState initialState) {
     for (int i = 0; i < initialState.PlayerCount; i++) {
-      initialState[i].Damage = config.PlayerConfigs[i].DefaultDamage;
+      initialState[i].Damage = config[i].DefaultDamage;
     }
   }
 

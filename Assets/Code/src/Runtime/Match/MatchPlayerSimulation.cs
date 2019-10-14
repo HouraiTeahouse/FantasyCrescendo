@@ -20,7 +20,7 @@ public class MatchPlayerSimulation : IMatchSimulation {
     var tasks = new List<Task>();
     for (int i = 0; i < PlayerSimulations.Length; i++) {
       PlayerSimulations[i] = new PlayerSimulation();
-      tasks.Add(PlayerSimulations[i].Initialize(config.PlayerConfigs[i]));
+      tasks.Add(PlayerSimulations[i].Initialize(config[i]));
     }
 
     context = Mediator.Global.CreateContext();

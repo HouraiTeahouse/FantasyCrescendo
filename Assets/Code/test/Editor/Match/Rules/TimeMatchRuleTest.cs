@@ -18,7 +18,8 @@ public class TimeMatchRuleTest {
 	[Test]
 	public void Simulate_each_simulate_decreases_remaining_time() {
     var timeMatchRule = new TimeMatchRule();
-    var config = new MatchConfig { Stocks = 5, PlayerConfigs = new PlayerConfig[4] };
+    var config = new MatchConfig { Stocks = 5 };
+    config.SetPlayerConfigs(new PlayerConfig[4]);
     var state = new MatchState (config) { Time = 100 };
     var input = new MatchInput(config);
     var inputContext = new MatchInputContext(input);
@@ -30,7 +31,8 @@ public class TimeMatchRuleTest {
 	[Test]
 	public void GetResolution_continues_game_with_remaining_time() {
     var timeMatchRule = new TimeMatchRule();
-    var config = new MatchConfig { Stocks = 5, PlayerConfigs = new PlayerConfig[4] };
+    var config = new MatchConfig { Stocks = 5 };
+    config.SetPlayerConfigs(new PlayerConfig[4]);
     var state = new MatchState (config) { Time = 100 };
 
     Assert.AreEqual(null, timeMatchRule.GetResolution(state));
@@ -39,7 +41,8 @@ public class TimeMatchRuleTest {
 	[Test]
 	public void GetResolution_zero_time_results_in_timeout() {
     var timeMatchRule = new TimeMatchRule();
-    var config = new MatchConfig { Stocks = 5, PlayerConfigs = new PlayerConfig[4] };
+    var config = new MatchConfig { Stocks = 5 };
+    config.SetPlayerConfigs(new PlayerConfig[4]);
     var state = new MatchState (config) { Time = 0 };
 
     Assert.AreEqual(MatchResolution.Tie, timeMatchRule.GetResolution(state));

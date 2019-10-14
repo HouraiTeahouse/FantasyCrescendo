@@ -1,6 +1,7 @@
 using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using System.Text;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
@@ -38,29 +39,27 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
   /// the player at index 1 may not be P2. Player 2 may be inactive and 
   /// the player may be P3 or P4 instead.
   /// </remarks>
-  public PlayerConfig[] PlayerConfigs;
+  PlayerConfig[] _playerConfigs;
+  public ref PlayerConfig this[int playerId] => ref _playerConfigs[playerId];
 
   /// <summary>
   /// Gets the number of participating players in the game.
   /// </summary>
-  public int PlayerCount => PlayerConfigs.Length;
+  public int PlayerCount => _playerConfigs.Length;
 
   public bool IsLocal {
     get {
-      bool isLocal = true;
-      for (var i = 0; i < PlayerConfigs.Length; i++) {
-        isLocal &= PlayerConfigs[i].IsLocal;
+      foreach (var config in _playerConfigs) {
+        if (!config.IsLocal) return false;
       }
-      return isLocal;
+      return true;
     }
   }
 
   public bool IsValid { 
     get {
-      foreach (var config in PlayerConfigs) {
-        if (!config.IsValid) {
-          return false;
-        }
+      foreach (var config in _playerConfigs) {
+        if (!config.IsValid) return false;
       }
       return true;
     }
@@ -71,19 +70,22 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
     var other = (MatchConfig)obj;
     var equal = StageID == other.StageID;
     equal &= Time == other.Time;
-    equal &= ArrayUtil.AreEqual(PlayerConfigs, other.PlayerConfigs);
+    equal &= ArrayUtil.AreEqual(_playerConfigs, other._playerConfigs);
     return equal;
   }
 
-  public override int GetHashCode() => unchecked(StageID.GetHashCode() * 31 + Time.GetHashCode() * 17 + ArrayUtil.GetOrderedHash(PlayerConfigs));
+  public override int GetHashCode() => unchecked(StageID.GetHashCode() * 31 + Time.GetHashCode() * 17 + ArrayUtil.GetOrderedHash(_playerConfigs));
+
+  public PlayerConfig[] GetPlayerConfigs() => _playerConfigs;
+  public void SetPlayerConfigs(IEnumerable<PlayerConfig> configs) => _playerConfigs = configs.ToArray();
 
   public void Serialize(Serializer serializer) {
     serializer.Write(StageID);
     serializer.Write(Stocks);
     serializer.Write(Time);
-    serializer.Write((uint)PlayerConfigs.Length);
-    for (var i = 0; i < PlayerConfigs.Length; i++) {
-      serializer.Write(PlayerConfigs[i]);
+    serializer.Write((uint)_playerConfigs.Length);
+    for (var i = 0; i < _playerConfigs.Length; i++) {
+      serializer.Write(_playerConfigs[i]);
     }
   }
 
@@ -92,16 +94,16 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
     Stocks = deserializer.ReadUInt32();
     Time = deserializer.ReadUInt32();
     var length = deserializer.ReadUInt32();
-    PlayerConfigs = new PlayerConfig[length];
-    for (var i = 0; i < PlayerConfigs.Length; i++) {
-      PlayerConfigs[i] = deserializer.Read<PlayerConfig>();
+    _playerConfigs = new PlayerConfig[length];
+    for (var i = 0; i < _playerConfigs.Length; i++) {
+      _playerConfigs[i] = deserializer.Read<PlayerConfig>();
     }
   }
 
   public override string ToString() {
     var builder = new StringBuilder($"(MatchConfig {{{PlayerCount}}}: ");
     for (var i = 0; i < PlayerCount; i++) {
-      builder.Append(PlayerConfigs[i].ToString()).Append(" ");
+      builder.Append(_playerConfigs[i].ToString()).Append(" ");
     }
     builder.Append(")");
     return builder.ToString();
