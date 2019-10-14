@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 using UnityEngine.Networking;
 using Mask = System.Byte;
 
-namespace HouraiTeahouse.FantasyCrescendo.Matches {
+namespace HouraiTeahouse.FantasyCrescendo {
 
 public unsafe struct MatchInput : IMergable<MatchInput> {
 

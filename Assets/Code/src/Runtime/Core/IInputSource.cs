@@ -1,5 +1,3 @@
-using HouraiTeahouse.FantasyCrescendo.Matches;
-
 namespace HouraiTeahouse.FantasyCrescendo {
 
 /// <summary>
