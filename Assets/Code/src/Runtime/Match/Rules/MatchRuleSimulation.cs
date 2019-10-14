@@ -10,13 +10,13 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 public class MatchRuleSimulation : IMatchSimulation {
 
   MatchConfig MatchConfig;
-  readonly IMatchRule[] Rules;
+  readonly MatchRule[] Rules;
 
   //TODO(james7132): Move this to somewhere more sane.
   MediatorContext Events;
   BlastZone BlastZone;
 
-  public MatchRuleSimulation(IEnumerable<IMatchRule> rules) {
+  public MatchRuleSimulation(IEnumerable<MatchRule> rules) {
     Rules = rules.ToArray();
     foreach (var rule in Rules) {
       Debug.Log($"Match rule enabled: {rule.GetType().Name}");
@@ -27,7 +27,7 @@ public class MatchRuleSimulation : IMatchSimulation {
     MatchConfig = config;
     BlastZone = Object.FindObjectOfType<BlastZone>();
     return Task.WhenAll(Rules.Select(rule => rule.Initialize(config)));
-  } 
+  }
 
   public void Simulate(ref MatchState state, in MatchInputContext input) {
     foreach (var rule in Rules) {

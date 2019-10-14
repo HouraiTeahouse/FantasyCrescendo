@@ -1,30 +1,20 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Threading.Tasks;
 
-namespace HouraiTeahouse.FantasyCrescendo.Matches.Rules {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 /// <summary>
-/// Match Rule for normal stock matches. Players have a limited number of lives.
-/// After expending all lives, they will no longer respawn. Last player alive
-/// will be declared the winner.
+/// Match rule for training mode. Players can die indefinitely, and a MatchEndd
+/// event will not be fired without manual player intervention.
 /// </summary>
-public sealed class TrainingMatchRule : IMatchRule {
+public sealed class TrainingMatchRule : MatchRule {
 
-  MediatorContext Events;
-
-  public Task Initialize(MatchConfig config) {
-    Events = Mediator.Global.CreateContext();
+  public TrainingMatchRule() : base() {
     Events.Subscribe<PlayerDiedEvent>(OnPlayerDied);
-    return Task.CompletedTask;
   }
 
-  public void Simulate(ref MatchState state, in MatchInputContext input) {}
-
-  public int GetWinner(MatchState state) => -1;
-
-  public MatchResolution? GetResolution(MatchState state) => null;
-
-  public void Dispose() => Events?.Dispose();
+  public override MatchResolution? GetResolution(MatchState state) => null;
+  public override int GetWinner(MatchState state) => -1;
 
   void OnPlayerDied(PlayerDiedEvent evt) => PlayerUtil.RespawnPlayer(evt);
 

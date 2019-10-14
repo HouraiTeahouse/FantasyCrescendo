@@ -7,7 +7,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public class TrainingMatch : DefaultMatch {
 
-  protected override IEnumerable<IMatchRule> CreateRules(MatchConfig config) {
+  protected override IEnumerable<MatchRule> CreateRules(MatchConfig config) {
     yield return new TrainingMatchRule();
   }
 

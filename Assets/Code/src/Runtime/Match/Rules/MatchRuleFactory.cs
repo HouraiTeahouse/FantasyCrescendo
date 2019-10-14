@@ -6,7 +6,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches.Rules {
 
 public static class MatchRuleFactory {
 
-  public static IEnumerable<IMatchRule> CreateRules(MatchConfig config) {
+  public static IEnumerable<MatchRule> CreateRules(MatchConfig config) {
     var stock = config.Stocks > 0;
     var time = config.Time > 0;
     if (stock && time) {
@@ -21,5 +21,5 @@ public static class MatchRuleFactory {
   }
 
 }
-    
+
 }
