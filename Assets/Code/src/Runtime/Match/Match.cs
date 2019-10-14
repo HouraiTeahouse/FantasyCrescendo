@@ -39,12 +39,12 @@ public abstract class Match {
     return await matchManager.RunMatch();
   }
 
-  protected virtual IEnumerable<IMatchRule> CreateRules(MatchConfig config) {
+  protected virtual IEnumerable<MatchRule> CreateRules(MatchConfig config) {
     return MatchRuleFactory.CreateRules(config);
   }
 
   protected IMatchSimulation CreateSimulation(MatchConfig config) {
-    return new MatchSimulation(new IMatchSimulation[] { 
+    return new MatchSimulation(new IMatchSimulation[] {
       new MatchPlayerSimulation(),
       new MatchHitboxSimulation(config),
       new MatchRuleSimulation(CreateRules(config))

@@ -2,30 +2,29 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo.Matches.Rules {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
-public sealed class TimeMatchRule : IMatchRule {
+public sealed class TimeMatchRule : MatchRule {
 
-  MediatorContext Events;
-
-  public Task Initialize(MatchConfig config) {
-    Events = Mediator.Global.CreateContext();
+  public TimeMatchRule() : base() {
     Events.Subscribe<PlayerDiedEvent>(OnPlayerDied);
-    return Task.CompletedTask;
   }
 
-  public void Simulate(ref MatchState state, in MatchInputContext input) {
+  public override void Simulate(ref MatchState state,
+                                in MatchInputContext input) {
     state.Time--;
   }
 
-  public MatchResolution? GetResolution(MatchState state) {
+  public override MatchResolution? GetResolution(MatchState state) {
     if (state.Time <= 0) {
-      return GetWinner(state) >= 0 ? MatchResolution.HasWinner : MatchResolution.Tie;
+      return GetWinner(state) >= 0 ?
+        MatchResolution.HasWinner :
+        MatchResolution.Tie;
     }
     return null;
   }
 
-  public int GetWinner(MatchState state) {
+  public override int GetWinner(MatchState state) {
     int winner = -1;
     int maxStocks = int.MinValue;
     for (var i = 0; i < state.PlayerCount; i++) {
@@ -43,13 +42,8 @@ public sealed class TimeMatchRule : IMatchRule {
 
   void OnPlayerDied(PlayerDiedEvent evt) {
     evt.PlayerState.Stocks--;
-    if (evt.PlayerState.Stocks > 0) {
-      PlayerUtil.RespawnPlayer(evt);
-    }
+    PlayerUtil.RespawnPlayer(evt);
   }
-
-
-  public void Dispose() => Events?.Dispose();
 
 }
 
