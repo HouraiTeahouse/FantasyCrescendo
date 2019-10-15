@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
@@ -27,6 +28,7 @@ public class MatchSimulation : IMatchSimulation {
   }
 
   public Task Initialize(MatchConfig config) {
+    Debug.LogWarning("Start Initialize");
     return Task.WhenAll(SimulationComponents.Select(comp => comp.Initialize(config)));
   }
 

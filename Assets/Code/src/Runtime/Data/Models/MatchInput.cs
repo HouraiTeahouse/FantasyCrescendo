@@ -118,7 +118,8 @@ public class MatchInputContext {
   }
 
   public MatchInputContext(MatchInput input) {
-    Reset(input);
+    before = input;
+    current = input;
     Predict();
   }
 

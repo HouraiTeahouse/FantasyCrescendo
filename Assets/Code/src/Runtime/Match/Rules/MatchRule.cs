@@ -14,7 +14,7 @@ public abstract class MatchRule : IInitializable<MatchConfig>, IDisposable,
 
   public virtual Task Initialize(MatchConfig config) => Task.CompletedTask;
   public virtual void Simulate(ref MatchState state,
-                               in kMatchInputContext input) {}
+                               in MatchInputContext input) {}
   public abstract MatchResolution? GetResolution(MatchState state);
   public abstract int GetWinner(MatchState state);
 

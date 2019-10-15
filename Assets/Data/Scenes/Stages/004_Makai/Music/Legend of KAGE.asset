@@ -4,14 +4,17 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80b065f1d67cd3b4883ff7bd69022f36, type: 3}
   m_Name: Legend of KAGE
   m_EditorClassIdentifier: 
-  _audioClip: bgm/makai:Legend of KAGE
+  Clip:
+    m_AssetGUID: 43b21429830138548bb1895056307d28
+    m_SubObjectName: 
   Author: 
   Original: 
   DefaultWeight: 1

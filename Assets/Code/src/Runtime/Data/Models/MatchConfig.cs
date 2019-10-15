@@ -3,6 +3,7 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -39,6 +40,7 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
   /// the player at index 1 may not be P2. Player 2 may be inactive and 
   /// the player may be P3 or P4 instead.
   /// </remarks>
+  [SerializeField]
   PlayerConfig[] _playerConfigs;
   public ref PlayerConfig this[int playerId] => ref _playerConfigs[playerId];
 
@@ -49,6 +51,7 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
 
   public bool IsLocal {
     get {
+      if (_playerConfigs == null) return true;
       foreach (var config in _playerConfigs) {
         if (!config.IsLocal) return false;
       }

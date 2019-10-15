@@ -36,6 +36,7 @@ public class MatchState : INetworkSerializable {
 
   public uint Time;
 
+  [SerializeField]
   PlayerState[] playerStates;
   public int PlayerCount { get; private set; }
   public MatchProgressionState StateID = MatchProgressionState.Intro;
