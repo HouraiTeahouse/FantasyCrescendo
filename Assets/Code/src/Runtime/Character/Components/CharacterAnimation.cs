@@ -66,7 +66,7 @@ public class CharacterAnimation : PlayerComponent {
       MixerIndex = mixerIndex;
 
       var timeline = State.Data.Timeline;
-      Duration = timeline.duration;
+      Duration = timeline != null ? timeline.duration : 0;
       TimelinePlayable = controller.CreatePlayable(timeline);
     }
 
@@ -115,6 +115,10 @@ public class CharacterAnimation : PlayerComponent {
     _stateMap = new Dictionary<uint, StateInfo>();
     // TODO(james7132): Set up proper state blending
     foreach (var state in StateMachine.StateController.States) {
+      if (state.Data.Timeline == null) {
+        Debug.LogWarning($"State {state.Name} for {this} does not have a Timeline.");
+        continue;
+      }
       _stateMap[state.Id] = new StateInfo(state, controller);
       _stateMap[state.Id].Disconnect();
     }

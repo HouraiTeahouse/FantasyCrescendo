@@ -11,21 +11,25 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
 public class MatchPlayerSimulation : IMatchSimulation {
 
-  public PlayerSimulation[] PlayerSimulations;
-  MediatorContext context;
+  readonly PlayerSimulation[] PlayerSimulations;
+  readonly MediatorContext _context;
 
-  public Task Initialize(MatchConfig config) {
+  public MatchPlayerSimulation(MatchConfig config) {
     Assert.IsTrue(config.IsValid);
     PlayerSimulations = new PlayerSimulation[config.PlayerCount];
-    var tasks = new List<Task>();
     for (int i = 0; i < PlayerSimulations.Length; i++) {
       PlayerSimulations[i] = new PlayerSimulation();
-      tasks.Add(PlayerSimulations[i].Initialize(config[i]));
     }
 
-    context = Mediator.Global.CreateContext();
-    context.Subscribe<PlayerResetEvent>(ResetPlayer);
+    _context = Mediator.Global.CreateContext();
+    _context.Subscribe<PlayerResetEvent>(ResetPlayer);
+  }
 
+  public Task Initialize(MatchConfig config) {
+    var tasks = new List<Task>();
+    for (int i = 0; i < PlayerSimulations.Length; i++) {
+      tasks.Add(PlayerSimulations[i].Initialize(config[i]));
+    }
     return Task.WhenAll(tasks);
   }
 
@@ -52,7 +56,7 @@ public class MatchPlayerSimulation : IMatchSimulation {
     PlayerSimulations[evt.PlayerID].ResetState(ref evt.PlayerState);
   }
 
-  public void Dispose() => context.Dispose();
+  public void Dispose() => _context.Dispose();
 
 }
 

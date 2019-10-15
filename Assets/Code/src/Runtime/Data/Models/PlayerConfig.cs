@@ -1,6 +1,7 @@
 using HouraiTeahouse.FantasyCrescendo.Networking;
 using System;
 using System.Linq;
+using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -62,6 +63,7 @@ public struct PlayerSelection : IValidatable, INetworkSerializable {
   public bool IsValid {
     get {
       var character = Registry.Get<CharacterData>().Get(CharacterID);
+      Debug.LogWarning(character);
       if (character == null) return false;
       return Pallete < character.Palletes.Length;
     }
