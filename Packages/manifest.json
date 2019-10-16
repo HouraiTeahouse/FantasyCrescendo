@@ -1,8 +1,8 @@
 {
   "dependencies": {
+    "com.discord.game-sdk": "https://github.com/HouraiTeahouse/Discord-Game-SDK.git",
     "com.houraiteahouse.config": "https://github.com/HouraiTeahouse/HouraiConfig.git",
     "com.houraiteahouse.core": "https://github.com/HouraiTeahouse/HouraiCore.git",
-    "com.houraiteahouse.discord": "https://github.com/HouraiTeahouse/discord-rpc-unity.git",
     "com.houraiteahouse.editorattributes": "https://github.com/HouraiTeahouse/EditorAttributes.git",
     "com.houraiteahouse.localization": "https://github.com/HouraiTeahouse/HouraiLocalization.git",
     "com.houraiteahouse.lz4": "https://github.com/HouraiTeahouse/LZF.git",
@@ -10,8 +10,7 @@
     "com.rlabrecque.steamworks": "https://github.com/HouraiTeahouse/Steamworks.NET.git",
     "com.unity.addressables": "1.2.4",
     "com.unity.assetbundlebrowser": "1.7.0",
-    "com.unity.inputsystem": "1.0.0-preview",
-    "com.unity.multiplayer-hlapi": "1.0.4",
+    "com.unity.inputsystem": "1.0.0-preview.1",
     "com.unity.package-manager-ui": "2.1.2",
     "com.unity.postprocessing": "2.1.7",
     "com.unity.textmeshpro": "2.0.1",
@@ -49,10 +48,6 @@
       "hash": "abe201982a3cce89d14d9773ecef58b787de938d",
       "revision": "HEAD"
     },
-    "com.houraiteahouse.discord": {
-      "hash": "eaf960196f33fda6db53f675b50e86f3266c0af6",
-      "revision": "HEAD"
-    },
     "com.houraiteahouse.editorattributes": {
       "hash": "9d235a6f0ba36ce8f17094e55bcb213c00693dff",
       "revision": "HEAD"
@@ -71,6 +66,10 @@
     },
     "com.rlabrecque.steamworks": {
       "hash": "c94bbaaf0ffe7c22c5bee86b71eb75ca1b860248",
+      "revision": "HEAD"
+    },
+    "com.discord.game-sdk": {
+      "hash": "e7dc8870bc5558679cc76a5432ba13b49040f4cf",
       "revision": "HEAD"
     }
   }
