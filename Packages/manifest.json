@@ -40,6 +40,10 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
+    "com.discord.game-sdk": {
+      "hash": "e7dc8870bc5558679cc76a5432ba13b49040f4cf",
+      "revision": "HEAD"
+    },
     "com.houraiteahouse.config": {
       "hash": "0b7490068889c1ba1b21d4ec539c463d4eb1f140",
       "revision": "HEAD"
@@ -65,11 +69,7 @@
       "revision": "HEAD"
     },
     "com.rlabrecque.steamworks": {
-      "hash": "c94bbaaf0ffe7c22c5bee86b71eb75ca1b860248",
-      "revision": "HEAD"
-    },
-    "com.discord.game-sdk": {
-      "hash": "e7dc8870bc5558679cc76a5432ba13b49040f4cf",
+      "hash": "63abcecdce3678e561e9ebc3fe0b0008c0cf701b",
       "revision": "HEAD"
     }
   }
