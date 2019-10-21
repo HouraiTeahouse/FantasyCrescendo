@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.EditorAttributes;
+﻿using HouraiTeahouse.Attributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;

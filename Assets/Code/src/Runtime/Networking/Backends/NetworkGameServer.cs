@@ -21,7 +21,7 @@ public class NetworkGameServer : INetworkServer {
   Dictionary<NetworkConnection, NetworkClientPlayer> clients;
 
   public readonly NetworkServerConfig Config;
-  public int ClientCount => NetworkServer.connections.Count; 
+  public int ClientCount => clients.Count; 
 
   public NetworkGameServer(Type interfaceType, NetworkServerConfig config) {
     Config = config;
@@ -47,9 +47,9 @@ public class NetworkGameServer : INetworkServer {
     networkInterface.OnPeerDisconnected += OnDisconnect;
 
     var handlers = networkInterface.MessageHandlers;
-    handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
-    handlers.RegisterHandler(MessageCodes.UpdateConfig, OnClientConfigUpdated);
-    handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
+    // handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
+    // handlers.RegisterHandler(MessageCodes.UpdateConfig, OnClientConfigUpdated);
+    // handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
   }
 
   public void Update() {
@@ -91,8 +91,8 @@ public class NetworkGameServer : INetworkServer {
 
       var handlers = networkInterface.MessageHandlers;
       if (handlers == null) return;
-      handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
-      handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
+      // handlers.RegisterHandler(MessageCodes.ClientReady, OnClientReady);
+      // handlers.RegisterHandler(MessageCodes.UpdateInput, OnReceivedClientInput);
     }
     interfaces.Clear();
   }

@@ -1,12 +1,12 @@
 ﻿using HouraiTeahouse.FantasyCrescendo;
 using HouraiTeahouse.FantasyCrescendo.Matches;
-using HouraiTeahouse.FantasyCrescendo.Networking;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using HouraiTeahouse.Networking;
 
 public class MatchStateTests {
 
@@ -17,17 +17,19 @@ public class MatchStateTests {
   }
 
 	[TestCaseSource("TestCases")]
-	public void MatchInput_serializes_and_deserializes_properly(int playerCount) {
+	public unsafe void MatchInput_serializes_and_deserializes_properly(int playerCount) {
     var sizes = new List<int>();
+    var buffer = stackalloc byte[SerializationConstants.kMaxMessageSize];
     for (var i = 0; i < 1000; i++) {
       var input = StateUtility.RandomState(playerCount);
-      var networkWriter = new Serializer();
-      input.Serialize(networkWriter);
-      var bytes = networkWriter.AsArray();
+      var networkWriter = Serializer.Create(buffer, 2048);
+      input.Serialize(ref networkWriter);
+      var bytes = networkWriter.ToArray();
       sizes.Add(networkWriter.Position);
-      using (var networkReader = new Deserializer(bytes)) {
+      fixed (byte* bytesPtr = bytes) {
+        var networkReader = Deserializer.Create(bytesPtr, (uint)networkWriter.Position);
         var deserialized = new MatchState(playerCount);
-        deserialized.Deserialize(networkReader);
+        deserialized.Deserialize(ref networkReader);
         Assert.AreEqual(input, deserialized);
       }
     }

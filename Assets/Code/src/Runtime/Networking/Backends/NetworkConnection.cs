@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using HouraiTeahouse.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 

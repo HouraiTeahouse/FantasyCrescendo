@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using UnityEngine;
+using HouraiTeahouse.Compression;
+using HouraiTeahouse.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -19,7 +21,7 @@ public abstract class NetworkInterface : INetworkInterface {
   public event Action<NetworkConnection> OnPeerDisconnected;
 
   protected byte[] ReadBuffer;
-  Deserializer messageDeserializer;
+  // Deserializer messageDeserializer;
 
   protected bool IsDisposed { get; private set; }
 
@@ -29,7 +31,7 @@ public abstract class NetworkInterface : INetworkInterface {
     connections = new List<NetworkConnection>();
     Connections = new ReadOnlyCollection<NetworkConnection>(connections);
     ReadBuffer = ArrayPool<byte>.Shared.Rent(maxMsgSize);
-    messageDeserializer = new Deserializer(ReadBuffer);
+    // messageDeserializer = new Deserializer(ReadBuffer);
   }
 
   public virtual Task Initialize(NetworkInterfaceConfiguration config) {
@@ -67,9 +69,9 @@ public abstract class NetworkInterface : INetworkInterface {
     if (!connectionMap.TryGetValue(connectionId, out connection)) return;
     var decompressed = ArrayPool<byte>.Shared.Rent(dataSize);
     CLZF2.Decompress(data, ref decompressed, dataSize);
-    messageDeserializer.Replace(decompressed);
-    messageDeserializer.SeekZero();
-    MessageHandlers.Execute(connection, messageDeserializer);
+    // messageDeserializer.Replace(decompressed);
+    // messageDeserializer.SeekZero();
+    // MessageHandlers.Execute(connection, messageDeserializer);
   }
 
   protected virtual void OnDisconnect(int connectionId, Exception exception) {

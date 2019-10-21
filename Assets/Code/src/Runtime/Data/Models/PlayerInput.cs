@@ -1,4 +1,4 @@
-using HouraiTeahouse.FantasyCrescendo.Networking;
+using HouraiTeahouse.Networking;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -73,7 +73,7 @@ public struct PlayerInput {
     };
   }
 
-  public void Serialize(Serializer serializer, PlayerInput? previous = null) {
+  public void Serialize(ref Serializer serializer, PlayerInput? previous = null) {
     bool cutMovement, cutSmash;
     if (previous != null) {
       cutMovement = Movement == previous.Value.Movement;
@@ -96,22 +96,23 @@ public struct PlayerInput {
     }
   }
 
-  public static void Deserialize(Deserializer deserializer, ref PlayerInput input) {
+  public static void Deserialize(ref Deserializer deserializer, ref PlayerInput input) {
       PlayerInput? previous = null;
-      Deserialize(deserializer, ref input, ref previous);
+      Deserialize(ref deserializer, ref input, ref previous);
   }
-  public static void Deserialize(Deserializer deserializer, 
+  public static void Deserialize(ref Deserializer deserializer, 
                                  ref PlayerInput input,
                                  ref PlayerInput? previous) {
     var header = deserializer.ReadByte();
     input.Buttons = (byte)(header & 31);
-    DeserializeVector(BitUtil.GetBit(header, 5), ref input.Movement, deserializer, 
+    DeserializeVector(BitUtil.GetBit(header, 5), ref input.Movement, ref deserializer, 
                       previous?.Movement);
-    DeserializeVector(BitUtil.GetBit(header, 6), ref input.Smash, deserializer, 
+    DeserializeVector(BitUtil.GetBit(header, 6), ref input.Smash, ref deserializer, 
                       previous?.Smash);
   }
 
-  static void DeserializeVector(bool read, ref Vector2b vec, Deserializer deserializer,
+  static void DeserializeVector(bool read, ref Vector2b vec, ref 
+                                Deserializer deserializer,
                                 Vector2b? previous) {
     if (read) {
       vec.X = deserializer.ReadSByte();

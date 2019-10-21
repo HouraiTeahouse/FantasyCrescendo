@@ -1,4 +1,4 @@
-using HouraiTeahouse.EditorAttributes;
+using HouraiTeahouse.Attributes;
 using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {

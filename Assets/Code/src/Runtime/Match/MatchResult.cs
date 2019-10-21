@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Networking;
+﻿using HouraiTeahouse.Networking;
 using System;
 using System.Linq;
 
@@ -25,10 +25,10 @@ public struct MatchResult : INetworkSerializable {
     return hash + ArrayUtil.GetOrderedHash(PlayerStats);
   }
 
-  public void Serialize(Serializer serializer) {
+  public void Serialize(ref Serializer serializer) {
     // serializer.Write(MatchResult);
   }
-  public void Deserialize(Deserializer deserializer) {
+  public void Deserialize(ref Deserializer deserializer) {
     // MatchResult = deserializer.Read<MatchResult>();
   }
 

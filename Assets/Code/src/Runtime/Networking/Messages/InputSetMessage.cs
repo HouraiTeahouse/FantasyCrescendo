@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
 using Mask = System.Byte;
+using HouraiTeahouse.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -18,7 +19,7 @@ public struct InputSetMessage : INetworkSerializable, IDisposable {
 
   public ArraySegment<MatchInput> AsArraySegment() => new ArraySegment<MatchInput>(Inputs, 0, (int)InputCount);
 
-  public void Serialize(Serializer serializer) {
+  public void Serialize(ref Serializer serializer) {
     Assert.IsTrue(InputCount <= Inputs.Length);
     serializer.Write(InputCount);                           // 1-4 bytes
     if (InputCount <= 0) return;
@@ -41,13 +42,13 @@ public struct InputSetMessage : INetworkSerializable, IDisposable {
       PlayerInput? lastInput= null;
       for (int j = 0; j < InputCount; j++) {                // 1-5 * playerCount * Inputs.Length bytes
         var currentInput = Inputs[j][i];                    // (Only valid inputs)
-        currentInput.Serialize(serializer, lastInput);
+        currentInput.Serialize(ref serializer, lastInput);
         lastInput = currentInput;
       }
     }
   }
 
-  public void Deserialize(Deserializer deserializer) {
+  public void Deserialize(ref Deserializer deserializer) {
     InputCount = deserializer.ReadUInt32();
     if (InputCount <= 0) return;
     byte mask = deserializer.ReadByte();
@@ -62,7 +63,7 @@ public struct InputSetMessage : INetworkSerializable, IDisposable {
       if (!BitUtil.GetBit(mask, i)) continue;
       PlayerInput? lastInput = null;
       for (int j = 0; j < InputCount; j++) {
-        PlayerInput.Deserialize(deserializer, ref Inputs[j][i], 
+        PlayerInput.Deserialize(ref deserializer, ref Inputs[j][i], 
                                 ref lastInput);
         lastInput = Inputs[j][i];
       }

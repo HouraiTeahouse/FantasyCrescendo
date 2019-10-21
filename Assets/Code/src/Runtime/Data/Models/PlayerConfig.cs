@@ -1,4 +1,4 @@
-using HouraiTeahouse.FantasyCrescendo.Networking;
+using HouraiTeahouse.Networking;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -32,14 +32,14 @@ public struct PlayerConfig : IValidatable, INetworkSerializable {
   public bool IsLocal => LocalPlayerID >= 0;
   public bool IsValid => Selection.IsValid;
 
-  public void Serialize(Serializer serializer) {
+  public void Serialize(ref Serializer serializer) {
     serializer.Write(PlayerID);
     serializer.Write(LocalPlayerID);
     serializer.Write(Selection);
     serializer.Write(DefaultDamage);
   }
 
-  public void Deserialize(Deserializer deserializer) {
+  public void Deserialize(ref Deserializer deserializer) {
     PlayerID = deserializer.ReadByte();
     LocalPlayerID = deserializer.ReadSByte();
     Selection = deserializer.Read<PlayerSelection>();
@@ -69,12 +69,12 @@ public struct PlayerSelection : IValidatable, INetworkSerializable {
     }
   }
 
-  public void Serialize(Serializer serializer) {
+  public void Serialize(ref Serializer serializer) {
     serializer.Write(CharacterID);
     serializer.Write(Pallete);
   }
 
-  public void Deserialize(Deserializer deserializer) {
+  public void Deserialize(ref Deserializer deserializer) {
     CharacterID = deserializer.ReadUInt32();
     Pallete = deserializer.ReadByte();
   }

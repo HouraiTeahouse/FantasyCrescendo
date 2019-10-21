@@ -1,5 +1,5 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
-using HouraiTeahouse.EditorAttributes; 
+using HouraiTeahouse.Attributes; 
 using System;
 using UnityEngine;
 
