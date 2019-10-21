@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.EditorAttributes;
+﻿using HouraiTeahouse.Attributes;
 using System;
 using UnityEngine;
 using Random = System.Random;

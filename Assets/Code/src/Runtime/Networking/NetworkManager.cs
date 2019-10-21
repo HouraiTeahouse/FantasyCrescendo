@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.EditorAttributes;
+﻿using HouraiTeahouse.Attributes;
 using HouraiTeahouse.FantasyCrescendo.Matches;
 using HouraiTeahouse.FantasyCrescendo.Matchmaking;
 using System;

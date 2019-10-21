@@ -102,11 +102,11 @@ public class NetworkGameClient : INetworkClient {
     NetworkInterface.Dispose();
     var handlers = Connection?.MessageHandlers;
     if (handlers == null) return;
-    handlers.UnregisterHandler(MessageCodes.UpdateInput);
-    handlers.UnregisterHandler(MessageCodes.UpdateState);
-    handlers.UnregisterHandler(MessageCodes.MatchStart);
-    handlers.UnregisterHandler(MessageCodes.MatchFinish);
-    handlers.UnregisterHandler(MessageCodes.UpdateConfig);
+    handlers.ClearHandlers(MessageCodes.UpdateInput);
+    handlers.ClearHandlers(MessageCodes.UpdateState);
+    handlers.ClearHandlers(MessageCodes.MatchStart);
+    handlers.ClearHandlers(MessageCodes.MatchFinish);
+    handlers.ClearHandlers(MessageCodes.UpdateConfig);
   }
 
   // Event Handlers

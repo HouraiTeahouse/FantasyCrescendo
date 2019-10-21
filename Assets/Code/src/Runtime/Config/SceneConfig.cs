@@ -1,4 +1,4 @@
-﻿using HouraiTeahouse.EditorAttributes;
+﻿using HouraiTeahouse.Attributes;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;

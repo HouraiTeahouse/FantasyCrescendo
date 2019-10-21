@@ -1,6 +1,6 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Matches;
 using UnityEngine;
-using UnityEngine.Networking;
+using HouraiTeahouse.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -8,8 +8,8 @@ public struct MatchFinishMessage : INetworkSerializable {
 
   public MatchResult MatchResult;
 
-  public void Serialize(Serializer serializer) => serializer.Write(MatchResult);
-  public void Deserialize(Deserializer deserializer) => MatchResult = deserializer.Read<MatchResult>();
+  public void Serialize(ref Serializer serializer) => serializer.Write(MatchResult);
+  public void Deserialize(ref Deserializer deserializer) => MatchResult = deserializer.Read<MatchResult>();
 
 }
 

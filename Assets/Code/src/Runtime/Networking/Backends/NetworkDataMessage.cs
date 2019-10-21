@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using HouraiTeahouse.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public readonly struct NetworkDataMessage {
+public struct NetworkDataMessage {
 
   public readonly NetworkConnection Connection;
-  public readonly Deserializer NetworkReader;
+  public Deserializer NetworkReader;
 
   public NetworkDataMessage(NetworkConnection connection, Deserializer reader) {
     Connection = connection;
@@ -14,7 +15,7 @@ public readonly struct NetworkDataMessage {
 
   public T ReadAs<T>() where T : INetworkSerializable, new() {
     var message = ObjectPool<T>.Shared.Rent();
-    message.Deserialize(NetworkReader);
+    message.Deserialize(ref NetworkReader);
     return message;
   }
 

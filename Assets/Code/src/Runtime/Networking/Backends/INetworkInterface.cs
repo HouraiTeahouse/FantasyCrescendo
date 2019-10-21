@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Steamworks;
+using HouraiTeahouse.Networking;
 using HouraiTeahouse.FantasyCrescendo.Matchmaking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {

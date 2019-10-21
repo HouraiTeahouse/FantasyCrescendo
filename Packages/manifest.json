@@ -1,15 +1,13 @@
 {
   "dependencies": {
-    "com.discord.game-sdk": "https://github.com/HouraiTeahouse/Discord-Game-SDK.git",
-    "com.houraiteahouse.config": "https://github.com/HouraiTeahouse/HouraiConfig.git",
-    "com.houraiteahouse.core": "https://github.com/HouraiTeahouse/HouraiCore.git",
-    "com.houraiteahouse.editorattributes": "https://github.com/HouraiTeahouse/EditorAttributes.git",
-    "com.houraiteahouse.localization": "https://github.com/HouraiTeahouse/HouraiLocalization.git",
-    "com.houraiteahouse.lz4": "https://github.com/HouraiTeahouse/LZF.git",
-    "com.houraiteahouse.options": "https://github.com/HouraiTeahouse/HouraiOptions.git",
-    "com.rlabrecque.steamworks": "https://github.com/HouraiTeahouse/Steamworks.NET.git",
+    "com.discord.game-sdk": "1.0.0",
+    "com.houraiteahouse.config": "1.0.0",
+    "com.houraiteahouse.localization": "1.0.0",
+    "com.houraiteahouse.lz4": "2.0.0",
+    "com.houraiteahouse.networking": "0.1.0",
+    "com.houraiteahouse.options": "1.0.0",
+    "com.rlabrecque.steamworks": "11.0.0",
     "com.unity.addressables": "1.2.4",
-    "com.unity.assetbundlebrowser": "1.7.0",
     "com.unity.inputsystem": "1.0.0-preview.1",
     "com.unity.package-manager-ui": "2.1.2",
     "com.unity.postprocessing": "2.1.7",
@@ -39,38 +37,15 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
   },
-  "lock": {
-    "com.discord.game-sdk": {
-      "hash": "e7dc8870bc5558679cc76a5432ba13b49040f4cf",
-      "revision": "HEAD"
-    },
-    "com.houraiteahouse.config": {
-      "hash": "0b7490068889c1ba1b21d4ec539c463d4eb1f140",
-      "revision": "HEAD"
-    },
-    "com.houraiteahouse.core": {
-      "hash": "abe201982a3cce89d14d9773ecef58b787de938d",
-      "revision": "HEAD"
-    },
-    "com.houraiteahouse.editorattributes": {
-      "hash": "9d235a6f0ba36ce8f17094e55bcb213c00693dff",
-      "revision": "HEAD"
-    },
-    "com.houraiteahouse.localization": {
-      "hash": "2f6420a80d4e8ba50964385c6c3119fee8735495",
-      "revision": "HEAD"
-    },
-    "com.houraiteahouse.lz4": {
-      "hash": "a3aaf97edebba81e8388891ce22633815783a94e",
-      "revision": "HEAD"
-    },
-    "com.houraiteahouse.options": {
-      "hash": "2e7f6154c9c4e7d16a79f4ffae281e7846f39694",
-      "revision": "HEAD"
-    },
-    "com.rlabrecque.steamworks": {
-      "hash": "63abcecdce3678e561e9ebc3fe0b0008c0cf701b",
-      "revision": "HEAD"
+  "scopedRegistries": [
+    {
+      "name": "Hourai Teahouse",
+      "url": "https://upm.houraiteahouse.net",
+      "scopes": [
+        "com.houraiteahouse",
+        "com.rlabrecque",
+        "com.discord"
+      ]
     }
-  }
+  ]
 }

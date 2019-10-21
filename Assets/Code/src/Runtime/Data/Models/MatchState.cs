@@ -1,4 +1,4 @@
-using HouraiTeahouse.FantasyCrescendo.Networking;
+using HouraiTeahouse.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,7 +83,7 @@ public class MatchState : INetworkSerializable {
     return clone;
   }
 
-  public void Serialize(Serializer writer) {
+  public void Serialize(ref Serializer writer) {
     byte activeMask = (byte)(PlayerCount & 15);
     for (var i = 0; i < PlayerCount; i++) {
       if (!playerStates[i].IsActive) continue;
@@ -92,20 +92,20 @@ public class MatchState : INetworkSerializable {
     writer.Write(activeMask);
     for (uint i = 0; i < PlayerCount; i++) {
       if (playerStates[i].IsActive) {
-        playerStates[i].Serialize(writer);
+        playerStates[i].Serialize(ref writer);
       }
     }
     writer.Write((byte)StateID);
   }
 
-  public void Deserialize(Deserializer deserializer) {
+  public void Deserialize(ref Deserializer deserializer) {
     var mask = deserializer.ReadByte();
     PlayerCount = mask & 15;
     playerStates = ArrayPool<PlayerState>.Shared.Rent(PlayerCount);
     for (var i = 0; i < PlayerCount; i++) {
       var state = new PlayerState();
       if ((mask & (1 << (i + 4))) != 0) {
-        state.Deserialize(deserializer);
+        state.Deserialize(ref deserializer);
       }
       state.MatchState = this;
       this[i] = state;

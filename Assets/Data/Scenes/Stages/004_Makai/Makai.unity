@@ -697,6 +697,16 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 224522483688928986, guid: bf625dd01f80d7b41a53783c50b4317d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 224522483688928986, guid: bf625dd01f80d7b41a53783c50b4317d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 25.000015
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf625dd01f80d7b41a53783c50b4317d, type: 3}
 --- !u!1 &1017662182
@@ -10888,6 +10898,12 @@ PrefabInstance:
       propertyPath: field of view
       value: 64.3
       objectReference: {fileID: 0}
+    - target: {fileID: 114032290879023464, guid: 7a5f56393098bdf429da82c1cc54b467,
+        type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e0b54d29d457de4fbca8f4ffc7d9ee9,
+        type: 2}
     - target: {fileID: 114890186897579434, guid: 7a5f56393098bdf429da82c1cc54b467,
         type: 3}
       propertyPath: m_AfterStackBundles.Array.size
@@ -10903,12 +10919,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114032290879023464, guid: 7a5f56393098bdf429da82c1cc54b467,
-        type: 3}
-      propertyPath: sharedProfile
-      value: 
-      objectReference: {fileID: 11400000, guid: 7e0b54d29d457de4fbca8f4ffc7d9ee9,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a5f56393098bdf429da82c1cc54b467, type: 3}
 --- !u!1001 &1616461888
@@ -11548,11 +11558,6 @@ PrefabInstance:
     - target: {fileID: 4935029060846326, guid: 9e2ceb2d0c8a9504a943fa50028134a9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114727785565368142, guid: 9e2ceb2d0c8a9504a943fa50028134a9,
-        type: 3}
-      propertyPath: Config._playerConfigs.Array.data[1].Selection.Pallete
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e2ceb2d0c8a9504a943fa50028134a9, type: 3}

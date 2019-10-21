@@ -1,4 +1,4 @@
-using HouraiTeahouse.FantasyCrescendo.Networking;
+using HouraiTeahouse.Networking;
 using System;
 using UnityEngine;
 
@@ -116,7 +116,7 @@ public struct PlayerState : INetworkSerializable {
     return result;
   }
 
-  public void Serialize(Serializer writer) {
+  public void Serialize(ref Serializer writer) {
     uint mask = 0;
     WriteBit(ref mask, RespawnTimeRemaining != 0);
     WriteBit(ref mask, ShieldRecoveryCooldown != 0);
@@ -154,7 +154,7 @@ public struct PlayerState : INetworkSerializable {
     if (RespawnTimeRemaining != 0)   writer.Write(RespawnTimeRemaining);
   }
 
-  public void Deserialize(Deserializer deserializer) {
+  public void Deserialize(ref Deserializer deserializer) {
     uint mask = deserializer.ReadUInt32();
     posX = deserializer.ReadInt16();
     posY = deserializer.ReadInt16();

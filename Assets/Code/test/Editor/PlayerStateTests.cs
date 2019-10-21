@@ -1,27 +1,28 @@
 ﻿using HouraiTeahouse.FantasyCrescendo;
-using HouraiTeahouse.FantasyCrescendo.Networking;
+using HouraiTeahouse.Networking;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.Networking;
 using UnityEditor;
 using UnityEngine.TestTools;
-using NUnit.Framework;
+using UnityEngine;
 
 public class PlayerStateTests {
 
 	[Test]
-	public void PlayerState_serializes_and_deserializes_properly() {
+	public unsafe void PlayerState_serializes_and_deserializes_properly() {
     var sizes = new List<int>();
+    var buffer = stackalloc byte[SerializationConstants.kMaxMessageSize];
     for (var i = 0; i < 1000; i++) {
       var state = StateUtility.RandomPlayerState();
-      var networkWriter = new Serializer();
-      state.Serialize(networkWriter);
-      var bytes = networkWriter.AsArray();
+      var networkWriter = Serializer.Create(buffer, 2048);
+      state.Serialize(ref networkWriter);
+      var bytes = networkWriter.ToArray();
       sizes.Add(networkWriter.Position);
-      using (var networkReader = new Deserializer(bytes)) {
+      fixed (byte* bytesPtr = bytes) {
+        var networkReader = Deserializer.Create(bytesPtr, (uint)networkWriter.Position);
         var deserializedState = new PlayerState();
-        deserializedState.Deserialize(networkReader);
+        deserializedState.Deserialize(ref networkReader);
         Assert.AreEqual(state, deserializedState);
       }
     }

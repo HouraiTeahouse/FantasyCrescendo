@@ -1,4 +1,4 @@
-using HouraiTeahouse.FantasyCrescendo.Networking;
+using HouraiTeahouse.Networking;
 using System;
 using System.Text;
 using System.Linq;
@@ -82,7 +82,7 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
   public PlayerConfig[] GetPlayerConfigs() => _playerConfigs;
   public void SetPlayerConfigs(IEnumerable<PlayerConfig> configs) => _playerConfigs = configs.ToArray();
 
-  public void Serialize(Serializer serializer) {
+  public void Serialize(ref Serializer serializer) {
     serializer.Write(StageID);
     serializer.Write(Stocks);
     serializer.Write(Time);
@@ -92,7 +92,7 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
     }
   }
 
-  public void Deserialize(Deserializer deserializer) {
+  public void Deserialize(ref Deserializer deserializer) {
     StageID = deserializer.ReadUInt32();
     Stocks = deserializer.ReadUInt32();
     Time = deserializer.ReadUInt32();
