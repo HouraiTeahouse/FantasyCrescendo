@@ -19,9 +19,7 @@ public class DefaultGameMode : GameMode {
   }
 
   public override bool IsValidConfig(MatchConfig config) {
-    var playerConfigs = config.GetPlayerConfigs();
-    if (playerConfigs == null) return false;
-    var selections = config.GetPlayerConfigs().Select(player => player.Selection);
+    var selections = config.Select(player => player.Selection);
     return base.IsValidConfig(config) && selections.Distinct().Count() == selections.Count();
   }
 

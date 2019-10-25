@@ -18,15 +18,9 @@ public static class InputUtility {
     };
   }
 
-  public static void ForceValid(MatchInput[] inputs, int mask) {
-    for (var i = 0; i < inputs.Length; i++) {
-      inputs[i].ValidMask = (byte)mask;
-    }
-  }
-
   public static MatchInput RandomInput(int players) {
-    var input = new MatchInput(players);
-    for (var i = 0; i < input.PlayerCount; i++) {
+    var input = new MatchInput();
+    for (var i = 0; i < players; i++) {
       input[i] = RandomPlayerInput();
     }
     return input;

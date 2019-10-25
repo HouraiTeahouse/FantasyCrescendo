@@ -16,13 +16,11 @@ public class PlayerInputTests {
     for (var i = 0; i < 10000; i++) {
       var state = InputUtility.RandomPlayerInput();
       var networkWriter = Serializer.Create(buffer, 2048);
-      state.Serialize(ref networkWriter);
       var bytes = networkWriter.ToArray();
       sizes.Add(networkWriter.Position);
       fixed (byte* bytesPtr = bytes) {
         var networkReader = Deserializer.Create(bytesPtr, (uint)networkWriter.Position);
         var deserialized = new PlayerInput();
-        PlayerInput.Deserialize(ref networkReader, ref deserialized);
         Assert.AreEqual(state, deserialized);
       }
     }

@@ -1,14 +1,14 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Networking;
+﻿using HouraiTeahouse.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HouraiTeahouse.FantasyCrescendo.Matchmaking {
+namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class LobbyDisplay : MonoBehaviour, IStateView<LobbyInfo>, IStateView<MatchmakerController> {
+public class LobbyDisplay : MonoBehaviour, IStateView<Lobby>, IStateView<MatchmakerController> {
 
-  public LobbyInfo lobbyInfo;
+  public Lobby lobby;
 
   public Text Name;
   public Text Owner;
@@ -19,14 +19,17 @@ public class LobbyDisplay : MonoBehaviour, IStateView<LobbyInfo>, IStateView<Mat
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
-  void Update() => UpdateUI(lobbyInfo);
+  void Update() => UpdateUI(lobby);
 
-  void UpdateUI(LobbyInfo info) {
-    if (info == null) return;
-    var name = string.IsNullOrEmpty(info.Name) ? "-" : info.Name;
+  void UpdateUI(Lobby lobby) {
+    if (lobby == null) return;
+    var name = lobby.GetName();
+    if (string.IsNullOrEmpty(name)) {
+      name = "-";
+    }
     SetText(Name, name);
-    SetText(Owner, info.OnwerName);
-    SetText(Players, $"{info.CurrentPlayers}/{info.MaxPlayers}");
+    //SetText(Owner, info.OnwerName);
+    SetText(Players, $"{lobby.MemberCount}/{lobby.Capacity}");
   }
 
   void SetText(Text text, string displayText) {
@@ -36,14 +39,14 @@ public class LobbyDisplay : MonoBehaviour, IStateView<LobbyInfo>, IStateView<Mat
   }
 
   public async void JoinLobby() {
-    if (controller == null || lobbyInfo == null) return;
-    await controller.JoinLobby(lobbyInfo);
+    if (controller == null || lobby == null) return;
+    await controller.JoinLobby(lobby);
   }
 
-  public void UpdateView(in LobbyInfo lobby) {
-    lobbyInfo = lobby;
+  public void UpdateView(in Lobby lobby) {
+    this.lobby = lobby;
     name = lobby.Id.ToString();
-    UpdateUI(lobbyInfo);
+            UpdateUI(this.lobby);
   }
 
   public void UpdateView(in MatchmakerController controller) {

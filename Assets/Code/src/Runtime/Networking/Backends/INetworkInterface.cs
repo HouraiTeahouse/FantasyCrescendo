@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Steamworks;
 using HouraiTeahouse.Networking;
-using HouraiTeahouse.FantasyCrescendo.Matchmaking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
@@ -61,8 +60,6 @@ public class NetworkInterfaceConfiguration {
 public class NetworkConnectionConfig {
   public string IP;
   public int Port;
-
-  public LobbyInfo LobbyInfo;
 }
 
 public interface INetworkInterface : IDisposable {

@@ -21,45 +21,47 @@ public class NetworkMenu : MonoBehaviour {
   int PortValue => int.Parse(Port.text);
 
   public async void StartHost() {
-    var networkManager = NetworkManager.Instance;
-    var hostConfig = new NetworkHostConfig {
-      ServerConfig = new NetworkServerConfig  {
-        Port = PortValue
-      }
-    };
-    Debug.Log($"Started host on {PortValue}");
-    try {
-      SetActive(ConnectingScreen);
-      await networkManager.StartHost(hostConfig);
-      SetActive(SuccessScreen);
-    } catch (NetworkingException exception) {
-      networkManager.StopHost();
-      SetActive(ErrorScreen);
-      ErrorText.text = exception.Message;
-      return;
-    }
+    // TODO(james7132): Properly set this up again
+    // var networkManager = NetworkManager.Instance;
+    // var hostConfig = new NetworkHostConfig {
+    //   ServerConfig = new NetworkServerConfig  {
+    //     Port = PortValue
+    //   }
+    // };
+    // Debug.Log($"Started host on {PortValue}");
+    // try {
+    //   SetActive(ConnectingScreen);
+    //   await networkManager.StartHost(hostConfig);
+    //   SetActive(SuccessScreen);
+    // } catch (NetworkingException exception) {
+    //   networkManager.StopHost();
+    //   SetActive(ErrorScreen);
+    //   ErrorText.text = exception.Message;
+    //   return;
+    // }
   }
 
   public async void StartClient() {
-    var networkManager = NetworkManager.Instance;
-    var clientConfig = new NetworkClientConfig();
-    var client = networkManager.StartClient(clientConfig);
-    Debug.Log($"Connecting to {IP.text}:{PortValue}");
-    try {
-      SetActive(ConnectingScreen);
-      await client.Connect(
-        new NetworkConnectionConfig {
-          IP = IP.text,
-          Port = PortValue
-        });
-      SetActive(SuccessScreen);
-    } catch (NetworkingException exception) {
-      networkManager.StopClient();
-      SetActive(ErrorScreen);
-      ErrorText.text = exception.Message;
-      Debug.LogError(exception);
-      return;
-    }
+    // TODO(james7132): Properly set this up again
+    // var networkManager = NetworkManager.Instance;
+    // var clientConfig = new NetworkClientConfig();
+    // var client = networkManager.StartClient(clientConfig);
+    // Debug.Log($"Connecting to {IP.text}:{PortValue}");
+    // try {
+    //   SetActive(ConnectingScreen);
+    //   await client.Connect(
+    //     new NetworkConnectionConfig {
+    //       IP = IP.text,
+    //       Port = PortValue
+    //     });
+    //   SetActive(SuccessScreen);
+    // } catch (NetworkingException exception) {
+    //   networkManager.StopClient();
+    //   SetActive(ErrorScreen);
+    //   ErrorText.text = exception.Message;
+    //   Debug.LogError(exception);
+    //   return;
+    // }
   }
 
   public void ReturnToMainScreen() {

@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using HouraiTeahouse.Networking;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo.Matchmaking {
+namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public class LobbyListUI : MonoBehaviour, IStateView<IEnumerable<LobbyInfo>> {
+public class LobbyListUI : MonoBehaviour, IStateView<IEnumerable<Lobby>> {
 
   public RectTransform Container;
   public LobbyDisplay DisplayPrefab;
@@ -30,7 +31,7 @@ public class LobbyListUI : MonoBehaviour, IStateView<IEnumerable<LobbyInfo>> {
     }
   }
 
-  public void UpdateView(in IEnumerable<LobbyInfo> state) {
+  public void UpdateView(in IEnumerable<Lobby> state) {
     int index = 0;
     foreach (var lobby in state) {
       LobbyDisplay display;

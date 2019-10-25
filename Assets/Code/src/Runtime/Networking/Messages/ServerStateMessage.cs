@@ -18,11 +18,8 @@ public struct ServerStateMessage : INetworkSerializable {
       serializer.Write((byte)0);
     } else {
       var input = LatestInput.Value;
-      var count = input.PlayerCount;
+      var count = State.PlayerCount;
       serializer.Write((byte)count);
-      for (var i = 0; i < count; i++) {
-        input[i].Serialize(ref serializer);
-      }
     }
   }
 
@@ -33,10 +30,7 @@ public struct ServerStateMessage : INetworkSerializable {
     if (count == 0) {
       LatestInput = null;
     } else {
-      var input = new MatchInput(count);
-      for (var i = 0; i < count; i++) {
-        PlayerInput.Deserialize(ref deserializer, ref input[i]);
-      }
+      var input = new MatchInput();
       LatestInput = input;
     }
   }

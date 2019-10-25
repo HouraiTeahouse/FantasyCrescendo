@@ -40,8 +40,8 @@ public class RollbackStrategy : INetworkStrategy {
     internal Server(INetworkServer server, MatchConfig config) : base(server, config) {
       NetworkServer.ReceivedInputs += OnRecievedInputs;
       NetworkServer.PlayerRemoved += OnRemovePlayer;
-      InputContext = new MatchInputContext(config);
-      InputHistory = new InputHistory<MatchInput>(new MatchInput(config));
+      InputContext = new MatchInputContext();
+      InputHistory = new InputHistory<MatchInput>();
       NetworkConfig = Config.Get<NetworkConfig>();
       ClientTimesteps = new Dictionary<int, uint>();
       StateSendTimer = 0;
@@ -77,7 +77,7 @@ public class RollbackStrategy : INetworkStrategy {
         var inputs = InputHistory.StartingWith(clientTimestep);
         var timestep = inputs.FirstOrDefault().Timestep;
         if (timestep < clientTimestep) continue;
-        client.SendInputs(timestep, inputs.Select(i => i.Input).TakeWhile(i => i.IsValid));
+        client.SendInputs(timestep, inputs.Select(i => i.Input));
       }
     }
 
@@ -85,7 +85,7 @@ public class RollbackStrategy : INetworkStrategy {
       MatchInput input = InputHistory.Current.Input;
       var newestTimestep = InputHistory.Newest.Timestep;
       var state = CurrentState;
-      while (input.IsValid && InputHistory.Current.Timestep < newestTimestep) {
+      while (InputHistory.Current.Timestep < newestTimestep) {
         InputContext.Update(input);
         Simulation.Simulate(ref state, InputContext);
         input = InputHistory.Step();
@@ -132,8 +132,8 @@ public class RollbackStrategy : INetworkStrategy {
     internal Client(INetworkClient client, MatchConfig config) : base(client, config) {
       NetworkClient.OnRecievedState += OnRecievedState;
       NetworkClient.OnRecievedInputs += OnRecievedInputs;
-      InputContext = new MatchInputContext(config);
-      InputHistory = new InputHistory<MatchInput>(new MatchInput(config));
+      InputContext = new MatchInputContext();
+      InputHistory = new InputHistory<MatchInput>();
       NetworkConfig = Config.Get<NetworkConfig>();
       InputSendTimer = 0;
       latestServerState = null;
@@ -159,14 +159,10 @@ public class RollbackStrategy : INetworkStrategy {
       foreach (var timedInput in InputHistory.StartingWith(start)) {
         if (timedInput.Timestep >= InputHistory.Current.Timestep) break;
         var input = timedInput.Input;
-        if (latestServerInput != null) {
-          input.MergeWith(latestServerInput.Value);
-        }
         if (timedInput.Timestep < latestServerStateTimestamp || timedInput.Timestep == 0) {
           InputContext.Reset(input);
         } else {
           InputContext.Update(input);
-          InputContext.Predict();
           
           var state = CurrentState;
           Simulation.Simulate(ref state, InputContext);
@@ -181,17 +177,12 @@ public class RollbackStrategy : INetworkStrategy {
       var input = InputSource.SampleInput();
       var current = InputHistory.Current;
       if (current.Timestep == 0) {
-        current.Input = current.Input.MergeWith(input);
+        // current.Input = current.Input.MergeWith(input);
         InputHistory.Current = current;
-      }
-      if (latestServerInput != null) {
-        input = input.MergeWith(latestServerInput.Value, 
-                                MatchInput.MergeStrategy.KeepValidity);
       }
       input = InputHistory.Append(input);
 
       InputContext.Reset(current.Input, input);
-      InputContext.Predict();
 
       var state = CurrentState;
       Simulation.Simulate(ref state, InputContext);

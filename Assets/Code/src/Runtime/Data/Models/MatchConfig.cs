@@ -1,7 +1,8 @@
 using HouraiTeahouse.Networking;
+using HouraiTeahouse.Backroll;
 using System;
 using System.Text;
-using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,9 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// A data object for configuring a game between multiple players.
 /// </summary>
 [Serializable]
-public struct MatchConfig : IValidatable, INetworkSerializable {
+public unsafe struct MatchConfig : IValidatable, INetworkSerializable, IEnumerable<PlayerConfig> {
+
+  const int kPlayerConfigSize = 11;
 
   /// <summary>
   /// The ID of the stage that the match will be played on.
@@ -31,6 +34,11 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
   public uint Time;
 
   /// <summary>
+  /// Gets the number of participating players in the game.
+  /// </summary>
+  public uint PlayerCount;
+
+  /// <summary>
   /// Individual configurations for each participating player.
   /// </summary>
   /// <remarks>
@@ -41,19 +49,20 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
   /// the player may be P3 or P4 instead.
   /// </remarks>
   [SerializeField]
-  PlayerConfig[] _playerConfigs;
-  public ref PlayerConfig this[int playerId] => ref _playerConfigs[playerId];
-
-  /// <summary>
-  /// Gets the number of participating players in the game.
-  /// </summary>
-  public int PlayerCount => _playerConfigs.Length;
+  fixed byte _playerConfigs[kPlayerConfigSize * BackrollConstants.kMaxPlayers];
+  public ref PlayerConfig this[int id] {
+    get {
+      fixed (byte* ptr = _playerConfigs) {
+        return ref ((PlayerConfig*)ptr)[id];
+      }
+    }
+  }
 
   public bool IsLocal {
     get {
-      if (_playerConfigs == null) return true;
-      foreach (var config in _playerConfigs) {
-        if (!config.IsLocal) return false;
+      if (PlayerCount <= 0) return false;
+      for (var i = 0; i < PlayerCount; i++) {
+        if (!this[i].IsLocal) return false;
       }
       return true;
     }
@@ -61,34 +70,21 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
 
   public bool IsValid { 
     get {
-      foreach (var config in _playerConfigs) {
-        if (!config.IsValid) return false;
+      if (PlayerCount <= 0) return false;
+      for (var i = 0; i < PlayerCount; i++) {
+        if (!this[i].IsValid) return false;
       }
       return true;
     }
   }
 
-  public override bool Equals(object obj) {
-    if (typeof(MatchConfig) != obj.GetType()) return false;
-    var other = (MatchConfig)obj;
-    var equal = StageID == other.StageID;
-    equal &= Time == other.Time;
-    equal &= ArrayUtil.AreEqual(_playerConfigs, other._playerConfigs);
-    return equal;
-  }
-
-  public override int GetHashCode() => unchecked(StageID.GetHashCode() * 31 + Time.GetHashCode() * 17 + ArrayUtil.GetOrderedHash(_playerConfigs));
-
-  public PlayerConfig[] GetPlayerConfigs() => _playerConfigs;
-  public void SetPlayerConfigs(IEnumerable<PlayerConfig> configs) => _playerConfigs = configs.ToArray();
-
   public void Serialize(ref Serializer serializer) {
     serializer.Write(StageID);
     serializer.Write(Stocks);
     serializer.Write(Time);
-    serializer.Write((uint)_playerConfigs.Length);
-    for (var i = 0; i < _playerConfigs.Length; i++) {
-      serializer.Write(_playerConfigs[i]);
+    serializer.Write((uint)PlayerCount);
+    for (var i = 0; i < PlayerCount; i++) {
+      this[i].Serialize(ref serializer);
     }
   }
 
@@ -96,21 +92,28 @@ public struct MatchConfig : IValidatable, INetworkSerializable {
     StageID = deserializer.ReadUInt32();
     Stocks = deserializer.ReadUInt32();
     Time = deserializer.ReadUInt32();
-    var length = deserializer.ReadUInt32();
-    _playerConfigs = new PlayerConfig[length];
-    for (var i = 0; i < _playerConfigs.Length; i++) {
-      _playerConfigs[i] = deserializer.Read<PlayerConfig>();
+    PlayerCount = deserializer.ReadUInt32();
+    for (var i = 0; i < PlayerCount; i++) {
+      this[i].Deserialize(ref deserializer);
     }
   }
 
   public override string ToString() {
     var builder = new StringBuilder($"(MatchConfig {{{PlayerCount}}}: ");
     for (var i = 0; i < PlayerCount; i++) {
-      builder.Append(_playerConfigs[i].ToString()).Append(" ");
+      builder.Append(this[i].ToString()).Append(" ");
     }
     builder.Append(")");
     return builder.ToString();
   }
+
+  public IEnumerator<PlayerConfig> GetEnumerator() {
+    for (var i = 0; i < PlayerCount; i++) {
+      yield return this[i];
+    }
+  }
+
+  IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 }
 

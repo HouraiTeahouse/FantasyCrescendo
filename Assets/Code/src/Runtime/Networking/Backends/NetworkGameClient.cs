@@ -59,12 +59,12 @@ public class NetworkGameClient : INetworkClient {
 
   void InitConnection(NetworkConnection connection) {
     var handlers = connection.MessageHandlers;
-    handlers.RegisterHandler<InputSetMessage>(MessageCodes.UpdateInput, OnGetInput);
-    handlers.RegisterHandler<ServerStateMessage>(MessageCodes.UpdateState, OnGetState);
-    handlers.RegisterHandler<MatchStartMessage>(MessageCodes.MatchStart, OnStartMatch);
-    handlers.RegisterHandler<MatchFinishMessage>(MessageCodes.MatchFinish, OnFinishMatch);
-    handlers.RegisterHandler<ServerUpdateConfigMessage>(MessageCodes.UpdateConfig, OnUpdateConfig);
-    handlers.RegisterHandler<PeerReadyMessage>(MessageCodes.ServerReady, OnSetServerReady);
+    // handlers.RegisterHandler<InputSetMessage>(MessageCodes.UpdateInput, OnGetInput);
+    // handlers.RegisterHandler<ServerStateMessage>(MessageCodes.UpdateState, OnGetState);
+    // handlers.RegisterHandler<MatchStartMessage>(MessageCodes.MatchStart, OnStartMatch);
+    // handlers.RegisterHandler<MatchFinishMessage>(MessageCodes.MatchFinish, OnFinishMatch);
+    // handlers.RegisterHandler<ServerUpdateConfigMessage>(MessageCodes.UpdateConfig, OnUpdateConfig);
+    // handlers.RegisterHandler<PeerReadyMessage>(MessageCodes.ServerReady, OnSetServerReady);
 
     connectionTask.TrySetResult(null);
   }

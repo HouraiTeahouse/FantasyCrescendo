@@ -60,27 +60,28 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
       players[i].gameObject.SetActive(i < maxPlayers);
     }
     var networkManager = NetworkManager.Instance;
-    if (networkManager == null || !networkManager.IsServer) return;
-    foreach (var client in networkManager.Server.Clients) {
-      players[client.PlayerID].Config = client.Config;
-      players[client.PlayerID].SetActive(true);
-    }
+    // TODO(james7132): Properly set this up again
+    // if (networkManager == null || !networkManager.IsServer) return;
+    // foreach (var client in networkManager.Server.Clients) {
+    //   players[client.PlayerID].Config = client.Config;
+    //   players[client.PlayerID].SetActive(true);
+    // }
   }
 
   public void UpdateView(in MatchConfig config) {
     foreach (var player in players) {
       player.IsActive = false;
     }
-    foreach (var player in config.GetPlayerConfigs()) {
+    foreach (var player in config) {
       players[player.PlayerID].IsActive = true;
       players[player.PlayerID].Config = player;
     }
   }
 
   public MatchConfig BuildMatchConfig(MatchConfig baseConfig) {
-    baseConfig.SetPlayerConfigs(from player in players 
-                                where player.IsActive 
-                                select player.Config);
+    // baseConfig.SetPlayerConfigs(from player in players 
+    //                             where player.IsActive 
+    //                             select player.Config);
     return baseConfig;
   }
 

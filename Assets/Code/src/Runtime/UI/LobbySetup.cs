@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
-public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
+public sealed class LobbySetup : MonoBehaviour, IValidator<MatchConfig> {
 
   public GameSetupMenu GameSetupMenu;
   public CharacterSelectMenu CharacterSelectMenu;
@@ -19,8 +19,8 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
   void OnEnable() {
     var networkManager = NetworkManager.Instance;
     if (networkManager == null) return;
-    if (networkManager.IsServer) { EnableServer(networkManager.Server); }
-    if (networkManager.IsClient) { EnableClient(networkManager.Client); }
+    // if (networkManager.IsServer) { EnableServer(networkManager.Server); }
+    // if (networkManager.IsClient) { EnableClient(networkManager.Client); }
   }
 
   /// <summary>
@@ -29,24 +29,25 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
   void OnDisable() {
     var networkManager = NetworkManager.Instance;
     if (networkManager == null) return;
-    if (networkManager.IsClient) { DisableClient(networkManager.Client); }
-    if (networkManager.IsServer) { DisableServer(networkManager.Server); }
+    // if (networkManager.IsClient) { DisableClient(networkManager.Client); }
+    // if (networkManager.IsServer) { DisableServer(networkManager.Server); }
   }
 
   public void CloseConnections() {
     var networkManager = NetworkManager.Instance;
     if (networkManager == null) return;
-    if (networkManager.IsClient) { networkManager.StopClient(); }
-    if (networkManager.IsServer) { networkManager.StopServer(); }
+    // if (networkManager.IsClient) { networkManager.StopClient(); }
+    // if (networkManager.IsServer) { networkManager.StopServer(); }
   }
 
   bool IValidator<MatchConfig>.IsValid(MatchConfig obj) {
     var networkManager = NetworkManager.Instance;
     if (networkManager == null || !networkManager.IsNetworkActive) return true;
-    if (networkManager.IsServer) {
-      var baseConfig = ServerBuildBaseConfig();
-      return GameSetupMenu.MainMenu.CurrentGameMode.IsValidConfig(baseConfig);
-    }
+    // TODO(james7132): Properly set this up again
+    // if (networkManager.IsServer) {
+    //   var baseConfig = ServerBuildBaseConfig();
+    //   return GameSetupMenu.MainMenu.CurrentGameMode.IsValidConfig(baseConfig);
+    // }
     // Non-host clients should not be able to start a match
     return false;
   }
@@ -75,9 +76,10 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
 
   Task OnServerStartMatch(MatchConfig config) {
     var baseConfig = ServerBuildBaseConfig();
-    foreach (var player in NetworkManager.Instance.Server.Clients) {
-      player.StartMatch(BuildConfigForPlayer(baseConfig, player.PlayerID));
-    }
+    // TODO(james7132): Properly set this up again
+    // foreach (var player in NetworkManager.Instance.Server.Clients) {
+    //   player.StartMatch(BuildConfigForPlayer(baseConfig, player.PlayerID));
+    // }
     return Task.CompletedTask;
   }
 
@@ -98,17 +100,19 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
   void OnServerUpdatedConfig() {
     var baseConfig = ServerBuildBaseConfig();
     Debug.Log($"Sending Config: {baseConfig}");
-    foreach (var player in NetworkManager.Instance.Server.Clients) {
-      player.SendConfig(BuildConfigForPlayer(baseConfig, player.PlayerID));
-    }
+    // TODO(james7132): Properly set this up again
+    // foreach (var player in NetworkManager.Instance.Server.Clients) {
+    //   player.SendConfig(BuildConfigForPlayer(baseConfig, player.PlayerID));
+    // }
   }
 
   MatchConfig ServerBuildBaseConfig() {
     var baseConfig = GameSetupMenu.Config;
-    var server = NetworkManager.Instance.Server;
-    baseConfig.SetPlayerConfigs(from client in server.Clients 
-                                orderby client.PlayerID 
-                                select client.Config);
+    // TODO(james7132): Properly set this up again
+    // var server = NetworkManager.Instance.Server;
+    // baseConfig.SetPlayerConfigs(from client in server.Clients 
+    //                             orderby client.PlayerID 
+    //                             select client.Config);
     return baseConfig;
   }
 
@@ -140,9 +144,10 @@ public sealed class NetworkGameSetup : MonoBehaviour, IValidator<MatchConfig> {
   }
 
   void OnClientLocalPlayerUpdated(byte playerId, PlayerConfig config) {
-    var client = NetworkManager.Instance.ForceNull()?.Client;
-    if (client == null) return;
-    client.SetConfig(config);
+    // TODO(james7132): Properly set this up again
+    // var client = NetworkManager.Instance.ForceNull()?.Client;
+    // if (client == null) return;
+    // client.SetConfig(config);
   }
 
   void OnClientUpdatedConfig(MatchConfig config)  {

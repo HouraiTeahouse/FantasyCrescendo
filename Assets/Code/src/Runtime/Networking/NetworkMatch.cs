@@ -25,38 +25,42 @@ public class NetworkMatch : DefaultMatch {
 	}
 
 	protected override async Task InitializeMatch(MatchManager manager, MatchConfig config) {
-		if (NetworkManager.IsServer) {
-      NetworkManager.Server.PlayerUpdated += ServerHandleClientReady;
-      foreach(var client in NetworkManager.Server.Clients) {
-        Debug.Log($"Setting {client.PlayerID} not ready");
-        client.IsReady = false;
-      }
-		}
-    if (NetworkManager.IsClient) {
-      NetworkManager.Client.OnServerReady += ClientHandleServerReady;
-    }
+    // TODO(james7132): Properly set this up again
+		// if (NetworkManager.IsServer) {
+    //   NetworkManager.Server.PlayerUpdated += ServerHandleClientReady;
+    //   foreach(var client in NetworkManager.Server.Clients) {
+    //     Debug.Log($"Setting {client.PlayerID} not ready");
+    //     client.IsReady = false;
+    //   }
+		// }
+    // if (NetworkManager.IsClient) {
+    //   NetworkManager.Client.OnServerReady += ClientHandleServerReady;
+    // }
     await base.InitializeMatch(manager, config);
 		// Wait for remote players to be ready
 		var tasks = new List<Task>();
-		if (NetworkManager.IsClient && !NetworkManager.Client.IsServerReady) {
-      Debug.Log("Client: Set to Ready.");
-      NetworkManager.Client.SetReady(true);
-			tasks.Add(ClientReady.Task);
-		}
-		if (NetworkManager.IsServer && !AllClientsAreReady) {
-      Debug.Log("Waiting on clients...");
-			tasks.Add(ServerReady.Task);
-		}
+    // TODO(james7132): Properly set this up again
+		// if (NetworkManager.IsClient && !NetworkManager.Client.IsServerReady) {
+    //   Debug.Log("Client: Set to Ready.");
+    //   NetworkManager.Client.SetReady(true);
+		// 	tasks.Add(ClientReady.Task);
+		// }
+		// if (NetworkManager.IsServer && !AllClientsAreReady) {
+    //   Debug.Log("Waiting on clients...");
+		// 	tasks.Add(ServerReady.Task);
+		// }
 		await Task.WhenAll(tasks);
-		if (NetworkManager.IsClient) {
-      NetworkManager.Client.OnServerReady -= ClientHandleServerReady;
-		}
-		if (NetworkManager.IsServer) {
-      NetworkManager.Server.PlayerUpdated -= ServerHandleClientReady;
-		}
+    // TODO(james7132): Properly set this up again
+		// if (NetworkManager.IsClient) {
+    //   NetworkManager.Client.OnServerReady -= ClientHandleServerReady;
+		// }
+		// if (NetworkManager.IsServer) {
+    //   NetworkManager.Server.PlayerUpdated -= ServerHandleClientReady;
+		// }
 	}
 
-	bool AllClientsAreReady => NetworkManager.Server.Clients.All(client => client.IsReady);
+  // TODO(james7132): Properly set this up again
+	// bool AllClientsAreReady => NetworkManager.Server.Clients.All(client => client.IsReady);
 
   void ClientHandleServerReady(bool isServerReady) {
     Debug.Log("Client: Server is Ready");
@@ -68,9 +72,10 @@ public class NetworkMatch : DefaultMatch {
   void ServerHandleClientReady(NetworkClientPlayer player) {
     if (!player.IsReady) return;
     Debug.Log($"Server: Client {player.PlayerID} is Ready");
-    if (!AllClientsAreReady) return;
+    // if (!AllClientsAreReady) return;
     Debug.Log("Server: All Clients are Ready");
-    NetworkManager.Server.SetReady(true);
+    // TODO(james7132): Properly set this up again
+    // NetworkManager.Server.SetReady(true);
     ServerReady.TrySetResult(true);
   }
 

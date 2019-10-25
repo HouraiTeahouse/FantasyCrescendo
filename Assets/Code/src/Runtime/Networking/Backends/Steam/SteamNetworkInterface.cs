@@ -59,30 +59,31 @@ public sealed class SteamNetworkInterface : NetworkInterface {
 
   public override async Task<NetworkConnection> Connect(NetworkConnectionConfig config) {
     ValidateSteamInitalized();
-    if (config.LobbyInfo == null) {
-      throw new ArgumentException("Cannot connect to Steam networking except through a lobby.");
-    }
-    var id = new CSteamID(config.LobbyInfo.Id);
-    Debug.Log($"[Steam] Joining lobby: {config.LobbyInfo.Id}");
-    var lobbyEnter = await SteamMatchmaking.JoinLobby(id).ToTask<LobbyEnter_t>();
-    var responseCode = (EChatRoomEnterResponse)lobbyEnter.m_EChatRoomEnterResponse;
-    if (responseCode != EChatRoomEnterResponse.k_EChatRoomEnterResponseSuccess) {
-      throw new NetworkingException($"Could not join lobby {lobbyEnter.m_ulSteamIDLobby}. Error: {responseCode}.");
-    }
-    await SteamUtility.WaitFor<LobbyDataUpdate_t>();
-    currentLobbyId = new CSteamID(lobbyEnter.m_ulSteamIDLobby);
-    lobbyOwner = SteamMatchmaking.GetLobbyOwner(currentLobbyId);
-    // Send initial connection packet.
-    Debug.Log($"[Steam] Sending initial connection packet to lobby owner {lobbyOwner}...");
-    SendPacket(lobbyOwner, null, 0);
-    var connection = AddConnection(lobbyOwner);
-    var connectTask = connection.ConnectTask;
-    if (await Task.WhenAny(connectTask, Task.Delay(20000)) == connectTask) {
-      Debug.Log("[Steam] Connected to host");
-      return connection;
-    } else {
-      throw new NetworkingException("Could not connect to lobby host. Timeout: 20 seconds passed.");
-    }
+    throw new NotSupportedException();
+    // if (config.LobbyInfo == null) {
+    //   throw new ArgumentException("Cannot connect to Steam networking except through a lobby.");
+    // }
+    // var id = new CSteamID(config.LobbyInfo.Id);
+    // Debug.Log($"[Steam] Joining lobby: {config.LobbyInfo.Id}");
+    // var lobbyEnter = await SteamMatchmaking.JoinLobby(id).ToTask<LobbyEnter_t>();
+    // var responseCode = (EChatRoomEnterResponse)lobbyEnter.m_EChatRoomEnterResponse;
+    // if (responseCode != EChatRoomEnterResponse.k_EChatRoomEnterResponseSuccess) {
+    //   throw new NetworkingException($"Could not join lobby {lobbyEnter.m_ulSteamIDLobby}. Error: {responseCode}.");
+    // }
+    // await SteamUtility.WaitFor<LobbyDataUpdate_t>();
+    // currentLobbyId = new CSteamID(lobbyEnter.m_ulSteamIDLobby);
+    // lobbyOwner = SteamMatchmaking.GetLobbyOwner(currentLobbyId);
+    // // Send initial connection packet.
+    // Debug.Log($"[Steam] Sending initial connection packet to lobby owner {lobbyOwner}...");
+    // SendPacket(lobbyOwner, null, 0);
+    // var connection = AddConnection(lobbyOwner);
+    // var connectTask = connection.ConnectTask;
+    // if (await Task.WhenAny(connectTask, Task.Delay(20000)) == connectTask) {
+    //   Debug.Log("[Steam] Connected to host");
+    //   return connection;
+    // } else {
+    //   throw new NetworkingException("Could not connect to lobby host. Timeout: 20 seconds passed.");
+    // }
   }
 
   protected override void SendImpl(int connectionId, byte[] buffer, int count, 
