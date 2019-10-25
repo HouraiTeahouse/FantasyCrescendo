@@ -65,7 +65,7 @@ public class MatchState : INetworkSerializable {
   /// Constructs a new GameState based on a given GameConfig.
   /// </summary>
   /// <param name="config">the configuration for the game.</param>
-  public MatchState(MatchConfig config) : this(config.PlayerCount) {
+  public MatchState(MatchConfig config) : this((int)config.PlayerCount) {
     Time = config.Time;
     for (var i = 0; i < PlayerCount; i++) {
       playerStates[i].Stocks = (sbyte)config.Stocks;

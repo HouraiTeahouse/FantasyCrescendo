@@ -6,12 +6,10 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public class TestInputSource : IInputSource<MatchInput> {
 
-  MatchInput input;
+  readonly MatchConfig _config;
 
   public TestInputSource(MatchConfig config) {
-    input = new MatchInput(config);
-    // Force all inputs to be valid by "predicting" it.
-    input.Predict();
+    _config = config;
   }
 
   public MatchInput SampleInput() {
@@ -20,8 +18,8 @@ public class TestInputSource : IInputSource<MatchInput> {
       //TODO(james7132): Make Tap Jump Configurable
       Jump = Input.GetKey(KeyCode.W),
     };
-    var inputValue = input;
-    for (int i = 0; i < inputValue.PlayerCount; i++) {
+    var inputValue = new MatchInput();
+    for (int i = 0; i < _config.PlayerCount; i++) {
       if (i == 0) {
         inputValue[i] = playerInput;
       }

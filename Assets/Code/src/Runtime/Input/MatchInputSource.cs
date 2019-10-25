@@ -7,20 +7,11 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public abstract class MatchInputSourceBase<T> : IInputSource<MatchInput> where T : IInputSource<PlayerInput> {
 
-  byte _validMask;
-
   MatchInput input;
   readonly IInputSource<PlayerInput>[] playerInputs;
 
   protected MatchInputSourceBase(MatchConfig config) {
-    input = new MatchInput(config);
-    _validMask = 0;
     playerInputs = new IInputSource<PlayerInput>[config.PlayerCount];
-    for (var i = 0; i < config.PlayerCount; i++) {
-      playerInputs[i] = BuildPlayerInputSource(ref config[i]);
-      BitUtil.SetBit(ref _validMask, i, config[i].IsLocal);
-    }
-    Debug.Log($"Valid Mask: {_validMask}");
   }
 
   IInputSource<PlayerInput> BuildPlayerInputSource(ref PlayerConfig config) {
@@ -34,12 +25,8 @@ public abstract class MatchInputSourceBase<T> : IInputSource<MatchInput> where T
   }
   
   public MatchInput SampleInput() {
-    input = new MatchInput(input.PlayerCount);
-    input.ValidMask = _validMask;
-    for (var i = 0; i < input.PlayerCount; i++) {
-      if (input.IsPlayerValid(i)) {
-        input[i] = playerInputs[i].SampleInput();
-      }
+    for (var i = 0; i < playerInputs.Length; i++) {
+      input[i] = playerInputs[i].SampleInput();
     }
     return input;
   }

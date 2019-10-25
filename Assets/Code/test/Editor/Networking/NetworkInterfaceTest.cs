@@ -85,7 +85,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
 	[UnityTest]
 	public IEnumerator Server_StartMatch() {
     var server = new MatchConfig { Time = 100 };
-    server.SetPlayerConfigs(new PlayerConfig[4]);
+    server.PlayerCount = 4;
     MatchConfig? client = null;
 
     return RunTest(() => {
@@ -114,7 +114,6 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
 	public IEnumerator Server_BroadcastInput() {
     uint serverTimestamp = 42;
     var serverInputs = InputUtility.RandomInput(20, 4).ToArray();
-    InputUtility.ForceValid(serverInputs, new Random().Next());
     uint? clientTimestamp = null;
     IEnumerable<MatchInput> clientInputs = null;
     return RunTest(() => {
@@ -177,7 +176,6 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
 	public IEnumerator Client_SendInput() {
     uint clientTimestamp = 42;
     var clientInputs = InputUtility.RandomInput(20, 4).ToArray();
-    InputUtility.ForceValid(clientInputs, new Random().Next());
     uint? serverTimestamp = null;
     IEnumerable<MatchInput> serverInputs = null;
     return RunTest(() => {
@@ -195,7 +193,7 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
 	[UnityTest]
 	public IEnumerator LocalServer_StartMatch() {
     var server = new MatchConfig { Time = 100 };
-    server.SetPlayerConfigs(new PlayerConfig[4]);
+    server.PlayerCount = 4;
     MatchConfig? client = null;
 
     return RunLocalTest(() => {
@@ -224,7 +222,6 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
 	public IEnumerator LocalServer_BroadcastInput() {
     uint serverTimestamp = 42;
     var serverInputs = InputUtility.RandomInput(20, 4).ToArray();
-    InputUtility.ForceValid(serverInputs, new Random().Next());
     uint? clientTimestamp = null;
     IEnumerable<MatchInput> clientInputs = null;
     return RunLocalTest(() => {
@@ -287,7 +284,6 @@ public abstract class NetworkInterfaceTestBase<T> where T : HouraiTeahouse.Fanta
 	public IEnumerator LocalClient_SendInput() {
     uint clientTimestamp = 42;
     var clientInputs = InputUtility.RandomInput(20, 4).ToArray();
-    InputUtility.ForceValid(clientInputs, new Random().Next());
     uint? serverTimestamp = null;
     IEnumerable<MatchInput> serverInputs = null;
     return RunLocalTest(() => {

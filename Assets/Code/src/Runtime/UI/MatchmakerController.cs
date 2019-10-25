@@ -1,12 +1,13 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Networking;
-using System.Collections;
+﻿using HouraiTeahouse.Networking;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
+using System;
+using UnityEngine.UI;
+using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo.Matchmaking {
+namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public class MatchmakerController : MonoBehaviour {
 
@@ -34,11 +35,29 @@ public class MatchmakerController : MonoBehaviour {
     }
   }
 
+  IEnumerable<T> RoundRobin<T>(IList<T>[] sequences) {
+    var index = 0;
+    var pushed = false;
+    do {
+      pushed = false;
+      foreach (var seq in sequences) {
+        if (index >= seq.Count) continue;
+        yield return seq[index];
+        pushed = true;
+      }
+      index++;
+    } while (pushed);
+  }
+
   async Task RefreshLobbies() {
-    var networkManager = NetworkManager.Instance;
-    if (networkManager == null) return;
-    var lobbies = await networkManager.Matchmaker.GetLobbies();
-    foreach (var display in GetComponentsInChildren<IStateView<IEnumerable<LobbyInfo>>>()) {
+    var integrationManager = IntegrationManager.Instance;
+    if (integrationManager == null || integrationManager.Integrations == null) return;
+    var tasks = new List<Task<IList<Lobby>>>();
+    foreach (var integration in integrationManager.Integrations) {
+      tasks.Add(integration.LobbyManager.SearchLobbies());
+    }
+    Lobby[] lobbies = RoundRobin<Lobby>(await Task.WhenAll(tasks)).ToArray();
+    foreach (var display in GetComponentsInChildren<IStateView<IEnumerable<Lobby>>>()) {
       display.UpdateView(lobbies);
     }
     foreach (var display in GetComponentsInChildren<IStateView<MatchmakerController>>()) {
@@ -48,32 +67,41 @@ public class MatchmakerController : MonoBehaviour {
   }
 
   public async void CreateLobby() {
+    var integrationManager = IntegrationManager.Instance;
+    if (integrationManager == null || integrationManager.Integrations?.Count <= 0) {
+      throw new InvalidOperationException("Cannot create a lobby without a running ");
+    }
     Debug.Log("Started host for matchmaking.");
     SetActive(ConnectingScreen);
     try {
       var manager = NetworkManager.Instance;
-      await manager.StartHost(new NetworkHostConfig(), manager.Matchmaker.NetworkInterfaceType);
+      // TODO(james7132): Have this prefer one integration over another.
+      // TODO(james7132): Allow initial configuration through.
+      var initialConfig = new MatchConfig { Stocks = 3 };
+      var networkSetup = await manager.CreateLobby(integrationManager.Integrations.FirstOrDefault(),
+                                                   initialConfig);
+      // await manager.StartHost(new NetworkHostConfig(), manager.Matchmaker.NetworkInterfaceType);
       SetActive(SuccessScreen);
-    } catch (NetworkingException exception) {
+    } catch (Exception exception) {
       SetActive(ErrorScreen);
       ErrorText.text = exception.Message;
     }
   }
 
-  public async Task JoinLobby(LobbyInfo lobby) {
+  public async Task JoinLobby(Lobby lobby) {
     if (lobby == null) return;
     var manager = NetworkManager.Instance;
-    var client = manager.StartClient(new NetworkClientConfig(), manager.Matchmaker.NetworkInterfaceType);
-    try {
-      SetActive(ConnectingScreen);
-      await client.Connect(new NetworkConnectionConfig {
-        LobbyInfo = lobby
-      });
-      SetActive(SuccessScreen);
-    } catch (NetworkingException exception)  {
-      SetActive(ErrorScreen);
-      ErrorText.text = exception.Message;
-    }
+    // var client = manager.StartClient(new NetworkClientConfig(), manager.Matchmaker.NetworkInterfaceType);
+    // try {
+    //   SetActive(ConnectingScreen);
+    //   await client.Connect(new NetworkConnectionConfig {
+    //     LobbyInfo = lobby
+    //   });
+    //   SetActive(SuccessScreen);
+    // } catch (NetworkingException exception)  {
+    //   SetActive(ErrorScreen);
+    //   ErrorText.text = exception.Message;
+    // }
   }
 
   void SetActive(GameObject gameObj) {

@@ -13,7 +13,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// This is internally implemented as a singly-linked list, most of the 
 /// operations on these objects run in O(n) time.
 /// </remarks>
-public class InputHistory<I> : IEnumerable<TimedInput<I>> {
+public class InputHistory<I> : IEnumerable<TimedInput<I>> where I : struct {
 
   struct Element {
     public TimedInput<I> Value;
@@ -62,14 +62,14 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
   /// Initalizes a new instance of the <see cref="InputHistory{T}"/> class.
   /// </summary>
   /// <param name="input">the starting base input.</param>
-  public InputHistory(I input) : this(input, 0, Merger<I>.Default) { }
+  public InputHistory() : this(0, Merger<I>.Default) { }
 
   /// <summary>
   /// Initalizes a new instance of the <see cref="InputHistory{T}"/> class.
   /// </summary>
   /// <param name="input">the starting base input.</param>
   /// <param name="startTimestamp">the timestamp of the first element.</param>
-  public InputHistory(I input, uint startTimestamp) : this(input, startTimestamp, Merger<I>.Default) {
+  public InputHistory(uint startTimestamp) : this(startTimestamp, Merger<I>.Default) {
   }
 
   /// <summary>
@@ -77,7 +77,7 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
   /// </summary>
   /// <param name="input">the starting base input.</param>
   /// <param name="merger">a <see cref="IMerger{T}"/> used to merge inputs.</param>
-  public InputHistory(I input, IMerger<I> merger) : this(input, 0, merger) {
+  public InputHistory(IMerger<I> merger) : this(0, merger) {
   }
 
   /// <summary>
@@ -86,14 +86,12 @@ public class InputHistory<I> : IEnumerable<TimedInput<I>> {
   /// <param name="input">the starting base input.</param>
   /// <param name="startTimestamp">the timestamp of the first element.</param>
   /// <param name="merger">a <see cref="IMerger{T}"/> used to merge inputs.</param>
-  public InputHistory(I start, uint startTimestep,
-                      IMerger<I> merger, int capacity = kDefaultStartSize) {
+  public InputHistory(uint startTimestep, IMerger<I> merger, int capacity = kDefaultStartSize) {
     inputs = new Element[capacity];
     pool = new Stack<int>(capacity);
     isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(I));
     this.merger = merger;
     inputs[0] = new Element {
-      Input = start,
       Timestep = startTimestep,
       Next = null
     };

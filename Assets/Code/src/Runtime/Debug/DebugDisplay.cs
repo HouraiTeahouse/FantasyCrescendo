@@ -95,16 +95,17 @@ public class DebugDisplay : MonoBehaviour {
     var networkManager = NetworkManager.Instance;
     if (networkManager == null) return;
     var seconds = GetSeconds(timestep);
-    if (networkManager.IsClient) {
-      builder.AppendLine($"Client: {NetworkStats(networkManager.Client.Connection.Stats, seconds)}");
-    }
-    if (networkManager.IsServer) {
-      var stats = new ConnectionStats();
-      foreach (var client in networkManager.Server.Clients) {
-        stats.MergeWith(client.Connection.Stats);
-      }
-      builder.AppendLine($"Server: {NetworkStats(stats, seconds)}");
-    }
+    // TODO(james7132): Properly set this up again
+    // if (networkManager.IsClient) {
+    //   builder.AppendLine($"Client: {NetworkStats(networkManager.Client.Connection.Stats, seconds)}");
+    // }
+    // if (networkManager.IsServer) {
+    //   var stats = new ConnectionStats();
+    //   foreach (var client in networkManager.Server.Clients) {
+    //     stats.MergeWith(client.Connection.Stats);
+    //   }
+    //   builder.AppendLine($"Server: {NetworkStats(stats, seconds)}");
+    // }
   }
 
   string NetworkStats(ConnectionStats stats, float seconds) {

@@ -46,84 +46,12 @@ public struct PlayerInput {
     set => BitUtil.SetBit(ref Buttons, kGrabBit, value);
   }
 
-  public static bool operator ==(PlayerInput a, PlayerInput b) {
-    var equals = (a.Buttons & 31) == (b.Buttons & 31);
-    equals &= a.Movement == b.Movement;
-    equals &= a.Smash == b.Smash;
-    return equals;
-  }
-
-  public static bool operator !=(PlayerInput a, PlayerInput b) => !(a == b);
-
-  public override string ToString() {
-    var buttons = Convert.ToString(Buttons, 2).PadLeft(8, '0');
-    return $"PlayerInput(({Movement.x}, {Movement.y}), ({Smash.x}, {Smash.y}), {buttons})";
-  }
-
-  public override int GetHashCode() => 
-    31 * Movement.GetHashCode() + 
-    17 * Smash.GetHashCode() + 
-    Buttons.GetHashCode();
-
   public PlayerInput MergeWith(PlayerInput other) {
     return new PlayerInput {
       Movement = (Vector2)Movement + (Vector2)other.Movement,
       Smash = (Vector2)Smash + (Vector2)other.Smash,
       Buttons = (byte)((Buttons | other.Buttons) & 31)
     };
-  }
-
-  public void Serialize(ref Serializer serializer, PlayerInput? previous = null) {
-    bool cutMovement, cutSmash;
-    if (previous != null) {
-      cutMovement = Movement == previous.Value.Movement;
-      cutSmash = Smash == previous.Value.Smash;
-    } else {
-      cutMovement = Movement.X == 0 && Movement.Y == 0;
-      cutSmash = Smash.X == 0 && Smash.Y == 0;
-    }
-    byte header = Buttons;
-    BitUtil.SetBit(ref header, 5, !cutMovement);
-    BitUtil.SetBit(ref header, 6, !cutSmash);
-    serializer.Write(header);
-    if (!cutMovement) {
-      serializer.Write(Movement.X);
-      serializer.Write(Movement.Y);
-    }
-    if (!cutSmash) {
-      serializer.Write(Smash.X);
-      serializer.Write(Smash.Y);
-    }
-  }
-
-  public static void Deserialize(ref Deserializer deserializer, ref PlayerInput input) {
-      PlayerInput? previous = null;
-      Deserialize(ref deserializer, ref input, ref previous);
-  }
-  public static void Deserialize(ref Deserializer deserializer, 
-                                 ref PlayerInput input,
-                                 ref PlayerInput? previous) {
-    var header = deserializer.ReadByte();
-    input.Buttons = (byte)(header & 31);
-    DeserializeVector(BitUtil.GetBit(header, 5), ref input.Movement, ref deserializer, 
-                      previous?.Movement);
-    DeserializeVector(BitUtil.GetBit(header, 6), ref input.Smash, ref deserializer, 
-                      previous?.Smash);
-  }
-
-  static void DeserializeVector(bool read, ref Vector2b vec, ref 
-                                Deserializer deserializer,
-                                Vector2b? previous) {
-    if (read) {
-      vec.X = deserializer.ReadSByte();
-      vec.Y = deserializer.ReadSByte();
-    } else {
-      if (previous != null) {
-        vec = previous.Value;
-      } else {
-        vec.X = vec.Y = 0;
-      }
-    }
   }
 
 }
@@ -171,8 +99,8 @@ public readonly struct ButtonContext {
 }
 
 public struct Vector2b {
-  public sbyte X;
-  public sbyte Y;
+  public byte X;
+  public byte Y;
 
   public float x  {
     get => ToFloat(X);
@@ -186,15 +114,15 @@ public struct Vector2b {
   public static implicit operator Vector2b(Vector2 vector) => new Vector2b { x = vector.x, y = vector.y };
   public static implicit operator Vector2(Vector2b vector) => new Vector2 { x = vector.x, y = vector.y };
 
-  float ToFloat(sbyte val) => (float)val / sbyte.MaxValue;
-  sbyte FromFloat(float val) => (sbyte)(Mathf.Clamp(val, -1, 1) * sbyte.MaxValue);
+  float ToFloat(byte val) => (val - 127) / 127f;
+  byte FromFloat(float val) => (byte)(Mathf.Clamp(val, -1, 1) * 127f + 127);
 
   public static bool operator ==(Vector2b a, Vector2b b) => a.X == b.X && a.Y == b.Y;
   public static bool operator !=(Vector2b a, Vector2b b) => !(a == b);
 
   public override int GetHashCode() => unchecked(31 * X + Y);
   
-  public override string ToString() => $"Vector2b<{(Vector2)this}>";
+  public override string ToString() => $"Vector2b<{X - 128}, {Y - 128}>";
 
 }
 

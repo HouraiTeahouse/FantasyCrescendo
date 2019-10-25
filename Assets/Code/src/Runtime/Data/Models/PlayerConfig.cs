@@ -2,6 +2,7 @@ using HouraiTeahouse.Networking;
 using System;
 using System.Linq;
 using UnityEngine;
+using System.Runtime.InteropServices;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
@@ -9,24 +10,29 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// A data object for configuring a single player within a multiplayer match.
 /// </summary>
 [Serializable]
+[StructLayout(LayoutKind.Explicit, Size = 11)]
 public struct PlayerConfig : IValidatable, INetworkSerializable {
 
   /// <summary>
   /// The Player ID of the player. Determines what is visually displayed
   /// to denote the player.
   /// </summary>
+  [FieldOffset(0)]
   public byte PlayerID;
 
   /// <summary>
   /// The local player number. Mainly used to determine what local input 
   /// device to read the input from.
   /// </summary>
+  [FieldOffset(1)]
   public sbyte LocalPlayerID;
+  [FieldOffset(2)]
   public PlayerSelection Selection;
 
   /// <summary>
   /// The default amount of damage the player will have on (re)spawning.
   /// </summary>
+  [FieldOffset(7)]
   public float DefaultDamage;
 
   public bool IsLocal => LocalPlayerID >= 0;
@@ -55,9 +61,12 @@ public struct PlayerConfig : IValidatable, INetworkSerializable {
 /// configuration.
 /// </summary>
 [Serializable]
+[StructLayout(LayoutKind.Explicit, Size = 5)]
 public struct PlayerSelection : IValidatable, INetworkSerializable {
 
+  [FieldOffset(0)]
   public uint CharacterID;            // 1-4 bytes
+  [FieldOffset(4)]
   public byte Pallete;                // 1 byte
   
   public bool IsValid {

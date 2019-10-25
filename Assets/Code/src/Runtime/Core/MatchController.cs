@@ -16,13 +16,12 @@ public class MatchController : IMatchController {
   readonly MatchInputContext inputContext;
   
   public MatchController(MatchConfig config) {
-    inputContext = new MatchInputContext(new MatchInput(config));
+    inputContext = new MatchInputContext();
   }
 
   public virtual void Update() {
     if (CurrentState.StateID != MatchProgressionState.Intro) {
       var input = InputSource.SampleInput();
-      Assert.IsTrue(input.IsValid);
       inputContext.Update(input);
     }
     
