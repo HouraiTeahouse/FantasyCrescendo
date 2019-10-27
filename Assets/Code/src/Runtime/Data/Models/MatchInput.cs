@@ -33,25 +33,13 @@ public unsafe struct MatchInput {
 
 }
 
-public class MatchInputContext {
+public struct MatchInputContext {
 
-  MatchInput before;
-  MatchInput current;
+  public MatchInput Previous;
+  public MatchInput Current;
 
   public PlayerInputContext this[int idx] => 
-    new PlayerInputContext(ref before[idx], ref current[idx]);
-
-  public void Reset(MatchInput input) => current = input;
-
-  public void Reset(MatchInput previous, MatchInput current) {
-    Reset(previous);
-    Update(current);
-  }
-
-  public void Update(MatchInput next) {
-    before = current;
-    current = next;
-  }
+    new PlayerInputContext(ref Previous[idx], ref Current[idx]);
 
 }
 

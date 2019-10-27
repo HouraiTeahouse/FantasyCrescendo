@@ -38,9 +38,6 @@ public class NetworkManager : MonoBehaviour {
 	[SerializeField] [Type(typeof(IIntegrationClient), CommonName = "Integration")]
 	string defaultNetworkInterface;
 
-	[SerializeField] [Type(typeof(INetworkStrategy), CommonName = "Strategy")]
-	string networkStrategy;
-
 	/// <summary>
 	/// Awake is called when the script instance is being loaded.
 	/// </summary>
@@ -63,25 +60,6 @@ public class NetworkManager : MonoBehaviour {
   }
 
 	Type DefaultNetworkInterfaceType => Type.GetType(defaultNetworkInterface);
-
-	INetworkStrategy GetNetworkStrategy() {
-		return Activator.CreateInstance(Type.GetType(networkStrategy)) as INetworkStrategy;
-	}
-
-	public IMatchController CreateMatchController(MatchConfig config) {
-		var strategy = GetNetworkStrategy();
-
-    // TODO(james7132): Properly set this up again
-		// if (IsHost) {
-		// 	return strategy.CreateHost(Host, config);
-		// } else if (IsClient) {
-		// 	return strategy.CreateClient(Client, config);
-		// } else if (IsServer) {
-		// 	return strategy.CreateServer(Server, config);
-		// } else {
-			return new MatchController(config);
-		// }
-	}
 
   public async Task<NetworkGameSetup> CreateLobby(IIntegrationClient integration,
                                                   MatchConfig config,

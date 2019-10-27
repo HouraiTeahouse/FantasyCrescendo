@@ -13,32 +13,7 @@ public sealed class LobbySetup : MonoBehaviour, IValidator<MatchConfig> {
   public GameSetupMenu GameSetupMenu;
   public CharacterSelectMenu CharacterSelectMenu;
 
-  /// <summary>
-  /// This function is called when the object becomes enabled and active.
-  /// </summary>
-  void OnEnable() {
-    var networkManager = NetworkManager.Instance;
-    if (networkManager == null) return;
-    // if (networkManager.IsServer) { EnableServer(networkManager.Server); }
-    // if (networkManager.IsClient) { EnableClient(networkManager.Client); }
-  }
-
-  /// <summary>
-  /// This function is called when the behaviour becomes disabled or inactive.
-  /// </summary>
-  void OnDisable() {
-    var networkManager = NetworkManager.Instance;
-    if (networkManager == null) return;
-    // if (networkManager.IsClient) { DisableClient(networkManager.Client); }
-    // if (networkManager.IsServer) { DisableServer(networkManager.Server); }
-  }
-
-  public void CloseConnections() {
-    var networkManager = NetworkManager.Instance;
-    if (networkManager == null) return;
-    // if (networkManager.IsClient) { networkManager.StopClient(); }
-    // if (networkManager.IsServer) { networkManager.StopServer(); }
-  }
+  public NetworkGameSetup GameSetup;
 
   bool IValidator<MatchConfig>.IsValid(MatchConfig obj) {
     var networkManager = NetworkManager.Instance;
@@ -50,112 +25,6 @@ public sealed class LobbySetup : MonoBehaviour, IValidator<MatchConfig> {
     // }
     // Non-host clients should not be able to start a match
     return false;
-  }
-
-  // Server Methods
-
-  void EnableServer(INetworkServer server) {
-    server.PlayerAdded += OnServerAddPlayer;
-    server.PlayerUpdated += OnServerUpdatePlayer;
-    server.PlayerRemoved += OnServerRemovePlayer;
-
-    GameSetupMenu.OnStartMatch += OnServerStartMatch;
-
-    foreach (var client in server.Clients)  {
-      InitalizePlayer(client);
-    }
-    OnServerUpdatedConfig();
-  }
-
-  void DisableServer(INetworkServer server) {
-    server.PlayerAdded -= OnServerAddPlayer;
-    server.PlayerUpdated -= OnServerUpdatePlayer;
-    server.PlayerRemoved -= OnServerRemovePlayer;
-    GameSetupMenu.OnStartMatch -= OnServerStartMatch;
-  }
-
-  Task OnServerStartMatch(MatchConfig config) {
-    var baseConfig = ServerBuildBaseConfig();
-    // TODO(james7132): Properly set this up again
-    // foreach (var player in NetworkManager.Instance.Server.Clients) {
-    //   player.StartMatch(BuildConfigForPlayer(baseConfig, player.PlayerID));
-    // }
-    return Task.CompletedTask;
-  }
-
-  void OnServerAddPlayer(NetworkClientPlayer player) {
-    InitalizePlayer(player);
-    OnServerUpdatedConfig(); 
-  }
-  void OnServerUpdatePlayer(NetworkClientPlayer player) {
-    Debug.Log($"Player config updated: {player.PlayerID} {player.Config}");
-    OnServerUpdatedConfig();
-  } 
-  void OnServerRemovePlayer(int playerId) => OnServerUpdatedConfig();
-
-  void InitalizePlayer(NetworkClientPlayer player) {
-    player.Config.Selection = CharacterSelectMenu.CreateNewSelection(player.PlayerID);
-  }
-
-  void OnServerUpdatedConfig() {
-    var baseConfig = ServerBuildBaseConfig();
-    Debug.Log($"Sending Config: {baseConfig}");
-    // TODO(james7132): Properly set this up again
-    // foreach (var player in NetworkManager.Instance.Server.Clients) {
-    //   player.SendConfig(BuildConfigForPlayer(baseConfig, player.PlayerID));
-    // }
-  }
-
-  MatchConfig ServerBuildBaseConfig() {
-    var baseConfig = GameSetupMenu.Config;
-    // TODO(james7132): Properly set this up again
-    // var server = NetworkManager.Instance.Server;
-    // baseConfig.SetPlayerConfigs(from client in server.Clients 
-    //                             orderby client.PlayerID 
-    //                             select client.Config);
-    return baseConfig;
-  }
-
-  MatchConfig BuildConfigForPlayer(MatchConfig baseConfig, uint playerId) {
-    // TODO(james7132): Generalize this to work with multiple players per client
-    for (var i = 0; i < baseConfig.PlayerCount; i++) {
-      baseConfig[i].LocalPlayerID = -1;
-    }
-    baseConfig[(int)playerId].LocalPlayerID = 0;
-    return baseConfig;
-  }
-
-  // Client Methods
-
-  void EnableClient(INetworkClient client) {
-    client.OnMatchConfigUpdated += OnClientUpdatedConfig;
-    client.OnMatchStarted += OnClientMatchStarted;
-    foreach (var player in CharacterSelectMenu.Players) {
-      player.PlayerUpdated += OnClientLocalPlayerUpdated;
-    }
-  }
-
-  void DisableClient(INetworkClient client) {
-    client.OnMatchConfigUpdated -= OnClientUpdatedConfig;
-    client.OnMatchStarted -= OnClientMatchStarted;
-    foreach (var player in CharacterSelectMenu.Players) {
-      player.PlayerUpdated -= OnClientLocalPlayerUpdated;
-    }
-  }
-
-  void OnClientLocalPlayerUpdated(byte playerId, PlayerConfig config) {
-    // TODO(james7132): Properly set this up again
-    // var client = NetworkManager.Instance.ForceNull()?.Client;
-    // if (client == null) return;
-    // client.SetConfig(config);
-  }
-
-  void OnClientUpdatedConfig(MatchConfig config)  {
-    CharacterSelectMenu.UpdateView(config); 
-  }
-
-  async void OnClientMatchStarted(MatchConfig config) {
-    await GameSetupMenu.MainMenu.CurrentGameMode.Execute(config);
   }
 
 }

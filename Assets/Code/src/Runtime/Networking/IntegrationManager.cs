@@ -38,9 +38,11 @@ public class IntegrationManager : MonoBehaviour {
 
     public IReadOnlyCollection<IIntegrationClient> Integrations { get; private set; }
 
+#pragma warning disable 0649
     [SerializeField] UpdateMode _updateMode;
     [SerializeField] SteamConfig _steam;
     [SerializeField] DiscordConfig _discord;
+#pragma warning restore 0649
 
     IIntegrationClient[] _integrations;
 
