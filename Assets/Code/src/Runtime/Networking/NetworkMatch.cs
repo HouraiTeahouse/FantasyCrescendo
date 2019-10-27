@@ -3,80 +3,102 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Assertions;
+using HouraiTeahouse.Networking;
 
 namespace HouraiTeahouse.FantasyCrescendo.Networking {
 
 public class NetworkMatch : DefaultMatch {
 
-	readonly NetworkManager NetworkManager;
-  readonly TaskCompletionSource<object> ClientReady;
-  readonly TaskCompletionSource<object> ServerReady;
+  const int resendDelay    = 500;     // in milliseconds
+  const byte kLaodedHeader = 69;      // Nice
 
-	public NetworkMatch(NetworkManager networkManager) {
-		NetworkManager = Argument.NotNull(networkManager);
-    ClientReady = new TaskCompletionSource<object>();
-    ServerReady = new TaskCompletionSource<object>();
+	readonly Lobby Lobby;
+  readonly List<LobbyMember> _waitingMembers;
+  readonly TaskCompletionSource<object> ready;
+
+  BackrollMatchController controller;
+
+	public NetworkMatch(Lobby lobby) {
+		Lobby = Argument.NotNull(lobby);
+    _waitingMembers = new List<LobbyMember>(Lobby.Members);
+    _waitingMembers.Remove(lobby.Members.Me);
+
+    controller = null;
+    ready = new TaskCompletionSource<object>();
+
+    Lobby. OnLobbyMessage += OnLobbyMessage;
+    Lobby.OnDeleted += OnLobbyDelete;
+    Lobby.OnMemberLeave += OnMemberLeave;
 	}
 
 	protected override IMatchController CreateMatchController(MatchConfig config ) {
-		return NetworkManager.CreateMatchController(config);
+    return (controller = new BackrollMatchController(Lobby));
 	}
 
 	protected override async Task InitializeMatch(MatchManager manager, MatchConfig config) {
-    // TODO(james7132): Properly set this up again
-		// if (NetworkManager.IsServer) {
-    //   NetworkManager.Server.PlayerUpdated += ServerHandleClientReady;
-    //   foreach(var client in NetworkManager.Server.Clients) {
-    //     Debug.Log($"Setting {client.PlayerID} not ready");
-    //     client.IsReady = false;
-    //   }
-		// }
-    // if (NetworkManager.IsClient) {
-    //   NetworkManager.Client.OnServerReady += ClientHandleServerReady;
-    // }
-    await base.InitializeMatch(manager, config);
-		// Wait for remote players to be ready
-		var tasks = new List<Task>();
-    // TODO(james7132): Properly set this up again
-		// if (NetworkManager.IsClient && !NetworkManager.Client.IsServerReady) {
-    //   Debug.Log("Client: Set to Ready.");
-    //   NetworkManager.Client.SetReady(true);
-		// 	tasks.Add(ClientReady.Task);
-		// }
-		// if (NetworkManager.IsServer && !AllClientsAreReady) {
-    //   Debug.Log("Waiting on clients...");
-		// 	tasks.Add(ServerReady.Task);
-		// }
-		await Task.WhenAll(tasks);
-    // TODO(james7132): Properly set this up again
-		// if (NetworkManager.IsClient) {
-    //   NetworkManager.Client.OnServerReady -= ClientHandleServerReady;
-		// }
-		// if (NetworkManager.IsServer) {
-    //   NetworkManager.Server.PlayerUpdated -= ServerHandleClientReady;
-		// }
+    try {
+      await base.InitializeMatch(manager, config);
+      // Wait for all members of the lobby to be ready.
+      do {
+        BroadcastReady();
+        await Task.WhenAny(Task.Delay(resendDelay), ready.Task);
+      } while(ready.Task.IsCompleted);
+      // Rethrow the error if an exception occured.
+      await ready.Task;
+      // Wait for the session to finish synchronizing
+      await controller.StartSession();
+    } finally {
+      Unsubscribe();
+    }
 	}
 
-  // TODO(james7132): Properly set this up again
-	// bool AllClientsAreReady => NetworkManager.Server.Clients.All(client => client.IsReady);
+  void Unsubscribe() {
+    Lobby.OnNetworkMessage -= OnLobbyMessage;
+    Lobby.OnDeleted -= OnLobbyDelete;
+    Lobby.OnMemberLeave -= OnMemberLeave;
+  }
 
-  void ClientHandleServerReady(bool isServerReady) {
-    Debug.Log("Client: Server is Ready");
-    if (isServerReady) {
-      ClientReady.TrySetResult(true);
+  void OnLobbyDelete() => ready.SetException(new Exception("Network lobby was deleted."));
+  void OnMemberLeave(LobbyMember member) {
+    Debug.Log($"Remote Peer {member.Id.Id} left during initialization.");
+    _waitingMembers.Remove(member);
+  }
+
+  void OnLobbyMessage(LobbyMember member, byte[] msg, uint size) {
+    var expected = CreateReadyMessage(member);
+    if (!BufferEquals(expected, msg, size)) {
+      Debug.Log($"Unexpected message from {member.Id.Id}.");
+      return;
+    }
+    _waitingMembers.Remove(member);
+    Debug.Log($"Remote Peer {member.Id.Id} ready.");
+    if (_waitingMembers.Count <= 0) {
+      ready.SetResult(null);
+      Debug.Log("All remote peers are ready!");
     }
   }
 
-  void ServerHandleClientReady(NetworkClientPlayer player) {
-    if (!player.IsReady) return;
-    Debug.Log($"Server: Client {player.PlayerID} is Ready");
-    // if (!AllClientsAreReady) return;
-    Debug.Log("Server: All Clients are Ready");
-    // TODO(james7132): Properly set this up again
-    // NetworkManager.Server.SetReady(true);
-    ServerReady.TrySetResult(true);
+  void BroadcastReady() {
+    Debug.Log("Broadcasting ready message.");
+    Lobby.SendLobbyMessage(CreateReadyMessage(Lobby.Members.Me));
+  }
+
+  unsafe byte[] CreateReadyMessage(LobbyMember member) {
+    var buffer = stackalloc byte[256];
+    var serializer = Serializer.Create(buffer, 256);
+    serializer.Write(kLaodedHeader);
+    serializer.Write(member.Id.Id);
+    return serializer.ToArray();
+  }
+
+  unsafe bool BufferEquals(byte[] a, byte[] b, uint size) {
+    if (size < a.Length) return false;
+    fixed (byte* aPtr = a, bPtr = b) {
+      return UnsafeUtility.MemCmp(aPtr, bPtr, a.Length) == 0;
+    }
   }
 
 }

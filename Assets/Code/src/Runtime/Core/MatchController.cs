@@ -13,20 +13,16 @@ public class MatchController : IMatchController {
   public virtual ISimulation<MatchState, MatchInputContext> Simulation { get; set; }
   public virtual IInputSource<MatchInput> InputSource { get; set; }
 
-  readonly MatchInputContext inputContext;
-  
-  public MatchController(MatchConfig config) {
-    inputContext = new MatchInputContext();
-  }
-
   public virtual void Update() {
-    if (CurrentState.StateID != MatchProgressionState.Intro) {
-      var input = InputSource.SampleInput();
-      inputContext.Update(input);
-    }
+    if (CurrentState.StateID == MatchProgressionState.Intro) return;
+
+    var input = new MatchInputContext {
+      Previous = CurrentState.LastInput,
+      Current = InputSource.SampleInput()
+    };
     
     var state = CurrentState;
-    Simulation.Simulate(ref state, inputContext);
+    Simulation.Simulate(ref state, input);
     CurrentState = state;
 
     Timestep++;

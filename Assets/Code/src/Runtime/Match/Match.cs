@@ -53,7 +53,7 @@ public abstract class Match {
 
 	// TODO(james71323): Refactor or move this to somewhere more sane
 	protected virtual IMatchController CreateMatchController(MatchConfig config) {
-		return new MatchController(config);
+		return new MatchController();
 	}
 
   protected abstract Task InitializeMatch(MatchManager manager, MatchConfig config);

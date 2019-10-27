@@ -35,11 +35,12 @@ public enum MatchProgressionState {
 public class MatchState : INetworkSerializable {
 
   public uint Time;
+  public MatchProgressionState StateID = MatchProgressionState.Intro;
+  public MatchInput LastInput;
 
   [SerializeField]
   PlayerState[] playerStates;
   public int PlayerCount { get; private set; }
-  public MatchProgressionState StateID = MatchProgressionState.Intro;
 
   public MatchState() : this((int)GameMode.GlobalMaxPlayers) { }
 
