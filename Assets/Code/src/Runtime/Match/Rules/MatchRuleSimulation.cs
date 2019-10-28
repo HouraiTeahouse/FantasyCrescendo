@@ -7,13 +7,11 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
-public class MatchRuleSimulation : IMatchSimulation {
+public sealed class MatchRuleSimulation : IMatchSimulation {
 
   MatchConfig MatchConfig;
   readonly MatchRule[] Rules;
 
-  //TODO(james7132): Move this to somewhere more sane.
-  MediatorContext Events;
   BlastZone BlastZone;
 
   public MatchRuleSimulation(IEnumerable<MatchRule> rules) {
@@ -41,7 +39,7 @@ public class MatchRuleSimulation : IMatchSimulation {
 
   public MatchState ResetState(MatchState state) => state;
 
-  public void Dispose() => Events?.Dispose();
+  public void Dispose() {}
 
   void CheckForFinish(MatchState state) {
     MatchResolution? resolution = GetResolution(state);

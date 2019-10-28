@@ -80,7 +80,6 @@ public class MatchmakerController : MonoBehaviour {
       var initialConfig = new MatchConfig { Stocks = 3 };
       var networkSetup = await manager.CreateLobby(integrationManager.Integrations.FirstOrDefault(),
                                                    initialConfig);
-      // await manager.StartHost(new NetworkHostConfig(), manager.Matchmaker.NetworkInterfaceType);
       SetActive(SuccessScreen);
     } catch (Exception exception) {
       SetActive(ErrorScreen);
@@ -89,19 +88,14 @@ public class MatchmakerController : MonoBehaviour {
   }
 
   public async Task JoinLobby(Lobby lobby) {
-    if (lobby == null) return;
-    var manager = NetworkManager.Instance;
-    // var client = manager.StartClient(new NetworkClientConfig(), manager.Matchmaker.NetworkInterfaceType);
-    // try {
-    //   SetActive(ConnectingScreen);
-    //   await client.Connect(new NetworkConnectionConfig {
-    //     LobbyInfo = lobby
-    //   });
-    //   SetActive(SuccessScreen);
-    // } catch (NetworkingException exception)  {
-    //   SetActive(ErrorScreen);
-    //   ErrorText.text = exception.Message;
-    // }
+    try {
+      SetActive(ConnectingScreen);
+      await NetworkManager.Instance.JoinLobby(lobby);
+      SetActive(SuccessScreen);
+    } catch (Exception exception) {
+      SetActive(ErrorScreen);
+      ErrorText.text = exception.Message;
+    }
   }
 
   void SetActive(GameObject gameObj) {

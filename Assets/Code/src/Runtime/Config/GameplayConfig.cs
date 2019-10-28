@@ -8,8 +8,10 @@ namespace HouraiTeahouse.FantasyCrescendo {
 [CreateAssetMenu(menuName = "Config/Gameplay Config")]
 public class GameplayConfig : ScriptableObject {
 
+#pragma warning disable 0649
 	[SerializeField] [Type(typeof(IInputSource<MatchInput>), CommonName="InputSource")] 
 	string inputSource;
+#pragma warning restore 0649
 
 	[SerializeField] float _maxLedgeHangTime = 10;
 	[SerializeField] float _ledgeGrabCooldown = 0.5f;

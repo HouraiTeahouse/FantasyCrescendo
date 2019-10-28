@@ -25,7 +25,7 @@ public class UnityPlayerInputSource : IInputSource<PlayerInput> {
 
   void UpdatePlayerInput(Gamepad device) {
     // TODO(james7132): Add PlayerControllerMapping support
-    input.Movement = device.leftStick.ReadValue();
+    input.Movement = (FixedVector16)device.leftStick.ReadValue();
     input.Attack = device.buttonSouth.isPressed;
     input.Special = device.buttonEast.isPressed;
     input.Shield = device.leftTrigger.isPressed || device.rightTrigger.isPressed;

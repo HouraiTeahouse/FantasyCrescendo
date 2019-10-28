@@ -24,14 +24,11 @@ public class MatchStateTests {
       var input = StateUtility.RandomState(playerCount);
       var networkWriter = Serializer.Create(buffer, 2048);
       input.Serialize(ref networkWriter);
-      var bytes = networkWriter.ToArray();
       sizes.Add(networkWriter.Position);
-      fixed (byte* bytesPtr = bytes) {
-        var networkReader = Deserializer.Create(bytesPtr, (uint)networkWriter.Position);
-        var deserialized = new MatchState(playerCount);
-        deserialized.Deserialize(ref networkReader);
-        Assert.AreEqual(input, deserialized);
-      }
+      var networkReader = Deserializer.Create(networkWriter.ToFixedBuffer());
+      var deserialized = new MatchState(playerCount);
+      deserialized.Deserialize(ref networkReader);
+      Assert.AreEqual(input, deserialized);
     }
     Debug.Log($"Match Input: Average Message Size ({playerCount}): {sizes.Average()}");
 	}

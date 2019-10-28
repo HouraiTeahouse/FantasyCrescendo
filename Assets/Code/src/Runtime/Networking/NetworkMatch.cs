@@ -13,7 +13,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Networking {
 public class NetworkMatch : DefaultMatch {
 
   const int resendDelay    = 500;     // in milliseconds
-  const byte kLaodedHeader = 69;      // Nice
+  const byte kLoadedHeader = 69;      // Nice
 
 	readonly Lobby Lobby;
   readonly List<LobbyMember> _waitingMembers;
@@ -29,7 +29,7 @@ public class NetworkMatch : DefaultMatch {
     controller = null;
     ready = new TaskCompletionSource<object>();
 
-    Lobby. OnLobbyMessage += OnLobbyMessage;
+    Lobby.OnLobbyMessage += OnLobbyMessage;
     Lobby.OnDeleted += OnLobbyDelete;
     Lobby.OnMemberLeave += OnMemberLeave;
 	}
@@ -67,9 +67,11 @@ public class NetworkMatch : DefaultMatch {
     _waitingMembers.Remove(member);
   }
 
-  void OnLobbyMessage(LobbyMember member, byte[] msg, uint size) {
-    var expected = CreateReadyMessage(member);
-    if (!BufferEquals(expected, msg, size)) {
+  unsafe void OnLobbyMessage(LobbyMember member, FixedBuffer msg) {
+    // Stackalloc that must be bigger any ready message could ever be.
+    var expected = stackalloc byte[256];
+    var size = CreateReadyMessage(member, expected, 256);
+    if (!BufferEquals(expected, size, msg)) {
       Debug.Log($"Unexpected message from {member.Id.Id}.");
       return;
     }
@@ -81,24 +83,23 @@ public class NetworkMatch : DefaultMatch {
     }
   }
 
-  void BroadcastReady() {
+  unsafe void BroadcastReady() {
     Debug.Log("Broadcasting ready message.");
-    Lobby.SendLobbyMessage(CreateReadyMessage(Lobby.Members.Me));
+    var msg = stackalloc byte[256];
+    var size = CreateReadyMessage(Lobby.Members.Me, msg, 256);
+    Lobby.SendLobbyMessage(new FixedBuffer(msg, size));
   }
 
-  unsafe byte[] CreateReadyMessage(LobbyMember member) {
-    var buffer = stackalloc byte[256];
-    var serializer = Serializer.Create(buffer, 256);
-    serializer.Write(kLaodedHeader);
+  unsafe int CreateReadyMessage(LobbyMember member, byte* buffer, int size) {
+    var serializer = Serializer.Create(buffer, (uint)size);
+    serializer.Write(kLoadedHeader);
     serializer.Write(member.Id.Id);
-    return serializer.ToArray();
+    return serializer.Position;
   }
 
-  unsafe bool BufferEquals(byte[] a, byte[] b, uint size) {
-    if (size < a.Length) return false;
-    fixed (byte* aPtr = a, bPtr = b) {
-      return UnsafeUtility.MemCmp(aPtr, bPtr, a.Length) == 0;
-    }
+  unsafe bool BufferEquals(byte* reference, int size, FixedBuffer buffer) {
+    if (buffer.Size < size) return false;
+    return UnsafeUtility.MemCmp(reference, buffer.Start, size) == 0;
   }
 
 }

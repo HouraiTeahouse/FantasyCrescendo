@@ -44,7 +44,7 @@ public unsafe class BackrollMatchController : MatchController {
     return readyFuture.Task;
   }
 
-  public virtual void Update() {
+  public override void Update() {
     if (CurrentState.StateID == MatchProgressionState.Intro) return;
     session.AdvanceFrame();
   }

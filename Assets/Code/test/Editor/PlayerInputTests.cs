@@ -7,6 +7,8 @@ using UnityEditor;
 using UnityEngine.TestTools;
 using HouraiTeahouse.Networking;
 
+namespace HouraiTeahouse {
+
 public class PlayerInputTests {
 
 	[Test]
@@ -16,15 +18,14 @@ public class PlayerInputTests {
     for (var i = 0; i < 10000; i++) {
       var state = InputUtility.RandomPlayerInput();
       var networkWriter = Serializer.Create(buffer, 2048);
-      var bytes = networkWriter.ToArray();
       sizes.Add(networkWriter.Position);
-      fixed (byte* bytesPtr = bytes) {
-        var networkReader = Deserializer.Create(bytesPtr, (uint)networkWriter.Position);
-        var deserialized = new PlayerInput();
-        Assert.AreEqual(state, deserialized);
-      }
+      var networkReader = Deserializer.Create(networkWriter.ToFixedBuffer());
+      var deserialized = new PlayerInput();
+      Assert.AreEqual(state, deserialized);
     }
     Debug.Log($"Player Input: Average Message Size: {sizes.Average()}");
 	}
+
+}
 
 }
