@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: c008
+  m_EditorClassIdentifier: 
+  m_GroupName: c008
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 134502d70e4deff4f97136d845fe9000
+  m_SerializeEntries:
+  - m_GUID: 2a25524599be084408e17cfa4db64929
+    m_Address: yuuka_portrait_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9bc4cf0538f1fc8448c63cceeec8ea8b
+    m_Address: yuuka_portrait_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9ff3b1721e754b344ad07d429246513c
+    m_Address: yuuka_portrait_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d5e591e73e371c94eaead06a769c126a
+    m_Address: yuuka_icon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f08a2c10748552544a53c59f8d1fbd50
+    m_Address: yuuka_kazami
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - characters
+  - m_GUID: f190d62cf51254144b0ae884acda60cb
+    m_Address: yuuka_portrait_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 44c5ae0e98d4e3340aa4796d004ec71f, type: 2}
+    - {fileID: 11400000, guid: 0e025593a8adbba499e54c4336302b8d, type: 2}

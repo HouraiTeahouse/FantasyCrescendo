@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: s001
+  m_EditorClassIdentifier: 
+  m_GroupName: s001
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 162d916b7b356a54ab537653d0258abd
+  m_SerializeEntries:
+  - m_GUID: 19194b4217a6e0f4ebb3dc2d97fb5fec
+    m_Address: Did You See That Shadow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 31aebd4c2791e654bb7624d8640f92ce
+    m_Address: MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - scenes
+  - m_GUID: 6cbaca2731accf34b9ad7227f4562b29
+    m_Address: Shinkirou Orchestra
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a60dca073c7c01d4784836d739088af1
+    m_Address: Selection
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c24175da64e4c30459a9b1dd6ef0caf7
+    m_Address: Memory of Forgathering Dream
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: da1c90b397c2bfc4d9fb342dd396198f
+    m_Address: MainMenu_Scene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: dd62b7b4c384e7a47bfd195cbadfe1ca, type: 2}
+    - {fileID: 11400000, guid: 20546bee574345e4986948a24331e189, type: 2}
