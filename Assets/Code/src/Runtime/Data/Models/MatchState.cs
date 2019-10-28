@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
   /// <summary>
   /// Represents the match's state in game
   /// </summary>
-public enum MatchProgressionState { 
+public enum MatchProgressionState : byte { 
   /// <summary>
   /// Before the game begins. Represents the countdown sequence.
   /// </summary>
@@ -37,6 +38,7 @@ public class MatchState : INetworkSerializable {
   public uint Time;
   public MatchProgressionState StateID = MatchProgressionState.Intro;
   public MatchInput LastInput;
+  public Random.State RandomState;
 
   [SerializeField]
   PlayerState[] playerStates;
@@ -47,12 +49,14 @@ public class MatchState : INetworkSerializable {
   public MatchState(int playerCount) {
     PlayerCount = playerCount;
     playerStates = ArrayPool<PlayerState>.Shared.Rent((int)PlayerCount);
+    RandomState = Random.state;
     UpdatePlayerStates();
   }
 
   public MatchState(IEnumerable<PlayerState> playerStates) {
     this.playerStates = playerStates.ToArray();
     PlayerCount = this.playerStates.Length;
+    RandomState = Random.state;
     UpdatePlayerStates();
   }
 
@@ -72,6 +76,8 @@ public class MatchState : INetworkSerializable {
       playerStates[i].Stocks = (sbyte)config.Stocks;
       playerStates[i].MatchState = this;
     }
+    Random.InitState(config.RandomSeed);
+    RandomState = Random.state;
   }
 
   /// <summary>
@@ -80,26 +86,35 @@ public class MatchState : INetworkSerializable {
   /// <returns>a deep cloned copy of the state.</returns>
   public MatchState Clone() {
     var clone = (MatchState)MemberwiseClone();
+    clone.playerStates = ArrayPool<PlayerState>.Shared.Rent(PlayerCount);
     Array.Copy(playerStates, clone.playerStates, PlayerCount);
     return clone;
   }
 
-  public void Serialize(ref Serializer writer) {
+  public void Serialize(ref Serializer serializer) {
+    serializer.Write(Time);
+    serializer.Write((byte)StateID);
+    serializer.WriteStruct(ref LastInput);
+    serializer.WriteStruct(ref RandomState);
     byte activeMask = (byte)(PlayerCount & 15);
     for (var i = 0; i < PlayerCount; i++) {
       if (!playerStates[i].IsActive) continue;
       activeMask |= (byte)(1 << (i + 4));
     }
-    writer.Write(activeMask);
+    serializer.Write(activeMask);
     for (uint i = 0; i < PlayerCount; i++) {
       if (playerStates[i].IsActive) {
-        playerStates[i].Serialize(ref writer);
+        playerStates[i].Serialize(ref serializer);
       }
     }
-    writer.Write((byte)StateID);
+    serializer.Write((byte)StateID);
   }
 
   public void Deserialize(ref Deserializer deserializer) {
+    Time = deserializer.ReadUInt32();
+    StateID = (MatchProgressionState)deserializer.ReadByte();
+    deserializer.ReadStruct(ref LastInput);
+    deserializer.ReadStruct(ref RandomState);
     var mask = deserializer.ReadByte();
     PlayerCount = mask & 15;
     playerStates = ArrayPool<PlayerState>.Shared.Rent(PlayerCount);

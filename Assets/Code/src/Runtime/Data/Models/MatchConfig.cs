@@ -39,6 +39,11 @@ public unsafe struct MatchConfig : IValidatable, INetworkSerializable, IEnumerab
   public uint PlayerCount;
 
   /// <summary>
+  /// The initial random seed used when starting the match.
+  /// </summary>
+  public int RandomSeed;
+
+  /// <summary>
   /// Individual configurations for each participating player.
   /// </summary>
   /// <remarks>
