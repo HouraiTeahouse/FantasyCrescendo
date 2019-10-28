@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: c003
+  m_EditorClassIdentifier: 
+  m_GroupName: c003
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 026c72e2dd3aec54cbfedbab80a522e8
+  m_SerializeEntries:
+  - m_GUID: 16d1f11948b7e244aa4bcbdca2d78fd7
+    m_Address: sakuya_portrait_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8558cce18de1b744a8f0655ed8a4a683
+    m_Address: sakuya_portrait_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 879ac156e473ea645a7f9f91489c8ea6
+    m_Address: sakuya_portrait_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 89547a4ac66cdbf48a7d72ba896eb38e
+    m_Address: sakuya_izayoi
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - characters
+  - m_GUID: dbfc01b93c5702341931efc372d8027b
+    m_Address: sakuya_portrait_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f45398a8ed80bee41b4432d4895cb18d
+    m_Address: sakuya_icon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f4dda1c17dde9ce4fa5dc2595c25228e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 27bce237263c5204c899dff6b1509a03, type: 2}
+    - {fileID: 11400000, guid: 1a8476852b5d657448e3ff3bfda5bba2, type: 2}
