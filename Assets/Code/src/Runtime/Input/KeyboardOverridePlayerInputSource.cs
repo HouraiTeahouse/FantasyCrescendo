@@ -27,8 +27,8 @@ public class KeyboardOverridePlayerInputSource : IInputSource<PlayerInput> {
     var arrowKeys = new Vector2(ButtonAxis(KeyCode.LeftArrow, KeyCode.RightArrow), 
                                 ButtonAxis(KeyCode.DownArrow, KeyCode.UpArrow));
     return new PlayerInput {
-      Movement = wasd + arrowKeys,
-      Smash = wasd,
+      Movement = (FixedVector16)(wasd + arrowKeys),
+      Smash = (FixedVector16)wasd,
       Attack = Input.GetKey(KeyCode.E),
       Special = Input.GetKey(KeyCode.R),
       Shield = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift),

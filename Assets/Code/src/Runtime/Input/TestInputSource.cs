@@ -14,7 +14,7 @@ public class TestInputSource : IInputSource<MatchInput> {
 
   public MatchInput SampleInput() {
     var playerInput = new PlayerInput {
-      Movement = new Vector2(ButtonAxis(KeyCode.A, KeyCode.D), ButtonAxis(KeyCode.S, KeyCode.W)),
+      Movement = (FixedVector16)new Vector2(ButtonAxis(KeyCode.A, KeyCode.D), ButtonAxis(KeyCode.S, KeyCode.W)),
       //TODO(james7132): Make Tap Jump Configurable
       Jump = Input.GetKey(KeyCode.W),
     };

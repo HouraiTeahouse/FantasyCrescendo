@@ -70,9 +70,9 @@ public class TapPlayerInputSource : IInputSource<PlayerInput> {
   public PlayerInput SampleInput() {
     var input = _baseInputSource.SampleInput();
 
-    // TODO(james7132)
-    TapDetector.Update(input.Movement);
-    input.Smash = TapDetector.SmashValue; //controllerMapping.Smash(device);
+    // TODO(james7132): Update TapDetector to operate on FixedVector16s
+    TapDetector.Update((Vector2)input.Movement);
+    input.Smash = (FixedVector16)TapDetector.SmashValue; //controllerMapping.Smash(device);
 
     return input;
   }

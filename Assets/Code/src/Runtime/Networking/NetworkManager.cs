@@ -35,9 +35,6 @@ public class NetworkManager : MonoBehaviour {
   /// </summary>
   public bool IsNetworkActive => Lobby != null;
 
-	[SerializeField] [Type(typeof(IIntegrationClient), CommonName = "Integration")]
-	string defaultNetworkInterface;
-
 	/// <summary>
 	/// Awake is called when the script instance is being loaded.
 	/// </summary>
@@ -58,8 +55,6 @@ public class NetworkManager : MonoBehaviour {
       LeaveLobby();
     }
   }
-
-	Type DefaultNetworkInterfaceType => Type.GetType(defaultNetworkInterface);
 
   public async Task<NetworkGameSetup> CreateLobby(IIntegrationClient integration,
                                                   MatchConfig config,

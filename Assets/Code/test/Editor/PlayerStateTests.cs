@@ -17,14 +17,11 @@ public class PlayerStateTests {
       var state = StateUtility.RandomPlayerState();
       var networkWriter = Serializer.Create(buffer, 2048);
       state.Serialize(ref networkWriter);
-      var bytes = networkWriter.ToArray();
       sizes.Add(networkWriter.Position);
-      fixed (byte* bytesPtr = bytes) {
-        var networkReader = Deserializer.Create(bytesPtr, (uint)networkWriter.Position);
-        var deserializedState = new PlayerState();
-        deserializedState.Deserialize(ref networkReader);
-        Assert.AreEqual(state, deserializedState);
-      }
+      var networkReader = Deserializer.Create(networkWriter.ToFixedBuffer());
+      var deserializedState = new PlayerState();
+      deserializedState.Deserialize(ref networkReader);
+      Assert.AreEqual(state, deserializedState);
     }
     Debug.Log($"Player State: Average Message Size: {sizes.Average()}");
 	}

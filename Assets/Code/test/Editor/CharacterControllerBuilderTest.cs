@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+namespace HouraiTeahouse { 
+
 [Parallelizable]
 public class CharacterControllerBuilderTest {
 
@@ -46,7 +48,7 @@ public class CharacterControllerBuilderTest {
       StateLength = 100 * Time.fixedDeltaTime
     }};
     yield return new object[] {"LedgeIdle", "LedgeRelease", new CharacterContext {
-      Input = CreateInput(new PlayerInput { Movement = new Vector2(0, -1) })
+      Input = CreateInput(new PlayerInput { Movement = new FixedVector16(0f, -1f) })
     }};
     yield return new object[] {"LedgeIdle", "LedgeAttack", new CharacterContext {
       State = ledgeState,
@@ -64,7 +66,7 @@ public class CharacterControllerBuilderTest {
       context = (x, y, d, g) => new CharacterContext {
         State = new PlayerState { Direction = d },
         IsGrounded = g,
-        Input = CreateInput(new PlayerInput { Movement = new Vector2(x, y) })
+        Input = CreateInput(new PlayerInput { Movement = new FixedVector16(x, y) })
       };
     foreach (var dir in new[] {true, false}) {
       foreach (var src in new[] {"Idle", "Walk"}) {
@@ -82,17 +84,17 @@ public class CharacterControllerBuilderTest {
       yield return new object[] {"Idle", "Dash", new CharacterContext {
         State = directionState,
         IsGrounded = true,
-        Input = CreateInput(new PlayerInput { Smash = -Vector2.right })
+        Input = CreateInput(new PlayerInput { Smash = -FixedVector16.Right })
       }};
       yield return new object[] {"Run", "RunTurn", new CharacterContext {
         State = directionState,
         IsGrounded = true,
-        Input = CreateInput(new PlayerInput { Movement = Vector2.right * -direction })
+        Input = CreateInput(new PlayerInput { Movement = new FixedVector16(-direction, 0f) })
       }};
       yield return new object[] {"Run", "Run", new CharacterContext {
         State = directionState,
         IsGrounded = true,
-        Input = CreateInput(new PlayerInput { Movement = Vector2.right * direction })
+        Input = CreateInput(new PlayerInput { Movement = new FixedVector16(direction, 0f) })
       }};
       foreach (var src in new [] {"Idle", "Walk", "Dash", "Run", "RunTurn", "RunBrake", "CrouchStart", "Crouch", "CrouchEnd", "Shield.Main"}) {
         yield return new object[] {src, "JumpStart", new CharacterContext {
@@ -110,7 +112,7 @@ public class CharacterControllerBuilderTest {
       context = (x, y, d, g) => new CharacterContext {
         State = new PlayerState { Direction = d },
         Input = CreateInput(new PlayerInput {
-          Movement = new Vector2(x, y),
+          Movement = new FixedVector16(x, y),
           Attack = true
         }),
         IsGrounded = g
@@ -186,12 +188,12 @@ public class CharacterControllerBuilderTest {
     yield return new object[] {"TiltDown", "Crouch", new CharacterContext {
       State = new PlayerState { StateTick = 100 },
       StateLength = 100 * Time.fixedDeltaTime,
-      Input = CreateInput(new PlayerInput { Movement = -Vector2.up })
+      Input = CreateInput(new PlayerInput { Movement = -FixedVector16.Up })
     }};
     yield return new object[] {"Dash", "Run", new CharacterContext {
       State = new PlayerState { StateTick = 100 },
       StateLength = 100 * Time.fixedDeltaTime,
-      Input = CreateInput(new PlayerInput { Movement = Vector2.right})
+      Input = CreateInput(new PlayerInput { Movement = FixedVector16.Right })
     }};
   }
 
@@ -225,5 +227,7 @@ public class CharacterControllerBuilderTest {
   public void ledge_transitions(string src, string dst, CharacterContext context) {
     TestTransition(src, dst, context);
   }
+
+}
 
 }

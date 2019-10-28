@@ -1,5 +1,6 @@
 using HouraiTeahouse.Networking;
 using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,6 +10,7 @@ namespace HouraiTeahouse.FantasyCrescendo {
 /// A data object representing the complete input of one player for a given
 /// tick.
 /// </summary>
+[StructLayout(LayoutKind.Explicit, Size = 5)]
 public struct PlayerInput {
 
   public const int kAttackBit  = 0;
@@ -17,40 +19,40 @@ public struct PlayerInput {
   public const int kShieldBit  = 3;
   public const int kGrabBit    = 4;
 
-  public byte Buttons;
-  public Vector2b Movement;
-  public Vector2b Smash;
+  [FieldOffset(0)] public BitArray8 Buttons;
+  [FieldOffset(1)] public FixedVector16 Movement;
+  [FieldOffset(3)] public FixedVector16 Smash;
 
   public bool Attack {
-    get => BitUtil.GetBit(Buttons, kAttackBit);
-    set => BitUtil.SetBit(ref Buttons, kAttackBit, value);
+    get => Buttons[kAttackBit];
+    set => Buttons[kAttackBit] = value;
   }
 
   public bool Special {
-    get => BitUtil.GetBit(Buttons, kSpecialBit);
-    set => BitUtil.SetBit(ref Buttons, kSpecialBit, value);
+    get => Buttons[kSpecialBit];
+    set => Buttons[kSpecialBit] = value;
   }
 
   public bool Jump {
-    get => BitUtil.GetBit(Buttons, kJumpBit);
-    set => BitUtil.SetBit(ref Buttons, kJumpBit, value);
+    get => Buttons[kJumpBit];
+    set => Buttons[kJumpBit] = value;
   }
 
   public bool Shield {
-    get => BitUtil.GetBit(Buttons, kJumpBit);
-    set => BitUtil.SetBit(ref Buttons, kJumpBit, value);
+    get => Buttons[kJumpBit];
+    set => Buttons[kJumpBit] = value;
   }
 
   public bool Grab {
-    get => BitUtil.GetBit(Buttons, kGrabBit);
-    set => BitUtil.SetBit(ref Buttons, kGrabBit, value);
+    get => Buttons[kGrabBit];
+    set => Buttons[kGrabBit] = value;
   }
 
   public PlayerInput MergeWith(PlayerInput other) {
     return new PlayerInput {
-      Movement = (Vector2)Movement + (Vector2)other.Movement,
-      Smash = (Vector2)Smash + (Vector2)other.Smash,
-      Buttons = (byte)((Buttons | other.Buttons) & 31)
+      Movement = Movement + other.Movement,
+      Smash = Smash + other.Smash,
+      Buttons = Buttons | other.Buttons
     };
   }
 
@@ -62,8 +64,8 @@ public struct PlayerInput {
 /// </summary>
 public readonly struct PlayerInputContext {
 
-  readonly byte _prev;
-  readonly byte _cur;
+  readonly BitArray8 _prev;
+  readonly BitArray8 _cur;
   public readonly DirectionalInput Movement;
   public readonly DirectionalInput Smash;
 
@@ -88,44 +90,15 @@ public readonly struct ButtonContext {
   public readonly bool Previous;
   public readonly bool Current;
 
-  public ButtonContext(byte previous, byte current, int bit) {
-    Previous = BitUtil.GetBit(previous, bit);
-    Current = BitUtil.GetBit(current, bit);
+  public ButtonContext(BitArray8 previous, BitArray8 current, int bit) {
+    Previous = previous[bit];
+    Current = current[bit];
   }
 
   public bool WasPressed => !Previous && Current;
   public bool WasReleased => Previous && !Current;
 
 }
-
-public struct Vector2b {
-  public byte X;
-  public byte Y;
-
-  public float x  {
-    get => ToFloat(X);
-    set => X = FromFloat(value);
-  }
-  public float y  {
-    get => ToFloat(Y);
-    set => Y = FromFloat(value);
-  }
-
-  public static implicit operator Vector2b(Vector2 vector) => new Vector2b { x = vector.x, y = vector.y };
-  public static implicit operator Vector2(Vector2b vector) => new Vector2 { x = vector.x, y = vector.y };
-
-  float ToFloat(byte val) => (val - 127) / 127f;
-  byte FromFloat(float val) => (byte)(Mathf.Clamp(val, -1, 1) * 127f + 127);
-
-  public static bool operator ==(Vector2b a, Vector2b b) => a.X == b.X && a.Y == b.Y;
-  public static bool operator !=(Vector2b a, Vector2b b) => !(a == b);
-
-  public override int GetHashCode() => unchecked(31 * X + Y);
-  
-  public override string ToString() => $"Vector2b<{X - 128}, {Y - 128}>";
-
-}
-
 
 public static class InputUtil {
 
@@ -205,6 +178,5 @@ public enum Direction {
   Left,
   Right
 }
-
 
 }

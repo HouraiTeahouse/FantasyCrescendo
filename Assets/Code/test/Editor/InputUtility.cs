@@ -6,14 +6,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
+namespace HouraiTeahouse {
+
 public static class InputUtility {
   
   static Random random = new Random();
 
   public static PlayerInput RandomPlayerInput() {
     return new PlayerInput {
-      Movement = UnityEngine.Random.insideUnitCircle,
-      Smash = random.NextDouble() > 0.5 ? UnityEngine.Random.insideUnitCircle : Vector2.zero,
+      Movement = (FixedVector16)UnityEngine.Random.insideUnitCircle,
+      Smash = (FixedVector16)(random.NextDouble() > 0.5 ? UnityEngine.Random.insideUnitCircle : Vector2.zero),
       Buttons = (byte)random.Next(0, 31),
     };
   }
@@ -31,5 +33,7 @@ public static class InputUtility {
       yield return RandomInput(players);
     }
   }
+
+}
 
 }

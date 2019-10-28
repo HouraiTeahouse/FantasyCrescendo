@@ -8,8 +8,10 @@ namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
 public class StateAsset : BaseStateAsset {
 
+#pragma warning disable 0649
   [Type(typeof(State), CommonName = "State"), SerializeField]
   string _stateType;
+#pragma warning restore 0649
 
   public CharacterStateData StateData;
 
