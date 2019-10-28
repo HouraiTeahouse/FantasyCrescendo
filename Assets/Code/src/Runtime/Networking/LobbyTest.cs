@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using HouraiTeahouse.Networking;
+using Random = UnityEngine.Random;
+using HouraiTeahouse.FantasyCrescendo;
 
 public class LobbyTest : MonoBehaviour {
 
@@ -16,6 +19,8 @@ public class LobbyTest : MonoBehaviour {
     public uint seed;
 
     void Start() {
+        Debug.Log(UnsafeUtility.SizeOf<MatchInput>());
+        Debug.Log(UnsafeUtility.SizeOf<Random.State>());
         foreach (var integration in manager.Integrations) {
             CreateLobbyTest(integration);
         }

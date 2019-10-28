@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
@@ -33,7 +34,9 @@ public class MatchSimulation : IMatchSimulation {
   }
 
   public void Simulate(ref MatchState state, in MatchInputContext input) {
+    Random.state = state.RandomState;
     Simulations[state.StateID].Simulate(ref state, input);
+    state.RandomState = Random.state;
   }
 
   public MatchState ResetState(MatchState state) {
