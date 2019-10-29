@@ -5,23 +5,17 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-[RequireComponent(typeof(CharacterPhysics))]
-public class CharacterMovement : PlayerComponent {
-
-  public CharacterPhysics Physics;
-  public CharacterStateMachine StateMachine;
+[Serializable]
+public class CharacterMovement : CharacterComponent {
 
   public float[] JumpPower;
 
-  public int MaxJumpCount =>  JumpPower?.Length ?? 0;
-
   CharacterMover[] Movers;
 
-  public override Task Initialize(PlayerConfig config, bool isView) {
-    if (Physics == null) {
-      Physics = GetComponent<CharacterPhysics>();
-    }
+  public int MaxJumpCount =>  JumpPower?.Length ?? 0;
+  internal CharacterPhysics Physics => Character._physics;
 
+  public override Task Init(Character character) {
     Movers = new CharacterMover[] {
       new HitstunMovement(),
       new RespawnMovement(),
@@ -61,7 +55,7 @@ public class CharacterMovement : PlayerComponent {
   }
 
   public void ApplyControlledMovement(ref PlayerState state, Vector2 movementInput) {
-    var data = StateMachine.GetControllerState(state).Data;
+    var data = Character.GetControllerState(state).Data;
     ApplyDirection(ref state, movementInput, data);
     ApplyMovement(ref state, movementInput, data);
   }

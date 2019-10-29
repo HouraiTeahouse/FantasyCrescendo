@@ -1,4 +1,5 @@
 using HouraiTeahouse.FantasyCrescendo.Players;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -6,8 +7,8 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-[RequireComponent(typeof(CharacterStateMachine))]
-public class CharacterPhysics : PlayerComponent {
+[Serializable]
+public class CharacterPhysics : CharacterComponent {
 
   static Collider[] colliderDummy = new Collider[1];
   static PhysicsConfig PhysicsConfig;
@@ -22,33 +23,32 @@ public class CharacterPhysics : PlayerComponent {
 
   public bool IsGrounded { get; private set; }
 
-  /// <summary>
-  /// Awake is called when the script instance is being loaded.
-  /// </summary>
-  void Awake() {
+  Transform transform => Character.transform;
+
+  public override void PreInit(Character character) {
     if (PhysicsConfig == null) {
       PhysicsConfig = Config.Get<PhysicsConfig>();
     }
   }
 
-  public override Task Initialize(PlayerConfig config, bool isView) {
+  public override Task Init(Character character) {
     if (LedgeGrabBone == null) {
       LedgeGrabBone = transform;
     }
 
     if (CharacterController == null) {
-      CharacterController = GetComponent<CharacterController>();
+      CharacterController = character.GetComponent<CharacterController>();
     }
 
-    var rigidbody = GetComponent<Rigidbody>();
+    var rigidbody = character.GetComponent<Rigidbody>();
     if (rigidbody == null) {
-      rigidbody = gameObject.AddComponent<Rigidbody>();
+      rigidbody = character.gameObject.AddComponent<Rigidbody>();
     }
     rigidbody.useGravity = false;
     rigidbody.isKinematic = true;
     rigidbody.hideFlags = HideFlags.HideInInspector;
 
-    return base.Initialize(config, isView);
+    return Task.CompletedTask;
   }
 
   public override void Presimulate(in PlayerState state) {

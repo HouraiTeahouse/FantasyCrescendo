@@ -3,18 +3,16 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-[RequireComponent(typeof(CharacterStateMachine))]
-public sealed class CharacterShield : PlayerComponent {
+[Serializable]
+public sealed class CharacterShield : CharacterComponent {
 
-  public CharacterStateMachine StateMachine;
   public GameObject ShieldPrefab;
   public Transform TargetBone;
 
-  // Character Constrants
-  [Header("Constants")]
   [Tooltip("How large the shield is while the player's shield is full.")]
   public float ShieldScale = 1f;
 
@@ -41,37 +39,22 @@ public sealed class CharacterShield : PlayerComponent {
   Renderer[] ShieldRenderers;
   bool isShieldView;
 
-  public bool IsShieldActive(in PlayerState state) => StateMachine.GetControllerState(state) is ShieldState;
+  public bool IsShieldActive(in PlayerState state) => Character.GetControllerState(state) is ShieldState;
   public bool IsShieldBroken(in PlayerState state) => state.ShieldDamage >= MaxShieldHealth;
 
-  /// <summary>
-  /// Awake is called when the script instance is being loaded.
-  /// </summary>
-  void Awake() {
-    // NOTE: This is only to allow the shield components to be stripped before
-    // charater initialization. Do not do this in other situations.
-
-    // Create Shield Object
-    Shield = Instantiate(ShieldPrefab);
+  public override void PreInit(Character character) {
+    Shield = Object.Instantiate(ShieldPrefab);
     Shield.name = "Shield";
     ShieldTransform = Shield.transform;
-    ShieldTransform.parent = transform;
+    ShieldTransform.parent = character.transform;
     ShieldRenderers = Shield.GetComponentsInChildren<Renderer>();
     Shield.SetActive(false);
   }
 
-  /// <summary>
-  /// This function is called when the MonoBehaviour will be destroyed.
-  /// </summary>
-  void OnDestroy() {
-    if (Shield == null) {
-      Destroy(Shield);
-    }
-  }
-
-  public override Task Initialize(PlayerConfig config, bool isView) {
-    SetShieldColor(Config.Get<VisualConfig>().GetPlayerColor(config.PlayerID));
-    return base.Initialize(config, isView);
+  public override Task Init(Character character) {
+    ResetHealth = Mathf.Clamp(ResetHealth , 0f, MaxShieldHealth);
+    SetShieldColor(Config.Get<VisualConfig>().GetPlayerColor(character.Config.PlayerID));
+    return Task.CompletedTask;
   }
 
   public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
@@ -92,7 +75,14 @@ public sealed class CharacterShield : PlayerComponent {
     ObjectUtil.SetActive(Shield, IsShieldActive(state));
     ShieldTransform.localScale = Vector3.one * ShieldScale * ShieldSize.Evaluate(shieldSizeRatio);
     if (TargetBone != null) {
-      ShieldTransform.localPosition = transform.InverseTransformPoint(TargetBone.position);
+      ShieldTransform.localPosition = Character.transform.InverseTransformPoint(TargetBone.position);
+    }
+  }
+
+  public override void Dispose() {
+    base.Dispose();
+    if (Shield == null) {
+      Object.Destroy(Shield);
     }
   }
 
@@ -105,10 +95,6 @@ public sealed class CharacterShield : PlayerComponent {
       renderer.material.color = shieldColor;
       renderer.material.SetColor("_RimColor", shieldColor);
     }
-  }
-
-  void OnValidate() {
-    ResetHealth = Mathf.Clamp(ResetHealth , 0f, MaxShieldHealth);
   }
 
 }

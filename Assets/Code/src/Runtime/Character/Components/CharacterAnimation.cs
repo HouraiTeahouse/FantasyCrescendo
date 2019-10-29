@@ -14,8 +14,8 @@ using Object = UnityEngine.Object;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-[RequireComponent(typeof(CharacterStateMachine))]
-public class CharacterAnimation : PlayerComponent {
+[Serializable]
+public class CharacterAnimation : CharacterComponent {
 
   class ControllerInfo {
 
@@ -77,44 +77,26 @@ public class CharacterAnimation : PlayerComponent {
 
   }
 
-  CharacterStateMachine StateMachine;
   PlayableGraph _playableGraph;
   Dictionary<uint, StateInfo> _stateMap;
   StateInfo[] _states;
 
-  /// <summary>
-  /// Awake is called when the script instance is being loaded.
-  /// </summary>
-  void Awake() {
-    StateMachine = GetComponent<CharacterStateMachine>();
-    ObjectUtil.DestroyAll<PlayableDirector>(this);
-  }
-
-  /// <summary>
-  /// This function is called when the MonoBehaviour will be destroyed.
-  /// </summary>
-  void OnDestroy() {
-    if (_playableGraph.IsValid()) {
-      _playableGraph.Destroy();
-    }
-  }
-
-  public override Task Initialize(PlayerConfig config, bool isView = false) {
-    var animator = ObjectUtil.GetFirst<Animator>(this);
+  public override Task Init(Character character) {
+    var animator = ObjectUtil.GetFirst<Animator>(character);
     if (animator == null) return Task.CompletedTask;
     //OptimizeHierarchy();
 
-    _playableGraph = PlayableGraph.Create(name);
+    _playableGraph = PlayableGraph.Create(character.name);
     _playableGraph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
 
     var controller = new ControllerInfo { 
       Graph = _playableGraph, 
-      Owner = gameObject,
+      Owner = character.gameObject,
     };
 
     _stateMap = new Dictionary<uint, StateInfo>();
     // TODO(james7132): Set up proper state blending
-    foreach (var state in StateMachine.StateController.States) {
+    foreach (var state in Character.StateController.States) {
       if (state.Data.Timeline == null) {
         Debug.LogWarning($"State {state.Name} for {this} does not have a Timeline.");
         continue;
@@ -127,7 +109,7 @@ public class CharacterAnimation : PlayerComponent {
     controller.Animation = CreateAnimationBinding(_playableGraph, animator);
     controller.Audio = CreateAudioBinding(_playableGraph, GetAudioSource());
 
-    if (!isView) {
+    if (!character.IsView) {
       animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
     }
 
@@ -136,16 +118,10 @@ public class CharacterAnimation : PlayerComponent {
     return Task.CompletedTask;
   }
 
-  // By default presimulation calls UpdateView, this should be avoided here.
-  public override void Presimulate(in PlayerState state) {}
-
-  public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
-    state.StateTick++;
+  public override void Simulate(ref PlayerState state, in PlayerInputContext input) =>
     UpdateView(state);
-  }
 
   public override void UpdateView(in PlayerState state) {
-    StateMachine.Presimulate(state);
     var stateInfo = GetControllerState(state);
     if (stateInfo == null) return;
     foreach (var controllerState in _states) {
@@ -158,6 +134,14 @@ public class CharacterAnimation : PlayerComponent {
     stateInfo.SetTime(state);
     _playableGraph.Evaluate();
   }
+
+  public override void Dispose() {
+    base.Dispose();
+    if (_playableGraph.IsValid()) {
+      _playableGraph.Destroy();
+    }
+  }
+
 
   StateInfo GetControllerState(in PlayerState state) {
     StateInfo controllerState;
@@ -190,8 +174,8 @@ public class CharacterAnimation : PlayerComponent {
     return mixerPlayable;
   }
 
-  void OptimizeHierarchy(Animator animator) {
-    foreach (var animators in ObjectUtil.GetAll<Animator>(this)) {
+  void OptimizeHierarchy() {
+    foreach (var animator in ObjectUtil.GetAll<Animator>(Character)) {
       var root = animator.gameObject;
       var transforms = ObjectUtil.GetAll<Component>(root)
                            .Where(comp => !(comp is Transform))
@@ -203,10 +187,10 @@ public class CharacterAnimation : PlayerComponent {
   }
 
   AudioSource GetAudioSource() {
-    var source = ObjectUtil.GetFirst<AudioSource>(this);
+    var source = ObjectUtil.GetFirst<AudioSource>(Character);
     if (source == null) { 
-      source = new GameObject(gameObject.name + "_Audio").AddComponent<AudioSource>();
-      source.transform.parent = transform;
+      source = new GameObject(Character.name + "_Audio").AddComponent<AudioSource>();
+      source.transform.parent = Character.transform;
       source.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
     }
     return source;
