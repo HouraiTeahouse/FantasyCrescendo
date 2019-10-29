@@ -1,4 +1,5 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Players;
+﻿using HouraiTeahouse.FantasyCrescendo.Characters;
+using HouraiTeahouse.FantasyCrescendo.Players;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -17,6 +18,26 @@ public abstract class PlayerComponent : MonoBehaviour, IPlayerView, IPlayerSimul
   public virtual void UpdateView(in PlayerState state) {}
 
   public virtual void Dispose() => ObjectUtil.Destroy(this);
+
+  public virtual void ResetState(ref PlayerState state) {}
+
+}
+
+public abstract class CharacterComponent : IStateView<PlayerState>, ISimulation<PlayerState, PlayerInputContext> {
+
+  public Character Character { get; internal set; }
+
+  public virtual void PreInit(Character character) {}
+
+  public virtual Task Init(Character character) => Task.CompletedTask;
+
+  public virtual void Presimulate(in PlayerState state) => UpdateView(state);
+
+  public virtual void Simulate(ref PlayerState state, in PlayerInputContext input) {}
+
+  public virtual void UpdateView(in PlayerState state) {}
+
+  public virtual void Dispose() {}
 
   public virtual void ResetState(ref PlayerState state) {}
 

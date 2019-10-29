@@ -9,9 +9,9 @@ public class JumpState : State {
 
   CharacterMovement component;
 
-  public override Task Initalize(PlayerConfig config, GameObject gameObject, bool isView) {
-    component = gameObject.GetComponentInChildren<CharacterMovement>();
-    return base.Initalize(config, gameObject, isView);
+  public override Task Initalize(Character character) {
+    component = character._movement;
+    return Task.CompletedTask;
   }
 
   public override void OnStateEnter(CharacterContext context) {

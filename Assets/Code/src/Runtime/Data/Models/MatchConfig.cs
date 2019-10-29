@@ -5,8 +5,32 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace HouraiTeahouse.FantasyCrescendo {
+
+[Serializable]
+public class EditorMatchConfig {
+  public uint StageID;
+  public uint Stocks;
+  public uint Time;
+  public int RandomSeed;
+  public PlayerConfig[] PlayerConfigs;
+
+  public MatchConfig CreateConfig() {
+    var config = new MatchConfig {
+      StageID = StageID,
+      Stocks = Stocks,
+      Time = Time,
+      RandomSeed = Random.Range(int.MinValue, int.MaxValue),
+      PlayerCount = (uint)PlayerConfigs.Length
+    };
+    for (var i = 0; i < PlayerConfigs.Length; i++) {
+      config[i] = PlayerConfigs[i];
+    }
+    return config;
+  }
+}
 
 /// <summary>
 /// A data object for configuring a game between multiple players.

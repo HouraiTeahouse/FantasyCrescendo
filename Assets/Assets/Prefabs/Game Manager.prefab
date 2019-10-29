@@ -47,6 +47,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameManager: {fileID: 114727785565368142}
   GameMode: {fileID: 11400000, guid: ce1f27b7856194045a3e3c7c1a9fae24, type: 2}
+  Config:
+    StageID: 0
+    Stocks: 3
+    Time: 10800
+    RandomSeed: 0
+    PlayerConfigs:
+    - PlayerID: 0
+      LocalPlayerID: 0
+      Selection:
+        CharacterID: 3548088660
+        Pallete: 0
+      DefaultDamage: 0
+    - PlayerID: 1
+      LocalPlayerID: 1
+      Selection:
+        CharacterID: 3548088660
+        Pallete: 1
+      DefaultDamage: 0
 --- !u!114 &114286316001963736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +80,12 @@ MonoBehaviour:
   Manager: {fileID: 114727785565368142}
   State:
     Time: 0
+    StateID: 0
+    RandomState:
+      s0: 0
+      s1: 0
+      s2: 0
+      s3: 0
     playerStates:
     - Direction: 0
       IsFastFalling: 0
@@ -127,7 +151,6 @@ MonoBehaviour:
       Hitlag: 0
       Stocks: 0
       PlayersHit: 0
-    StateID: 0
 --- !u!114 &114030854213002886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,19 +260,9 @@ MonoBehaviour:
     StageID: 0
     Stocks: 3
     Time: 0
-    _playerConfigs:
-    - PlayerID: 0
-      LocalPlayerID: 0
-      Selection:
-        CharacterID: 3548088660
-        Pallete: 0
-      DefaultDamage: 0
-    - PlayerID: 1
-      LocalPlayerID: 1
-      Selection:
-        CharacterID: 3548088660
-        Pallete: 1
-      DefaultDamage: 0
+    PlayerCount: 0
+    RandomSeed: 0
+    _playerConfigs: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &114710496242346924
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,12 +9,13 @@ public class EditorQuickMatch : MonoBehaviour {
 
   public MatchManager GameManager;
   public GameMode GameMode;
+  public EditorMatchConfig Config;
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
   async void Awake() {
-    await GameMode.Execute(GameManager.Config, false);
+    await GameMode.Execute(Config.CreateConfig(), false);
   }
 
 }

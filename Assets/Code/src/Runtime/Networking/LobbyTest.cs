@@ -21,6 +21,7 @@ public class LobbyTest : MonoBehaviour {
     void Start() {
         Debug.Log(UnsafeUtility.SizeOf<MatchInput>());
         Debug.Log(UnsafeUtility.SizeOf<Random.State>());
+        Debug.Log(UnsafeUtility.SizeOf<PlayerState>());
         foreach (var integration in manager.Integrations) {
             CreateLobbyTest(integration);
         }

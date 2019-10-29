@@ -797,6 +797,15 @@ MonoBehaviour:
       MovementType: 0
       DirectionMode: 0
       KnockbackResistance: 0
+  - Name: LedgeTeeter
+    Data:
+      Timeline: {fileID: 0}
+      MinMoveSpeed: 0
+      MaxMoveSpeed: 0
+      EntryPolicy: 0
+      MovementType: 0
+      DirectionMode: 0
+      KnockbackResistance: 0
   _default:
     Timeline: {fileID: 0}
     MinMoveSpeed: 0

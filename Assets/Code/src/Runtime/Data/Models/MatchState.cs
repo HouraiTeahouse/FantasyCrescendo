@@ -49,7 +49,6 @@ public class MatchState : INetworkSerializable {
   public MatchState(int playerCount) {
     PlayerCount = playerCount;
     playerStates = ArrayPool<PlayerState>.Shared.Rent((int)PlayerCount);
-    RandomState = Random.state;
     UpdatePlayerStates();
   }
 

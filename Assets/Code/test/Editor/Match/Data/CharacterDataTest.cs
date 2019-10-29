@@ -29,7 +29,6 @@ internal class CharacterDataTest : AbstractDataTest<CharacterData> {
     typeof(CharacterPhysics),
     typeof(CharacterLedge),
     typeof(CharacterIndicator),
-    typeof(CharacterCamera),
     typeof(CharacterRespawn),
     typeof(CharacterStateMachine),
     typeof(CharacterShield),

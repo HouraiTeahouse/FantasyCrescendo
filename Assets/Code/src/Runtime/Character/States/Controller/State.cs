@@ -25,8 +25,7 @@ public class State : IEntity, IStateView<PlayerState>, ISimulation<PlayerState, 
     AnimatorHash = Animator.StringToHash(AnimatorName);
   }
 
-  public virtual Task Initalize(PlayerConfig config, GameObject gameObject, 
-                                bool isView) => null;
+  public virtual Task Initalize(Character character) => null;
 
   readonly List<Transition> _transitions;
   public ReadOnlyCollection<Transition> Transitions { get; }
@@ -84,14 +83,9 @@ public class State : IEntity, IStateView<PlayerState>, ISimulation<PlayerState, 
     return lhs.AnimatorHash == rhs.AnimatorHash;
   }
 
-  public static bool operator !=(State lhs, State rhs) {
-    return !(lhs == rhs);
-  }
+  public static bool operator !=(State lhs, State rhs) => !(lhs == rhs);
 
-  public override bool Equals(object obj) {
-    var state = obj as State;
-    return object.ReferenceEquals(state, null) ? false : state == this;
-  }
+  public override bool Equals(object obj) => (obj is State) && ((State)obj) == this;
 
   public override string ToString() => $"CharacterState({Name})";
 

@@ -1,4 +1,5 @@
 ﻿using HouraiTeahouse.FantasyCrescendo.Players;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,7 +8,8 @@ using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo.Characters {
 
-public class CharacterIndicator : PlayerComponent {
+[Serializable]
+public class CharacterIndicator : CharacterComponent {
 
   public Transform TargetTransform;
   public Vector3 PositionBias = new Vector3(0, 1, 0);
@@ -16,34 +18,27 @@ public class CharacterIndicator : PlayerComponent {
   RectTransform CanvasTransform;
   IStateView<PlayerState>[] ViewComponents;
 
-  /// <summary>
-  /// Awake is called when the script instance is being loaded.
-  /// </summary>
-  void Awake() {
+  public override async Task Init(Character character) {
     if (TargetTransform == null) {
-      TargetTransform = transform;
+      TargetTransform = character.transform;
     }
-  }
-
-  public override async Task Initialize(PlayerConfig config, bool isView = false) {
-    var factoryInstance = PlayerIndicatorFactory.Instance; 
-    if (!isView || !factoryInstance) return;
-    Indicator = factoryInstance.CreateIndicator();
+    var factory = PlayerIndicatorFactory.Instance; 
+    if (!character.IsView) return;
+    Assert.IsNotNull(factory);
+    Indicator = factory.CreateIndicator();
     Assert.IsNotNull(Indicator);
+    var config = character.Config;
     ViewComponents = Indicator.GetComponentsInChildren<IStateView<PlayerState>>();
     CanvasTransform = Indicator.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
     await Indicator.gameObject.Broadcast<IInitializable<PlayerConfig>>(comp => comp.Initialize(config));
-    await Indicator.gameObject.Broadcast<IPlayerComponent>(comp => comp.Initialize(config, isView));
-    await base.Initialize(config, isView);
+    await Indicator.gameObject.Broadcast<IPlayerComponent>(comp => comp.Initialize(config, true));
   }
 
   public override void UpdateView(in PlayerState state) {
     if (Indicator == null) return;
     AdjustActiveState(state);
     AdjustIndicatorPosition(state);
-    foreach (var view in ViewComponents) {
-      view.UpdateView(state);
-    }
+    ViewComponents.UpdateView(state);
   }
 
   void AdjustActiveState(in PlayerState state) {

@@ -7,6 +7,7 @@ namespace HouraiTeahouse.FantasyCrescendo.Matches {
 public class MatchManager : MonoBehaviour {
   public static MatchManager Instance { get; private set; }
 
+  [HideInInspector]
   public MatchConfig Config;
 
   public IMatchController MatchController;
