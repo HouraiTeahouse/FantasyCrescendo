@@ -49,18 +49,20 @@ public class Hurtbox : AbstractHitDetector {
     }
   }
 
+#if UNITY_EDITOR
   /// <summary>
   /// Callback to draw gizmos that are pickable and always drawn.
   /// </summary>
   void OnDrawGizmos() {
     if (isActiveAndEnabled) 
-    using (GizmoUtil.With(HitboxUtil.GetHurtboxColor(Type))) {
+    using (GizmoUtility.With(HitboxUtil.GetHurtboxColor(Type))) {
       foreach (var collider in GetComponents<Collider>()) {
         if (!collider.enabled && collider.gameObject.activeInHierarchy) continue;
-        GizmoUtil.DrawCollider(collider);
+        GizmoUtility.DrawCollider(collider);
       }
     }
   }
+#endif
 
 }
 

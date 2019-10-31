@@ -21,10 +21,10 @@ public class PlayerDamage : PlayerComponent {
       Debug.LogWarning($"{name} has a PlayerDamage without a Text display.");
       return;
     }
-    SetTetDamage(state.Damage);
+    SetDamage(state.Damage);
   }
 
-  void SetTetDamage(float damage) {
+  void SetDamage(float damage) {
     if (damage == lastDamage) return;
     var displayDamage = Mathf.Round(damage);
     if (string.IsNullOrEmpty(Format)) {

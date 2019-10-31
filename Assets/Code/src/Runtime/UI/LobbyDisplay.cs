@@ -53,7 +53,7 @@ public class LobbyDisplay : MonoBehaviour, IStateView<Lobby>, IStateView<Matchma
     this.controller = controller;
   }
 
-  public void Dispose() => ObjectUtil.Destroy(this);
+  public void Dispose() => ObjectUtility.Destroy(this);
 
 }
 

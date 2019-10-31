@@ -1,4 +1,5 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Matches;
+﻿using HouraiTeahouse.Backroll;
+using HouraiTeahouse.FantasyCrescendo.Matches;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -7,14 +8,12 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 public abstract class GameMode : GameDataBase {
 
-  public const uint GlobalMaxPlayers = 4;
+  public const uint GlobalMaxPlayers = BackrollConstants.kMaxPlayers;
 
 	public string Name;
 
   [Range(1, GlobalMaxPlayers)] public uint MinPlayers = 1;
   [Range(1, GlobalMaxPlayers)] public uint MaxPlayers = GlobalMaxPlayers;
-
-	public virtual bool SupportsNetworkPlay => false;
 
   protected abstract Task RunGame(MatchConfig config, bool loadStage = true);
 

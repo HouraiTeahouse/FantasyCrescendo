@@ -55,7 +55,7 @@ public class PlayerSelectControls : MonoBehaviour {
       button.interactable = interactable;
     }
     foreach (var obj in ActiveComponents) {
-      ObjectUtil.SetActive(obj, IsActive);
+      ObjectUtility.SetActive(obj, IsActive);
     }
   }
 

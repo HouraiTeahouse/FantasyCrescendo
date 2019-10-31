@@ -59,22 +59,6 @@ public class Platform : RegisteredBehaviour<Platform, byte> {
   }
 
   /// <summary>
-  /// Callback to draw gizmos that are pickable and always drawn.
-  /// </summary>
-  void OnDrawGizmos() {
-    using (GizmoUtil.With(Color.magenta)) {
-      foreach (var platformCollider in GetComponentsInChildren<Collider>()) {
-        if (platformCollider.isTrigger) continue;
-        GizmoUtil.DrawCollider(platformCollider);
-      }
-      if (CheckRegions == null) return;
-      foreach (var region in CheckRegions) {
-        GizmoUtil.DrawBox(GetWorldRegion(region));
-      }
-    }
-  }
-
-  /// <summary>
   /// Reset is called when the user hits the Reset button in the Inspector's
   /// context menu or when adding the component the first time.
   /// </summary>
@@ -93,6 +77,24 @@ public class Platform : RegisteredBehaviour<Platform, byte> {
     worldRegion.size = Vector3.Scale(localRegion.size, transform.lossyScale);
     return worldRegion;
   }
+
+#if UNITY_EDITOR
+  /// <summary>
+  /// Callback to draw gizmos that are pickable and always drawn.
+  /// </summary>
+  void OnDrawGizmos() {
+    using (GizmoUtility.With(Color.magenta)) {
+      foreach (var platformCollider in GetComponentsInChildren<Collider>()) {
+        if (platformCollider.isTrigger) continue;
+        GizmoUtility.DrawCollider(platformCollider);
+      }
+      if (CheckRegions == null) return;
+      foreach (var region in CheckRegions) {
+        GizmoUtility.DrawBox(GetWorldRegion(region));
+      }
+    }
+  }
+#endif
 
 }
 

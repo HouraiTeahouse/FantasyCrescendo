@@ -1,28 +1,19 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Matches;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace HouraiTeahouse.FantasyCrescendo {
+namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
-public class PauseSFX : MonoBehaviour {
+public class PauseSFX : EventHandlerBehaviour<MatchPauseStateChangedEvent> {
 
   public AudioSource AudioSource;
   public AudioClip PauseClip;
   public AudioClip UnpauseClip;
 
-  /// <summary>
-  /// Awake is called when the script instance is being loaded.
-  /// </summary>
-  void Awake() {
-    Mediator.Global.CreateUnityContext(this)
-      .Subscribe<MatchPauseStateChangedEvent>(args => {
-        if (AudioSource == null) return;
-        var clip = args.IsPaused ? PauseClip : UnpauseClip;
-        AudioSource.Stop();
-        AudioSource.clip = clip;
-        AudioSource.Play();
-      });
+  protected override void OnEvent(MatchPauseStateChangedEvent evt) {
+    if (AudioSource == null) return;
+    var clip = evt.IsPaused ? PauseClip : UnpauseClip;
+    AudioSource.Stop();
+    AudioSource.clip = clip;
+    AudioSource.Play();
   }
 
 }

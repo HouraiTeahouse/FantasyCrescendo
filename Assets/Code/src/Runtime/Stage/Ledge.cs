@@ -21,17 +21,6 @@ public sealed class Ledge : RegisteredBehaviour<Ledge, byte> {
     }
   }
 
-  /// <summary>
-  /// Callback to draw gizmos that are pickable and always drawn.
-  /// </summary>
-  void OnDrawGizmos() {
-    var capsuleCollider = GetComponent<CapsuleCollider>();
-    if (capsuleCollider == null) return;
-    using (GizmoUtil.With(Color.red)) {
-      GizmoUtil.DrawCapsuleCollider(capsuleCollider);
-    }
-  }
-
   public bool IsOccupied(MatchState state) {
     bool occupied = false;
     for (var i = 0; i < state.PlayerCount; i++) {
@@ -57,6 +46,20 @@ public sealed class Ledge : RegisteredBehaviour<Ledge, byte> {
       Id = (byte)random.Next();
     } while (Id == 0);
   }
+
+#if UNITY_EDITOR
+  /// <summary>
+  /// Callback to draw gizmos that are pickable and always drawn.
+  /// </summary>
+  void OnDrawGizmos() {
+    var capsuleCollider = GetComponent<CapsuleCollider>();
+    if (capsuleCollider == null) return;
+    using (GizmoUtility.With(Color.red)) {
+      GizmoUtility.DrawCapsuleCollider(capsuleCollider);
+    }
+  }
+#endif
+
 
 }
 

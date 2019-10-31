@@ -26,7 +26,7 @@ public class LoadingScreen : MonoBehaviour {
   void UpdateActive() {
     var isLoading = GetIsLoading();
     foreach (var view in ViewObjects) {
-      ObjectUtil.SetActive(view, isLoading);
+      ObjectUtility.SetActive(view, isLoading);
     }
     if (Tasks.Count > 0) {
       Tasks.RemoveAll(t => t.IsCompleted);

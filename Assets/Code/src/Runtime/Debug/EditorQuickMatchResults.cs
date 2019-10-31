@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace HouraiTeahouse.FantasyCrescendo {
 
-public class EditorQuickMatchResults : MonoBehaviour {
+public class EditorQuickMatchResults : EditorOnlyBehaviour {
 
   public MatchResult Results;
   public PlayerMatchResultDisplayFactory DisplayFactory;
@@ -15,7 +15,8 @@ public class EditorQuickMatchResults : MonoBehaviour {
   /// <summary>
   /// Awake is called when the script instance is being loaded.
   /// </summary>
-  async void Awake() {
+  protected override async void Awake() {
+    base.Awake();
     await DataLoader.LoadTask.Task;
     await Task.WhenAll(Results.PlayerStats.Select(async playerStats => {
       var views = await DisplayFactory.CreateViews(playerStats.Config);

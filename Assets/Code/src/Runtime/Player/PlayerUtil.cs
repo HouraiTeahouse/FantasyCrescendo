@@ -24,26 +24,12 @@ public static class PlayerUtil {
     obj.name = $"Player {config.PlayerID + 1} {type} ({selection.GetPrettyString()})";
 
     var bannedComponents = isView ? kBannedViewComponents : kBannedSimulationComponents;
-    PlayerUtil.DestroyAll(obj, bannedComponents);
-    return obj;
-  }
-
-  /// <summary>
-  /// Finds and destroys all components of a given set of types found on a
-  /// GameObject or any of it's children.
-  /// </summary>
-  /// <remarks>
-  /// This function uses Object.DestroyImmediate.
-  /// </remarks>
-  /// <param name="characterObject">the root object to search from.</param>
-  /// <param name="componentTypes">the types to destroy.</param>
-  public static void DestroyAll(GameObject characterObject,
-                                params Type[] componentTypes) {
-    foreach (var type in componentTypes) {
-      foreach (var component in characterObject.GetComponentsInChildren(type)) {
-        Object.DestroyImmediate(component);
-      }
+    foreach (var componentType in bannedComponents) {
+        foreach (var component in ObjectUtility.GetAll(obj, componentType)) {
+            Object.DestroyImmediate(component);
+        }
     }
+    return obj;
   }
 
   public static PlayerRespawnEvent RespawnPlayer(PlayerDiedEvent evt) {

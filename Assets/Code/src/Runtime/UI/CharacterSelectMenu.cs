@@ -114,7 +114,7 @@ public class CharacterSelectMenu : MonoBehaviour, IStateView<MatchConfig> {
     return GetNextAvailableSelection(selection, character.Palletes.Length, backwards);
   }
 
-  public void Dispose() => ObjectUtil.Destroy(this);
+  public void Dispose() => ObjectUtility.Destroy(this);
 
   PlayerSelection GetNextAvailableSelection(PlayerSelection selection, int limit, bool backwards = false) {
     int diff = backwards ? -1 : 1;

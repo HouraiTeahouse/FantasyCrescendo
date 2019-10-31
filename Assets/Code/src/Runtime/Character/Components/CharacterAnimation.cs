@@ -82,7 +82,7 @@ public class CharacterAnimation : CharacterComponent {
   StateInfo[] _states;
 
   public override Task Init(Character character) {
-    var animator = ObjectUtil.GetFirst<Animator>(character);
+    var animator = ObjectUtility.GetFirst<Animator>(character);
     if (animator == null) return Task.CompletedTask;
     //OptimizeHierarchy();
 
@@ -175,9 +175,9 @@ public class CharacterAnimation : CharacterComponent {
   }
 
   void OptimizeHierarchy() {
-    foreach (var animator in ObjectUtil.GetAll<Animator>(Character)) {
+    foreach (var animator in ObjectUtility.GetAll<Animator>(Character)) {
       var root = animator.gameObject;
-      var transforms = ObjectUtil.GetAll<Component>(root)
+      var transforms = ObjectUtility.GetAll<Component>(root)
                            .Where(comp => !(comp is Transform))
                            .Select(comp => comp.name)
                            .Distinct()
@@ -187,7 +187,7 @@ public class CharacterAnimation : CharacterComponent {
   }
 
   AudioSource GetAudioSource() {
-    var source = ObjectUtil.GetFirst<AudioSource>(Character);
+    var source = ObjectUtility.GetFirst<AudioSource>(Character);
     if (source == null) { 
       source = new GameObject(Character.name + "_Audio").AddComponent<AudioSource>();
       source.transform.parent = Character.transform;

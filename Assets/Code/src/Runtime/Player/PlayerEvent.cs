@@ -21,4 +21,16 @@ public abstract class PlayerEvent : MatchEvent {
 
 }
 
+public class PlayerDiedEvent : PlayerEvent {
+  public bool Respawned;
+}
+    
+public class PlayerResetEvent : PlayerEvent {
+  public PlayerResetEvent(PlayerEvent evt) : base(evt) {}
+}
+
+public class PlayerRespawnEvent : PlayerEvent {
+  public PlayerRespawnEvent(PlayerEvent evt) : base(evt) {}
+}
+
 }

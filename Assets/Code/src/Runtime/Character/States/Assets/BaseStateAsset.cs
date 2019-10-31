@@ -61,9 +61,9 @@ public abstract class BaseStateAsset : ScriptableObject {
   /// </summary>
   public void Destroy() {
     foreach (var transition in _transitions) {
-      ObjectUtil.Destroy(transition);
+      ObjectUtility.Destroy(transition);
     }
-    ObjectUtil.Destroy(this);
+    ObjectUtility.Destroy(this);
   }
 
   /// <summary>
@@ -105,7 +105,7 @@ public abstract class BaseStateAsset : ScriptableObject {
     }
     foreach (var transition in toRemove) {
       _transitions.Remove(transition);
-      ObjectUtil.Destroy(transition);
+      ObjectUtility.Destroy(transition);
     }
     return toRemove.Count > 0;
   }
