@@ -16,10 +16,10 @@ public class RequireSteam : MonoBehaviour {
       hasSteam = !hasSteam;
     }
     foreach (var target in toEnable) {
-      ObjectUtil.SetActive(target, hasSteam);
+      ObjectUtility.SetActive(target, hasSteam);
     }
     foreach (var target in toDisable) {
-      ObjectUtil.SetActive(target, !hasSteam);
+      ObjectUtility.SetActive(target, !hasSteam);
     }
   }
 

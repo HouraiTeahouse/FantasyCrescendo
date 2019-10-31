@@ -72,7 +72,7 @@ public sealed class CharacterShield : CharacterComponent {
   public override void UpdateView(in PlayerState state) {
     var shieldHealth = MaxShieldHealth - state.ShieldDamage;
     var shieldSizeRatio = shieldHealth / (float)MaxShieldHealth;
-    ObjectUtil.SetActive(Shield, IsShieldActive(state));
+    ObjectUtility.SetActive(Shield, IsShieldActive(state));
     ShieldTransform.localScale = Vector3.one * ShieldScale * ShieldSize.Evaluate(shieldSizeRatio);
     if (TargetBone != null) {
       ShieldTransform.localPosition = Character.transform.InverseTransformPoint(TargetBone.position);

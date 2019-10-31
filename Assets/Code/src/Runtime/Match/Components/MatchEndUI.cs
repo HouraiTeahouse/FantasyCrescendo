@@ -33,7 +33,7 @@ public class MatchEndUI : MonoBehaviour {
   }
   
   async Task OnMatchEnd(MatchEndEvent evt) {
-    ObjectUtil.SetActive(TextUI.gameObject, true);
+    ObjectUtility.SetActive(TextUI.gameObject, true);
     if (evt.MatchConfig.Time > 0 && evt.MatchState.Time <= 0) {
       Time.Apply(AudioPlayer, TextUI);
     } else {

@@ -11,25 +11,9 @@ public struct MatchResult : INetworkSerializable {
   public int WinningPlayerID;
   public PlayerMatchStats[] PlayerStats;
 
-  public override bool Equals(object obj) {
-    if (typeof(MatchResult) != obj.GetType()) return false;
-    var other = (MatchResult)obj;
-    var equal = Resolution== other.Resolution;
-    equal &= WinningPlayerID == other.WinningPlayerID;
-    equal &= ArrayUtil.AreEqual(PlayerStats, other.PlayerStats);
-    return equal;
-  }
-
-  public override int GetHashCode() {
-    var hash = unchecked(Resolution.GetHashCode() * 31 + WinningPlayerID * 17);
-    return hash + ArrayUtil.GetOrderedHash(PlayerStats);
-  }
-
   public void Serialize(ref Serializer serializer) {
-    // serializer.Write(MatchResult);
   }
   public void Deserialize(ref Deserializer deserializer) {
-    // MatchResult = deserializer.Read<MatchResult>();
   }
 
 }

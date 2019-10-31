@@ -134,7 +134,7 @@ public class Hitbox : AbstractHitDetector {
     arrayPool.Return(staticResults);
     arrayPool.Return(interpolatedResults);
 
-    return ArrayUtil.RemoveDuplicates(colliders);
+    return ArrayUtility.RemoveDuplicates(colliders);
   }
 
 #if UNITY_EDITOR
@@ -145,7 +145,7 @@ public class Hitbox : AbstractHitDetector {
     if (EditorApplication.isPlayingOrWillChangePlaymode && !IsActive) return;
     Gizmos.color = HitboxUtil.GetHitboxColor(Type);
     if (oldCenter_.HasValue) {
-      GizmoUtil.DrawCapsule(Center, oldCenter_.Value, Radius);
+      GizmoUtility.DrawCapsule(Center, oldCenter_.Value, Radius);
     } else {
       Gizmos.DrawWireSphere(Center, Radius);
     }

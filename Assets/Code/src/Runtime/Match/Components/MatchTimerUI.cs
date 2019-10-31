@@ -43,8 +43,8 @@ public class MatchTimerUI : ViewFactory<MatchState, MatchConfig>, IStateView<Mat
   }
 
   public void Dispose() {
-    ObjectUtil.Destroy(this);
-    ObjectUtil.Destroy(DisplayText);
+    ObjectUtility.Destroy(this);
+    ObjectUtility.Destroy(DisplayText);
   }
 
 }

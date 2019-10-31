@@ -19,7 +19,7 @@ public class PlayerName : MonoBehaviour, IInitializable<PlayerConfig>, IStateVie
     Text.text = string.Format(Format, config.PlayerID + 1);
   }
 
-  public void Dispose() => ObjectUtil.Destroy(this);
+  public void Dispose() => ObjectUtility.Destroy(this);
 
 }
     

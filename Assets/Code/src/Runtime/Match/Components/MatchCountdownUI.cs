@@ -49,7 +49,7 @@ public class MatchCountdownUI : MonoBehaviour {
     if (InitialDelay > 0) {
       await Task.Delay((int)(InitialDelay * 1000));
     }
-    ObjectUtil.SetActive(TextUI.gameObject, true);
+    ObjectUtility.SetActive(TextUI.gameObject, true);
 
     for (var i = 0; i < CountdownClips.Length; i++) {
       if (i < CountdownClips.Length -1) {
@@ -88,7 +88,7 @@ public class MatchCountdownUI : MonoBehaviour {
   /// <param name="audio"></param>
   async void UpdateTextUIGO(MatchStateDisplayData data){
     await UpdateTextUI(data);
-    ObjectUtil.SetActive(TextUI.gameObject, false);
+    ObjectUtility.SetActive(TextUI.gameObject, false);
   }
 
 }

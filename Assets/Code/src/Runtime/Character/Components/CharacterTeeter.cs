@@ -73,20 +73,20 @@ public class CharacterTeeter : PlayerComponent {
     return region;
   }
 
+#if UNITY_EDITOR
   /// <summary>
   /// Callback to draw gizmos that are pickable and always drawn.
   /// </summary>
   void OnDrawGizmos() {
     if (CheckRegions == null) return;
-#if UNITY_EDITOR
     if (EditorApplication.isPlayingOrWillChangePlaymode && !isView) return;
-#endif
-    using (GizmoUtil.With(Color.white))  {
+    using (GizmoUtility.With(Color.white))  {
       foreach (var region in CheckRegions) {
-        GizmoUtil.DrawBox(GetWorldRegion(region, dir));
+        GizmoUtility.DrawBox(GetWorldRegion(region, dir));
       }
     }
   }
+#endif
 
 }
 

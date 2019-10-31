@@ -100,7 +100,7 @@ public class MatchmakerController : MonoBehaviour {
 
   void SetActive(GameObject gameObj) {
     foreach (var screen in new[] {NetworkMenuScreen, ConnectingScreen, SuccessScreen, ErrorScreen}) {
-      ObjectUtil.SetActive(screen, screen == gameObj);
+      ObjectUtility.SetActive(screen, screen == gameObj);
     }
   }
 

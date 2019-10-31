@@ -17,7 +17,7 @@ public abstract class PlayerComponent : MonoBehaviour, IPlayerView, IPlayerSimul
 
   public virtual void UpdateView(in PlayerState state) {}
 
-  public virtual void Dispose() => ObjectUtil.Destroy(this);
+  public virtual void Dispose() => ObjectUtility.Destroy(this);
 
   public virtual void ResetState(ref PlayerState state) {}
 
@@ -43,13 +43,13 @@ public abstract class CharacterComponent : IStateView<PlayerState>, ISimulation<
 
 }
 
-public class PlayerStateDebugView : PlayerComponent {
+public sealed class PlayerStateDebugView : PlayerComponent {
 
   public PlayerConfig Config;
   public PlayerState State;
 
 #if !UNITY_EDITOR
-  void Awake() => DestroyImmediate(this);
+   void Awake() => DestroyImmediate(this);
 #endif
 
   public override Task Initialize(PlayerConfig config, bool isView = false) {
