@@ -14,7 +14,7 @@ public class UnityPlayerInputSource : IInputSource<PlayerInput> {
   public PlayerInput SampleInput() {
     var manager = InputManager.Instance;
     Assert.IsNotNull(manager);
-    return manager.GetInputForPlayer(_confi.LocalPlayerID);
+    return manager.GetInputForPlayer(_config.LocalPlayerID);
   }
 
 }

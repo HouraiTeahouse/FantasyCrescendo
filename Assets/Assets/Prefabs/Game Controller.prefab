@@ -640,6 +640,8 @@ GameObject:
   - component: {fileID: 114128713614494998}
   - component: {fileID: 114512974970822564}
   - component: {fileID: 5687046292653861867}
+  - component: {fileID: 1690273947268914711}
+  - component: {fileID: 3636057294970101700}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: EditorOnly
@@ -709,7 +711,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c68019df2e4ef49be40ec419a85549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameModes: []
+  GameModes:
+  - {fileID: 11400000, guid: ce1f27b7856194045a3e3c7c1a9fae24, type: 2}
+  - {fileID: 11400000, guid: 78bd7db234c5c1b4b9a90fb575179e49, type: 2}
+  - {fileID: 11400000, guid: 911d2a37d116762439b0925e8d2122e2, type: 2}
   LoadedLabels:
   - m_LabelString: characters
   - m_LabelString: scenes
@@ -839,3 +844,59 @@ MonoBehaviour:
   _discord:
     Enabled: 1
     ClientId: 425238271283429377
+--- !u!114 &1690273947268914711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996456345168662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86e167de93b2c246937eb9f82d50b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3636057294970101700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996456345168662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NotificationBehavior: 3
+  m_MaxPlayerCount: 4
+  m_AllowJoining: 1
+  m_JoinBehavior: 0
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 2501553900832222678, guid: 2d817f57af485a24d8dd3ee9e4c352a8,
+    type: 3}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
