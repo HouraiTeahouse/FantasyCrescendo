@@ -1,10 +1,13 @@
 using System;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace HouraiTeahouse.FantasyCrescendo.Matches {
 
-public class MatchManager : MonoBehaviour {
+public class MatchManager : MonoBehaviour, IDisposable {
+
   public static MatchManager Instance { get; private set; }
 
   [HideInInspector]
@@ -16,11 +19,13 @@ public class MatchManager : MonoBehaviour {
   public bool IsLocal => Config.IsLocal;
 
   public MatchProgressionState CurrentProgressionID {
-    get { return MatchController?.CurrentState?.StateID ?? default(MatchProgressionState); }
-    set { MatchController.CurrentState.StateID = value; }
+    get => MatchController?.CurrentState?.StateID ?? default(MatchProgressionState);
+    set => MatchController.CurrentState.StateID = value;
   }
 
   TaskCompletionSource<MatchResult> MatchTask;
+  public bool IsPaused => CurrentProgressionID == MatchProgressionState.Pause;
+  public int? PausedPlayer { get; private set; }
 
   /// <summary>
   /// Awake is called when the script instance is being loaded.
@@ -42,22 +47,16 @@ public class MatchManager : MonoBehaviour {
   /// <summary>
   /// Update is called every frame, if the MonoBehaviour is enabled.
   /// </summary>
-  void Update() {
-    if (View == null) return;
-    var state = MatchController.CurrentState;
-    View.UpdateView(state);
-  }
+  void Update() => View?.UpdateView(MatchController.CurrentState);
 
   /// <summary>
   /// This function is called when the MonoBehaviour will be destroyed.
   /// </summary>
-  void OnDestroy() {
-    if (View != null) {
-      View.Dispose();
-    }
-    if (MatchController != null) {
-      MatchController.Dispose();
-    }
+  void OnDestroy() => Dispose();
+
+  public void Dispose() {
+    View?.Dispose();
+    MatchController?.Dispose();
   }
 
   public async Task<MatchResult> RunMatch() {
@@ -67,8 +66,7 @@ public class MatchManager : MonoBehaviour {
 
     Debug.Log("Starting cooldown...");
     CurrentProgressionID = MatchProgressionState.Intro;
-    await Mediator.Global.PublishAsync(new MatchStartCountdownEvent
-    {
+    await Mediator.Global.PublishAsync(new MatchStartCountdownEvent {
         MatchConfig = Config,
         MatchState = MatchController.CurrentState
     });
@@ -91,26 +89,43 @@ public class MatchManager : MonoBehaviour {
 	 return result;
   }
 
-  public void SetPaused(bool paused, int pausedPlayer) {
-    if (!IsLocal) return;
+  public void TogglePaused(int pausedPlayer) => SetPaused(!IsPaused, pausedPlayer);
 
-    var pauseID = paused ? MatchProgressionState.Pause : MatchProgressionState.InGame;
-    bool changed = pauseID != CurrentProgressionID;
-    CurrentProgressionID = pauseID;
+  public void SetPaused(bool paused, int player) {
+    if (!IsLocal || (IsPaused && player != PausedPlayer)) return;
+
+    bool changed = IsPaused != paused;
+    if (paused) {
+        CurrentProgressionID = MatchProgressionState.Pause;
+        PausedPlayer = player;
+    } else {
+        CurrentProgressionID = MatchProgressionState.InGame;
+        PausedPlayer = null;
+    }
+    Assert.AreEqual(IsPaused, paused);
     if (changed) {
       Mediator.Global.Publish(new MatchPauseStateChangedEvent {
         MatchConfig = Config,
         MatchState = MatchController.CurrentState,
         IsPaused = paused,
-        PausedPlayerID = pausedPlayer
+        PausedPlayerID = player
       });
     }
+  }
+
+  public void ResetMatch(int player) {
+      if (!IsLocal || player != PausedPlayer) return;
+      // TODO(james7132): Properly construct this.
+      EndMatch(new MatchResult{ 
+          Resolution = MatchResolution.NoContest,
+          WinningPlayerID = -1
+      });
   }
 
   public void EndMatch(MatchResult result) {
     if (MatchTask == null || !MatchTask.TrySetResult(result)) return;
     Debug.Log($"Match over. Winner: {result.WinningPlayerID}, Resolution {result.Resolution}");
-    (MatchController as IDisposable)?.Dispose();
+    Dispose();
   }
 
 }

@@ -9,7 +9,6 @@ namespace HouraiTeahouse.FantasyCrescendo {
 public class PauseCamera : MonoBehaviour {
 
   public MatchManager MatchManager;
-  public MatchPauseController PauseController;
   public CameraTarget CameraTarget;
   public Vector3 StartOffset;
   public Vector3 TranslationSpeed = Vector3.one * 5f;
