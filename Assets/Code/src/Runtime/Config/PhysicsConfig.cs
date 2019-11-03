@@ -19,8 +19,7 @@ public class PhysicsConfig : ScriptableObject {
   public float GlobalKnockbackScaling = 0.1f;
 
   [Header("Hitlag")]
-  public uint BaseHitlag = 3;
-  public uint HitlagScaling = 3;
+  public LinearScaledValue Hitlag;
 
   [Header("Gravity")]
   public float ShortJumpGravityMultiplier = 2f;

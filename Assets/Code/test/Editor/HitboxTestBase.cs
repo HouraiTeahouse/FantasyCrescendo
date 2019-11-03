@@ -4,9 +4,7 @@ using UnityEngine;
 public abstract class HitboxTestBase : GameObjectTest {
 
   protected HitboxBuilder CreateHitbox() {
-    var builder = new HitboxBuilder(CreateObject<Hitbox>());
-    builder.Hitbox.Type = HitboxType.Offensive;
-    return builder;
+    return new HitboxBuilder().WithType(HitboxType.Offensive);
   }
 
   protected HurtboxBuilder CreateHurtbox() {

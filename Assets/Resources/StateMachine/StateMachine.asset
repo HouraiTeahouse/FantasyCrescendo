@@ -1,10 +1,28 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3406194243155141771
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sourceState: {fileID: 114214883133146244}
+  _destinationState: {fileID: 2012085377451769445}
+  _conditions: []
+  TransitionRequirement: 0
+  Muted: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -14,11 +32,15 @@ MonoBehaviour:
   _states:
   - {fileID: 114214883133146244}
   - {fileID: 114862697135579352}
+  - {fileID: 2012085377451769445}
+  - {fileID: 5351320381651591367}
+  - {fileID: 287485665733287736}
 --- !u!114 &114165026013793590
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -27,24 +49,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sourceState: {fileID: 114214883133146244}
   _destinationState: {fileID: 114862697135579352}
+  _conditions:
+  - Type: 0
+    Button: 0
+    Axis: 0
+    AxisDirection: 0
+    FloatParam: 0
+    BoolParam: 0
+  - Type: 0
+    Button: 0
+    Axis: 0
+    AxisDirection: 0
+    FloatParam: 0
+    BoolParam: 0
   TransitionRequirement: 0
-  Conditions: []
   Muted: 0
 --- !u!114 &114214883133146244
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
-  m_Name: State
+  m_Name: Idle
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 11400000}
   _transitions:
   - {fileID: 114165026013793590}
-  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.State
+  - {fileID: -3406194243155141771}
+  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.JumpState
   StateData:
     Timeline: {fileID: 0}
     MinMoveSpeed: 0
@@ -57,7 +93,8 @@ MonoBehaviour:
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -66,47 +103,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sourceState: {fileID: 114862697135579352}
   _destinationState: {fileID: 114214883133146244}
+  _conditions: []
   TransitionRequirement: 0
-  Conditions: []
   Muted: 0
 --- !u!114 &114660375724661250
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a7a72a05d3baca418906d9da5d78f4f, type: 3}
   m_Name: Metadata
   m_EditorClassIdentifier: 
-  WindowOffset: {x: 0, y: 0}
-  WindowZoomPivot: {x: 0, y: 0}
-  WindowZoom: 1
+  WindowOffset: {x: -275.89804, y: 58.58572}
+  WindowZoomPivot: {x: 651.80707, y: 135.3234}
+  WindowZoom: 1.1
   _stateNodes:
   - Asset: {fileID: 114214883133146244}
-    Center: {x: 309, y: 168}
+    Center: {x: 620.99994, y: 207.09091}
   - Asset: {fileID: 114862697135579352}
-    Center: {x: 557, y: 168}
+    Center: {x: 942.5453, y: 206.18182}
+  - Asset: {fileID: 2012085377451769445}
+    Center: {x: 788.6362, y: 310.18182}
+  - Asset: {fileID: 5351320381651591367}
+    Center: {x: 854.936, y: 26.627426}
+  - Asset: {fileID: 287485665733287736}
+    Center: {x: 522.40393, y: 47.865868}
   _transitionNodes:
   - Asset: {fileID: 114165026013793590}
   - Asset: {fileID: 114336536611537822}
+  - Asset: {fileID: 6438068571723489323}
+  - Asset: {fileID: 8158269558264468624}
+  - Asset: {fileID: -3406194243155141771}
+  - Asset: {fileID: 1627509410071832073}
+  - Asset: {fileID: 4219602474130249756}
   _stateMachine: {fileID: 11400000}
 --- !u!114 &114862697135579352
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
-  m_Name: State
+  m_Name: State 1
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 11400000}
   _transitions:
   - {fileID: 114336536611537822}
-  _stateType: 
+  - {fileID: 8158269558264468624}
+  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.JumpState
   StateData:
     Timeline: {fileID: 0}
     MinMoveSpeed: 0
@@ -115,3 +166,135 @@ MonoBehaviour:
     MovementType: 0
     DirectionMode: 0
     KnockbackResistance: 0
+--- !u!114 &287485665733287736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 11400000}
+  _transitions: []
+  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.JumpState
+  StateData:
+    Timeline: {fileID: 0}
+    MinMoveSpeed: 0
+    MaxMoveSpeed: 0
+    EntryPolicy: 0
+    MovementType: 0
+    DirectionMode: 0
+    KnockbackResistance: 0
+--- !u!114 &1627509410071832073
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sourceState: {fileID: 2012085377451769445}
+  _destinationState: {fileID: 114214883133146244}
+  _conditions: []
+  TransitionRequirement: 0
+  Muted: 0
+--- !u!114 &2012085377451769445
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7c12dc03a0e31459943d45f0cd0441, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 11400000}
+  _transitions:
+  - {fileID: 6438068571723489323}
+  - {fileID: 1627509410071832073}
+  _stateType: HouraiTeahouse.FantasyCrescendo.Characters.JumpState
+  StateData:
+    Timeline: {fileID: 0}
+    MinMoveSpeed: 0
+    MaxMoveSpeed: 0
+    EntryPolicy: 0
+    MovementType: 0
+    DirectionMode: 0
+    KnockbackResistance: 0
+--- !u!114 &4219602474130249756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sourceState: {fileID: 5351320381651591367}
+  _destinationState: {fileID: 287485665733287736}
+  _conditions: []
+  TransitionRequirement: 0
+  Muted: 0
+--- !u!114 &5351320381651591367
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e014ed50c9dc1468dc42317e16d8cc, type: 3}
+  m_Name: Grounded
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 11400000}
+  _transitions:
+  - {fileID: 4219602474130249756}
+  States: []
+--- !u!114 &6438068571723489323
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sourceState: {fileID: 2012085377451769445}
+  _destinationState: {fileID: 114862697135579352}
+  _conditions: []
+  TransitionRequirement: 0
+  Muted: 0
+--- !u!114 &8158269558264468624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c1868afc343148ab55183988e882f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sourceState: {fileID: 114862697135579352}
+  _destinationState: {fileID: 2012085377451769445}
+  _conditions: []
+  TransitionRequirement: 0
+  Muted: 0

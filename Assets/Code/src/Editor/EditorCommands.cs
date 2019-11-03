@@ -9,9 +9,6 @@ namespace HouraiTeahouse.FantasyCrescendo {
 
 class EditorCommands {
 
-    [MenuItem("Hitbox/Add Offensive Hitbox %h")]
-    static void AddOffensiveHitbox() => AddHitbox<Hitbox>("Offensive");
-
     [MenuItem("Hitbox/Add Hurtbox %#h")]
     static void AddHurtbox() => AddHitbox<Hurtbox>("Damageable");
 

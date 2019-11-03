@@ -58,11 +58,7 @@ public class HitboxEditorWindow : LockableEditorWindow {
     });
     var typeCol = table.AddColumn((rect, serializedObject) => {
       var color = GUI.color;
-      var hitbox = serializedObject.targetObject as Hitbox;
       var hurtbox = serializedObject.targetObject as Hurtbox;
-      if (hitbox != null) {
-        GUI.color = HitboxUtil.GetHitboxColor(hitbox.Type);
-      }
       if (hurtbox != null) {
         GUI.color = HitboxUtil.GetHurtboxColor(hurtbox.Type);
       }
@@ -134,7 +130,7 @@ public class HitboxEditorWindow : LockableEditorWindow {
 
     _roots = _roots ?? new GameObject[0];
 
-    table.Draw(pos, GetAllChildren<Hitbox>().Concat(GetAllChildren<Hurtbox>()));
+    table.Draw(pos, GetAllChildren<Hurtbox>());
 
     pos.y = pos.y + pos.height;
     pos.height = 16f;
