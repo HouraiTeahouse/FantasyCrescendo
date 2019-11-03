@@ -80,48 +80,50 @@ public class MatchHitboxSimulation : IMatchSimulation {
     bool isHit = false;
     foreach (var collision in collisions) {
       var source = collision.Source;
-      int srcPlayerId = (int)collision.Source.PlayerID;
+      int srcPlayerId = (int)collision.Source.PlayerId;
       int dstPlayerId = (int)collision.Destination.PlayerID;
       switch (collision.Destination.Type) {
         case HurtboxType.Damageable:
-          ref var sourceState = ref match[(int)source.PlayerID];
+          ref var sourceState = ref match[(int)source.PlayerId];
 
           // Check if hit is valid.
           if (isShielded || isHit || sourceState.HasHit(dstPlayerId)) continue;
 
           // Deal damage, knockback, and hitstun to the target
-          var hitDamage = source.BaseDamage;
-          var hitKnockback = source.GetKnocback(state.Damage, sourceState.Direction);
+          var hitDamage = source.Info.Damage.GetScaledValue(0f);
+          var hitKnockback = source.Info.GetKnocback(state.Damage, sourceState.Direction);
 
           state.Damage += hitDamage;
           state.Velocity = hitKnockback;
-          state.Hitstun = source.GetHitstun(state.Damage);
+          state.Hitstun = source.Info.GetHitstun(state.Damage);
 
           // Apply hitlag
-          state.Hitlag = source.Hitlag;
-          sourceState.Hitlag = source.Hitlag;
+          state.Hitlag = source.Info.Hitlag;
+          sourceState.Hitlag = source.Info.Hitlag;
 
           // Mark the source as having hit the destination.
           sourceState.HitPlayer(dstPlayerId);
 
-          collision.PlayEffect(new HitInfo { 
-            Source = collision.Source, 
-            Destination = collision.Destination, 
-            MatchState = match, 
-          });
+        // TODO(james7132): Reimplement this
+        //   collision.PlayEffect(new HitInfo { 
+        //     Source = collision.Source, 
+        //     Destination = collision.Destination, 
+        //     MatchState = match, 
+        //   });
 
           isHit = true;
           break;
         case HurtboxType.Shield:
           isShielded = true;
-          state.ShieldDamage += (uint)(source.BaseDamage * 100);
+          state.ShieldDamage += (uint)(source.Info.Damage.GetScaledValue(0f) * 100);
           break;
         case HurtboxType.Invincible:
-          collision.PlayEffect(new HitInfo { 
-            Source = collision.Source, 
-            Destination = collision.Destination, 
-            MatchState = match, 
-          });
+        // TODO(james7132): Reimplement this
+        //   collision.PlayEffect(new HitInfo { 
+        //     Source = collision.Source, 
+        //     Destination = collision.Destination, 
+        //     MatchState = match, 
+        //   });
           break;
       }
     }

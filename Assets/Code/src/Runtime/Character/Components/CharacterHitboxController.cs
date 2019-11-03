@@ -24,11 +24,6 @@ public class CharacterHitboxController : PlayerComponent {
   }
 
   public override void Presimulate(in PlayerState state) { 
-    foreach (var hitbox in Hitboxes) {
-      hitbox.Presimulate();
-      // Deactivate all hitboxes, let them be driven solely by tick to tick animation
-      hitbox.Type = HitboxType.Inactive;
-    }
   }
 
   public override void Simulate(ref PlayerState state, in PlayerInputContext input) {
@@ -36,7 +31,7 @@ public class CharacterHitboxController : PlayerComponent {
     var matchHurtboxes = MatchHitboxSimulation.Instance?.ActiveHurtboxes;
     if (matchHitboxes != null) {
       foreach (var hitbox in Hitboxes) {
-        if (!hitbox.IsActive) continue;
+        if (!hitbox.Info.IsActive) continue;
         matchHitboxes.Add(hitbox);
       }
     }

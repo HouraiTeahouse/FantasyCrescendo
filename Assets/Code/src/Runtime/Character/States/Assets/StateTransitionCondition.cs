@@ -73,13 +73,13 @@ public class StateTransitionCondition {
       case ButtonType.Special: button = ctx => ctx.Input.Special; break;
       case ButtonType.Shield: button = ctx => ctx.Input.Shield; break;
       case ButtonType.Jump: button = ctx => ctx.Input.Jump; break;
-      default: return null;
+      default: throw new InvalidOperationException();
     }
     switch (Type) {
       case ConditionType.InputButtonWasPressed: return ctx => button(ctx).WasPressed;
       case ConditionType.InputButtonWasReleased: return ctx => button(ctx).WasReleased;
       case ConditionType.InputButtonHeld: return ctx => button(ctx).Current;
-      default: return null;
+      default: throw new InvalidOperationException();
     }
   }
 
