@@ -1,0 +1,263 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Menu_Strings_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_KeyDatabase: {fileID: 11400000, guid: 523272643cee33942880d8d7da93bfe9, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1
+    m_Localized: Youmu Konpaku
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2
+    m_Localized: Youmu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3
+    m_Localized: 'This game is best experienced with one or more gamepad controllers.
+
+      Got
+      a controller? Plug it in!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5
+    m_Localized: 2D Character Artist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6
+    m_Localized: 3D Character Artist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7
+    m_Localized: 3D Environment Artist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8
+    m_Localized: Character Animation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9
+    m_Localized: Game Programming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10
+    m_Localized: Gameplay Design
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11
+    m_Localized: Localization
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12
+    m_Localized: Producer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13
+    m_Localized: Promotion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14
+    m_Localized: Sound Effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15
+    m_Localized: Special Thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16
+    m_Localized: Support System Programming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17
+    m_Localized: User Interface Design
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18
+    m_Localized: Visual Effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19
+    m_Localized: mm{0}dd{0}yyyy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20
+    m_Localized: "Notice!\n\nThis game is a derivative of Touhou Project (\u6771\u65B9Project).\nIt
+      may contain story, character personalities, and settings different from the
+      original works.\nIf you feel uncomfortable with this, please proceed with caution."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21
+    m_Localized: Fantasy Crescendo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24
+    m_Localized: Exit Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25
+    m_Localized: Multiplayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28
+    m_Localized: Singleplayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29
+    m_Localized: Netplay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30
+    m_Localized: Special
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31
+    m_Localized: Standard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32
+    m_Localized: Story Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33
+    m_Localized: Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34
+    m_Localized: All-Star Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35
+    m_Localized: Classic Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39
+    m_Localized: Antialiasing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41
+    m_Localized: BGM Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43
+    m_Localized: We have set your language to {0}, is this OK?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44
+    m_Localized: Master Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45
+    m_Localized: Quality Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47
+    m_Localized: SFX Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48
+    m_Localized: Video
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49
+    m_Localized: VA Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50
+    m_Localized: Player {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51
+    m_Localized: Random
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52
+    m_Localized: Debug Stage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53
+    m_Localized: '"Full of magic and greenery, hence the name."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 54
+    m_Localized: Forest of Magic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55
+    m_Localized: '"Home to quite a few revels. Tenshi not welcome."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56
+    m_Localized: Hakurei Shrine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57
+    m_Localized: Makai
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58
+    m_Localized: Netherworld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59
+    m_Localized: Scarlet Devil Mansion
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1
