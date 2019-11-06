@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace HouraiTeahouse {
 
@@ -14,15 +15,14 @@ public class CreditsAsset : ScriptableObject {
 
   [Serializable]
   public class Category {
-    //TODO(james7132): Make these readonly.
-    public string Name;
+    public LocalizedString Name;
     public string[] Contributors;
 
     public override string ToString() {
       if (Contributors?.Length == 1) {
-        return $"{Name}: {Contributors[0]}";
+        return $"{Name.ToString()}: {Contributors[0]}";
       }
-      return Name;
+      return Name.ToString();
     }
   }
 

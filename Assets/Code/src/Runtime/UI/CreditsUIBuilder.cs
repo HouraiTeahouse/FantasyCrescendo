@@ -45,13 +45,14 @@ public class CreditsUIBuilder : MonoBehaviour {
     }
   }
 
-  void BuildSingleView(CreditsAsset.Category category, Transform viewContainer) {
-      var container = new GameObject(category.Name, typeof(RectTransform));
+  async void BuildSingleView(CreditsAsset.Category category, Transform viewContainer) {
+      var categoryName = await category.Name.GetLocalizedString();
+      var container = new GameObject(categoryName, typeof(RectTransform));
       BuildLayout(container, CreditHeight);
       var categoryLabel = Instantiate(CategoryLabelTemplate);
       categoryLabel.SetParent(container.transform, false);
       FillRect(categoryLabel, Indent, LabelSize);
-      SetNameAndText(categoryLabel.gameObject, category.Name);
+      SetNameAndText(categoryLabel.gameObject, categoryName);
       foreach (var text in categoryLabel.GetComponentsInChildren<Text>())
           text.alignment = TextAnchor.MiddleLeft;
       container.transform.SetParent(viewContainer, false);
@@ -63,17 +64,18 @@ public class CreditsUIBuilder : MonoBehaviour {
           text.alignment = TextAnchor.MiddleRight;
   }
 
-  void BuildFullView(CreditsAsset.Category category, Transform viewContainer) {
+  async void BuildFullView(CreditsAsset.Category category, Transform viewContainer) {
     var categoryLabel = Instantiate(CategoryLabelTemplate);
-    SetNameAndText(categoryLabel.gameObject, category.Name);
+    var categoryName = await category.Name.GetLocalizedString();
+    SetNameAndText(categoryLabel.gameObject, categoryName);
     BuildLayout(categoryLabel.gameObject, CreditHeight);
     categoryLabel.SetParent(viewContainer, false);
-    SetText(categoryLabel.gameObject, category.Name);
+    SetText(categoryLabel.gameObject, categoryName);
     int segmentCount = 1;
     foreach (var segment in Segment(category.Contributors.OrderBy(s => s), MaxContributorsPerLine)) {
       var count = segment.Length;
       var size = 1 / (float) count;
-      var container = new GameObject(category.Name + " " + segmentCount, typeof(RectTransform));
+      var container = new GameObject(categoryName + " " + segmentCount, typeof(RectTransform));
       BuildLayout(container, CreditHeight);
       container.transform.SetParent(viewContainer, false);
       for (var i = 0; i < segment.Length; i++) {
