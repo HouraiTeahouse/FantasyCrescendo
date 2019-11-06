@@ -1,4 +1,5 @@
-﻿using HouraiTeahouse.FantasyCrescendo.Characters;
+﻿using HouraiTeahouse.Localization;
+using HouraiTeahouse.FantasyCrescendo.Characters;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,9 @@ public static class BuildCommands {
           manifest.GetValue<string>("cloudBuildTargetName"), 
           manifest.GetValue<string>("buildNumber"));
       Debug.Log($"Changed version to {PlayerSettings.bundleVersion}");
+      Debug.Log("Updating localization data...");
+      LocalizationGenerator.GenerateAll();
+      Debug.Log("Localization data updated!");
 #else
   public static void Prebuild() {
       Debug.Log("Starting pre-build cleanup...");
