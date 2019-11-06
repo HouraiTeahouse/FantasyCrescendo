@@ -5,14 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Data/Scenes/Base/GameBootstrap.unity
     guid: 07c1323aedb3a5b43a8791bf343df61e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Data/Scenes/Base/ErrorDisplay.unity
     guid: 34f53487d5f67004d85ed3f6e6275256
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 9e818a5f754e3804ab9630be1c287a81,
       type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: d7d9dd0c21cf24844ab8016fa538799e,
+      type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 6144a64912950d148b3d8586805d1053,
       type: 2}
