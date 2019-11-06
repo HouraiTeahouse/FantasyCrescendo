@@ -1,0 +1,262 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Menu_Strings_pt
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pt
+  m_KeyDatabase: {fileID: 11400000, guid: 523272643cee33942880d8d7da93bfe9, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1
+    m_Localized: Youmu Konpaku
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2
+    m_Localized: Youmu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3
+    m_Localized: "Este jogo \xE9 melhor aproveitado com um ou mais controles.\nTem
+      um controle? Conecte-o!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4
+    m_Localized: "Cr\xE9ditos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5
+    m_Localized: Artista Personagens 2D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6
+    m_Localized: Artista Personagens 3D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7
+    m_Localized: Artista Ambientes 3D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8
+    m_Localized: "Anima\xE7\xE3o das Personagens"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9
+    m_Localized: "Programa\xE7\xE3o do Jogo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10
+    m_Localized: Design de Gameplay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11
+    m_Localized: "Localiza\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12
+    m_Localized: "Produ\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13
+    m_Localized: "Promo\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14
+    m_Localized: Efeitos Sonoros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15
+    m_Localized: Agradecimentos Especiais
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16
+    m_Localized: "Programa\xE7\xE3o do Sistema de Suporte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17
+    m_Localized: "Design da Interface de Usu\xE1rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18
+    m_Localized: Efeitos Visuais
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19
+    m_Localized: dd{0}mm{0}yyyy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20
+    m_Localized: "Aviso!\n\nEste jogo \xE9 baseado no universo de Touhou Project
+      (\u6771\u65B9Project).\nEle pode conter hist\xF3rias, personalidades de personagens
+      e contextos diferentes dos materiais originais.\nSe voc\xEA se sente desconfort\xE1vel
+      com isto, por favor prossiga com precau\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21
+    m_Localized: Fantasy Crescendo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22
+    m_Localized: "Portugu\xEAs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23
+    m_Localized: Voltar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24
+    m_Localized: Sair do Jogo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25
+    m_Localized: Multijogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26
+    m_Localized: "M\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27
+    m_Localized: "Op\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28
+    m_Localized: Um Jogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30
+    m_Localized: Especial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31
+    m_Localized: "Padr\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32
+    m_Localized: "Modo Hist\xF3ria"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33
+    m_Localized: Treinamento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34
+    m_Localized: Modo All-Star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35
+    m_Localized: "Modo Cl\xE1ssico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36
+    m_Localized: "N\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38
+    m_Localized: Sim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39
+    m_Localized: Antialiasing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40
+    m_Localized: "\xC1udio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41
+    m_Localized: "Volume das M\xFAsicas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43
+    m_Localized: "Definimos seu idioma como {0}, isto est\xE1 OK?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44
+    m_Localized: Volume Mestre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45
+    m_Localized: Qualidade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46
+    m_Localized: "Resolu\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47
+    m_Localized: Volume dos Efeitos Sonoros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48
+    m_Localized: "V\xEDdeo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49
+    m_Localized: Volume das Vozes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50
+    m_Localized: Jogador {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51
+    m_Localized: "Aleat\xF3rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52
+    m_Localized: Fase de Debug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53
+    m_Localized: "\"Cheio de magia e verde, da\xED o nome.\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 54
+    m_Localized: Floresta da Magia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55
+    m_Localized: "\"Lar de v\xE1rias festas. Tenshi n\xE3o \xE9 bem-vinda.\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56
+    m_Localized: "Santu\xE1rio Hakurei"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57
+    m_Localized: Makai
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58
+    m_Localized: Mundo Sombrio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59
+    m_Localized: "Mans\xE3o do Dem\xF4nio Escarlate"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

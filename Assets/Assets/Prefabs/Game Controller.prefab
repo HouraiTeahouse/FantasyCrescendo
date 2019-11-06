@@ -632,7 +632,6 @@ GameObject:
   - component: {fileID: 114715350892547174}
   - component: {fileID: 114974252137424500}
   - component: {fileID: 114423664066748220}
-  - component: {fileID: 114851974053767234}
   - component: {fileID: 114636917838261216}
   - component: {fileID: 114397010500727212}
   - component: {fileID: 114209513861547228}
@@ -718,25 +717,6 @@ MonoBehaviour:
   LoadedLabels:
   - m_LabelString: characters
   - m_LabelString: scenes
---- !u!114 &114851974053767234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1996456345168662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36bde28572b02ea4db7c258aa7c2e9c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LanguageOption: {fileID: 11400000, guid: b983caafd32a10d4cafaba2ee2dbc3b6, type: 2}
-  _defaultLanguage: en
-  _dontDestroyOnLoad: 0
-  localizationDirectory: lang
-  _onLanguageChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &114636917838261216
 MonoBehaviour:
   m_ObjectHideFlags: 0
