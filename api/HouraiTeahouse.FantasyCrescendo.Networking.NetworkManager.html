@@ -1,0 +1,630 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class NetworkManager
+   | Fantasy Crescendo </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class NetworkManager
+   | Fantasy Crescendo ">
+    <meta name="generator" content="docfx 2.31.0.0">
+    
+    <link rel="shortcut icon" href="../images/logo.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items"></div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager">
+  
+  
+  <h1 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager" class="text-break">Class NetworkManager
+  </h1>
+  <div class="markdown level0 summary"><p>Singleton MonoBehaviour manager of network related operations.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">MonoBehaviour</span></div>
+    <div class="level1"><span class="xref">NetworkManager</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.html">HouraiTeahouse.FantasyCrescendo.Networking</a></h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class NetworkManager : MonoBehaviour</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Client_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Client*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Client" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Client">Client</h4>
+  <div class="markdown level1 summary"><p>Gets the currently active NetworkClient. Null if not active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public INetworkClient Client { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.INetworkClient.html">INetworkClient</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Host_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Host*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Host" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Host">Host</h4>
+  <div class="markdown level1 summary"><p>Gets the currently active NetworkHost. Null if not active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NetworkHost Host { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkHost.html">NetworkHost</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Instance_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Instance*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Instance" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Instance">Instance</h4>
+  <div class="markdown level1 summary"><p>Gets the singleton instance of NetworkManager.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static NetworkManager Instance { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.html">NetworkManager</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_IsClient_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.IsClient*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_IsClient" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.IsClient">IsClient</h4>
+  <div class="markdown level1 summary"><p>Gets whether the current instance is a client to a server. True if the 
+NetworkClient is currently active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsClient { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_IsHost_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.IsHost*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_IsHost" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.IsHost">IsHost</h4>
+  <div class="markdown level1 summary"><p>Gets whether both server and client are active on the current game. True if 
+both client and server are active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsHost { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_IsNetworkActive_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.IsNetworkActive*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_IsNetworkActive" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.IsNetworkActive">IsNetworkActive</h4>
+  <div class="markdown level1 summary"><p>Gets whether any network activity is currently being. True if either client 
+or server are active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsNetworkActive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_IsServer_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.IsServer*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_IsServer" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.IsServer">IsServer</h4>
+  <div class="markdown level1 summary"><p>Gets whether the current instance is server to clients. True if the 
+NetworkClient is currently active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsServer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Matchmaker_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Matchmaker*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Matchmaker" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Matchmaker">Matchmaker</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IMatchmaker Matchmaker { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IMatchmaker</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Server_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Server*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_Server" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.Server">Server</h4>
+  <div class="markdown level1 summary"><p>Gets the currently active NetworkServer. Null if not active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public INetworkServer Server { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.INetworkServer.html">INetworkServer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_CreateMatchController_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.CreateMatchController*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_CreateMatchController_HouraiTeahouse_FantasyCrescendo_MatchConfig_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.CreateMatchController(HouraiTeahouse.FantasyCrescendo.MatchConfig)">CreateMatchController(MatchConfig)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IMatchController CreateMatchController(MatchConfig config)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.MatchConfig.html">MatchConfig</a></td>
+        <td><span class="parametername">config</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IMatchController</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StartClient_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StartClient*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StartClient_HouraiTeahouse_FantasyCrescendo_Networking_NetworkClientConfig_Type_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StartClient(HouraiTeahouse.FantasyCrescendo.Networking.NetworkClientConfig,Type)">StartClient(NetworkClientConfig, Type)</h4>
+  <div class="markdown level1 summary"><p>Starts the local NetworkClient.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public INetworkClient StartClient(NetworkClientConfig config, Type interfaceType = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkClientConfig.html">NetworkClientConfig</a></td>
+        <td><span class="parametername">config</span></td>
+        <td><p>the NetworkClientConfig used to start the server.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">interfaceType</span></td>
+        <td><p>INetworkInterface type to use, uses default if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.INetworkClient.html">INetworkClient</a></td>
+        <td><p>the NetworkClient created or fetched.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StartClient_HouraiTeahouse_FantasyCrescendo_Networking_NetworkClientConfig_Type__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This does not connect the client to any server. This only opens the
+socket for a client.</p>
+<p>If a client is already active, another client will not be started.
+and the active client will be returned.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StartHost_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StartHost*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StartHost_HouraiTeahouse_FantasyCrescendo_Networking_NetworkHostConfig_Type_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StartHost(HouraiTeahouse.FantasyCrescendo.Networking.NetworkHostConfig,Type)">StartHost(NetworkHostConfig, Type)</h4>
+  <div class="markdown level1 summary"><p>Starts the local NetworkServer and NetworkClient, and connects the client to the
+local server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;NetworkHost&gt; StartHost(NetworkHostConfig config, Type interfaceType = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkHostConfig.html">NetworkHostConfig</a></td>
+        <td><span class="parametername">config</span></td>
+        <td><p>the NetworkHostConfig used to start the host.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">interfaceType</span></td>
+        <td><p>INetworkInterface type to use, uses default if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkHost.html">NetworkHost</a>&gt;</td>
+        <td><p>an awaitable task for the resultant NetworkHost</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StartHost_HouraiTeahouse_FantasyCrescendo_Networking_NetworkHostConfig_Type__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This will open a connection and does not immediately resolve. To assure the
+connection is complete. Await the returned task.</p>
+<p>If a client is already active, another client will not be started.
+and the active client will be returned.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StartServer_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StartServer*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StartServer_HouraiTeahouse_FantasyCrescendo_Networking_NetworkServerConfig_Type_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StartServer(HouraiTeahouse.FantasyCrescendo.Networking.NetworkServerConfig,Type)">StartServer(NetworkServerConfig, Type)</h4>
+  <div class="markdown level1 summary"><p>Starts the local NetworkServer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;INetworkServer&gt; StartServer(NetworkServerConfig config, Type interfaceType = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkServerConfig.html">NetworkServerConfig</a></td>
+        <td><span class="parametername">config</span></td>
+        <td><p>the NetworkServerConfig used to start the server.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">interfaceType</span></td>
+        <td><p>INetworkInterface type to use, uses default if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.INetworkServer.html">INetworkServer</a>&gt;</td>
+        <td><p>the NetworkServer created or fetched.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StartServer_HouraiTeahouse_FantasyCrescendo_Networking_NetworkServerConfig_Type__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This does not connect the server to any client. This only opens the
+socket for a server.</p>
+<p>If a server is already active, another server will not be started.
+and the active server will be returned.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StopClient_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StopClient*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StopClient" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StopClient">StopClient()</h4>
+  <div class="markdown level1 summary"><p>Stops the local NetworkClient.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StopClient()</code></pre>
+  </div>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StopClient_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This will forcibly disconnect the client from any connected servers.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StopHost_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StopHost*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StopHost" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StopHost">StopHost()</h4>
+  <div class="markdown level1 summary"><p>Stops both the local client and server..</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StopHost()</code></pre>
+  </div>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StopHost_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This will forcibly disconnect all connected peers.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StopServer_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StopServer*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StopServer" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.NetworkManager.StopServer">StopServer()</h4>
+  <div class="markdown level1 summary"><p>Stops the local NetworkServer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StopServer()</code></pre>
+  </div>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_Networking_NetworkManager_StopServer_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This will forcibly disconnect all connected clients.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Getting Started | Fantasy Crescendo </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Getting Started | Fantasy Crescendo ">
+    <meta name="generator" content="docfx 2.31.0.0">
+    
+    <link rel="shortcut icon" href="../images/logo.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items"></div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="getting-started">Getting Started</h1>
+
+<p>Before attempting to make any contributions or work with the game at all, we suggest all contributors join the <a href="https://discord.gg/VuZhs9V">Hourai Teahouse Discord</a>.</p>
+<h2 id="installing-tools">Installing Tools</h2>
+<p>Fantasy Crescendo is a video game, pulling together multiple creative and technical disciplines. We use a variety of tools to finish the necessary tasks.</p>
+<h3 id="for-game-designersprogrammers">For Game Designers/Programmers</h3>
+<p>Fantasy Creacendo is developed with the Unity3D engine. If you plan on directly changing game assets or code, you will need Unity 2018.2. It&#39;s suggested to use the <a href="https://forum.unity.com/threads/unity-hub-preview-0-18-1-is-now-available.539353/">Unity Hub</a> to manage and install Unity.</p>
+<p>To also get the project files and push changes, you will also need a <strong>Git client</strong>. There&#39;s multiple choices for this: <a href="https://git-scm.com/">git bash</a> (Command-line), <a href="https://www.sourcetreeapp.com/">SourceTree</a> (GUI), <a href="https://desktop.github.com/">GitHub Desktop</a> (GUI). Any git client works, choose one that you feel you work with best.</p>
+<p>You will also need a GitHub account. If you do not have one already, <a href="https://github.com/join">register</a>.</p>
+<p>For programmers, while it is possible to work with any program that edits text files (vim, Sublime, Notepad++), it is suggested that you use an editor that supports language specific features for C#. Some suggestions for this are <a href="https://code.visualstudio.com/">Visual Studio Code</a>, <a href="https://visualstudio.microsoft.com/">Visual Studio</a>, or <a href="https://www.jetbrains.com/rider/">Rider</a>.</p>
+<h3 id="for-animators">For Animators</h3>
+<p>The source files used to animate characters in Fantasy Crescendo is <a href="https://www.autodesk.com/products/maya/overview">Autodesk Maya</a>. Specifically, we use <strong>Autodesk Maya 2016 Extension 2</strong>. </p>
+<h3 id="for-localizers">For Localizers</h3>
+<p>Localizers do not need to install anything on their computers, but they will need access to the shared <a href="https://docs.google.com/spreadsheets/d/10FN34rosfGUNap72iH8PPLmM2yZ8_Wv_cFdtXx2IsTk/edit?usp=sharing">localization Google Sheet</a>. If you wish to localize a language, request access, then contact the project maintainers on the Hourai Teahouse Discord to get the request approved.</p>
+<h3 id="for-2d-artistsmusicians">For 2D Artists/Musicians</h3>
+<p>Luckily for most of these assets used in the game, we do not have any strong requirements so long as the end asset importable by Unity. We suggest you use whatever tool you find most adequate.</p>
+<h2 id="development-enviroment-setup">Development Enviroment Setup</h2>
+<p>This part only pretains to those directly working with files on the repo, namely game designers and programmers. <strong>NOTE:</strong> Fantasy Crescendo, as of writing, currently depends on using many <strong>git
+submodules</strong> to manage dependencies. This is a suboptimal solution for
+dependency management, but is currently the only available choice we have, even
+if it complicates the setup process for the project. Sometime in the future we
+will be migrating to the <a href="https://docs.unity3d.com/Packages/com.unity.package-manager-ui@1.8/manual/index.html">Unity Package
+Manager</a>
+when it supports 3rd party remote packages, which will remove the need to manage
+these submodules.</p>
+<h3 id="setting-up-remote-repo">Setting up remote repo</h3>
+<p>If you are a member of the Hourai Teahouse GitHub organization, you are allowed
+to directly commit to the official repository, skip this step.</p>
+<p>If you are an external contributor, it is suggested that you
+<a href="https://help.github.com/articles/fork-a-repo/">fork</a> the repo onto your own
+account.</p>
+<h3 id="setting-up-your-local-files">Setting up your local files</h3>
+<p>To get the local files, you&#39;ll need to <strong>git clone</strong> the remote repository (the
+official one or the fork you have created).</p>
+<p><strong>Via GitHub for Desktop</strong></p>
+<p>TODO(Gabo7): Document.</p>
+<p><strong>Via Command Line</strong></p>
+<p>This assumes you are using a *nix (Linux/macOS) style terminal. Windows users
+are suggested to use either <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for
+Linux</a> (requires
+Windows 10) or <a href="https://git-scm.com/downloads">GitBash</a> </p>
+<pre><code class="lang-bash">git clone https://github.com/HouraiTeahouse/FantasyCrescendo # Clone the
+repository
+cd FantasyCrescendo # Change directory to the cloned repo
+git submodule init --recursive
+</code></pre><h3 id="loading-into-the-unity-editor">Loading into the Unity Editor</h3>
+<p>Simply open the cloned directory with the Unity Editor. It will ask to import a large number of files (this may take longer on less powerful development machines).</p>
+<h2 id="common-development-operations">Common Development Operations</h2>
+<h3 id="running-unit-tests">Running Unit Tests</h3>
+<p>In the top menu bar, Window &gt; General &gt; Test Runner will bring up the <strong>Test Runner Window</strong>. Press &quot;Run All&quot;. This will run all unit tests defined in the project. Generally all of these tests should pass for every code change pushed to the repository. The continuous integration system that creates builds will reject any change that causes unit tests to fail.</p>
+<h3 id="building-asset-bundles">Building Asset Bundles</h3>
+<p>In the top menu bar, &quot;Hourai Teahouse &gt; Build Asset Bundles (<your os="">)&quot; will build all Asset Bundles in the project. This may take some time for the first you do it.<p>
+<h3 id="playing-in-editor">Playing In-Editor</h3>
+<p>Make sure you have built Asset Bundles before doing this step (Errors will occur without them). Load up a common test scene to make sure that the game starts correctly. In the Project Window, search for and open the &quot;DebugStage&quot; scene. If you enter Play Mode (press the Play button at the top of the editor), it should load up the game, and a number of test players. It should play out just like any other stock match, but within the Editor.</p>
+<h3 id="creating-a-build">Creating a Build</h3>
+<p>Make sure you have built Asset Bundles before doing this step (Errors will occur without them). In the top menu bar, File &gt; Build Settings, this will open the build window. Select the approriate build target for the operating system you are on. Click either of the Build options (Build and Run will run the build on completion).</p>
+<h3 id="deploying-a-build">Deploying a Build</h3>
+<p>Hourai Teahouse employs a continuous integration and continuous deployment pipeline upon source control changes. If you make changes and get them integrated into the official repository&#39;s <code>master</code> and <code>develop</code> branches, it will automatically trigger builds to be created. If builds for all platforms (Windows, macOS, and Linux) succeed, and they all pass defined unit tests, it will be deployed to Steam. Please note, the processes for creating game builds can take quite a while, it may take up to 1-3 hours before a build is completed and deployed.</p>
+<p>The <code>develop</code> branch is configured to deploy only to the <code>latest-beta</code> beta release line on Steam, changes in the default release line must be manually made by a Hourai Teahouse administrator.</p>
+</your></article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/HouraiTeahouse/FantasyCrescendo/blob/develop/docs/guides/getting-started.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

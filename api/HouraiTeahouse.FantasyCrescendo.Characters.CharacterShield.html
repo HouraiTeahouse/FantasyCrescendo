@@ -1,0 +1,597 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class CharacterShield
+   | Fantasy Crescendo </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class CharacterShield
+   | Fantasy Crescendo ">
+    <meta name="generator" content="docfx 2.31.0.0">
+    
+    <link rel="shortcut icon" href="../images/logo.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items"></div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield">
+  
+  
+  <h1 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield" class="text-break">Class CharacterShield
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">MonoBehaviour</span></div>
+    <div class="level1"><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerComponent.html">PlayerComponent</a></div>
+    <div class="level2"><span class="xref">CharacterShield</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IPlayerView</span></div>
+    <div><span class="xref">IPlayerSimulation</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerComponent.html#HouraiTeahouse_FantasyCrescendo_PlayerComponent_Presimulate_HouraiTeahouse_FantasyCrescendo_PlayerState__">PlayerComponent.Presimulate(PlayerState)</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerComponent.html#HouraiTeahouse_FantasyCrescendo_PlayerComponent_Dispose">PlayerComponent.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerComponent.html#HouraiTeahouse_FantasyCrescendo_PlayerComponent_ResetState_HouraiTeahouse_FantasyCrescendo_PlayerState__">PlayerComponent.ResetState(PlayerState)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Characters.html">HouraiTeahouse.FantasyCrescendo.Characters</a></h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class CharacterShield : PlayerComponent, IPlayerView, IPlayerSimulation</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_DepletionRate" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.DepletionRate">DepletionRate</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint DepletionRate</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_MaxShieldHealth" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.MaxShieldHealth">MaxShieldHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint MaxShieldHealth</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_RecoveryCooldown" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.RecoveryCooldown">RecoveryCooldown</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint RecoveryCooldown</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_RegenRate" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.RegenRate">RegenRate</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint RegenRate</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_ResetHealth" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.ResetHealth">ResetHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float ResetHealth</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_ShieldPrefab" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.ShieldPrefab">ShieldPrefab</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject ShieldPrefab</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GameObject</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_ShieldScale" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.ShieldScale">ShieldScale</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float ShieldScale</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_ShieldSize" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.ShieldSize">ShieldSize</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AnimationCurve ShieldSize</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">AnimationCurve</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_StateMachine" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.StateMachine">StateMachine</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CharacterStateMachine StateMachine</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Characters.CharacterStateMachine.html">CharacterStateMachine</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_TargetBone" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.TargetBone">TargetBone</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Transform TargetBone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Transform</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_Initialize_" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.Initialize*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_Initialize_HouraiTeahouse_FantasyCrescendo_PlayerConfig_System_Boolean_" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.Initialize(HouraiTeahouse.FantasyCrescendo.PlayerConfig,System.Boolean)">Initialize(PlayerConfig, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Task Initialize(PlayerConfig config, bool isView)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerConfig.html">PlayerConfig</a></td>
+        <td><span class="parametername">config</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isView</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerComponent.html#HouraiTeahouse_FantasyCrescendo_PlayerComponent_Initialize_HouraiTeahouse_FantasyCrescendo_PlayerConfig_System_Boolean_">PlayerComponent.Initialize(PlayerConfig, Boolean)</a></div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_IsShieldActive_" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.IsShieldActive*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_IsShieldActive_HouraiTeahouse_FantasyCrescendo_PlayerState__" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.IsShieldActive(HouraiTeahouse.FantasyCrescendo.PlayerState@)">IsShieldActive(PlayerState)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsShieldActive(in PlayerState state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerState.html">PlayerState</a></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_IsShieldBroken_" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.IsShieldBroken*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_IsShieldBroken_HouraiTeahouse_FantasyCrescendo_PlayerState__" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.IsShieldBroken(HouraiTeahouse.FantasyCrescendo.PlayerState@)">IsShieldBroken(PlayerState)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsShieldBroken(in PlayerState state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerState.html">PlayerState</a></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_Simulate_" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.Simulate*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_Simulate_HouraiTeahouse_FantasyCrescendo_PlayerState__HouraiTeahouse_FantasyCrescendo_PlayerInputContext__" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.Simulate(HouraiTeahouse.FantasyCrescendo.PlayerState@,HouraiTeahouse.FantasyCrescendo.PlayerInputContext@)">Simulate(ref PlayerState, PlayerInputContext)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Simulate(ref PlayerState state, in PlayerInputContext input)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerState.html">PlayerState</a></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerInputContext.html">PlayerInputContext</a></td>
+        <td><span class="parametername">input</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerComponent.html#HouraiTeahouse_FantasyCrescendo_PlayerComponent_Simulate_HouraiTeahouse_FantasyCrescendo_PlayerState__HouraiTeahouse_FantasyCrescendo_PlayerInputContext__">PlayerComponent.Simulate(ref PlayerState, PlayerInputContext)</a></div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_UpdateView_" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.UpdateView*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Characters_CharacterShield_UpdateView_HouraiTeahouse_FantasyCrescendo_PlayerState__" data-uid="HouraiTeahouse.FantasyCrescendo.Characters.CharacterShield.UpdateView(HouraiTeahouse.FantasyCrescendo.PlayerState@)">UpdateView(PlayerState)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void UpdateView(in PlayerState state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerState.html">PlayerState</a></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.PlayerComponent.html#HouraiTeahouse_FantasyCrescendo_PlayerComponent_UpdateView_HouraiTeahouse_FantasyCrescendo_PlayerState__">PlayerComponent.UpdateView(PlayerState)</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IPlayerView</span>
+  </div>
+  <div>
+      <span class="xref">IPlayerSimulation</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

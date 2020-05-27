@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Overview | Fantasy Crescendo </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Overview | Fantasy Crescendo ">
+    <meta name="generator" content="docfx 2.31.0.0">
+    
+    <link rel="shortcut icon" href="../images/logo.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items"></div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="overview">Overview</h1>
+
+<p>TODO(james7132): Document</p>
+<h1 id="states">States</h1>
+<p>State is represented as simple data objects.</p>
+<h1 id="inputs">Inputs</h1>
+<p>Inputs are represented as simple data objects. <code>PlayerInput</code> is a plain old C#
+struct that contains a summary of all input for a player at a given frame.
+<code>MatchInput</code> represents an aggregation of all player&#39;s inputs for a frame. You
+can get the PlayerInput for a given player ID by indexing into it like any
+array.  Despite being able to index MatchInput like an array of PlayerInputs, it
+operates under value semantics. It should be noted that both structures only
+contain input information and do not track the time at which they were generated.</p>
+<p>Both <code>MatchInput</code> and <code>PlayerInput</code> implement <code>IValidatable</code>. If <code>IsValid</code> is
+false, the input is not entirely generated locally, or, when in a netowrk match,
+has not been verified to be the correct input by the server.</p>
+<p>Inputs are produced by objects of the interface <code>IInputSource&lt;I&gt;</code>. The current
+input for a frame can be sampled with the <code>SampleInput()</code> method. Interfacing
+the game with a new input framework (i.e. InControl, Rewired, or Unity&#39;s New
+Input System) involves implementing a new IInputSource and selecting it in the
+game&#39;s global configuration files.</p>
+<h1 id="simulation">Simulation</h1>
+<p>Simulations are represented as the interface <code>ISimulation&lt;S, I&gt;</code>. The sole
+method it defines is <code>S Simuilate(S, I)</code>. This defines a mapping of the state S
+and input I to a new state S. It should be noted that these simulations usually
+do not mutate the input state, instead creating a new state based on the input.</p>
+<p>In practice, the engine uses two classes <code>MatchInputContext</code> and
+<code>PlayerInputContext</code> as the input types instead of the raw inputs. Both
+represent the current and last frame&#39;s inputs, information some of the
+simulations both need to properly run.</p>
+<p>Simulations generally should be completely self contained and the simulation
+itself should be stateless. As a general rule, the only information needed to
+compute the next state should be provided the arguments to <code>Simulate(...)</code>.
+Exceptions to this rule usually include some unchanging global configuration
+options or manipulating the intermediate state of a higher level simulation. An
+example of the latter exception is hitboxes. The Match level simulation of
+hitboxes are self contained, as in the state of hitboxes from one call to
+Simulate to another are hold no state, but within one call to the Match level
+simulate are multiple calls to player level simulations that may manipulate the
+global state of the hitbox simulation.</p>
+<h1 id="views">Views</h1>
+<p>TODO(james7132): Document</p>
+<h1 id="configuration">Configuration</h1>
+<p>TODO(james7132): Document</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/HouraiTeahouse/FantasyCrescendo/blob/develop/docs/guides/simulation-model.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

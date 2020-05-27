@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SteamNetworkInterface
+   | Fantasy Crescendo </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SteamNetworkInterface
+   | Fantasy Crescendo ">
+    <meta name="generator" content="docfx 2.31.0.0">
+    
+    <link rel="shortcut icon" href="../images/logo.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items"></div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface">
+  
+  
+  <h1 id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface" class="text-break">Class SteamNetworkInterface
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html">NetworkInterface</a></div>
+    <div class="level2"><span class="xref">SteamNetworkInterface</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.INetworkInterface.html">INetworkInterface</a></div>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_MessageHandlers">NetworkInterface.MessageHandlers</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_Connections">NetworkInterface.Connections</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_Config">NetworkInterface.Config</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_OnPeerConnected">NetworkInterface.OnPeerConnected</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_OnPeerDisconnected">NetworkInterface.OnPeerDisconnected</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_ReadBuffer">NetworkInterface.ReadBuffer</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_IsDisposed">NetworkInterface.IsDisposed</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_Send_System_Int32_System_Byte___System_Int32_HouraiTeahouse_FantasyCrescendo_NetworkReliablity_">NetworkInterface.Send(Int32, Byte[], Int32, NetworkReliablity)</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_OnRecieveData_System_Int32_System_Byte___System_Int32_">NetworkInterface.OnRecieveData(Int32, Byte[], Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_OnDisconnect_System_Int32_Exception_">NetworkInterface.OnDisconnect(Int32, Exception)</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_OnNewConnection_System_Int32_">NetworkInterface.OnNewConnection(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_RemoveConnection_HouraiTeahouse_FantasyCrescendo_Networking_NetworkConnection_">NetworkInterface.RemoveConnection(NetworkConnection)</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_GetConnectionStats_System_Int32_">NetworkInterface.GetConnectionStats(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_GetConnection_System_Int32_">NetworkInterface.GetConnection(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_AddConnection_System_Int32_">NetworkInterface.AddConnection(Int32)</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.Steam.html">HouraiTeahouse.FantasyCrescendo.Networking.Steam</a></h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class SteamNetworkInterface : NetworkInterface, INetworkInterface, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface__ctor_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.#ctor*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface__ctor" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.#ctor">SteamNetworkInterface()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SteamNetworkInterface()</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Connect_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Connect*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Connect_HouraiTeahouse_FantasyCrescendo_Networking_NetworkConnectionConfig_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Connect(HouraiTeahouse.FantasyCrescendo.Networking.NetworkConnectionConfig)">Connect(NetworkConnectionConfig)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Task&lt;NetworkConnection&gt; Connect(NetworkConnectionConfig config)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkConnectionConfig.html">NetworkConnectionConfig</a></td>
+        <td><span class="parametername">config</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkConnection.html">NetworkConnection</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_Connect_HouraiTeahouse_FantasyCrescendo_Networking_NetworkConnectionConfig_">NetworkInterface.Connect(NetworkConnectionConfig)</a></div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Disconnect_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Disconnect*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Disconnect_System_Int32_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Disconnect(System.Int32)">Disconnect(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Disconnect(int connectionId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">connectionId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_Disconnect_System_Int32_">NetworkInterface.Disconnect(Int32)</a></div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Dispose_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Dispose*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Dispose" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Dispose()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_Dispose">NetworkInterface.Dispose()</a></div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Initialize_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Initialize*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Initialize_HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterfaceConfiguration_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Initialize(HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterfaceConfiguration)">Initialize(NetworkInterfaceConfiguration)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Task Initialize(NetworkInterfaceConfiguration config)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterfaceConfiguration.html">NetworkInterfaceConfiguration</a></td>
+        <td><span class="parametername">config</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_Initialize_HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterfaceConfiguration_">NetworkInterface.Initialize(NetworkInterfaceConfiguration)</a></div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_SendImpl_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.SendImpl*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_SendImpl_System_Int32_System_Byte___System_Int32_HouraiTeahouse_FantasyCrescendo_NetworkReliablity_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.SendImpl(System.Int32,System.Byte[],System.Int32,HouraiTeahouse.FantasyCrescendo.NetworkReliablity)">SendImpl(Int32, Byte[], Int32, NetworkReliablity)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void SendImpl(int connectionId, byte[] buffer, int count, NetworkReliablity reliability)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">connectionId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">buffer</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">count</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.NetworkReliablity.html">NetworkReliablity</a></td>
+        <td><span class="parametername">reliability</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_SendImpl_System_Int32_System_Byte___System_Int32_HouraiTeahouse_FantasyCrescendo_NetworkReliablity_">NetworkInterface.SendImpl(Int32, Byte[], Int32, NetworkReliablity)</a></div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Update_" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Update*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_Networking_Steam_SteamNetworkInterface_Update" data-uid="HouraiTeahouse.FantasyCrescendo.Networking.Steam.SteamNetworkInterface.Update">Update()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.NetworkInterface.html#HouraiTeahouse_FantasyCrescendo_Networking_NetworkInterface_Update">NetworkInterface.Update()</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="HouraiTeahouse.FantasyCrescendo.Networking.INetworkInterface.html">INetworkInterface</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

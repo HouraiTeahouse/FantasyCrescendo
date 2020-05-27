@@ -1,0 +1,813 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class InputHistory&lt;I&gt;
+   | Fantasy Crescendo </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class InputHistory&lt;I&gt;
+   | Fantasy Crescendo ">
+    <meta name="generator" content="docfx 2.31.0.0">
+    
+    <link rel="shortcut icon" href="../images/logo.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items"></div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1">
+  
+  
+  <h1 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1" class="text-break">Class InputHistory&lt;I&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>A managed history of a set of inputs.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">IEnumerable</span>&lt;<a class="xref" href="HouraiTeahouse.FantasyCrescendo.TimedInput-1.html">TimedInput</a>&lt;I&gt;&gt;</div>
+    <div class="level1"><span class="xref">InputHistory&lt;I&gt;</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="HouraiTeahouse.FantasyCrescendo.html">HouraiTeahouse.FantasyCrescendo</a></h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class InputHistory&lt;I&gt; : IEnumerable&lt;TimedInput&lt;I&gt;&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">I</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This is internally implemented as a singly-linked list, most of the 
+operations on these objects run in O(n) time.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1__ctor_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.#ctor*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1__ctor__0_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.#ctor(`0)">InputHistory(I)</h4>
+  <div class="markdown level1 summary"><p>Initalizes a new instance of the <a class="xref" href="HouraiTeahouse.FantasyCrescendo.InputHistory-1.html">InputHistory&lt;I&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputHistory(I input)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">I</span></td>
+        <td><span class="parametername">input</span></td>
+        <td><p>the starting base input.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1__ctor_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.#ctor*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1__ctor__0_HouraiTeahouse_FantasyCrescendo_IMerger__0__" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.#ctor(`0,HouraiTeahouse.FantasyCrescendo.IMerger{`0})">InputHistory(I, IMerger&lt;I&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initalizes a new instance of the <a class="xref" href="HouraiTeahouse.FantasyCrescendo.InputHistory-1.html">InputHistory&lt;I&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputHistory(I input, IMerger&lt;I&gt; merger)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">I</span></td>
+        <td><span class="parametername">input</span></td>
+        <td><p>the starting base input.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.IMerger-1.html">IMerger</a>&lt;I&gt;</td>
+        <td><span class="parametername">merger</span></td>
+        <td><p>a <a class="xref" href="HouraiTeahouse.FantasyCrescendo.IMerger-1.html">IMerger&lt;I&gt;</a> used to merge inputs.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1__ctor_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.#ctor*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1__ctor__0_System_UInt32_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.#ctor(`0,System.UInt32)">InputHistory(I, UInt32)</h4>
+  <div class="markdown level1 summary"><p>Initalizes a new instance of the <a class="xref" href="HouraiTeahouse.FantasyCrescendo.InputHistory-1.html">InputHistory&lt;I&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputHistory(I input, uint startTimestamp)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">I</span></td>
+        <td><span class="parametername">input</span></td>
+        <td><p>the starting base input.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">startTimestamp</span></td>
+        <td><p>the timestamp of the first element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1__ctor_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.#ctor*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1__ctor__0_System_UInt32_HouraiTeahouse_FantasyCrescendo_IMerger__0__System_Int32_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.#ctor(`0,System.UInt32,HouraiTeahouse.FantasyCrescendo.IMerger{`0},System.Int32)">InputHistory(I, UInt32, IMerger&lt;I&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initalizes a new instance of the <a class="xref" href="HouraiTeahouse.FantasyCrescendo.InputHistory-1.html">InputHistory&lt;I&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputHistory(I start, uint startTimestep, IMerger&lt;I&gt; merger, int capacity = 128)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">I</span></td>
+        <td><span class="parametername">start</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">startTimestep</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.IMerger-1.html">IMerger</a>&lt;I&gt;</td>
+        <td><span class="parametername">merger</span></td>
+        <td><p>a <a class="xref" href="HouraiTeahouse.FantasyCrescendo.IMerger-1.html">IMerger&lt;I&gt;</a> used to merge inputs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">capacity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  
+  
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_kDefaultStartSize" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.kDefaultStartSize">kDefaultStartSize</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int kDefaultStartSize = 128</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Count_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Count*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Count" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Count">Count</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Count { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Current_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Current*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Current" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Current">Current</h4>
+  <div class="markdown level1 summary"><p>Gets the current input and timestamp.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimedInput&lt;I&gt; Current { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.TimedInput-1.html">TimedInput</a>&lt;I&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Newest_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Newest*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Newest" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Newest">Newest</h4>
+  <div class="markdown level1 summary"><p>Gets the newest recorded input and timestamp.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimedInput&lt;I&gt; Newest { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.TimedInput-1.html">TimedInput</a>&lt;I&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Oldest_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Oldest*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Oldest" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Oldest">Oldest</h4>
+  <div class="markdown level1 summary"><p>Gets the oldest recorded input and timestamp.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimedInput&lt;I&gt; Oldest { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.TimedInput-1.html">TimedInput</a>&lt;I&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Append_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Append*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Append__0_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Append(`0)">Append(I)</h4>
+  <div class="markdown level1 summary"><p>Advances the <a class="xref" href="HouraiTeahouse.FantasyCrescendo.InputHistory-1.html#HouraiTeahouse_FantasyCrescendo_InputHistory_1_Current">Current</a> input by one timestep and records it
+in the history.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public I Append(I input)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">I</span></td>
+        <td><span class="parametername">input</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">I</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Append__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If there are inputs in the history newer than the current input, the 
+provided input may be merged with the newer input before being stored.
+The merge strategy is determined by the <see cref="!:IMerger"></see> provided
+during the history&apos;s construction.</p>
+<p>This operation runs in O(1) time.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_DropBefore_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.DropBefore*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_DropBefore_System_UInt32_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.DropBefore(System.UInt32)">DropBefore(UInt32)</h4>
+  <div class="markdown level1 summary"><p>Drops all elements older than a certain timestamp.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DropBefore(uint timestep)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">timestep</span></td>
+        <td><p>the new oldest timestamp supported.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_DropBefore_System_UInt32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the <type cref="P:HouraiTeahouse.FantasyCrescendo.InputHistory`1.Current"></type> input is dropped, it will be updated
+to the new oldest input in the history.</p>
+<p>If <code data-dev-comment-type="typeparamref" class="typeparamref">T</code> inherits from <see cref="!:IDisposable"></see>
+all dropped inputs will be disposed.</p>
+<p>This operation runs in O(n) time where n is the number of elements
+managed by the history.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_FastForward_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.FastForward*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_FastForward" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.FastForward">FastForward()</h4>
+  <div class="markdown level1 summary"><p>Updates <a class="xref" href="HouraiTeahouse.FantasyCrescendo.InputHistory-1.html#HouraiTeahouse_FantasyCrescendo_InputHistory_1_Current">Current</a> forward to the newest recorded input.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public I FastForward()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">I</span></td>
+        <td><p>the new current input.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_FastForward_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This operation runs in O(1) time.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_GetEnumerator_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.GetEnumerator*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_GetEnumerator_System_Boolean_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.GetEnumerator(System.Boolean)">GetEnumerator(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputHistory&lt;I&gt;.Enumerator GetEnumerator(bool full = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">full</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="HouraiTeahouse.FantasyCrescendo.InputHistory-1.Enumerator.html">InputHistory.Enumerator</a>&lt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_GetFullSequence_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.GetFullSequence*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_GetFullSequence" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.GetFullSequence">GetFullSequence()</h4>
+  <div class="markdown level1 summary"><p>Enumerates the full sequence of timed inputs, including the inputs newer
+than the <a class="xref" href="HouraiTeahouse.FantasyCrescendo.InputHistory-1.html#HouraiTeahouse_FantasyCrescendo_InputHistory_1_Current">Current</a> timed input.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TimedInput&lt;I&gt;&gt; GetFullSequence()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="HouraiTeahouse.FantasyCrescendo.TimedInput-1.html">TimedInput</a>&lt;I&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_MergeWith_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.MergeWith*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_MergeWith_System_UInt32_ArraySegment__0__" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.MergeWith(System.UInt32,ArraySegment{`0})">MergeWith(UInt32, ArraySegment&lt;I&gt;)</h4>
+  <div class="markdown level1 summary"><p>Merges the sequence of inputs with the existing history of inputs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MergeWith(uint timestep, ArraySegment&lt;I&gt; inputs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">timestep</span></td>
+        <td><p>The start timestamp corresponding to the first element in the list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ArraySegment</span>&lt;I&gt;</td>
+        <td><span class="parametername">inputs</span></td>
+        <td><p>the list of inputs to merge into the history.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_MergeWith_System_UInt32_ArraySegment__0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Inputs from before the oldest recorded input will be ignored.</p>
+<p>Inputs newer than the newest recorded input will be appended to
+the history and become the newest inputs added.</p>
+<p>Intermediate inputs that have a matching input for the same timestep
+will be merged according to the <see cref="!:IMerger"></see> provided during
+the history&apos;s construction.</p>
+<p>Intermedate inputs that do not have a corresponding input will be 
+inserted into approriate locations.</p>
+<p>This operation runs in O(n) time where n is the number of elements
+managed by the history.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_MergeWith_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.MergeWith*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_MergeWith_System_UInt32_IEnumerable__0__" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.MergeWith(System.UInt32,IEnumerable{`0})">MergeWith(UInt32, IEnumerable&lt;I&gt;)</h4>
+  <div class="markdown level1 summary"><p>Merges the sequence of inputs with the existing history of inputs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MergeWith(uint timestep, IEnumerable&lt;I&gt; inputs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">timestep</span></td>
+        <td><p>The start timestamp corresponding to the first element in the list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;I&gt;</td>
+        <td><span class="parametername">inputs</span></td>
+        <td><p>the list of inputs to merge into the history.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_MergeWith_System_UInt32_IEnumerable__0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Inputs from before the oldest recorded input will be ignored.</p>
+<p>Inputs newer than the newest recorded input will be appended to
+the history and become the newest inputs added.</p>
+<p>Intermediate inputs that have a matching input for the same timestep
+will be merged according to the <see cref="!:IMerger"></see> provided during
+the history&apos;s construction.</p>
+<p>Intermedate inputs that do not have a corresponding input will be 
+inserted into approriate locations.</p>
+<p>This operation runs in O(n) time where n is the number of elements
+managed by the history.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Rewind_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Rewind*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Rewind" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Rewind">Rewind()</h4>
+  <div class="markdown level1 summary"><p>Resets <a class="xref" href="HouraiTeahouse.FantasyCrescendo.InputHistory-1.html#HouraiTeahouse_FantasyCrescendo_InputHistory_1_Current">Current</a> back to the oldest recorded input.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public I Rewind()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">I</span></td>
+        <td><p>the new current input.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Rewind_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This operation runs in O(1) time.</p>
+</div>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_StartingWith_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.StartingWith*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_StartingWith_System_UInt32_System_Boolean_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.StartingWith(System.UInt32,System.Boolean)">StartingWith(UInt32, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TimedInput&lt;I&gt;&gt; StartingWith(uint timestep, bool full = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">timestep</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">full</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="HouraiTeahouse.FantasyCrescendo.TimedInput-1.html">TimedInput</a>&lt;I&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Step_" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Step*"></a>
+  <h4 id="HouraiTeahouse_FantasyCrescendo_InputHistory_1_Step" data-uid="HouraiTeahouse.FantasyCrescendo.InputHistory`1.Step">Step()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public I Step()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">I</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
