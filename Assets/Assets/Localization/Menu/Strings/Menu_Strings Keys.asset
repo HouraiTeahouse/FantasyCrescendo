@@ -12,10 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
   m_Name: Menu_Strings Keys
   m_EditorClassIdentifier: 
-  m_NextAvailableId: 1
+  m_NextAvailableId: 71
   m_TableName: Menu_Strings
   m_TableNameGuidString: 523272643cee33942880d8d7da93bfe9
-  m_Entries: []
+  m_Entries:
+  - m_Id: 63
+    m_Key: character.reimu.full_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64
+    m_Key: character.reimu.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65
+    m_Key: controller_notice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66
+    m_Key: credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67
+    m_Key: credits.2d_character_artists
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68
+    m_Key: credits.3d_character_artist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69
+    m_Key: credits.3d_enviroment_artist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70
+    m_Key: credits.character_animation
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   references:

@@ -67,7 +67,7 @@ public class NetworkMatch : DefaultMatch {
     _waitingMembers.Remove(member);
   }
 
-  unsafe void OnLobbyMessage(LobbyMember member, FixedBuffer msg) {
+  unsafe void OnLobbyMessage(LobbyMember member, ReadOnlySpan<byte> msg) {
     // Stackalloc that must be bigger any ready message could ever be.
     var expected = stackalloc byte[256];
     var size = CreateReadyMessage(member, expected, 256);
@@ -87,19 +87,21 @@ public class NetworkMatch : DefaultMatch {
     Debug.Log("Broadcasting ready message.");
     var msg = stackalloc byte[256];
     var size = CreateReadyMessage(Lobby.Members.Me, msg, 256);
-    Lobby.SendLobbyMessage(new FixedBuffer(msg, size));
+    Lobby.SendLobbyMessage(new ReadOnlySpan<byte>(msg, size));
   }
 
   unsafe int CreateReadyMessage(LobbyMember member, byte* buffer, int size) {
-    var serializer = Serializer.Create(buffer, (uint)size);
+    var serializer = Serializer.Create(new Span<byte>(buffer, size));
     serializer.Write(kLoadedHeader);
     serializer.Write(member.Id.Id);
     return serializer.Position;
   }
 
-  unsafe bool BufferEquals(byte* reference, int size, FixedBuffer buffer) {
-    if (buffer.Size < size) return false;
-    return UnsafeUtility.MemCmp(reference, buffer.Start, size) == 0;
+  unsafe bool BufferEquals(byte* reference, int size, ReadOnlySpan<byte> buffer) {
+    if (buffer.Length < size) return false;
+    fixed (byte* ptr = buffer) {
+        return UnsafeUtility.MemCmp(reference, ptr, size) == 0;
+    }
   }
 
 }

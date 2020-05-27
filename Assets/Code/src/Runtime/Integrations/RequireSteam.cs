@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Steamworks;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class RequireSteam : MonoBehaviour {
   public Object[] toDisable;
 
   void OnEnable() {
-    var hasSteam = SteamManager.Initialized;
+    var hasSteam = SteamClient.IsValid;
     if (Invert) {
       hasSteam = !hasSteam;
     }

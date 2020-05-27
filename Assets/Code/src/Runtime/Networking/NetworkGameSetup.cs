@@ -82,9 +82,8 @@ public class NetworkGameSetup : IDisposable {
     /// </summary>
     /// <param name="config">the player's config</param>
     public unsafe void UpdatePlayerConfig(PlayerConfig config) {
-        const int kBufferSize = 256;
-        var buffer = stackalloc byte[kBufferSize];
-        var serializer = Serializer.Create(buffer, kBufferSize);
+        Span<byte> buffer = stackalloc byte[256];
+        var serializer = Serializer.Create(buffer);
         config.Serialize(ref serializer);
         var base64config = serializer.ToBase64String();
         Debug.Log(base64config);

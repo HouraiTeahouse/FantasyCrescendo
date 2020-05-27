@@ -53,14 +53,16 @@ public unsafe class BackrollMatchController : MatchController {
     var outputSize = 256;
     while (true) {
       try {
-        var temp = stackalloc byte[outputSize];
-        var serializer = Serializer.Create(temp, (uint)outputSize);
+        Span<byte> temp = stackalloc byte[outputSize];
+        var serializer = Serializer.Create(temp);
         CurrentState.Serialize(ref serializer);
         var size = serializer.Position;
         var buffer = (byte*)UnsafeUtility.Malloc(size, 
                                                  UnsafeUtility.AlignOf<byte>(),
                                                  Allocator.Persistent);
-        UnsafeUtility.MemCpy(buffer, temp, size);
+        fixed (byte* ptr = temp) {
+            UnsafeUtility.MemCpy(buffer, ptr, size);
+        }
 
         frame.Buffer = buffer;
         frame.Size = size;

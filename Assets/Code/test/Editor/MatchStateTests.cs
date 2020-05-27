@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HouraiTeahouse.Networking;
@@ -19,13 +20,13 @@ public class MatchStateTests {
 	[TestCaseSource("TestCases")]
 	public unsafe void MatchInput_serializes_and_deserializes_properly(int playerCount) {
     var sizes = new List<int>();
-    var buffer = stackalloc byte[SerializationConstants.kMaxMessageSize];
+    Span<byte> buffer = stackalloc byte[SerializationConstants.kMaxMessageSize];
     for (var i = 0; i < 1000; i++) {
       var input = StateUtility.RandomState(playerCount);
-      var networkWriter = Serializer.Create(buffer, 2048);
+      var networkWriter = Serializer.Create(buffer);
       input.Serialize(ref networkWriter);
       sizes.Add(networkWriter.Position);
-      var networkReader = Deserializer.Create(networkWriter.ToFixedBuffer());
+      var networkReader = Deserializer.Create(networkWriter);
       var deserialized = new MatchState(playerCount);
       deserialized.Deserialize(ref networkReader);
       Assert.AreEqual(input, deserialized);

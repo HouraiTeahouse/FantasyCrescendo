@@ -1319,9 +1319,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb29fde83477c4e48ad98a39f3a3df93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 278420643}
-  _format: 
-  _caseSetting: 0
 --- !u!1 &285632988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,7 +1881,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 308.6667, y: -59.52858}
+  m_AnchoredPosition: {x: 308.6667, y: -59.52881}
   m_SizeDelta: {x: 250, y: 39.68572}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &353297970
@@ -3761,7 +3758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 308.6667, y: -178.58574}
+  m_AnchoredPosition: {x: 308.6667, y: -178.58594}
   m_SizeDelta: {x: 250, y: 39.68572}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &537224462
@@ -4068,9 +4065,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb29fde83477c4e48ad98a39f3a3df93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 538050158}
-  _format: 
-  _caseSetting: 0
 --- !u!1 &553434403
 GameObject:
   m_ObjectHideFlags: 0
@@ -5826,9 +5820,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb29fde83477c4e48ad98a39f3a3df93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 681246585}
-  _format: 
-  _caseSetting: 0
 --- !u!1 &699316034
 GameObject:
   m_ObjectHideFlags: 0
@@ -5911,7 +5902,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 795311491}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6926,7 +6917,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 308.6667, y: -19.842834}
+  m_AnchoredPosition: {x: 308.6667, y: -19.842773}
   m_SizeDelta: {x: 250, y: 39.68572}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &791279951
@@ -7429,9 +7420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb29fde83477c4e48ad98a39f3a3df93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 838150135}
-  _format: 
-  _caseSetting: 0
 --- !u!1 &845658978
 GameObject:
   m_ObjectHideFlags: 0
@@ -9544,9 +9532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb29fde83477c4e48ad98a39f3a3df93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 1127972841}
-  _format: 
-  _caseSetting: 0
 --- !u!1 &1128631279
 GameObject:
   m_ObjectHideFlags: 0
@@ -11203,9 +11188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb29fde83477c4e48ad98a39f3a3df93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 1275761638}
-  _format: 
-  _caseSetting: 0
 --- !u!114 &1275761641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11275,7 +11257,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -7.499878}
+  m_AnchoredPosition: {x: 0, y: -7.5}
   m_SizeDelta: {x: 0, y: -15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1290119121
@@ -11751,8 +11733,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a0e36dc7c41bdd49a96843b24695336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: {fileID: 1317313087}
-  TextAsset: {fileID: 4900000, guid: 3ecde626c2fa4794089507d71736d30f, type: 3}
 --- !u!114 &1317313090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13623,10 +13603,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 608638672}
     m_Modifications:
-    - target: {fileID: 1027906987454530, guid: 7719030b47dcda6458bd3c2913627d03, type: 3}
-      propertyPath: m_Name
-      value: Headers
-      objectReference: {fileID: 0}
     - target: {fileID: 224804166612194656, guid: 7719030b47dcda6458bd3c2913627d03,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13716,6 +13692,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027906987454530, guid: 7719030b47dcda6458bd3c2913627d03, type: 3}
+      propertyPath: m_Name
+      value: Headers
       objectReference: {fileID: 0}
     - target: {fileID: 224042173065293572, guid: 7719030b47dcda6458bd3c2913627d03,
         type: 3}

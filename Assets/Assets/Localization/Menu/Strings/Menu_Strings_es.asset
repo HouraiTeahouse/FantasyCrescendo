@@ -14,247 +14,259 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LocaleId:
     m_Code: es
-  m_KeyDatabase: {fileID: 11400000, guid: 523272643cee33942880d8d7da93bfe9, type: 2}
+  m_SharedData: {fileID: 11400000, guid: 523272643cee33942880d8d7da93bfe9, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 1
+  - m_Id: 63
     m_Localized: Youmu Konpaku
     m_Metadata:
       m_Items: []
-  - m_Id: 2
+  - m_Id: 64
     m_Localized: Youmu
     m_Metadata:
       m_Items: []
-  - m_Id: 3
+  - m_Id: 65
     m_Localized: "Este juego se experimenta mejor con uno o mas mandos de videojuegos.\n\xBFTienes
       un mando? \xA1Conectarlo!"
     m_Metadata:
       m_Items: []
-  - m_Id: 4
+  - m_Id: 66
     m_Localized: "Cr\xE9ditos"
     m_Metadata:
       m_Items: []
-  - m_Id: 5
+  - m_Id: 67
     m_Localized: Artista de Personajes 2D
     m_Metadata:
       m_Items: []
-  - m_Id: 6
+  - m_Id: 68
     m_Localized: Artista de Personajes 3D
     m_Metadata:
       m_Items: []
-  - m_Id: 7
+  - m_Id: 69
     m_Localized: Artista de Entornos 3D
     m_Metadata:
       m_Items: []
-  - m_Id: 8
+  - m_Id: 70
     m_Localized: "Animaci\xF3n de Personajes"
     m_Metadata:
       m_Items: []
-  - m_Id: 9
+  - m_Id: 71
     m_Localized: "Programaci\xF3n del Juego"
     m_Metadata:
       m_Items: []
-  - m_Id: 10
+  - m_Id: 72
     m_Localized: "Dise\xF1o de Jugabilidad"
     m_Metadata:
       m_Items: []
-  - m_Id: 11
+  - m_Id: 73
     m_Localized: "Internacionalizaci\xF3n "
     m_Metadata:
       m_Items: []
-  - m_Id: 12
+  - m_Id: 74
     m_Localized: Productor
     m_Metadata:
       m_Items: []
-  - m_Id: 13
+  - m_Id: 75
     m_Localized: "Promoci\xF3n"
     m_Metadata:
       m_Items: []
-  - m_Id: 14
+  - m_Id: 76
     m_Localized: Efectos de Sonido
     m_Metadata:
       m_Items: []
-  - m_Id: 15
+  - m_Id: 77
     m_Localized: Agradecimientos Especiales
     m_Metadata:
       m_Items: []
-  - m_Id: 16
+  - m_Id: 78
     m_Localized: "Programaci\xF3n del Sistema de Soporte"
     m_Metadata:
       m_Items: []
-  - m_Id: 17
+  - m_Id: 79
     m_Localized: "Dise\xF1o de Interfaz de Usuario"
     m_Metadata:
       m_Items: []
-  - m_Id: 18
+  - m_Id: 80
     m_Localized: Efectos Visuales
     m_Metadata:
       m_Items: []
-  - m_Id: 19
+  - m_Id: 81
     m_Localized: dd{0}mm{0}yyyy
     m_Metadata:
       m_Items: []
-  - m_Id: 20
+  - m_Id: 82
     m_Localized: "\xA1Aviso!\n\nEste juego es un derivado de \"Touhou Project (\u6771\u65B9Project)\".\nQuiz\xE1s
       pueda contener historia, car\xE1cter de los personajes, y escenarios diferentes
       de las obras originales.\nSi te sientes inc\xF3modo con esto, por favor proceda
       con precauci\xF3n."
     m_Metadata:
       m_Items: []
-  - m_Id: 21
-    m_Localized: Fantasy Crescendo
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22
-    m_Localized: "Espa\xF1ol"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 23
-    m_Localized: "Atr\xE1s"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 24
-    m_Localized: Salir del Juego
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25
-    m_Localized: Multijugador
-    m_Metadata:
-      m_Items: []
-  - m_Id: 26
-    m_Localized: "M\xFAsica"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 27
-    m_Localized: Opciones
-    m_Metadata:
-      m_Items: []
-  - m_Id: 28
-    m_Localized: Un solo jugador
-    m_Metadata:
-      m_Items: []
-  - m_Id: 29
+  - m_Id: 83
     m_Localized: 
     m_Metadata:
       m_Items: []
-  - m_Id: 30
+  - m_Id: 84
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85
+    m_Localized: Salir del Juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 87
+    m_Localized: Fantasy Crescendo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88
+    m_Localized: "Espa\xF1ol"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89
+    m_Localized: "Atr\xE1s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 90
+    m_Localized: Multijugador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 91
+    m_Localized: "M\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92
+    m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93
+    m_Localized: Un solo jugador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 95
     m_Localized: Especial
     m_Metadata:
       m_Items: []
-  - m_Id: 31
+  - m_Id: 96
     m_Localized: "Est\xE1ndard"
     m_Metadata:
       m_Items: []
-  - m_Id: 32
+  - m_Id: 97
     m_Localized: Modo Historia
     m_Metadata:
       m_Items: []
-  - m_Id: 33
+  - m_Id: 98
     m_Localized: Entrenamiento
     m_Metadata:
       m_Items: []
-  - m_Id: 34
+  - m_Id: 99
     m_Localized: Modo All-Star
     m_Metadata:
       m_Items: []
-  - m_Id: 35
+  - m_Id: 100
     m_Localized: Modo Clasico
     m_Metadata:
       m_Items: []
-  - m_Id: 36
+  - m_Id: 101
     m_Localized: No
     m_Metadata:
       m_Items: []
-  - m_Id: 37
+  - m_Id: 102
     m_Localized: OK
     m_Metadata:
       m_Items: []
-  - m_Id: 38
+  - m_Id: 103
     m_Localized: "S\xED"
     m_Metadata:
       m_Items: []
-  - m_Id: 39
+  - m_Id: 104
     m_Localized: Suavizado de Bordes
     m_Metadata:
       m_Items: []
-  - m_Id: 40
+  - m_Id: 105
     m_Localized: Audio
     m_Metadata:
       m_Items: []
-  - m_Id: 41
+  - m_Id: 106
     m_Localized: "Volumen de la m\xFAsica"
     m_Metadata:
       m_Items: []
-  - m_Id: 42
+  - m_Id: 107
     m_Localized: Idioma
     m_Metadata:
       m_Items: []
-  - m_Id: 43
+  - m_Id: 108
     m_Localized: "Hemos puesto tu idioma al {0}, \xBFest\xE1 bien?"
     m_Metadata:
       m_Items: []
-  - m_Id: 44
+  - m_Id: 109
     m_Localized: Volumen Maestro
     m_Metadata:
       m_Items: []
-  - m_Id: 45
+  - m_Id: 110
     m_Localized: Nivel de Calidad
     m_Metadata:
       m_Items: []
-  - m_Id: 46
+  - m_Id: 111
     m_Localized: "Resoluci\xF3n"
     m_Metadata:
       m_Items: []
-  - m_Id: 47
+  - m_Id: 112
     m_Localized: Volumen de los efectos de sonido
     m_Metadata:
       m_Items: []
-  - m_Id: 48
+  - m_Id: 113
     m_Localized: Video
     m_Metadata:
       m_Items: []
-  - m_Id: 49
+  - m_Id: 114
     m_Localized: Volumen de las voces
     m_Metadata:
       m_Items: []
-  - m_Id: 50
+  - m_Id: 115
     m_Localized: Jugador {0}
     m_Metadata:
       m_Items: []
-  - m_Id: 51
+  - m_Id: 116
     m_Localized: Aleatorio
     m_Metadata:
       m_Items: []
-  - m_Id: 52
+  - m_Id: 117
     m_Localized: Nivel de Pruebas
     m_Metadata:
       m_Items: []
-  - m_Id: 53
+  - m_Id: 118
     m_Localized: "\"Lleno de magia y vegetaci\xF3n, de ah\xED su nombre.\""
     m_Metadata:
       m_Items: []
-  - m_Id: 54
+  - m_Id: 119
     m_Localized: Bosque de la Magia
     m_Metadata:
       m_Items: []
-  - m_Id: 55
+  - m_Id: 120
     m_Localized: "\"Hogar de un bastante n\xFAmero de fiestas. Tenshi no es bienvenida.\""
     m_Metadata:
       m_Items: []
-  - m_Id: 56
+  - m_Id: 121
     m_Localized: Santuario Hakurei
     m_Metadata:
       m_Items: []
-  - m_Id: 57
+  - m_Id: 122
     m_Localized: Makai
     m_Metadata:
       m_Items: []
-  - m_Id: 58
+  - m_Id: 123
     m_Localized: Inframundo
     m_Metadata:
       m_Items: []
-  - m_Id: 59
+  - m_Id: 124
     m_Localized: "Mansi\xF3n del Demonio Escarlata"
     m_Metadata:
       m_Items: []
